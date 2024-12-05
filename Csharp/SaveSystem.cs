@@ -76,7 +76,7 @@ public class SaveSystem
 
 		if (!File.Exists(saveData))
 		{
-			File.Create(saveData);
+			File.Create(saveData).Close();
 			File.WriteAllText(saveData, "0\n0\n0.0\n0.0");
             playlistIndex = 0;
             songIndex = 0;
@@ -94,7 +94,7 @@ public class SaveSystem
 
 		if (!File.Exists(playlistSaver))
 		{
-			File.Create(playlistSaver);
+			File.Create(playlistSaver).Close();
 		}
 	}
 
@@ -111,21 +111,27 @@ public class SaveSystem
         }
     }
 
-	public static Playlist LoadPlaylist(string playlist)
+	public static Playlist LoadPlaylist(string playlist) // both loads and tests playlist
 	{
-        Playlist pl = new Playlist();
+        if(!File.Exists(playlist)) return null;
+		Playlist pl = new Playlist();
         List<string> songpaths = new List<string>(File.ReadAllLines(playlist));
-        pl.Coverpath = songpaths[0] == "null" ? null : songpaths[0];
+        pl.Coverpath = !File.Exists(songpaths[0]) || songpaths[0].Trim() == "null" ? "" : songpaths[0];
         songpaths.RemoveAt(0);
 
         for (int i = 0; i < songpaths.Count; i++)
         {
-            songpaths[i] = songpaths[i].Trim();
+			songpaths[i] = songpaths[i].Trim();
+            if (!songpaths[i].EndsWith(".mp3") || !File.Exists(songpaths[i]))
+			{
+				songpaths.RemoveAt(i);
+			}
         }
 
         pl.songs = songpaths;
         pl.Name = GetFileName(playlist);
         pl.path = playlist;
+		pl.Save();
 		return pl;
     }
 
@@ -145,4 +151,7 @@ public class Playlist
 	{
         File.WriteAllText(path, $"{Coverpath}\n{string.Join("\n", songs)}");
 	}
+
+    public static bool operator true(Playlist obj) => obj != null;
+    public static bool operator false(Playlist obj) => obj == null;
 }

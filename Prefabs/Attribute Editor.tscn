@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://dle5y658wmx03"]
 
+[ext_resource type="Script" path="res://Csharp/AttributeEditor.cs" id="1_cj5je"]
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Fonts/DefaultFont.tres" id="1_ot5f1"]
-[ext_resource type="Script" path="res://GDscript/getdata.gd" id="1_w78q0"]
 [ext_resource type="Texture2D" uid="uid://c85envuiuo3ju" path="res://Icons/folder.png" id="3_5xnwa"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mixmj"]
@@ -13,7 +13,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_w78q0")
+script = ExtResource("1_cj5je")
 Name = NodePath("Attribute editor/Name")
 Artist = NodePath("Attribute editor/Artist")
 CoverButton = NodePath("Attribute editor/Cover")

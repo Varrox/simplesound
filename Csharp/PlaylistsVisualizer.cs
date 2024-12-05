@@ -1,12 +1,14 @@
 using Godot;
-using System;
+using System.Collections.Generic;
 
 public partial class PlaylistsVisualizer : Control
 {
 	[Export] public PackedScene template;
 	[Export] public Main mainController;
 
-    public void LoadAllPlaylistVisuals()
+    List<Control> playlists;
+
+    public void LoadAllPlaylistVisuals() // only done once for init
     {
         float space = 20;
         for (int i = 0; i < mainController.playlists.Length; i++)
@@ -16,7 +18,13 @@ public partial class PlaylistsVisualizer : Control
             AddChild(playlist);
             playlist.Position = new Vector2(20, space);
             playlist.Call("init", pl.Name, pl.Coverpath, pl.songs.Count, i, mainController);
-            space += 100;
+            space += 95;
+            //playlists.Add(playlist);
         }
+    }
+
+    public void UpdatePlaylists()
+    {
+
     }
 }

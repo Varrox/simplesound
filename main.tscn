@@ -1,7 +1,7 @@
-[gd_scene load_steps=26 format=3 uid="uid://cbpkjhjnbrjm6"]
+[gd_scene load_steps=28 format=3 uid="uid://cbpkjhjnbrjm6"]
 
 [ext_resource type="Script" path="res://Csharp/Main.cs" id="1_l00ml"]
-[ext_resource type="Script" path="res://GDscript/interface.gd" id="2_cdef4"]
+[ext_resource type="Script" path="res://Csharp/Player.cs" id="2_632yu"]
 [ext_resource type="FontFile" uid="uid://ckdni7vy5bpft" path="res://Fonts/VarelaRound-Regular.ttf" id="3_bbvvl"]
 [ext_resource type="Texture2D" uid="uid://c11jkh52sohaq" path="res://Icons/loopon.png" id="3_lifiy"]
 [ext_resource type="Texture2D" uid="uid://umqcsl8yhoem" path="res://Icons/back.png" id="4_0btiw"]
@@ -14,10 +14,13 @@
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Fonts/DefaultFont.tres" id="9_3b7g8"]
 [ext_resource type="Texture2D" uid="uid://5hwvlu7uerj6" path="res://Icons/plus.png" id="10_7e43v"]
 [ext_resource type="Texture2D" uid="uid://c85envuiuo3ju" path="res://Icons/folder.png" id="11_1f20w"]
-[ext_resource type="Script" path="res://PlaylistsVisualizer.cs" id="12_0nioi"]
+[ext_resource type="Script" path="res://Csharp/PlaylistsVisualizer.cs" id="12_0nioi"]
 [ext_resource type="Texture2D" uid="uid://0yw8m2y164lr" path="res://Icons/settings.png" id="12_s6aix"]
-[ext_resource type="PackedScene" uid="uid://4mmerh1u4xho" path="res://playlisttemplate.tscn" id="13_a7qgi"]
-[ext_resource type="PackedScene" uid="uid://dle5y658wmx03" path="res://Attribute Editor.tscn" id="17_f7c3k"]
+[ext_resource type="PackedScene" uid="uid://4mmerh1u4xho" path="res://Prefabs/playlisttemplate.tscn" id="13_a7qgi"]
+[ext_resource type="PackedScene" uid="uid://dle5y658wmx03" path="res://Prefabs/Attribute Editor.tscn" id="17_f7c3k"]
+[ext_resource type="Script" path="res://GDscript/discord.gd" id="19_8krr3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r3k7g"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7vj4a"]
 
@@ -33,7 +36,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_68lop"]
 
-[node name="Main" type="Control" node_paths=PackedStringArray("player", "volumeSlider", "importPlaylist", "playlistvisualizer")]
+[node name="Main" type="Control" node_paths=PackedStringArray("player", "volumeSlider", "playlistvisualizer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -43,24 +46,24 @@ grow_vertical = 2
 script = ExtResource("1_l00ml")
 player = NodePath("Player")
 volumeSlider = NodePath("Interface/Player/Controls/Volume")
-importPlaylist = NodePath("Import Playlist")
 playlistvisualizer = NodePath("Interface/Playlist Display/Playlists")
 
-[node name="Interface" type="Control" parent="." node_paths=PackedStringArray("MainController", "Play", "Next", "Back", "Loop", "Progress", "CurrentTime", "TotalTime", "SongName", "SongArtist", "SongCover", "VolumeSlider", "EditAttributes", "AttributeEditor")]
+[node name="Interface" type="Control" parent="." node_paths=PackedStringArray("MainController", "DiscordPresense", "Play", "Next", "Back", "Loop", "Progress", "CurrentTime", "TotalTime", "SongName", "SongArtist", "SongCover", "VolumeSlider", "EditAttributes", "AttributeEditor")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("2_cdef4")
+script = ExtResource("2_632yu")
 MainController = NodePath("..")
+DiscordPresense = NodePath("../Discord Presense")
 Play = NodePath("Player/Controls/Play")
-PlayIcon = ExtResource("5_8inno")
-PauseIcon = ExtResource("4_lfnj1")
 Next = NodePath("Player/Controls/Next")
 Back = NodePath("Player/Controls/Back")
 Loop = NodePath("Player/Controls/Loop")
+PlayIcon = ExtResource("5_8inno")
+PauseIcon = ExtResource("4_lfnj1")
 LoopOn = ExtResource("3_lifiy")
 LoopOff = ExtResource("7_uv8rp")
 Progress = NodePath("Player/Controls/Progress")
@@ -99,24 +102,30 @@ anchor_bottom = 1.0
 offset_right = 303.0
 grow_vertical = 2
 
-[node name="Playlist" type="TextureRect" parent="Interface/Playlist Display"]
+[node name="Playlist" type="Button" parent="Interface/Playlist Display"]
 layout_mode = 1
 offset_left = 15.0
 offset_top = 68.0
 offset_right = 47.0
 offset_bottom = 100.0
 scale = Vector2(0.8, 0.8)
-texture = ExtResource("8_8i1ca")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_r3k7g")
+icon = ExtResource("8_8i1ca")
+expand_icon = true
 
 [node name="Label" type="Label" parent="Interface/Playlist Display/Playlist"]
-layout_mode = 0
-offset_left = 37.5
-offset_top = 5.0
-offset_right = 103.5
-offset_bottom = 32.0
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 40.0
+offset_top = -13.5
+offset_right = 147.0
+offset_bottom = 13.5
+grow_vertical = 2
 theme_override_fonts/font = ExtResource("9_3b7g8")
 theme_override_font_sizes/font_size = 19
-text = "My Library"
+text = "My Playlists"
 
 [node name="Add" type="Button" parent="Interface/Playlist Display"]
 layout_mode = 1
@@ -563,3 +572,9 @@ ok_button_text = "Select Current Folder"
 file_mode = 2
 access = 2
 use_native_dialog = true
+
+[node name="Discord Presense" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("19_8krr3")

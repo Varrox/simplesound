@@ -2,8 +2,9 @@
 
 public class ConvertToGodot
 {
-    public static ImageTexture getCover(byte[] pictureData, string type)
+    public static ImageTexture getCover(string path)
     {
+        byte[] pictureData = Metadata.GetCover(path, out string type);
         if (pictureData == null) return null;
         Image image = new Image();
         switch (type)

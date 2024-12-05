@@ -13,20 +13,21 @@ func _ready() -> void:
 	
 func setSong():
 	if MainController != null && MainController.currentPlaylist != PlaylistIndex:
+		MainController.currentSong = 0
 		MainController.playing = true
 		MainController.LoadPlaylist(PlaylistIndex)
-		MainController.currentSong = 0
 		MainController.playing = false
 		MainController.time = 0
 		MainController.Play()
 		
 func init(playlistname, Coverpath, songcount, index:int, main):
 	var img = Image.new()
-	if img.load(Coverpath) == OK:
-		Cover.texture = ImageTexture.create_from_image(img)
+	if Coverpath != "":
+		if img.load(Coverpath) == OK:
+			Cover.texture = ImageTexture.create_from_image(img)
 	else:
 		Cover.texture = load("res://Icons/DefaultCover.png")
 	Name.text = playlistname
-	Songs.text = "Songs : " + str(songcount)
+	Songs.text = str(songcount) + " songs"
 	PlaylistIndex = index
 	MainController = main
