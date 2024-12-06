@@ -68,6 +68,7 @@ public partial class Main : Control
 	{
 		currentPlaylist = index;
 		playlist = playlists.Length > 0 ? SaveSystem.LoadPlaylist(playlists[currentPlaylist]) : null;
+        EmitSignal("OnLoadPlaylist", currentPlaylist);
     }
 
     public void Play()

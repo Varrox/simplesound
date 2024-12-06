@@ -18,6 +18,7 @@ func setSong():
 		MainController.LoadPlaylist(PlaylistIndex)
 		MainController.playing = false
 		MainController.time = 0
+		MainController.InitSong()
 		MainController.Play()
 		Register.flat = true
 		

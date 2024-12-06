@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://dlh34aq4t8tvu"]
+[gd_scene load_steps=6 format=3 uid="uid://dlh34aq4t8tvu"]
 
 [ext_resource type="Texture2D" uid="uid://cksbdmhr2s8yy" path="res://Icons/DefaultCover.png" id="1_3homh"]
 [ext_resource type="Script" path="res://Csharp/Songdiplay.cs" id="1_crd2r"]
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Fonts/DefaultFont.tres" id="3_uwkr0"]
+[ext_resource type="Texture2D" uid="uid://23nnkoswyxm8" path="res://Icons/play.png" id="4_5laip"]
+[ext_resource type="Texture2D" uid="uid://b3au8pb3kdvei" path="res://Icons/pause.png" id="4_rpwxs"]
 
 [node name="Songdiplay" type="Control" node_paths=PackedStringArray("Number", "Name", "Artist", "Time", "Cover", "Register")]
 layout_mode = 3
@@ -17,8 +19,23 @@ Number = NodePath("Number")
 Name = NodePath("Number/Cover/Name")
 Artist = NodePath("Number/Cover/Artist")
 Time = NodePath("Length")
-Cover = NodePath("Number/Cover")
+Cover = NodePath("")
 Register = NodePath("Register")
+
+[node name="Register" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 55.0
+offset_top = -29.0
+offset_bottom = 29.0
+grow_horizontal = 2
+grow_vertical = 2
+flat = true
+icon_alignment = 1
+expand_icon = true
 
 [node name="Number" type="Label" parent="."]
 layout_mode = 1
@@ -36,21 +53,25 @@ text = "1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Cover" type="TextureRect" parent="Number"]
+[node name="Cover" type="TextureButton" parent="Number"]
 layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
+anchors_preset = 8
+anchor_left = 0.5
 anchor_top = 0.5
-anchor_right = 1.0
+anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 11.0
+offset_left = 26.5
 offset_top = -29.5
-offset_right = 71.0
+offset_right = 86.5
 offset_bottom = 30.5
-grow_horizontal = 0
+grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_3homh")
-expand_mode = 4
+toggle_mode = true
+texture_normal = ExtResource("1_3homh")
+texture_pressed = ExtResource("4_rpwxs")
+texture_hover = ExtResource("4_5laip")
+ignore_texture_size = true
+stretch_mode = 4
 
 [node name="Name" type="Label" parent="Number/Cover"]
 layout_mode = 0
@@ -90,17 +111,3 @@ theme_override_fonts/font = ExtResource("3_uwkr0")
 theme_override_font_sizes/font_size = 14
 text = "0:00"
 horizontal_alignment = 2
-
-[node name="Register" type="Button" parent="."]
-layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_top = -29.0
-offset_bottom = 29.0
-grow_horizontal = 2
-grow_vertical = 2
-flat = true
-icon_alignment = 1
-expand_icon = true
