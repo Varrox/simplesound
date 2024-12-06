@@ -16,6 +16,7 @@ public partial class Player : Node
     [Export] public AttributeEditor AttributeEditor;
 
     bool canSetTime, attributesBeingedited;
+    float tim = 0;
 
     public override void _Ready()
 	{
@@ -25,7 +26,7 @@ public partial class Player : Node
         Back.ButtonDown += () => move(-1);
         MainController.OnLoadSong += onLoadSong;
         Progress.DragEnded += setTime;
-        Progress.DragEnded += (bool value) => canSetTime = true;
+        Progress.DragStarted += () => canSetTime = true;
         EditAttributes.ButtonDown += editAttributes;
         AttributeEditor.onSubmitdata += submitmeta;
 
@@ -70,14 +71,20 @@ public partial class Player : Node
     {
         if (MainController.playlist)
         {
-            SongName.Text = SaveSystem.GetName(MainController.playlist.songs[MainController.currentSong]);
-            SongArtist.Text = Metadata.GetArtist(MainController.playlist.songs[MainController.currentSong]);
+            string name = SaveSystem.GetName(MainController.playlist.songs[MainController.currentSong]);
+            SongName.Text = name;
+            SongName.TooltipText = name;
+            string artist = Metadata.GetArtist(MainController.playlist.songs[MainController.currentSong]);
+            SongArtist.Text = artist;
+            SongArtist.TooltipText = artist;
             SongCover.Texture = ConvertToGodot.getCover(MainController.playlist.songs[MainController.currentSong]);
         }
         else
         {
             SongName.Text = "No song playing";
-            SongArtist.Text = "Artist";
+            SongName.TooltipText = "";
+            SongArtist.Text = "No artist";
+            SongArtist.TooltipText = "";
         }
 
         SongCover.Texture = SongCover.Texture == null ? DefaultCover : SongCover.Texture;
@@ -85,6 +92,7 @@ public partial class Player : Node
         Progress.MaxValue = MainController.player.Stream.GetLength();
         Play.Icon = !MainController.playing ? PlayIcon : PauseIcon;
         DiscordPresense.Call("setdetails", SongName.Text);
+        tim = 1;
     }
 
     public void setTime(bool value)
@@ -92,6 +100,7 @@ public partial class Player : Node
         MainController.time = (float)Progress.Value;
         if (MainController.playing) MainController.player.Play(MainController.time);
         canSetTime = false;
+        tim = 1;
     }
 
     public void submitmeta()
@@ -105,11 +114,27 @@ public partial class Player : Node
 	{
         if(MainController.player.Stream != null) CurrentTime.Text = SaveSystem.GetTimeFromSeconds(MainController.time);
 
-        if (!canSetTime) Progress.Value = MainController.time;
-        else if (!MainController.playing) MainController.time = (float)Progress.Value;
-
+        if (!canSetTime)
+        {
+            Progress.Value = MainController.time;
+            tim += (float)delta;
+            if (tim >= 1)
+            {
+                DiscordPresense.Call("setstate", CurrentTime.Text, !MainController.playing);
+                tim = 0;
+            }
+        }
+        else if (!MainController.playing)
+        {
+            MainController.time = (float)Progress.Value;
+            tim += (float)delta;
+            if (tim >= 0.3f)
+            {
+                DiscordPresense.Call("setstate", CurrentTime.Text, !MainController.playing);
+                tim = 0;
+            }
+        }
 
         MainController.player.VolumeDb = (float)(VolumeSlider.Value != -50 ? VolumeSlider.Value : -80);
-        DiscordPresense.Call("setstate", CurrentTime.Text, !MainController.playing);
     }
 }

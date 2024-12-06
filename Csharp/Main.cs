@@ -1,4 +1,5 @@
 using Godot;
+using System;
 
 public partial class Main : Control
 {
@@ -15,6 +16,7 @@ public partial class Main : Control
 	public float time, volume;
 
     [Signal] public delegate void OnLoadSongEventHandler();
+    [Signal] public delegate void OnLoadPlaylistEventHandler(int index);
 
     public override void _Ready()
 	{
@@ -53,6 +55,7 @@ public partial class Main : Control
 
         // initialize playlist displayer
         if (playlist) playlistvisualizer.LoadAllPlaylistVisuals();
+        EmitSignal("OnLoadPlaylist", currentPlaylist);
     }
 
     public void LoadPlaylists()
@@ -64,6 +67,7 @@ public partial class Main : Control
 	{
 		currentPlaylist = index;
 		playlist = playlists.Length > 0 ? SaveSystem.LoadPlaylist(playlists[currentPlaylist]) : null;
+        EmitSignal("OnLoadPlaylist", index);
 		if(playlist) InitSong();
     }
 

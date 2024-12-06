@@ -19,6 +19,11 @@ func setSong():
 		MainController.playing = false
 		MainController.time = 0
 		MainController.Play()
+		Register.flat = true
+		
+func clearSelected(index):
+	if index != PlaylistIndex:
+		Register.flat = false
 		
 func init(playlistname, Coverpath, songcount, index:int, main):
 	var img = Image.new()
@@ -31,3 +36,4 @@ func init(playlistname, Coverpath, songcount, index:int, main):
 	Songs.text = str(songcount) + " songs"
 	PlaylistIndex = index
 	MainController = main
+	MainController.OnLoadPlaylist.connect(clearSelected)

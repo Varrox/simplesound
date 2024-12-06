@@ -135,6 +135,25 @@ public class SaveSystem
 		return pl;
     }
 
+	public static void GetPlaylistAttributes(string filepath, out string name, out string coverpath, out int songcount)
+	{
+        List<string> songpaths = new List<string>(File.ReadAllLines(filepath));
+        coverpath = !File.Exists(songpaths[0]) || songpaths[0].Trim() == "null" ? "" : songpaths[0];
+        songpaths.RemoveAt(0);
+
+        for (int i = 0; i < songpaths.Count; i++)
+        {
+            songpaths[i] = songpaths[i].Trim();
+            if (!songpaths[i].EndsWith(".mp3") || !File.Exists(songpaths[i]))
+            {
+                songpaths.RemoveAt(i);
+            }
+        }
+
+		songcount = songpaths.Count;
+		name = GetFileName(filepath);
+    }
+
 	public static string[] GetAllPlaylists()
 	{
         string appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
