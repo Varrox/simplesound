@@ -52,6 +52,7 @@ public partial class Main : Control
         // load playlists
         LoadPlaylists();
         LoadPlaylist(currentPlaylist);
+        if(playlist) InitSong();
 
         // initialize playlist displayer
         if (playlist) playlistvisualizer.LoadAllPlaylistVisuals();
@@ -67,8 +68,6 @@ public partial class Main : Control
 	{
 		currentPlaylist = index;
 		playlist = playlists.Length > 0 ? SaveSystem.LoadPlaylist(playlists[currentPlaylist]) : null;
-        EmitSignal("OnLoadPlaylist", index);
-		if(playlist) InitSong();
     }
 
     public void Play()

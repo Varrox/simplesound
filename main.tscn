@@ -56,23 +56,23 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_632yu")
-PlayIcon = ExtResource("5_8inno")
-PauseIcon = ExtResource("4_lfnj1")
-LoopOn = ExtResource("3_lifiy")
-LoopOff = ExtResource("7_uv8rp")
-DefaultCover = ExtResource("7_xn3w4")
 MainController = NodePath("..")
 DiscordPresense = NodePath("../Discord Presense")
 Play = NodePath("Player/Controls/Play")
 Next = NodePath("Player/Controls/Next")
 Back = NodePath("Player/Controls/Back")
 Loop = NodePath("Player/Controls/Loop")
+PlayIcon = ExtResource("5_8inno")
+PauseIcon = ExtResource("4_lfnj1")
+LoopOn = ExtResource("3_lifiy")
+LoopOff = ExtResource("7_uv8rp")
 Progress = NodePath("Player/Controls/Progress")
 CurrentTime = NodePath("Player/Controls/Progress/Current Time")
 TotalTime = NodePath("Player/Controls/Progress/Total Time")
 SongName = NodePath("Player/Song Attributes/Name")
 SongArtist = NodePath("Player/Song Attributes/Artist")
 SongCover = NodePath("Player/Song Attributes/Cover")
+DefaultCover = ExtResource("7_xn3w4")
 VolumeSlider = NodePath("Player/Controls/Volume")
 EditAttributes = NodePath("Player/Song Attributes/Edit Attributes")
 AttributeEditor = NodePath("Player/Song Attributes/Edit Attributes/AttributeEditor")
@@ -206,6 +206,17 @@ scale = Vector2(0.8, 0.8)
 script = ExtResource("12_0nioi")
 template = ExtResource("13_a7qgi")
 mainController = NodePath("../../..")
+
+[node name="Song Display" type="Control" parent="Interface"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 305.0
+offset_top = 55.0
+offset_bottom = -109.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Top Bar" type="ColorRect" parent="Interface"]
 layout_mode = 1
