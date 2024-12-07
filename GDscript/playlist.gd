@@ -4,6 +4,7 @@ extends Control
 @export var Name:Label
 @export var Songs:Label
 @export var Register:Button
+@export var LightPanel:Panel
 
 var MainController:Node
 var PlaylistIndex:int
@@ -14,17 +15,19 @@ func _ready() -> void:
 func setSong():
 	if MainController != null && MainController.currentPlaylist != PlaylistIndex:
 		MainController.currentSong = 0
-		MainController.playing = true
 		MainController.LoadPlaylist(PlaylistIndex)
-		MainController.playing = false
 		MainController.time = 0
+		MainController.playing = true
 		MainController.InitSong()
+		MainController.playing = false
 		MainController.Play()
 		Register.flat = true
+		LightPanel.show()
 		
 func clearSelected(index):
 	if index != PlaylistIndex:
 		Register.flat = false
+		LightPanel.hide()
 		
 func init(playlistname, Coverpath, songcount, index:int, main):
 	var img = Image.new()

@@ -5,23 +5,21 @@ public partial class PlaylistsVisualizer : Node
 {
 	[Export] public PackedScene template;
 	[Export] public Main mainController;
-
-    float space = 20;
+    [Export] public VBoxContainer container;
 
     public void LoadAllPlaylistVisuals() // only done once for init
     {
         for (int i = 0; i < mainController.playlists.Length; i++)
         {
-            LoadPlaylist(i, new Vector2(20, space));
-            space += 95;
+            LoadPlaylist(i);
         }
+
     }
 
-    public void LoadPlaylist(int i, Vector2 position)
+    public void LoadPlaylist(int i)
     {
         Control playlist = (Control)template.Instantiate();
-        AddChild(playlist);
-        playlist.Position = position;
+        container.AddChild(playlist);
         LoadDataIntoPlaylist(i, playlist);
     }
 
@@ -33,7 +31,7 @@ public partial class PlaylistsVisualizer : Node
 
     public void UpdatePlaylists()
     {
-        Array<Node> playlists = GetChildren();
+        Array<Node> playlists = container.GetChildren();
         int end = playlists.Count;
         if(playlists.Count != mainController.playlists.Length)
         {
@@ -41,8 +39,7 @@ public partial class PlaylistsVisualizer : Node
             {
                 for(int i = playlists.Count; i < mainController.playlists.Length - playlists.Count; i++)
                 {
-                    LoadPlaylist(i, new Vector2(20, space));
-                    space += 95;
+                    LoadPlaylist(i);
                 }
             }
             else
@@ -51,7 +48,6 @@ public partial class PlaylistsVisualizer : Node
                 {
                     playlists[i].QueueFree();
                     playlists.RemoveAt(i);
-                    space -= 95;
                 }
                 end = playlists.Count;
             }

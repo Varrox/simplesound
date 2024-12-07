@@ -7,20 +7,20 @@
       "RelativeMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|solutionrelative:csharp\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|d:\\godot\\simplesound\\csharp\\converttogodot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|solutionrelative:csharp\\converttogodot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|d:\\godot\\simplesound\\csharp\\playlistsvisualizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|solutionrelative:csharp\\playlistsvisualizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|d:\\godot\\simplesound\\csharp\\songdisplay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|solutionrelative:csharp\\songdisplay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|d:\\godot\\simplesound\\csharp\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|solutionrelative:csharp\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|d:\\godot\\simplesound\\csharp\\songdiplay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|solutionrelative:csharp\\songdiplay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|d:\\godot\\simplesound\\csharp\\converttogodot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|solutionrelative:csharp\\converttogodot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|d:\\godot\\simplesound\\csharp\\metadata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -42,13 +42,13 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Songdiplay.cs",
-              "DocumentMoniker": "D:\\Godot\\simplesound\\Csharp\\Songdiplay.cs",
-              "RelativeDocumentMoniker": "Csharp\\Songdiplay.cs",
-              "ToolTip": "D:\\Godot\\simplesound\\Csharp\\Songdiplay.cs",
-              "RelativeToolTip": "Csharp\\Songdiplay.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAkAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "Songdisplay.cs",
+              "DocumentMoniker": "D:\\Godot\\simplesound\\Csharp\\Songdisplay.cs",
+              "RelativeDocumentMoniker": "Csharp\\Songdisplay.cs",
+              "ToolTip": "D:\\Godot\\simplesound\\Csharp\\Songdisplay.cs",
+              "RelativeToolTip": "Csharp\\Songdisplay.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-06T17:52:19.78Z",
               "EditorCaption": ""
@@ -63,25 +63,24 @@
               "RelativeToolTip": "Csharp\\Player.cs",
               "ViewState": "AgIAADoAAAAAAAAAAAAuwHYAAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-05T03:10:00.137Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-05T03:10:00.137Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "PlaylistsVisualizer.cs",
               "DocumentMoniker": "D:\\Godot\\simplesound\\Csharp\\PlaylistsVisualizer.cs",
               "RelativeDocumentMoniker": "Csharp\\PlaylistsVisualizer.cs",
               "ToolTip": "D:\\Godot\\simplesound\\Csharp\\PlaylistsVisualizer.cs",
               "RelativeToolTip": "Csharp\\PlaylistsVisualizer.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAqAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACMAAAA+AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-05T00:41:05.834Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "ConvertToGodot.cs",
               "DocumentMoniker": "D:\\Godot\\simplesound\\Csharp\\ConvertToGodot.cs",
               "RelativeDocumentMoniker": "Csharp\\ConvertToGodot.cs",
@@ -89,8 +88,7 @@
               "RelativeToolTip": "Csharp\\ConvertToGodot.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-03T03:45:09.651Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-03T03:45:09.651Z"
             },
             {
               "$type": "Document",
@@ -124,7 +122,7 @@
               "RelativeDocumentMoniker": "Csharp\\Main.cs",
               "ToolTip": "D:\\Godot\\simplesound\\Csharp\\Main.cs",
               "RelativeToolTip": "Csharp\\Main.cs",
-              "ViewState": "AgIAACoAAAAAzczMzMwuwEYAAAA2AAAAAAAAAA==",
+              "ViewState": "AgIAACEAAAAAzczMzMwuwDgAAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-03T03:45:14.106Z",
               "EditorCaption": ""

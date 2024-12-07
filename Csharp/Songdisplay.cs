@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Songdiplay : Control
+public partial class Songdisplay : Control
 {
 	[Export] public Label Number, Name, Artist, Time;
     [Export] public TextureRect Cover;

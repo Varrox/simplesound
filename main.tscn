@@ -195,19 +195,28 @@ offset_bottom = 101.0
 scale = Vector2(0.6, 0.6)
 texture = ExtResource("11_1f20w")
 
-[node name="Playlists" type="Control" parent="Interface/Playlist Display" node_paths=PackedStringArray("mainController")]
+[node name="Playlists" type="ScrollContainer" parent="Interface/Playlist Display" node_paths=PackedStringArray("mainController", "container")]
 layout_mode = 1
-anchors_preset = 0
-offset_left = -10.0
-offset_top = 100.0
-offset_right = 30.0
-offset_bottom = 140.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 120.0
+offset_right = 76.0
+offset_bottom = -11.0
+grow_horizontal = 2
+grow_vertical = 2
 scale = Vector2(0.8, 0.8)
 script = ExtResource("12_0nioi")
 template = ExtResource("13_a7qgi")
 mainController = NodePath("../../..")
+container = NodePath("VBoxContainer")
 
-[node name="Song Display" type="Control" parent="Interface"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Interface/Playlist Display/Playlists"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Song Display" type="ScrollContainer" parent="Interface"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -217,6 +226,11 @@ offset_top = 55.0
 offset_bottom = -109.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Interface/Song Display"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Top Bar" type="ColorRect" parent="Interface"]
 layout_mode = 1
