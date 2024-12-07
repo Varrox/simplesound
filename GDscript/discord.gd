@@ -2,6 +2,7 @@ extends Node
 
 func _ready() -> void:
 	DiscordRPC.app_id = 1313226375007703160
+	DiscordRPC.large_image = "logotrans"
 	DiscordRPC.refresh()
 	
 func setdetails(song):

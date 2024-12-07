@@ -6,13 +6,13 @@ extends Control
 @export var Register:Button
 @export var LightPanel:Panel
 
-var MainController:Node
 var PlaylistIndex:int
 
 func _ready() -> void:
 	Register.button_down.connect(setSong)
 	
 func setSong():
+	var MainController = get_tree().current_scene
 	if MainController != null && MainController.currentPlaylist != PlaylistIndex:
 		MainController.currentSong = 0
 		MainController.LoadPlaylist(PlaylistIndex)
@@ -29,7 +29,7 @@ func clearSelected(index):
 		Register.flat = false
 		LightPanel.hide()
 		
-func init(playlistname, Coverpath, songcount, index:int, main):
+func init(playlistname, Coverpath, songcount, index:int):
 	var img = Image.new()
 	if Coverpath != "":
 		if img.load(Coverpath) == OK:
@@ -39,5 +39,4 @@ func init(playlistname, Coverpath, songcount, index:int, main):
 	Name.text = playlistname
 	Songs.text = str(songcount) + " songs"
 	PlaylistIndex = index
-	MainController = main
-	MainController.OnLoadPlaylist.connect(clearSelected)
+	get_tree().current_scene.OnLoadPlaylist.connect(clearSelected)

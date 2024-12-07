@@ -13,7 +13,6 @@ public partial class PlaylistsVisualizer : Node
         {
             LoadPlaylist(i);
         }
-
     }
 
     public void LoadPlaylist(int i)
@@ -26,7 +25,7 @@ public partial class PlaylistsVisualizer : Node
     public void LoadDataIntoPlaylist(int i, Node playlist)
     {
         SaveSystem.GetPlaylistAttributes(mainController.playlists[i], out string name, out string coverpath, out int songcount);
-        playlist.Call("init", name, coverpath, songcount, i, mainController);
+        playlist.Call("init", name, coverpath, songcount, i);
     }
 
     public void UpdatePlaylists()

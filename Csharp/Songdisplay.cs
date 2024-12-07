@@ -7,8 +7,6 @@ public partial class Songdisplay : Control
     [Export] public TextureRect Cover;
     [Export] public Button Register;
 
-	Main Main;
-
 	int playlist, song;
 	public override void _Ready()
 	{
@@ -28,6 +26,7 @@ public partial class Songdisplay : Control
 
 	public void SetSong()
 	{
+		Main Main = GetTree().CurrentScene as Main;
 		Main.LoadPlaylist(playlist);
 		Main.currentSong = 0;
 		Main.MoveSong(song);

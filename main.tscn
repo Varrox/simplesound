@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://cbpkjhjnbrjm6"]
+[gd_scene load_steps=29 format=3 uid="uid://cbpkjhjnbrjm6"]
 
 [ext_resource type="Script" path="res://Csharp/Main.cs" id="1_l00ml"]
 [ext_resource type="Script" path="res://Csharp/Player.cs" id="2_632yu"]
@@ -17,6 +17,7 @@
 [ext_resource type="Script" path="res://Csharp/PlaylistsVisualizer.cs" id="12_0nioi"]
 [ext_resource type="Texture2D" uid="uid://0yw8m2y164lr" path="res://Icons/settings.png" id="12_s6aix"]
 [ext_resource type="PackedScene" uid="uid://4mmerh1u4xho" path="res://Prefabs/playlisttemplate.tscn" id="13_a7qgi"]
+[ext_resource type="PackedScene" uid="uid://dlh34aq4t8tvu" path="res://Prefabs/songdisplay.tscn" id="14_t035w"]
 [ext_resource type="PackedScene" uid="uid://dle5y658wmx03" path="res://Prefabs/Attribute Editor.tscn" id="17_f7c3k"]
 [ext_resource type="Script" path="res://GDscript/discord.gd" id="19_8krr3"]
 
@@ -85,6 +86,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+color = Color(1, 0.27451, 0.27451, 1)
 
 [node name="Background" type="TextureRect" parent="Interface"]
 layout_mode = 1
@@ -221,8 +223,9 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 305.0
-offset_top = 55.0
+offset_left = 308.0
+offset_top = 57.0
+offset_right = -5.0
 offset_bottom = -109.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -232,13 +235,64 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
+[node name="Top card" type="Panel" parent="Interface/Song Display/VBoxContainer"]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Interface/Song Display/VBoxContainer/Top card"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 25.0
+offset_top = -50.0
+offset_right = 125.0
+offset_bottom = 50.0
+grow_vertical = 2
+texture = ExtResource("7_xn3w4")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Interface/Song Display/VBoxContainer/Top card"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 150.0
+offset_top = -39.0
+offset_right = 233.0
+offset_bottom = -3.0
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("9_3b7g8")
+theme_override_font_sizes/font_size = 29
+text = "Name"
+
+[node name="Label2" type="Label" parent="Interface/Song Display/VBoxContainer/Top card"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 150.0
+offset_top = 8.0
+offset_right = 233.0
+offset_bottom = 44.0
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("9_3b7g8")
+theme_override_font_sizes/font_size = 16
+text = "0 songs"
+
+[node name="Songdisplay" parent="Interface/Song Display/VBoxContainer" instance=ExtResource("14_t035w")]
+layout_mode = 2
+
+[node name="Songdisplay2" parent="Interface/Song Display/VBoxContainer" instance=ExtResource("14_t035w")]
+layout_mode = 2
+
 [node name="Top Bar" type="ColorRect" parent="Interface"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 52.0
 grow_horizontal = 2
-color = Color(0.118581, 0.118581, 0.118581, 1)
+color = Color(0.117647, 0.117647, 0.117647, 1)
 
 [node name="Search" type="TextEdit" parent="Interface/Top Bar"]
 layout_mode = 1
@@ -594,6 +648,7 @@ volume_db = -80.0
 
 [node name="Import Playlist" type="FileDialog" parent="."]
 title = "Open a Directory"
+size = Vector2i(352, 180)
 ok_button_text = "Select Current Folder"
 file_mode = 2
 access = 2
