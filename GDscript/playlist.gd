@@ -4,12 +4,22 @@ extends Control
 @export var Name:Label
 @export var Songs:Label
 @export var Register:Button
-@export var LightPanel:Panel
+@export var SelectedColor:Color
+@export var More:Button
 
 var PlaylistIndex:int
 
 func _ready() -> void:
 	Register.button_down.connect(setSong)
+	Register.mouse_entered.connect(onEnter)
+	Register.mouse_exited.connect(onExit)
+	More.mouse_entered.connect(onEnter)
+	
+func onEnter():
+	More.show()
+	
+func onExit():
+	More.hide()
 	
 func setSong():
 	var MainController = get_tree().current_scene
@@ -21,13 +31,11 @@ func setSong():
 		MainController.InitSong()
 		MainController.playing = false
 		MainController.Play()
-		Register.flat = true
-		LightPanel.show()
+		Register.self_modulate = SelectedColor
 		
 func clearSelected(index):
 	if index != PlaylistIndex:
-		Register.flat = false
-		LightPanel.hide()
+		Register.self_modulate = Color(1, 1, 1, 1)
 		
 func init(playlistname, Coverpath, songcount, index:int):
 	var img = Image.new()

@@ -5,15 +5,28 @@ public partial class Songdisplay : Control
 {
 	[Export] public Label Number, Name, Artist, Time;
     [Export] public TextureRect Cover;
-    [Export] public Button Register;
+    [Export] public Button Register, More;
 
 	int playlist, song;
 	public override void _Ready()
 	{
 		Register.ButtonDown += SetSong;
+		Register.MouseEntered += onEnter;
+		Register.MouseExited += onExit;
+		More.MouseEntered += onEnter;
 	}
 
-	public void init(string name, string artist, string time, int playlist, int song, ImageTexture cover)
+	public void onEnter()
+	{
+        More.Show();
+    }
+
+	public void onExit()
+	{
+        More.Hide();
+    }
+
+    public void init(string name, string artist, string time, int playlist, int song, ImageTexture cover)
 	{
 		Number.Text = (song + 1).ToString();
 		this.song = song;

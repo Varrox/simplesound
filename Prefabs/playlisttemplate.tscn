@@ -1,13 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://4mmerh1u4xho"]
+[gd_scene load_steps=7 format=3 uid="uid://4mmerh1u4xho"]
 
 [ext_resource type="Texture2D" uid="uid://cksbdmhr2s8yy" path="res://Icons/DefaultCover.png" id="1_hfn8r"]
 [ext_resource type="Script" path="res://GDscript/playlist.gd" id="1_i7jl6"]
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Fonts/DefaultFont.tres" id="2_gsxcp"]
+[ext_resource type="Texture2D" uid="uid://bfdwehd6cajgg" path="res://Icons/more.png" id="4_5dlv3"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0xwl0"]
 
-[node name="Playlisttemplate" type="Control" node_paths=PackedStringArray("Cover", "Name", "Songs", "Register", "LightPanel")]
-custom_minimum_size = Vector2(0, 90)
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2it5a"]
+
+[node name="Playlisttemplate" type="Control" node_paths=PackedStringArray("Cover", "Name", "Songs", "Register", "More")]
+custom_minimum_size = Vector2(360, 90)
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -21,23 +24,8 @@ Cover = NodePath("Register/Cover")
 Name = NodePath("Register/Name")
 Songs = NodePath("Register/Songs")
 Register = NodePath("Register")
-LightPanel = NodePath("Panel")
-
-[node name="Panel" type="Panel" parent="."]
-visible = false
-modulate = Color(0, 0, 0, 0.117647)
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -180.5
-offset_top = -42.5
-offset_right = 180.5
-offset_bottom = 42.5
-grow_horizontal = 2
-grow_vertical = 2
+SelectedColor = Color(50, 50, 50, 0.162)
+More = NodePath("Register/More")
 
 [node name="Register" type="Button" parent="."]
 layout_mode = 1
@@ -85,3 +73,21 @@ offset_bottom = 68.0
 theme_override_fonts/font = ExtResource("2_gsxcp")
 theme_override_font_sizes/font_size = 11
 text = "0 songs"
+
+[node name="More" type="Button" parent="Register"]
+visible = false
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -58.5
+offset_top = -19.0
+offset_right = -18.5
+offset_bottom = 21.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_2it5a")
+icon = ExtResource("4_5dlv3")
+icon_alignment = 1
