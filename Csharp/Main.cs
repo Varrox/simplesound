@@ -17,6 +17,7 @@ public partial class Main : Control
 
     [Signal] public delegate void OnLoadSongEventHandler();
     [Signal] public delegate void OnInitDoneEventHandler();
+    [Signal] public delegate void OnPlayEventHandler(bool playing);
 
     public override void _Ready()
 	{
@@ -36,6 +37,7 @@ public partial class Main : Control
                 {
                     time = 0;
                     player.Play(time);
+                    EmitSignal("OnPlay", playing);
                 }
             }
             time = player.GetPlaybackPosition();
@@ -75,7 +77,8 @@ public partial class Main : Control
 		playing = !playing;
 		if(playing) player.Play(time);
 		else player.Stop();
-	}
+        EmitSignal("OnPlay", playing);
+    }
 
     public void MoveSong(int amount)
     {
@@ -86,6 +89,7 @@ public partial class Main : Control
             InitSong();
             playing = false;
             Play();
+            EmitSignal("OnPlay", playing);
         }
     }
 

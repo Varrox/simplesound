@@ -16,7 +16,7 @@ public partial class Player : Node
     [Export] public AttributeEditor AttributeEditor;
 
     bool canSetTime, attributesBeingedited;
-    float tim = 0;
+    float tim = 0; // time for fixed rate updater thingy
 
     public override void _Ready()
 	{
@@ -114,7 +114,7 @@ public partial class Player : Node
 	{
         if(MainController.player.Stream != null) CurrentTime.Text = SaveSystem.GetTimeFromSeconds(MainController.time);
 
-        if (!canSetTime)
+        if (!canSetTime) // To avoid stupid memory leak, put on a low fixed refresh rate
         {
             Progress.Value = MainController.time;
             tim += (float)delta;

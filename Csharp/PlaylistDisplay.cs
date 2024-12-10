@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public partial class PlaylistDisplay : Node
 {
@@ -14,23 +13,12 @@ public partial class PlaylistDisplay : Node
     public override void _Ready()
     {
         Register.ButtonDown += Set;
-        Register.MouseEntered += onEnter;
-        Register.MouseExited += onExit;
-        More.MouseEntered += onEnter;
+        Register.MouseEntered += () => More.Show();
+        Register.MouseExited += () => More.Hide();
+        More.MouseEntered += () => More.Show();
     }
 
-
-    public void onEnter()
-    {
-        More.Show();
-    }
-
-    public void onExit()
-    {
-        More.Hide();
-    }
-
-    public void Set() // reprogram to load song visualizer
+    public void Set()
     {
         visualizer.EmitSignal("OnSelectPlaylist", PlaylistIndex, Cover.Texture);
         Register.SelfModulate = SelectedColor;
@@ -38,10 +26,7 @@ public partial class PlaylistDisplay : Node
 
     public void clearSelected(int index, Texture2D img)
     {
-        if (index != PlaylistIndex)
-        {
-            Register.SelfModulate = new Color(1, 1, 1, 1);
-        }
+        if (index != PlaylistIndex) Register.SelfModulate = new Color(1, 1, 1, 1);
     }
 
 

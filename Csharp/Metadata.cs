@@ -1,5 +1,4 @@
-﻿using System;
-using TagLib;
+﻿using TagLib;
 
 public class Metadata
 {

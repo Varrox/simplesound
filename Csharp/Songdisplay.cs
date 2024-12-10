@@ -5,17 +5,48 @@ public partial class Songdisplay : Control
 {
 	[Export] public Label Number, Name, Artist, Time;
 	[Export] public Control Play;
-    [Export] public TextureRect Cover;
+    [Export] public TextureRect Cover, Playbutton;
     [Export] public Button Register;
 	[Export] public ContextMenu More;
+	[Export] public Texture2D PlayTexture, Pause;
 
 	int playlist, song;
+	bool isPlaying;
 	public override void _Ready()
 	{
 		Register.ButtonDown += SetSong;
 		Register.MouseEntered += onEnter;
 		Register.MouseExited += onExit;
 		More.MouseEntered += onEnter;
+		(GetTree().CurrentScene as Main).OnLoadSong += SetHighlight;
+	}
+
+	public void SetHighlight()
+	{
+        Main Main = GetTree().CurrentScene as Main;
+        if(Main.currentPlaylist == playlist &&  Main.currentSong == song)
+		{
+			Main.OnPlay += SetTextures;
+			isPlaying = true;
+		}
+        else if(isPlaying)
+        {
+			Playbutton.Texture = PlayTexture;
+			Main.OnPlay -= SetTextures;
+			isPlaying = false;
+        }
+    }
+
+	public void SetTextures(bool playing)
+	{
+		if(playing)
+		{
+			Playbutton.Texture = Pause;
+		}
+		else
+		{
+			Playbutton.Texture = PlayTexture;
+		}
 	}
 
 	public void onEnter()

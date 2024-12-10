@@ -43,11 +43,12 @@ public partial class SongsVisualizer : Control
 				disp = Template.Instantiate() as Songdisplay;
                 container.AddChild(disp);
             }
-			else
+			else // use ones that already exist
 			{
 				disp = SongDisplays[i] as Songdisplay;
             }
 
+			// init the playlist
             disp.init(SaveSystem.GetName(Playlist.songs[i]), Metadata.GetArtist(Playlist.songs[i]), SaveSystem.GetTimeFromSeconds(Metadata.GetTotalTime(Playlist.songs[i])), playlist, i, ConvertToGodot.getCover(Playlist.songs[i]), menu);
         }
 	}

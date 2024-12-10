@@ -132,7 +132,7 @@ theme_override_fonts/font = ExtResource("9_3b7g8")
 theme_override_font_sizes/font_size = 19
 text = "My Playlists"
 
-[node name="Playlists" type="ScrollContainer" parent="Interface/Playlist Display" node_paths=PackedStringArray("mainController", "container")]
+[node name="Playlists" type="ScrollContainer" parent="Interface/Playlist Display" node_paths=PackedStringArray("mainController")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -146,7 +146,6 @@ scale = Vector2(0.8, 0.8)
 script = ExtResource("12_0nioi")
 template = ExtResource("13_a7qgi")
 mainController = NodePath("../../..")
-container = NodePath("VBoxContainer")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Interface/Playlist Display/Playlists"]
 layout_mode = 2
