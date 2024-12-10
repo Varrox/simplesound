@@ -24,7 +24,7 @@ public partial class Songdisplay : Control
 	public void SetHighlight()
 	{
         Main Main = GetTree().CurrentScene as Main;
-        if(Main.currentPlaylist == playlist &&  Main.currentSong == song)
+        if(Main.currentPlaylist == playlist && Main.currentSong == song)
 		{
 			Main.OnPlay += SetTextures;
 			isPlaying = true;
@@ -73,13 +73,27 @@ public partial class Songdisplay : Control
 		Time.Text = time;
 		Cover.Texture = cover;
 		More.menu = menu;
+        Main Main = GetTree().CurrentScene as Main;
+        isPlaying = Main.currentPlaylist == playlist && Main.currentSong == song && Main.playing;
+		SetTextures(isPlaying);
 	}
 
 	public void SetSong()
 	{
 		Main Main = GetTree().CurrentScene as Main;
-		Main.LoadPlaylist(playlist);
-		Main.currentSong = 0;
-		Main.MoveSong(song);
+
+		if(Main.currentPlaylist != playlist)
+		{
+            Main.LoadPlaylist(playlist);
+        }
+		if(!isPlaying)
+		{
+            Main.currentSong = 0;
+            Main.MoveSong(song);
+        }
+		else
+		{
+			Main.Play();
+		}
 	}
 }

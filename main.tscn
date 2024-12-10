@@ -19,7 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://4mmerh1u4xho" path="res://Prefabs/playlisttemplate.tscn" id="13_a7qgi"]
 [ext_resource type="Script" path="res://Csharp/ContextMenu.cs" id="13_huc3l"]
 [ext_resource type="PackedScene" uid="uid://dlh34aq4t8tvu" path="res://Prefabs/songdisplay.tscn" id="14_t035w"]
-[ext_resource type="Script" path="res://SongsVisualizer.cs" id="15_v5k8q"]
+[ext_resource type="Script" path="res://Csharp/SongsVisualizer.cs" id="15_v5k8q"]
 [ext_resource type="PackedScene" uid="uid://dcre7b1cn3b6i" path="res://Prefabs/songcontext.tscn" id="17_3m5kb"]
 [ext_resource type="PackedScene" uid="uid://dle5y658wmx03" path="res://Prefabs/Attribute Editor.tscn" id="17_f7c3k"]
 [ext_resource type="Script" path="res://GDscript/discord.gd" id="19_8krr3"]
@@ -132,7 +132,7 @@ theme_override_fonts/font = ExtResource("9_3b7g8")
 theme_override_font_sizes/font_size = 19
 text = "My Playlists"
 
-[node name="Playlists" type="ScrollContainer" parent="Interface/Playlist Display" node_paths=PackedStringArray("mainController")]
+[node name="Playlists" type="ScrollContainer" parent="Interface/Playlist Display" node_paths=PackedStringArray("mainController", "container")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -146,6 +146,7 @@ scale = Vector2(0.8, 0.8)
 script = ExtResource("12_0nioi")
 template = ExtResource("13_a7qgi")
 mainController = NodePath("../../..")
+container = NodePath("VBoxContainer")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Interface/Playlist Display/Playlists"]
 layout_mode = 2

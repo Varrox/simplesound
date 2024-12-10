@@ -30,10 +30,12 @@ public partial class SongsVisualizer : Control
 		{
 			for(int i = Playlist.songs.Count; i < SongDisplays.Count; i++)
 			{
+				var ds = SongDisplays[i] as Songdisplay;
+				main.OnPlay -= ds.SetTextures;
+                main.OnLoadSong -= ds.SetHighlight;
 				SongDisplays[i].QueueFree();
 			}
 		}
-		GD.Print(Playlist.songs.Count);
 
         for (int i = 0; i < Playlist.songs.Count; i++) // update all
 		{

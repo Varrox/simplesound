@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://dlh34aq4t8tvu"]
+[gd_scene load_steps=10 format=3 uid="uid://dlh34aq4t8tvu"]
 
 [ext_resource type="Script" path="res://Csharp/Songdisplay.cs" id="1_qnwii"]
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Fonts/DefaultFont.tres" id="2_rrqbv"]
 [ext_resource type="Texture2D" uid="uid://cksbdmhr2s8yy" path="res://Icons/DefaultCover.png" id="3_aqj3n"]
+[ext_resource type="Texture2D" uid="uid://b3au8pb3kdvei" path="res://Icons/pause.png" id="3_vcbtx"]
 [ext_resource type="Texture2D" uid="uid://23nnkoswyxm8" path="res://Icons/play.png" id="4_4uf0g"]
 [ext_resource type="Texture2D" uid="uid://bfdwehd6cajgg" path="res://Icons/more.png" id="4_26211"]
 [ext_resource type="Script" path="res://Csharp/ContextMenu.cs" id="5_djgw6"]
@@ -11,7 +12,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_31pnr"]
 
-[node name="Songdisplay" type="Control" node_paths=PackedStringArray("Number", "Name", "Artist", "Time", "Play", "Cover", "Register", "More")]
+[node name="Songdisplay" type="Control" node_paths=PackedStringArray("Number", "Name", "Artist", "Time", "Play", "Cover", "Playbutton", "Register", "More")]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 3
 anchors_preset = 14
@@ -27,8 +28,11 @@ Artist = NodePath("Number/Cover/Artist")
 Time = NodePath("Length")
 Play = NodePath("Play")
 Cover = NodePath("Number/Cover")
+Playbutton = NodePath("Play")
 Register = NodePath("Register")
 More = NodePath("More")
+PlayTexture = ExtResource("4_4uf0g")
+Pause = ExtResource("3_vcbtx")
 
 [node name="Register" type="Button" parent="."]
 layout_mode = 1

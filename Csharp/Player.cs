@@ -32,7 +32,8 @@ public partial class Player : Node
 
         GetTree().Root.MinSize = new Vector2I(850, 350);
         AttributeEditor.AttributeWindow.Hide();
-
+        MainController.OnPlay += Playicon;
+        Playicon(false);
     }
 
     public void editAttributes()
@@ -55,7 +56,11 @@ public partial class Player : Node
     public void setPlay()
     {
         MainController.Play();
-        Play.Icon = !MainController.playing ? PlayIcon : PauseIcon;
+    }
+
+    public void Playicon(bool playing)
+    {
+        Play.Icon = !playing ? PlayIcon : PauseIcon;
     }
 
     public void move(int by)
@@ -63,7 +68,6 @@ public partial class Player : Node
         if (!attributesBeingedited)
         {
             MainController.MoveSong(by);
-            Play.Icon = !MainController.playing ? PlayIcon : PauseIcon;
         }
     }
 
@@ -90,7 +94,6 @@ public partial class Player : Node
         SongCover.Texture = SongCover.Texture == null ? DefaultCover : SongCover.Texture;
         TotalTime.Text = SaveSystem.GetTimeFromSeconds(Metadata.GetTotalTime(MainController.playlist.songs[MainController.currentSong]));
         Progress.MaxValue = MainController.player.Stream.GetLength();
-        Play.Icon = !MainController.playing ? PlayIcon : PauseIcon;
         DiscordPresense.Call("setdetails", SongName.Text);
         tim = 1;
     }
