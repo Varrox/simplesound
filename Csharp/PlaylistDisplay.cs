@@ -9,6 +9,7 @@ public partial class PlaylistDisplay : Node
     [Export] public Color SelectedColor;
 
     int PlaylistIndex;
+    PlaylistsVisualizer visualizer;
 
     public override void _Ready()
     {
@@ -29,27 +30,13 @@ public partial class PlaylistDisplay : Node
         More.Hide();
     }
 
-    public void Set()
+    public void Set() // reprogram to load song visualizer
     {
-        var MainController = GetTree().CurrentScene as Main;
-
-        if (MainController != null && MainController.currentPlaylist != PlaylistIndex)
-        {
-            MainController.currentSong = 0;
-            MainController.LoadPlaylist(PlaylistIndex);
-            MainController.time = 0;
-
-            MainController.playing = true;
-
-            MainController.InitSong();
-            MainController.playing = false;
-
-            MainController.Play();
-            Register.SelfModulate = SelectedColor;
-        }
+        visualizer.EmitSignal("OnSelectPlaylist", PlaylistIndex, Cover.Texture);
+        Register.SelfModulate = SelectedColor;
     }
 
-    public void clearSelected(int index)
+    public void clearSelected(int index, Texture2D img)
     {
         if (index != PlaylistIndex)
         {
@@ -58,7 +45,7 @@ public partial class PlaylistDisplay : Node
     }
 
 
-    public void init(string playlistname, string Coverpath, int songcount, int index)
+    public void init(string playlistname, string Coverpath, int songcount, int index, PlaylistsVisualizer visualizer)
     {
         var img = new Image();
         bool nuhuh = Coverpath == null;
@@ -74,6 +61,8 @@ public partial class PlaylistDisplay : Node
 
         PlaylistIndex = index;
 
-        (GetTree().CurrentScene as Main).OnLoadPlaylist += clearSelected;
+        this.visualizer = visualizer;
+
+        visualizer.OnSelectPlaylist += clearSelected;
     }
 }

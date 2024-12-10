@@ -16,12 +16,13 @@ public partial class Main : Control
 	public float time, volume;
 
     [Signal] public delegate void OnLoadSongEventHandler();
-    [Signal] public delegate void OnLoadPlaylistEventHandler(int index);
+    [Signal] public delegate void OnInitDoneEventHandler();
 
     public override void _Ready()
 	{
         LoadEverything();
         GetTree().Root.Connect(Window.SignalName.CloseRequested, Callable.From(SaveData));
+        EmitSignal("OnInitDone");
     }
 
     public override void _Process(double delta)
@@ -56,7 +57,6 @@ public partial class Main : Control
 
         // initialize playlist displayer
         if (playlist) playlistvisualizer.LoadAllPlaylistVisuals();
-        EmitSignal("OnLoadPlaylist", currentPlaylist);
     }
 
     public void LoadPlaylists()
@@ -68,7 +68,6 @@ public partial class Main : Control
 	{
 		currentPlaylist = index;
 		playlist = playlists.Length > 0 ? SaveSystem.LoadPlaylist(playlists[currentPlaylist]) : null;
-        EmitSignal("OnLoadPlaylist", currentPlaylist);
     }
 
     public void Play()

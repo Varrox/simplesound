@@ -7,6 +7,8 @@ public partial class PlaylistsVisualizer : Node
 	[Export] public Main mainController;
     [Export] public VBoxContainer container;
 
+    [Signal] public delegate void OnSelectPlaylistEventHandler(int playlist, Texture2D img);
+
     public void LoadAllPlaylistVisuals() // only done once for init
     {
         for (int i = 0; i < mainController.playlists.Length; i++)
@@ -25,7 +27,7 @@ public partial class PlaylistsVisualizer : Node
     public void LoadDataIntoPlaylist(int i, PlaylistDisplay playlist)
     {
         SaveSystem.GetPlaylistAttributes(mainController.playlists[i], out string name, out string coverpath, out int songcount);
-        playlist.init(name, coverpath, songcount, i);
+        playlist.init(name, coverpath, songcount, i, this);
     }
 
     public void UpdatePlaylists()

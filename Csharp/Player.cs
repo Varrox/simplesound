@@ -88,7 +88,7 @@ public partial class Player : Node
         }
 
         SongCover.Texture = SongCover.Texture == null ? DefaultCover : SongCover.Texture;
-        TotalTime.Text = SaveSystem.GetTimeFromSeconds((float)MainController.player.Stream.GetLength());
+        TotalTime.Text = SaveSystem.GetTimeFromSeconds(Metadata.GetTotalTime(MainController.playlist.songs[MainController.currentSong]));
         Progress.MaxValue = MainController.player.Stream.GetLength();
         Play.Icon = !MainController.playing ? PlayIcon : PauseIcon;
         DiscordPresense.Call("setdetails", SongName.Text);

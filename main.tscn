@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://cbpkjhjnbrjm6"]
+[gd_scene load_steps=32 format=3 uid="uid://cbpkjhjnbrjm6"]
 
 [ext_resource type="Script" path="res://Csharp/Main.cs" id="1_l00ml"]
 [ext_resource type="Script" path="res://Csharp/Player.cs" id="2_632yu"]
@@ -20,6 +20,7 @@
 [ext_resource type="Script" path="res://Csharp/ContextMenu.cs" id="13_huc3l"]
 [ext_resource type="PackedScene" uid="uid://dlh34aq4t8tvu" path="res://Prefabs/songdisplay.tscn" id="14_t035w"]
 [ext_resource type="Script" path="res://SongsVisualizer.cs" id="15_v5k8q"]
+[ext_resource type="PackedScene" uid="uid://dcre7b1cn3b6i" path="res://Prefabs/songcontext.tscn" id="17_3m5kb"]
 [ext_resource type="PackedScene" uid="uid://dle5y658wmx03" path="res://Prefabs/Attribute Editor.tscn" id="17_f7c3k"]
 [ext_resource type="Script" path="res://GDscript/discord.gd" id="19_8krr3"]
 
@@ -220,7 +221,7 @@ alignment = 0
 icon_alignment = 2
 expand_icon = true
 
-[node name="Song Display" type="ScrollContainer" parent="Interface"]
+[node name="Song Display" type="ScrollContainer" parent="Interface" node_paths=PackedStringArray("main", "PlaylistsVisualizer", "menu", "container")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -232,6 +233,11 @@ offset_bottom = -109.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("15_v5k8q")
+Template = ExtResource("14_t035w")
+main = NodePath("../..")
+PlaylistsVisualizer = NodePath("../Playlist Display/Playlists")
+menu = NodePath("../Songcontext")
+container = NodePath("VBoxContainer")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Interface/Song Display"]
 layout_mode = 2
@@ -253,6 +259,7 @@ offset_right = 125.0
 offset_bottom = 50.0
 grow_vertical = 2
 texture = ExtResource("7_xn3w4")
+expand_mode = 1
 stretch_mode = 5
 
 [node name="Label" type="Label" parent="Interface/Song Display/VBoxContainer/Top card"]
@@ -283,11 +290,9 @@ theme_override_fonts/font = ExtResource("9_3b7g8")
 theme_override_font_sizes/font_size = 16
 text = "0 songs"
 
-[node name="Songdisplay" parent="Interface/Song Display/VBoxContainer" instance=ExtResource("14_t035w")]
-layout_mode = 2
-
-[node name="Songdisplay2" parent="Interface/Song Display/VBoxContainer" instance=ExtResource("14_t035w")]
-layout_mode = 2
+[node name="Songcontext" parent="Interface" instance=ExtResource("17_3m5kb")]
+visible = false
+layout_mode = 1
 
 [node name="Top Bar" type="ColorRect" parent="Interface"]
 layout_mode = 1

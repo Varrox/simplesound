@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dlh34aq4t8tvu"]
+[gd_scene load_steps=9 format=3 uid="uid://dlh34aq4t8tvu"]
 
 [ext_resource type="Script" path="res://Csharp/Songdisplay.cs" id="1_qnwii"]
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Fonts/DefaultFont.tres" id="2_rrqbv"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://23nnkoswyxm8" path="res://Icons/play.png" id="4_4uf0g"]
 [ext_resource type="Texture2D" uid="uid://bfdwehd6cajgg" path="res://Icons/more.png" id="4_26211"]
 [ext_resource type="Script" path="res://Csharp/ContextMenu.cs" id="5_djgw6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rv41x"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_31pnr"]
 
@@ -35,6 +37,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_rv41x")
 icon_alignment = 1
 expand_icon = true
 
@@ -67,7 +70,7 @@ grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("3_aqj3n")
 expand_mode = 1
-stretch_mode = 4
+stretch_mode = 6
 
 [node name="Name" type="Label" parent="Number/Cover"]
 layout_mode = 0
@@ -110,6 +113,7 @@ horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="More" type="Button" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0

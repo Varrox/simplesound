@@ -1,10 +1,16 @@
-﻿using TagLib;
+﻿using System;
+using TagLib;
 
 public class Metadata
 {
     public static string GetArtist(string path)
     {
         return TagLib.File.Create(path).Tag.FirstPerformer ?? "Unknown Artist";
+    }
+
+    public static float GetTotalTime(string path)
+    {
+        return (float)TagLib.File.Create(path).Properties.Duration.TotalSeconds;
     }
 
     public static byte[] GetCover(string path, out string type)
