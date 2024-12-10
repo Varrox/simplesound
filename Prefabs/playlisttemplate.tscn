@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://4mmerh1u4xho"]
 
+[ext_resource type="Script" path="res://Csharp/PlaylistDisplay.cs" id="1_35iy2"]
 [ext_resource type="Texture2D" uid="uid://cksbdmhr2s8yy" path="res://Icons/DefaultCover.png" id="1_hfn8r"]
-[ext_resource type="Script" path="res://GDscript/playlist.gd" id="1_i7jl6"]
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Fonts/DefaultFont.tres" id="2_gsxcp"]
 [ext_resource type="Texture2D" uid="uid://bfdwehd6cajgg" path="res://Icons/more.png" id="4_5dlv3"]
 
@@ -19,13 +19,13 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_i7jl6")
+script = ExtResource("1_35iy2")
 Cover = NodePath("Register/Cover")
 Name = NodePath("Register/Name")
 Songs = NodePath("Register/Songs")
 Register = NodePath("Register")
-SelectedColor = Color(50, 50, 50, 0.162)
 More = NodePath("Register/More")
+SelectedColor = Color(50, 50, 50, 0.162)
 
 [node name="Register" type="Button" parent="."]
 layout_mode = 1

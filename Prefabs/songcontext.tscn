@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://dcre7b1cn3b6i"]
+
+[node name="Songcontext" type="Control"]
+layout_mode = 3
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -142.0
+offset_bottom = 111.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Edit" type="Button" parent="Panel"]
+layout_mode = 1
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 43.0
+offset_bottom = 36.0
+text = "Edit"
+
+[node name="Remove" type="Button" parent="Panel"]
+layout_mode = 1
+offset_left = 5.0
+offset_top = 40.0
+offset_right = 76.0
+offset_bottom = 71.0
+text = "Remove"
+
+[node name="Delete" type="Button" parent="Panel"]
+layout_mode = 1
+offset_left = 5.0
+offset_top = 75.0
+offset_right = 64.0
+offset_bottom = 106.0
+text = "Delete"

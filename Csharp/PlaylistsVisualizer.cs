@@ -17,15 +17,15 @@ public partial class PlaylistsVisualizer : Node
 
     public void LoadPlaylist(int i)
     {
-        Control playlist = (Control)template.Instantiate();
+        PlaylistDisplay playlist = template.Instantiate() as PlaylistDisplay;
         container.AddChild(playlist);
         LoadDataIntoPlaylist(i, playlist);
     }
 
-    public void LoadDataIntoPlaylist(int i, Node playlist)
+    public void LoadDataIntoPlaylist(int i, PlaylistDisplay playlist)
     {
         SaveSystem.GetPlaylistAttributes(mainController.playlists[i], out string name, out string coverpath, out int songcount);
-        playlist.Call("init", name, coverpath, songcount, i);
+        playlist.init(name, coverpath, songcount, i);
     }
 
     public void UpdatePlaylists()
@@ -54,7 +54,7 @@ public partial class PlaylistsVisualizer : Node
 
         for(int i = 0; i < end; i++)
         {
-            LoadDataIntoPlaylist(i, playlists[i]);
+            LoadDataIntoPlaylist(i, playlists[i] as PlaylistDisplay);
         }
     }
 }

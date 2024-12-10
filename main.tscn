@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://cbpkjhjnbrjm6"]
+[gd_scene load_steps=31 format=3 uid="uid://cbpkjhjnbrjm6"]
 
 [ext_resource type="Script" path="res://Csharp/Main.cs" id="1_l00ml"]
 [ext_resource type="Script" path="res://Csharp/Player.cs" id="2_632yu"]
@@ -17,7 +17,9 @@
 [ext_resource type="Script" path="res://Csharp/PlaylistsVisualizer.cs" id="12_0nioi"]
 [ext_resource type="Texture2D" uid="uid://0yw8m2y164lr" path="res://Icons/settings.png" id="12_s6aix"]
 [ext_resource type="PackedScene" uid="uid://4mmerh1u4xho" path="res://Prefabs/playlisttemplate.tscn" id="13_a7qgi"]
+[ext_resource type="Script" path="res://Csharp/ContextMenu.cs" id="13_huc3l"]
 [ext_resource type="PackedScene" uid="uid://dlh34aq4t8tvu" path="res://Prefabs/songdisplay.tscn" id="14_t035w"]
+[ext_resource type="Script" path="res://SongsVisualizer.cs" id="15_v5k8q"]
 [ext_resource type="PackedScene" uid="uid://dle5y658wmx03" path="res://Prefabs/Attribute Editor.tscn" id="17_f7c3k"]
 [ext_resource type="Script" path="res://GDscript/discord.gd" id="19_8krr3"]
 
@@ -129,74 +131,6 @@ theme_override_fonts/font = ExtResource("9_3b7g8")
 theme_override_font_sizes/font_size = 19
 text = "My Playlists"
 
-[node name="Add" type="Button" parent="Interface/Playlist Display"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -50.0
-offset_top = 68.0
-offset_right = -18.0
-offset_bottom = 99.0
-grow_horizontal = 0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_7vj4a")
-text = "
-"
-icon = ExtResource("10_7e43v")
-icon_alignment = 1
-expand_icon = true
-
-[node name="Panel" type="Panel" parent="Interface/Playlist Display/Add"]
-visible = false
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -186.0
-offset_top = 34.0
-offset_bottom = 138.0
-grow_horizontal = 0
-
-[node name="Button" type="Button" parent="Interface/Playlist Display/Add/Panel"]
-layout_mode = 0
-offset_left = 15.0
-offset_top = 15.0
-offset_right = 109.0
-offset_bottom = 43.0
-theme_override_fonts/font = ExtResource("9_3b7g8")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_kuk8b")
-text = "Create new"
-flat = true
-
-[node name="Button2" type="Button" parent="Interface/Playlist Display/Add/Panel"]
-layout_mode = 0
-offset_left = 15.0
-offset_top = 57.0
-offset_right = 123.0
-offset_bottom = 85.0
-theme_override_fonts/font = ExtResource("9_3b7g8")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_kuk8b")
-text = "Import folder"
-flat = true
-
-[node name="TextureRect" type="TextureRect" parent="Interface/Playlist Display/Add/Panel"]
-layout_mode = 0
-offset_left = 140.0
-offset_top = 19.0
-offset_right = 180.0
-offset_bottom = 59.0
-scale = Vector2(0.6, 0.6)
-texture = ExtResource("10_7e43v")
-
-[node name="TextureRect2" type="TextureRect" parent="Interface/Playlist Display/Add/Panel"]
-layout_mode = 0
-offset_left = 140.0
-offset_top = 61.0
-offset_right = 180.0
-offset_bottom = 101.0
-scale = Vector2(0.6, 0.6)
-texture = ExtResource("11_1f20w")
-
 [node name="Playlists" type="ScrollContainer" parent="Interface/Playlist Display" node_paths=PackedStringArray("mainController", "container")]
 layout_mode = 1
 anchors_preset = 15
@@ -218,6 +152,74 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
+[node name="Add" type="Button" parent="Interface/Playlist Display" node_paths=PackedStringArray("menu")]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -50.0
+offset_top = 68.0
+offset_right = -18.0
+offset_bottom = 99.0
+grow_horizontal = 0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_7vj4a")
+text = "
+"
+icon = ExtResource("10_7e43v")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("13_huc3l")
+menu = NodePath("Panel")
+
+[node name="Panel" type="Panel" parent="Interface/Playlist Display/Add"]
+visible = false
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -186.0
+offset_top = 34.0
+offset_bottom = 138.0
+grow_horizontal = 0
+
+[node name="Create" type="Button" parent="Interface/Playlist Display/Add/Panel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 50.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("9_3b7g8")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_kuk8b")
+text = "Create new"
+icon = ExtResource("10_7e43v")
+alignment = 0
+icon_alignment = 2
+expand_icon = true
+
+[node name="Add" type="Button" parent="Interface/Playlist Display/Add/Panel"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -50.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("9_3b7g8")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_kuk8b")
+text = "Import folder"
+icon = ExtResource("11_1f20w")
+alignment = 0
+icon_alignment = 2
+expand_icon = true
+
 [node name="Song Display" type="ScrollContainer" parent="Interface"]
 layout_mode = 1
 anchors_preset = 15
@@ -229,6 +231,7 @@ offset_right = -5.0
 offset_bottom = -109.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("15_v5k8q")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Interface/Song Display"]
 layout_mode = 2

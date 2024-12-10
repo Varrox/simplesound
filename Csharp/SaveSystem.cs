@@ -138,7 +138,7 @@ public class SaveSystem
 	public static void GetPlaylistAttributes(string filepath, out string name, out string coverpath, out int songcount)
 	{
         List<string> songpaths = new List<string>(File.ReadAllLines(filepath));
-        coverpath = !File.Exists(songpaths[0]) || songpaths[0].Trim() == "null" ? "" : songpaths[0];
+        coverpath = !File.Exists(songpaths[0]) || songpaths[0].Trim() == "null" ? null : songpaths[0];
         songpaths.RemoveAt(0);
 
         for (int i = 0; i < songpaths.Count; i++)
