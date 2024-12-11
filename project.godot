@@ -20,10 +20,6 @@ boot_splash/use_filter=false
 config/icon="res://Icons/logotrans.png"
 config/windows_native_icon="res://Icons/mainicon.ico"
 
-[autoload]
-
-DiscordRPCLoader="*res://addons/discord-rpc-gd/nodes/discord_autoload.gd"
-
 [display]
 
 window/subwindows/embed_subwindows=false
@@ -32,10 +28,6 @@ window/vsync/vsync_mode=2
 [dotnet]
 
 project/assembly_name="Simplesound"
-
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/discord-rpc-gd/plugin.cfg")
 
 [rendering]
 

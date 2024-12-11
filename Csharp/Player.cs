@@ -14,7 +14,7 @@ public partial class Player : Node
     [Export] public Button EditAttributes;
     [Export] public AttributeEditor AttributeEditor;
 
-    bool canSetTime, attributesBeingedited, spacepressed;
+    bool canSetTime, attributesBeingedited, spacepressed, discordworking = true;
     float tim = 0; // time for fixed rate updater thingy
 
     public override void _Ready()
@@ -33,6 +33,15 @@ public partial class Player : Node
         AttributeEditor.AttributeWindow.Hide();
         MainController.OnPlay += Playicon;
         Playicon(false);
+
+        try
+        {
+            DiscordPresense.Call("init");
+        }
+        catch 
+        { 
+            discordworking = false;
+        }
     }
 
     public void editAttributes()
@@ -117,24 +126,27 @@ public partial class Player : Node
 
         if(MainController.player.Stream != null) CurrentTime.Text = SaveSystem.GetTimeFromSeconds(MainController.time);
 
-        if (!canSetTime) // To avoid stupid memory leak, put on a low fixed refresh rate
+        if(discordworking)
         {
-            Progress.Value = MainController.time;
-            tim += (float)delta;
-            if (tim >= 1)
+            if (!canSetTime) // To avoid stupid memory leak, put on a low fixed refresh rate
             {
-                DiscordPresense.Call("setstate", CurrentTime.Text, !MainController.playing);
-                tim = 0;
+                Progress.Value = MainController.time;
+                tim += (float)delta;
+                if (tim >= 1)
+                {
+                    DiscordPresense.Call("setstate", CurrentTime.Text, !MainController.playing);
+                    tim = 0;
+                }
             }
-        }
-        else if (!MainController.playing)
-        {
-            MainController.time = (float)Progress.Value;
-            tim += (float)delta;
-            if (tim >= 0.3f)
+            else if (!MainController.playing)
             {
-                DiscordPresense.Call("setstate", CurrentTime.Text, !MainController.playing);
-                tim = 0;
+                MainController.time = (float)Progress.Value;
+                tim += (float)delta;
+                if (tim >= 0.3f)
+                {
+                    DiscordPresense.Call("setstate", CurrentTime.Text, !MainController.playing);
+                    tim = 0;
+                }
             }
         }
 

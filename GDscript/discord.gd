@@ -1,6 +1,6 @@
 extends Node
 
-func _ready() -> void:
+func init():
 	DiscordRPC.app_id = 1313226375007703160
 	DiscordRPC.large_image = "logotrans"
 	DiscordRPC.refresh()
