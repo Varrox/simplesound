@@ -9,7 +9,6 @@ public partial class Player : Node
     [Export] public Slider Progress;
     [Export] public Label CurrentTime, TotalTime, SongName, SongArtist;
     [Export] public TextureRect SongCover;
-    [Export] public Texture2D DefaultCover;
     [Export] public Slider VolumeSlider;
 
     [Export] public Button EditAttributes;
@@ -91,7 +90,6 @@ public partial class Player : Node
             SongArtist.TooltipText = "";
         }
 
-        SongCover.Texture = SongCover.Texture == null ? DefaultCover : SongCover.Texture;
         TotalTime.Text = SaveSystem.GetTimeFromSeconds(Metadata.GetTotalTime(MainController.playlist.songs[MainController.currentSong]));
         Progress.MaxValue = MainController.player.Stream.GetLength();
         DiscordPresense.Call("setdetails", SongName.Text);

@@ -23,7 +23,7 @@ public partial class SongsVisualizer : Control
 		var SongDisplays = container.GetChildren();
 		(SongDisplays[0].GetChild(0) as TextureRect).Texture = playDisp;
         (SongDisplays[0].GetChild(1) as Label).Text = Playlist.Name;
-		(SongDisplays[0].GetChild(2) as Label).Text = $"{Playlist.songs.Count} songs";
+		(SongDisplays[0].GetChild(2) as Label).Text = $"{Playlist.songs.Count} song" + (Playlist.songs.Count > 1 ? "s" : "");
         SongDisplays.RemoveAt(0);
 
 		if(SongDisplays.Count > Playlist.songs.Count) // delete overflow

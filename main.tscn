@@ -40,7 +40,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_68lop"]
 
-[node name="Main" type="Control" node_paths=PackedStringArray("player", "volumeSlider", "playlistvisualizer")]
+[node name="Main" type="Control" node_paths=PackedStringArray("player", "volumeSlider", "playlistvisualizer", "songsVisualizer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -51,6 +51,7 @@ script = ExtResource("1_l00ml")
 player = NodePath("Player")
 volumeSlider = NodePath("Interface/Player/Controls/Volume")
 playlistvisualizer = NodePath("Interface/Playlist Display/Playlists")
+songsVisualizer = NodePath("Interface/Song Display")
 
 [node name="Interface" type="Control" parent="." node_paths=PackedStringArray("MainController", "DiscordPresense", "Play", "Next", "Back", "Loop", "Progress", "CurrentTime", "TotalTime", "SongName", "SongArtist", "SongCover", "VolumeSlider", "EditAttributes", "AttributeEditor")]
 layout_mode = 1
@@ -76,7 +77,6 @@ TotalTime = NodePath("Player/Controls/Progress/Total Time")
 SongName = NodePath("Player/Song Attributes/Name")
 SongArtist = NodePath("Player/Song Attributes/Artist")
 SongCover = NodePath("Player/Song Attributes/Cover")
-DefaultCover = ExtResource("7_xn3w4")
 VolumeSlider = NodePath("Player/Controls/Volume")
 EditAttributes = NodePath("Player/Song Attributes/Edit Attributes")
 AttributeEditor = NodePath("Player/Song Attributes/Edit Attributes/AttributeEditor")

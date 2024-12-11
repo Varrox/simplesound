@@ -6,6 +6,7 @@ public partial class Main : Control
 	[Export] public AudioStreamPlayer player;
 	[Export] public Slider volumeSlider;
 	[Export] public PlaylistsVisualizer playlistvisualizer;
+	[Export] public SongsVisualizer songsVisualizer;
 
 	public bool loop, playing;
 
@@ -15,107 +16,110 @@ public partial class Main : Control
 	
 	public float time, volume;
 
-    [Signal] public delegate void OnLoadSongEventHandler();
-    [Signal] public delegate void OnInitDoneEventHandler();
-    [Signal] public delegate void OnPlayEventHandler(bool playing);
+	[Signal] public delegate void OnLoadSongEventHandler();
+	[Signal] public delegate void OnInitDoneEventHandler();
+	[Signal] public delegate void OnPlayEventHandler(bool playing);
 
-    public override void _Ready()
+	public override void _Ready()
 	{
-        LoadEverything();
-        GetTree().Root.Connect(Window.SignalName.CloseRequested, Callable.From(SaveData));
-        EmitSignal("OnInitDone");
-    }
+		LoadEverything();
+		GetTree().Root.Connect(Window.SignalName.CloseRequested, Callable.From(SaveData));
+		EmitSignal("OnInitDone");
+	}
 
-    public override void _Process(double delta)
-    {
-        if (playing && playlist != null)
-        {
-            if (!player.Playing)
-            {
-                if (!loop) MoveSong(1);
-                else
-                {
-                    time = 0;
-                    player.Play(time);
-                    EmitSignal("OnPlay", playing);
-                }
-            }
-            time = player.GetPlaybackPosition();
-        }
-    }
+	public override void _Process(double delta)
+	{
+		if (playing && playlist != null)
+		{
+			if (!player.Playing)
+			{
+				if (!loop) MoveSong(1);
+				else
+				{
+					time = 0;
+					player.Play(time);
+					EmitSignal("OnPlay", playing);
+				}
+			}
+			time = player.GetPlaybackPosition();
+		}
+	}
 
 	public void LoadEverything()
 	{
-        SaveSystem.InitData(out currentPlaylist, out currentSong, out time, out volume);
+		SaveSystem.InitData(out currentPlaylist, out currentSong, out time, out volume);
 
 		// volume
-        player.VolumeDb = volume;
-        volumeSlider.Value = volume;
+		player.VolumeDb = volume;
+		volumeSlider.Value = volume;
 
-        // load playlists
-        LoadPlaylists();
-        LoadPlaylist(currentPlaylist);
-        if(playlist) InitSong();
+		// load playlists
+		LoadPlaylists();
+		LoadPlaylist(currentPlaylist);
+		if(playlist) InitSong();
 
-        // initialize playlist displayer
-        if (playlist) playlistvisualizer.LoadAllPlaylistVisuals();
-    }
+		// initialize playlist displayer
+		if (playlist) playlistvisualizer.LoadAllPlaylistVisuals();
 
-    public void LoadPlaylists()
-    {
-        playlists = SaveSystem.GetAllPlaylists();
-    }
+		// show current playlist
+		if (playlist) songsVisualizer.Load(currentPlaylist, (playlistvisualizer.container.GetChild(currentPlaylist) as PlaylistDisplay).Cover.Texture);
+	}
 
-    public void LoadPlaylist(int index)
+	public void LoadPlaylists()
+	{
+		playlists = SaveSystem.GetAllPlaylists();
+	}
+
+	public void LoadPlaylist(int index)
 	{
 		currentPlaylist = index;
 		playlist = playlists.Length > 0 ? SaveSystem.LoadPlaylist(playlists[currentPlaylist]) : null;
-    }
+	}
 
-    public void Play()
+	public void Play()
 	{
 		playing = !playing;
 		if(playing) player.Play(time);
 		else player.Stop();
-        EmitSignal("OnPlay", playing);
-    }
+		EmitSignal("OnPlay", playing);
+	}
 
-    public void MoveSong(int amount)
-    {
-        if (playlist)
-        {
-            currentSong += amount;
-            time = 0;
-            InitSong();
-            playing = false;
-            Play();
-            EmitSignal("OnPlay", playing);
-        }
-    }
+	public void MoveSong(int amount)
+	{
+		if (playlist)
+		{
+			currentSong += amount;
+			time = 0;
+			InitSong();
+			playing = false;
+			Play();
+			EmitSignal("OnPlay", playing);
+		}
+	}
 
-    public void InitSong()
-    {
-        int lastIndex = playlist.songs.Count - 1;
-        currentSong = currentSong < 0 ? lastIndex + currentSong + 1 : currentSong;
-        currentSong = currentSong > lastIndex ? currentSong - lastIndex - 1 : currentSong;
+	public void InitSong()
+	{
+		int lastIndex = playlist.songs.Count - 1;
+		currentSong = currentSong < 0 ? lastIndex + currentSong + 1 : currentSong;
+		currentSong = currentSong > lastIndex ? currentSong - lastIndex - 1 : currentSong;
 
-        if (FileAccess.FileExists(playlist.songs[currentSong]))
-        {
-            AudioStreamMP3 song = new AudioStreamMP3();
-            song.Data = FileAccess.GetFileAsBytes(playlist.songs[currentSong]);
-            player.Stream = song;
-            EmitSignal(SignalName.OnLoadSong);
-        }
-        else // if the file doesn't exist
-        {
-            GD.PrintErr($"{playlist.songs[currentSong]} doesn't exist");
-            playlist.songs.RemoveAt(currentSong);
-            playlist.Save();
-            InitSong();
-        }
-    }
+		if (FileAccess.FileExists(playlist.songs[currentSong]))
+		{
+			AudioStreamMP3 song = new AudioStreamMP3();
+			song.Data = FileAccess.GetFileAsBytes(playlist.songs[currentSong]);
+			player.Stream = song;
+			EmitSignal(SignalName.OnLoadSong);
+		}
+		else // if the file doesn't exist
+		{
+			GD.PrintErr($"{playlist.songs[currentSong]} doesn't exist");
+			playlist.songs.RemoveAt(currentSong);
+			playlist.Save();
+			InitSong();
+		}
+	}
 
-    public void EditMeta(string name, string artist, string coverpath)
+	public void EditMeta(string name, string artist, string coverpath)
 	{
 		if(playlist) Metadata.SetData(playlist.songs[currentSong], name, artist, coverpath);
 	}
