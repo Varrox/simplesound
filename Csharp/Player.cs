@@ -14,13 +14,13 @@ public partial class Player : Node
     [Export] public Button EditAttributes;
     [Export] public AttributeEditor AttributeEditor;
 
-    bool canSetTime, attributesBeingedited;
+    bool canSetTime, attributesBeingedited, spacepressed;
     float tim = 0; // time for fixed rate updater thingy
 
     public override void _Ready()
 	{
         Loop.ButtonDown += setLoop;
-        Play.ButtonDown += setPlay;
+        Play.ButtonDown += MainController.Play;
         Next.ButtonDown += () => move(1);
         Back.ButtonDown += () => move(-1);
         MainController.OnLoadSong += onLoadSong;
@@ -42,7 +42,7 @@ public partial class Player : Node
             AttributeEditor.open(SongName.Text, SongArtist.Text);
             attributesBeingedited = true;
 
-            if (MainController.playing) setPlay();
+            if (MainController.playing) MainController.Play();
         }
     }
 
@@ -50,11 +50,6 @@ public partial class Player : Node
     {
         MainController.loop = !MainController.loop;
         Loop.Icon = MainController.loop ? LoopOn : LoopOff;
-    }
-
-    public void setPlay()
-    {
-        MainController.Play();
     }
 
     public void Playicon(bool playing)
@@ -113,6 +108,13 @@ public partial class Player : Node
 
     public override void _Process(double delta)
 	{
+        if(Input.IsKeyPressed(Key.Space) && !spacepressed) 
+        {
+            MainController.Play();
+            spacepressed = true;
+        }
+        else if(!Input.IsKeyPressed(Key.Space) && spacepressed) spacepressed = false;
+
         if(MainController.player.Stream != null) CurrentTime.Text = SaveSystem.GetTimeFromSeconds(MainController.time);
 
         if (!canSetTime) // To avoid stupid memory leak, put on a low fixed refresh rate
