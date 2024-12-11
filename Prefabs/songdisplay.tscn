@@ -33,6 +33,7 @@ Register = NodePath("Register")
 More = NodePath("More")
 PlayTexture = ExtResource("4_4uf0g")
 Pause = ExtResource("3_vcbtx")
+highlight = Color(1, 1, 1, 0.513)
 
 [node name="Register" type="Button" parent="."]
 layout_mode = 1

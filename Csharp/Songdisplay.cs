@@ -9,6 +9,7 @@ public partial class Songdisplay : Control
     [Export] public Button Register;
 	[Export] public ContextMenu More;
 	[Export] public Texture2D PlayTexture, Pause;
+	[Export] public Color highlight;
 
 	int playlist, song;
 	bool isPlaying;
@@ -24,30 +25,28 @@ public partial class Songdisplay : Control
 	public void SetHighlight()
 	{
         Main Main = GetTree().CurrentScene as Main;
-        if(Main.currentPlaylist == playlist && Main.currentSong == song)
+
+        if(Main.currentPlaylist == playlist && Main.currentSong == song) // highlight
 		{
 			Main.OnPlay += SetTextures;
 			isPlaying = true;
+            Register.SelfModulate = highlight;
 		}
-        else if(isPlaying)
+        else // un-highlight
         {
 			Playbutton.Texture = PlayTexture;
-			Main.OnPlay -= SetTextures;
+            if (isPlaying) Main.OnPlay -= SetTextures;
 			isPlaying = false;
+            Register.SelfModulate = new Color(1, 1, 1, 1);
         }
+
+        SetTextures(isPlaying && Main.playing);
     }
 
 	public void SetTextures(bool playing)
 	{
-		if(playing)
-		{
-			Playbutton.Texture = Pause;
-		}
-		else
-		{
-			Playbutton.Texture = PlayTexture;
-		}
-	}
+        Playbutton.Texture = playing ? Pause : PlayTexture;
+    }
 
 	public void onEnter()
 	{
@@ -73,10 +72,8 @@ public partial class Songdisplay : Control
 		Time.Text = time;
 		Cover.Texture = cover;
 		More.menu = menu;
-        Main Main = GetTree().CurrentScene as Main;
-        isPlaying = Main.currentPlaylist == playlist && Main.currentSong == song && Main.playing;
-		SetTextures(isPlaying);
-	}
+		SetHighlight();
+    }
 
 	public void SetSong()
 	{
@@ -86,14 +83,12 @@ public partial class Songdisplay : Control
 		{
             Main.LoadPlaylist(playlist);
         }
+
 		if(!isPlaying)
 		{
             Main.currentSong = 0;
             Main.MoveSong(song);
         }
-		else
-		{
-			Main.Play();
-		}
+		else Main.Play();
 	}
 }
