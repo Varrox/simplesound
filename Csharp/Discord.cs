@@ -1,16 +1,25 @@
-using Godot;
-using System;
-
-public partial class Discord : Node
+using
+public class disc
 {
-	const long appId = 1313226375007703160;
+    DiscordRpcClient client;
+    RichPresence presence;
+    public void init()
+    {
+        client = new DiscordRpcClient("1313226375007703160");
 
-    public override void _Ready()
-	{
-	}
+        client.Initialize();
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
+        presence = new RichPresence();
+    }
+
+    public void setdetails(string song)
+    {
+        presence.Details = "Listening to " + song;
+        client.SetPresence(presence);
+    }
+
+    public void setstate(string time, bool paused)
+    {
+        presence.State = time + (paused ? " (Paused)" : "");
+    }
 }

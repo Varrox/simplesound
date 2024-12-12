@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://cbpkjhjnbrjm6"]
+[gd_scene load_steps=32 format=3 uid="uid://cbpkjhjnbrjm6"]
 
 [ext_resource type="Script" path="res://Csharp/Main.cs" id="1_l00ml"]
 [ext_resource type="Script" path="res://Csharp/Player.cs" id="2_632yu"]
@@ -22,7 +22,6 @@
 [ext_resource type="Script" path="res://Csharp/SongsVisualizer.cs" id="15_v5k8q"]
 [ext_resource type="PackedScene" uid="uid://dcre7b1cn3b6i" path="res://Prefabs/songcontext.tscn" id="17_3m5kb"]
 [ext_resource type="PackedScene" uid="uid://dle5y658wmx03" path="res://Prefabs/Attribute Editor.tscn" id="17_f7c3k"]
-[ext_resource type="Script" path="res://GDscript/discord.gd" id="19_8krr3"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r3k7g"]
 
@@ -42,7 +41,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_68lop"]
 
-[node name="Main" type="Control" node_paths=PackedStringArray("player", "volumeSlider", "playlistvisualizer", "songsVisualizer")]
+[node name="Main" type="Control" node_paths=PackedStringArray("player", "volumeSlider", "playlistvisualizer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -53,9 +52,8 @@ script = ExtResource("1_l00ml")
 player = NodePath("Player")
 volumeSlider = NodePath("Interface/Player/Controls/Volume")
 playlistvisualizer = NodePath("Interface/Playlist Display/Playlists")
-songsVisualizer = NodePath("Interface/Song Display")
 
-[node name="Interface" type="Control" parent="." node_paths=PackedStringArray("MainController", "DiscordPresense", "Play", "Next", "Back", "Loop", "Progress", "CurrentTime", "TotalTime", "SongName", "SongArtist", "SongCover", "VolumeSlider", "EditAttributes", "AttributeEditor")]
+[node name="Interface" type="Control" parent="." node_paths=PackedStringArray("MainController", "Play", "Next", "Back", "Loop", "Progress", "CurrentTime", "TotalTime", "SongName", "SongArtist", "SongCover", "VolumeSlider", "EditAttributes", "AttributeEditor")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -64,7 +62,6 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_632yu")
 MainController = NodePath("..")
-DiscordPresense = NodePath("../Discord Presense")
 Play = NodePath("Player/Controls/Play")
 Next = NodePath("Player/Controls/Next")
 Back = NodePath("Player/Controls/Back")
@@ -679,9 +676,3 @@ ok_button_text = "Select Current Folder"
 file_mode = 2
 access = 2
 use_native_dialog = true
-
-[node name="Discord Presense" type="Control" parent="."]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("19_8krr3")

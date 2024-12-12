@@ -3,7 +3,6 @@ using Godot;
 public partial class Player : Node
 {
     [Export] public Main MainController;
-    [Export] public Node DiscordPresense;
     [Export] public Button Play, Next, Back, Loop;
     [Export] public Texture2D PlayIcon, PauseIcon, LoopOn, LoopOff;
     [Export] public Slider Progress;
@@ -16,6 +15,8 @@ public partial class Player : Node
 
     bool canSetTime, attributesBeingedited, spacepressed, discordworking = true;
     float tim = 0; // time for fixed rate updater thingy
+
+    disc DiscordPresense;
 
     public override void _Ready()
 	{
@@ -34,9 +35,11 @@ public partial class Player : Node
         MainController.OnPlay += Playicon;
         Playicon(false);
 
+        DiscordPresense = new disc();
+
         try
         {
-            DiscordPresense.Call("init");
+            DiscordPresense.init();
         }
         catch 
         { 
@@ -96,7 +99,7 @@ public partial class Player : Node
 
         TotalTime.Text = SaveSystem.GetTimeFromSeconds(Metadata.GetTotalTime(MainController.playlist.songs[MainController.currentSong]));
         Progress.MaxValue = MainController.player.Stream.GetLength();
-        DiscordPresense.Call("setdetails", SongName.Text);
+        DiscordPresense.setdetails(SongName.Text);
         tim = 1;
     }
 
@@ -134,7 +137,7 @@ public partial class Player : Node
                 tim += (float)delta;
                 if (tim >= 1)
                 {
-                    DiscordPresense.Call("setstate", CurrentTime.Text, !MainController.playing);
+                    DiscordPresense.setstate(CurrentTime.Text, !MainController.playing);
                     tim = 0;
                 }
             }
@@ -144,7 +147,7 @@ public partial class Player : Node
                 tim += (float)delta;
                 if (tim >= 0.3f)
                 {
-                    DiscordPresense.Call("setstate", CurrentTime.Text, !MainController.playing);
+                    DiscordPresense.setstate(CurrentTime.Text, !MainController.playing);
                     tim = 0;
                 }
             }
