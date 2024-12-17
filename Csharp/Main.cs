@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Linq;
+using System.Collections.Generic;
 
 public partial class Main : Control
 {
@@ -8,11 +10,13 @@ public partial class Main : Control
 	[Export] public PlaylistsVisualizer playlistvisualizer;
 	[Export] public SongsVisualizer songsVisualizer;
 
-	public bool loop, playing;
+	public bool loop, playing, shuffle;
 
 	public int currentPlaylist, currentSong;
 	public Playlist playlist;
 	public string[] playlists;
+
+	public List<int> shuffledlist = new List<int>();
 	
 	public float time, volume;
 
@@ -20,9 +24,19 @@ public partial class Main : Control
 	[Signal] public delegate void OnInitDoneEventHandler();
 	[Signal] public delegate void OnPlayEventHandler(bool playing);
 
-	public override void _Ready()
+	public string song
 	{
-		LoadEverything();
+		get
+		{
+			return playlist.songs[songindex];
+        }
+	}
+
+    public int songindex;
+
+    public override void _Ready()
+	{
+        LoadEverything();
 		GetTree().Root.Connect(Window.SignalName.CloseRequested, Callable.From(SaveData));
 		EmitSignal("OnInitDone");
 	}
@@ -103,17 +117,19 @@ public partial class Main : Control
 		currentSong = currentSong < 0 ? lastIndex + currentSong + 1 : currentSong;
 		currentSong = currentSong > lastIndex ? currentSong - lastIndex - 1 : currentSong;
 
-		if (FileAccess.FileExists(playlist.songs[currentSong]))
+		songindex = shuffledlist == null ? currentSong : shuffledlist[currentSong];
+
+		if (FileAccess.FileExists(playlist.songs[songindex]))
 		{
 			AudioStreamMP3 song = new AudioStreamMP3();
-			song.Data = FileAccess.GetFileAsBytes(playlist.songs[currentSong]);
+			song.Data = FileAccess.GetFileAsBytes(playlist.songs[songindex]);
 			player.Stream = song;
 			EmitSignal(SignalName.OnLoadSong);
 		}
 		else // if the file doesn't exist
 		{
-			GD.PrintErr($"{playlist.songs[currentSong]} doesn't exist");
-			playlist.songs.RemoveAt(currentSong);
+			GD.PrintErr($"{playlist.songs[songindex]} doesn't exist");
+			playlist.songs.RemoveAt(songindex);
 			playlist.Save();
 			InitSong();
 		}
@@ -121,11 +137,44 @@ public partial class Main : Control
 
 	public void EditMeta(string name, string artist, string coverpath)
 	{
-		if(playlist) Metadata.SetData(playlist.songs[currentSong], name, artist, coverpath);
+		if(playlist) Metadata.SetData(playlist.songs[songindex], name, artist, coverpath);
 	}
 
 	public void SaveData()
 	{
-		SaveSystem.SaveData(currentPlaylist, currentSong, time, player.VolumeDb);
+		SaveSystem.SaveData(currentPlaylist, songindex, time, player.VolumeDb);
 	}
+
+	public void Shuffle() // crashes, do not use
+	{
+		if (!shuffle)
+		{
+			shuffledlist.Add(currentSong);
+        }
+
+		shuffle = !shuffle;
+	}
+
+	public bool isIntInArray(ref List<int> array, int n)
+	{
+		for (int i = 0; i < array.Count; i++)
+		{
+			if(array[i] == n) return true;
+		}
+		return false;
+	}
+
+	public void GetRandom()
+	{
+        bool goodNumb = false;
+		while (!goodNumb)
+		{
+            int randomSong = GD.RandRange(0, playlist.songs.Count - 1);
+			if(!isIntInArray(ref shuffledlist, randomSong))
+			{
+				shuffledlist.Add(randomSong);
+				goodNumb = true;
+			}
+        }
+    }
 }

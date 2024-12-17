@@ -19,6 +19,7 @@ public partial class Songdisplay : Control
 		Register.MouseEntered += onEnter;
 		Register.MouseExited += onExit;
 		More.MouseEntered += onEnter;
+		More.OnClose += () => More.Hide();
 		(GetTree().CurrentScene as Main).OnLoadSong += SetHighlight;
 	}
 
@@ -57,7 +58,7 @@ public partial class Songdisplay : Control
 
 	public void onExit()
 	{
-        More.Hide();
+		if(!More.menuOpen) More.Hide();
 		Play.Hide();
         Number.SelfModulate = new Color(1, 1, 1, 1);
     }

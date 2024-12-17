@@ -3,7 +3,7 @@ using Godot;
 public partial class Player : Node
 {
     [Export] public Main MainController;
-    [Export] public Button Play, Next, Back, Loop;
+    [Export] public Button Play, Next, Back, Loop, Shuffle;
     [Export] public Texture2D PlayIcon, PauseIcon, LoopOn, LoopOff;
     [Export] public Slider Progress;
     [Export] public Label CurrentTime, TotalTime, SongName, SongArtist;
@@ -14,13 +14,14 @@ public partial class Player : Node
     [Export] public AttributeEditor AttributeEditor;
 
     bool canSetTime, attributesBeingedited, spacepressed, discordworking = true;
-    float tim = 0; // time for fixed rate updater thingy
+    //float tim = 0; // time for fixed rate updater thingy
 
-    disc DiscordPresense;
+    //disc DiscordPresense;
 
     public override void _Ready()
 	{
         Loop.ButtonDown += setLoop;
+        Shuffle.ButtonDown += MainController.Shuffle;
         Play.ButtonDown += MainController.Play;
         Next.ButtonDown += () => move(1);
         Back.ButtonDown += () => move(-1);
@@ -35,7 +36,7 @@ public partial class Player : Node
         MainController.OnPlay += Playicon;
         Playicon(false);
 
-        DiscordPresense = new disc();
+        /*DiscordPresense = new disc();
 
         try
         {
@@ -44,7 +45,7 @@ public partial class Player : Node
         catch 
         { 
             discordworking = false;
-        }
+        }*/
     }
 
     public void editAttributes()
@@ -81,13 +82,13 @@ public partial class Player : Node
     {
         if (MainController.playlist)
         {
-            string name = SaveSystem.GetName(MainController.playlist.songs[MainController.currentSong]);
+            string name = SaveSystem.GetName(MainController.playlist.songs[MainController.songindex]);
             SongName.Text = name;
             SongName.TooltipText = name;
-            string artist = Metadata.GetArtist(MainController.playlist.songs[MainController.currentSong]);
+            string artist = Metadata.GetArtist(MainController.playlist.songs[MainController.songindex]);
             SongArtist.Text = artist;
             SongArtist.TooltipText = artist;
-            SongCover.Texture = ConvertToGodot.getCover(MainController.playlist.songs[MainController.currentSong]);
+            SongCover.Texture = ConvertToGodot.getCover(MainController.playlist.songs[MainController.songindex]);
         }
         else
         {
@@ -97,10 +98,10 @@ public partial class Player : Node
             SongArtist.TooltipText = "";
         }
 
-        TotalTime.Text = SaveSystem.GetTimeFromSeconds(Metadata.GetTotalTime(MainController.playlist.songs[MainController.currentSong]));
+        TotalTime.Text = SaveSystem.GetTimeFromSeconds(Metadata.GetTotalTime(MainController.playlist.songs[MainController.songindex]));
         Progress.MaxValue = MainController.player.Stream.GetLength();
-        DiscordPresense.setdetails(SongName.Text);
-        tim = 1;
+        //DiscordPresense.setdetails(SongName.Text);
+        //tim = 1;
     }
 
     public void setTime(bool value)
@@ -108,7 +109,7 @@ public partial class Player : Node
         MainController.time = (float)Progress.Value;
         if (MainController.playing) MainController.player.Play(MainController.time);
         canSetTime = false;
-        tim = 1;
+        //tim = 1;
     }
 
     public void submitmeta()
@@ -134,22 +135,22 @@ public partial class Player : Node
             if (!canSetTime) // To avoid stupid memory leak, put on a low fixed refresh rate
             {
                 Progress.Value = MainController.time;
-                tim += (float)delta;
+                /*tim += (float)delta;
                 if (tim >= 1)
                 {
                     DiscordPresense.setstate(CurrentTime.Text, !MainController.playing);
                     tim = 0;
-                }
+                }*/
             }
             else if (!MainController.playing)
             {
                 MainController.time = (float)Progress.Value;
-                tim += (float)delta;
+                /*tim += (float)delta;
                 if (tim >= 0.3f)
                 {
                     DiscordPresense.setstate(CurrentTime.Text, !MainController.playing);
                     tim = 0;
-                }
+                }*/
             }
         }
 

@@ -1,4 +1,6 @@
-using
+
+
+/*using
 public class disc
 {
     DiscordRpcClient client;
@@ -22,4 +24,4 @@ public class disc
     {
         presence.State = time + (paused ? " (Paused)" : "");
     }
-}
+}*/

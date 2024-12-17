@@ -5,7 +5,9 @@ public partial class ContextMenu : Button
     [Export] public Control menu;
     [Export] public bool teleportMenu;
     [Export] public Vector2 teleportMenuOffset;
-    bool menuOpen;
+    public bool menuOpen;
+
+    [Signal] public delegate void OnCloseEventHandler();
     public override void _Ready()
     {
         ButtonDown += ToggleMenu;
@@ -43,12 +45,13 @@ public partial class ContextMenu : Button
     {
         menuOpen = false;
         menu.Visible = false;
+        EmitSignal("OnClose");
     }
 
     public void OpenMenu()
     {
         menuOpen = true;
-        TeleportMenu();
+        if (menuOpen && teleportMenu) TeleportMenu();
         menu.Visible = true;
     }
 

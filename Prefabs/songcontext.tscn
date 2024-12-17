@@ -28,6 +28,7 @@ offset_left = 5.0
 offset_top = 5.0
 offset_right = 43.0
 offset_bottom = 36.0
+focus_mode = 0
 text = "Edit"
 
 [node name="Remove" type="Button" parent="Panel"]
@@ -36,6 +37,7 @@ offset_left = 5.0
 offset_top = 40.0
 offset_right = 76.0
 offset_bottom = 71.0
+focus_mode = 0
 text = "Remove"
 
 [node name="Delete" type="Button" parent="Panel"]
@@ -44,4 +46,5 @@ offset_left = 5.0
 offset_top = 75.0
 offset_right = 64.0
 offset_bottom = 106.0
+focus_mode = 0
 text = "Delete"

@@ -41,7 +41,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_68lop"]
 
-[node name="Main" type="Control" node_paths=PackedStringArray("player", "volumeSlider", "playlistvisualizer")]
+[node name="Main" type="Control" node_paths=PackedStringArray("player", "volumeSlider", "playlistvisualizer", "songsVisualizer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -51,9 +51,10 @@ grow_vertical = 2
 script = ExtResource("1_l00ml")
 player = NodePath("Player")
 volumeSlider = NodePath("Interface/Player/Controls/Volume")
-playlistvisualizer = NodePath("Interface/Playlist Display/Playlists")
+playlistvisualizer = NodePath("Interface/Playlists")
+songsVisualizer = NodePath("Interface/Song Display")
 
-[node name="Interface" type="Control" parent="." node_paths=PackedStringArray("MainController", "Play", "Next", "Back", "Loop", "Progress", "CurrentTime", "TotalTime", "SongName", "SongArtist", "SongCover", "VolumeSlider", "EditAttributes", "AttributeEditor")]
+[node name="Interface" type="Control" parent="." node_paths=PackedStringArray("MainController", "Play", "Next", "Back", "Loop", "Shuffle", "Progress", "CurrentTime", "TotalTime", "SongName", "SongArtist", "SongCover", "VolumeSlider", "EditAttributes", "AttributeEditor")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -66,6 +67,7 @@ Play = NodePath("Player/Controls/Play")
 Next = NodePath("Player/Controls/Next")
 Back = NodePath("Player/Controls/Back")
 Loop = NodePath("Player/Controls/Loop")
+Shuffle = NodePath("Player/Controls/Shuffle")
 PlayIcon = ExtResource("5_8inno")
 PauseIcon = ExtResource("4_lfnj1")
 LoopOn = ExtResource("3_lifiy")
@@ -80,7 +82,12 @@ VolumeSlider = NodePath("Player/Controls/Volume")
 EditAttributes = NodePath("Player/Song Attributes/Edit Attributes")
 AttributeEditor = NodePath("Player/Song Attributes/Edit Attributes/AttributeEditor")
 
-[node name="Background Color" type="ColorRect" parent="Interface"]
+[node name="Background" type="Control" parent="Interface"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Color" type="ColorRect" parent="Interface/Background"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -90,7 +97,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 0.27451, 0.27451, 1)
 
-[node name="Background" type="TextureRect" parent="Interface"]
+[node name="Image" type="TextureRect" parent="Interface/Background"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -99,25 +106,45 @@ grow_horizontal = 2
 grow_vertical = 2
 stretch_mode = 5
 
-[node name="Playlist Display" type="Panel" parent="Interface"]
+[node name="Side" type="Panel" parent="Interface"]
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
 offset_right = 303.0
 grow_vertical = 2
 
-[node name="Playlist" type="Button" parent="Interface/Playlist Display"]
+[node name="Playlists" type="ScrollContainer" parent="Interface" node_paths=PackedStringArray("mainController", "container")]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 116.0
+offset_right = 296.0
+offset_bottom = -114.0
+grow_vertical = 2
+script = ExtResource("12_0nioi")
+template = ExtResource("13_a7qgi")
+mainController = NodePath("../..")
+container = NodePath("VBoxContainer")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Interface/Playlists"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Playlist" type="Button" parent="Interface"]
 layout_mode = 1
 offset_left = 15.0
 offset_top = 68.0
 offset_right = 47.0
 offset_bottom = 100.0
 scale = Vector2(0.8, 0.8)
+focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_r3k7g")
 icon = ExtResource("8_8i1ca")
 expand_icon = true
 
-[node name="Label" type="Label" parent="Interface/Playlist Display/Playlist"]
+[node name="Label" type="Label" parent="Interface/Playlist"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -131,37 +158,13 @@ theme_override_fonts/font = ExtResource("9_3b7g8")
 theme_override_font_sizes/font_size = 19
 text = "My Playlists"
 
-[node name="Playlists" type="ScrollContainer" parent="Interface/Playlist Display" node_paths=PackedStringArray("mainController", "container")]
+[node name="Add" type="Button" parent="Interface" node_paths=PackedStringArray("menu")]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 120.0
-offset_right = 76.0
-offset_bottom = -11.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.8, 0.8)
-script = ExtResource("12_0nioi")
-template = ExtResource("13_a7qgi")
-mainController = NodePath("../../..")
-container = NodePath("VBoxContainer")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Interface/Playlist Display/Playlists"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Add" type="Button" parent="Interface/Playlist Display" node_paths=PackedStringArray("menu")]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -50.0
-offset_top = 68.0
-offset_right = -18.0
-offset_bottom = 99.0
-grow_horizontal = 0
+offset_left = 256.0
+offset_top = 67.0
+offset_right = 288.0
+offset_bottom = 98.0
+focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_7vj4a")
 text = "
 "
@@ -171,7 +174,7 @@ expand_icon = true
 script = ExtResource("13_huc3l")
 menu = NodePath("Panel")
 
-[node name="Panel" type="Panel" parent="Interface/Playlist Display/Add"]
+[node name="Panel" type="Panel" parent="Interface/Add"]
 visible = false
 self_modulate = Color(0, 0, 0, 1)
 layout_mode = 1
@@ -183,7 +186,7 @@ offset_top = 34.0
 offset_bottom = 138.0
 grow_horizontal = 0
 
-[node name="Create" type="Button" parent="Interface/Playlist Display/Add/Panel"]
+[node name="Create" type="Button" parent="Interface/Add/Panel"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -200,7 +203,7 @@ alignment = 0
 icon_alignment = 2
 expand_icon = true
 
-[node name="Add" type="Button" parent="Interface/Playlist Display/Add/Panel"]
+[node name="Add" type="Button" parent="Interface/Add/Panel"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -234,7 +237,7 @@ grow_vertical = 2
 script = ExtResource("15_v5k8q")
 Template = ExtResource("14_t035w")
 main = NodePath("../..")
-PlaylistsVisualizer = NodePath("../Playlist Display/Playlists")
+PlaylistsVisualizer = NodePath("../Playlists")
 menu = NodePath("../Songcontext")
 container = NodePath("VBoxContainer")
 
@@ -302,6 +305,7 @@ offset_right = -49.0
 offset_bottom = 20.0
 grow_horizontal = 0
 grow_vertical = 2
+focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_i82gy")
 icon = ExtResource("5_8inno")
 
@@ -328,6 +332,7 @@ offset_right = 605.0
 offset_bottom = 18.0
 grow_vertical = 2
 tooltip_text = "Type in the name of an artist or song, or playlist"
+focus_mode = 1
 theme_override_fonts/font = ExtResource("9_3b7g8")
 placeholder_text = " search for songs"
 
@@ -344,6 +349,7 @@ offset_right = -11.0
 offset_bottom = 15.0
 grow_horizontal = 0
 grow_vertical = 2
+focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_wx3lt")
 icon = ExtResource("12_s6aix")
 icon_alignment = 1
@@ -355,6 +361,7 @@ offset_left = 10.0
 offset_top = 10.0
 offset_right = 45.0
 offset_bottom = 41.0
+focus_mode = 0
 theme_override_fonts/font = ExtResource("9_3b7g8")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_i5cru")
 text = "File"
@@ -365,6 +372,7 @@ offset_left = 51.0
 offset_top = 10.0
 offset_right = 89.0
 offset_bottom = 41.0
+focus_mode = 0
 theme_override_fonts/font = ExtResource("9_3b7g8")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_i5cru")
 text = "Edit"
@@ -375,6 +383,7 @@ offset_left = 95.0
 offset_top = 10.0
 offset_right = 148.0
 offset_bottom = 41.0
+focus_mode = 0
 theme_override_fonts/font = ExtResource("9_3b7g8")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_i5cru")
 text = "Cloud"
@@ -414,6 +423,7 @@ offset_right = -88.0
 offset_bottom = -44.0
 grow_horizontal = 2
 grow_vertical = 2
+focus_mode = 0
 theme_override_fonts/font = ExtResource("3_bbvvl")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_l3qov")
 text = "R
@@ -433,6 +443,7 @@ offset_right = -32.0
 offset_bottom = -44.0
 grow_horizontal = 2
 grow_vertical = 2
+focus_mode = 0
 theme_override_fonts/font = ExtResource("3_bbvvl")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_l3qov")
 text = "
@@ -454,6 +465,7 @@ offset_right = 23.5
 offset_bottom = -44.0
 grow_horizontal = 2
 grow_vertical = 2
+focus_mode = 0
 theme_override_fonts/font = ExtResource("3_bbvvl")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_l3qov")
 icon = ExtResource("4_lfnj1")
@@ -473,6 +485,7 @@ offset_right = 79.0
 offset_bottom = -44.0
 grow_horizontal = 2
 grow_vertical = 2
+focus_mode = 0
 theme_override_fonts/font = ExtResource("3_bbvvl")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_l3qov")
 text = "
@@ -494,6 +507,7 @@ offset_right = 135.0
 offset_bottom = -44.0
 grow_horizontal = 2
 grow_vertical = 2
+focus_mode = 0
 theme_override_fonts/font = ExtResource("3_bbvvl")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_l3qov")
 icon = ExtResource("7_uv8rp")
@@ -613,6 +627,7 @@ offset_right = 93.0
 offset_bottom = 6.0
 grow_vertical = 0
 tooltip_text = "Middle click to edit attributes"
+focus_mode = 0
 theme_override_fonts/font = ExtResource("9_3b7g8")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_68lop")
 button_mask = 4
