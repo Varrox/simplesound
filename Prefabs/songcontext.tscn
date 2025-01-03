@@ -24,27 +24,45 @@ grow_vertical = 2
 
 [node name="Edit" type="Button" parent="Panel"]
 layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
 offset_left = 5.0
 offset_top = 5.0
-offset_right = 43.0
+offset_right = -5.0
 offset_bottom = 36.0
+grow_horizontal = 2
 focus_mode = 0
 text = "Edit"
+alignment = 0
 
 [node name="Remove" type="Button" parent="Panel"]
 layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
 offset_left = 5.0
-offset_top = 40.0
-offset_right = 76.0
-offset_bottom = 71.0
+offset_top = -15.5
+offset_right = -5.0
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
 focus_mode = 0
 text = "Remove"
+alignment = 0
 
 [node name="Delete" type="Button" parent="Panel"]
 layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 offset_left = 5.0
-offset_top = 75.0
-offset_right = 64.0
-offset_bottom = 106.0
+offset_top = -36.0
+offset_right = -5.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 0
 focus_mode = 0
 text = "Delete"
+alignment = 0

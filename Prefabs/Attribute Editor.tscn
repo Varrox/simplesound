@@ -46,6 +46,7 @@ offset_bottom = 42.0
 theme_override_fonts/font = ExtResource("1_ot5f1")
 placeholder_text = "Name"
 scroll_fit_content_height = true
+caret_blink = true
 
 [node name="Artist" type="TextEdit" parent="Attribute editor"]
 offset_left = 9.72
@@ -56,6 +57,7 @@ theme_override_fonts/font = ExtResource("1_ot5f1")
 placeholder_text = "Artist
 "
 scroll_fit_content_height = true
+caret_blink = true
 
 [node name="Cover" type="Button" parent="Attribute editor"]
 anchors_preset = 4

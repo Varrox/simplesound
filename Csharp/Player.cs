@@ -13,15 +13,12 @@ public partial class Player : Node
     [Export] public Button EditAttributes;
     [Export] public AttributeEditor AttributeEditor;
 
-    bool canSetTime, attributesBeingedited, spacepressed, discordworking = true;
-    //float tim = 0; // time for fixed rate updater thingy
-
-    //disc DiscordPresense;
+    bool canSetTime, attributesBeingedited, spacepressed;
 
     public override void _Ready()
 	{
         Loop.ButtonDown += setLoop;
-        Shuffle.ButtonDown += MainController.Shuffle;
+        Shuffle.ButtonDown += SetShuffle;
         Play.ButtonDown += MainController.Play;
         Next.ButtonDown += () => move(1);
         Back.ButtonDown += () => move(-1);
@@ -35,17 +32,6 @@ public partial class Player : Node
         AttributeEditor.AttributeWindow.Hide();
         MainController.OnPlay += Playicon;
         Playicon(false);
-
-        /*DiscordPresense = new disc();
-
-        try
-        {
-            DiscordPresense.init();
-        }
-        catch 
-        { 
-            discordworking = false;
-        }*/
     }
 
     public void editAttributes()
@@ -57,6 +43,12 @@ public partial class Player : Node
 
             if (MainController.playing) MainController.Play();
         }
+    }
+
+    public void SetShuffle()
+    {
+        MainController.random = !MainController.random;
+        MainController.shuffleIndex = MainController.currentSong;
     }
 
     public void setLoop()
@@ -82,13 +74,13 @@ public partial class Player : Node
     {
         if (MainController.playlist)
         {
-            string name = SaveSystem.GetName(MainController.playlist.songs[MainController.songindex]);
+            string name = SaveSystem.GetName(MainController.song);
             SongName.Text = name;
             SongName.TooltipText = name;
-            string artist = Metadata.GetArtist(MainController.playlist.songs[MainController.songindex]);
+            string artist = Metadata.GetArtist(MainController.song);
             SongArtist.Text = artist;
             SongArtist.TooltipText = artist;
-            SongCover.Texture = ConvertToGodot.getCover(MainController.playlist.songs[MainController.songindex]);
+            SongCover.Texture = ConvertToGodot.getCover(MainController.song);
         }
         else
         {
@@ -98,10 +90,8 @@ public partial class Player : Node
             SongArtist.TooltipText = "";
         }
 
-        TotalTime.Text = SaveSystem.GetTimeFromSeconds(Metadata.GetTotalTime(MainController.playlist.songs[MainController.songindex]));
+        TotalTime.Text = SaveSystem.GetTimeFromSeconds(Metadata.GetTotalTime(MainController.song));
         Progress.MaxValue = MainController.player.Stream.GetLength();
-        //DiscordPresense.setdetails(SongName.Text);
-        //tim = 1;
     }
 
     public void setTime(bool value)
@@ -109,7 +99,6 @@ public partial class Player : Node
         MainController.time = (float)Progress.Value;
         if (MainController.playing) MainController.player.Play(MainController.time);
         canSetTime = false;
-        //tim = 1;
     }
 
     public void submitmeta()
@@ -117,41 +106,30 @@ public partial class Player : Node
         MainController.EditMeta(AttributeEditor.songname, AttributeEditor.artist, AttributeEditor.coverpath);
         onLoadSong();
         attributesBeingedited = false;
+        MainController.songsVisualizer.UpdateSong(MainController.currentSong, AttributeEditor.songname, AttributeEditor.artist, TotalTime.Text, SongCover.Texture);
     }
 
     public override void _Process(double delta)
 	{
-        if(Input.IsKeyPressed(Key.Space) && !spacepressed) 
+        if(!attributesBeingedited)
         {
-            MainController.Play();
-            spacepressed = true;
+            if (Input.IsKeyPressed(Key.Space) && !spacepressed)
+            {
+                MainController.Play();
+                spacepressed = true;
+            }
+            else if (!Input.IsKeyPressed(Key.Space) && spacepressed) spacepressed = false;
         }
-        else if(!Input.IsKeyPressed(Key.Space) && spacepressed) spacepressed = false;
 
-        if(MainController.player.Stream != null) CurrentTime.Text = SaveSystem.GetTimeFromSeconds(MainController.time);
+        if (MainController.player.Stream != null) CurrentTime.Text = SaveSystem.GetTimeFromSeconds(MainController.time);
 
-        if(discordworking)
+        if (!canSetTime)
         {
-            if (!canSetTime) // To avoid stupid memory leak, put on a low fixed refresh rate
-            {
-                Progress.Value = MainController.time;
-                /*tim += (float)delta;
-                if (tim >= 1)
-                {
-                    DiscordPresense.setstate(CurrentTime.Text, !MainController.playing);
-                    tim = 0;
-                }*/
-            }
-            else if (!MainController.playing)
-            {
-                MainController.time = (float)Progress.Value;
-                /*tim += (float)delta;
-                if (tim >= 0.3f)
-                {
-                    DiscordPresense.setstate(CurrentTime.Text, !MainController.playing);
-                    tim = 0;
-                }*/
-            }
+            Progress.Value = MainController.time;
+        }
+        else if (!MainController.playing)
+        {
+            MainController.time = (float)Progress.Value;
         }
 
         MainController.player.VolumeDb = (float)(VolumeSlider.Value != -50 ? VolumeSlider.Value : -80);

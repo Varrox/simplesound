@@ -13,6 +13,7 @@ public partial class AttributeEditor : Node
     [Signal] public delegate void onSubmitdataEventHandler();
 
     public string songname, artist, coverpath;
+    bool coverChanged;
 
     public override void _Ready()
     {
@@ -20,10 +21,21 @@ public partial class AttributeEditor : Node
         CoverButton.ButtonDown += cover;
     }
 
+    public override void _Process(double delta)
+    {
+        if (AttributeWindow.Visible)
+        { 
+            bool changed = (Name.Text != songname) || (Artist.Text != artist) || coverChanged;
+            SubmitButton.Text = changed ? "Apply Changes" : "Cancel";
+        }
+    }
+
     public void open(string currentSong, string currentArtist)
     {
         Name.Text = currentSong;
+        songname = currentSong;
         Artist.Text = currentArtist;
+        artist = currentArtist;
         AttributeWindow.Show();
         AttributeWindow.Visible = true;
         CoverLabel.Text = "";
@@ -36,6 +48,7 @@ public partial class AttributeEditor : Node
         artist = Artist.Text;
         AttributeWindow.Visible = false;
         AttributeWindow.Hide();
+        coverChanged = false;
         EmitSignal("onSubmitdata");
     }
 
@@ -45,5 +58,6 @@ public partial class AttributeEditor : Node
         CoverFileDialog.Popup();
         coverpath = CoverFileDialog.CurrentFile;
         CoverLabel.Text = coverpath;
+        coverChanged = true;
     }
 }

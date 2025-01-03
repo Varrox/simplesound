@@ -1,11 +1,19 @@
-[gd_scene load_steps=7 format=3 uid="uid://4mmerh1u4xho"]
+[gd_scene load_steps=9 format=3 uid="uid://4mmerh1u4xho"]
 
 [ext_resource type="Script" path="res://Csharp/PlaylistDisplay.cs" id="1_35iy2"]
 [ext_resource type="Texture2D" uid="uid://cksbdmhr2s8yy" path="res://Icons/DefaultCover.png" id="1_hfn8r"]
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Fonts/DefaultFont.tres" id="2_gsxcp"]
 [ext_resource type="Texture2D" uid="uid://bfdwehd6cajgg" path="res://Icons/more.png" id="4_5dlv3"]
+[ext_resource type="Script" path="res://Csharp/ContextMenu.cs" id="5_qfyfq"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0xwl0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e08kb"]
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+anti_aliasing_size = 1.1
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2it5a"]
 
@@ -24,7 +32,7 @@ offset_bottom = 38.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_35iy2")
-Cover = NodePath("Register/Cover")
+Cover = NodePath("Register/PanelContainer/Cover")
 Name = NodePath("Register/Name")
 Songs = NodePath("Register/Songs")
 Register = NodePath("Register")
@@ -43,7 +51,8 @@ grow_vertical = 2
 pivot_offset = Vector2(60, 60)
 theme_override_styles/focus = SubResource("StyleBoxEmpty_0xwl0")
 
-[node name="Cover" type="TextureRect" parent="Register"]
+[node name="PanelContainer" type="PanelContainer" parent="Register"]
+clip_children = 1
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -53,6 +62,10 @@ offset_top = -24.5
 offset_right = 58.0
 offset_bottom = 25.5
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_e08kb")
+
+[node name="Cover" type="TextureRect" parent="Register/PanelContainer"]
+layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("1_hfn8r")
 expand_mode = 4
@@ -95,3 +108,5 @@ scale = Vector2(0.8, 0.8)
 theme_override_styles/focus = SubResource("StyleBoxEmpty_2it5a")
 icon = ExtResource("4_5dlv3")
 icon_alignment = 1
+script = ExtResource("5_qfyfq")
+teleportMenu = true

@@ -4,7 +4,8 @@ public partial class PlaylistDisplay : Node
 {
     [Export] public TextureRect Cover;
     [Export] public Label Name, Songs;
-    [Export] public Button Register, More;
+    [Export] public Button Register;
+    [Export] public ContextMenu More;
     [Export] public Color SelectedColor;
 
     int PlaylistIndex;
@@ -30,7 +31,7 @@ public partial class PlaylistDisplay : Node
     }
 
 
-    public void init(string playlistname, string Coverpath, int songcount, int index, PlaylistsVisualizer visualizer)
+    public void init(string playlistname, string Coverpath, int songcount, int index, PlaylistsVisualizer visualizer, bool current, Control menu)
     {
         var img = new Image();
         bool nuhuh = Coverpath == null;
@@ -43,10 +44,13 @@ public partial class PlaylistDisplay : Node
 
         Name.Text = playlistname;
         Songs.Text = songcount.ToString() + (songcount > 1 ? " songs" : " song");
+        More.menu = menu;
 
         PlaylistIndex = index;
 
         this.visualizer = visualizer;
+
+        if (current) Set();
 
         visualizer.OnSelectPlaylist += clearSelected;
     }

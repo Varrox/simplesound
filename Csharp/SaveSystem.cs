@@ -4,6 +4,14 @@ using System.IO;
 
 public class SaveSystem
 {
+	public static string UserData
+	{
+		get
+		{
+			return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "simplesound");
+        }
+	}
+
 	public static string GetName(string songPath)
 	{
 		return Metadata.GetName(songPath) ?? GetFileName(songPath);
@@ -40,8 +48,8 @@ public class SaveSystem
 
 	public static Playlist CreatePlaylist(string name, string saveFolder, string coverpath, string playlistSaver, int index)
 	{
-        string appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-		string path = Path.Combine(appdata, "simplesound", "Playlists", name + ".txt");
+
+		string path = Path.Combine(UserData, "Playlists", name + ".txt");
 
         if (!File.Exists(path))
 		{
@@ -64,14 +72,26 @@ public class SaveSystem
 
 	public static void InitData(out int playlistIndex, out int songIndex, out float currentTime, out float volume)
 	{
-        string appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-        string saveData = Path.Combine(appdata, "simplesound", "savedata.txt");
-		string playlistSaver = Path.Combine(appdata, "simplesound", "savedplaylists.txt");
-		string playlists = Path.Combine(appdata, "simplesound", "Playlists");
-		
-		if (!Directory.Exists(playlists))
+        string appdata = UserData;
+        string saveData = Path.Combine(appdata, "savedata.txt");
+		string playlistSaver = Path.Combine(appdata, "savedplaylists.txt");
+		string playlists = Path.Combine(appdata, "Playlists");
+		string musicFiles = Path.Combine(appdata, "Music Folders");
+		string playlistCovers = Path.Combine(appdata, "Playlist Covers");
+
+        if (!Directory.Exists(playlists))
 		{
 			Directory.CreateDirectory(playlists);
+		}
+
+		if (!Directory.Exists(musicFiles))
+		{ 
+			Directory.CreateDirectory(musicFiles);
+		}
+
+		if (!Directory.Exists(playlistCovers))
+		{
+			Directory.CreateDirectory(playlistCovers);
 		}
 
 		if (!File.Exists(saveData))
@@ -100,8 +120,7 @@ public class SaveSystem
 
 	public static void SaveData(int playlistIndex, int songIndex, float currentTime, float volume)
 	{
-        string appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-        string saveData = Path.Combine(appdata, "simplesound", "savedata.txt");
+        string saveData = Path.Combine(UserData, "savedata.txt");
 
         if (File.Exists(saveData))
         {
@@ -137,28 +156,42 @@ public class SaveSystem
 
 	public static void GetPlaylistAttributes(string filepath, out string name, out string coverpath, out int songcount)
 	{
-        List<string> songpaths = new List<string>(File.ReadAllLines(filepath));
+        string[] songpaths = File.ReadAllLines(filepath);
         coverpath = !File.Exists(songpaths[0]) || songpaths[0].Trim() == "null" ? null : songpaths[0];
-        songpaths.RemoveAt(0);
+		songcount = songpaths.Length - 1;
 
-        for (int i = 0; i < songpaths.Count; i++)
+        for (int i = 1; i < songpaths.Length; i++)
         {
-            songpaths[i] = songpaths[i].Trim();
-            if (!songpaths[i].EndsWith(".mp3") || !File.Exists(songpaths[i]))
+            if (!File.Exists(songpaths[i]))
             {
-                songpaths.RemoveAt(i);
+				songcount--;
             }
         }
 
-		songcount = songpaths.Count;
 		name = GetFileName(filepath);
     }
 
 	public static string[] GetAllPlaylists()
 	{
-        string appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-		return File.ReadAllLines(Path.Combine(appdata, "simplesound", "savedplaylists.txt"));
+		return File.ReadAllLines(Path.Combine(UserData, "savedplaylists.txt"));
 	}
+
+	public static void ImportFolder(string path)
+	{
+        // Create new folder
+		string newPath = Path.Combine(UserData, "Music Folders", GetName(path));
+        Directory.CreateDirectory(newPath);
+
+		// Copy all music files to the folder
+		string[] songs = Directory.GetFiles(path);
+		foreach (string song in songs)
+		{ 
+			if(song.EndsWith(".mp3"))
+			{
+				File.Copy(song, Path.Combine(newPath, GetFileName(song) + ".mp3"));
+			}
+		}
+    }
 }
 
 public class Playlist
@@ -168,7 +201,7 @@ public class Playlist
 
 	public void Save()
 	{
-        File.WriteAllText(path, $"{Coverpath}\n{string.Join("\n", songs)}");
+        File.WriteAllText(path, $"{Coverpath ?? "null"}\n{string.Join("\n", songs)}");
 	}
 
     public static bool operator true(Playlist obj) => obj != null;

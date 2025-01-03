@@ -6,6 +6,7 @@ public partial class PlaylistsVisualizer : Node
 	[Export] public PackedScene template;
 	[Export] public Main mainController;
     [Export] public VBoxContainer container;
+    [Export] public Control moreMenu;
 
     [Signal] public delegate void OnSelectPlaylistEventHandler(int playlist, Texture2D img);
 
@@ -21,13 +22,13 @@ public partial class PlaylistsVisualizer : Node
     {
         PlaylistDisplay playlist = template.Instantiate() as PlaylistDisplay;
         container.AddChild(playlist);
-        LoadDataIntoPlaylist(i, playlist);
+        LoadDataIntoPlaylist(i, playlist, i == mainController.currentPlaylist);
     }
 
-    public void LoadDataIntoPlaylist(int i, PlaylistDisplay playlist)
+    public void LoadDataIntoPlaylist(int i, PlaylistDisplay playlist, bool current)
     {
         SaveSystem.GetPlaylistAttributes(mainController.playlists[i], out string name, out string coverpath, out int songcount);
-        playlist.init(name, coverpath, songcount, i, this);
+        playlist.init(name, coverpath, songcount, i, this, current, moreMenu);
     }
 
     public void UpdatePlaylists()
@@ -56,7 +57,7 @@ public partial class PlaylistsVisualizer : Node
 
         for(int i = 0; i < end; i++)
         {
-            LoadDataIntoPlaylist(i, playlists[i] as PlaylistDisplay);
+            LoadDataIntoPlaylist(i, playlists[i] as PlaylistDisplay, i == mainController.currentPlaylist);
         }
     }
 }

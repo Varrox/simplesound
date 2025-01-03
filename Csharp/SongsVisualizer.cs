@@ -21,7 +21,7 @@ public partial class SongsVisualizer : Control
 		string path = main.playlists[playlist];
 		var Playlist = SaveSystem.LoadPlaylist(path);
 		var SongDisplays = container.GetChildren();
-		(SongDisplays[0].GetChild(0) as TextureRect).Texture = playDisp;
+		(SongDisplays[0].GetChild(0).GetChild(0) as TextureRect).Texture = playDisp;
         (SongDisplays[0].GetChild(1) as Label).Text = Playlist.Name;
 		(SongDisplays[0].GetChild(2) as Label).Text = $"{Playlist.songs.Count} song" + (Playlist.songs.Count > 1 ? "s" : "");
         SongDisplays.RemoveAt(0);
@@ -54,4 +54,10 @@ public partial class SongsVisualizer : Control
             disp.init(SaveSystem.GetName(Playlist.songs[i]), Metadata.GetArtist(Playlist.songs[i]), SaveSystem.GetTimeFromSeconds(Metadata.GetTotalTime(Playlist.songs[i])), playlist, i, ConvertToGodot.getCover(Playlist.songs[i]), menu);
         }
 	}
+
+	public void UpdateSong(int index, string sname, string artist, string time, Texture2D texture)
+	{
+		Songdisplay disp = container.GetChild(index + 1) as Songdisplay;
+		disp.init(sname, artist, time, currentPlaylist, index, texture, menu);
+    }
 }

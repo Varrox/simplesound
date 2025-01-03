@@ -25,18 +25,18 @@ public partial class Songdisplay : Control
 
 	public void SetHighlight()
 	{
-        Main Main = GetTree().CurrentScene as Main;
+		Main Main = GetTree().CurrentScene as Main;
 
-        if(Main.currentPlaylist == playlist && Main.currentSong == song) // highlight
+		if (Main.currentPlaylist == playlist && Main.currentSong == song) // highlight
 		{
 			Main.OnPlay += SetTextures;
 			isPlaying = true;
-            Register.SelfModulate = highlight;
+			Register.SelfModulate = highlight;
 		}
-        else // un-highlight
+		else if (Main.currentPlaylist != playlist || Main.currentSong != song) // un-highlight
         {
 			Playbutton.Texture = PlayTexture;
-            if (isPlaying) Main.OnPlay -= SetTextures;
+            Main.OnPlay -= SetTextures;
 			isPlaying = false;
             Register.SelfModulate = new Color(1, 1, 1, 1);
         }
@@ -63,7 +63,7 @@ public partial class Songdisplay : Control
         Number.SelfModulate = new Color(1, 1, 1, 1);
     }
 
-    public void init(string name, string artist, string time, int playlist, int song, ImageTexture cover, Control menu)
+    public void init(string name, string artist, string time, int playlist, int song, Texture2D cover, Control menu)
 	{
 		Number.Text = (song + 1).ToString();
 		this.song = song;
@@ -88,7 +88,7 @@ public partial class Songdisplay : Control
 		if(!isPlaying)
 		{
             Main.currentSong = 0;
-            Main.MoveSong(song);
+            Main.MoveSong(song, true);
         }
 		else Main.Play();
 	}
