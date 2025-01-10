@@ -1,1 +1,6 @@
 TODO
+
+- Fix playlist more button
+- Add playlist creation / importing for real time
+- Add folder explorer
+- Add song search within folders
