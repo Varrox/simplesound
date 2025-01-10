@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://cbpkjhjnbrjm6"]
+[gd_scene load_steps=37 format=3 uid="uid://cbpkjhjnbrjm6"]
 
 [ext_resource type="Script" path="res://Csharp/Main.cs" id="1_l00ml"]
 [ext_resource type="Script" path="res://Csharp/Player.cs" id="2_632yu"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://b3au8pb3kdvei" path="res://Icons/pause.png" id="4_lfnj1"]
 [ext_resource type="Texture2D" uid="uid://23nnkoswyxm8" path="res://Icons/play.png" id="5_8inno"]
 [ext_resource type="Texture2D" uid="uid://ccy68bhx3rrxu" path="res://Icons/forward.png" id="6_e5vtu"]
+[ext_resource type="Texture2D" uid="uid://n02mi4hbtm0b" path="res://Icons/shuffleon.png" id="7_oidy5"]
 [ext_resource type="Texture2D" uid="uid://b3phnmlkksrac" path="res://Icons/loop.png" id="7_uv8rp"]
 [ext_resource type="Texture2D" uid="uid://cksbdmhr2s8yy" path="res://Icons/DefaultCover.png" id="7_xn3w4"]
 [ext_resource type="Texture2D" uid="uid://bfwa3yivib7hh" path="res://Icons/playlist.png" id="8_8i1ca"]
@@ -22,6 +23,7 @@
 [ext_resource type="Script" path="res://Csharp/SongsVisualizer.cs" id="15_v5k8q"]
 [ext_resource type="PackedScene" uid="uid://dcre7b1cn3b6i" path="res://Prefabs/songcontext.tscn" id="17_3m5kb"]
 [ext_resource type="PackedScene" uid="uid://dle5y658wmx03" path="res://Prefabs/Attribute Editor.tscn" id="17_f7c3k"]
+[ext_resource type="Texture2D" uid="uid://b8ldjgpmsaxgu" path="res://Icons/shuffle.png" id="20_fkbne"]
 [ext_resource type="StyleBox" uid="uid://bhcyqvvim6l5e" path="res://Rounded Corners.tres" id="21_jy3dx"]
 [ext_resource type="Script" path="res://Discord.gd" id="24_crcn0"]
 
@@ -63,7 +65,7 @@ volumeSlider = NodePath("Interface/Player/Controls/Volume")
 playlistvisualizer = NodePath("Interface/Playlists")
 songsVisualizer = NodePath("Interface/Song Display")
 
-[node name="Interface" type="Control" parent="." node_paths=PackedStringArray("MainController", "Play", "Next", "Back", "Loop", "Shuffle", "Progress", "CurrentTime", "TotalTime", "SongName", "SongArtist", "SongCover", "VolumeSlider", "EditAttributes", "AttributeEditor")]
+[node name="Interface" type="Control" parent="." node_paths=PackedStringArray("MainController", "Play", "Next", "Back", "Loop", "Shuffle", "Progress", "CurrentTime", "TotalTime", "SongName", "SongArtist", "SongCover", "VolumeSlider", "backgroundColor", "EditAttributes", "AttributeEditor")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -81,6 +83,8 @@ PlayIcon = ExtResource("5_8inno")
 PauseIcon = ExtResource("4_lfnj1")
 LoopOn = ExtResource("3_lifiy")
 LoopOff = ExtResource("7_uv8rp")
+ShuffleOn = ExtResource("7_oidy5")
+ShuffleOff = ExtResource("20_fkbne")
 Progress = NodePath("Player/Controls/Progress")
 CurrentTime = NodePath("Player/Controls/Progress/Current Time")
 TotalTime = NodePath("Player/Controls/Progress/Total Time")
@@ -88,6 +92,7 @@ SongName = NodePath("Player/Song Attributes/Name")
 SongArtist = NodePath("Player/Song Attributes/Artist")
 SongCover = NodePath("Player/Song Attributes/PanelContainer/Cover")
 VolumeSlider = NodePath("Player/Controls/Volume")
+backgroundColor = NodePath("Background/Color")
 EditAttributes = NodePath("Player/Song Attributes/Edit Attributes")
 AttributeEditor = NodePath("Player/Song Attributes/Edit Attributes/AttributeEditor")
 
@@ -100,14 +105,13 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Color" type="ColorRect" parent="Interface/Background"]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(1, 0.27451, 0.27451, 1)
+color = Color(1, 1, 1, 0)
 
 [node name="Image" type="TextureRect" parent="Interface/Background"]
 layout_mode = 1
@@ -447,9 +451,11 @@ grow_vertical = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("3_bbvvl")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_l3qov")
-text = "R
+text = "
 "
+icon = ExtResource("20_fkbne")
 icon_alignment = 1
+expand_icon = true
 
 [node name="Back" type="Button" parent="Interface/Player/Controls"]
 layout_mode = 1

@@ -4,14 +4,17 @@ public partial class Player : Node
 {
     [Export] public Main MainController;
     [Export] public Button Play, Next, Back, Loop, Shuffle;
-    [Export] public Texture2D PlayIcon, PauseIcon, LoopOn, LoopOff;
+    [Export] public Texture2D PlayIcon, PauseIcon, LoopOn, LoopOff, ShuffleOn, ShuffleOff;
     [Export] public Slider Progress;
     [Export] public Label CurrentTime, TotalTime, SongName, SongArtist;
     [Export] public TextureRect SongCover;
     [Export] public Slider VolumeSlider;
+    [Export] public ColorRect backgroundColor;
 
     [Export] public Button EditAttributes;
     [Export] public AttributeEditor AttributeEditor;
+
+    Color bc;
 
     bool canSetTime, attributesBeingedited, spacepressed;
 
@@ -49,6 +52,7 @@ public partial class Player : Node
     {
         MainController.random = !MainController.random;
         MainController.shuffleIndex = MainController.currentSong;
+        Shuffle.Icon = MainController.random ? ShuffleOn : ShuffleOff;
     }
 
     public void setLoop()
@@ -81,6 +85,7 @@ public partial class Player : Node
             SongArtist.Text = artist;
             SongArtist.TooltipText = artist;
             SongCover.Texture = ConvertToGodot.getCover(MainController.song);
+            bc = ConvertToGodot.GetAverageColor(SongCover.Texture, 16);
         }
         else
         {
@@ -88,6 +93,7 @@ public partial class Player : Node
             SongName.TooltipText = "";
             SongArtist.Text = "No artist";
             SongArtist.TooltipText = "";
+            bc = new Color(0, 0, 0, 0);
         }
 
         TotalTime.Text = SaveSystem.GetTimeFromSeconds(Metadata.GetTotalTime(MainController.song));
@@ -132,6 +138,8 @@ public partial class Player : Node
             MainController.time = (float)Progress.Value;
         }
 
+        float max = 0.65f;
+        backgroundColor.Color = backgroundColor.Color.Lerp(bc.Clamp(new Color(), new Color(max, max, max, max)), (float)delta * 2f);
         MainController.player.VolumeDb = (float)(VolumeSlider.Value != -50 ? VolumeSlider.Value : -80);
     }
 }
