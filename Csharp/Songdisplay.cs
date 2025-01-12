@@ -9,6 +9,7 @@ public partial class Songdisplay : Control
     [Export] public Button Register;
 	[Export] public ContextMenu More;
 	[Export] public Texture2D PlayTexture, Pause;
+	[Export] public Panel explicitLyrics;
 	[Export] public Color highlight;
 
 	int playlist, song;
@@ -63,7 +64,7 @@ public partial class Songdisplay : Control
         Number.SelfModulate = new Color(1, 1, 1, 1);
     }
 
-    public void init(string name, string artist, string time, int playlist, int song, Texture2D cover, Control menu)
+    public void init(string name, string artist, string time, int playlist, int song, bool explicitLyrics, Texture2D cover, Control menu)
 	{
 		Number.Text = (song + 1).ToString();
 		this.song = song;
@@ -73,6 +74,7 @@ public partial class Songdisplay : Control
 		Time.Text = time;
 		Cover.Texture = cover;
 		More.menu = menu;
+		this.explicitLyrics.Visible = explicitLyrics;
 		SetHighlight();
     }
 

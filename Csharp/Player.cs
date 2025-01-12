@@ -41,7 +41,7 @@ public partial class Player : Node
     {
         if(!attributesBeingedited)
         {
-            AttributeEditor.open(SongName.Text, SongArtist.Text);
+            AttributeEditor.open(SongName.Text, SongArtist.Text, Metadata.IsExplicit(MainController.song));
             attributesBeingedited = true;
 
             if (MainController.playing) MainController.Play();
@@ -109,10 +109,10 @@ public partial class Player : Node
 
     public void submitmeta()
     {
-        MainController.EditMeta(AttributeEditor.songname, AttributeEditor.artist, AttributeEditor.coverpath);
+        MainController.EditMeta(AttributeEditor.songname, AttributeEditor.artist, AttributeEditor.coverpath, AttributeEditor.explicitLyrics);
         onLoadSong();
         attributesBeingedited = false;
-        MainController.songsVisualizer.UpdateSong(MainController.currentSong, AttributeEditor.songname, AttributeEditor.artist, TotalTime.Text, SongCover.Texture);
+        MainController.songsVisualizer.UpdateSong(MainController.currentSong, AttributeEditor.songname, AttributeEditor.artist, TotalTime.Text, AttributeEditor.explicitLyrics, SongCover.Texture);
     }
 
     public override void _Process(double delta)

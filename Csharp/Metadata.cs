@@ -44,7 +44,7 @@ public class Metadata
         return TagLib.File.Create(path).Tag.Title;
     }
 
-    public static void SetData(string path, string name, string artist, string coverpath)
+    public static void SetData(string path, string name, string artist, string coverpath, bool explicitLyrics)
     {
         var file = TagLib.File.Create(path);
 
@@ -70,6 +70,8 @@ public class Metadata
             file.Tag.Pictures = new[] { picture };
         }
 
+        file.Tag.Comment = explicitLyrics ? "Explicit" : "";
+
         file.Save();
     }
 
@@ -89,5 +91,11 @@ public class Metadata
         }
 
         return null;
+    }
+
+    public static bool IsExplicit(string path)
+    {
+        var file = TagLib.File.Create(path);
+        return file.Tag.Comment == "Explicit";
     }
 }

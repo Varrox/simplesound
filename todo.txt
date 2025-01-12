@@ -4,3 +4,15 @@ TODO
 - Add playlist creation / importing for real time
 - Add folder explorer
 - Add song search within folders
+- Playlist color themes
+- Add albums
+- Remove cover art from playlist display on albums
+- Make a tags line, an album with dynamic colors is "Album Dynamic-Colors" (Dynamic-Colors adds it back)
+- Add lyrics viewer
+
+PLAYLIST TAGS
+- Album
+- Artist
+- Averaged-Color
+- Cover-Color
+- Static-Color

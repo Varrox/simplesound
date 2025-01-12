@@ -192,16 +192,146 @@ public class SaveSystem
 			}
 		}
     }
+
+	public static Playlist ParseList(string path)
+	{
+		string[] lines = File.ReadAllLines(path);
+
+		Playlist playlist = new Playlist();
+
+		for (int i = 0; i < lines.Length; i++)
+		{
+            switch (lines[i].Trim())
+            {
+                case "Tags":
+                    for (int t = i + 1; t < lines.Length; t++)
+                    {
+                        string trimmedLine = lines[t].Trim();
+                        if (trimmedLine == "}")
+                        {
+							i = t;
+							break;
+                        }
+                        else if (trimmedLine == "{")
+                        {
+                            continue;
+                        }
+
+                        string[] split = trimmedLine.Split(':');
+                        string value = split[1].Trim();
+                        switch (split[0].Trim())
+                        {
+                            case "Type":
+                                playlist.SetType(value);
+                                break;
+                            case "Artist":
+                                playlist.artist = value;
+                                break;
+                            case "Static-Color":
+                                playlist.staticColor = value;
+                                break;
+                            case "Averaged-Color":
+                                playlist.averagedColor = value == "true" ? true : false;
+                                break;
+                            case "Cover-Color":
+                                playlist.averagedColor = value == "true" ? false : true;
+                                break;
+                        }
+                    }
+                    break;
+				case "Cover":
+					playlist.Coverpath = lines[i + 2].Trim();
+					i += 3;
+					break;
+				case "Songs":
+					for(int s = i + 1; s < lines.Length; s++)
+					{
+                        string trimmedLine = lines[s].Trim();
+                        if (trimmedLine == "}")
+                        {
+                            i = s;
+                            break;
+                        }
+                        else if (trimmedLine == "{")
+                        {
+                            continue;
+                        }
+
+						string songPath = Path.Combine(UserData, trimmedLine);
+
+						if(trimmedLine.EndsWith(".mp3") && File.Exists(songPath))
+						{
+                            playlist.songs.Add(songPath);
+                        }
+                    }
+					break;
+				case "Folders":
+					for(int f = i + 1; f < lines.Length; f++)
+					{
+                        string trimmedLine = lines[f].Trim();
+                        if (trimmedLine == "}")
+                        {
+                            i = f;
+                            break;
+                        }
+                        else if (trimmedLine == "{")
+                        {
+                            continue;
+                        }
+
+                        if (Directory.Exists(trimmedLine))
+                        {
+                            playlist.folders.Add(trimmedLine);
+                        }
+                    }
+					break;
+            }
+        }
+
+		playlist.Name = GetFileName(path);
+		return playlist;
+	}
 }
 
 public class Playlist
 {
 	public string Name, Coverpath, path;
-	public List<string> songs;
+	public List<string> songs, folders;
+
+	public string staticColor, artist;
+	public bool averagedColor;
+	public PlaylistType type = PlaylistType.Default;
+	public enum PlaylistType
+	{
+		Default,
+		Album,
+		Folder
+	}
 
 	public void Save()
 	{
         File.WriteAllText(path, $"{Coverpath ?? "null"}\n{string.Join("\n", songs)}");
+	}
+
+	public void SetType(string t)
+	{
+		switch(t)
+		{
+			case "Default":
+				type = PlaylistType.Default; break;
+			case "Album":
+				type = PlaylistType.Album; break;
+			case "Folder": 
+				type = PlaylistType.Folder; break;
+		}
+	}
+
+	public void LoadFromFolders()
+	{
+		foreach (string f in folders)
+		{
+			songs.AddRange(Directory.GetFiles(f));
+		}
 	}
 
     public static bool operator true(Playlist obj) => obj != null;

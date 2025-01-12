@@ -1,0 +1,182 @@
+[gd_scene load_steps=8 format=3 uid="uid://5kfxiu06xug0"]
+
+[ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Fonts/DefaultFont.tres" id="1_8t6yf"]
+[ext_resource type="Script" path="res://Csharp/CreatePlaylist.cs" id="1_b0noq"]
+[ext_resource type="Texture2D" uid="uid://c85envuiuo3ju" path="res://Icons/folder.png" id="2_5l8pw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_acdqb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yiuwm"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r7omr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bhcbq"]
+
+[node name="CreatePlaylist" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_b0noq")
+
+[node name="Window" type="Window" parent="."]
+title = "Create Playlist"
+initial_position = 2
+size = Vector2i(450, 250)
+min_size = Vector2i(450, 250)
+max_size = Vector2i(450, 250)
+
+[node name="ColorRect" type="ColorRect" parent="Window"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.133196, 0.133196, 0.133196, 1)
+
+[node name="Name" type="TextEdit" parent="Window"]
+offset_left = 15.0
+offset_top = 15.0
+offset_right = 207.35
+offset_bottom = 47.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("1_8t6yf")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_acdqb")
+placeholder_text = "Name"
+scroll_fit_content_height = true
+
+[node name="Cover" type="Button" parent="Window"]
+offset_left = 15.0
+offset_top = 50.0
+offset_right = 207.35
+offset_bottom = 81.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("1_8t6yf")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yiuwm")
+text = "Select cover"
+
+[node name="TextureRect" type="TextureRect" parent="Window/Cover"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -2.67
+offset_top = 19.165
+offset_right = 37.33
+offset_bottom = 59.165
+grow_vertical = 2
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("2_5l8pw")
+
+[node name="Label" type="Label" parent="Window/Cover"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 20.0
+offset_top = 24.33
+offset_right = 200.0
+offset_bottom = 47.33
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_8t6yf")
+theme_override_font_sizes/font_size = 11
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="FileDialog" type="FileDialog" parent="Window/Cover"]
+auto_translate_mode = 1
+title = "Open a File"
+size = Vector2i(207, 175)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+use_native_dialog = true
+
+[node name="Album" type="CheckBox" parent="Window"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -210.0
+offset_top = 15.0
+offset_right = -71.0
+offset_bottom = 46.0
+grow_horizontal = 0
+theme_override_fonts/font = ExtResource("1_8t6yf")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_r7omr")
+text = "Album"
+
+[node name="Artist" type="TextEdit" parent="Window"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -207.35
+offset_top = 50.0
+offset_right = -15.0
+offset_bottom = 82.0
+grow_horizontal = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("1_8t6yf")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_acdqb")
+placeholder_text = "Artist"
+editable = false
+scroll_fit_content_height = true
+
+[node name="Background Theme" type="CheckBox" parent="Window"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -209.785
+offset_top = 95.3
+offset_right = 15.215
+offset_bottom = 126.3
+grow_horizontal = 0
+theme_override_fonts/font = ExtResource("1_8t6yf")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_r7omr")
+text = "Background Theme"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Window"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -61.0
+offset_top = -39.045
+offset_right = 61.0
+offset_bottom = -11.045
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="Button" type="Button" parent="Window/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_8t6yf")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_r7omr")
+text = "Create"
+
+[node name="Button2" type="Button" parent="Window/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_8t6yf")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_r7omr")
+text = "Cancel"
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="Window"]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -207.35
+offset_top = 0.889999
+offset_right = -15.0
+offset_bottom = 31.89
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_bhcbq")
+text = "
+"

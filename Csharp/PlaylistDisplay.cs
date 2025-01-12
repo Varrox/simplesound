@@ -43,7 +43,7 @@ public partial class PlaylistDisplay : Node
         if(nuhuh) Cover.Texture = ResourceLoader.Load<Texture2D>("res://Icons/DefaultCover.png");
 
         Name.Text = playlistname;
-        Songs.Text = songcount.ToString() + (songcount > 1 ? " songs" : " song");
+        Songs.Text = songcount.ToString() + (songcount != 1 ? " songs" : " song");
         More.menu = menu;
 
         PlaylistIndex = index;

@@ -7,22 +7,30 @@ public class ConvertToGodot
         byte[] pictureData = Metadata.GetCover(path, out string type);
         if (pictureData == null) return ImageTexture.CreateFromImage(ResourceLoader.Load<Texture2D>("res://Icons/DefaultCover.png").GetImage());
         Image image = new Image();
+        Error error = Error.Failed;
         switch (type)
         {
             case "image/jpeg":
-                image.LoadJpgFromBuffer(pictureData);
+                error = image.LoadJpgFromBuffer(pictureData);
                 break;
             case "image/png":
-                image.LoadPngFromBuffer(pictureData);
+                error = image.LoadPngFromBuffer(pictureData);
                 break;
             case "image/webp":
-                image.LoadWebpFromBuffer(pictureData);
+                error = image.LoadWebpFromBuffer(pictureData);
                 break;
         }
 
-        Texture2D t = new Texture2D();
-        t = ImageTexture.CreateFromImage(image);
-        return t;
+        if(error == Error.Ok)
+        {
+            Texture2D t = new Texture2D();
+            return ImageTexture.CreateFromImage(image);
+        }
+        else
+        {
+            image.Load("res://Icons/DefaultCover.png");
+            return ImageTexture.CreateFromImage(image);
+        }
     }
 
     public static Color GetAverageColor(Texture2D texture, int samples)
@@ -34,7 +42,7 @@ public class ConvertToGodot
 
         for (int i = 0; i < samples; i++)
         {
-            color += image.GetPixel(GD.RandRange(0, x), GD.RandRange(0, y));
+            color += image.GetPixel((x / samples) * i, (y / samples) * i);
         }
 
         return color / samples;

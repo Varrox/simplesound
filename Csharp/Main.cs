@@ -38,7 +38,11 @@ public partial class Main : Control
 
 	public override void _Process(double delta)
 	{
-		if(Input.IsKeyPressed(Key.Ctrl) && Input.IsKeyPressed(Key.S)) SaveData();
+		if(Input.IsKeyPressed(Key.Ctrl))
+		{
+			if (Input.IsKeyPressed(Key.S)) SaveData();
+			else if (Input.IsKeyPressed(Key.R)) Refresh();
+        }
 
 		if (playing && playlist != null)
 		{
@@ -110,7 +114,6 @@ public partial class Main : Control
 			InitSong();
 			playing = false;
 			Play();
-			EmitSignal("OnPlay", playing);
 		}
 	}
 
@@ -136,13 +139,18 @@ public partial class Main : Control
 		}
 	}
 
-	public void EditMeta(string name, string artist, string coverpath)
+	public void EditMeta(string name, string artist, string coverpath, bool explicitLyrics)
 	{
-		if(playlist) Metadata.SetData(playlist.songs[currentSong], name, artist, coverpath);
+		if(playlist) Metadata.SetData(playlist.songs[currentSong], name, artist, coverpath, explicitLyrics);
 	}
 
 	public void SaveData()
 	{
 		SaveSystem.SaveData(currentPlaylist, currentSong, time, player.VolumeDb);
+	}
+
+	public void Refresh()
+	{
+
 	}
 }

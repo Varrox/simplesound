@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://cbpkjhjnbrjm6"]
+[gd_scene load_steps=41 format=3 uid="uid://cbpkjhjnbrjm6"]
 
 [ext_resource type="Script" path="res://Csharp/Main.cs" id="1_l00ml"]
 [ext_resource type="Script" path="res://Csharp/Player.cs" id="2_632yu"]
@@ -14,7 +14,9 @@
 [ext_resource type="Texture2D" uid="uid://bfwa3yivib7hh" path="res://Icons/playlist.png" id="8_8i1ca"]
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Fonts/DefaultFont.tres" id="9_3b7g8"]
 [ext_resource type="Texture2D" uid="uid://5hwvlu7uerj6" path="res://Icons/plus.png" id="10_7e43v"]
+[ext_resource type="Shader" path="res://blur.gdshader" id="10_sha6j"]
 [ext_resource type="Texture2D" uid="uid://c85envuiuo3ju" path="res://Icons/folder.png" id="11_1f20w"]
+[ext_resource type="Texture2D" uid="uid://boakkgkl8bk6h" path="res://Icons/artworks-cqf6QqqYAI8R73xP-XNrD3w-t500x500.jpg" id="11_h1ew4"]
 [ext_resource type="Script" path="res://Csharp/PlaylistsVisualizer.cs" id="12_0nioi"]
 [ext_resource type="Texture2D" uid="uid://0yw8m2y164lr" path="res://Icons/settings.png" id="12_s6aix"]
 [ext_resource type="PackedScene" uid="uid://4mmerh1u4xho" path="res://Prefabs/playlisttemplate.tscn" id="13_a7qgi"]
@@ -26,6 +28,11 @@
 [ext_resource type="Texture2D" uid="uid://b8ldjgpmsaxgu" path="res://Icons/shuffle.png" id="20_fkbne"]
 [ext_resource type="StyleBox" uid="uid://bhcyqvvim6l5e" path="res://Rounded Corners.tres" id="21_jy3dx"]
 [ext_resource type="Script" path="res://Discord.gd" id="24_crcn0"]
+[ext_resource type="PackedScene" uid="uid://dtfoexo3o7b3p" path="res://Prefabs/playlistcontext.tscn" id="26_gbh2w"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n3cvr"]
+shader = ExtResource("10_sha6j")
+shader_parameter/strength = 3.5
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i82gy"]
 
@@ -64,6 +71,15 @@ player = NodePath("Player")
 volumeSlider = NodePath("Interface/Player/Controls/Volume")
 playlistvisualizer = NodePath("Interface/Playlists")
 songsVisualizer = NodePath("Interface/Song Display")
+
+[node name="Discord" type="Control" parent="." node_paths=PackedStringArray("Player", "Main")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("24_crcn0")
+Player = NodePath("../Interface")
+Main = NodePath("..")
 
 [node name="Interface" type="Control" parent="." node_paths=PackedStringArray("MainController", "Play", "Next", "Back", "Loop", "Shuffle", "Progress", "CurrentTime", "TotalTime", "SongName", "SongArtist", "SongCover", "VolumeSlider", "backgroundColor", "EditAttributes", "AttributeEditor")]
 layout_mode = 1
@@ -114,13 +130,15 @@ grow_vertical = 2
 color = Color(1, 1, 1, 0)
 
 [node name="Image" type="TextureRect" parent="Interface/Background"]
+material = SubResource("ShaderMaterial_n3cvr")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-stretch_mode = 5
+texture = ExtResource("11_h1ew4")
+stretch_mode = 6
 
 [node name="Side" type="Panel" parent="Interface/Background"]
 layout_mode = 1
@@ -129,7 +147,7 @@ anchor_bottom = 1.0
 offset_right = 303.0
 grow_vertical = 2
 
-[node name="Playlists" type="ScrollContainer" parent="Interface" node_paths=PackedStringArray("mainController", "container")]
+[node name="Playlists" type="ScrollContainer" parent="Interface" node_paths=PackedStringArray("mainController", "container", "moreMenu")]
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
@@ -142,6 +160,7 @@ script = ExtResource("12_0nioi")
 template = ExtResource("13_a7qgi")
 mainController = NodePath("../..")
 container = NodePath("VBoxContainer")
+moreMenu = NodePath("../Playlistcontext")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Interface/Playlists"]
 layout_mode = 2
@@ -336,7 +355,7 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 52.0
 grow_horizontal = 2
-color = Color(0.117647, 0.117647, 0.117647, 1)
+color = Color(0.136826, 0.136826, 0.136826, 1)
 
 [node name="Search" type="TextEdit" parent="Interface/Top Bar"]
 layout_mode = 1
@@ -720,6 +739,14 @@ text_overrun_behavior = 3
 visible = false
 layout_mode = 1
 
+[node name="Playlistcontext" parent="Interface" instance=ExtResource("26_gbh2w")]
+visible = false
+layout_mode = 1
+offset_left = -865.0
+offset_top = -210.0
+offset_right = -865.0
+offset_bottom = -210.0
+
 [node name="Player" type="AudioStreamPlayer" parent="."]
 volume_db = -80.0
 
@@ -730,12 +757,3 @@ ok_button_text = "Select Current Folder"
 file_mode = 2
 access = 2
 use_native_dialog = true
-
-[node name="Discord" type="Control" parent="." node_paths=PackedStringArray("Player", "Main")]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("24_crcn0")
-Player = NodePath("../Interface")
-Main = NodePath("..")

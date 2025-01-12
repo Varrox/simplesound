@@ -23,7 +23,7 @@ public partial class SongsVisualizer : Control
 		var SongDisplays = container.GetChildren();
 		(SongDisplays[0].GetChild(0).GetChild(0) as TextureRect).Texture = playDisp;
         (SongDisplays[0].GetChild(1) as Label).Text = Playlist.Name;
-		(SongDisplays[0].GetChild(2) as Label).Text = $"{Playlist.songs.Count} song" + (Playlist.songs.Count > 1 ? "s" : "");
+		(SongDisplays[0].GetChild(2) as Label).Text = $"{Playlist.songs.Count} song" + (Playlist.songs.Count != 1 ? "s" : "");
         SongDisplays.RemoveAt(0);
 
 		if(SongDisplays.Count > Playlist.songs.Count) // delete overflow
@@ -40,6 +40,7 @@ public partial class SongsVisualizer : Control
         for (int i = 0; i < Playlist.songs.Count; i++) // update all
 		{
 			Songdisplay disp = null;
+
 			if(i >= SongDisplays.Count) // create song display if one does not exist
 			{
 				disp = Template.Instantiate() as Songdisplay;
@@ -51,13 +52,13 @@ public partial class SongsVisualizer : Control
             }
 
 			// init the playlist
-            disp.init(SaveSystem.GetName(Playlist.songs[i]), Metadata.GetArtist(Playlist.songs[i]), SaveSystem.GetTimeFromSeconds(Metadata.GetTotalTime(Playlist.songs[i])), playlist, i, ConvertToGodot.getCover(Playlist.songs[i]), menu);
+            disp.init(SaveSystem.GetName(Playlist.songs[i]), Metadata.GetArtist(Playlist.songs[i]), SaveSystem.GetTimeFromSeconds(Metadata.GetTotalTime(Playlist.songs[i])), playlist, i, Metadata.IsExplicit(Playlist.songs[i]), ConvertToGodot.getCover(Playlist.songs[i]), menu);
         }
 	}
 
-	public void UpdateSong(int index, string sname, string artist, string time, Texture2D texture)
+	public void UpdateSong(int index, string sname, string artist, string time, bool explicitlyrics, Texture2D texture)
 	{
 		Songdisplay disp = container.GetChild(index + 1) as Songdisplay;
-		disp.init(sname, artist, time, currentPlaylist, index, texture, menu);
+		disp.init(sname, artist, time, currentPlaylist, index, explicitlyrics, texture, menu);
     }
 }
