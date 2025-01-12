@@ -7,6 +7,7 @@ public partial class PlaylistsVisualizer : Node
 	[Export] public Main mainController;
     [Export] public VBoxContainer container;
     [Export] public Control moreMenu;
+    [Export] public Texture2D defaultCover;
 
     [Signal] public delegate void OnSelectPlaylistEventHandler(int playlist, Texture2D img);
 

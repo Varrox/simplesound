@@ -5,7 +5,7 @@ shader_type canvas_item;
 
 uniform float strength : hint_range(0.0, 5.0, 0.1) = 1.0;
 const float pi = atan(1.0) * 4.0;
-const int samples = 20;
+const int samples = 30;
 const float sigma = float(samples) * 0.25;
 
 float gaussian(vec2 i) {

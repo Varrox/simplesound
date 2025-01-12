@@ -188,22 +188,22 @@ public class SaveSystem
             output += $"\tOverlay-Color : {playlist.overlayColor}\n";
         }
 
-		if(playlist.averagedColor)
-		{
-            output += "\tAveraged-Color : true\n";
-        }
-
 		output += "}\n\n";
-
+        output += "Images\n{\n";
 
         if (playlist.Coverpath != null)
 		{
-            output += "Cover\n{\n";
-			output += $"\t{playlist.Coverpath}\n";
-			output += "}\n\n";
+			output += $"\tCover : {playlist.Coverpath}\n";
         }
 
-		if (playlist.songs != null && playlist.songs.Count > 0)
+		if (playlist.BackgroundPath != null)
+		{
+            output += $"\tBackground-Image : {playlist.BackgroundPath}\n";
+        }
+
+        output += "}\n\n";
+
+        if (playlist.songs != null && playlist.songs.Count > 0)
 		{
 			output += "Songs\n{\n";
 
@@ -265,8 +265,8 @@ public class SaveSystem
                     }
 
                     string[] split = trimmedLine.Split(':');
-					string var = split[0].Trim();
-                    string value = split[1].Split("//")[0].Trim();
+					string var = split[0];
+                    string value = split[1];
 
 					if(var.Length > 0)
 					{
@@ -279,11 +279,7 @@ public class SaveSystem
                                 playlist.artist = value;
                                 break;
                             case "Overlay-Color":
-                                playlist.averagedColor = false;
                                 playlist.overlayColor = value;
-                                break;
-                            case "Averaged-Color":
-                                playlist.averagedColor = value == "true" ? true : false;
                                 break;
                         }
 
@@ -294,7 +290,7 @@ public class SaveSystem
                     }
                 }
             }
-			else if(trimmedStartLine.StartsWith("Cover"))
+			else if(trimmedStartLine.StartsWith("Images"))
 			{
 				for(int c = i + 1; c < lines.Length; c++)
 				{
@@ -309,11 +305,23 @@ public class SaveSystem
                         continue;
                     }
 
-					if (trimmedLine.Length > 0)
+					if(trimmedLine.Length > 0)
 					{
-                        if (File.Exists(trimmedLine))
+                        string[] split = SplitLine(trimmedLine);
+                        string var = split[0];
+                        string value = split[1];
+
+                        if (var.Length > 0)
                         {
-                            playlist.Coverpath = trimmedLine;
+                            switch (var)
+                            {
+                                case "Cover":
+                                    playlist.Coverpath = File.Exists(value) ? value : null;
+                                    break;
+                                case "Background-Image":
+                                    playlist.BackgroundPath = File.Exists(value) ? value : null;
+                                    break;
+                            }
 
                             if (trimmedLine.EndsWith("}"))
                             {
@@ -390,6 +398,13 @@ public class SaveSystem
 		playlist.Name = GetFileName(path);
 		return playlist;
 	}
+
+	public static string[] SplitLine(string line)
+	{
+		line = line.Split("//")[0];
+        int index = line.IndexOf(':');
+        return new[] {line.Substring(0, index).Trim(), line.Substring(index + 1).Trim()};
+	}
 }
 
 public class Playlist
@@ -397,8 +412,7 @@ public class Playlist
 	public string Name, Coverpath, path;
 	public List<string> songs, folders;
 
-	public string overlayColor, artist;
-	public bool averagedColor = true;
+	public string overlayColor, BackgroundPath, artist;
 
 	public PlaylistType type = PlaylistType.Default;
 	public enum PlaylistType

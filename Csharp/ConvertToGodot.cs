@@ -86,4 +86,11 @@ public class ConvertToGodot
             return new Color(0, 0, 0, 0);
         }
     }
+
+    public static Texture2D LoadImage(string filename, ref Texture2D fallback)
+    {
+        var img = new Image();
+        if (img.Load(filename) == Error.Ok) return ImageTexture.CreateFromImage(img);
+        else return fallback;
+    }
 }

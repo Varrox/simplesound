@@ -7,7 +7,7 @@ public partial class Player : Node
     [Export] public Texture2D PlayIcon, PauseIcon, LoopOn, LoopOff, ShuffleOn, ShuffleOff;
     [Export] public Slider Progress;
     [Export] public Label CurrentTime, TotalTime, SongName, SongArtist;
-    [Export] public TextureRect SongCover;
+    [Export] public TextureRect SongCover, BackgroundImage;
     [Export] public Slider VolumeSlider;
     [Export] public ColorRect backgroundColor;
 
@@ -84,8 +84,10 @@ public partial class Player : Node
             string artist = Metadata.GetArtist(MainController.song);
             SongArtist.Text = artist;
             SongArtist.TooltipText = artist;
-            SongCover.Texture = ConvertToGodot.getCover(MainController.song);
-            if(MainController.playlist.averagedColor) bc = ConvertToGodot.GetAverageColor(SongCover.Texture, 16);
+            Texture2D cover = ConvertToGodot.getCover(MainController.song);
+            SongCover.Texture = cover;
+            if (MainController.playlist.BackgroundPath != null) BackgroundImage.Texture = ConvertToGodot.LoadImage(MainController.playlist.BackgroundPath, ref cover);
+            else BackgroundImage.Texture = cover;
         }
         else
         {
@@ -112,7 +114,7 @@ public partial class Player : Node
         MainController.EditMeta(AttributeEditor.songname, AttributeEditor.artist, AttributeEditor.coverpath, AttributeEditor.explicitLyrics);
         onLoadSong();
         attributesBeingedited = false;
-        MainController.songsVisualizer.UpdateSong(MainController.currentSong, AttributeEditor.songname, AttributeEditor.artist, TotalTime.Text, AttributeEditor.explicitLyrics, MainController.playlist.type == Playlist.PlaylistType.Album, SongCover.Texture);
+        MainController.songsVisualizer.UpdateSong(MainController.currentSong, AttributeEditor.songname, AttributeEditor.artist, TotalTime.Text, AttributeEditor.explicitLyrics, SongCover.Texture);
     }
 
     public override void _Process(double delta)
@@ -139,10 +141,16 @@ public partial class Player : Node
         }
 
         float max = 0.65f;
-        if(!MainController.playlist.averagedColor && MainController.playlist.overlayColor != null)
+
+        if(MainController.playlist.overlayColor != null)
         {
             bc = ConvertToGodot.GetColor(MainController.playlist.overlayColor);
         }
+        else
+        {
+            bc = new Color();
+        }
+
         backgroundColor.Color = backgroundColor.Color.Lerp(bc.Clamp(new Color(), new Color(max, max, max, max)), (float)delta * 2f);
 
         MainController.player.VolumeDb = (float)(VolumeSlider.Value != -50 ? VolumeSlider.Value : -80);

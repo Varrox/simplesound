@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://cbpkjhjnbrjm6"]
+[gd_scene load_steps=40 format=3 uid="uid://cbpkjhjnbrjm6"]
 
 [ext_resource type="Script" path="res://Csharp/Main.cs" id="1_l00ml"]
 [ext_resource type="Script" path="res://Csharp/Player.cs" id="2_632yu"]
@@ -16,7 +16,6 @@
 [ext_resource type="Texture2D" uid="uid://5hwvlu7uerj6" path="res://Icons/plus.png" id="10_7e43v"]
 [ext_resource type="Shader" path="res://blur.gdshader" id="10_sha6j"]
 [ext_resource type="Texture2D" uid="uid://c85envuiuo3ju" path="res://Icons/folder.png" id="11_1f20w"]
-[ext_resource type="Texture2D" uid="uid://boakkgkl8bk6h" path="res://Icons/artworks-cqf6QqqYAI8R73xP-XNrD3w-t500x500.jpg" id="11_h1ew4"]
 [ext_resource type="Script" path="res://Csharp/PlaylistsVisualizer.cs" id="12_0nioi"]
 [ext_resource type="Texture2D" uid="uid://0yw8m2y164lr" path="res://Icons/settings.png" id="12_s6aix"]
 [ext_resource type="PackedScene" uid="uid://4mmerh1u4xho" path="res://Prefabs/playlisttemplate.tscn" id="13_a7qgi"]
@@ -32,7 +31,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n3cvr"]
 shader = ExtResource("10_sha6j")
-shader_parameter/strength = 3.5
+shader_parameter/strength = 1.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i82gy"]
 
@@ -81,7 +80,7 @@ script = ExtResource("24_crcn0")
 Player = NodePath("../Interface")
 Main = NodePath("..")
 
-[node name="Interface" type="Control" parent="." node_paths=PackedStringArray("MainController", "Play", "Next", "Back", "Loop", "Shuffle", "Progress", "CurrentTime", "TotalTime", "SongName", "SongArtist", "SongCover", "VolumeSlider", "backgroundColor", "EditAttributes", "AttributeEditor")]
+[node name="Interface" type="Control" parent="." node_paths=PackedStringArray("MainController", "Play", "Next", "Back", "Loop", "Shuffle", "Progress", "CurrentTime", "TotalTime", "SongName", "SongArtist", "SongCover", "BackgroundImage", "VolumeSlider", "backgroundColor", "EditAttributes", "AttributeEditor")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -107,6 +106,7 @@ TotalTime = NodePath("Player/Controls/Progress/Total Time")
 SongName = NodePath("Player/Song Attributes/Name")
 SongArtist = NodePath("Player/Song Attributes/Artist")
 SongCover = NodePath("Player/Song Attributes/PanelContainer/Cover")
+BackgroundImage = NodePath("Background/Image")
 VolumeSlider = NodePath("Player/Controls/Volume")
 backgroundColor = NodePath("Background/Color")
 EditAttributes = NodePath("Player/Song Attributes/Edit Attributes")
@@ -120,6 +120,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="Image" type="TextureRect" parent="Interface/Background"]
+material = SubResource("ShaderMaterial_n3cvr")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 3
+stretch_mode = 6
+
 [node name="Color" type="ColorRect" parent="Interface/Background"]
 layout_mode = 1
 anchors_preset = 15
@@ -128,18 +139,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 1, 1, 0)
-
-[node name="Image" type="TextureRect" parent="Interface/Background"]
-visible = false
-material = SubResource("ShaderMaterial_n3cvr")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("11_h1ew4")
-stretch_mode = 6
 
 [node name="Side" type="Panel" parent="Interface/Background"]
 layout_mode = 1
@@ -162,6 +161,7 @@ template = ExtResource("13_a7qgi")
 mainController = NodePath("../..")
 container = NodePath("VBoxContainer")
 moreMenu = NodePath("../Playlistcontext")
+defaultCover = ExtResource("7_xn3w4")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Interface/Playlists"]
 layout_mode = 2
@@ -185,6 +185,9 @@ main = NodePath("../..")
 PlaylistsVisualizer = NodePath("../Playlists")
 menu = NodePath("../Songcontext")
 container = NodePath("VBoxContainer")
+PlayTexture = ExtResource("5_8inno")
+Pause = ExtResource("4_lfnj1")
+highlight = Color(1, 1, 1, 0.513)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Interface/Song Display"]
 layout_mode = 2

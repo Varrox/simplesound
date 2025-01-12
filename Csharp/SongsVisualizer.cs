@@ -6,10 +6,12 @@ public partial class SongsVisualizer : Control
 	[Export] public PackedScene Template;
     [Export] public Main main;
 	[Export] public PlaylistsVisualizer PlaylistsVisualizer;
-	[Export] public Control menu;
-	[Export] public Control container;
+	[Export] public Control menu, container;
+    [Export] public Texture2D PlayTexture, Pause;
+    [Export] public Color highlight;
 
-	public int currentPlaylist;
+    public int currentPlaylist;
+	public Playlist Playlist;
 
 	public override void _Ready()
 	{
@@ -19,7 +21,7 @@ public partial class SongsVisualizer : Control
 	public void Load(int playlist, Texture2D playDisp)
 	{
 		currentPlaylist = playlist;
-		var Playlist = SaveSystem.LoadPlaylist(main.playlists[playlist]);
+		Playlist = SaveSystem.LoadPlaylist(main.playlists[playlist]);
 		var SongDisplays = container.GetChildren();
 		(SongDisplays[0].GetChild(0).GetChild(0) as TextureRect).Texture = playDisp;
         (SongDisplays[0].GetChild(1) as Label).Text = Playlist.Name;
@@ -52,16 +54,16 @@ public partial class SongsVisualizer : Control
             }
 
 			// init the playlist
-            disp.init(SaveSystem.GetName(Playlist.songs[i]), Metadata.GetArtist(Playlist.songs[i]), SaveSystem.GetTimeFromSeconds(Metadata.GetTotalTime(Playlist.songs[i])), playlist, i, Metadata.IsExplicit(Playlist.songs[i]), Playlist.type == Playlist.PlaylistType.Album, ConvertToGodot.getCover(Playlist.songs[i]), menu);
+            disp.init(SaveSystem.GetName(Playlist.songs[i]), Metadata.GetArtist(Playlist.songs[i]), SaveSystem.GetTimeFromSeconds(Metadata.GetTotalTime(Playlist.songs[i])), playlist, i, Metadata.IsExplicit(Playlist.songs[i]), this, ConvertToGodot.getCover(Playlist.songs[i]), menu);
         }
 	}
 
-	public void UpdateSong(int index, string sname, string artist, string time, bool explicitlyrics, bool album, Texture2D texture)
+	public void UpdateSong(int index, string sname, string artist, string time, bool explicitlyrics, Texture2D texture)
 	{
 		if(currentPlaylist == main.currentPlaylist)
 		{
             Songdisplay disp = container.GetChild(index + 1) as Songdisplay;
-            disp.init(sname, artist, time, currentPlaylist, index, explicitlyrics, album, texture, menu);
+            disp.init(sname, artist, time, currentPlaylist, index, explicitlyrics, this, texture, menu);
         }
     }
 }

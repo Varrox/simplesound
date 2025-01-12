@@ -4,20 +4,18 @@ using System;
 public partial class Songdisplay : Control
 {
 	[Export] public Label Number, Name, Artist, Time;
-	[Export] public Control Play;
     [Export] public TextureRect Cover, Playbutton;
 	[Export] public Control Spacer;
     [Export] public Button Register;
 	[Export] public ContextMenu More;
-	[Export] public Texture2D PlayTexture, Pause;
 	[Export] public Panel explicitLyrics;
-	[Export] public Color highlight;
 
 	int playlist, song;
 	bool isPlaying;
+	SongsVisualizer visualizer;
 	public override void _Ready()
 	{
-		Register.ButtonDown += SetSong;
+		Register.ButtonUp += SetSong;
 		Register.MouseEntered += onEnter;
 		Register.MouseExited += onExit;
 		More.MouseEntered += onEnter;
@@ -33,11 +31,11 @@ public partial class Songdisplay : Control
 		{
 			Main.OnPlay += SetTextures;
 			isPlaying = true;
-			Register.SelfModulate = highlight;
+			Register.SelfModulate = visualizer.highlight;
 		}
 		else if (Main.currentPlaylist != playlist || Main.currentSong != song) // un-highlight
         {
-			Playbutton.Texture = PlayTexture;
+			Playbutton.Texture = visualizer.PlayTexture;
             Main.OnPlay -= SetTextures;
 			isPlaying = false;
             Register.SelfModulate = new Color(1, 1, 1, 1);
@@ -48,24 +46,24 @@ public partial class Songdisplay : Control
 
 	public void SetTextures(bool playing)
 	{
-        Playbutton.Texture = playing ? Pause : PlayTexture;
+        Playbutton.Texture = playing ? visualizer.Pause : visualizer.PlayTexture;
     }
 
 	public void onEnter()
 	{
         More.Show();
-		Play.Show();
+        Playbutton.Show();
 		Number.SelfModulate = new Color(1, 1, 1, 0);
     }
 
 	public void onExit()
 	{
 		if(!More.menuOpen) More.Hide();
-		Play.Hide();
+        Playbutton.Hide();
         Number.SelfModulate = new Color(1, 1, 1, 1);
     }
 
-    public void init(string name, string artist, string time, int playlist, int song, bool explicitLyrics, bool album, Texture2D cover, Control menu)
+    public void init(string name, string artist, string time, int playlist, int song, bool explicitLyrics, SongsVisualizer visualizer, Texture2D cover, Control menu)
 	{
 		Number.Text = (song + 1).ToString();
 		this.song = song;
@@ -73,7 +71,9 @@ public partial class Songdisplay : Control
 		Name.Text = name;
 		Artist.Text = artist;
 		Time.Text = time;
-		if (album)
+		this.visualizer = visualizer;
+
+		if (visualizer.Playlist.type == Playlist.PlaylistType.Album)
 		{
             (Cover.GetParent() as Control).Visible = false;
 			Spacer.Visible = false;
@@ -84,8 +84,10 @@ public partial class Songdisplay : Control
             (Cover.GetParent() as Control).Visible = true;
             Spacer.Visible = true;
         }
+
         More.menu = menu;
 		this.explicitLyrics.Visible = explicitLyrics;
+
 		SetHighlight();
     }
 

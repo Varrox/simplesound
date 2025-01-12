@@ -35,15 +35,15 @@ public partial class PlaylistDisplay : Node
 
     public void init(Playlist playlist, int index, PlaylistsVisualizer visualizer, bool current, Control menu)
     {
-        var img = new Image();
         bool nuhuh = playlist.Coverpath == null;
 
         if (playlist.Coverpath != null)
         {
+            var img = new Image();
             if (img.Load(playlist.Coverpath) == Error.Ok) Cover.Texture = ImageTexture.CreateFromImage(img);
             else nuhuh = true;
         }
-        if(nuhuh) Cover.Texture = ResourceLoader.Load<Texture2D>("res://Icons/DefaultCover.png");
+        if(nuhuh) Cover.Texture = visualizer.defaultCover;
 
         Name.Text = playlist.Name;
         if (playlist.type != Playlist.PlaylistType.Album)
