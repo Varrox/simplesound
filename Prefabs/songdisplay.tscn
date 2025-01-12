@@ -13,7 +13,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_31pnr"]
 
-[node name="Songdisplay" type="Control" node_paths=PackedStringArray("Number", "Name", "Artist", "Time", "Play", "Cover", "Playbutton", "Register", "More", "explicitLyrics")]
+[node name="Songdisplay" type="Control" node_paths=PackedStringArray("Number", "Name", "Artist", "Time", "Play", "Cover", "Playbutton", "Spacer", "Register", "More", "explicitLyrics")]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 3
 anchors_preset = 14
@@ -30,6 +30,7 @@ Time = NodePath("Length")
 Play = NodePath("Play")
 Cover = NodePath("Number/HFlowContainer/PanelContainer/Cover")
 Playbutton = NodePath("Play")
+Spacer = NodePath("Number/HFlowContainer/Spacer")
 Register = NodePath("Register")
 More = NodePath("More")
 PlayTexture = ExtResource("4_4uf0g")
@@ -81,15 +82,21 @@ mouse_filter = 2
 clip_children = 1
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
+size_flags_stretch_ratio = 0.0
 mouse_filter = 2
 theme_override_styles/panel = ExtResource("6_2m43a")
 
 [node name="Cover" type="TextureRect" parent="Number/HFlowContainer/PanelContainer"]
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("3_aqj3n")
 expand_mode = 1
 stretch_mode = 6
+
+[node name="Spacer" type="Control" parent="Number/HFlowContainer"]
+custom_minimum_size = Vector2(7.395, 0)
+layout_mode = 2
 
 [node name="Text" type="Control" parent="Number/HFlowContainer"]
 custom_minimum_size = Vector2(60, 50)
@@ -99,10 +106,9 @@ mouse_filter = 2
 
 [node name="Name" type="Label" parent="Number/HFlowContainer/Text"]
 layout_mode = 0
-offset_left = 10.0
-offset_top = 5.0
-offset_right = 50.0
-offset_bottom = 28.0
+offset_top = 7.0
+offset_right = 40.0
+offset_bottom = 30.0
 theme_override_fonts/font = ExtResource("2_rrqbv")
 text = "Song"
 
@@ -144,10 +150,9 @@ vertical_alignment = 1
 
 [node name="Artist" type="Label" parent="Number/HFlowContainer/Text"]
 layout_mode = 0
-offset_left = 10.0
-offset_top = 25.0
-offset_right = 53.0
-offset_bottom = 48.0
+offset_top = 27.0
+offset_right = 43.0
+offset_bottom = 50.0
 theme_override_colors/font_color = Color(0.629675, 0.629675, 0.629675, 1)
 theme_override_fonts/font = ExtResource("2_rrqbv")
 theme_override_font_sizes/font_size = 11

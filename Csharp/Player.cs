@@ -85,7 +85,7 @@ public partial class Player : Node
             SongArtist.Text = artist;
             SongArtist.TooltipText = artist;
             SongCover.Texture = ConvertToGodot.getCover(MainController.song);
-            bc = ConvertToGodot.GetAverageColor(SongCover.Texture, 16);
+            if(MainController.playlist.averagedColor) bc = ConvertToGodot.GetAverageColor(SongCover.Texture, 16);
         }
         else
         {
@@ -112,7 +112,7 @@ public partial class Player : Node
         MainController.EditMeta(AttributeEditor.songname, AttributeEditor.artist, AttributeEditor.coverpath, AttributeEditor.explicitLyrics);
         onLoadSong();
         attributesBeingedited = false;
-        MainController.songsVisualizer.UpdateSong(MainController.currentSong, AttributeEditor.songname, AttributeEditor.artist, TotalTime.Text, AttributeEditor.explicitLyrics, SongCover.Texture);
+        MainController.songsVisualizer.UpdateSong(MainController.currentSong, AttributeEditor.songname, AttributeEditor.artist, TotalTime.Text, AttributeEditor.explicitLyrics, MainController.playlist.type == Playlist.PlaylistType.Album, SongCover.Texture);
     }
 
     public override void _Process(double delta)
@@ -139,7 +139,12 @@ public partial class Player : Node
         }
 
         float max = 0.65f;
+        if(!MainController.playlist.averagedColor && MainController.playlist.overlayColor != null)
+        {
+            bc = ConvertToGodot.GetColor(MainController.playlist.overlayColor);
+        }
         backgroundColor.Color = backgroundColor.Color.Lerp(bc.Clamp(new Color(), new Color(max, max, max, max)), (float)delta * 2f);
+
         MainController.player.VolumeDb = (float)(VolumeSlider.Value != -50 ? VolumeSlider.Value : -80);
     }
 }

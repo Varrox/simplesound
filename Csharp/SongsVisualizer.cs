@@ -1,4 +1,5 @@
 using Godot;
+using System.IO;
 
 public partial class SongsVisualizer : Control
 {
@@ -18,8 +19,7 @@ public partial class SongsVisualizer : Control
 	public void Load(int playlist, Texture2D playDisp)
 	{
 		currentPlaylist = playlist;
-		string path = main.playlists[playlist];
-		var Playlist = SaveSystem.LoadPlaylist(path);
+		var Playlist = SaveSystem.LoadPlaylist(main.playlists[playlist]);
 		var SongDisplays = container.GetChildren();
 		(SongDisplays[0].GetChild(0).GetChild(0) as TextureRect).Texture = playDisp;
         (SongDisplays[0].GetChild(1) as Label).Text = Playlist.Name;
@@ -52,13 +52,16 @@ public partial class SongsVisualizer : Control
             }
 
 			// init the playlist
-            disp.init(SaveSystem.GetName(Playlist.songs[i]), Metadata.GetArtist(Playlist.songs[i]), SaveSystem.GetTimeFromSeconds(Metadata.GetTotalTime(Playlist.songs[i])), playlist, i, Metadata.IsExplicit(Playlist.songs[i]), ConvertToGodot.getCover(Playlist.songs[i]), menu);
+            disp.init(SaveSystem.GetName(Playlist.songs[i]), Metadata.GetArtist(Playlist.songs[i]), SaveSystem.GetTimeFromSeconds(Metadata.GetTotalTime(Playlist.songs[i])), playlist, i, Metadata.IsExplicit(Playlist.songs[i]), Playlist.type == Playlist.PlaylistType.Album, ConvertToGodot.getCover(Playlist.songs[i]), menu);
         }
 	}
 
-	public void UpdateSong(int index, string sname, string artist, string time, bool explicitlyrics, Texture2D texture)
+	public void UpdateSong(int index, string sname, string artist, string time, bool explicitlyrics, bool album, Texture2D texture)
 	{
-		Songdisplay disp = container.GetChild(index + 1) as Songdisplay;
-		disp.init(sname, artist, time, currentPlaylist, index, explicitlyrics, texture, menu);
+		if(currentPlaylist == main.currentPlaylist)
+		{
+            Songdisplay disp = container.GetChild(index + 1) as Songdisplay;
+            disp.init(sname, artist, time, currentPlaylist, index, explicitlyrics, album, texture, menu);
+        }
     }
 }

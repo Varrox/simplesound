@@ -8,6 +8,8 @@ public partial class PlaylistDisplay : Node
     [Export] public ContextMenu More;
     [Export] public Color SelectedColor;
 
+    public const char dot = '\u00b7';
+
     int PlaylistIndex;
     PlaylistsVisualizer visualizer;
 
@@ -31,19 +33,28 @@ public partial class PlaylistDisplay : Node
     }
 
 
-    public void init(string playlistname, string Coverpath, int songcount, int index, PlaylistsVisualizer visualizer, bool current, Control menu)
+    public void init(Playlist playlist, int index, PlaylistsVisualizer visualizer, bool current, Control menu)
     {
         var img = new Image();
-        bool nuhuh = Coverpath == null;
-        if (Coverpath != null)
+        bool nuhuh = playlist.Coverpath == null;
+
+        if (playlist.Coverpath != null)
         {
-            if (img.Load(Coverpath) == Error.Ok) Cover.Texture = ImageTexture.CreateFromImage(img);
+            if (img.Load(playlist.Coverpath) == Error.Ok) Cover.Texture = ImageTexture.CreateFromImage(img);
             else nuhuh = true;
         }
         if(nuhuh) Cover.Texture = ResourceLoader.Load<Texture2D>("res://Icons/DefaultCover.png");
 
-        Name.Text = playlistname;
-        Songs.Text = songcount.ToString() + (songcount != 1 ? " songs" : " song");
+        Name.Text = playlist.Name;
+        if (playlist.type != Playlist.PlaylistType.Album)
+        { 
+            Songs.Text = (playlist.songs.Count.ToString() + (playlist.songs.Count != 1 ? " songs" : " song")) + (playlist.artist != null ? $" {dot} {playlist.artist}" : "");
+        }
+        else
+        {
+            Songs.Text = $"Album  {dot}  " + (playlist.artist != null ? playlist.artist : playlist.songs.Count.ToString() + (playlist.songs.Count != 1 ? " songs" : " song"));
+        }
+
         More.menu = menu;
 
         PlaylistIndex = index;

@@ -6,6 +6,7 @@ public partial class Songdisplay : Control
 	[Export] public Label Number, Name, Artist, Time;
 	[Export] public Control Play;
     [Export] public TextureRect Cover, Playbutton;
+	[Export] public Control Spacer;
     [Export] public Button Register;
 	[Export] public ContextMenu More;
 	[Export] public Texture2D PlayTexture, Pause;
@@ -64,7 +65,7 @@ public partial class Songdisplay : Control
         Number.SelfModulate = new Color(1, 1, 1, 1);
     }
 
-    public void init(string name, string artist, string time, int playlist, int song, bool explicitLyrics, Texture2D cover, Control menu)
+    public void init(string name, string artist, string time, int playlist, int song, bool explicitLyrics, bool album, Texture2D cover, Control menu)
 	{
 		Number.Text = (song + 1).ToString();
 		this.song = song;
@@ -72,8 +73,18 @@ public partial class Songdisplay : Control
 		Name.Text = name;
 		Artist.Text = artist;
 		Time.Text = time;
-		Cover.Texture = cover;
-		More.menu = menu;
+		if (album)
+		{
+            (Cover.GetParent() as Control).Visible = false;
+			Spacer.Visible = false;
+		}
+		else
+		{
+            Cover.Texture = cover;
+            (Cover.GetParent() as Control).Visible = true;
+            Spacer.Visible = true;
+        }
+        More.menu = menu;
 		this.explicitLyrics.Visible = explicitLyrics;
 		SetHighlight();
     }

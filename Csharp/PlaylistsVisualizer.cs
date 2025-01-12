@@ -27,8 +27,7 @@ public partial class PlaylistsVisualizer : Node
 
     public void LoadDataIntoPlaylist(int i, PlaylistDisplay playlist, bool current)
     {
-        SaveSystem.GetPlaylistAttributes(mainController.playlists[i], out string name, out string coverpath, out int songcount);
-        playlist.init(name, coverpath, songcount, i, this, current, moreMenu);
+        playlist.init(SaveSystem.LoadPlaylist(mainController.playlists[i]), i, this, current, moreMenu);
     }
 
     public void UpdatePlaylists()

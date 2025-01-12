@@ -130,6 +130,7 @@ grow_vertical = 2
 color = Color(1, 1, 1, 0)
 
 [node name="Image" type="TextureRect" parent="Interface/Background"]
+visible = false
 material = SubResource("ShaderMaterial_n3cvr")
 layout_mode = 1
 anchors_preset = 15

@@ -71,10 +71,10 @@ public partial class Main : Control
 		// load playlists
 		LoadPlaylists();
 		LoadPlaylist(currentPlaylist);
-		if(playlist) InitSong();
+        if (playlist) InitSong();
 
-		// initialize playlist displayer
-		if (playlist) playlistvisualizer.LoadAllPlaylistVisuals();
+        // initialize playlist displayer
+        if (playlist) playlistvisualizer.LoadAllPlaylistVisuals();
 
 		// show current playlist
 		if (playlist) songsVisualizer.Load(currentPlaylist, (playlistvisualizer.container.GetChild(currentPlaylist) as PlaylistDisplay).Cover.Texture);
@@ -89,7 +89,7 @@ public partial class Main : Control
 	{
 		currentPlaylist = index;
 		playlist = playlists.Length > 0 ? SaveSystem.LoadPlaylist(playlists[currentPlaylist]) : null;
-	}
+    }
 
 	public void Play()
 	{
