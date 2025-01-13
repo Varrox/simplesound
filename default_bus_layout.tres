@@ -1,0 +1,9 @@
+[gd_resource type="AudioBusLayout" load_steps=2 format=3 uid="uid://c34ugugid1knj"]
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_ga3na"]
+resource_name = "Reverb"
+room_size = 0.0
+
+[resource]
+bus/0/effect/0/effect = SubResource("AudioEffectReverb_ga3na")
+bus/0/effect/0/enabled = false

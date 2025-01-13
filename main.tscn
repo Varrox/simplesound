@@ -752,7 +752,6 @@ offset_right = -865.0
 offset_bottom = -210.0
 
 [node name="Player" type="AudioStreamPlayer" parent="."]
-volume_db = -80.0
 
 [node name="Import Folder" type="FileDialog" parent="."]
 title = "Open a Directory"

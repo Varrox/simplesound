@@ -51,39 +51,21 @@ public class ConvertToGodot
 
     public static Color GetColor(string text)
     {
-        if (text.StartsWith("rgb"))
-        {
-            bool alpha = text[3] == 'a';
-
-            string[] colorVals = text.Substring(4 + (alpha ? 1 : 0), text.Length - 7 + (alpha ? 1 : 0)).Split(',');
-
-            bool byteOverFloat = false;
-
-            for (int i = 0; i < colorVals.Length; i++)
-            {
-                if(!colorVals[i].Contains('.') && colorVals[i] != "1")
-                {
-                    byteOverFloat = true;
-                    break;
-                }
-            }
-
-            if (alpha)
-            {
-                return new Color(Convert.ToSingle(colorVals[0]), Convert.ToSingle(colorVals[1]), Convert.ToSingle(colorVals[2]), Convert.ToSingle(colorVals[3]));
-            }
-            else
-            {
-                return new Color(Convert.ToSingle(colorVals[0]), Convert.ToSingle(colorVals[1]), Convert.ToSingle(colorVals[2])) / (byteOverFloat ? 256 : 1);
-            }
-        }
-        else if (text[0] == '#')
+        if (text[0] == '#')
         {
             return Color.FromHtml(text);
         }
         else
         {
-            return new Color(0, 0, 0, 0);
+            string[] colorVals = SaveSystem.GetInParenthases(text, out string before);
+            switch(before)
+            {
+                case "rgb":
+                    return new Color(Convert.ToSingle(colorVals[0]), Convert.ToSingle(colorVals[1]), Convert.ToSingle(colorVals[2]), 1);
+                case "rgba":
+                    return new Color(Convert.ToSingle(colorVals[0]), Convert.ToSingle(colorVals[1]), Convert.ToSingle(colorVals[2]), Convert.ToSingle(colorVals[3]));
+            }
+            return new Color();
         }
     }
 

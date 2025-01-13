@@ -11,7 +11,7 @@ public partial class Songdisplay : Control
 	[Export] public Panel explicitLyrics;
 
 	int playlist, song;
-	bool isPlaying;
+	public bool isPlaying;
 	SongsVisualizer visualizer;
 	public override void _Ready()
 	{

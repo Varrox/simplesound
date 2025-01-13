@@ -86,7 +86,7 @@ public partial class Player : Node
             SongArtist.TooltipText = artist;
             Texture2D cover = ConvertToGodot.getCover(MainController.song);
             SongCover.Texture = cover;
-            if (MainController.playlist.BackgroundPath != null) BackgroundImage.Texture = ConvertToGodot.LoadImage(MainController.playlist.BackgroundPath, ref cover);
+            if (MainController.playlist.backgroundPath != null) BackgroundImage.Texture = ConvertToGodot.LoadImage(MainController.playlist.backgroundPath, ref cover);
             else BackgroundImage.Texture = cover;
         }
         else
@@ -153,6 +153,10 @@ public partial class Player : Node
 
         backgroundColor.Color = backgroundColor.Color.Lerp(bc.Clamp(new Color(), new Color(max, max, max, max)), (float)delta * 2f);
 
-        MainController.player.VolumeDb = (float)(VolumeSlider.Value != -50 ? VolumeSlider.Value : -80);
+        MainController.player.VolumeDb = (float)(VolumeSlider.Value != -50 ? VolumeSlider.Value : -80) + MainController.playlist.volume;
+        MainController.player.PitchScale = MainController.playlist.speed;
+        var effect = AudioServer.GetBusEffect(0, 0) as AudioEffectReverb;
+        effect.RoomSize = MainController.playlist.reverb;
+        //AudioServer.GetBusEffect();
     }
 }

@@ -23,7 +23,7 @@ public partial class PlaylistsVisualizer : Node
     {
         PlaylistDisplay playlist = template.Instantiate() as PlaylistDisplay;
         container.AddChild(playlist);
-        LoadDataIntoPlaylist(i, playlist, i == mainController.currentPlaylist);
+        LoadDataIntoPlaylist(i, playlist, i == mainController.currentLookingAtPlaylist);
     }
 
     public void LoadDataIntoPlaylist(int i, PlaylistDisplay playlist, bool current)
@@ -35,18 +35,18 @@ public partial class PlaylistsVisualizer : Node
     {
         Array<Node> playlists = container.GetChildren();
         int end = playlists.Count;
-        if(playlists.Count != mainController.playlists.Length)
+        if(playlists.Count != mainController.playlists.Length) // not length
         {
-            if (playlists.Count < mainController.playlists.Length)
+            if (playlists.Count < mainController.playlists.Length) // less
             {
                 for(int i = playlists.Count; i < mainController.playlists.Length - playlists.Count; i++)
                 {
                     LoadPlaylist(i);
                 }
             }
-            else
+            else // same or more
             {
-                for (int i = playlists.Count; i < playlists.Count - mainController.playlists.Length; i++)
+                for (int i = playlists.Count; i < playlists.Count - mainController.playlists.Length; i++) // delete the extra
                 {
                     playlists[i].QueueFree();
                     playlists.RemoveAt(i);

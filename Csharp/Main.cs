@@ -10,7 +10,9 @@ public partial class Main : Control
 	public bool loop, playing, random;
 
 	public int currentPlaylist, currentSong;
-	public Playlist playlist;
+	public string currentPlaylistPath, currentSongPath;
+    public int currentLookingAtPlaylist;
+    public Playlist playlist;
 	public string[] playlists;
 	
 	public float time, volume;
@@ -85,10 +87,25 @@ public partial class Main : Control
 		playlists = SaveSystem.GetAllPlaylists();
 	}
 
+	public void CheckIndex()
+	{
+		if (playlists[currentPlaylist] != currentPlaylistPath)
+		{
+			currentPlaylist = SaveSystem.Find(currentPlaylistPath, ref playlists);
+		}
+
+		if (song != currentSongPath)
+		{
+			string[] songs = playlist.songs.ToArray();
+            currentSong = SaveSystem.Find(currentSongPath, ref songs);
+        }
+	}
+
 	public void LoadPlaylist(int index)
 	{
 		currentPlaylist = index;
 		playlist = playlists.Length > 0 ? SaveSystem.LoadPlaylist(playlists[currentPlaylist]) : null;
+		currentPlaylistPath = playlist.path;
     }
 
 	public void Play()
@@ -151,6 +168,8 @@ public partial class Main : Control
 
 	public void Refresh()
 	{
-
-	}
+		LoadPlaylist(currentPlaylist);
+		EmitSignal(SignalName.OnLoadSong);
+		playlistvisualizer.UpdatePlaylists();
+    }
 }

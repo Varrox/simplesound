@@ -5,12 +5,11 @@ public partial class SongsVisualizer : Control
 {
 	[Export] public PackedScene Template;
     [Export] public Main main;
-	[Export] public PlaylistsVisualizer PlaylistsVisualizer;
+    [Export] public PlaylistsVisualizer PlaylistsVisualizer;
 	[Export] public Control menu, container;
     [Export] public Texture2D PlayTexture, Pause;
     [Export] public Color highlight;
 
-    public int currentPlaylist;
 	public Playlist Playlist;
 
 	public override void _Ready()
@@ -20,7 +19,7 @@ public partial class SongsVisualizer : Control
 
 	public void Load(int playlist, Texture2D playDisp)
 	{
-		currentPlaylist = playlist;
+		main.currentLookingAtPlaylist = playlist;
 		Playlist = SaveSystem.LoadPlaylist(main.playlists[playlist]);
 		var SongDisplays = container.GetChildren();
 		(SongDisplays[0].GetChild(0).GetChild(0) as TextureRect).Texture = playDisp;
@@ -33,7 +32,10 @@ public partial class SongsVisualizer : Control
 			for(int i = Playlist.songs.Count; i < SongDisplays.Count; i++)
 			{
 				var ds = SongDisplays[i] as Songdisplay;
-				main.OnPlay -= ds.SetTextures;
+				if(ds.isPlaying)
+				{
+                    main.OnPlay -= ds.SetTextures;
+                }
                 main.OnLoadSong -= ds.SetHighlight;
 				SongDisplays[i].QueueFree();
 			}
@@ -54,16 +56,16 @@ public partial class SongsVisualizer : Control
             }
 
 			// init the playlist
-            disp.init(SaveSystem.GetName(Playlist.songs[i]), Metadata.GetArtist(Playlist.songs[i]), SaveSystem.GetTimeFromSeconds(Metadata.GetTotalTime(Playlist.songs[i])), playlist, i, Metadata.IsExplicit(Playlist.songs[i]), this, ConvertToGodot.getCover(Playlist.songs[i]), menu);
+            disp.init(SaveSystem.GetName(Playlist.songs[i]), Metadata.GetArtist(Playlist.songs[i]), SaveSystem.GetTimeFromSeconds(Metadata.GetTotalTime(Playlist.songs[i])), playlist, i, Metadata.IsExplicit(Playlist.songs[i]), this, Playlist.type != Playlist.PlaylistType.Album ? ConvertToGodot.getCover(Playlist.songs[i]) : null, menu);
         }
 	}
 
 	public void UpdateSong(int index, string sname, string artist, string time, bool explicitlyrics, Texture2D texture)
 	{
-		if(currentPlaylist == main.currentPlaylist)
+		if(main.currentLookingAtPlaylist == main.currentPlaylist)
 		{
             Songdisplay disp = container.GetChild(index + 1) as Songdisplay;
-            disp.init(sname, artist, time, currentPlaylist, index, explicitlyrics, this, texture, menu);
+            disp.init(sname, artist, time, main.currentLookingAtPlaylist, index, explicitlyrics, this, texture, menu);
         }
     }
 }

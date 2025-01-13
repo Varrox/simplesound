@@ -24,6 +24,7 @@ public partial class PlaylistDisplay : Node
     public void Set()
     {
         visualizer.EmitSignal("OnSelectPlaylist", PlaylistIndex, Cover.Texture);
+        visualizer.mainController.currentLookingAtPlaylist = PlaylistIndex;
         Register.SelfModulate = SelectedColor;
     }
 

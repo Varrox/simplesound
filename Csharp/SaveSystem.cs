@@ -99,23 +99,6 @@ public class SaveSystem
         }
     }
 
-	public static void GetPlaylistAttributes(string filepath, out string name, out string coverpath, out int songcount)
-	{
-        string[] songpaths = File.ReadAllLines(filepath);
-        coverpath = !File.Exists(songpaths[0]) || songpaths[0].Trim() == "null" ? null : songpaths[0];
-		songcount = songpaths.Length - 1;
-
-        for (int i = 1; i < songpaths.Length; i++)
-        {
-            if (!File.Exists(songpaths[i]))
-            {
-				songcount--;
-            }
-        }
-
-		name = GetFileName(filepath);
-    }
-
 	public static string[] GetAllPlaylists()
 	{
 		return File.ReadAllLines(Path.Combine(UserData, "savedplaylists.txt"));
@@ -196,9 +179,9 @@ public class SaveSystem
 			output += $"\tCover : {playlist.Coverpath}\n";
         }
 
-		if (playlist.BackgroundPath != null)
+		if (playlist.backgroundPath != null)
 		{
-            output += $"\tBackground-Image : {playlist.BackgroundPath}\n";
+            output += $"\tBackground-Image : {playlist.backgroundPath}\n";
         }
 
         output += "}\n\n";
@@ -227,7 +210,7 @@ public class SaveSystem
             output += "}";
         }
 
-        string path = Path.Combine(UserData, "Playlists", playlist.Name + ".txt");
+        string path = Path.Combine(UserData, "Playlists", playlist.Name + ".ssl");
 		File.WriteAllText(path, output);
 		return path;
     }
@@ -235,6 +218,10 @@ public class SaveSystem
     public static void DeletePlaylist(Playlist playlist)
     {
         File.Delete(playlist.path);
+        string playlistSaver = Path.Combine(UserData, "savedplaylists.txt");
+		List<string> paths = new List<string>(File.ReadAllLines(playlistSaver));
+		paths.Remove(playlist.path);
+		File.WriteAllLines(playlistSaver, paths);
     }
 
     public static Playlist LoadPlaylist(string path)
@@ -253,7 +240,7 @@ public class SaveSystem
 			{
                 for (int t = i + 1; t < lines.Length; t++)
                 {
-                    string trimmedLine = lines[t].Trim();
+                    string trimmedLine = lines[t].Split("//")[0].Trim();
                     if (trimmedLine == "}")
                     {
                         i = t;
@@ -264,12 +251,12 @@ public class SaveSystem
                         continue;
                     }
 
-                    string[] split = trimmedLine.Split(':');
-					string var = split[0];
-                    string value = split[1];
-
-					if(var.Length > 0)
+                    if (trimmedLine.Length > 0)
 					{
+                        string[] split = SplitLine(trimmedLine);
+                        string var = split[0];
+                        string value = split[1];
+
                         switch (var)
                         {
                             case "Type":
@@ -285,6 +272,66 @@ public class SaveSystem
 
                         if (trimmedLine.EndsWith("}"))
                         {
+                            i = t;
+                            break;
+                        }
+                    }
+                }
+            }
+			else if(trimmedStartLine.StartsWith("Sound"))
+			{
+                for (int s = i + 1; s < lines.Length; s++)
+                {
+                    string trimmedLine = lines[s].Split("//")[0].Trim();
+                    if (trimmedLine == "}")
+                    {
+                        i = s;
+                        break;
+                    }
+                    else if (trimmedLine == "{")
+                    {
+                        continue;
+                    }
+
+                    if (trimmedLine.Length > 0)
+                    {
+                        string[] split = SplitLine(trimmedLine);
+                        string var = split[0];
+                        string value = split[1];
+
+                        switch (var)
+                        {
+                            case "Volume-Reactive":
+                                string[] vars = value.Split(',');
+                                foreach (string var2 in vars)
+                                {
+                                    string[] colors = GetInParenthases(var2, out string selectedVar);
+                                    bool4 color = new bool4(colors[0].Contains('r'), colors[0].Contains('g'), colors[0].Contains('b'), colors[0].Contains('a'));
+                                    switch (selectedVar)
+                                    { 
+                                        case "Overlay-Color":
+                                            playlist.overlayReactive = color;
+                                            break;
+                                        case "Background-Image":
+                                            playlist.backgroundReactive = color;
+                                            break;
+                                    }
+                                }
+                                break;
+                            case "Volume":
+                                playlist.volume = Convert.ToSingle(value);
+                                break;
+                            case "Speed":
+                                playlist.speed = Convert.ToSingle(value);
+                                break;
+                            case "Reverb":
+                                playlist.reverb = Convert.ToSingle(value);
+                                break;
+                        }
+
+                        if (trimmedLine.EndsWith("}"))
+                        {
+                            i = s;
                             break;
                         }
                     }
@@ -319,12 +366,13 @@ public class SaveSystem
                                     playlist.Coverpath = File.Exists(value) ? value : null;
                                     break;
                                 case "Background-Image":
-                                    playlist.BackgroundPath = File.Exists(value) ? value : null;
+                                    playlist.backgroundPath = File.Exists(value) ? value : null;
                                     break;
                             }
 
                             if (trimmedLine.EndsWith("}"))
                             {
+                                i = c;
                                 break;
                             }
                         }
@@ -357,6 +405,7 @@ public class SaveSystem
 
                             if (trimmedLine.EndsWith("}"))
                             {
+                                i = s;
                                 break;
                             }
                         }
@@ -387,6 +436,7 @@ public class SaveSystem
 
                             if (trimmedLine.EndsWith("}"))
                             {
+                                i = f;
                                 break;
                             }
                         }
@@ -399,11 +449,41 @@ public class SaveSystem
 		return playlist;
 	}
 
+	public static string[] GetInParenthases(string text, out string before)
+	{
+        // Format : Before(a, b, c)
+		
+		int start = text.IndexOf('(');
+
+		before = text.Substring(0, start - 1);
+
+		string[] output = text.Substring(start + 1, text.Length - start - 2).Split(',');
+
+        for (int i = 0; i < output.Length; i++)
+		{
+			output[i] = output[i].Trim();
+		}
+
+		return output;
+    }
+
 	public static string[] SplitLine(string line)
 	{
 		line = line.Split("//")[0];
         int index = line.IndexOf(':');
         return new[] {line.Substring(0, index).Trim(), line.Substring(index + 1).Trim()};
+	}
+
+	public static int Find(string what, ref string[] array)
+	{
+		for (int i = 0; i < array.Length; i++)
+		{
+			if (array[i] == what)
+			{
+				return i;
+			}
+		}
+		return 0;
 	}
 }
 
@@ -412,7 +492,11 @@ public class Playlist
 	public string Name, Coverpath, path;
 	public List<string> songs, folders;
 
-	public string overlayColor, BackgroundPath, artist;
+	public string overlayColor, backgroundPath, artist;
+
+    public bool4 overlayReactive, backgroundReactive;
+
+    public float volume = 0, speed = 1, reverb = 0;
 
 	public PlaylistType type = PlaylistType.Default;
 	public enum PlaylistType
@@ -450,4 +534,17 @@ public class Playlist
 
     public static bool operator true(Playlist obj) => obj != null;
     public static bool operator false(Playlist obj) => obj == null;
+}
+
+public struct bool4
+{
+    public bool r, g, b, a;
+    
+    public bool4(bool r, bool g, bool b, bool a)
+    {
+        this.r = r;
+        this.g = g;
+        this.b = b;
+        this.a = a;
+    }
 }
