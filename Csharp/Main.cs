@@ -65,6 +65,7 @@ public partial class Main : Control
 	public void LoadEverything()
 	{
 		SaveSystem.InitData(out currentPlaylist, out currentSong, out time, out volume);
+		currentLookingAtPlaylist = currentPlaylist;
 
 		// volume
 		player.VolumeDb = volume;
@@ -169,7 +170,7 @@ public partial class Main : Control
 	public void Refresh()
 	{
 		LoadPlaylist(currentPlaylist);
-		EmitSignal(SignalName.OnLoadSong);
-		playlistvisualizer.UpdatePlaylists();
+        playlistvisualizer.UpdatePlaylists();
+        EmitSignal(SignalName.OnLoadSong);
     }
 }

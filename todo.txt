@@ -7,3 +7,7 @@ TODO
 - Add song position rearange
 - Lerp background image to transition
 - Make top card playbutton functionality
+- Fix song play pause icon
+- Add sorting
+- Add basic gdshader support to ssl
+- Add images to ssl

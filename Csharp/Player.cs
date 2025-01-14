@@ -157,6 +157,6 @@ public partial class Player : Node
         MainController.player.PitchScale = MainController.playlist.speed;
         var effect = AudioServer.GetBusEffect(0, 0) as AudioEffectReverb;
         effect.RoomSize = MainController.playlist.reverb;
-        //AudioServer.GetBusEffect();
+        effect.Wet = MainController.playlist.reverb / 100;
     }
 }

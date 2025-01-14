@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://cbpkjhjnbrjm6"]
+[gd_scene load_steps=42 format=3 uid="uid://cbpkjhjnbrjm6"]
 
 [ext_resource type="Script" path="res://Csharp/Main.cs" id="1_l00ml"]
 [ext_resource type="Script" path="res://Csharp/Player.cs" id="2_632yu"]
@@ -26,7 +26,9 @@
 [ext_resource type="PackedScene" uid="uid://dle5y658wmx03" path="res://Prefabs/Attribute Editor.tscn" id="17_f7c3k"]
 [ext_resource type="Texture2D" uid="uid://b8ldjgpmsaxgu" path="res://Icons/shuffle.png" id="20_fkbne"]
 [ext_resource type="StyleBox" uid="uid://bhcyqvvim6l5e" path="res://Rounded Corners.tres" id="21_jy3dx"]
+[ext_resource type="Texture2D" uid="uid://bwftf22dhh4du" path="res://Icons/refresh.png" id="23_7r5f6"]
 [ext_resource type="Script" path="res://Discord.gd" id="24_crcn0"]
+[ext_resource type="Script" path="res://Csharp/RefreshButton.cs" id="24_xd8i8"]
 [ext_resource type="PackedScene" uid="uid://dtfoexo3o7b3p" path="res://Prefabs/playlistcontext.tscn" id="26_gbh2w"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n3cvr"]
@@ -394,6 +396,27 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_wx3lt")
 icon = ExtResource("12_s6aix")
 icon_alignment = 1
 expand_icon = true
+
+[node name="Refresh" type="Button" parent="Interface/Top Bar" node_paths=PackedStringArray("main")]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -77.0
+offset_top = -16.0
+offset_right = -46.0
+offset_bottom = 15.0
+grow_horizontal = 0
+grow_vertical = 2
+focus_mode = 0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wx3lt")
+icon = ExtResource("23_7r5f6")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("24_xd8i8")
+main = NodePath("../../..")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Interface/Top Bar"]
 layout_mode = 1

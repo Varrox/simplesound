@@ -20,7 +20,10 @@ public partial class SongsVisualizer : Control
 	public void Load(int playlist, Texture2D playDisp)
 	{
 		main.currentLookingAtPlaylist = playlist;
-		Playlist = SaveSystem.LoadPlaylist(main.playlists[playlist]);
+
+		if(playlist == main.currentPlaylist) Playlist = main.playlist;
+		else Playlist = SaveSystem.LoadPlaylist(main.playlists[playlist]);
+
 		var SongDisplays = container.GetChildren();
 		(SongDisplays[0].GetChild(0).GetChild(0) as TextureRect).Texture = playDisp;
         (SongDisplays[0].GetChild(1) as Label).Text = Playlist.Name;

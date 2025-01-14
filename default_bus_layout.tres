@@ -1,9 +1,15 @@
-[gd_resource type="AudioBusLayout" load_steps=2 format=3 uid="uid://c34ugugid1knj"]
+[gd_resource type="AudioBusLayout" load_steps=3 format=3 uid="uid://c34ugugid1knj"]
 
 [sub_resource type="AudioEffectReverb" id="AudioEffectReverb_ga3na"]
 resource_name = "Reverb"
 room_size = 0.0
+wet = 0.0
+
+[sub_resource type="AudioEffectSpectrumAnalyzer" id="AudioEffectSpectrumAnalyzer_rmc1a"]
+resource_name = "SpectrumAnalyzer"
 
 [resource]
 bus/0/effect/0/effect = SubResource("AudioEffectReverb_ga3na")
-bus/0/effect/0/enabled = false
+bus/0/effect/0/enabled = true
+bus/0/effect/1/effect = SubResource("AudioEffectSpectrumAnalyzer_rmc1a")
+bus/0/effect/1/enabled = true

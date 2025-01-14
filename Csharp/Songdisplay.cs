@@ -25,7 +25,8 @@ public partial class Songdisplay : Control
 
 	public void SetHighlight()
 	{
-		Main Main = GetTree().CurrentScene as Main;
+		Main Main = visualizer.main;
+		isPlaying = false;
 
 		if (Main.currentPlaylist == playlist && Main.currentSong == song) // highlight
 		{
@@ -93,7 +94,7 @@ public partial class Songdisplay : Control
 
 	public void SetSong()
 	{
-		Main Main = GetTree().CurrentScene as Main;
+		Main Main = visualizer.main;
 
 		if(Main.currentPlaylist != playlist)
 		{
