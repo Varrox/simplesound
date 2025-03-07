@@ -35,12 +35,11 @@ public partial class SongsVisualizer : Control
 			for(int i = Playlist.songs.Count; i < SongDisplays.Count; i++)
 			{
 				var ds = SongDisplays[i] as Songdisplay;
-				if(ds.isPlaying)
-				{
-                    main.OnPlay -= ds.SetTextures;
-                }
+                main.OnPlay -= ds.SetTextures;
                 main.OnLoadSong -= ds.SetHighlight;
 				SongDisplays[i].QueueFree();
+                SongDisplays.RemoveAt(i);
+				i--;
 			}
 		}
 

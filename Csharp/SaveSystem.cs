@@ -115,8 +115,9 @@ public class SaveSystem
 
 		foreach (string song in songs)
 		{ 
-			if(song.EndsWith(".mp3"))
-			{
+			if(song.EndsWith(".mp3") || song.EndsWith(".wav") || song.EndsWith(".ogg"))
+
+            {
 				File.Copy(song, Path.Combine(newPath, Path.GetFileName(song)));
 			}
 		}
@@ -137,7 +138,7 @@ public class SaveSystem
             string[] songs = Directory.GetFiles(directory);
             foreach (string song in songs)
             {
-                if (song.EndsWith(".mp3"))
+                if (song.EndsWith(".mp3") || song.EndsWith(".wav") || song.EndsWith(".ogg"))
                 {
                     playlist.songs.Add(song);
                 }
@@ -145,8 +146,7 @@ public class SaveSystem
         }
 		else
 		{
-			playlist.folders = new List<string>();
-			playlist.folders.Add(directory);
+			playlist.folders = new List<string>(new []{directory});
 		}
 
 		return CreatePlaylist(playlist);
@@ -399,7 +399,7 @@ public class SaveSystem
 					{
                         string songPath = Path.Combine(UserData, "Music Folders", trimmedLine.Split("//")[0].Trim());
 
-                        if (songPath.EndsWith(".mp3") && File.Exists(songPath))
+                        if ((songPath.EndsWith(".mp3") || songPath.EndsWith(".wav") || songPath.EndsWith(".ogg")) && File.Exists(songPath))
                         {
                             playlist.songs.Add(songPath);
 
@@ -449,25 +449,60 @@ public class SaveSystem
 		return playlist;
 	}
 
-	public static string[] GetInParenthases(string text, out string before)
-	{
-        // Format : Before(a, b, c)
-		
-		int start = text.IndexOf('(');
+    public static string[] GetInParenthases(string line, out string method)
+    {
+        int index = line.IndexOf('(');
+        method = line.Substring(0, index);
 
-		before = text.Substring(0, start - 1);
+        int starts = 1;
+        int ends = 0;
+        int lastCut = index + 1;
+        bool stringWrap = false;
+        string[] output = new string[0];
 
-		string[] output = text.Substring(start + 1, text.Length - start - 2).Split(',');
+        for (int i = index + 1; i < line.Length; i++)
+        {
+            // check if string
 
-        for (int i = 0; i < output.Length; i++)
-		{
-			output[i] = output[i].Trim();
-		}
+            if (line[i] == '"')
+            {
+                stringWrap = !stringWrap;
+            }
 
-		return output;
+            // skip string
+
+            else if (!stringWrap)
+            {
+                if (line[i] == '(' || line[i] == '{')
+                {
+                    starts++;
+                }
+                else if (line[i] == ')' || line[i] == '}')
+                {
+                    ends++;
+
+                    // end
+
+                    if (starts == ends)
+                    {
+                        AddToArray(ref output, line.Substring(lastCut, i - lastCut).Trim());
+                        break;
+                    }
+                }
+                else if ((line[i] == ',') && ((starts - ends) < 2))
+                {
+                    // finish argument
+
+                    AddToArray(ref output, line.Substring(lastCut, i - lastCut).Trim());
+                    lastCut = i + 1;
+                }
+            }
+        }
+
+        return output;
     }
 
-	public static string[] SplitLine(string line)
+    public static string[] SplitLine(string line)
 	{
 		line = line.Split("//")[0];
         int index = line.IndexOf(':');
@@ -485,55 +520,17 @@ public class SaveSystem
 		}
 		return 0;
 	}
-}
 
-public class Playlist
-{
-	public string Name, Coverpath, path;
-	public List<string> songs, folders;
+    public static void AddToArray<T>(ref T[] array, T item)
+    {
+        T[] newArray = new T[array.Length + 1];
 
-	public string overlayColor, backgroundPath, artist;
+        array.CopyTo(newArray, 0);
 
-    public bool4 overlayReactive, backgroundReactive;
+        newArray[array.Length] = item;
 
-    public float volume = 0, speed = 1, reverb = 0;
-
-	public PlaylistType type = PlaylistType.Default;
-	public enum PlaylistType
-	{
-		Default,
-		Album,
-		Folder
-	}
-
-	public void Save()
-	{
-		SaveSystem.CreatePlaylist(this);
-	}
-
-	public void SetType(string t)
-	{
-		switch(t)
-		{
-			case "Default":
-				type = PlaylistType.Default; break;
-			case "Album":
-				type = PlaylistType.Album; break;
-			case "Folder": 
-				type = PlaylistType.Folder; break;
-		}
-	}
-
-	public void LoadFromFolders()
-	{
-		foreach (string f in folders)
-		{
-			songs.AddRange(Directory.GetFiles(f));
-		}
-	}
-
-    public static bool operator true(Playlist obj) => obj != null;
-    public static bool operator false(Playlist obj) => obj == null;
+        array = newArray;
+    }
 }
 
 public struct bool4

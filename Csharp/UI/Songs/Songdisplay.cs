@@ -47,7 +47,7 @@ public partial class Songdisplay : Control
 
 	public void SetTextures(bool playing)
 	{
-        Playbutton.Texture = playing ? visualizer.Pause : visualizer.PlayTexture;
+		Playbutton.Texture = playing ? visualizer.Pause : visualizer.PlayTexture;
     }
 
 	public void onEnter()

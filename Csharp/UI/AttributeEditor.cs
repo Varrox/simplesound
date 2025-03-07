@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public partial class AttributeEditor : Node
 {
@@ -22,6 +21,7 @@ public partial class AttributeEditor : Node
         SubmitButton.ButtonDown += submit;
         CoverButton.ButtonDown += cover;
         CancelButton.ButtonDown += Cancel;
+        CoverFileDialog.FileSelected += submitCover;
     }
 
     public override void _Process(double delta)
@@ -70,8 +70,12 @@ public partial class AttributeEditor : Node
     public void cover()
     {
         CoverFileDialog.Popup();
-        coverpath = CoverFileDialog.CurrentFile;
-        CoverLabel.Text = coverpath;
         coverChanged = true;
+    }
+
+    public void submitCover(string path)
+    {
+        coverpath = path;
+        CoverLabel.Text = path;
     }
 }

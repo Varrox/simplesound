@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://5kfxiu06xug0"]
 
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Fonts/DefaultFont.tres" id="1_8t6yf"]
-[ext_resource type="Script" path="res://Csharp/CreatePlaylist.cs" id="1_b0noq"]
+[ext_resource type="Script" uid="uid://bnk1pcof0h5i" path="res://Csharp/CreatePlaylist.cs" id="1_b0noq"]
 [ext_resource type="Texture2D" uid="uid://c85envuiuo3ju" path="res://Icons/folder.png" id="2_5l8pw"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_acdqb"]

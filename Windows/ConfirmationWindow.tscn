@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bw078i5dk5ff4"]
 
-[ext_resource type="Script" path="res://Csharp/ConfirmationWindow.cs" id="1_3wopc"]
+[ext_resource type="Script" uid="uid://b4xa24nss1paj" path="res://Csharp/ConfirmationWindow.cs" id="1_3wopc"]
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Fonts/DefaultFont.tres" id="2_jua8g"]
 
 [node name="ConfirmationWindow" type="Window" node_paths=PackedStringArray("accept", "cancel", "message")]

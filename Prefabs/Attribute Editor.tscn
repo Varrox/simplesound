@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://dle5y658wmx03"]
 
-[ext_resource type="Script" path="res://Csharp/AttributeEditor.cs" id="1_cj5je"]
+[ext_resource type="Script" uid="uid://cbcyd3b72ilbx" path="res://Csharp/AttributeEditor.cs" id="1_cj5je"]
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Fonts/DefaultFont.tres" id="1_ot5f1"]
 [ext_resource type="Texture2D" uid="uid://c85envuiuo3ju" path="res://Icons/folder.png" id="3_5xnwa"]
 

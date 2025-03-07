@@ -1,11 +1,11 @@
 [gd_scene load_steps=10 format=3 uid="uid://dlh34aq4t8tvu"]
 
-[ext_resource type="Script" path="res://Csharp/Songdisplay.cs" id="1_qnwii"]
+[ext_resource type="Script" uid="uid://cocebfd2g1u0k" path="res://Csharp/Songdisplay.cs" id="1_qnwii"]
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Fonts/DefaultFont.tres" id="2_rrqbv"]
 [ext_resource type="Texture2D" uid="uid://cksbdmhr2s8yy" path="res://Icons/DefaultCover.png" id="3_aqj3n"]
 [ext_resource type="Texture2D" uid="uid://23nnkoswyxm8" path="res://Icons/play.png" id="4_4uf0g"]
 [ext_resource type="Texture2D" uid="uid://bfdwehd6cajgg" path="res://Icons/more.png" id="4_26211"]
-[ext_resource type="Script" path="res://Csharp/ContextMenu.cs" id="5_djgw6"]
+[ext_resource type="Script" uid="uid://c0jk2qonoboo2" path="res://Csharp/ContextMenu.cs" id="5_djgw6"]
 [ext_resource type="StyleBox" uid="uid://bhcyqvvim6l5e" path="res://Rounded Corners.tres" id="6_2m43a"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rv41x"]

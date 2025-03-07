@@ -143,10 +143,21 @@ public partial class Main : Control
 
 		if (FileAccess.FileExists(playlist.songs[currentSong]))
 		{
-			AudioStreamMP3 song = new AudioStreamMP3();
-			song.Data = FileAccess.GetFileAsBytes(playlist.songs[currentSong]);
-			player.Stream = song;
-			EmitSignal(SignalName.OnLoadSong);
+			if(playlist.songs[currentSong].EndsWith(".mp3"))
+			{
+                AudioStreamMP3 song = new AudioStreamMP3();
+                song.Data = FileAccess.GetFileAsBytes(playlist.songs[currentSong]);
+                player.Stream = song;
+            }
+			else if(playlist.songs[currentSong].EndsWith(".wav"))
+			{
+				player.Stream = AudioStreamWav.LoadFromBuffer(FileAccess.GetFileAsBytes(playlist.songs[currentSong]));
+            }
+            else if (playlist.songs[currentSong].EndsWith(".ogg"))
+            {
+                player.Stream = AudioStreamOggVorbis.LoadFromBuffer(FileAccess.GetFileAsBytes(playlist.songs[currentSong]));
+            }
+            EmitSignal(SignalName.OnLoadSong);
 		}
 		else // if the file doesn't exist
 		{

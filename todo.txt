@@ -11,3 +11,5 @@ TODO
 - Add sorting
 - Add basic gdshader support to ssl
 - Add images to ssl
+- Add music video playing
+- Create sssl
