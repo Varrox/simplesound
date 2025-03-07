@@ -1,4 +1,5 @@
 using Godot;
+using SSLParser;
 using System.IO;
 
 public partial class SongsVisualizer : Control
@@ -22,7 +23,7 @@ public partial class SongsVisualizer : Control
 		main.currentLookingAtPlaylist = playlist;
 
 		if(playlist == main.currentPlaylist) Playlist = main.playlist;
-		else Playlist = SaveSystem.LoadPlaylist(main.playlists[playlist]);
+		else Playlist = MainParser.ParsePlaylist(main.playlists[playlist]);
 
 		var SongDisplays = container.GetChildren();
 		(SongDisplays[0].GetChild(0).GetChild(0) as TextureRect).Texture = playDisp;
@@ -58,7 +59,7 @@ public partial class SongsVisualizer : Control
             }
 
 			// init the playlist
-            disp.init(Tools.GetMediaTitle(Playlist.Songs[i]), Metadata.GetArtist(Playlist.Songs[i]), Tools.SecondsToTimestamp(Metadata.GetTotalTime(Playlist.Songs[i])), playlist, i, Metadata.IsExplicit(Playlist.Songs[i]), this, Playlist.type != Playlist.PlaylistType.Album ? ConvertToGodot.getCover(Playlist.Songs[i]) : null, menu);
+            disp.init(Tools.GetMediaTitle(Playlist.Songs[i]), Metadata.GetArtist(Playlist.Songs[i]), Tools.SecondsToTimestamp(Metadata.GetTotalTime(Playlist.Songs[i])), playlist, i, Metadata.IsExplicit(Playlist.Songs[i]), this, Playlist.type != Playlist.PlaylistType.Album ? ConvertToGodot.GetCover(Playlist.Songs[i]) : null, menu);
         }
 	}
 

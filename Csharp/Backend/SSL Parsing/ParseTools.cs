@@ -54,5 +54,15 @@ namespace SSLParser
 
             return output;
         }
+
+        /// <summary>
+        /// Returns a formatted line of code
+        /// </summary>
+        /// <param name="text">line of code</param>
+        /// <returns>formatted code</returns>
+        public static string FormatCode(string text)
+        {
+            return text.Split("//")[0].Trim();
+        }
     }
 }

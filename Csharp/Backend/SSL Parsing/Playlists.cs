@@ -6,11 +6,8 @@ public class Playlist
     public string Name, Coverpath, Path;
     public List<string> Songs, Folders;
 
-    public string overlayColor, backgroundPath, artist;
-
-    public bool4 overlayReactive, backgroundReactive;
-
-    public float volume = 0, speed = 1, reverb = 0;
+    public string artist;
+    public CustomInfo customInfo;
 
     public PlaylistType type = PlaylistType.Default;
     public enum PlaylistType
@@ -25,12 +22,12 @@ public class Playlist
         SaveSystem.CreatePlaylist(this);
     }
 
-    public void Delete(Playlist playlist)
+    public void DeleteFile()
     {
-        File.Delete(playlist.Path);
+        File.Delete(Path);
         string playlistSaver = System.IO.Path.Combine(SaveSystem.UserData, "savedplaylists.txt");
         List<string> paths = new List<string>(File.ReadAllLines(playlistSaver));
-        paths.Remove(playlist.Path);
+        paths.Remove(Path);
         File.WriteAllLines(playlistSaver, paths);
     }
 
@@ -86,5 +83,17 @@ public class Playlist
         }
 
         return playlist;
+    }
+}
+
+public struct CustomInfo
+{
+    public string overlayColor, backgroundPath;
+    public bool4 overlayReactive, backgroundReactive;
+    public float volume = 0, speed = 1, reverb = 0;
+
+    public CustomInfo()
+    {
+
     }
 }

@@ -1,4 +1,5 @@
 using Godot;
+using SSLParser;
 
 public partial class Main : Control
 {
@@ -105,7 +106,7 @@ public partial class Main : Control
 	public void LoadPlaylist(int index)
 	{
 		currentPlaylist = index;
-		playlist = playlists.Length > 0 ? SaveSystem.LoadPlaylist(playlists[currentPlaylist]) : null;
+		playlist = playlists.Length > 0 ? MainParser.ParsePlaylist(playlists[currentPlaylist]) : null;
 		currentPlaylistPath = playlist.Path;
     }
 

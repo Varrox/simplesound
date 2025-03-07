@@ -84,7 +84,7 @@ public partial class Player : Node
             string artist = Metadata.GetArtist(MainController.song);
             SongArtist.Text = artist;
             SongArtist.TooltipText = artist;
-            Texture2D cover = ConvertToGodot.getCover(MainController.song);
+            Texture2D cover = ConvertToGodot.GetCover(MainController.song);
             SongCover.Texture = cover;
             if (MainController.playlist.backgroundPath != null) BackgroundImage.Texture = ConvertToGodot.LoadImage(MainController.playlist.backgroundPath, ref cover);
             else BackgroundImage.Texture = cover;

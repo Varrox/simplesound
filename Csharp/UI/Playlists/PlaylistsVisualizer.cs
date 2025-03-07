@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using SSLParser;
 
 public partial class PlaylistsVisualizer : Node
 {
@@ -28,7 +29,7 @@ public partial class PlaylistsVisualizer : Node
 
     public void LoadDataIntoPlaylist(int i, PlaylistDisplay playlist, bool current)
     {
-        playlist.init(SaveSystem.LoadPlaylist(mainController.playlists[i]), i, this, current, moreMenu);
+        playlist.init(MainParser.ParsePlaylist(mainController.playlists[i]), i, this, current, moreMenu);
     }
 
     public void UpdatePlaylists()

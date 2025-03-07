@@ -4,7 +4,7 @@ using System;
 
 public class ConvertToGodot
 {
-    public static Texture2D getCover(string path)
+    public static Texture2D GetCover(string path)
     {
         byte[] pictureData = Metadata.GetCover(path, out string type);
         if (pictureData == null) return ImageTexture.CreateFromImage(ResourceLoader.Load<Texture2D>("res://Icons/DefaultCover.png").GetImage());
@@ -58,21 +58,23 @@ public class ConvertToGodot
         }
         else
         {
-            string[] colorVals = ParsingTools.GetInParenthases(text, out string before);
-            switch(before)
+            string[] colorVals = ParsingTools.GetInParenthases(text, out string argument);
+            switch(argument)
             {
                 case "rgb":
                     return new Color(Convert.ToSingle(colorVals[0]), Convert.ToSingle(colorVals[1]), Convert.ToSingle(colorVals[2]), 1);
                 case "rgba":
                     return new Color(Convert.ToSingle(colorVals[0]), Convert.ToSingle(colorVals[1]), Convert.ToSingle(colorVals[2]), Convert.ToSingle(colorVals[3]));
             }
+
+            GD.PrintErr("Could not parse color properly, invalid argument");
             return new Color();
         }
     }
 
     public static Texture2D LoadImage(string filename, ref Texture2D fallback)
     {
-        var img = new Image();
+        Image img = new Image();
         if (img.Load(filename) == Error.Ok) return ImageTexture.CreateFromImage(img);
         else return fallback;
     }
