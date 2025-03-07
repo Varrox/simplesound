@@ -6,7 +6,7 @@ public class Playlist
     public string Name, Coverpath, Path;
     public List<string> Songs, Folders;
 
-    public string artist;
+    public string Artist;
     public CustomInfo customInfo;
 
     public PlaylistType type = PlaylistType.Default;

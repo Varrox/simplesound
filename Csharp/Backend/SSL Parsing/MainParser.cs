@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace SSLParser
 {
@@ -59,6 +58,8 @@ namespace SSLParser
                     continue;
                 }
 
+                
+
                 if (trimmedLine.Length > 0)
                 {
                     string[] split = SplitLine(trimmedLine);
@@ -71,13 +72,12 @@ namespace SSLParser
                             playlist.SetType(value);
                             break;
                         case "Artist":
-                            playlist.artist = value;
+                            playlist.Artist = value;
                             break;
                         case "Overlay-Color":
                             playlist.customInfo.overlayColor = value;
                             break;
                     }
-
                     if (trimmedLine.EndsWith("}"))
                     {
                         index = i;

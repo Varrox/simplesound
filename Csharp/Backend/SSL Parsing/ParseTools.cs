@@ -1,3 +1,6 @@
+using System;
+using System.Reflection;
+
 namespace SSLParser
 {
     public class ParsingTools
@@ -63,6 +66,23 @@ namespace SSLParser
         public static string FormatCode(string text)
         {
             return text.Split("//")[0].Trim();
+        }
+
+        public static void SetVariable(string variable, string value, ref Type objectType, object obj)
+        {
+            foreach (FieldInfo field in objectType.GetFields(BindingFlags.Public))
+            {
+                if (field.Name == variable)
+                {
+                    switch(field.GetType())
+                    {
+
+                    }
+                    
+                    // Add type filtering
+                    field.SetValue(obj, value);
+                }
+            }
         }
     }
 }

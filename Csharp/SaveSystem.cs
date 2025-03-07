@@ -104,9 +104,9 @@ public class SaveSystem
 			output += $"{TAB}Type : {playlist.type.ToString()}\n";
 		}
 
-		if (playlist.artist != null)
+		if (playlist.Artist != null)
 		{
-			output += $"{TAB}Artist : {playlist.artist}\n";
+			output += $"{TAB}Artist : {playlist.Artist}\n";
 		}
 
 		if(playlist.customInfo.overlayColor != null)
