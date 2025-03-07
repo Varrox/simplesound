@@ -27,7 +27,7 @@ public partial class Main : Control
 	{
 		get
 		{
-			return playlist.songs[currentSong];
+			return playlist.Songs[currentSong];
         }
 	}
 
@@ -92,13 +92,13 @@ public partial class Main : Control
 	{
 		if (playlists[currentPlaylist] != currentPlaylistPath)
 		{
-			currentPlaylist = SaveSystem.Find(currentPlaylistPath, ref playlists);
+			currentPlaylist = Tools.FindString(currentPlaylistPath, ref playlists);
 		}
 
 		if (song != currentSongPath)
 		{
-			string[] songs = playlist.songs.ToArray();
-            currentSong = SaveSystem.Find(currentSongPath, ref songs);
+			string[] songs = playlist.Songs.ToArray();
+            currentSong = Tools.FindString(currentSongPath, ref songs);
         }
 	}
 
@@ -106,7 +106,7 @@ public partial class Main : Control
 	{
 		currentPlaylist = index;
 		playlist = playlists.Length > 0 ? SaveSystem.LoadPlaylist(playlists[currentPlaylist]) : null;
-		currentPlaylistPath = playlist.path;
+		currentPlaylistPath = playlist.Path;
     }
 
 	public void Play()
@@ -125,7 +125,7 @@ public partial class Main : Control
 			{
 				shuffleIndex += amount;
 				GD.Seed((ulong)shuffleIndex);
-				currentSong = GD.RandRange(0, playlist.songs.Count - 1); 
+				currentSong = GD.RandRange(0, playlist.Songs.Count - 1); 
 			}
 			else currentSong += amount;
 			time = 0;
@@ -137,32 +137,32 @@ public partial class Main : Control
 
 	public void InitSong()
 	{
-		int lastIndex = playlist.songs.Count - 1;
+		int lastIndex = playlist.Songs.Count - 1;
 		currentSong = currentSong < 0 ? lastIndex + currentSong + 1 : currentSong;
 		currentSong = currentSong > lastIndex ? currentSong - lastIndex - 1 : currentSong;
 
-		if (FileAccess.FileExists(playlist.songs[currentSong]))
+		if (FileAccess.FileExists(playlist.Songs[currentSong]))
 		{
-			if(playlist.songs[currentSong].EndsWith(".mp3"))
+			if(playlist.Songs[currentSong].EndsWith(".mp3"))
 			{
                 AudioStreamMP3 song = new AudioStreamMP3();
-                song.Data = FileAccess.GetFileAsBytes(playlist.songs[currentSong]);
+                song.Data = FileAccess.GetFileAsBytes(playlist.Songs[currentSong]);
                 player.Stream = song;
             }
-			else if(playlist.songs[currentSong].EndsWith(".wav"))
+			else if(playlist.Songs[currentSong].EndsWith(".wav"))
 			{
-				player.Stream = AudioStreamWav.LoadFromBuffer(FileAccess.GetFileAsBytes(playlist.songs[currentSong]));
+				player.Stream = AudioStreamWav.LoadFromBuffer(FileAccess.GetFileAsBytes(playlist.Songs[currentSong]));
             }
-            else if (playlist.songs[currentSong].EndsWith(".ogg"))
+            else if (playlist.Songs[currentSong].EndsWith(".ogg"))
             {
-                player.Stream = AudioStreamOggVorbis.LoadFromBuffer(FileAccess.GetFileAsBytes(playlist.songs[currentSong]));
+                player.Stream = AudioStreamOggVorbis.LoadFromBuffer(FileAccess.GetFileAsBytes(playlist.Songs[currentSong]));
             }
             EmitSignal(SignalName.OnLoadSong);
 		}
 		else // if the file doesn't exist
 		{
-			GD.PrintErr($"{playlist.songs[currentSong]} doesn't exist");
-			playlist.songs.RemoveAt(currentSong);
+			GD.PrintErr($"{playlist.Songs[currentSong]} doesn't exist");
+			playlist.Songs.RemoveAt(currentSong);
 			playlist.Save();
 			InitSong();
 		}
@@ -170,7 +170,7 @@ public partial class Main : Control
 
 	public void EditMeta(string name, string artist, string coverpath, bool explicitLyrics)
 	{
-		if(playlist) Metadata.SetData(playlist.songs[currentSong], name, artist, coverpath, explicitLyrics);
+		if(playlist) Metadata.SetData(playlist.Songs[currentSong], name, artist, coverpath, explicitLyrics);
 	}
 
 	public void SaveData()

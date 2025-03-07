@@ -27,12 +27,12 @@ public partial class SongsVisualizer : Control
 		var SongDisplays = container.GetChildren();
 		(SongDisplays[0].GetChild(0).GetChild(0) as TextureRect).Texture = playDisp;
         (SongDisplays[0].GetChild(1) as Label).Text = Playlist.Name;
-		(SongDisplays[0].GetChild(2) as Label).Text = $"{Playlist.songs.Count} song" + (Playlist.songs.Count != 1 ? "s" : "");
+		(SongDisplays[0].GetChild(2) as Label).Text = $"{Playlist.Songs.Count} song" + (Playlist.Songs.Count != 1 ? "s" : "");
         SongDisplays.RemoveAt(0);
 
-		if(SongDisplays.Count > Playlist.songs.Count) // delete overflow
+		if(SongDisplays.Count > Playlist.Songs.Count) // delete overflow
 		{
-			for(int i = Playlist.songs.Count; i < SongDisplays.Count; i++)
+			for(int i = Playlist.Songs.Count; i < SongDisplays.Count; i++)
 			{
 				var ds = SongDisplays[i] as Songdisplay;
                 main.OnPlay -= ds.SetTextures;
@@ -43,7 +43,7 @@ public partial class SongsVisualizer : Control
 			}
 		}
 
-        for (int i = 0; i < Playlist.songs.Count; i++) // update all
+        for (int i = 0; i < Playlist.Songs.Count; i++) // update all
 		{
 			Songdisplay disp = null;
 
@@ -58,7 +58,7 @@ public partial class SongsVisualizer : Control
             }
 
 			// init the playlist
-            disp.init(SaveSystem.GetName(Playlist.songs[i]), Metadata.GetArtist(Playlist.songs[i]), SaveSystem.GetTimeFromSeconds(Metadata.GetTotalTime(Playlist.songs[i])), playlist, i, Metadata.IsExplicit(Playlist.songs[i]), this, Playlist.type != Playlist.PlaylistType.Album ? ConvertToGodot.getCover(Playlist.songs[i]) : null, menu);
+            disp.init(Tools.GetMediaTitle(Playlist.Songs[i]), Metadata.GetArtist(Playlist.Songs[i]), Tools.SecondsToTimestamp(Metadata.GetTotalTime(Playlist.Songs[i])), playlist, i, Metadata.IsExplicit(Playlist.Songs[i]), this, Playlist.type != Playlist.PlaylistType.Album ? ConvertToGodot.getCover(Playlist.Songs[i]) : null, menu);
         }
 	}
 

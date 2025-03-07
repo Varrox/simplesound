@@ -1,43 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using SSLParser;
 
 public class SaveSystem
 {
-	public static string UserData
-	{
-		get
-		{
-			return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "simplesound");
-        }
-	}
-
-	public static string GetName(string songPath)
-	{
-		return Metadata.GetName(songPath) ?? GetFileName(songPath);
-	}
-
-	public static string GetFileName(string path)
-	{
-        return Path.GetFileNameWithoutExtension(path);
-    }
-
-	public static string GetTimeFromSeconds(float time)
-	{
-		int mins = (int)time / 60;
-
-		string hours = (mins/60).ToString();
-
-		string minsmodsixty = (mins%60).ToString();
-
-		string minutes = (mins%60) < 10 ? (mins < 10 ? $"{minsmodsixty}" : minsmodsixty) : minsmodsixty;
-
-		int inttimemodsixty = (int)(time % 60);
-
-        string seconds = inttimemodsixty < 10 ? $"0{inttimemodsixty}" : inttimemodsixty.ToString();
-
-		return (int)(time / 3600) != 0 ? $"{hours}:{minutes}:{seconds}" : $"{minutes}:{seconds}";
-	}
+	public static readonly string UserData = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "simplesound");
 
 	public static void InitData(out int playlistIndex, out int songIndex, out float currentTime, out float volume)
 	{
@@ -107,7 +75,7 @@ public class SaveSystem
 	public static string ImportFolder(string path)
 	{
         // Create new folder
-		string newPath = Path.Combine(UserData, "Music Folders", GetName(path));
+		string newPath = Path.Combine(UserData, "Music Folders", Path.GetDirectoryName(path));
         Directory.CreateDirectory(newPath);
 
 		// Copy all music files to the folder
@@ -115,8 +83,7 @@ public class SaveSystem
 
 		foreach (string song in songs)
 		{ 
-			if(song.EndsWith(".mp3") || song.EndsWith(".wav") || song.EndsWith(".ogg"))
-
+			if(Tools.ValidAudioFile(song))
             {
 				File.Copy(song, Path.Combine(newPath, Path.GetFileName(song)));
 			}
@@ -125,32 +92,16 @@ public class SaveSystem
 		return newPath;
     }
 
-	public static string CreatePlaylistFromFolder(string directory, string coverpath, bool sync)
-	{
-		Playlist playlist = new Playlist();
-		playlist.Coverpath = coverpath;
-		playlist.Name = Path.GetDirectoryName(directory);
-		
-
-		if(!sync)
-		{
-            playlist.songs = new List<string>();
-            string[] songs = Directory.GetFiles(directory);
-            foreach (string song in songs)
-            {
-                if (song.EndsWith(".mp3") || song.EndsWith(".wav") || song.EndsWith(".ogg"))
-                {
-                    playlist.songs.Add(song);
-                }
-            }
-        }
-		else
-		{
-			playlist.folders = new List<string>(new []{directory});
-		}
-
-		return CreatePlaylist(playlist);
+    public static void DeletePlaylist(Playlist playlist)
+    {
+        File.Delete(playlist.Path);
+        string playlistSaver = Path.Combine(UserData, "savedplaylists.txt");
+        List<string> paths = new List<string>(File.ReadAllLines(playlistSaver));
+        paths.Remove(playlist.Path);
+        File.WriteAllLines(playlistSaver, paths);
     }
+
+    // EVERYTHING BELOW NEEDS TO BE PUT INTO THE PARSER
 
     public static string CreatePlaylist(Playlist playlist)
     {
@@ -186,49 +137,40 @@ public class SaveSystem
 
         output += "}\n\n";
 
-        if (playlist.songs != null && playlist.songs.Count > 0)
+        if (playlist.Songs != null && playlist.Songs.Count > 0)
 		{
 			output += "Songs\n{\n";
 
-			for (int i = 0; i < playlist.songs.Count; i++)
+			for (int i = 0; i < playlist.Songs.Count; i++)
 			{
-				output += $"\t{playlist.songs[i]}\n";
+				output += $"\t{playlist.Songs[i]}\n";
 			}
 
 			output += "}\n\n";
 		}
 
-		if(playlist.folders != null && playlist.folders.Count > 0)
+		if(playlist.Folders != null && playlist.Folders.Count > 0)
 		{
             output += "Folders\n{\n";
 
-            for (int i = 0; i < playlist.folders.Count; i++)
+            for (int i = 0; i < playlist.Folders.Count; i++)
             {
-                output += $"\t{playlist.folders[i]}\n";
+                output += $"\t{playlist.Folders[i]}\n";
             }
 
             output += "}";
         }
 
-        string path = Path.Combine(UserData, "Playlists", playlist.Name + ".ssl");
+        string path = Path.Combine(UserData, "Playlists", $"{playlist.Name}.ssl");
 		File.WriteAllText(path, output);
 		return path;
-    }
-
-    public static void DeletePlaylist(Playlist playlist)
-    {
-        File.Delete(playlist.path);
-        string playlistSaver = Path.Combine(UserData, "savedplaylists.txt");
-		List<string> paths = new List<string>(File.ReadAllLines(playlistSaver));
-		paths.Remove(playlist.path);
-		File.WriteAllLines(playlistSaver, paths);
     }
 
     public static Playlist LoadPlaylist(string path)
 	{
 		string[] lines = File.ReadAllLines(path);
 
-		Playlist playlist = new Playlist();
+		Playlist playlist = new Playlist(Path.GetFileNameWithoutExtension(path), null, null);
 
 		for (int i = 0; i < lines.Length; i++)
 		{
@@ -305,7 +247,7 @@ public class SaveSystem
                                 string[] vars = value.Split(',');
                                 foreach (string var2 in vars)
                                 {
-                                    string[] colors = GetInParenthases(var2, out string selectedVar);
+                                    string[] colors = ParsingTools.GetInParenthases(var2, out string selectedVar);
                                     bool4 color = new bool4(colors[0].Contains('r'), colors[0].Contains('g'), colors[0].Contains('b'), colors[0].Contains('a'));
                                     switch (selectedVar)
                                     { 
@@ -381,7 +323,7 @@ public class SaveSystem
             }
 			else if(trimmedStartLine.StartsWith("Songs"))
 			{
-				playlist.songs = new List<string>();
+				playlist.Songs = new List<string>();
 				for (int s = i + 1; s < lines.Length; s++)
                 {
                     string trimmedLine = lines[s].Trim();
@@ -399,9 +341,9 @@ public class SaveSystem
 					{
                         string songPath = Path.Combine(UserData, "Music Folders", trimmedLine.Split("//")[0].Trim());
 
-                        if ((songPath.EndsWith(".mp3") || songPath.EndsWith(".wav") || songPath.EndsWith(".ogg")) && File.Exists(songPath))
+                        if (Tools.ValidAudioFile(songPath))
                         {
-                            playlist.songs.Add(songPath);
+                            playlist.Songs.Add(songPath);
 
                             if (trimmedLine.EndsWith("}"))
                             {
@@ -414,7 +356,7 @@ public class SaveSystem
             }
 			else if(trimmedStartLine.StartsWith("Folders"))
 			{
-                playlist.folders = new List<string>();
+                playlist.Folders = new List<string>();
                 for (int f = i + 1; f < lines.Length; f++)
                 {
                     string trimmedLine = lines[f].Split("//")[0].Trim();
@@ -432,7 +374,7 @@ public class SaveSystem
 					{
                         if (Directory.Exists(trimmedLine))
                         {
-                            playlist.folders.Add(trimmedLine);
+                            playlist.Folders.Add(trimmedLine);
 
                             if (trimmedLine.EndsWith("}"))
                             {
@@ -445,62 +387,8 @@ public class SaveSystem
             }
         }
 
-		playlist.Name = GetFileName(path);
 		return playlist;
 	}
-
-    public static string[] GetInParenthases(string line, out string method)
-    {
-        int index = line.IndexOf('(');
-        method = line.Substring(0, index);
-
-        int starts = 1;
-        int ends = 0;
-        int lastCut = index + 1;
-        bool stringWrap = false;
-        string[] output = new string[0];
-
-        for (int i = index + 1; i < line.Length; i++)
-        {
-            // check if string
-
-            if (line[i] == '"')
-            {
-                stringWrap = !stringWrap;
-            }
-
-            // skip string
-
-            else if (!stringWrap)
-            {
-                if (line[i] == '(' || line[i] == '{')
-                {
-                    starts++;
-                }
-                else if (line[i] == ')' || line[i] == '}')
-                {
-                    ends++;
-
-                    // end
-
-                    if (starts == ends)
-                    {
-                        AddToArray(ref output, line.Substring(lastCut, i - lastCut).Trim());
-                        break;
-                    }
-                }
-                else if ((line[i] == ',') && ((starts - ends) < 2))
-                {
-                    // finish argument
-
-                    AddToArray(ref output, line.Substring(lastCut, i - lastCut).Trim());
-                    lastCut = i + 1;
-                }
-            }
-        }
-
-        return output;
-    }
 
     public static string[] SplitLine(string line)
 	{
@@ -508,29 +396,6 @@ public class SaveSystem
         int index = line.IndexOf(':');
         return new[] {line.Substring(0, index).Trim(), line.Substring(index + 1).Trim()};
 	}
-
-	public static int Find(string what, ref string[] array)
-	{
-		for (int i = 0; i < array.Length; i++)
-		{
-			if (array[i] == what)
-			{
-				return i;
-			}
-		}
-		return 0;
-	}
-
-    public static void AddToArray<T>(ref T[] array, T item)
-    {
-        T[] newArray = new T[array.Length + 1];
-
-        array.CopyTo(newArray, 0);
-
-        newArray[array.Length] = item;
-
-        array = newArray;
-    }
 }
 
 public struct bool4

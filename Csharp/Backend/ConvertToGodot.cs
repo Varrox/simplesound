@@ -1,4 +1,5 @@
 ﻿using Godot;
+using SSLParser;
 using System;
 
 public class ConvertToGodot
@@ -57,7 +58,7 @@ public class ConvertToGodot
         }
         else
         {
-            string[] colorVals = SaveSystem.GetInParenthases(text, out string before);
+            string[] colorVals = ParsingTools.GetInParenthases(text, out string before);
             switch(before)
             {
                 case "rgb":

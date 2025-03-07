@@ -13,11 +13,8 @@ public class Tools
     public static void AddToArray<T>(ref T[] array, T item)
     {
         T[] newArray = new T[array.Length + 1];
-
         array.CopyTo(newArray, 0);
-
         newArray[array.Length] = item;
-
         array = newArray;
     }
 
@@ -68,5 +65,15 @@ public class Tools
     public static string GetMediaTitle(string path)
     {
         return Metadata.GetName(path) ?? Path.GetFileNameWithoutExtension(path);
+    }
+
+    /// <summary>
+    /// Whether a file is a valid audio file or not, and if the file exists. (supported file types are: mp3, wav, ogg)
+    /// </summary>
+    /// <param name="path">audio filepath</param>
+    /// <returns>audio file validness</returns>
+    public static bool ValidAudioFile(string path)
+    {
+        return (path.EndsWith(".mp3") || path.EndsWith(".wav") || path.EndsWith(".ogg")) && File.Exists(path);
     }
 }

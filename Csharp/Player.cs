@@ -78,7 +78,7 @@ public partial class Player : Node
     {
         if (MainController.playlist)
         {
-            string name = SaveSystem.GetName(MainController.song);
+            string name = Tools.GetMediaTitle(MainController.song);
             SongName.Text = name;
             SongName.TooltipText = name;
             string artist = Metadata.GetArtist(MainController.song);
@@ -98,7 +98,7 @@ public partial class Player : Node
             bc = new Color(0, 0, 0, 0);
         }
 
-        TotalTime.Text = SaveSystem.GetTimeFromSeconds(Metadata.GetTotalTime(MainController.song));
+        TotalTime.Text = Tools.SecondsToTimestamp(Metadata.GetTotalTime(MainController.song));
         Progress.MaxValue = MainController.player.Stream.GetLength();
     }
 
@@ -129,7 +129,7 @@ public partial class Player : Node
             else if (!Input.IsKeyPressed(Key.Space) && spacepressed) spacepressed = false;
         }
 
-        if (MainController.player.Stream != null) CurrentTime.Text = SaveSystem.GetTimeFromSeconds(MainController.time);
+        if (MainController.player.Stream != null) CurrentTime.Text = Tools.SecondsToTimestamp(MainController.time);
 
         if (!canSetTime)
         {

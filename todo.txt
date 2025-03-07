@@ -13,3 +13,7 @@ TODO
 - Add images to ssl
 - Add music video playing
 - Create sssl
+
+ULTIMATE GOAL:
+Create a music player like spotify, that allows for advanced song visualizers, shaders, 
+ui customization, and other features.

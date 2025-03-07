@@ -3,8 +3,8 @@ using System.IO;
 
 public class Playlist
 {
-    public string Name, Coverpath, path;
-    public List<string> songs, folders;
+    public string Name, Coverpath, Path;
+    public List<string> Songs, Folders;
 
     public string overlayColor, backgroundPath, artist;
 
@@ -25,6 +25,15 @@ public class Playlist
         SaveSystem.CreatePlaylist(this);
     }
 
+    public void Delete(Playlist playlist)
+    {
+        File.Delete(playlist.Path);
+        string playlistSaver = System.IO.Path.Combine(SaveSystem.UserData, "savedplaylists.txt");
+        List<string> paths = new List<string>(File.ReadAllLines(playlistSaver));
+        paths.Remove(playlist.Path);
+        File.WriteAllLines(playlistSaver, paths);
+    }
+
     public void SetType(string t)
     {
         switch (t)
@@ -40,12 +49,42 @@ public class Playlist
 
     public void LoadFromFolders()
     {
-        foreach (string f in folders)
+        foreach (string f in Folders)
         {
-            songs.AddRange(Directory.GetFiles(f));
+            Songs.AddRange(Directory.GetFiles(f));
         }
     }
 
     public static bool operator true(Playlist obj) => obj != null;
     public static bool operator false(Playlist obj) => obj == null;
+
+    public Playlist(string name, string coverpath, List<string> songs)
+    {
+        this.Name = name;
+        this.Coverpath = coverpath;
+        this.Songs = songs;
+    }
+
+    public static Playlist CreateFromFolder(string directory, string coverpath, bool sync)
+    {
+        Playlist playlist = new Playlist(System.IO.Path.GetDirectoryName(directory), coverpath, null);
+
+        if (!sync)
+        {
+            playlist.Songs = new List<string>();
+            foreach (string song in Directory.GetFiles(directory))
+            {
+                if (Tools.ValidAudioFile(song))
+                {
+                    playlist.Songs.Add(song);
+                }
+            }
+        }
+        else
+        {
+            playlist.Folders = new List<string>(new[] { directory });
+        }
+
+        return playlist;
+    }
 }

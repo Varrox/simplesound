@@ -49,11 +49,11 @@ public partial class PlaylistDisplay : Node
         Name.Text = playlist.Name;
         if (playlist.type != Playlist.PlaylistType.Album)
         { 
-            Songs.Text = (playlist.songs.Count.ToString() + (playlist.songs.Count != 1 ? " songs" : " song")) + (playlist.artist != null ? $" {dot} {playlist.artist}" : "");
+            Songs.Text = (playlist.Songs.Count.ToString() + (playlist.Songs.Count != 1 ? " songs" : " song")) + (playlist.artist != null ? $" {dot} {playlist.artist}" : "");
         }
         else
         {
-            Songs.Text = $"Album  {dot}  " + (playlist.artist != null ? playlist.artist : playlist.songs.Count.ToString() + (playlist.songs.Count != 1 ? " songs" : " song"));
+            Songs.Text = $"Album  {dot}  " + (playlist.artist != null ? playlist.artist : playlist.Songs.Count.ToString() + (playlist.Songs.Count != 1 ? " songs" : " song"));
         }
 
         More.menu = menu;
