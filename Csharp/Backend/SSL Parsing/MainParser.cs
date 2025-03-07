@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SSLParser
 {
@@ -20,45 +21,7 @@ namespace SSLParser
 
                 if (trimmedStartLine.StartsWith("Tags"))
                 {
-                    for (int t = i + 1; t < lines.Length; t++)
-                    {
-                        string trimmedLine = lines[t].Split("//")[0].Trim();
-                        if (trimmedLine == "}")
-                        {
-                            i = t;
-                            break;
-                        }
-                        else if (trimmedLine == "{")
-                        {
-                            continue;
-                        }
-
-                        if (trimmedLine.Length > 0)
-                        {
-                            string[] split = SplitLine(trimmedLine);
-                            string var = split[0];
-                            string value = split[1];
-
-                            switch (var)
-                            {
-                                case "Type":
-                                    playlist.SetType(value);
-                                    break;
-                                case "Artist":
-                                    playlist.artist = value;
-                                    break;
-                                case "Overlay-Color":
-                                    playlist.customInfo.overlayColor = value;
-                                    break;
-                            }
-
-                            if (trimmedLine.EndsWith("}"))
-                            {
-                                i = t;
-                                break;
-                            }
-                        }
-                    }
+                    ParseTags(ref playlist, ref lines, ref i);
                 }
                 else if (trimmedStartLine.StartsWith("Sound"))
                 {
@@ -66,78 +29,11 @@ namespace SSLParser
                 }
                 else if (trimmedStartLine.StartsWith("Images"))
                 {
-                    for (int c = i + 1; c < lines.Length; c++)
-                    {
-                        string trimmedLine = lines[c].Split("//")[0].Trim();
-                        if (trimmedLine == "}")
-                        {
-                            i = c;
-                            break;
-                        }
-                        else if (trimmedLine == "{")
-                        {
-                            continue;
-                        }
-
-                        if (trimmedLine.Length > 0)
-                        {
-                            string[] split = SplitLine(trimmedLine);
-                            string var = split[0];
-                            string value = split[1];
-
-                            if (var.Length > 0)
-                            {
-                                switch (var)
-                                {
-                                    case "Cover":
-                                        playlist.Coverpath = File.Exists(value) ? value : null;
-                                        break;
-                                    case "Background-Image":
-                                        playlist.customInfo.backgroundPath = File.Exists(value) ? value : null;
-                                        break;
-                                }
-
-                                if (trimmedLine.EndsWith("}"))
-                                {
-                                    i = c;
-                                    break;
-                                }
-                            }
-                        }
-                    }
+                    ParseImages(ref playlist, ref lines, ref i);
                 }
                 else if (trimmedStartLine.StartsWith("Songs"))
                 {
-                    playlist.Songs = new List<string>();
-                    for (int s = i + 1; s < lines.Length; s++)
-                    {
-                        string trimmedLine = lines[s].Trim();
-                        if (trimmedLine == "}")
-                        {
-                            i = s;
-                            break;
-                        }
-                        else if (trimmedLine == "{")
-                        {
-                            continue;
-                        }
-
-                        if (trimmedLine.Length > 0)
-                        {
-                            string songPath = Path.Combine(SaveSystem.UserData, "Music Folders", trimmedLine.Split("//")[0].Trim());
-
-                            if (Tools.ValidAudioFile(songPath))
-                            {
-                                playlist.Songs.Add(songPath);
-
-                                if (trimmedLine.EndsWith("}"))
-                                {
-                                    i = s;
-                                    break;
-                                }
-                            }
-                        }
-                    }
+                    ParseSongs(ref playlist, ref lines, ref i);
                 }
                 else if (trimmedStartLine.StartsWith("Folders"))
                 {
@@ -148,16 +44,59 @@ namespace SSLParser
             return playlist;
         }
 
+        public static void ParseTags(ref Playlist playlist, ref string[] lines, ref int index)
+        {
+            for (int i = index + 1; i < lines.Length; i++)
+            {
+                string trimmedLine = ParsingTools.FormatCode(lines[i]);
+                if (trimmedLine == "}")
+                {
+                    index = i;
+                    return;
+                }
+                else if (trimmedLine == "{")
+                {
+                    continue;
+                }
+
+                if (trimmedLine.Length > 0)
+                {
+                    string[] split = SplitLine(trimmedLine);
+                    string var = split[0];
+                    string value = split[1];
+
+                    switch (var)
+                    {
+                        case "Type":
+                            playlist.SetType(value);
+                            break;
+                        case "Artist":
+                            playlist.artist = value;
+                            break;
+                        case "Overlay-Color":
+                            playlist.customInfo.overlayColor = value;
+                            break;
+                    }
+
+                    if (trimmedLine.EndsWith("}"))
+                    {
+                        index = i;
+                        return;
+                    }
+                }
+            }
+        }
+
         public static void ParseSound(ref Playlist playlist, ref string[] lines, ref int index)
         {
-            for (int s = index + 1; s < lines.Length; s++)
+            for (int i = index + 1; i < lines.Length; i++)
             {
-                string trimmedLine = lines[s].Split("//")[0].Trim();
+                string trimmedLine = ParsingTools.FormatCode(lines[i]);
 
                 if (trimmedLine == "}")
                 {
-                    index = s;
-                    break;
+                    index = i;
+                    return;
                 }
                 else if (trimmedLine == "{")
                 {
@@ -202,8 +141,85 @@ namespace SSLParser
 
                     if (trimmedLine.EndsWith("}"))
                     {
+                        index = i;
+                        return;
+                    }
+                }
+            }
+        }
+
+        public static void ParseImages(ref Playlist playlist, ref string[] lines, ref int index)
+        {
+            for (int i = index + 1; i < lines.Length; i++)
+            {
+                string trimmedLine = ParsingTools.FormatCode(lines[i]);
+                if (trimmedLine == "}")
+                {
+                    index = i;
+                    return;
+                }
+                else if (trimmedLine == "{")
+                {
+                    continue;
+                }
+
+                if (trimmedLine.Length > 0)
+                {
+                    string[] split = SplitLine(trimmedLine);
+                    string variable = split[0];
+                    string value = split[1];
+
+                    if (variable.Length > 0)
+                    {
+                        switch (variable)
+                        {
+                            case "Cover":
+                                playlist.Coverpath = File.Exists(value) ? value : null;
+                                break;
+                            case "Background-Image":
+                                playlist.customInfo.backgroundPath = File.Exists(value) ? value : null;
+                                break;
+                        }
+
+                        if (trimmedLine.EndsWith("}"))
+                        {
+                            index = i;
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+
+        public static void ParseSongs(ref Playlist playlist, ref string[] lines, ref int index)
+        {
+            playlist.Songs = new List<string>();
+            for (int s = index + 1; s < lines.Length; s++)
+            {
+                string trimmedLine = lines[s].Trim();
+                if (trimmedLine == "}")
+                {
+                    index = s;
+                    return;
+                }
+                else if (trimmedLine == "{")
+                {
+                    continue;
+                }
+
+                if (trimmedLine.Length > 0)
+                {
+                    string songPath = Path.Combine(SaveSystem.UserData, "Music Folders", ParsingTools.FormatCode(trimmedLine));
+
+                    if (Tools.ValidAudioFile(songPath))
+                    {
+                        playlist.Songs.Add(songPath);
+                    }
+
+                    if (trimmedLine.EndsWith("}"))
+                    {
                         index = s;
-                        break;
+                        return;
                     }
                 }
             }
@@ -219,7 +235,7 @@ namespace SSLParser
                 if (trimmedLine == "}")
                 {
                     index = f;
-                    break;
+                    return;
                 }
                 else if (trimmedLine == "{")
                 {
@@ -231,12 +247,12 @@ namespace SSLParser
                     if (Directory.Exists(trimmedLine))
                     {
                         playlist.Folders.Add(trimmedLine);
+                    }
 
-                        if (trimmedLine.EndsWith("}"))
-                        {
-                            index = f;
-                            break;
-                        }
+                    if (trimmedLine.EndsWith("}"))
+                    {
+                        index = f;
+                        return;
                     }
                 }
             }
