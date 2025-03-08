@@ -59,7 +59,7 @@ public partial class SongsVisualizer : Control
             }
 
 			// init the playlist
-            disp.init(Tools.GetMediaTitle(Playlist.Songs[i]), Metadata.GetArtist(Playlist.Songs[i]), Tools.SecondsToTimestamp(Metadata.GetTotalTime(Playlist.Songs[i])), playlist, i, Metadata.IsExplicit(Playlist.Songs[i]), this, Playlist.type != Playlist.PlaylistType.Album ? ConvertToGodot.GetCover(Playlist.Songs[i]) : null, menu);
+            disp.init(Tools.GetMediaTitle(Playlist.Songs[i]), Metadata.GetArtist(Playlist.Songs[i]), Tools.SecondsToTimestamp(Metadata.GetTotalTime(Playlist.Songs[i])), playlist, i, Metadata.IsExplicit(Playlist.Songs[i]), this, Playlist.Type != Playlist.PlaylistType.Album ? ConvertToGodot.GetCover(Playlist.Songs[i]) : null, menu);
         }
 	}
 

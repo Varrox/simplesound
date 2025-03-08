@@ -99,9 +99,9 @@ public class SaveSystem
     {
         string output = "Tags\n{\n";
 
-		if(playlist.type != Playlist.PlaylistType.Default)
+		if(playlist.Type != Playlist.PlaylistType.Default)
 		{
-			output += $"{TAB}Type : {playlist.type.ToString()}\n";
+			output += $"{TAB}Type : {playlist.Type.ToString()}\n";
 		}
 
 		if (playlist.Artist != null)
@@ -117,9 +117,9 @@ public class SaveSystem
 		output += "}\n\n";
         output += "Images\n{\n";
 
-        if (playlist.Coverpath != null)
+        if (playlist.Cover != null)
 		{
-			output += $"{TAB}Cover : {playlist.Coverpath}\n";
+			output += $"{TAB}Cover : {playlist.Cover}\n";
         }
 
 		if (playlist.customInfo.backgroundPath != null)

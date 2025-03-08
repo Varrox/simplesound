@@ -1,5 +1,7 @@
 using System;
+using System.Globalization;
 using System.Reflection;
+using TagLib.Matroska;
 
 namespace SSLParser
 {
@@ -81,9 +83,9 @@ namespace SSLParser
         /// <param name="value">value to set the variable</param>
         /// <param name="objectType">the type the variable is from</param>
         /// <param name="obj">the object that is affected</param>
-        public static void SetVariable(string variable, string value, ref Type objectType, object obj)
+        public static void SetVariable<T>(string variable, string value, ref T obj)
         {
-            FieldInfo field = objectType.GetField(variable);
+            FieldInfo field = typeof(T).GetField(variable);
             if (field != null)
             {
                 object newValue = ConvertType(value, field.FieldType);
@@ -101,29 +103,17 @@ namespace SSLParser
 
         public static object ConvertType(string value, Type type)
         {
-            if (type is string)
+            if (type == typeof(string))
             {
                 return value;
             }
-            else if (type is int)
+            else if (type.IsEnum)
             {
-                return Convert.ToInt32(value);
-            }
-            else if (type is long)
-            {
-                return Convert.ToInt64(value);
-            }
-            else if (type is float)
-            {
-                return Convert.ToSingle(value);
-            }
-            else if (type is double)
-            {
-                return Convert.ToDouble(value);
+                return Enum.Parse(type, value);
             }
             else
             {
-                return null;
+                return Convert.ChangeType(value, type, CultureInfo.InvariantCulture);
             }
         }
     }

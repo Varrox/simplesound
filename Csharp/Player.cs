@@ -86,7 +86,7 @@ public partial class Player : Node
             SongArtist.TooltipText = artist;
             Texture2D cover = ConvertToGodot.GetCover(MainController.song);
             SongCover.Texture = cover;
-            if (MainController.playlist.backgroundPath != null) BackgroundImage.Texture = ConvertToGodot.LoadImage(MainController.playlist.backgroundPath, ref cover);
+            if (MainController.playlist.customInfo.backgroundPath != null) BackgroundImage.Texture = ConvertToGodot.LoadImage(MainController.playlist.customInfo.backgroundPath, ref cover);
             else BackgroundImage.Texture = cover;
         }
         else
@@ -142,9 +142,9 @@ public partial class Player : Node
 
         float max = 0.65f;
 
-        if(MainController.playlist.overlayColor != null)
+        if(MainController.playlist.customInfo.overlayColor != null)
         {
-            bc = ConvertToGodot.GetColor(MainController.playlist.overlayColor);
+            bc = ConvertToGodot.GetColor(MainController.playlist.customInfo.overlayColor);
         }
         else
         {
@@ -153,10 +153,11 @@ public partial class Player : Node
 
         backgroundColor.Color = backgroundColor.Color.Lerp(bc.Clamp(new Color(), new Color(max, max, max, max)), (float)delta * 2f);
 
-        MainController.player.VolumeDb = (float)(VolumeSlider.Value != -50 ? VolumeSlider.Value : -80) + MainController.playlist.volume;
-        MainController.player.PitchScale = MainController.playlist.speed;
+        MainController.player.VolumeDb = (float)(VolumeSlider.Value != -50 ? VolumeSlider.Value : -80) + MainController.playlist.customInfo.volume;
+        MainController.player.PitchScale = Mathf.Clamp(MainController.playlist.customInfo.speed, 0.01f, 4f);
+
         var effect = AudioServer.GetBusEffect(0, 0) as AudioEffectReverb;
-        effect.RoomSize = MainController.playlist.reverb;
-        effect.Wet = MainController.playlist.reverb / 100;
+        effect.RoomSize = MainController.playlist.customInfo.reverb;
+        effect.Wet = MainController.playlist.customInfo.reverb / 100;
     }
 }

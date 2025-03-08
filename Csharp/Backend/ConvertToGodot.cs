@@ -98,8 +98,13 @@ public class ConvertToGodot
         shader.Code = File.ReadAllText(path);
         shader.ResourceName = Path.GetFileNameWithoutExtension(path);
         string spath = Path.Combine(SaveSystem.UserData, "Cached Shaders");
-        ResourceSaver.Save(shader, spath);
-        cachedShader = Path.Combine(spath, Path.GetFileNameWithoutExtension(path));
+        if(ResourceSaver.Save(shader, spath) != Error.Ok)
+        {
+            Debug.ErrorLog("Shader failed to cache");
+            cachedShader = null;
+        }
+        else
+            cachedShader = Path.Combine(spath, Path.GetFileNameWithoutExtension(path));
 
         return shader;
     }

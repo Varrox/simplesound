@@ -74,7 +74,7 @@ public partial class Songdisplay : Control
 		Time.Text = time;
 		this.visualizer = visualizer;
 
-		if (visualizer.Playlist.type == Playlist.PlaylistType.Album)
+		if (visualizer.Playlist.Type == Playlist.PlaylistType.Album)
 		{
             (Cover.GetParent() as Control).Visible = false;
 			Spacer.Visible = false;

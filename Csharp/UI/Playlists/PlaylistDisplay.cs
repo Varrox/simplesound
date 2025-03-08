@@ -36,18 +36,18 @@ public partial class PlaylistDisplay : Node
 
     public void init(Playlist playlist, int index, PlaylistsVisualizer visualizer, bool current, Control menu)
     {
-        bool nuhuh = playlist.Coverpath == null;
+        bool nuhuh = playlist.Cover == null;
 
-        if (playlist.Coverpath != null)
+        if (playlist.Cover != null)
         {
             var img = new Image();
-            if (img.Load(playlist.Coverpath) == Error.Ok) Cover.Texture = ImageTexture.CreateFromImage(img);
+            if (img.Load(playlist.Cover) == Error.Ok) Cover.Texture = ImageTexture.CreateFromImage(img);
             else nuhuh = true;
         }
         if(nuhuh) Cover.Texture = visualizer.defaultCover;
 
         Name.Text = playlist.Name;
-        if (playlist.type != Playlist.PlaylistType.Album)
+        if (playlist.Type != Playlist.PlaylistType.Album)
         { 
             Songs.Text = (playlist.Songs.Count.ToString() + (playlist.Songs.Count != 1 ? " songs" : " song")) + (playlist.Artist != null ? $" {dot} {playlist.Artist}" : "");
         }

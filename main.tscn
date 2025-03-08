@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://cbpkjhjnbrjm6"]
+[gd_scene load_steps=43 format=3 uid="uid://cbpkjhjnbrjm6"]
 
 [ext_resource type="Script" uid="uid://b81fhtdmrks0a" path="res://Csharp/Main.cs" id="1_l00ml"]
 [ext_resource type="Script" uid="uid://cvtqwvi0qvcvy" path="res://Csharp/Player.cs" id="2_632yu"]
@@ -16,19 +16,20 @@
 [ext_resource type="Texture2D" uid="uid://5hwvlu7uerj6" path="res://Icons/plus.png" id="10_7e43v"]
 [ext_resource type="Shader" uid="uid://b27umdilyjk4d" path="res://blur.gdshader" id="10_sha6j"]
 [ext_resource type="Texture2D" uid="uid://c85envuiuo3ju" path="res://Icons/folder.png" id="11_1f20w"]
-[ext_resource type="Script" uid="uid://dd3nfsmwj28py" path="res://Csharp/PlaylistsVisualizer.cs" id="12_0nioi"]
+[ext_resource type="Script" uid="uid://dcnfao6qa81tk" path="res://Csharp/UI/Playlists/PlaylistsVisualizer.cs" id="11_kq58d"]
 [ext_resource type="Texture2D" uid="uid://0yw8m2y164lr" path="res://Icons/settings.png" id="12_s6aix"]
 [ext_resource type="PackedScene" uid="uid://4mmerh1u4xho" path="res://Prefabs/playlisttemplate.tscn" id="13_a7qgi"]
-[ext_resource type="Script" uid="uid://c0jk2qonoboo2" path="res://Csharp/ContextMenu.cs" id="13_huc3l"]
+[ext_resource type="Texture2D" uid="uid://d4mh3dd6oqgn4" path="res://Icons/DefaultCoverHighres.png" id="13_seu75"]
+[ext_resource type="Script" uid="uid://bgymt3f23woi7" path="res://Csharp/UI/Songs/SongsVisualizer.cs" id="14_htxhm"]
 [ext_resource type="PackedScene" uid="uid://dlh34aq4t8tvu" path="res://Prefabs/songdisplay.tscn" id="14_t035w"]
-[ext_resource type="Script" uid="uid://cdvg32fic2x6i" path="res://Csharp/SongsVisualizer.cs" id="15_v5k8q"]
 [ext_resource type="PackedScene" uid="uid://dcre7b1cn3b6i" path="res://Prefabs/songcontext.tscn" id="17_3m5kb"]
 [ext_resource type="PackedScene" uid="uid://dle5y658wmx03" path="res://Prefabs/Attribute Editor.tscn" id="17_f7c3k"]
+[ext_resource type="Script" uid="uid://b8mk63lbeibcc" path="res://Csharp/UI/RefreshButton.cs" id="19_0odxb"]
 [ext_resource type="Texture2D" uid="uid://b8ldjgpmsaxgu" path="res://Icons/shuffle.png" id="20_fkbne"]
 [ext_resource type="StyleBox" uid="uid://bhcyqvvim6l5e" path="res://Rounded Corners.tres" id="21_jy3dx"]
+[ext_resource type="Script" uid="uid://bcxwpol710ysq" path="res://Csharp/UI/ContextMenu.cs" id="21_seu75"]
 [ext_resource type="Texture2D" uid="uid://bwftf22dhh4du" path="res://Icons/refresh.png" id="23_7r5f6"]
 [ext_resource type="Script" uid="uid://dwpgkkupvf1jo" path="res://Discord.gd" id="24_crcn0"]
-[ext_resource type="Script" uid="uid://48yfkh0qokpv" path="res://Csharp/RefreshButton.cs" id="24_xd8i8"]
 [ext_resource type="PackedScene" uid="uid://dtfoexo3o7b3p" path="res://Prefabs/playlistcontext.tscn" id="26_gbh2w"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n3cvr"]
@@ -158,12 +159,12 @@ offset_top = 116.0
 offset_right = 296.0
 offset_bottom = -114.0
 grow_vertical = 2
-script = ExtResource("12_0nioi")
+script = ExtResource("11_kq58d")
 template = ExtResource("13_a7qgi")
 mainController = NodePath("../..")
 container = NodePath("VBoxContainer")
 moreMenu = NodePath("../Playlistcontext")
-defaultCover = ExtResource("7_xn3w4")
+defaultCover = ExtResource("13_seu75")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Interface/Playlists"]
 layout_mode = 2
@@ -181,7 +182,7 @@ offset_right = -5.0
 offset_bottom = -109.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("15_v5k8q")
+script = ExtResource("14_htxhm")
 Template = ExtResource("14_t035w")
 main = NodePath("../..")
 PlaylistsVisualizer = NodePath("../Playlists")
@@ -189,7 +190,7 @@ menu = NodePath("../Songcontext")
 container = NodePath("VBoxContainer")
 PlayTexture = ExtResource("5_8inno")
 Pause = ExtResource("4_lfnj1")
-highlight = Color(1, 1, 1, 0.513)
+highlight = Color(1, 1, 1, 0.376)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Interface/Song Display"]
 layout_mode = 2
@@ -303,7 +304,7 @@ text = "
 icon = ExtResource("10_7e43v")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("13_huc3l")
+script = ExtResource("21_seu75")
 menu = NodePath("Panel")
 
 [node name="Panel" type="Panel" parent="Interface/Add"]
@@ -415,7 +416,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_wx3lt")
 icon = ExtResource("23_7r5f6")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("24_xd8i8")
+script = ExtResource("19_0odxb")
 main = NodePath("../../..")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Interface/Top Bar"]

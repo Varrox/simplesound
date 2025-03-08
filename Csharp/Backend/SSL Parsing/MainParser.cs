@@ -18,17 +18,13 @@ namespace SSLParser
 
                 if (trimmedStartLine.Length == 0) continue;
 
-                if (trimmedStartLine.StartsWith("Tags"))
+                if (trimmedStartLine.StartsWith("Configuration"))
                 {
-                    ParseTags(ref playlist, ref lines, ref i);
+                    ParseConfiguration(ref playlist, ref lines, ref i);
                 }
                 else if (trimmedStartLine.StartsWith("Sound"))
                 {
                     ParseSound(ref playlist, ref lines, ref i);
-                }
-                else if (trimmedStartLine.StartsWith("Images"))
-                {
-                    ParseImages(ref playlist, ref lines, ref i);
                 }
                 else if (trimmedStartLine.StartsWith("Songs"))
                 {
@@ -43,11 +39,12 @@ namespace SSLParser
             return playlist;
         }
 
-        public static void ParseTags(ref Playlist playlist, ref string[] lines, ref int index)
+        public static void ParseConfiguration(ref Playlist playlist, ref string[] lines, ref int index)
         {
             for (int i = index + 1; i < lines.Length; i++)
             {
                 string trimmedLine = ParsingTools.FormatCode(lines[i]);
+
                 if (trimmedLine == "}")
                 {
                     index = i;
@@ -58,26 +55,14 @@ namespace SSLParser
                     continue;
                 }
 
-                
-
                 if (trimmedLine.Length > 0)
                 {
                     string[] split = SplitLine(trimmedLine);
                     string var = split[0];
                     string value = split[1];
 
-                    switch (var)
-                    {
-                        case "Type":
-                            playlist.SetType(value);
-                            break;
-                        case "Artist":
-                            playlist.Artist = value;
-                            break;
-                        case "Overlay-Color":
-                            playlist.customInfo.overlayColor = value;
-                            break;
-                    }
+                    ParsingTools.SetVariable(var, value, ref playlist);
+
                     if (trimmedLine.EndsWith("}"))
                     {
                         index = i;
@@ -112,20 +97,16 @@ namespace SSLParser
                     switch (var)
                     {
                         case "Volume-Reactive":
-                            string[] vars = value.Split(',');
-                            foreach (string var2 in vars)
+                            string[] colors = ParsingTools.GetInParenthases(value, out string selectedVar);
+                            bool4 color = new bool4(colors[0].Contains('r'), colors[0].Contains('g'), colors[0].Contains('b'), colors[0].Contains('a'));
+                            switch (selectedVar)
                             {
-                                string[] colors = ParsingTools.GetInParenthases(var2, out string selectedVar);
-                                bool4 color = new bool4(colors[0].Contains('r'), colors[0].Contains('g'), colors[0].Contains('b'), colors[0].Contains('a'));
-                                switch (selectedVar)
-                                {
-                                    case "Overlay-Color":
-                                        playlist.customInfo.overlayReactive = color;
-                                        break;
-                                    case "Background-Image":
-                                        playlist.customInfo.backgroundReactive = color;
-                                        break;
-                                }
+                                case "Overlay-Color":
+                                    playlist.customInfo.overlayReactive = color;
+                                    break;
+                                case "Background-Image":
+                                    playlist.customInfo.backgroundReactive = color;
+                                    break;
                             }
                             break;
                         case "Volume":
@@ -143,49 +124,6 @@ namespace SSLParser
                     {
                         index = i;
                         return;
-                    }
-                }
-            }
-        }
-
-        public static void ParseImages(ref Playlist playlist, ref string[] lines, ref int index)
-        {
-            for (int i = index + 1; i < lines.Length; i++)
-            {
-                string trimmedLine = ParsingTools.FormatCode(lines[i]);
-                if (trimmedLine == "}")
-                {
-                    index = i;
-                    return;
-                }
-                else if (trimmedLine == "{")
-                {
-                    continue;
-                }
-
-                if (trimmedLine.Length > 0)
-                {
-                    string[] split = SplitLine(trimmedLine);
-                    string variable = split[0];
-                    string value = split[1];
-
-                    if (variable.Length > 0)
-                    {
-                        switch (variable)
-                        {
-                            case "Cover":
-                                playlist.Coverpath = File.Exists(value) ? value : null;
-                                break;
-                            case "Background-Image":
-                                playlist.customInfo.backgroundPath = File.Exists(value) ? value : null;
-                                break;
-                        }
-
-                        if (trimmedLine.EndsWith("}"))
-                        {
-                            index = i;
-                            return;
-                        }
                     }
                 }
             }

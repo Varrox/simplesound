@@ -3,13 +3,19 @@ using System.IO;
 
 public class Playlist
 {
-    public string Name, Coverpath, Path;
+    public string Name, Cover, Path;
     public List<string> Songs, Folders;
+
+    public string OverlayColor { set => customInfo.overlayColor = value; }
+    public string BackgroundImage {set => customInfo.backgroundPath = value;}
+    public float Volume { set => customInfo.volume = value;}
+    public float Speed { set => customInfo.speed = value; }
+    public float Reverb { set => customInfo.reverb = value; }
 
     public string Artist;
     public CustomInfo customInfo;
 
-    public PlaylistType type = PlaylistType.Default;
+    public PlaylistType Type = PlaylistType.Default;
     public enum PlaylistType
     {
         Default,
@@ -31,19 +37,6 @@ public class Playlist
         File.WriteAllLines(playlistSaver, paths);
     }
 
-    public void SetType(string t)
-    {
-        switch (t)
-        {
-            case "Default":
-                type = PlaylistType.Default; break;
-            case "Album":
-                type = PlaylistType.Album; break;
-            case "Folder":
-                type = PlaylistType.Folder; break;
-        }
-    }
-
     public void LoadFromFolders()
     {
         foreach (string f in Folders)
@@ -58,8 +51,9 @@ public class Playlist
     public Playlist(string name, string coverpath, List<string> songs)
     {
         this.Name = name;
-        this.Coverpath = coverpath;
+        this.Cover = coverpath;
         this.Songs = songs;
+        customInfo = new CustomInfo();
     }
 
     public static Playlist CreateFromFolder(string directory, string coverpath, bool sync)
