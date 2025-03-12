@@ -68,7 +68,7 @@ public class ConvertToGodot
                     return new Color(Convert.ToSingle(colorVals[0]), Convert.ToSingle(colorVals[1]), Convert.ToSingle(colorVals[2]), Convert.ToSingle(colorVals[3]));
             }
             
-            GD.PrintErr("Could not parse color properly, invalid argument");
+            GD.PrintErr($"Could not parse color properly, invalid method name \'{text}\'");
             return new Color();
         }
     }
@@ -100,7 +100,7 @@ public class ConvertToGodot
         string spath = Path.Combine(SaveSystem.UserData, "Cached Shaders");
         if(ResourceSaver.Save(shader, spath) != Error.Ok)
         {
-            Debug.ErrorLog("Shader failed to cache");
+            Debug.ErrorLog($"Shader from \'{path}\' failed to cache");
             cachedShader = null;
         }
         else

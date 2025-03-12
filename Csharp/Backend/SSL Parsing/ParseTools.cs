@@ -1,7 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
-using TagLib.Matroska;
 
 namespace SSLParser
 {
@@ -83,21 +83,40 @@ namespace SSLParser
         /// <param name="value">value to set the variable</param>
         /// <param name="objectType">the type the variable is from</param>
         /// <param name="obj">the object that is affected</param>
-        public static void SetVariable<T>(string variable, string value, ref T obj)
+        public static void SetVariable<T>(ref LineAttributes line, string variable, string value, ref T obj)
         {
-            FieldInfo field = typeof(T).GetField(variable);
-            if (field != null)
+            // Add a way to check if the object has a dictionary called actionmapper, and use that instead of searching
+            if(variable != "" && value != "")
             {
-                object newValue = ConvertType(value, field.FieldType);
+                Type type = typeof(T);
+                FieldInfo field = type.GetField("ActionMapper");
+                if (field != null)
+                {
+                    var dict = field.GetValue(obj) as Dictionary<string, Action<string>>;
+                    if (dict.ContainsKey(variable))
+                    {
+                        dict[variable](value);
+                        return;
+                    }
+                }
 
-                if (newValue != null)
-                    field.SetValue(obj, newValue);
+                field = type.GetField(variable);
+                if (field != null)
+                {
+                    object newValue = ConvertType(value, field.FieldType);
+                    if (newValue != null)
+                        field.SetValue(obj, newValue);
+                    else
+                        Debug.ErrorLog($"{line} {variable} is not a variable that can be set properly in SSL");
+                }
                 else
-                    Debug.ErrorLog($"{variable} is not a variable that can be set properly in SSL");
+                {
+                    Debug.ErrorLog($"{line} {variable} is not a variable, maybe look over it again");
+                }
             }
             else
             {
-                Debug.ErrorLog($"{variable} is not a variable, maybe look over it again");
+                Debug.ErrorLog($"{line} either the variable or value is set blank");
             }
         }
 
@@ -114,6 +133,33 @@ namespace SSLParser
             else
             {
                 return Convert.ChangeType(value, type, CultureInfo.InvariantCulture);
+            }
+        }
+
+        /// <summary>
+        /// if a piece of code is a method or not
+        /// </summary>
+        /// <param name="line"></param>
+        /// <param name="code"></param>
+        /// <returns>the first bool is weather or not the code is a method, and the second bool is if the code is valid syntax</returns>
+        public static (bool, bool) IsMethod(ref LineAttributes line, string code)
+        {
+            int set = code.IndexOf(':');
+            int parenthases = code.IndexOf('(');
+
+            if (set == -1 && parenthases == - 1) // Error
+            {
+                Debug.LogInvalidCode(line, code);
+                return (false, false);
+            }
+            else
+            {
+                if(parenthases == -1)
+                    return (false, true);
+                else if(set == -1) 
+                    return (true, true);
+                else
+                    return (parenthases < set, true);
             }
         }
     }

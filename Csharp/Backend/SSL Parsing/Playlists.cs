@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -5,12 +6,6 @@ public class Playlist
 {
     public string Name, Cover, Path;
     public List<string> Songs, Folders;
-
-    public string OverlayColor { set => customInfo.overlayColor = value; }
-    public string BackgroundImage {set => customInfo.backgroundPath = value;}
-    public float Volume { set => customInfo.volume = value;}
-    public float Speed { set => customInfo.speed = value; }
-    public float Reverb { set => customInfo.reverb = value; }
 
     public string Artist;
     public CustomInfo customInfo;
@@ -22,6 +17,8 @@ public class Playlist
         Album,
         Folder
     }
+
+    public Dictionary<string, Action<string>> ActionMapper;
 
     public void Save()
     {
@@ -54,6 +51,15 @@ public class Playlist
         this.Cover = coverpath;
         this.Songs = songs;
         customInfo = new CustomInfo();
+
+        ActionMapper = new Dictionary<string, Action<string>>()
+        {
+            ["Overlay-Color"] = color => customInfo.overlayColor = color,
+            ["Background-Image"] = path => customInfo.backgroundPath = path,
+            ["Volume"] = amount => customInfo.volume = Convert.ToSingle(amount),
+            ["Speed"] = amount => customInfo.speed = Convert.ToSingle(amount),
+            ["Reverb"] = amount => customInfo.reverb = Convert.ToSingle(amount),
+        };
     }
 
     public static Playlist CreateFromFolder(string directory, string coverpath, bool sync)
@@ -87,6 +93,19 @@ public struct CustomInfo
     public float volume = 0, speed = 1, reverb = 0;
 
     public CustomInfo()
+    {
+
+    }
+}
+
+public struct UICustomization
+{
+    public string DefualtFont;
+    public string DefualtColor;
+    public string DefualtFontColor;
+
+
+    public UICustomization()
     {
 
     }
