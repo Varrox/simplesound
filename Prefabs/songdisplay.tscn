@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://23nnkoswyxm8" path="res://Icons/play.png" id="4_4uf0g"]
 [ext_resource type="Texture2D" uid="uid://bfdwehd6cajgg" path="res://Icons/more.png" id="4_26211"]
 [ext_resource type="Script" uid="uid://bcxwpol710ysq" path="res://Csharp/UI/ContextMenu.cs" id="5_djgw6"]
-[ext_resource type="StyleBox" uid="uid://bhcyqvvim6l5e" path="res://Rounded Corners.tres" id="6_2m43a"]
+[ext_resource type="StyleBox" uid="uid://bhcyqvvim6l5e" path="res://Styling/Rounded Corners.tres" id="6_2m43a"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rv41x"]
 

@@ -12,7 +12,6 @@ public partial class Songdisplay : Control
 
 	int playlist, song;
 	public bool isPlaying;
-	SongsVisualizer visualizer;
 	public override void _Ready()
 	{
 		Register.ButtonUp += SetSong;
@@ -20,34 +19,34 @@ public partial class Songdisplay : Control
 		Register.MouseExited += onExit;
 		More.MouseEntered += onEnter;
 		More.OnClose += () => More.Hide();
-		(GetTree().CurrentScene as Main).OnLoadSong += SetHighlight;
+		Globals.main.OnLoadSong += SetHighlight;
 	}
 
 	public void SetHighlight()
 	{
-		Main Main = visualizer.main;
 		isPlaying = false;
+        Globals.main.OnPlay -= SetTextures;
 
-		if (Main.currentPlaylist == playlist && Main.currentSong == song) // highlight
+        if (Globals.main.currentPlaylist == playlist && Globals.main.currentSong == song) // highlight
 		{
-			Main.OnPlay += SetTextures;
+			Globals.main.OnPlay += SetTextures;
 			isPlaying = true;
-			Register.SelfModulate = visualizer.highlight;
+			Register.SelfModulate = Globals.highlight;
 		}
-		else if (Main.currentPlaylist != playlist || Main.currentSong != song) // un-highlight
+		else if (Globals.main.currentPlaylist != playlist || Globals.main.currentSong != song) // un-highlight
         {
-			Playbutton.Texture = visualizer.PlayTexture;
-            Main.OnPlay -= SetTextures;
+			Playbutton.Texture = Globals.play_texture;
+            Globals.main.OnPlay -= SetTextures;
 			isPlaying = false;
             Register.SelfModulate = new Color(1, 1, 1, 1);
         }
 
-        SetTextures(isPlaying && Main.playing);
+        SetTextures(isPlaying && Globals.main.playing);
     }
 
 	public void SetTextures(bool playing)
 	{
-		Playbutton.Texture = playing ? visualizer.Pause : visualizer.PlayTexture;
+		Playbutton.Texture = playing ? Globals.pause_texture : Globals.play_texture;
     }
 
 	public void onEnter()
@@ -72,7 +71,6 @@ public partial class Songdisplay : Control
 		Name.Text = name;
 		Artist.Text = artist;
 		Time.Text = time;
-		this.visualizer = visualizer;
 
 		if (visualizer.Playlist.Type == Playlist.PlaylistType.Album)
 		{
@@ -94,18 +92,16 @@ public partial class Songdisplay : Control
 
 	public void SetSong()
 	{
-		Main Main = visualizer.main;
-
-		if(Main.currentPlaylist != playlist)
+		if(Globals.main.currentPlaylist != playlist)
 		{
-            Main.LoadPlaylist(playlist);
+            Globals.main.LoadPlaylist(playlist);
         }
 
 		if(!isPlaying)
 		{
-            Main.currentSong = 0;
-            Main.MoveSong(song, true);
+            Globals.main.currentSong = 0;
+            Globals.main.MoveSong(song, true);
         }
-		else Main.Play();
+		else Globals.main.Play();
 	}
 }

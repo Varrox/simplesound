@@ -8,8 +8,6 @@ public partial class SongsVisualizer : Control
     [Export] public Main main;
     [Export] public PlaylistsVisualizer PlaylistsVisualizer;
 	[Export] public Control menu, container;
-    [Export] public Texture2D PlayTexture, Pause;
-    [Export] public Color highlight;
 
 	public Playlist Playlist;
 
@@ -35,7 +33,7 @@ public partial class SongsVisualizer : Control
 		{
 			for(int i = Playlist.Songs.Count; i < SongDisplays.Count; i++)
 			{
-				var ds = SongDisplays[i] as Songdisplay;
+                Songdisplay ds = SongDisplays[i] as Songdisplay;
                 main.OnPlay -= ds.SetTextures;
                 main.OnLoadSong -= ds.SetHighlight;
 				SongDisplays[i].QueueFree();

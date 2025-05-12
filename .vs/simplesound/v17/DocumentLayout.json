@@ -3,32 +3,36 @@
   "WorkspaceRootPath": "D:\\Godot\\simplesound\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|d:\\godot\\simplesound\\csharp\\backend\\ssl parsing\\parsetools.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|solutionrelative:csharp\\backend\\ssl parsing\\parsetools.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|d:\\godot\\simplesound\\csharp\\ui\\attribute editor\\attributeeditoropener.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|solutionrelative:csharp\\ui\\attribute editor\\attributeeditoropener.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|d:\\godot\\simplesound\\csharp\\backend\\ssl parsing\\playlists.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|solutionrelative:csharp\\backend\\ssl parsing\\playlists.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|d:\\godot\\simplesound\\csharp\\ui\\windowopener.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|solutionrelative:csharp\\ui\\windowopener.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|d:\\godot\\simplesound\\csharp\\backend\\ssl parsing\\mainparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|solutionrelative:csharp\\backend\\ssl parsing\\mainparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|d:\\godot\\simplesound\\csharp\\ui\\window.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|solutionrelative:csharp\\ui\\window.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|d:\\godot\\simplesound\\csharp\\savesystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|solutionrelative:csharp\\savesystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|d:\\godot\\simplesound\\csharp\\ui\\attribute editor\\attributeeditor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|solutionrelative:csharp\\ui\\attribute editor\\attributeeditor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|d:\\godot\\simplesound\\csharp\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|solutionrelative:csharp\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|d:\\godot\\simplesound\\csharp\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|solutionrelative:csharp\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|d:\\godot\\simplesound\\csharp\\backend\\converttogodot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|solutionrelative:csharp\\backend\\converttogodot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|d:\\godot\\simplesound\\csharp\\ui\\createplaylist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|solutionrelative:csharp\\ui\\createplaylist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|d:\\godot\\simplesound\\csharp\\backend\\debugging.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|solutionrelative:csharp\\backend\\debugging.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|d:\\godot\\simplesound\\csharp\\globals.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|solutionrelative:csharp\\globals.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,93 +42,111 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Debugging.cs",
-              "DocumentMoniker": "D:\\Godot\\simplesound\\Csharp\\Backend\\Debugging.cs",
-              "RelativeDocumentMoniker": "Csharp\\Backend\\Debugging.cs",
-              "ToolTip": "D:\\Godot\\simplesound\\Csharp\\Backend\\Debugging.cs",
-              "RelativeToolTip": "Csharp\\Backend\\Debugging.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAABUAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "AttributeEditorOpener.cs",
+              "DocumentMoniker": "D:\\GODOT\\SIMPLESOUND\\Csharp\\UI\\Attribute Editor\\AttributeEditorOpener.cs",
+              "RelativeDocumentMoniker": "Csharp\\UI\\Attribute Editor\\AttributeEditorOpener.cs",
+              "ToolTip": "D:\\GODOT\\SIMPLESOUND\\Csharp\\UI\\Attribute Editor\\AttributeEditorOpener.cs",
+              "RelativeToolTip": "Csharp\\UI\\Attribute Editor\\AttributeEditorOpener.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-08T23:31:03.004Z"
+              "WhenOpened": "2025-05-12T03:45:08.457Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Player.cs",
+              "DocumentMoniker": "D:\\Godot\\simplesound\\Csharp\\Player.cs",
+              "RelativeDocumentMoniker": "Csharp\\Player.cs",
+              "ToolTip": "D:\\Godot\\simplesound\\Csharp\\Player.cs",
+              "RelativeToolTip": "Csharp\\Player.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-12T03:13:17.166Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "MainParser.cs",
-              "DocumentMoniker": "D:\\Godot\\simplesound\\Csharp\\Backend\\SSL Parsing\\MainParser.cs",
-              "RelativeDocumentMoniker": "Csharp\\Backend\\SSL Parsing\\MainParser.cs",
-              "ToolTip": "D:\\Godot\\simplesound\\Csharp\\Backend\\SSL Parsing\\MainParser.cs",
-              "RelativeToolTip": "Csharp\\Backend\\SSL Parsing\\MainParser.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAgwCAAAAAAAAAAAAAAAA==",
+              "Title": "Window.cs",
+              "DocumentMoniker": "D:\\Godot\\simplesound\\Csharp\\UI\\Window.cs",
+              "RelativeDocumentMoniker": "Csharp\\UI\\Window.cs",
+              "ToolTip": "D:\\Godot\\simplesound\\Csharp\\UI\\Window.cs",
+              "RelativeToolTip": "Csharp\\UI\\Window.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-07T14:06:39.666Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ParseTools.cs",
-              "DocumentMoniker": "D:\\Godot\\simplesound\\Csharp\\Backend\\SSL Parsing\\ParseTools.cs",
-              "RelativeDocumentMoniker": "Csharp\\Backend\\SSL Parsing\\ParseTools.cs",
-              "ToolTip": "D:\\Godot\\simplesound\\Csharp\\Backend\\SSL Parsing\\ParseTools.cs",
-              "RelativeToolTip": "Csharp\\Backend\\SSL Parsing\\ParseTools.cs",
-              "ViewState": "AgIAAGMAAAAAAAAAAAAAAHYAAABUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-07T04:28:20.083Z",
+              "WhenOpened": "2025-05-12T03:41:19.837Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Playlists.cs",
-              "DocumentMoniker": "D:\\Godot\\simplesound\\Csharp\\Backend\\SSL Parsing\\Playlists.cs",
-              "RelativeDocumentMoniker": "Csharp\\Backend\\SSL Parsing\\Playlists.cs",
-              "ToolTip": "D:\\Godot\\simplesound\\Csharp\\Backend\\SSL Parsing\\Playlists.cs",
-              "RelativeToolTip": "Csharp\\Backend\\SSL Parsing\\Playlists.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAQwG0AAAAAAAAAAAAAAA==",
+              "Title": "WindowOpener.cs",
+              "DocumentMoniker": "D:\\Godot\\simplesound\\Csharp\\UI\\WindowOpener.cs",
+              "RelativeDocumentMoniker": "Csharp\\UI\\WindowOpener.cs",
+              "ToolTip": "D:\\Godot\\simplesound\\Csharp\\UI\\WindowOpener.cs",
+              "RelativeToolTip": "Csharp\\UI\\WindowOpener.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-07T01:56:36.647Z",
+              "WhenOpened": "2025-05-12T03:37:24.249Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AttributeEditor.cs",
+              "DocumentMoniker": "D:\\GODOT\\SIMPLESOUND\\Csharp\\UI\\Attribute Editor\\AttributeEditor.cs",
+              "RelativeDocumentMoniker": "Csharp\\UI\\Attribute Editor\\AttributeEditor.cs",
+              "ToolTip": "D:\\GODOT\\SIMPLESOUND\\Csharp\\UI\\Attribute Editor\\AttributeEditor.cs",
+              "RelativeToolTip": "Csharp\\UI\\Attribute Editor\\AttributeEditor.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAADwvysAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-12T03:31:21.404Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "CreatePlaylist.cs",
+              "DocumentMoniker": "D:\\Godot\\simplesound\\Csharp\\UI\\CreatePlaylist.cs",
+              "RelativeDocumentMoniker": "Csharp\\UI\\CreatePlaylist.cs",
+              "ToolTip": "D:\\Godot\\simplesound\\Csharp\\UI\\CreatePlaylist.cs",
+              "RelativeToolTip": "Csharp\\UI\\CreatePlaylist.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-12T03:28:40.732Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Globals.cs",
+              "DocumentMoniker": "D:\\Godot\\simplesound\\Csharp\\Globals.cs",
+              "RelativeDocumentMoniker": "Csharp\\Globals.cs",
+              "ToolTip": "D:\\Godot\\simplesound\\Csharp\\Globals.cs",
+              "RelativeToolTip": "Csharp\\Globals.cs",
+              "ViewState": "AgIAABcAAAAAAAAAAAAqwCkAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-12T02:53:40.468Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "ConvertToGodot.cs",
-              "DocumentMoniker": "D:\\Godot\\simplesound\\Csharp\\Backend\\ConvertToGodot.cs",
-              "RelativeDocumentMoniker": "Csharp\\Backend\\ConvertToGodot.cs",
-              "ToolTip": "D:\\Godot\\simplesound\\Csharp\\Backend\\ConvertToGodot.cs",
-              "RelativeToolTip": "Csharp\\Backend\\ConvertToGodot.cs",
-              "ViewState": "AgIAAFEAAAAAyMzMzMz8v2YAAABGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-07T04:31:44.577Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
               "Title": "Main.cs",
               "DocumentMoniker": "D:\\Godot\\simplesound\\Csharp\\Main.cs",
               "RelativeDocumentMoniker": "Csharp\\Main.cs",
               "ToolTip": "D:\\Godot\\simplesound\\Csharp\\Main.cs",
               "RelativeToolTip": "Csharp\\Main.cs",
-              "ViewState": "AgIAABYAAAAAAAAAAADwvyYAAAAbAAAAAAAAAA==",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAQwBYAAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-07T03:55:27.007Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "SaveSystem.cs",
-              "DocumentMoniker": "D:\\Godot\\simplesound\\Csharp\\SaveSystem.cs",
-              "RelativeDocumentMoniker": "Csharp\\SaveSystem.cs",
-              "ToolTip": "D:\\Godot\\simplesound\\Csharp\\SaveSystem.cs",
-              "RelativeToolTip": "Csharp\\SaveSystem.cs",
-              "ViewState": "AgIAACsAAAAAAAAAAAAswDwAAABBAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-12T11:15:23.974Z"
+              "WhenOpened": "2025-03-07T03:55:27.007Z",
+              "EditorCaption": ""
             }
           ]
         }

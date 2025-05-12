@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://dle5y658wmx03"]
 
-[ext_resource type="Script" uid="uid://bdm0j42taoijb" path="res://Csharp/UI/AttributeEditor.cs" id="1_cj5je"]
+[ext_resource type="Script" uid="uid://eh8a3k652ogt" path="res://Csharp/UI/Attribute Editor/AttributeEditor.cs" id="1_cj5je"]
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Fonts/DefaultFont.tres" id="1_ot5f1"]
 [ext_resource type="Texture2D" uid="uid://c85envuiuo3ju" path="res://Icons/folder.png" id="3_5xnwa"]
 
@@ -10,33 +10,24 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iyibu"]
 
-[node name="AttributeEditor" type="Control" node_paths=PackedStringArray("Name", "Artist", "CoverButton", "CoverFileDialog", "CoverLabel", "ExplicitLyrics", "SubmitButton", "CancelButton", "AttributeWindow")]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("1_cj5je")
-Name = NodePath("Attribute editor/Name")
-Artist = NodePath("Attribute editor/Artist")
-CoverButton = NodePath("Attribute editor/Cover")
-CoverFileDialog = NodePath("Attribute editor/Cover/FileDialog")
-CoverLabel = NodePath("Attribute editor/Cover/Label")
-ExplicitLyrics = NodePath("Attribute editor/Explicit Lyrics")
-SubmitButton = NodePath("Attribute editor/HBoxContainer/Button")
-CancelButton = NodePath("Attribute editor/HBoxContainer/Button2")
-AttributeWindow = NodePath("Attribute editor")
-
-[node name="Attribute editor" type="Window" parent="."]
+[node name="Attribute editor" type="Window" node_paths=PackedStringArray("Name", "Artist", "CoverButton", "CoverFileDialog", "CoverLabel", "ExplicitLyrics", "SubmitButton", "CancelButton")]
 auto_translate_mode = 1
 title = "Edit song attributes"
 initial_position = 2
 size = Vector2i(300, 250)
 visible = false
 min_size = Vector2i(250, 200)
+script = ExtResource("1_cj5je")
+Name = NodePath("Name")
+Artist = NodePath("Artist")
+CoverButton = NodePath("Cover")
+CoverFileDialog = NodePath("Cover/FileDialog")
+CoverLabel = NodePath("Cover/Label")
+ExplicitLyrics = NodePath("Explicit Lyrics")
+SubmitButton = NodePath("HBoxContainer/Button")
+CancelButton = NodePath("HBoxContainer/Button2")
 
-[node name="ColorRect" type="ColorRect" parent="Attribute editor"]
+[node name="ColorRect" type="ColorRect" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -44,7 +35,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.133196, 0.133196, 0.133196, 1)
 
-[node name="Name" type="TextEdit" parent="Attribute editor"]
+[node name="Name" type="TextEdit" parent="."]
 offset_left = 10.0
 offset_top = 10.0
 offset_right = 160.0
@@ -54,7 +45,7 @@ placeholder_text = "Name"
 scroll_fit_content_height = true
 caret_blink = true
 
-[node name="Artist" type="TextEdit" parent="Attribute editor"]
+[node name="Artist" type="TextEdit" parent="."]
 offset_left = 10.0
 offset_top = 45.0
 offset_right = 160.0
@@ -65,7 +56,7 @@ placeholder_text = "Artist
 scroll_fit_content_height = true
 caret_blink = true
 
-[node name="Explicit Lyrics" type="CheckBox" parent="Attribute editor"]
+[node name="Explicit Lyrics" type="CheckBox" parent="."]
 offset_left = 7.5
 offset_top = 80.0
 offset_right = 139.5
@@ -76,7 +67,7 @@ theme_override_fonts/font = ExtResource("1_ot5f1")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_3g08v")
 text = "Explicit Lyrics"
 
-[node name="Cover" type="Button" parent="Attribute editor"]
+[node name="Cover" type="Button" parent="."]
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
@@ -89,7 +80,7 @@ theme_override_fonts/font = ExtResource("1_ot5f1")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_mixmj")
 text = "Select cover image"
 
-[node name="TextureRect" type="TextureRect" parent="Attribute editor/Cover"]
+[node name="TextureRect" type="TextureRect" parent="Cover"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -102,7 +93,7 @@ grow_vertical = 2
 scale = Vector2(0.6, 0.6)
 texture = ExtResource("3_5xnwa")
 
-[node name="Label" type="Label" parent="Attribute editor/Cover"]
+[node name="Label" type="Label" parent="Cover"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -115,14 +106,14 @@ grow_vertical = 2
 theme_override_fonts/font = ExtResource("1_ot5f1")
 theme_override_font_sizes/font_size = 11
 
-[node name="FileDialog" type="FileDialog" parent="Attribute editor/Cover"]
+[node name="FileDialog" type="FileDialog" parent="Cover"]
 title = "Open a File"
 ok_button_text = "Open"
 file_mode = 0
 access = 2
 use_native_dialog = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Attribute editor"]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -136,13 +127,13 @@ grow_horizontal = 2
 grow_vertical = 0
 alignment = 1
 
-[node name="Button" type="Button" parent="Attribute editor/HBoxContainer"]
+[node name="Button" type="Button" parent="HBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_ot5f1")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_iyibu")
 text = "Apply Changes"
 
-[node name="Button2" type="Button" parent="Attribute editor/HBoxContainer"]
+[node name="Button2" type="Button" parent="HBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_ot5f1")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_iyibu")

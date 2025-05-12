@@ -7,12 +7,10 @@ TODO
 - Add song position rearange
 - Lerp background image to transition
 - Make top card playbutton functionality
-- Fix song play pause icon
 - Add sorting
 - Add basic gdshader support to ssl
 - Add images to ssl
 - Add music video playing
-- Create sssl
 
 ULTIMATE GOAL:
 Create a music player like spotify, that allows for advanced song visualizers, shaders, 

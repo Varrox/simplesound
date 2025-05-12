@@ -2,91 +2,90 @@ using Godot;
 
 public partial class Player : Node
 {
-    [Export] public Main MainController;
     [Export] public Button Play, Next, Back, Loop, Shuffle;
-    [Export] public Texture2D PlayIcon, PauseIcon, LoopOn, LoopOff, ShuffleOn, ShuffleOff;
+    [Export] public Texture2D LoopOn, LoopOff, ShuffleOn, ShuffleOff;
     [Export] public Slider Progress;
     [Export] public Label CurrentTime, TotalTime, SongName, SongArtist;
     [Export] public TextureRect SongCover, BackgroundImage;
     [Export] public Slider VolumeSlider;
     [Export] public ColorRect backgroundColor;
 
-    [Export] public Button EditAttributes;
-    [Export] public AttributeEditor AttributeEditor;
-
     Color bc;
 
-    bool canSetTime, attributesBeingedited, spacepressed;
+    bool canSetTime, spacepressed;
+
+    public bool interrupted;
 
     public override void _Ready()
 	{
+        GetTree().Root.MinSize = new Vector2I(850, 350);
+
         Loop.ButtonDown += setLoop;
         Shuffle.ButtonDown += SetShuffle;
-        Play.ButtonDown += MainController.Play;
+        Play.ButtonDown += Globals.main.Play;
+
         Next.ButtonDown += () => move(1);
         Back.ButtonDown += () => move(-1);
-        MainController.OnLoadSong += onLoadSong;
+
+        Globals.main.OnLoadSong += onLoadSong;
+
         Progress.DragEnded += setTime;
         Progress.DragStarted += () => canSetTime = true;
-        EditAttributes.ButtonDown += editAttributes;
-        AttributeEditor.onSubmitdata += submitmeta;
 
-        GetTree().Root.MinSize = new Vector2I(850, 350);
-        AttributeEditor.AttributeWindow.Hide();
-        MainController.OnPlay += Playicon;
+        Globals.main.OnPlay += Playicon;
         Playicon(false);
     }
 
-    public void editAttributes()
+    public bool interrupt()
     {
-        if(!attributesBeingedited)
+        if(!interrupted)
         {
-            AttributeEditor.open(SongName.Text, SongArtist.Text, Metadata.IsExplicit(MainController.song));
-            attributesBeingedited = true;
-
-            if (MainController.playing) MainController.Play();
+            if (Globals.main.playing) Globals.main.Play();
+            interrupted = true;
+            return true;
         }
+        return false;
     }
 
     public void SetShuffle()
     {
-        MainController.random = !MainController.random;
-        MainController.shuffleIndex = MainController.currentSong;
-        Shuffle.Icon = MainController.random ? ShuffleOn : ShuffleOff;
+        Globals.main.random = !Globals.main.random;
+        Globals.main.shuffleIndex = Globals.main.currentSong;
+        Shuffle.Icon = Globals.main.random ? ShuffleOn : ShuffleOff;
     }
 
     public void setLoop()
     {
-        MainController.loop = !MainController.loop;
-        Loop.Icon = MainController.loop ? LoopOn : LoopOff;
+        Globals.main.loop = !Globals.main.loop;
+        Loop.Icon = Globals.main.loop ? LoopOn : LoopOff;
     }
 
     public void Playicon(bool playing)
     {
-        Play.Icon = !playing ? PlayIcon : PauseIcon;
+        Play.Icon = !playing ? Globals.play_texture : Globals.pause_texture;
     }
 
     public void move(int by)
     {
-        if (!attributesBeingedited)
+        if (!interrupted)
         {
-            MainController.MoveSong(by);
+            Globals.main.MoveSong(by);
         }
     }
 
     public void onLoadSong()
     {
-        if (MainController.playlist)
+        if (Globals.main.playlist)
         {
-            string name = Tools.GetMediaTitle(MainController.song);
+            string name = Tools.GetMediaTitle(Globals.main.song);
             SongName.Text = name;
             SongName.TooltipText = name;
-            string artist = Metadata.GetArtist(MainController.song);
+            string artist = Metadata.GetArtist(Globals.main.song);
             SongArtist.Text = artist;
             SongArtist.TooltipText = artist;
-            Texture2D cover = ConvertToGodot.GetCover(MainController.song);
+            Texture2D cover = ConvertToGodot.GetCover(Globals.main.song);
             SongCover.Texture = cover;
-            if (MainController.playlist.customInfo.backgroundPath != null) BackgroundImage.Texture = ConvertToGodot.LoadImage(MainController.playlist.customInfo.backgroundPath, ref cover);
+            if (Globals.main.playlist.customInfo.backgroundPath != null) BackgroundImage.Texture = ConvertToGodot.LoadImage(Globals.main.playlist.customInfo.backgroundPath, ref cover);
             else BackgroundImage.Texture = cover;
         }
         else
@@ -98,53 +97,45 @@ public partial class Player : Node
             bc = new Color(0, 0, 0, 0);
         }
 
-        TotalTime.Text = Tools.SecondsToTimestamp(Metadata.GetTotalTime(MainController.song));
-        Progress.MaxValue = MainController.player.Stream.GetLength();
+        TotalTime.Text = Tools.SecondsToTimestamp(Metadata.GetTotalTime(Globals.main.song));
+        Progress.MaxValue = Globals.main.player.Stream.GetLength();
     }
 
     public void setTime(bool value)
     {
-        MainController.time = (float)Progress.Value;
-        if (MainController.playing) MainController.player.Play(MainController.time);
+        Globals.main.time = (float)Progress.Value;
+        if (Globals.main.playing) Globals.main.player.Play(Globals.main.time);
         canSetTime = false;
-    }
-
-    public void submitmeta()
-    {
-        MainController.EditMeta(AttributeEditor.songname, AttributeEditor.artist, AttributeEditor.coverpath, AttributeEditor.explicitLyrics);
-        onLoadSong();
-        attributesBeingedited = false;
-        MainController.songsVisualizer.UpdateSong(MainController.currentSong, AttributeEditor.songname, AttributeEditor.artist, TotalTime.Text, AttributeEditor.explicitLyrics, SongCover.Texture);
     }
 
     public override void _Process(double delta)
 	{
-        if(!attributesBeingedited)
+        if(!interrupted)
         {
             if (Input.IsKeyPressed(Key.Space) && !spacepressed)
             {
-                MainController.Play();
+                Globals.main.Play();
                 spacepressed = true;
             }
             else if (!Input.IsKeyPressed(Key.Space) && spacepressed) spacepressed = false;
         }
 
-        if (MainController.player.Stream != null) CurrentTime.Text = Tools.SecondsToTimestamp(MainController.time);
+        if (Globals.main.player.Stream != null) CurrentTime.Text = Tools.SecondsToTimestamp(Globals.main.time);
 
         if (!canSetTime)
         {
-            Progress.Value = MainController.time;
+            Progress.Value = Globals.main.time;
         }
-        else if (!MainController.playing)
+        else if (!Globals.main.playing)
         {
-            MainController.time = (float)Progress.Value;
+            Globals.main.time = (float)Progress.Value;
         }
 
         float max = 0.65f;
 
-        if(MainController.playlist.customInfo.overlayColor != null)
+        if(Globals.main.playlist.customInfo.overlayColor != null)
         {
-            bc = ConvertToGodot.GetColor(MainController.playlist.customInfo.overlayColor);
+            bc = ConvertToGodot.GetColor(Globals.main.playlist.customInfo.overlayColor);
         }
         else
         {
@@ -153,11 +144,11 @@ public partial class Player : Node
 
         backgroundColor.Color = backgroundColor.Color.Lerp(bc.Clamp(new Color(), new Color(max, max, max, max)), (float)delta * 2f);
 
-        MainController.player.VolumeDb = (float)(VolumeSlider.Value != -50 ? VolumeSlider.Value : -80) + MainController.playlist.customInfo.volume;
-        MainController.player.PitchScale = Mathf.Clamp(MainController.playlist.customInfo.speed, 0.01f, 4f);
+        Globals.main.player.VolumeDb = (float)(VolumeSlider.Value != -50 ? VolumeSlider.Value : -80) + Globals.main.playlist.customInfo.volume;
+        Globals.main.player.PitchScale = Mathf.Clamp(Globals.main.playlist.customInfo.speed, 0.01f, 4f);
 
         var effect = AudioServer.GetBusEffect(0, 0) as AudioEffectReverb;
-        effect.RoomSize = MainController.playlist.customInfo.reverb;
-        effect.Wet = MainController.playlist.customInfo.reverb / 100;
+        effect.RoomSize = Globals.main.playlist.customInfo.reverb;
+        effect.Wet = Globals.main.playlist.customInfo.reverb / 100;
     }
 }

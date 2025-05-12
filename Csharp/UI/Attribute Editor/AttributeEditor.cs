@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class AttributeEditor : Node
+public partial class AttributeEditor : EditorWindow
 {
     [Export] public TextEdit Name, Artist;
     [Export] public Button CoverButton;
@@ -8,9 +8,6 @@ public partial class AttributeEditor : Node
     [Export] public Label CoverLabel;
     [Export] public CheckBox ExplicitLyrics;
     [Export] public Button SubmitButton, CancelButton;
-    [Export] public Window AttributeWindow;
-
-    [Signal] public delegate void onSubmitdataEventHandler();
 
     public string songname, artist, coverpath;
     public bool explicitLyrics;
@@ -26,7 +23,7 @@ public partial class AttributeEditor : Node
 
     public override void _Process(double delta)
     {
-        if (AttributeWindow.Visible)
+        if (Visible)
         { 
             bool changed = (Name.Text != songname) || (Artist.Text != artist) || coverChanged || (explicitLyrics != ExplicitLyrics.ButtonPressed);
             SubmitButton.Visible = changed;
@@ -41,8 +38,8 @@ public partial class AttributeEditor : Node
         artist = currentArtist;
         ExplicitLyrics.ButtonPressed = explicitLyrics;
         this.explicitLyrics = explicitLyrics;
-        AttributeWindow.Show();
-        AttributeWindow.Visible = true;
+        Show();
+        Visible = true;
         CoverLabel.Text = "";
         coverpath = "";
     }
@@ -52,18 +49,18 @@ public partial class AttributeEditor : Node
         songname = Name.Text;
         artist = Artist.Text;
         explicitLyrics = ExplicitLyrics.ButtonPressed;
-        AttributeWindow.Visible = false;
-        AttributeWindow.Hide();
+        Visible = false;
+        Hide();
         coverChanged = false;
-        EmitSignal("onSubmitdata");
+        EmitSignal("OnClose");
     }
 
     public void Cancel()
     {
-        AttributeWindow.Visible = false;
-        AttributeWindow.Hide();
+        Visible = false;
+        Hide();
         coverChanged = false;
-        EmitSignal("onSubmitdata");
+        EmitSignal("OnClose");
     }
 
 
