@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://5kfxiu06xug0"]
 
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Fonts/DefaultFont.tres" id="1_8t6yf"]
-[ext_resource type="Script" uid="uid://bnk1pcof0h5i" path="res://Csharp/CreatePlaylist.cs" id="1_b0noq"]
+[ext_resource type="Script" uid="uid://bhqfe4m1n2gya" path="res://Csharp/UI/CreatePlaylist.cs" id="1_b0noq"]
 [ext_resource type="Texture2D" uid="uid://c85envuiuo3ju" path="res://Icons/folder.png" id="2_5l8pw"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_acdqb"]
@@ -36,11 +36,23 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.133196, 0.133196, 0.133196, 1)
 
-[node name="Name" type="TextEdit" parent="Window"]
-offset_left = 15.0
-offset_top = 15.0
-offset_right = 207.35
-offset_bottom = 47.0
+[node name="HBoxContainer2" type="HBoxContainer" parent="Window"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Window/HBoxContainer2"]
+layout_mode = 2
+
+[node name="Name" type="TextEdit" parent="Window/HBoxContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(179.56, 0)
+layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("1_8t6yf")
@@ -48,18 +60,18 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_acdqb")
 placeholder_text = "Name"
 scroll_fit_content_height = true
 
-[node name="Cover" type="Button" parent="Window"]
-offset_left = 15.0
-offset_top = 50.0
-offset_right = 207.35
-offset_bottom = 81.0
-size_flags_horizontal = 4
+[node name="HSeparator" type="HSeparator" parent="Window/HBoxContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="Cover" type="Button" parent="Window/HBoxContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
 size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("1_8t6yf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_yiuwm")
 text = "Select cover"
 
-[node name="TextureRect" type="TextureRect" parent="Window/Cover"]
+[node name="TextureRect" type="TextureRect" parent="Window/HBoxContainer2/VBoxContainer/Cover"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -72,7 +84,7 @@ grow_vertical = 2
 scale = Vector2(0.6, 0.6)
 texture = ExtResource("2_5l8pw")
 
-[node name="Label" type="Label" parent="Window/Cover"]
+[node name="Label" type="Label" parent="Window/HBoxContainer2/VBoxContainer/Cover"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -87,14 +99,17 @@ theme_override_font_sizes/font_size = 11
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="FileDialog" type="FileDialog" parent="Window/Cover"]
+[node name="FileDialog" type="FileDialog" parent="Window/HBoxContainer2/VBoxContainer/Cover"]
 auto_translate_mode = 1
 title = "Open a File"
-size = Vector2i(207, 175)
+size = Vector2i(220, 175)
 ok_button_text = "Open"
 file_mode = 0
 access = 2
 use_native_dialog = true
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Window/HBoxContainer2"]
+layout_mode = 2
 
 [node name="Album" type="CheckBox" parent="Window"]
 anchors_preset = 1
