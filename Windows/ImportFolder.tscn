@@ -2,7 +2,7 @@
 
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Fonts/DefaultFont.tres" id="1_8t6yf"]
 [ext_resource type="Script" uid="uid://bhqfe4m1n2gya" path="res://Csharp/UI/CreatePlaylist.cs" id="1_b0noq"]
-[ext_resource type="Texture2D" uid="uid://c85envuiuo3ju" path="res://Icons/folder.png" id="2_5l8pw"]
+[ext_resource type="PackedScene" uid="uid://cjc5crjo31obe" path="res://Prefabs/pathdisplay.tscn" id="3_uox0n"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_acdqb"]
 
@@ -12,23 +12,22 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bhcbq"]
 
-[node name="CreatePlaylist" type="Control"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("1_b0noq")
-
-[node name="Window" type="Window" parent="."]
+[node name="Window" type="Window" node_paths=PackedStringArray("playlist_name", "open_cover", "playlist_cover", "coverdisplay", "add_songs", "open_songs", "song_display_container")]
 title = "Create Playlist"
 initial_position = 2
-size = Vector2i(450, 250)
-min_size = Vector2i(450, 250)
-max_size = Vector2i(450, 250)
+size = Vector2i(550, 300)
+min_size = Vector2i(450, 300)
+script = ExtResource("1_b0noq")
+song_display = ExtResource("3_uox0n")
+playlist_name = NodePath("HBoxContainer2/VBoxContainer/Name")
+open_cover = NodePath("HBoxContainer2/VBoxContainer/Cover")
+playlist_cover = NodePath("HBoxContainer2/VBoxContainer/Cover/FileDialog")
+coverdisplay = NodePath("HBoxContainer2/VBoxContainer/Selected File")
+add_songs = NodePath("HBoxContainer2/VBoxContainer/Cover2")
+open_songs = NodePath("HBoxContainer2/VBoxContainer/Cover2/FileDialog")
+song_display_container = NodePath("HBoxContainer2/VBoxContainer/Panel/ScrollContainer/VBoxContainer")
 
-[node name="ColorRect" type="ColorRect" parent="Window"]
+[node name="ColorRect" type="ColorRect" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -36,70 +35,41 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.133196, 0.133196, 0.133196, 1)
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="Window"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 10.0
 offset_top = 10.0
 offset_right = -10.0
-offset_bottom = -10.0
+offset_bottom = -55.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Window/HBoxContainer2"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer2"]
 layout_mode = 2
+size_flags_horizontal = 3
 
-[node name="Name" type="TextEdit" parent="Window/HBoxContainer2/VBoxContainer"]
-custom_minimum_size = Vector2(179.56, 0)
+[node name="Name" type="TextEdit" parent="HBoxContainer2/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("1_8t6yf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_acdqb")
 placeholder_text = "Name"
 scroll_fit_content_height = true
 
-[node name="HSeparator" type="HSeparator" parent="Window/HBoxContainer2/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="HBoxContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
-[node name="Cover" type="Button" parent="Window/HBoxContainer2/VBoxContainer"]
+[node name="Cover" type="Button" parent="HBoxContainer2/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 0
 size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("1_8t6yf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_yiuwm")
 text = "Select cover"
 
-[node name="TextureRect" type="TextureRect" parent="Window/HBoxContainer2/VBoxContainer/Cover"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = -2.67
-offset_top = 19.165
-offset_right = 37.33
-offset_bottom = 59.165
-grow_vertical = 2
-scale = Vector2(0.6, 0.6)
-texture = ExtResource("2_5l8pw")
-
-[node name="Label" type="Label" parent="Window/HBoxContainer2/VBoxContainer/Cover"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 20.0
-offset_top = 24.33
-offset_right = 200.0
-offset_bottom = 47.33
-grow_vertical = 2
-theme_override_fonts/font = ExtResource("1_8t6yf")
-theme_override_font_sizes/font_size = 11
-clip_text = true
-text_overrun_behavior = 3
-
-[node name="FileDialog" type="FileDialog" parent="Window/HBoxContainer2/VBoxContainer/Cover"]
+[node name="FileDialog" type="FileDialog" parent="HBoxContainer2/VBoxContainer/Cover"]
 auto_translate_mode = 1
 title = "Open a File"
 size = Vector2i(220, 175)
@@ -108,32 +78,64 @@ file_mode = 0
 access = 2
 use_native_dialog = true
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="Window/HBoxContainer2"]
+[node name="Selected File" parent="HBoxContainer2/VBoxContainer" instance=ExtResource("3_uox0n")]
 layout_mode = 2
 
-[node name="Album" type="CheckBox" parent="Window"]
-anchors_preset = 1
-anchor_left = 1.0
+[node name="HSeparator2" type="HSeparator" parent="HBoxContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="Cover2" type="Button" parent="HBoxContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("1_8t6yf")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yiuwm")
+text = "Add Songs"
+
+[node name="FileDialog" type="FileDialog" parent="HBoxContainer2/VBoxContainer/Cover2"]
+auto_translate_mode = 1
+title = "Open File(s)"
+size = Vector2i(220, 175)
+ok_button_text = "Open"
+file_mode = 1
+access = 2
+use_native_dialog = true
+
+[node name="Panel" type="Panel" parent="HBoxContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(0, 79.7)
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer2/VBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
-offset_left = -210.0
-offset_top = 15.0
-offset_right = -71.0
-offset_bottom = 46.0
-grow_horizontal = 0
+anchor_bottom = 1.0
+offset_left = 2.5
+offset_top = 2.5
+offset_right = -2.5
+offset_bottom = -2.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer2/VBoxContainer/Panel/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VSeparator" type="VSeparator" parent="HBoxContainer2"]
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Album" type="CheckBox" parent="HBoxContainer2/VBoxContainer2"]
+layout_mode = 2
 theme_override_fonts/font = ExtResource("1_8t6yf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_r7omr")
 text = "Album"
 
-[node name="Artist" type="TextEdit" parent="Window"]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -207.35
-offset_top = 50.0
-offset_right = -15.0
-offset_bottom = 82.0
-grow_horizontal = 0
-size_flags_horizontal = 4
+[node name="Artist" type="TextEdit" parent="HBoxContainer2/VBoxContainer2"]
+layout_mode = 2
 size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("1_8t6yf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_acdqb")
@@ -141,20 +143,22 @@ placeholder_text = "Artist"
 editable = false
 scroll_fit_content_height = true
 
-[node name="Background Theme" type="CheckBox" parent="Window"]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -209.785
-offset_top = 95.3
-offset_right = 15.215
-offset_bottom = 126.3
-grow_horizontal = 0
+[node name="HSeparator" type="HSeparator" parent="HBoxContainer2/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Background Theme" type="CheckBox" parent="HBoxContainer2/VBoxContainer2"]
+layout_mode = 2
 theme_override_fonts/font = ExtResource("1_8t6yf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_r7omr")
 text = "Background Theme"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Window"]
+[node name="ColorPickerButton" type="ColorPickerButton" parent="HBoxContainer2/VBoxContainer2"]
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_bhcbq")
+text = "
+"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -168,30 +172,14 @@ grow_horizontal = 2
 grow_vertical = 0
 alignment = 1
 
-[node name="Button" type="Button" parent="Window/HBoxContainer"]
+[node name="Create" type="Button" parent="HBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_8t6yf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_r7omr")
 text = "Create"
 
-[node name="Button2" type="Button" parent="Window/HBoxContainer"]
+[node name="Cancel" type="Button" parent="HBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_8t6yf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_r7omr")
 text = "Cancel"
-
-[node name="ColorPickerButton" type="ColorPickerButton" parent="Window"]
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -207.35
-offset_top = 0.889999
-offset_right = -15.0
-offset_bottom = 31.89
-grow_horizontal = 0
-grow_vertical = 2
-theme_override_styles/focus = SubResource("StyleBoxEmpty_bhcbq")
-text = "
-"
