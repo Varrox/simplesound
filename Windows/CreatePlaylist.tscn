@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://5kfxiu06xug0"]
 
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Fonts/DefaultFont.tres" id="1_8t6yf"]
-[ext_resource type="Script" uid="uid://bhqfe4m1n2gya" path="res://Csharp/UI/Playlist Creator/CreatePlaylist.cs" id="1_b0noq"]
+[ext_resource type="Script" uid="uid://bhqfe4m1n2gya" path="res://Csharp/UI/Playlist Creator/PlaylistCreator.cs" id="1_b0noq"]
 [ext_resource type="PackedScene" uid="uid://cjc5crjo31obe" path="res://Prefabs/pathdisplay.tscn" id="3_uox0n"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_acdqb"]
@@ -18,13 +18,13 @@ initial_position = 2
 size = Vector2i(550, 300)
 min_size = Vector2i(450, 300)
 script = ExtResource("1_b0noq")
+songDisplay = ExtResource("3_uox0n")
 playlist_name = NodePath("HBoxContainer2/VBoxContainer/Name")
 addCover = NodePath("HBoxContainer2/VBoxContainer/Cover")
 addCoverDialog = NodePath("HBoxContainer2/VBoxContainer/Cover/FileDialog")
 coverDisplay = NodePath("HBoxContainer2/VBoxContainer/Selected File")
 addSongs = NodePath("HBoxContainer2/VBoxContainer/Cover2")
 addSongsDialog = NodePath("HBoxContainer2/VBoxContainer/Cover2/FileDialog")
-songDisplay = ExtResource("3_uox0n")
 songDisplayContainer = NodePath("HBoxContainer2/VBoxContainer/Panel/ScrollContainer/VBoxContainer")
 album = NodePath("HBoxContainer2/VBoxContainer2/Album")
 artist = NodePath("HBoxContainer2/VBoxContainer2/Artist")

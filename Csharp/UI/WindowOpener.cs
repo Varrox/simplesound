@@ -1,11 +1,11 @@
-﻿using Godot;
+using Godot;
 
 public partial class EditorWindowOpener : Button
 {
-    [Export] public EditorWindow window;
+	[Export] public EditorWindow window;
 
-    public override void _Ready()
-    {
-        window.Hide();
-    }
+	public override void _Ready()
+	{
+		window.Hide();
+	}
 }

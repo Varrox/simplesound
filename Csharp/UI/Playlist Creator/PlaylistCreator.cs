@@ -15,15 +15,15 @@ public partial class PlaylistCreator : EditorWindow
 	[Export] Control songDisplayContainer;
 
 
-    [Export] public CheckBox album;
-    [Export] public TextEdit artist;
+	[Export] public CheckBox album;
+	[Export] public TextEdit artist;
 
 	[Export] public CheckBox backgroundThemeEnabled;
 	[Export] public ColorPickerButton backgroundTheme;
 
-    [Export] public Button SubmitButton, CancelButton;
+	[Export] public Button SubmitButton, CancelButton;
 
-    public List<string> songs;
+	public List<string> songs;
 	public string cover_path;
 
 	public override void _Ready()
@@ -35,14 +35,14 @@ public partial class PlaylistCreator : EditorWindow
 		addCover.ButtonDown += OpenCover;
 		addCoverDialog.FileSelected += SetCover;
 
-        addSongs.ButtonDown += OpenSongs;
+		addSongs.ButtonDown += OpenSongs;
 		addSongsDialog.FilesSelected += AddSongs;
 
 		// Submit / Cancel
 
-        SubmitButton.ButtonDown += Submit;
+		SubmitButton.ButtonDown += Submit;
 		CancelButton.ButtonDown += Cancel;
-    }
+	}
 
 	public void Open()
 	{
@@ -73,22 +73,22 @@ public partial class PlaylistCreator : EditorWindow
 			{
 				if(!songs.Contains(path))
 				{
-                    var disp = songDisplay.Instantiate() as PathDisplay;
-                    disp.set_path(path);
-
-                    songDisplayContainer.AddChild(disp);
-                    songs.Add(path);
-                }
-                else
-                {
-                    Debug.ErrorLog($"{path} is already in this playlist.");
-                }
-            }
+					var disp = songDisplay.Instantiate() as PathDisplay;
+					disp.set_path(path);
+					
+					songDisplayContainer.AddChild(disp);
+					songs.Add(path);
+				}
+				else
+				{
+					Debug.ErrorLog($"{path} is already in this playlist.");
+				}
+			}
 			else
 			{
 				Debug.ErrorLog($"{path} is not a valid audio file, it cannot be added to this playlist.");
 			}
-        }
+		}
 	}
 
 	public void RemoveSong(int index)
@@ -98,14 +98,14 @@ public partial class PlaylistCreator : EditorWindow
 
 	public void Submit()
 	{
-        Visible = false;
-        Hide();
+		Visible = false;
+		Hide();
 
-        EmitSignal("OnClose");
-    }
-    public void Cancel()
-    {
+		EmitSignal("OnClose");
+	}
+	public void Cancel()
+	{
 		cancelled = true;
 		Submit();
-    }
+	}
 }

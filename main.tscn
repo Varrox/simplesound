@@ -303,6 +303,7 @@ script = ExtResource("21_seu75")
 menu = NodePath("Panel")
 
 [node name="Panel" type="Panel" parent="Interface/Add"]
+visible = false
 self_modulate = Color(0, 0, 0, 1)
 layout_mode = 1
 anchors_preset = 1
