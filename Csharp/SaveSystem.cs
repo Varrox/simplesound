@@ -6,7 +6,6 @@ using SSLParser;
 public class SaveSystem
 {
 	public static readonly string UserData = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "simplesound");
-    public static readonly string TAB = "    ";
 
 	public static void InitData(out int playlistIndex, out int songIndex, out float currentTime, out float volume)
 	{
@@ -73,7 +72,12 @@ public class SaveSystem
 		return File.ReadAllLines(Path.Combine(UserData, "savedplaylists.txt"));
 	}
 
-	public static string ImportFolder(string path)
+    public static void SaveAllPlaylists(string[] playlists)
+    {
+        File.WriteAllLines(Path.Combine(UserData, "savedplaylists.txt"), playlists);
+    }
+
+    public static string ImportFolder(string path)
 	{
         // Create new folder
 		string newPath = Path.Combine(UserData, "Music Folders", Path.GetDirectoryName(path));
@@ -110,71 +114,6 @@ public class SaveSystem
 
 		return newPath;
 	}
-
-    // EVERYTHING BELOW NEEDS TO BE PUT INTO THE PARSER
-
-    public static string CreatePlaylist(Playlist playlist)
-    {
-        string output = "Tags\n{\n";
-
-		if(playlist.Type != Playlist.PlaylistType.Default)
-		{
-			output += $"{TAB}Type : {playlist.Type.ToString()}\n";
-		}
-
-		if (playlist.Artist != null)
-		{
-			output += $"{TAB}Artist : {playlist.Artist}\n";
-		}
-
-		if(playlist.customInfo.overlayColor != null)
-		{
-            output += $"{TAB}Overlay-Color : {playlist.customInfo.overlayColor}\n";
-        }
-
-		output += "}\n\n";
-        output += "Images\n{\n";
-
-        if (playlist.Cover != null)
-		{
-			output += $"{TAB}Cover : {playlist.Cover}\n";
-        }
-
-		if (playlist.customInfo.backgroundPath != null)
-		{
-            output += $"{TAB}Background-Image : {playlist.customInfo.backgroundPath}\n";
-        }
-
-        output += "}\n\n";
-
-        if (playlist.Songs != null && playlist.Songs.Count > 0)
-		{
-			output += "Songs\n{\n";
-
-			for (int i = 0; i < playlist.Songs.Count; i++)
-			{
-				output += $"\t{playlist.Songs[i]}\n";
-			}
-
-			output += "}\n\n";
-		}
-
-		if(playlist.Folders != null && playlist.Folders.Count > 0)
-		{
-            output += "Folders\n{\n";
-
-            for (int i = 0; i < playlist.Folders.Count; i++)
-            {
-                output += $"{TAB}{playlist.Folders[i]}\n";
-            }
-
-            output += "}";
-        }
-
-        string path = Path.Combine(UserData, "Playlists", $"{playlist.Name}.ssl");
-		File.WriteAllText(path, output);
-		return path;
-    }
 }
 
 public struct bool4

@@ -38,9 +38,9 @@ public partial class PlaylistCreatorOpener : EditorWindowOpener
 			if (creator.artist.Text.Trim() != "")
 				playlist.Artist = creator.artist.Text;
 
-			playlist.Save();
-
-			Globals.main.Refresh();
+			Tools.AddToArray(ref Globals.main.playlists, playlist.Save());
+			SaveSystem.SaveAllPlaylists(Globals.main.playlists);
+            Globals.main.Refresh();
 		}
 
 		Globals.player.interrupted = false;

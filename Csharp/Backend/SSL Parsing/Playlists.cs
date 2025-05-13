@@ -1,3 +1,4 @@
+using SSLParser;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,9 +21,69 @@ public class Playlist
 
     public Dictionary<string, Action<string>> ActionMapper;
 
-    public void Save()
+    public string Save()
     {
-        SaveSystem.CreatePlaylist(this);
+        string output = "Config\n{\n";
+
+        if (Type != PlaylistType.Default)
+        {
+            output += $"{ParsingTools.TAB}Type : {Type.ToString()}\n";
+        }
+
+        if (Artist != null)
+        {
+            output += $"{ParsingTools.TAB}Artist : {Artist}\n";
+        }
+
+        if (customInfo.overlayColor != null)
+        {
+            output += $"{ParsingTools.TAB}Overlay-Color : {customInfo.overlayColor}\n";
+        }
+
+        if (Cover != null)
+        {
+            output += $"{ParsingTools.TAB}Cover : {Cover}\n";
+        }
+
+        if (customInfo.backgroundPath != null)
+        {
+            output += $"{ParsingTools.TAB}Background-Image : {customInfo.backgroundPath}\n";
+        }
+
+        output += "}\n\n";
+
+        if (Songs != null && Songs.Count > 0)
+        {
+            output += "Songs\n{\n";
+
+            for (int i = 0; i < Songs.Count; i++)
+            {
+                output += $"\t{Songs[i]}\n";
+            }
+
+            output += "}\n\n";
+        }
+
+        if (Folders != null && Folders.Count > 0)
+        {
+            output += "Folders\n{\n";
+
+            for (int i = 0; i < Folders.Count; i++)
+            {
+                output += $"{ParsingTools.TAB}{Folders[i]}\n";
+            }
+
+            output += "}";
+        }
+
+        string path = GetPath();
+        File.WriteAllText(path, output);
+        return path;
+    }
+
+    public string GetPath()
+    {
+        return System.IO.Path.Combine(SaveSystem.UserData, "Playlists", $"{Name}.ssl");
     }
 
     public void DeleteFile()

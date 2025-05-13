@@ -8,7 +8,8 @@ func _ready() -> void:
 	DiscordRPC.large_image = "logotrans"
 	DiscordRPC.refresh()
 	
-func _process(delta: float) -> void:
-	DiscordRPC.details = "Listening to " + Player.SongName.text
-	DiscordRPC.state = Player.CurrentTime.text + (" (Paused)" if !Main.playing else "")
-	DiscordRPC.refresh()
+func _process(_delta: float) -> void:
+	if DiscordRPC.get_is_discord_working():
+		DiscordRPC.details = "Listening to " + Player.SongName.text
+		DiscordRPC.state = Player.CurrentTime.text + (" (Paused)" if !Main.playing else "")
+		DiscordRPC.refresh()

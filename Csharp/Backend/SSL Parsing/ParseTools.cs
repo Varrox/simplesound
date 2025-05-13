@@ -7,6 +7,8 @@ namespace SSLParser
 {
     public class ParsingTools
     {
+        public static readonly string TAB = "    ";
+
         /// <summary>
         /// Parses functions()
         /// </summary>

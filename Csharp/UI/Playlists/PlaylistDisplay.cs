@@ -44,12 +44,16 @@ public partial class PlaylistDisplay : Node
             if (img.Load(playlist.Cover) == Error.Ok) Cover.Texture = ImageTexture.CreateFromImage(img);
             else nuhuh = true;
         }
+
         if(nuhuh) Cover.Texture = visualizer.defaultCover;
 
         Name.Text = playlist.Name;
         if (playlist.Type != Playlist.PlaylistType.Album)
         { 
-            Songs.Text = (playlist.Songs.Count.ToString() + (playlist.Songs.Count != 1 ? " songs" : " song")) + (playlist.Artist != null ? $" {dot} {playlist.Artist}" : "");
+            if (playlist.Songs == null)
+                Songs.Text = "0 songs";
+            else
+                Songs.Text = (playlist.Songs.Count.ToString() + (playlist.Songs.Count != 1 ? " songs" : " song")) + (playlist.Artist != null ? $" {dot} {playlist.Artist}" : "");
         }
         else
         {

@@ -75,13 +75,17 @@ public partial class Main : Control
 		// load playlists
 		LoadPlaylists();
 		LoadPlaylist(currentPlaylist);
-        if (playlist) InitSong();
 
-        // initialize playlist displayer
-        if (playlist) playlistvisualizer.LoadAllPlaylistVisuals();
+		if (playlist)
+		{
+            InitSong();
 
-		// show current playlist
-		if (playlist) songsVisualizer.Load(currentPlaylist, (playlistvisualizer.container.GetChild(currentPlaylist) as PlaylistDisplay).Cover.Texture);
+            // initialize playlist displayer
+            playlistvisualizer.LoadAllPlaylistVisuals();
+
+			// show current playlist
+			songsVisualizer.Load(currentPlaylist, (playlistvisualizer.container.GetChild(currentPlaylist) as PlaylistDisplay).Cover.Texture);
+		}
 	}
 
 	public void LoadPlaylists()
@@ -179,10 +183,11 @@ public partial class Main : Control
 		SaveSystem.SaveData(currentPlaylist, currentSong, time, player.VolumeDb);
 	}
 
-	public void Refresh()
+    public void Refresh()
 	{
-		LoadPlaylist(currentPlaylist);
-        playlistvisualizer.UpdatePlaylists();
+		LoadPlaylists();
+        LoadPlaylist(Tools.FindString(playlist.GetPath(), ref playlists));
         EmitSignal(SignalName.OnLoadSong);
+        playlistvisualizer.UpdatePlaylists();
     }
 }
