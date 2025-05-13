@@ -15,10 +15,10 @@ public partial class AttributeEditor : EditorWindow
 
     public override void _Ready()
     {
-        SubmitButton.ButtonDown += submit;
-        CoverButton.ButtonDown += cover;
+        SubmitButton.ButtonDown += Submit;
+        CoverButton.ButtonDown += Cover;
         CancelButton.ButtonDown += Cancel;
-        CoverFileDialog.FileSelected += submitCover;
+        CoverFileDialog.FileSelected += SubmitCover;
     }
 
     public override void _Process(double delta)
@@ -30,7 +30,7 @@ public partial class AttributeEditor : EditorWindow
         }
     }
 
-    public void open(string currentSong, string currentArtist, bool explicitLyrics)
+    public void Open(string currentSong, string currentArtist, bool explicitLyrics)
     {
         Name.Text = currentSong;
         songname = currentSong;
@@ -44,33 +44,29 @@ public partial class AttributeEditor : EditorWindow
         coverpath = "";
     }
 
-    public void submit()
+    public void Submit()
     {
-        songname = Name.Text;
-        artist = Artist.Text;
-        explicitLyrics = ExplicitLyrics.ButtonPressed;
         Visible = false;
         Hide();
         coverChanged = false;
+
         EmitSignal("OnClose");
+        cancelled = false;
     }
 
     public void Cancel()
     {
-        Visible = false;
-        Hide();
-        coverChanged = false;
-        EmitSignal("OnClose");
+        cancelled = true;
+        Submit();
     }
 
-
-    public void cover()
+    public void Cover()
     {
         CoverFileDialog.Popup();
         coverChanged = true;
     }
 
-    public void submitCover(string path)
+    public void SubmitCover(string path)
     {
         coverpath = path;
         CoverLabel.Text = path;

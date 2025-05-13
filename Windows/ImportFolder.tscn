@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://5kfxiu06xug0"]
 
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Fonts/DefaultFont.tres" id="1_8t6yf"]
-[ext_resource type="Script" uid="uid://bhqfe4m1n2gya" path="res://Csharp/UI/CreatePlaylist.cs" id="1_b0noq"]
+[ext_resource type="Script" uid="uid://bhqfe4m1n2gya" path="res://Csharp/UI/Playlist Creator/CreatePlaylist.cs" id="1_b0noq"]
 [ext_resource type="PackedScene" uid="uid://cjc5crjo31obe" path="res://Prefabs/pathdisplay.tscn" id="3_uox0n"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_acdqb"]
@@ -12,20 +12,26 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bhcbq"]
 
-[node name="Window" type="Window" node_paths=PackedStringArray("playlist_name", "open_cover", "playlist_cover", "coverdisplay", "add_songs", "open_songs", "song_display_container")]
+[node name="Window" type="Window" node_paths=PackedStringArray("playlist_name", "addCover", "addCoverDialog", "coverDisplay", "addSongs", "addSongsDialog", "songDisplayContainer", "album", "artist", "backgroundThemeEnabled", "backgroundTheme", "SubmitButton", "CancelButton")]
 title = "Create Playlist"
 initial_position = 2
 size = Vector2i(550, 300)
 min_size = Vector2i(450, 300)
 script = ExtResource("1_b0noq")
-song_display = ExtResource("3_uox0n")
 playlist_name = NodePath("HBoxContainer2/VBoxContainer/Name")
-open_cover = NodePath("HBoxContainer2/VBoxContainer/Cover")
-playlist_cover = NodePath("HBoxContainer2/VBoxContainer/Cover/FileDialog")
-coverdisplay = NodePath("HBoxContainer2/VBoxContainer/Selected File")
-add_songs = NodePath("HBoxContainer2/VBoxContainer/Cover2")
-open_songs = NodePath("HBoxContainer2/VBoxContainer/Cover2/FileDialog")
-song_display_container = NodePath("HBoxContainer2/VBoxContainer/Panel/ScrollContainer/VBoxContainer")
+addCover = NodePath("HBoxContainer2/VBoxContainer/Cover")
+addCoverDialog = NodePath("HBoxContainer2/VBoxContainer/Cover/FileDialog")
+coverDisplay = NodePath("HBoxContainer2/VBoxContainer/Selected File")
+addSongs = NodePath("HBoxContainer2/VBoxContainer/Cover2")
+addSongsDialog = NodePath("HBoxContainer2/VBoxContainer/Cover2/FileDialog")
+songDisplay = ExtResource("3_uox0n")
+songDisplayContainer = NodePath("HBoxContainer2/VBoxContainer/Panel/ScrollContainer/VBoxContainer")
+album = NodePath("HBoxContainer2/VBoxContainer2/Album")
+artist = NodePath("HBoxContainer2/VBoxContainer2/Artist")
+backgroundThemeEnabled = NodePath("HBoxContainer2/VBoxContainer2/Background Theme")
+backgroundTheme = NodePath("HBoxContainer2/VBoxContainer2/ColorPickerButton")
+SubmitButton = NodePath("HBoxContainer/Create")
+CancelButton = NodePath("HBoxContainer/Cancel")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchors_preset = 15
@@ -90,7 +96,7 @@ layout_mode = 2
 size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("1_8t6yf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_yiuwm")
-text = "Add Songs"
+text = "Add Song(s)"
 
 [node name="FileDialog" type="FileDialog" parent="HBoxContainer2/VBoxContainer/Cover2"]
 auto_translate_mode = 1
@@ -104,6 +110,7 @@ use_native_dialog = true
 [node name="Panel" type="Panel" parent="HBoxContainer2/VBoxContainer"]
 custom_minimum_size = Vector2(0, 79.7)
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer2/VBoxContainer/Panel"]
 layout_mode = 1

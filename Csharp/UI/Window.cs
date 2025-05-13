@@ -3,7 +3,7 @@
 public partial class EditorWindow : Window
 {
     [Signal] public delegate void OnCloseEventHandler();
-    bool interrupted;
+    public bool interrupted, cancelled;
 
     public virtual bool interrupt()
     {

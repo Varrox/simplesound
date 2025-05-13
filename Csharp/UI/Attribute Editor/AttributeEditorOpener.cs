@@ -14,16 +14,21 @@ public partial class AttributeEditorOpener : EditorWindowOpener
     {
         if (Globals.player.interrupt())
         {
-            (window as AttributeEditor).open(Globals.player.SongName.Text, Globals.player.SongArtist.Text, Metadata.IsExplicit(Globals.main.song));
+            (window as AttributeEditor).Open(Globals.player.SongName.Text, Globals.player.SongArtist.Text, Metadata.IsExplicit(Globals.main.song));
         }
     }
 
     public void SubmitMeta()
     {
         AttributeEditor editor = window as AttributeEditor;
-        Globals.main.EditMeta(editor.songname, editor.artist, editor.coverpath, editor.explicitLyrics);
-        Globals.player.onLoadSong();
+
+        if(!editor.cancelled)
+        {
+            Globals.main.EditMeta(editor.Name.Text, editor.Artist.Text, editor.coverpath, editor.ExplicitLyrics.ButtonPressed);
+            Globals.player.onLoadSong();
+            Globals.main.songsVisualizer.UpdateSong(Globals.main.currentSong, editor.Name.Text, editor.Artist.Text, Globals.player.TotalTime.Text, editor.ExplicitLyrics.ButtonPressed, Globals.player.SongCover.Texture);
+        }
+
         Globals.player.interrupted = false;
-        Globals.main.songsVisualizer.UpdateSong(Globals.main.currentSong, editor.songname, editor.artist, Globals.player.TotalTime.Text, editor.explicitLyrics, Globals.player.SongCover.Texture);
     }
 }
