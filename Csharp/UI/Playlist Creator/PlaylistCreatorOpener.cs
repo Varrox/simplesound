@@ -1,4 +1,6 @@
 ﻿using Godot;
+using System.IO;
+using System.Collections.Generic;
 
 public partial class PlaylistCreatorOpener : EditorWindowOpener
 {
@@ -24,7 +26,21 @@ public partial class PlaylistCreatorOpener : EditorWindowOpener
 
         if (!creator.cancelled)
         {
+            string[] files = Directory.GetFiles(SaveSystem.ImportSongs(creator.songs.ToArray(), creator.playlist_name.Text, false));
+            Playlist playlist = new Playlist(creator.playlist_name.Text, creator.cover_path, new List<string>(files));
             
+            if (creator.backgroundThemeEnabled.ButtonPressed)
+                playlist.customInfo.overlayColor = creator.backgroundTheme.Color.ToHtml();
+
+            if (creator.album.ButtonPressed)
+                playlist.Type = Playlist.PlaylistType.Album;
+
+            if (creator.artist.Text.Trim() != "")
+                playlist.Artist = creator.artist.Text;
+
+            playlist.Save();
+
+            Globals.main.Refresh();
         }
 
         Globals.player.interrupted = false;

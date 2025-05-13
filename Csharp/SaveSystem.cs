@@ -93,6 +93,24 @@ public class SaveSystem
 		return newPath;
     }
 
+	public static string ImportSongs(string[] songs, string playlist_name, bool check_valid = true)
+	{
+		string newPath = Path.Combine(UserData, "Music Folders", playlist_name);
+		Directory.CreateDirectory(newPath);
+
+		foreach(string song in songs)
+		{
+			if(check_valid)
+			{
+				if (Tools.ValidAudioFile(song)) continue;
+			}
+
+			File.Copy(song, Path.Combine(newPath, Path.GetFileName(song)));
+		}
+
+		return newPath;
+	}
+
     // EVERYTHING BELOW NEEDS TO BE PUT INTO THE PARSER
 
     public static string CreatePlaylist(Playlist playlist)

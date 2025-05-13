@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://cbpkjhjnbrjm6"]
+[gd_scene load_steps=47 format=3 uid="uid://cbpkjhjnbrjm6"]
 
 [ext_resource type="Script" uid="uid://b81fhtdmrks0a" path="res://Csharp/Main.cs" id="1_l00ml"]
 [ext_resource type="Script" uid="uid://cvtqwvi0qvcvy" path="res://Csharp/Player.cs" id="2_632yu"]
@@ -26,8 +26,10 @@
 [ext_resource type="PackedScene" uid="uid://dle5y658wmx03" path="res://Prefabs/Attribute Editor.tscn" id="17_f7c3k"]
 [ext_resource type="Script" uid="uid://b8mk63lbeibcc" path="res://Csharp/UI/RefreshButton.cs" id="19_0odxb"]
 [ext_resource type="Texture2D" uid="uid://b8ldjgpmsaxgu" path="res://Icons/shuffle.png" id="20_fkbne"]
+[ext_resource type="Script" uid="uid://dk55q6mnaxkso" path="res://Csharp/UI/Playlist Creator/PlaylistCreatorOpener.cs" id="21_0rl1p"]
 [ext_resource type="StyleBox" uid="uid://bhcyqvvim6l5e" path="res://Styling/Rounded Corners.tres" id="21_jy3dx"]
 [ext_resource type="Script" uid="uid://bcxwpol710ysq" path="res://Csharp/UI/ContextMenu.cs" id="21_seu75"]
+[ext_resource type="PackedScene" uid="uid://5kfxiu06xug0" path="res://Windows/CreatePlaylist.tscn" id="22_ok6jj"]
 [ext_resource type="Texture2D" uid="uid://bwftf22dhh4du" path="res://Icons/refresh.png" id="23_7r5f6"]
 [ext_resource type="Script" uid="uid://dwpgkkupvf1jo" path="res://Discord.gd" id="24_crcn0"]
 [ext_resource type="PackedScene" uid="uid://dtfoexo3o7b3p" path="res://Prefabs/playlistcontext.tscn" id="26_gbh2w"]
@@ -301,7 +303,6 @@ script = ExtResource("21_seu75")
 menu = NodePath("Panel")
 
 [node name="Panel" type="Panel" parent="Interface/Add"]
-visible = false
 self_modulate = Color(0, 0, 0, 1)
 layout_mode = 1
 anchors_preset = 1
@@ -324,7 +325,7 @@ offset_bottom = -7.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Create" type="Button" parent="Interface/Add/Panel/VBoxContainer"]
+[node name="Create" type="Button" parent="Interface/Add/Panel/VBoxContainer" node_paths=PackedStringArray("window")]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_fonts/font = ExtResource("9_3b7g8")
@@ -334,6 +335,11 @@ icon = ExtResource("10_7e43v")
 alignment = 0
 icon_alignment = 2
 expand_icon = true
+script = ExtResource("21_0rl1p")
+window = NodePath("Window")
+
+[node name="Window" parent="Interface/Add/Panel/VBoxContainer/Create" instance=ExtResource("22_ok6jj")]
+visible = false
 
 [node name="Folder" type="Button" parent="Interface/Add/Panel/VBoxContainer"]
 layout_mode = 2

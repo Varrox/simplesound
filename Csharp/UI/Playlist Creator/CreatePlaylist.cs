@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public partial class PlaylistCreator : EditorWindow
 {
-	[Export] TextEdit playlist_name;
+	[Export] public TextEdit playlist_name;
 
 	[Export] Button addCover;
 	[Export] FileDialog addCoverDialog;
@@ -15,16 +15,16 @@ public partial class PlaylistCreator : EditorWindow
 	[Export] Control songDisplayContainer;
 
 
-    [Export] CheckBox album;
-    [Export] TextEdit artist;
+    [Export] public CheckBox album;
+    [Export] public TextEdit artist;
 
-	[Export] CheckBox backgroundThemeEnabled;
-	[Export] ColorPickerButton backgroundTheme;
+	[Export] public CheckBox backgroundThemeEnabled;
+	[Export] public ColorPickerButton backgroundTheme;
 
     [Export] public Button SubmitButton, CancelButton;
 
-    List<string> songs;
-	public string name, cover_path;
+    public List<string> songs;
+	public string cover_path;
 
 	public override void _Ready()
 	{
