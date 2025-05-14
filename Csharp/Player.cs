@@ -62,7 +62,7 @@ public partial class Player : Node
 
     public void Playicon(bool playing)
     {
-        Play.Icon = !playing ? Globals.play_texture : Globals.pause_texture;
+        Play.Icon = !playing || !Globals.main.CanPlay()? Globals.play_texture : Globals.pause_texture;
     }
 
     public void move(int by)
@@ -75,7 +75,7 @@ public partial class Player : Node
 
     public void onLoadSong()
     {
-        if (Globals.main.playlist)
+        if (Globals.main.CanPlay())
         {
             string name = Tools.GetMediaTitle(Globals.main.song);
             SongName.Text = name;
@@ -87,6 +87,10 @@ public partial class Player : Node
             SongCover.Texture = cover;
             if (Globals.main.playlist.customInfo.backgroundPath != null) BackgroundImage.Texture = ConvertToGodot.LoadImage(Globals.main.playlist.customInfo.backgroundPath, ref cover);
             else BackgroundImage.Texture = cover;
+
+            TotalTime.Text = Tools.SecondsToTimestamp(Metadata.GetTotalTime(Globals.main.song));
+            Progress.MaxValue = Globals.main.player.Stream.GetLength();
+            Progress.Editable = true;
         }
         else
         {
@@ -95,10 +99,15 @@ public partial class Player : Node
             SongArtist.Text = "No artist";
             SongArtist.TooltipText = "";
             bc = new Color(0, 0, 0, 0);
-        }
 
-        TotalTime.Text = Tools.SecondsToTimestamp(Metadata.GetTotalTime(Globals.main.song));
-        Progress.MaxValue = Globals.main.player.Stream.GetLength();
+            TotalTime.Text = "0:00";
+            Progress.MaxValue = 1;
+            Progress.Value = 0;
+            Progress.Editable = false;
+
+            SongCover.Texture = Globals.default_cover;
+            BackgroundImage.Texture = Globals.default_cover_highres;
+        }
     }
 
     public void setTime(bool value)
@@ -126,24 +135,26 @@ public partial class Player : Node
             Globals.main.time = (float)Progress.Value;
         }
 
-        float max = 0.65f;
-
-        if(Globals.main.playlist.customInfo.overlayColor != null)
+        if (Globals.main.playlist != null)
         {
-            bc = ConvertToGodot.GetColor(Globals.main.playlist.customInfo.overlayColor);
+            if (Globals.main.playlist.customInfo.overlayColor != null)
+            {
+                bc = ConvertToGodot.GetColor(Globals.main.playlist.customInfo.overlayColor);
+            }
+            else
+            {
+                bc = new Color();
+            }
+
+            float max = 0.65f;
+            backgroundColor.Color = backgroundColor.Color.Lerp(bc.Clamp(new Color(), new Color(max, max, max, max)), (float)delta * 2f);
+
+            Globals.main.player.VolumeDb = (float)(VolumeSlider.Value != -50 ? VolumeSlider.Value : -80) + Globals.main.playlist.customInfo.volume;
+            Globals.main.player.PitchScale = Mathf.Clamp(Globals.main.playlist.customInfo.speed, 0.01f, 4f);
+
+            var effect = AudioServer.GetBusEffect(0, 0) as AudioEffectReverb;
+            effect.RoomSize = Globals.main.playlist.customInfo.reverb;
+            effect.Wet = Globals.main.playlist.customInfo.reverb / 100;
         }
-        else
-        {
-            bc = new Color();
-        }
-
-        backgroundColor.Color = backgroundColor.Color.Lerp(bc.Clamp(new Color(), new Color(max, max, max, max)), (float)delta * 2f);
-
-        Globals.main.player.VolumeDb = (float)(VolumeSlider.Value != -50 ? VolumeSlider.Value : -80) + Globals.main.playlist.customInfo.volume;
-        Globals.main.player.PitchScale = Mathf.Clamp(Globals.main.playlist.customInfo.speed, 0.01f, 4f);
-
-        var effect = AudioServer.GetBusEffect(0, 0) as AudioEffectReverb;
-        effect.RoomSize = Globals.main.playlist.customInfo.reverb;
-        effect.Wet = Globals.main.playlist.customInfo.reverb / 100;
     }
 }

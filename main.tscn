@@ -291,6 +291,8 @@ icon_alignment = 1
 expand_icon = true
 script = ExtResource("21_seu75")
 menu = NodePath("Panel")
+teleportMenu = null
+teleportMenuOffset = null
 
 [node name="Panel" type="Panel" parent="Interface/Add"]
 visible = false

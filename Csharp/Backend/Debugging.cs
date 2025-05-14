@@ -1,4 +1,5 @@
 ﻿using Godot;
+using System.IO;
 
 public class Debug
 {
@@ -12,26 +13,25 @@ public class Debug
         GD.PushError(message);
     }
 
-    public static void LogInvalidCode(LineAttributes line,string code)
+    public static void LogInvalidCode(LineAttributes line, string code)
     {
-        ErrorLog($"{line} \'{code}\' is not in valid syntax, and cannot be parsed");
+        ErrorLog($"{line.ToString()} \'{code}\' is not in valid syntax, and cannot be parsed");
     }
 }
 
 public struct LineAttributes
 {
     public string path;
-    public int line, column;
+    public int line;
 
-    public LineAttributes(string path, int line, int column)
+    public LineAttributes(string path, int line)
     {
         this.path = path;
         this.line = line;
-        this.column = column;
     }
 
-    public static implicit operator string(LineAttributes attributes)
+    public string ToString()
     {
-        return $"{attributes.path} {attributes.line}:{attributes.column}";
+        return $"{Path.GetFileName(path)}:{line}";
     }
 }

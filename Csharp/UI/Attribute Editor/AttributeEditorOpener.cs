@@ -12,9 +12,12 @@ public partial class AttributeEditorOpener : EditorWindowOpener
 
     public void EditAttributes()
     {
-        if (Globals.player.interrupt())
+        if (Globals.main.song != null) 
         {
-            (window as AttributeEditor).Open(Globals.player.SongName.Text, Globals.player.SongArtist.Text, Metadata.IsExplicit(Globals.main.song));
+            if (Globals.player.interrupt())
+            {
+                (window as AttributeEditor).Open(Globals.player.SongName.Text, Globals.player.SongArtist.Text, Metadata.IsExplicit(Globals.main.song));
+            }
         }
     }
 

@@ -109,16 +109,16 @@ namespace SSLParser
                     if (newValue != null)
                         field.SetValue(obj, newValue);
                     else
-                        Debug.ErrorLog($"{line} {variable} is not a variable that can be set properly in SSL");
+                        Debug.ErrorLog($"{line.ToString()} {variable} is not a variable that can be set properly in SSL");
                 }
                 else
                 {
-                    Debug.ErrorLog($"{line} {variable} is not a variable, maybe look over it again");
+                    Debug.ErrorLog($"{line.ToString()} {variable} is not a variable, maybe look over it again");
                 }
             }
             else
             {
-                Debug.ErrorLog($"{line} either the variable or value is set blank");
+                Debug.ErrorLog($"{line.ToString()} either the variable or value is set blank");
             }
         }
 

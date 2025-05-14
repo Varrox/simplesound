@@ -10,7 +10,7 @@ public partial class PlaylistCreatorOpener : EditorWindowOpener
 		base._Ready();
 
 		ButtonDown += OpenCreator;
-		window.OnClose += SubmitMeta;
+		window.OnClose += CreatePlaylist;
 	}
 
 	public void OpenCreator()
@@ -22,7 +22,7 @@ public partial class PlaylistCreatorOpener : EditorWindowOpener
 		}
 	}
 
-	public void SubmitMeta()
+	public void CreatePlaylist()
 	{
 		PlaylistCreator creator = window as PlaylistCreator;
 
@@ -41,6 +41,7 @@ public partial class PlaylistCreatorOpener : EditorWindowOpener
 				playlist.Artist = creator.artist.Text;
 
 			Tools.AddToArray(ref Globals.main.playlists, playlist.Save());
+			GD.Print(Globals.main.playlists);
 			SaveSystem.SaveAllPlaylists(Globals.main.playlists);
             Globals.main.Refresh();
 		}

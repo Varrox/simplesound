@@ -6,7 +6,7 @@ namespace SSLParser
 {
     public class MainParser
     {
-        static LineAttributes line = new LineAttributes(null, 0, 0);
+        static LineAttributes line = new LineAttributes(null, 0);
         public static Playlist ParsePlaylist(string path)
         {
             string[] lines = File.ReadAllLines(path);

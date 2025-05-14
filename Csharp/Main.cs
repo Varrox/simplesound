@@ -27,7 +27,9 @@ public partial class Main : Control
 	{
 		get
 		{
-			return playlist.Songs[currentSong];
+			if(CanPlay())
+				return playlist.Songs[currentSong];
+			else return null;
         }
 	}
 
@@ -74,19 +76,27 @@ public partial class Main : Control
 
 		// load playlists
 		LoadPlaylists();
-		LoadPlaylist(currentPlaylist);
 
-		if (playlist)
+		if (playlists.Length > 0)
+		{
+            LoadPlaylist(currentPlaylist);
+        }
+
+		if(CanPlay())
 		{
             InitSong();
 
-            // initialize playlist displayer
-            playlistvisualizer.LoadAllPlaylistVisuals();
+            // show current playlist
+            songsVisualizer.Load(currentPlaylist, (playlistvisualizer.container.GetChild(currentPlaylist) as PlaylistDisplay).Cover.Texture);
+        }
+		else
+		{
+            EmitSignal(SignalName.OnLoadSong);
+        }
 
-			// show current playlist
-			songsVisualizer.Load(currentPlaylist, (playlistvisualizer.container.GetChild(currentPlaylist) as PlaylistDisplay).Cover.Texture);
-		}
-	}
+        // initialize playlist displayer
+        playlistvisualizer.LoadAllPlaylistVisuals();
+    }
 
 	public void LoadPlaylists()
 	{
@@ -124,7 +134,7 @@ public partial class Main : Control
 
 	public void MoveSong(int amount, bool set = false)
 	{
-		if (playlist)
+		if (CanPlay())
 		{
 			if (random && !set)
 			{
@@ -142,35 +152,46 @@ public partial class Main : Control
 
 	public void InitSong()
 	{
-		int lastIndex = playlist.Songs.Count - 1;
-		currentSong = currentSong < 0 ? lastIndex + currentSong + 1 : currentSong;
-		currentSong = currentSong > lastIndex ? currentSong - lastIndex - 1 : currentSong;
+		if (CanPlay())
+		{
+            int lastIndex = playlist.Songs.Count - 1;
+            currentSong = currentSong < 0 ? lastIndex + currentSong + 1 : currentSong;
+            currentSong = currentSong > lastIndex ? currentSong - lastIndex - 1 : currentSong;
 
-		if (FileAccess.FileExists(playlist.Songs[currentSong]))
-		{
-			if(playlist.Songs[currentSong].EndsWith(".mp3"))
-			{
-                AudioStreamMP3 song = new AudioStreamMP3();
-                song.Data = FileAccess.GetFileAsBytes(playlist.Songs[currentSong]);
-                player.Stream = song;
-            }
-			else if(playlist.Songs[currentSong].EndsWith(".wav"))
-			{
-				player.Stream = AudioStreamWav.LoadFromBuffer(FileAccess.GetFileAsBytes(playlist.Songs[currentSong]));
-            }
-            else if (playlist.Songs[currentSong].EndsWith(".ogg"))
+            if (FileAccess.FileExists(playlist.Songs[currentSong]))
             {
-                player.Stream = AudioStreamOggVorbis.LoadFromBuffer(FileAccess.GetFileAsBytes(playlist.Songs[currentSong]));
+                if (playlist.Songs[currentSong].EndsWith(".mp3"))
+                {
+                    AudioStreamMP3 song = new AudioStreamMP3();
+                    song.Data = FileAccess.GetFileAsBytes(playlist.Songs[currentSong]);
+                    player.Stream = song;
+                }
+                else if (playlist.Songs[currentSong].EndsWith(".wav"))
+                {
+                    player.Stream = AudioStreamWav.LoadFromBuffer(FileAccess.GetFileAsBytes(playlist.Songs[currentSong]));
+                }
+                else if (playlist.Songs[currentSong].EndsWith(".ogg"))
+                {
+                    player.Stream = AudioStreamOggVorbis.LoadFromBuffer(FileAccess.GetFileAsBytes(playlist.Songs[currentSong]));
+                }
+                EmitSignal(SignalName.OnLoadSong);
             }
-            EmitSignal(SignalName.OnLoadSong);
-		}
-		else // if the file doesn't exist
-		{
-			GD.PrintErr($"{playlist.Songs[currentSong]} doesn't exist");
-			playlist.Songs.RemoveAt(currentSong);
-			playlist.Save();
-			InitSong();
-		}
+            else // if the file doesn't exist
+            {
+                GD.PrintErr($"{playlist.Songs[currentSong]} doesn't exist");
+                playlist.Songs.RemoveAt(currentSong);
+                playlist.Save();
+                InitSong();
+            }
+        }
+	}
+
+	public bool CanPlay()
+	{
+		if (playlist)
+			if (playlist.Songs != null)
+				if (playlist.Songs.Count > 0) return true;
+		return false;
 	}
 
 	public void EditMeta(string name, string artist, string coverpath, bool explicitLyrics)
@@ -186,8 +207,9 @@ public partial class Main : Control
     public void Refresh()
 	{
 		LoadPlaylists();
-		GD.Print(playlists);
-        LoadPlaylist(Tools.FindString(playlist.GetPath(), ref playlists));
+		
+		if (playlists.Length > 0) 
+			LoadPlaylist(Tools.FindString(playlist.GetPath(), ref playlists));
 
         EmitSignal(SignalName.OnLoadSong);
         playlistvisualizer.UpdatePlaylists();

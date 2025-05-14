@@ -26,29 +26,23 @@ public class Playlist
         string output = "Config\n{\n";
 
         if (Type != PlaylistType.Default)
-        {
             output += $"{ParsingTools.TAB}Type : {Type.ToString()}\n";
-        }
 
         if (Artist != null)
-        {
-            output += $"{ParsingTools.TAB}Artist : {Artist}\n";
-        }
+            if (Artist.Trim() != "")
+                output += $"{ParsingTools.TAB}Artist : {Artist}\n";
 
         if (customInfo.overlayColor != null)
-        {
-            output += $"{ParsingTools.TAB}Overlay-Color : {customInfo.overlayColor}\n";
-        }
+            if(customInfo.overlayColor.Trim() != "")
+                output += $"{ParsingTools.TAB}Overlay-Color : {customInfo.overlayColor}\n";
 
         if (Cover != null)
-        {
-            output += $"{ParsingTools.TAB}Cover : {Cover}\n";
-        }
+            if(Cover.Trim() != "")
+                output += $"{ParsingTools.TAB}Cover : {Cover}\n";
 
         if (customInfo.backgroundPath != null)
-        {
-            output += $"{ParsingTools.TAB}Background-Image : {customInfo.backgroundPath}\n";
-        }
+            if (customInfo.backgroundPath.Trim() != "")
+                output += $"{ParsingTools.TAB}Background-Image : {customInfo.backgroundPath}\n";
 
         output += "}\n\n";
 
@@ -76,7 +70,7 @@ public class Playlist
             output += "}";
         }
 
-        string path = GetPath();
+        string path = Path == null ? GetPath() : Path;
         File.WriteAllText(path, output);
         return path;
     }
