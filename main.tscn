@@ -48,9 +48,9 @@ shader_parameter/strength = 1.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kuk8b"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wx3lt"]
-
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i5cru"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wx3lt"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l3qov"]
 
@@ -291,8 +291,6 @@ icon_alignment = 1
 expand_icon = true
 script = ExtResource("21_seu75")
 menu = NodePath("Panel")
-teleportMenu = null
-teleportMenuOffset = null
 
 [node name="Panel" type="Panel" parent="Interface/Add"]
 visible = false
@@ -380,46 +378,6 @@ focus_mode = 1
 theme_override_fonts/font = ExtResource("9_3b7g8")
 placeholder_text = " search for songs"
 
-[node name="Settings" type="Button" parent="Interface/Top Bar"]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -42.0
-offset_top = -16.0
-offset_right = -11.0
-offset_bottom = 15.0
-grow_horizontal = 0
-grow_vertical = 2
-focus_mode = 0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_wx3lt")
-icon = ExtResource("12_s6aix")
-icon_alignment = 1
-expand_icon = true
-
-[node name="Refresh" type="Button" parent="Interface/Top Bar" node_paths=PackedStringArray("main")]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -77.0
-offset_top = -16.0
-offset_right = -46.0
-offset_bottom = 15.0
-grow_horizontal = 0
-grow_vertical = 2
-focus_mode = 0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_wx3lt")
-icon = ExtResource("23_7r5f6")
-icon_alignment = 1
-expand_icon = true
-script = ExtResource("19_0odxb")
-main = NodePath("../../..")
-
 [node name="HBoxContainer" type="HBoxContainer" parent="Interface/Top Bar"]
 layout_mode = 1
 anchors_preset = 4
@@ -460,6 +418,49 @@ focus_mode = 0
 theme_override_fonts/font = ExtResource("9_3b7g8")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_i5cru")
 text = "Downloader"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Interface/Top Bar"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -116.0
+offset_top = -16.0
+offset_right = -11.0
+offset_bottom = 16.5
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Settings2" type="Button" parent="Interface/Top Bar/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wx3lt")
+icon = ExtResource("12_s6aix")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Refresh" type="Button" parent="Interface/Top Bar/HBoxContainer2" node_paths=PackedStringArray("main")]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wx3lt")
+icon = ExtResource("23_7r5f6")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("19_0odxb")
+main = NodePath("../../../..")
+
+[node name="Settings" type="Button" parent="Interface/Top Bar/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wx3lt")
+icon = ExtResource("12_s6aix")
+icon_alignment = 1
+expand_icon = true
 
 [node name="Player" type="ColorRect" parent="Interface"]
 layout_mode = 1

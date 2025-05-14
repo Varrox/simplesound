@@ -1,6 +1,6 @@
 TODO
 
-- Add playlist creation / importing for real time
+- Add playlist importing
 - Add folder explorer
 - Add lyrics viewer
 - Add max song display load limit
@@ -11,6 +11,13 @@ TODO
 - Add basic gdshader support to ssl
 - Add images to ssl
 - Add music video playing
+- Add update button
+- Add settings menu
+- Make playlist bar hiding
+
+FINISHED
+
+- Add playlist creation
 
 ULTIMATE GOAL:
 Create a music player like spotify, that allows for advanced song visualizers, shaders, 
