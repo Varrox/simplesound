@@ -114,6 +114,20 @@ public class SaveSystem
 
 		return newPath;
 	}
+
+	public static string ImportCover(string path, string playlist_name, bool check_valid = true)
+	{
+		if (check_valid)
+		{
+			if (!File.Exists(path)) return "";
+		}
+
+
+        string newPath = Path.Combine(UserData, "Playlist Covers", playlist_name + Path.GetExtension(path));
+        File.Copy(path, newPath);
+
+		return newPath;
+    }
 }
 
 public struct bool4

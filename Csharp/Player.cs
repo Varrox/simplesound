@@ -12,7 +12,7 @@ public partial class Player : Node
 
     Color bc;
 
-    bool canSetTime, spacepressed;
+    bool canSetTime;
 
     public bool interrupted;
 
@@ -112,12 +112,7 @@ public partial class Player : Node
 	{
         if(!interrupted)
         {
-            if (Input.IsKeyPressed(Key.Space) && !spacepressed)
-            {
-                Globals.main.Play();
-                spacepressed = true;
-            }
-            else if (!Input.IsKeyPressed(Key.Space) && spacepressed) spacepressed = false;
+            if(Input.IsActionJustPressed("play")) Globals.main.Play();
         }
 
         if (Globals.main.player.Stream != null) CurrentTime.Text = Tools.SecondsToTimestamp(Globals.main.time);

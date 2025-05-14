@@ -5,16 +5,14 @@ using SSLParser;
 public partial class PlaylistsVisualizer : Node
 {
 	[Export] public PackedScene template;
-	[Export] public Main mainController;
     [Export] public VBoxContainer container;
     [Export] public Control moreMenu;
-    [Export] public Texture2D defaultCover;
 
     [Signal] public delegate void OnSelectPlaylistEventHandler(int playlist, Texture2D img);
 
     public void LoadAllPlaylistVisuals() // only done once for init
     {
-        for (int i = 0; i < mainController.playlists.Length; i++)
+        for (int i = 0; i < Globals.main.playlists.Length; i++)
         {
             LoadPlaylist(i);
         }
@@ -24,41 +22,40 @@ public partial class PlaylistsVisualizer : Node
     {
         PlaylistDisplay playlist = template.Instantiate() as PlaylistDisplay;
         container.AddChild(playlist);
-        LoadDataIntoPlaylist(i, playlist, i == mainController.currentLookingAtPlaylist);
+        LoadDataIntoPlaylist(i, playlist, i == Globals.main.currentLookingAtPlaylist);
     }
 
     public void LoadDataIntoPlaylist(int i, PlaylistDisplay playlist, bool current)
     {
-        playlist.init(i == mainController.currentPlaylist ? mainController.playlist : MainParser.ParsePlaylist(mainController.playlists[i]), i, this, current, moreMenu);
+        playlist.init(i == Globals.main.currentPlaylist ? Globals.main.playlist : MainParser.ParsePlaylist(Globals.main.playlists[i]), i, this, current, moreMenu);
     }
 
     public void UpdatePlaylists()
     {
         Array<Node> playlists = container.GetChildren();
         int end = playlists.Count;
-        if(playlists.Count != mainController.playlists.Length) // not length
+
+        if (playlists.Count < Globals.main.playlists.Length) // less
         {
-            if (playlists.Count < mainController.playlists.Length) // less
+            for(int i = playlists.Count; i < Globals.main.playlists.Length; i++)
             {
-                for(int i = playlists.Count; i < mainController.playlists.Length - playlists.Count; i++)
-                {
-                    LoadPlaylist(i);
-                }
+                LoadPlaylist(i);
             }
-            else // same or more
+        }
+        else if (playlists.Count > Globals.main.playlists.Length) // more
+        {
+            for (int i = playlists.Count; i < playlists.Count - Globals.main.playlists.Length; i++) // delete the extra
             {
-                for (int i = playlists.Count; i < playlists.Count - mainController.playlists.Length; i++) // delete the extra
-                {
-                    playlists[i].QueueFree();
-                    playlists.RemoveAt(i);
-                }
-                end = playlists.Count;
+                playlists[i].QueueFree();
+                playlists.RemoveAt(i);
             }
+
+            end = playlists.Count;
         }
 
         for(int i = 0; i < end; i++)
         {
-            LoadDataIntoPlaylist(i, playlists[i] as PlaylistDisplay, i == mainController.currentPlaylist);
+            LoadDataIntoPlaylist(i, playlists[i] as PlaylistDisplay, i == Globals.main.currentPlaylist);
         }
     }
 }

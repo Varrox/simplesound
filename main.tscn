@@ -78,14 +78,6 @@ volumeSlider = NodePath("Interface/Player/Controls/Volume")
 playlistvisualizer = NodePath("Interface/Playlists")
 songsVisualizer = NodePath("Interface/Song Display")
 
-[node name="Discord" type="Control" parent="." node_paths=PackedStringArray("Player", "Main")]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("24_crcn0")
-Player = NodePath("../Interface")
-Main = NodePath("..")
-
 [node name="Interface" type="Control" parent="." node_paths=PackedStringArray("Play", "Next", "Back", "Loop", "Shuffle", "Progress", "CurrentTime", "TotalTime", "SongName", "SongArtist", "SongCover", "BackgroundImage", "VolumeSlider", "backgroundColor")]
 layout_mode = 1
 anchors_preset = 15
@@ -148,7 +140,7 @@ anchor_bottom = 1.0
 offset_right = 303.0
 grow_vertical = 2
 
-[node name="Playlists" type="ScrollContainer" parent="Interface" node_paths=PackedStringArray("mainController", "container", "moreMenu")]
+[node name="Playlists" type="ScrollContainer" parent="Interface" node_paths=PackedStringArray("container", "moreMenu")]
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
@@ -159,10 +151,8 @@ offset_bottom = -114.0
 grow_vertical = 2
 script = ExtResource("11_kq58d")
 template = ExtResource("13_a7qgi")
-mainController = NodePath("../..")
 container = NodePath("VBoxContainer")
 moreMenu = NodePath("../Playlistcontext")
-defaultCover = ExtResource("13_seu75")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Interface/Playlists"]
 layout_mode = 2
@@ -301,6 +291,8 @@ icon_alignment = 1
 expand_icon = true
 script = ExtResource("21_seu75")
 menu = NodePath("Panel")
+teleportMenu = null
+teleportMenuOffset = null
 
 [node name="Panel" type="Panel" parent="Interface/Add"]
 visible = false
@@ -326,7 +318,7 @@ offset_bottom = -7.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Create" type="Button" parent="Interface/Add/Panel/VBoxContainer" node_paths=PackedStringArray("window")]
+[node name="Create" type="Button" parent="Interface/Add/Panel/VBoxContainer" node_paths=PackedStringArray("menu", "window")]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_fonts/font = ExtResource("9_3b7g8")
@@ -337,6 +329,7 @@ alignment = 0
 icon_alignment = 2
 expand_icon = true
 script = ExtResource("21_0rl1p")
+menu = NodePath("../../..")
 window = NodePath("Window")
 
 [node name="Window" parent="Interface/Add/Panel/VBoxContainer/Create" instance=ExtResource("22_ok6jj")]
@@ -740,7 +733,6 @@ offset_right = 296.0
 offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 1
 theme_override_fonts/font = ExtResource("3_bbvvl")
 text = "Song
 "
@@ -760,7 +752,6 @@ offset_bottom = 15.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.75, 0.75)
-mouse_filter = 1
 theme_override_colors/font_color = Color(0.662452, 0.662452, 0.662452, 1)
 theme_override_fonts/font = ExtResource("3_bbvvl")
 text = "Artist"
@@ -781,18 +772,17 @@ offset_bottom = -210.0
 
 [node name="Player" type="AudioStreamPlayer" parent="."]
 
-[node name="Import Folder" type="FileDialog" parent="."]
-title = "Open a Directory"
-size = Vector2i(352, 180)
-ok_button_text = "Select Current Folder"
-file_mode = 2
-access = 2
-use_native_dialog = true
-
 [node name="Globals" type="Node" parent="." node_paths=PackedStringArray("_main", "_player")]
 script = ExtResource("32_htxhm")
 _play_texture = ExtResource("5_8inno")
 _pause_texture = ExtResource("4_lfnj1")
+_default_cover = ExtResource("7_xn3w4")
+_default_cover_highres = ExtResource("13_seu75")
 _main = NodePath("..")
 _player = NodePath("../Interface")
 _highlight = Color(1, 1, 1, 0.376)
+
+[node name="Discord" type="Node" parent="." node_paths=PackedStringArray("Player", "Main")]
+script = ExtResource("24_crcn0")
+Player = NodePath("../Interface")
+Main = NodePath("..")

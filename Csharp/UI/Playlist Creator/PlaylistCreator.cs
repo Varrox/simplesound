@@ -34,6 +34,7 @@ public partial class PlaylistCreator : EditorWindow
 
 		addCover.ButtonDown += OpenCover;
 		addCoverDialog.FileSelected += SetCover;
+		coverDisplay.delete.ButtonDown += ClearCover;
 
 		addSongs.ButtonDown += OpenSongs;
 		addSongsDialog.FilesSelected += AddSongs;
@@ -46,10 +47,28 @@ public partial class PlaylistCreator : EditorWindow
 
 	public void Open()
 	{
+		playlist_name.Text = "";
+        coverDisplay.set_path();
+
+        foreach (Node child in songDisplayContainer.GetChildren())
+        {
+            child.QueueFree();
+        }
+
+        album.ButtonPressed = false;
+		artist.Text = "";
+		backgroundThemeEnabled.ButtonPressed = false;
+		backgroundTheme.Color = new Color(1, 1, 1);
+
 		Show();
 	}
 
-	public void OpenCover()
+    public override void _Process(double delta)
+    {
+		backgroundTheme.Disabled = !backgroundThemeEnabled.ButtonPressed;
+    }
+
+    public void OpenCover()
 	{
 		addCoverDialog.Popup();
 	}
@@ -59,6 +78,12 @@ public partial class PlaylistCreator : EditorWindow
 		cover_path = path;
 		coverDisplay.set_path(cover_path);
 	}
+	
+	public void ClearCover()
+	{
+		cover_path = "";
+        coverDisplay.set_path(cover_path);
+    }
 
 	public void OpenSongs()
 	{
@@ -78,6 +103,9 @@ public partial class PlaylistCreator : EditorWindow
 					
 					songDisplayContainer.AddChild(disp);
 					songs.Add(path);
+
+					disp.delete.ButtonDown += () => songs.Remove(path);
+					disp.delete.ButtonDown += () => disp.QueueFree();
 				}
 				else
 				{
@@ -89,11 +117,6 @@ public partial class PlaylistCreator : EditorWindow
 				Debug.ErrorLog($"{path} is not a valid audio file, it cannot be added to this playlist.");
 			}
 		}
-	}
-
-	public void RemoveSong(int index)
-	{
-
 	}
 
 	public void Submit()

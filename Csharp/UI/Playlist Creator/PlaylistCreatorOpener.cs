@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public partial class PlaylistCreatorOpener : EditorWindowOpener
 {
+	[Export] ContextMenu menu;
 	public override void _Ready()
 	{
 		base._Ready();
@@ -16,6 +17,7 @@ public partial class PlaylistCreatorOpener : EditorWindowOpener
 	{
 		if (Globals.player.interrupt())
 		{
+			menu.CloseMenu();
 			(window as PlaylistCreator).Open();
 		}
 	}
@@ -27,10 +29,10 @@ public partial class PlaylistCreatorOpener : EditorWindowOpener
 		if (!creator.cancelled)
 		{
 			string[] files = Directory.GetFiles(SaveSystem.ImportSongs(creator.songs.ToArray(), creator.playlist_name.Text, false));
-			Playlist playlist = new Playlist(creator.playlist_name.Text, creator.cover_path, new List<string>(files));
+			Playlist playlist = new Playlist(creator.playlist_name.Text, SaveSystem.ImportCover(creator.cover_path, creator.playlist_name.Text), new List<string>(files));
 			
 			if (creator.backgroundThemeEnabled.ButtonPressed)
-				playlist.customInfo.overlayColor = creator.backgroundTheme.Color.ToHtml();
+				playlist.customInfo.overlayColor = "#" + creator.backgroundTheme.Color.ToHtml();
 
 			if (creator.album.ButtonPressed)
 				playlist.Type = Playlist.PlaylistType.Album;

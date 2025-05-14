@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://cjc5crjo31obe"]
+[gd_scene load_steps=5 format=3 uid="uid://cjc5crjo31obe"]
 
 [ext_resource type="Script" uid="uid://ddv8hmbckq2e" path="res://Csharp/UI/PathDisplay.cs" id="1_kuqad"]
 [ext_resource type="Texture2D" uid="uid://c85envuiuo3ju" path="res://Icons/folder.png" id="2_ba6a5"]
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Fonts/DefaultFont.tres" id="3_5jobu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kuqad"]
 
 [node name="Selected File" type="Control" node_paths=PackedStringArray("path_display", "delete")]
 custom_minimum_size = Vector2(20, 26.93)
@@ -59,4 +61,5 @@ offset_top = -15.5
 offset_bottom = 15.5
 grow_horizontal = 0
 grow_vertical = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_kuqad")
 text = "X"

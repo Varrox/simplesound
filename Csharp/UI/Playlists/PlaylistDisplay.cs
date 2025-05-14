@@ -24,7 +24,7 @@ public partial class PlaylistDisplay : Node
     public void Set()
     {
         visualizer.EmitSignal("OnSelectPlaylist", PlaylistIndex, Cover.Texture);
-        visualizer.mainController.currentLookingAtPlaylist = PlaylistIndex;
+        Globals.main.currentLookingAtPlaylist = PlaylistIndex;
         Register.SelfModulate = SelectedColor;
     }
 
@@ -45,7 +45,7 @@ public partial class PlaylistDisplay : Node
             else nuhuh = true;
         }
 
-        if(nuhuh) Cover.Texture = visualizer.defaultCover;
+        if(nuhuh) Cover.Texture = Globals.default_cover;
 
         Name.Text = playlist.Name;
         if (playlist.Type != Playlist.PlaylistType.Album)

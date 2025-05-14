@@ -21,7 +21,6 @@ public partial class Main : Control
 	public int shuffleIndex;
 
 	[Signal] public delegate void OnLoadSongEventHandler();
-	[Signal] public delegate void OnInitDoneEventHandler();
 	[Signal] public delegate void OnPlayEventHandler(bool playing);
 
 	public string song
@@ -34,18 +33,19 @@ public partial class Main : Control
 
     public override void _Ready()
 	{
+        GetTree().Root.CloseRequested += SaveData;
+
         LoadEverything();
-		GetTree().Root.CloseRequested += SaveData;
-		EmitSignal("OnInitDone");
 	}
 
 	public override void _Process(double delta)
 	{
-		if(Input.IsKeyPressed(Key.Ctrl))
-		{
-			if (Input.IsKeyPressed(Key.S)) SaveData();
-			else if (Input.IsKeyPressed(Key.R)) Refresh();
-        }
+		if (Input.IsActionJustPressed("save")) SaveData();
+		else if (Input.IsActionJustPressed("refresh")) Refresh();
+		else if (Input.IsActionJustPressed("scale_up")) GetTree().Root.ContentScaleFactor += 0.1f;
+        else if (Input.IsActionJustPressed("scale_down")) GetTree().Root.ContentScaleFactor -= 0.1f;
+
+        GetTree().Root.ContentScaleFactor = (float)Mathf.Clamp((double)GetTree().Root.ContentScaleFactor, 0.5, 1.5);
 
 		if (playing && playlist != null)
 		{
@@ -186,7 +186,9 @@ public partial class Main : Control
     public void Refresh()
 	{
 		LoadPlaylists();
+		GD.Print(playlists);
         LoadPlaylist(Tools.FindString(playlist.GetPath(), ref playlists));
+
         EmitSignal(SignalName.OnLoadSong);
         playlistvisualizer.UpdatePlaylists();
     }

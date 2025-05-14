@@ -58,7 +58,7 @@ public class Playlist
 
             for (int i = 0; i < Songs.Count; i++)
             {
-                output += $"\t{Songs[i]}\n";
+                output += $"{ParsingTools.TAB}{Songs[i]}\n";
             }
 
             output += "}\n\n";

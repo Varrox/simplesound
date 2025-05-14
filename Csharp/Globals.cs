@@ -24,6 +24,28 @@ public partial class Globals : Node
 
     public static Texture2D pause_texture;
 
+    [Export] Texture2D _default_cover
+    {
+        set
+        {
+            default_cover = value;
+        }
+        get { return default_cover; }
+    }
+
+    public static Texture2D default_cover;
+
+    [Export] Texture2D _default_cover_highres
+    {
+        set
+        {
+            default_cover_highres = value;
+        }
+        get { return default_cover_highres; }
+    }
+
+    public static Texture2D default_cover_highres;
+
     [Export] Main _main
     {
         set

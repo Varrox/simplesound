@@ -15,7 +15,7 @@
 [node name="Window" type="Window" node_paths=PackedStringArray("playlist_name", "addCover", "addCoverDialog", "coverDisplay", "addSongs", "addSongsDialog", "songDisplayContainer", "album", "artist", "backgroundThemeEnabled", "backgroundTheme", "SubmitButton", "CancelButton")]
 title = "Create Playlist"
 initial_position = 2
-size = Vector2i(550, 300)
+size = Vector2i(550, 350)
 min_size = Vector2i(450, 300)
 script = ExtResource("1_b0noq")
 playlist_name = NodePath("HBoxContainer2/VBoxContainer/Name")
@@ -147,7 +147,6 @@ size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("1_8t6yf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_acdqb")
 placeholder_text = "Artist"
-editable = false
 scroll_fit_content_height = true
 
 [node name="HSeparator" type="HSeparator" parent="HBoxContainer2/VBoxContainer2"]
