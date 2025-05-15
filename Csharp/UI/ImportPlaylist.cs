@@ -27,7 +27,7 @@ public partial class ImportPlaylist : Button
 
 		File.Copy(ssl_file, newPath);
 
-		Playlist playlist = MainParser.ParsePlaylist(File.ReadAllText(newPath));
+		Playlist playlist = MainParser.ParsePlaylist(newPath);
 
         Tools.AddToArray(ref Globals.main.playlists, playlist.Save());
         SaveSystem.SaveAllPlaylists(Globals.main.playlists);

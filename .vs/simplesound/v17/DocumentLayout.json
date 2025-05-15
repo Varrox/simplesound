@@ -3,16 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\Liam\\Documents\\blah\\simplesound\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|c:\\users\\liam\\documents\\blah\\simplesound\\csharp\\ui\\importplaylist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|solutionrelative:csharp\\ui\\importplaylist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|c:\\users\\liam\\documents\\blah\\simplesound\\csharp\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|solutionrelative:csharp\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|c:\\users\\liam\\documents\\blah\\simplesound\\csharp\\ui\\songs\\songdisplay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|solutionrelative:csharp\\ui\\songs\\songdisplay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|c:\\users\\liam\\documents\\blah\\simplesound\\csharp\\ui\\songs\\songsvisualizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|solutionrelative:csharp\\ui\\songs\\songsvisualizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|c:\\users\\liam\\documents\\blah\\simplesound\\csharp\\ui\\importplaylist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|solutionrelative:csharp\\ui\\importplaylist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|c:\\users\\liam\\documents\\blah\\simplesound\\csharp\\backend\\ssl parsing\\mainparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|solutionrelative:csharp\\backend\\ssl parsing\\mainparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|c:\\users\\liam\\documents\\blah\\simplesound\\csharp\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|solutionrelative:csharp\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|c:\\users\\liam\\documents\\blah\\simplesound\\csharp\\ui\\playlist creator\\playlistcreatoropener.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -55,10 +63,6 @@
       "RelativeMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|solutionrelative:csharp\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|c:\\users\\liam\\documents\\blah\\simplesound\\csharp\\backend\\ssl parsing\\mainparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|solutionrelative:csharp\\backend\\ssl parsing\\mainparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|c:\\users\\liam\\documents\\blah\\simplesound\\csharp\\ui\\playlists\\playlistdisplay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|solutionrelative:csharp\\ui\\playlists\\playlistdisplay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -74,36 +78,37 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "AttributeEditor.cs",
-              "DocumentMoniker": "C:\\Users\\Liam\\Documents\\blah\\simplesound\\Csharp\\UI\\Attribute Editor\\AttributeEditor.cs",
-              "RelativeDocumentMoniker": "Csharp\\UI\\Attribute Editor\\AttributeEditor.cs",
-              "ToolTip": "C:\\Users\\Liam\\Documents\\blah\\simplesound\\Csharp\\UI\\Attribute Editor\\AttributeEditor.cs",
-              "RelativeToolTip": "Csharp\\UI\\Attribute Editor\\AttributeEditor.cs",
-              "ViewState": "AgIAABgAAAAAAAAAAAAowDoAAAA4AAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "Songdisplay.cs",
+              "DocumentMoniker": "C:\\Users\\Liam\\Documents\\blah\\simplesound\\Csharp\\UI\\Songs\\Songdisplay.cs",
+              "RelativeDocumentMoniker": "Csharp\\UI\\Songs\\Songdisplay.cs",
+              "ToolTip": "C:\\Users\\Liam\\Documents\\blah\\simplesound\\Csharp\\UI\\Songs\\Songdisplay.cs",
+              "RelativeToolTip": "Csharp\\UI\\Songs\\Songdisplay.cs",
+              "ViewState": "AgIAAEUAAAAAAAAAAAAmwFMAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-15T02:12:59.964Z"
+              "WhenOpened": "2025-05-15T16:50:15.719Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "ImportPlaylist.cs",
               "DocumentMoniker": "C:\\Users\\Liam\\Documents\\blah\\simplesound\\Csharp\\UI\\ImportPlaylist.cs",
               "RelativeDocumentMoniker": "Csharp\\UI\\ImportPlaylist.cs",
               "ToolTip": "C:\\Users\\Liam\\Documents\\blah\\simplesound\\Csharp\\UI\\ImportPlaylist.cs",
               "RelativeToolTip": "Csharp\\UI\\ImportPlaylist.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAowCEAAAAfAAAAAAAAAA==",
+              "ViewState": "AgIAABMAAAAAAAAAAAAowBsAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-15T02:05:38.613Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "AttributeEditorOpener.cs",
               "DocumentMoniker": "C:\\Users\\Liam\\Documents\\blah\\simplesound\\Csharp\\UI\\Attribute Editor\\AttributeEditorOpener.cs",
               "RelativeDocumentMoniker": "Csharp\\UI\\Attribute Editor\\AttributeEditorOpener.cs",
@@ -111,12 +116,11 @@
               "RelativeToolTip": "Csharp\\UI\\Attribute Editor\\AttributeEditorOpener.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-14T21:11:36.073Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-14T21:11:36.073Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "PlaylistCreator.cs",
               "DocumentMoniker": "C:\\Users\\Liam\\Documents\\blah\\simplesound\\Csharp\\UI\\Playlist Creator\\PlaylistCreator.cs",
               "RelativeDocumentMoniker": "Csharp\\UI\\Playlist Creator\\PlaylistCreator.cs",
@@ -124,12 +128,11 @@
               "RelativeToolTip": "Csharp\\UI\\Playlist Creator\\PlaylistCreator.cs",
               "ViewState": "AgIAAFIAAAAAAAAAAAAcwGQAAACBAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-13T15:46:15.85Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-13T15:46:15.85Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "PlaylistCreatorOpener.cs",
               "DocumentMoniker": "C:\\Users\\Liam\\Documents\\blah\\simplesound\\Csharp\\UI\\Playlist Creator\\PlaylistCreatorOpener.cs",
               "RelativeDocumentMoniker": "Csharp\\UI\\Playlist Creator\\PlaylistCreatorOpener.cs",
@@ -137,12 +140,11 @@
               "RelativeToolTip": "Csharp\\UI\\Playlist Creator\\PlaylistCreatorOpener.cs",
               "ViewState": "AgIAABgAAAAAAAAAAAA5wCcAAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-13T02:23:34.121Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-13T02:23:34.121Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "ParseTools.cs",
               "DocumentMoniker": "C:\\Users\\Liam\\Documents\\blah\\simplesound\\Csharp\\Backend\\SSL Parsing\\ParseTools.cs",
               "RelativeDocumentMoniker": "Csharp\\Backend\\SSL Parsing\\ParseTools.cs",
@@ -150,12 +152,11 @@
               "RelativeToolTip": "Csharp\\Backend\\SSL Parsing\\ParseTools.cs",
               "ViewState": "AgIAAI8AAAAAAAAAAAAIwJYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-13T16:53:59.935Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-13T16:53:59.935Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "Main.cs",
               "DocumentMoniker": "C:\\Users\\Liam\\Documents\\blah\\simplesound\\Csharp\\Main.cs",
               "RelativeDocumentMoniker": "Csharp\\Main.cs",
@@ -163,12 +164,11 @@
               "RelativeToolTip": "Csharp\\Main.cs",
               "ViewState": "AgIAAHIAAAAAAAAAAAAmwHoAAABYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-07T03:55:27.007Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-07T03:55:27.007Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "SongsVisualizer.cs",
               "DocumentMoniker": "C:\\Users\\Liam\\Documents\\blah\\simplesound\\Csharp\\UI\\Songs\\SongsVisualizer.cs",
               "RelativeDocumentMoniker": "Csharp\\UI\\Songs\\SongsVisualizer.cs",
@@ -181,7 +181,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 10,
               "Title": "Globals.cs",
               "DocumentMoniker": "C:\\Users\\Liam\\Documents\\blah\\simplesound\\Csharp\\Globals.cs",
               "RelativeDocumentMoniker": "Csharp\\Globals.cs",
@@ -189,12 +189,11 @@
               "RelativeToolTip": "Csharp\\Globals.cs",
               "ViewState": "AgIAAHMAAAAAAAAAAAA2wH8AAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-14T00:24:01.744Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-14T00:24:01.744Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 12,
               "Title": "Playlists.cs",
               "DocumentMoniker": "C:\\Users\\Liam\\Documents\\blah\\simplesound\\Csharp\\Backend\\SSL Parsing\\Playlists.cs",
               "RelativeDocumentMoniker": "Csharp\\Backend\\SSL Parsing\\Playlists.cs",
@@ -206,7 +205,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": "SaveSystem.cs",
               "DocumentMoniker": "C:\\Users\\Liam\\Documents\\blah\\simplesound\\Csharp\\SaveSystem.cs",
               "RelativeDocumentMoniker": "Csharp\\SaveSystem.cs",
@@ -214,12 +213,36 @@
               "RelativeToolTip": "Csharp\\SaveSystem.cs",
               "ViewState": "AgIAAAUAAAAAAAAAAAAxwA4AAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-13T15:47:35.873Z",
+              "WhenOpened": "2025-05-13T15:47:35.873Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "MainParser.cs",
+              "DocumentMoniker": "C:\\Users\\Liam\\Documents\\blah\\simplesound\\Csharp\\Backend\\SSL Parsing\\MainParser.cs",
+              "RelativeDocumentMoniker": "Csharp\\Backend\\SSL Parsing\\MainParser.cs",
+              "ToolTip": "C:\\Users\\Liam\\Documents\\blah\\simplesound\\Csharp\\Backend\\SSL Parsing\\MainParser.cs",
+              "RelativeToolTip": "Csharp\\Backend\\SSL Parsing\\MainParser.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-13T16:29:31.381Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 11,
+              "Title": "AttributeEditor.cs",
+              "DocumentMoniker": "C:\\Users\\Liam\\Documents\\blah\\simplesound\\Csharp\\UI\\Attribute Editor\\AttributeEditor.cs",
+              "RelativeDocumentMoniker": "Csharp\\UI\\Attribute Editor\\AttributeEditor.cs",
+              "ToolTip": "C:\\Users\\Liam\\Documents\\blah\\simplesound\\Csharp\\UI\\Attribute Editor\\AttributeEditor.cs",
+              "RelativeToolTip": "Csharp\\UI\\Attribute Editor\\AttributeEditor.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAAAowDoAAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-15T02:12:59.964Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
               "Title": "PlaylistsVisualizer.cs",
               "DocumentMoniker": "C:\\Users\\Liam\\Documents\\blah\\simplesound\\Csharp\\UI\\Playlists\\PlaylistsVisualizer.cs",
               "RelativeDocumentMoniker": "Csharp\\UI\\Playlists\\PlaylistsVisualizer.cs",
@@ -231,7 +254,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 14,
               "Title": "Player.cs",
               "DocumentMoniker": "C:\\Users\\Liam\\Documents\\blah\\simplesound\\Csharp\\Player.cs",
               "RelativeDocumentMoniker": "Csharp\\Player.cs",
@@ -243,19 +266,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "MainParser.cs",
-              "DocumentMoniker": "C:\\Users\\Liam\\Documents\\blah\\simplesound\\Csharp\\Backend\\SSL Parsing\\MainParser.cs",
-              "RelativeDocumentMoniker": "Csharp\\Backend\\SSL Parsing\\MainParser.cs",
-              "ToolTip": "C:\\Users\\Liam\\Documents\\blah\\simplesound\\Csharp\\Backend\\SSL Parsing\\MainParser.cs",
-              "RelativeToolTip": "Csharp\\Backend\\SSL Parsing\\MainParser.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAABBAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-13T16:29:31.381Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "PlaylistDisplay.cs",
               "DocumentMoniker": "C:\\Users\\Liam\\Documents\\blah\\simplesound\\Csharp\\UI\\Playlists\\PlaylistDisplay.cs",
               "RelativeDocumentMoniker": "Csharp\\UI\\Playlists\\PlaylistDisplay.cs",
@@ -267,7 +278,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "Debugging.cs",
               "DocumentMoniker": "C:\\Users\\Liam\\Documents\\blah\\simplesound\\Csharp\\Backend\\Debugging.cs",
               "RelativeDocumentMoniker": "Csharp\\Backend\\Debugging.cs",

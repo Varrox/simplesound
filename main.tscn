@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://cbpkjhjnbrjm6"]
+[gd_scene load_steps=49 format=3 uid="uid://cbpkjhjnbrjm6"]
 
 [ext_resource type="Script" uid="uid://b81fhtdmrks0a" path="res://Csharp/Main.cs" id="1_l00ml"]
 [ext_resource type="Script" uid="uid://cvtqwvi0qvcvy" path="res://Csharp/Player.cs" id="2_632yu"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://b3phnmlkksrac" path="res://Icons/loop.png" id="7_uv8rp"]
 [ext_resource type="Texture2D" uid="uid://cksbdmhr2s8yy" path="res://Icons/DefaultCover.png" id="7_xn3w4"]
 [ext_resource type="Texture2D" uid="uid://bfwa3yivib7hh" path="res://Icons/playlist.png" id="8_8i1ca"]
+[ext_resource type="Texture2D" uid="uid://dvwv6fmmc3033" path="res://Icons/icon.svg" id="8_b1qrp"]
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Fonts/DefaultFont.tres" id="9_3b7g8"]
 [ext_resource type="Texture2D" uid="uid://5hwvlu7uerj6" path="res://Icons/plus.png" id="10_7e43v"]
 [ext_resource type="Shader" uid="uid://b27umdilyjk4d" path="res://Styling/blur.gdshader" id="10_sha6j"]
@@ -122,6 +123,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = ExtResource("8_b1qrp")
 expand_mode = 3
 stretch_mode = 6
 
@@ -204,7 +206,7 @@ theme_override_styles/panel = ExtResource("21_jy3dx")
 layout_mode = 2
 texture = ExtResource("7_xn3w4")
 expand_mode = 1
-stretch_mode = 5
+stretch_mode = 6
 
 [node name="Label" type="Label" parent="Interface/Song Display/VBoxContainer/Top card"]
 layout_mode = 1
@@ -345,7 +347,7 @@ alignment = 0
 icon_alignment = 2
 expand_icon = true
 
-[node name="File" type="Button" parent="Interface/Add/Panel/VBoxContainer"]
+[node name="File" type="Button" parent="Interface/Add/Panel/VBoxContainer" node_paths=PackedStringArray("menu")]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_fonts/font = ExtResource("9_3b7g8")
@@ -356,6 +358,7 @@ alignment = 0
 icon_alignment = 2
 expand_icon = true
 script = ExtResource("22_facbu")
+menu = NodePath("../../..")
 
 [node name="Top Bar" type="ColorRect" parent="Interface"]
 layout_mode = 1

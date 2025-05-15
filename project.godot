@@ -27,7 +27,6 @@ DiscordRPCLoader="*res://addons/discord-rpc-gd/nodes/discord_autoload.gd"
 [display]
 
 window/subwindows/embed_subwindows=false
-window/vsync/vsync_mode=2
 
 [dotnet]
 

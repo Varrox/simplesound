@@ -12,15 +12,20 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_31pnr"]
 
-[node name="Songdisplay" type="Control" node_paths=PackedStringArray("Number", "Name", "Artist", "Time", "Cover", "Playbutton", "Spacer", "Register", "More", "explicitLyrics")]
+[node name="Register" type="Button" node_paths=PackedStringArray("Number", "Name", "Artist", "Time", "Cover", "Playbutton", "Spacer", "More", "explicitLyrics")]
 custom_minimum_size = Vector2(0, 60)
-layout_mode = 3
 anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
+offset_top = -30.0
+offset_bottom = 30.0
 grow_horizontal = 2
 grow_vertical = 2
+focus_mode = 0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_rv41x")
+icon_alignment = 1
+expand_icon = true
 script = ExtResource("1_qnwii")
 Number = NodePath("Number")
 Name = NodePath("Number/HFlowContainer/Text/Name")
@@ -29,21 +34,8 @@ Time = NodePath("Length")
 Cover = NodePath("Number/HFlowContainer/PanelContainer/Cover")
 Playbutton = NodePath("Play")
 Spacer = NodePath("Number/HFlowContainer/Spacer")
-Register = NodePath("Register")
 More = NodePath("More")
 explicitLyrics = NodePath("Number/HFlowContainer/Text/Name/Explicit")
-
-[node name="Register" type="Button" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_rv41x")
-icon_alignment = 1
-expand_icon = true
 
 [node name="Number" type="Label" parent="."]
 layout_mode = 1

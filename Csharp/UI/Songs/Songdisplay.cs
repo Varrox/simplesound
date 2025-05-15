@@ -1,12 +1,11 @@
 using Godot;
 using System;
 
-public partial class Songdisplay : Control
+public partial class Songdisplay : Button
 {
 	[Export] public Label Number, Name, Artist, Time;
     [Export] public TextureRect Cover, Playbutton;
 	[Export] public Control Spacer;
-    [Export] public Button Register;
 	[Export] public ContextMenu More;
 	[Export] public Panel explicitLyrics;
 
@@ -14,9 +13,9 @@ public partial class Songdisplay : Control
 	public bool isPlaying;
 	public override void _Ready()
 	{
-		Register.ButtonUp += SetSong;
-		Register.MouseEntered += onEnter;
-		Register.MouseExited += onExit;
+		ButtonUp += SetSong;
+		MouseEntered += onEnter;
+		MouseExited += onExit;
 		More.MouseEntered += onEnter;
 		More.OnClose += () => More.Hide();
 		Globals.main.OnLoadSong += SetHighlight;
@@ -31,14 +30,14 @@ public partial class Songdisplay : Control
 		{
 			Globals.main.OnPlay += SetTextures;
 			isPlaying = true;
-			Register.SelfModulate = Globals.highlight;
+			SelfModulate = Globals.highlight;
 		}
 		else if (Globals.main.currentPlaylist != playlist || Globals.main.currentSong != song) // un-highlight
         {
 			Playbutton.Texture = Globals.play_texture;
             Globals.main.OnPlay -= SetTextures;
 			isPlaying = false;
-            Register.SelfModulate = new Color(1, 1, 1, 1);
+            SelfModulate = new Color(1, 1, 1, 1);
         }
 
         SetTextures(isPlaying && Globals.main.playing);

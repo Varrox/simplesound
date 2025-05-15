@@ -2,13 +2,21 @@ shader_type canvas_item;
 render_mode unshaded;
 
 uniform float darkness;
-uniform int samples:hint_range(1, 35, 1) = 16;
 uniform float blur_amount:hint_range(0, 1, 0.001) = 1.0;
 uniform float blur_size:hint_range(0, 1, 0.001) = 0.02;
 
+const int samples = 16;
+const float sigma = float(samples) * 0.25;
+
 uniform sampler2D screen_texture : hint_screen_texture, repeat_disable;
 
-vec3 blur(vec2 screen_uv, float size)
+#define pow2(x) (x * x)
+
+float gaussian(vec2 i) {
+    return 1.0 / (2.0 * PI * pow2(sigma)) * exp(-((pow2(i.x) + pow2(i.y)) / (2.0 * pow2(sigma))));
+}
+
+vec3 blur(vec2 screen_uv, float size)//, vec2 screen_pixel_size)
 {
 	vec4 result = vec4(1.);
 	float steps = size / float(samples);
@@ -17,8 +25,8 @@ vec3 blur(vec2 screen_uv, float size)
 	{
 		for(float y = -size; y < size; y += steps)
 		{
-			vec2 point = screen_uv + vec2(x, y) * size;
-			result += texture(screen_texture, point);
+			vec2 point = screen_uv + vec2(x, y) * size; //* screen_pixel_size;
+			result += texture(screen_texture, point) * gaussian(vec2(x, y) * size);
 		}
 	}
 
