@@ -8,7 +8,7 @@ public class ConvertToGodot
     public static Texture2D GetCover(string path)
     {
         byte[] pictureData = Metadata.GetCover(path, out string type);
-        if (pictureData == null) return ImageTexture.CreateFromImage(ResourceLoader.Load<Texture2D>("res://Icons/DefaultCover.png").GetImage());
+        if (pictureData == null) return Globals.default_cover;
         Image image = new Image();
         Error error = Error.Failed;
         switch (type)
@@ -31,8 +31,7 @@ public class ConvertToGodot
         }
         else
         {
-            image.Load("res://Icons/DefaultCover.png");
-            return ImageTexture.CreateFromImage(image);
+            return Globals.default_cover;
         }
     }
 

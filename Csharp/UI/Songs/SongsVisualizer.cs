@@ -37,6 +37,9 @@ public partial class SongsVisualizer : Control
 			(SongDisplays[0].GetChild(2) as Label).Text = "0 songs";
             for (int i = 1; i < SongDisplays.Count; i++)
             {
+                Songdisplay display = SongDisplays[i] as Songdisplay;
+                main.OnPlay -= display.SetTextures;
+                main.OnLoadSong -= display.SetHighlight;
                 SongDisplays[i].QueueFree();
             }
             return;
@@ -46,9 +49,9 @@ public partial class SongsVisualizer : Control
 		{
 			for(int i = Playlist.Songs.Count; i < SongDisplays.Count; i++)
 			{
-                Songdisplay ds = SongDisplays[i] as Songdisplay;
-                main.OnPlay -= ds.SetTextures;
-                main.OnLoadSong -= ds.SetHighlight;
+                Songdisplay display = SongDisplays[i] as Songdisplay;
+                main.OnPlay -= display.SetTextures;
+                main.OnLoadSong -= display.SetHighlight;
 				SongDisplays[i].QueueFree();
                 SongDisplays.RemoveAt(i);
 				i--;

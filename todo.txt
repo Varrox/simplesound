@@ -14,6 +14,7 @@ TODO
 - Add update button
 - Add settings menu
 - Make playlist bar hiding
+- Add share button to songs (keep youtube link in song metadata)
 
 FINISHED
 

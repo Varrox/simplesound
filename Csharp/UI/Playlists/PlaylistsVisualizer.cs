@@ -6,6 +6,7 @@ public partial class PlaylistsVisualizer : Node
 {
 	[Export] public PackedScene template;
     [Export] public VBoxContainer container;
+    [Export] public ScrollContainer scrollContainer;
     [Export] public Control moreMenu;
 
     [Signal] public delegate void OnSelectPlaylistEventHandler(int playlist, Texture2D img);
@@ -44,7 +45,7 @@ public partial class PlaylistsVisualizer : Node
         }
         else if (playlists.Count > Globals.main.playlists.Length) // more
         {
-            for (int i = playlists.Count; i < playlists.Count - Globals.main.playlists.Length; i++) // delete the extra
+            for (int i = playlists.Count; i < Globals.main.playlists.Length; i++) // delete the extra
             {
                 playlists[i].QueueFree();
                 playlists.RemoveAt(i);
@@ -57,5 +58,7 @@ public partial class PlaylistsVisualizer : Node
         {
             LoadDataIntoPlaylist(i, playlists[i] as PlaylistDisplay, i == Globals.main.currentPlaylist);
         }
+
+        scrollContainer.ScrollVertical = 4;
     }
 }

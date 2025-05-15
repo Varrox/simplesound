@@ -82,7 +82,10 @@ public partial class Main : Control
             LoadPlaylist(currentPlaylist);
         }
 
-		if(CanPlay())
+        // initialize playlist displayer
+        playlistvisualizer.LoadAllPlaylistVisuals();
+
+        if (CanPlay())
 		{
             InitSong();
 
@@ -93,9 +96,6 @@ public partial class Main : Control
 		{
             EmitSignal(SignalName.OnLoadSong);
         }
-
-        // initialize playlist displayer
-        playlistvisualizer.LoadAllPlaylistVisuals();
     }
 
 	public void LoadPlaylists()
