@@ -21,7 +21,7 @@ script = ExtResource("1_cj5je")
 Name = NodePath("Name")
 Artist = NodePath("Artist")
 CoverButton = NodePath("Cover")
-CoverFileDialog = NodePath("Cover/FileDialog")
+CoverFileDialog = NodePath("")
 CoverLabel = NodePath("Cover/Label")
 ExplicitLyrics = NodePath("Explicit Lyrics")
 SubmitButton = NodePath("HBoxContainer/Button")
@@ -105,13 +105,6 @@ offset_bottom = 47.33
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("1_ot5f1")
 theme_override_font_sizes/font_size = 11
-
-[node name="FileDialog" type="FileDialog" parent="Cover"]
-title = "Open a File"
-ok_button_text = "Open"
-file_mode = 0
-access = 2
-use_native_dialog = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 anchors_preset = 7

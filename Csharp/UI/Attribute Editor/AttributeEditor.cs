@@ -4,7 +4,6 @@ public partial class AttributeEditor : EditorWindow
 {
     [Export] public TextEdit Name, Artist;
     [Export] public Button CoverButton;
-    [Export] public FileDialog CoverFileDialog;
     [Export] public Label CoverLabel;
     [Export] public CheckBox ExplicitLyrics;
     [Export] public Button SubmitButton, CancelButton;
@@ -18,7 +17,6 @@ public partial class AttributeEditor : EditorWindow
         SubmitButton.ButtonDown += Submit;
         CoverButton.ButtonDown += Cover;
         CancelButton.ButtonDown += Cancel;
-        CoverFileDialog.FileSelected += SubmitCover;
     }
 
     public override void _Process(double delta)
@@ -42,6 +40,10 @@ public partial class AttributeEditor : EditorWindow
         Visible = true;
         CoverLabel.Text = "";
         coverpath = "";
+
+        Globals.file_dialog.Reparent(this);
+        Globals.file_dialog.FileSelected += SubmitCover;
+        Globals.SetFileDialogCover();
     }
 
     public void Submit()
@@ -52,6 +54,10 @@ public partial class AttributeEditor : EditorWindow
 
         EmitSignal("OnClose");
         cancelled = false;
+
+        Globals.file_dialog.Reparent(Globals.self);
+        Globals.file_dialog.FileSelected -= SubmitCover;
+        Globals.ResetFileDialogParameters();
     }
 
     public void Cancel()
@@ -62,7 +68,7 @@ public partial class AttributeEditor : EditorWindow
 
     public void Cover()
     {
-        CoverFileDialog.Popup();
+        Globals.file_dialog.Popup();
         coverChanged = true;
     }
 

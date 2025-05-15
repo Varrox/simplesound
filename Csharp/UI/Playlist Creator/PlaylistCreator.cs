@@ -6,11 +6,9 @@ public partial class PlaylistCreator : EditorWindow
 	[Export] public TextEdit playlist_name;
 
 	[Export] Button addCover;
-	[Export] FileDialog addCoverDialog;
 	[Export] PathDisplay coverDisplay;
 
 	[Export] Button addSongs;
-	[Export] FileDialog addSongsDialog;
 	[Export] PackedScene songDisplay;
 	[Export] Control songDisplayContainer;
 
@@ -33,11 +31,9 @@ public partial class PlaylistCreator : EditorWindow
 		songs = new List<string>();
 
 		addCover.ButtonDown += OpenCover;
-		addCoverDialog.FileSelected += SetCover;
 		coverDisplay.delete.ButtonDown += ClearCover;
 
 		addSongs.ButtonDown += OpenSongs;
-		addSongsDialog.FilesSelected += AddSongs;
 
 		// Submit / Cancel
 
@@ -60,7 +56,9 @@ public partial class PlaylistCreator : EditorWindow
 		backgroundThemeEnabled.ButtonPressed = false;
 		backgroundTheme.Color = new Color(1, 1, 1);
 
-		Show();
+        Globals.file_dialog.Reparent(this);
+
+        Show();
 	}
 
     public override void _Process(double delta)
@@ -70,14 +68,19 @@ public partial class PlaylistCreator : EditorWindow
 
     public void OpenCover()
 	{
-		addCoverDialog.Popup();
-	}
+        Globals.SetFileDialogCover();
+        Globals.file_dialog.Popup();
+
+		Globals.file_dialog.FileSelected += SetCover;
+        Globals.file_dialog.Canceled += DisconnectSetCover;
+    }
 
 	public void SetCover(string path)
 	{
 		cover_path = path;
 		coverDisplay.set_path(cover_path);
-	}
+        DisconnectSetCover();
+    }
 	
 	public void ClearCover()
 	{
@@ -87,10 +90,17 @@ public partial class PlaylistCreator : EditorWindow
 
 	public void OpenSongs()
 	{
-		addSongsDialog.Popup();
-	}
+		Globals.SetFileDialogSongs();
+		Globals.file_dialog.Popup();
 
-	public void AddSongs(string[] paths)
+        Globals.file_dialog.FilesSelected += AddSongs;
+        Globals.file_dialog.Canceled += DisconnectAddSongs;
+    }
+
+	void DisconnectAddSongs() { Globals.file_dialog.FilesSelected -= AddSongs; Globals.file_dialog.Canceled -= DisconnectAddSongs; }
+    void DisconnectSetCover() { Globals.file_dialog.FileSelected -= SetCover; Globals.file_dialog.Canceled -= DisconnectSetCover; }
+
+    public void AddSongs(string[] paths)
 	{
 		foreach(string path in paths)
 		{
@@ -117,14 +127,17 @@ public partial class PlaylistCreator : EditorWindow
 				Debug.ErrorLog($"{path} is not a valid audio file, it cannot be added to this playlist.");
 			}
 		}
-	}
+        DisconnectAddSongs();
+    }
 
 	public void Submit()
 	{
 		Visible = false;
 		Hide();
 
-		EmitSignal("OnClose");
+        Globals.file_dialog.Reparent(Globals.self);
+
+        EmitSignal("OnClose");
 	}
 	public void Cancel()
 	{

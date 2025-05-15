@@ -76,6 +76,28 @@ public partial class Globals : Node
 
     public static Player player;
 
+    [Export] FileDialog _file_dialog
+    {
+        set
+        {
+            file_dialog = value;
+        }
+        get { return file_dialog; }
+    }
+
+    public static FileDialog file_dialog;
+
+    [Export] Node _self
+    {
+        set
+        {
+            self = value;
+        }
+        get { return self; }
+    }
+
+    public static Node self;
+
     [Export]
     Color _highlight
     {
@@ -90,4 +112,25 @@ public partial class Globals : Node
     }
 
     public static Color highlight;
+
+    public static void ResetFileDialogParameters()
+    {
+        file_dialog.Filters = null;
+        
+        file_dialog.OkButtonText = "";
+    }
+
+    public static void SetFileDialogSongs()
+    {
+        file_dialog.Filters = new[] { "*.mp3", "*.wav", "*.ogg" };
+        file_dialog.FileMode = FileDialog.FileModeEnum.OpenFiles;
+        file_dialog.OkButtonText = "Import audio files";
+    }
+
+    public static void SetFileDialogCover()
+    {
+        file_dialog.Filters = new[] { "*.jpeg", "*.jpg", "*.png", "*.webp" };
+        file_dialog.FileMode = FileDialog.FileModeEnum.OpenFile;
+        file_dialog.OkButtonText = "Import cover";
+    }
 }

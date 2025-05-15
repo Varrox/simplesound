@@ -20,10 +20,10 @@ min_size = Vector2i(450, 300)
 script = ExtResource("1_b0noq")
 playlist_name = NodePath("HBoxContainer2/VBoxContainer/Name")
 addCover = NodePath("HBoxContainer2/VBoxContainer/Cover")
-addCoverDialog = NodePath("HBoxContainer2/VBoxContainer/Cover/FileDialog")
+addCoverDialog = NodePath("")
 coverDisplay = NodePath("HBoxContainer2/VBoxContainer/Selected File")
 addSongs = NodePath("HBoxContainer2/VBoxContainer/Cover2")
-addSongsDialog = NodePath("HBoxContainer2/VBoxContainer/Cover2/FileDialog")
+addSongsDialog = NodePath("")
 songDisplay = ExtResource("3_uox0n")
 songDisplayContainer = NodePath("HBoxContainer2/VBoxContainer/Panel/ScrollContainer/VBoxContainer")
 album = NodePath("HBoxContainer2/VBoxContainer2/Album")
@@ -75,15 +75,6 @@ theme_override_fonts/font = ExtResource("1_8t6yf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_yiuwm")
 text = "Select cover"
 
-[node name="FileDialog" type="FileDialog" parent="HBoxContainer2/VBoxContainer/Cover"]
-auto_translate_mode = 1
-title = "Open a File"
-size = Vector2i(220, 175)
-ok_button_text = "Open"
-file_mode = 0
-access = 2
-use_native_dialog = true
-
 [node name="Selected File" parent="HBoxContainer2/VBoxContainer" instance=ExtResource("3_uox0n")]
 layout_mode = 2
 
@@ -97,15 +88,6 @@ size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("1_8t6yf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_yiuwm")
 text = "Add Song(s)"
-
-[node name="FileDialog" type="FileDialog" parent="HBoxContainer2/VBoxContainer/Cover2"]
-auto_translate_mode = 1
-title = "Open File(s)"
-size = Vector2i(220, 175)
-ok_button_text = "Open"
-file_mode = 1
-access = 2
-use_native_dialog = true
 
 [node name="Panel" type="Panel" parent="HBoxContainer2/VBoxContainer"]
 custom_minimum_size = Vector2(0, 79.7)

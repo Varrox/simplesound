@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://cbpkjhjnbrjm6"]
+[gd_scene load_steps=48 format=3 uid="uid://cbpkjhjnbrjm6"]
 
 [ext_resource type="Script" uid="uid://b81fhtdmrks0a" path="res://Csharp/Main.cs" id="1_l00ml"]
 [ext_resource type="Script" uid="uid://cvtqwvi0qvcvy" path="res://Csharp/Player.cs" id="2_632yu"]
@@ -29,6 +29,7 @@
 [ext_resource type="Script" uid="uid://dk55q6mnaxkso" path="res://Csharp/UI/Playlist Creator/PlaylistCreatorOpener.cs" id="21_0rl1p"]
 [ext_resource type="StyleBox" uid="uid://bhcyqvvim6l5e" path="res://Styling/Rounded Corners.tres" id="21_jy3dx"]
 [ext_resource type="Script" uid="uid://bcxwpol710ysq" path="res://Csharp/UI/ContextMenu.cs" id="21_seu75"]
+[ext_resource type="Script" uid="uid://bw50lxnpt2ymm" path="res://Csharp/UI/ImportPlaylist.cs" id="22_facbu"]
 [ext_resource type="PackedScene" uid="uid://5kfxiu06xug0" path="res://Windows/CreatePlaylist.tscn" id="22_ok6jj"]
 [ext_resource type="Texture2D" uid="uid://bwftf22dhh4du" path="res://Icons/refresh.png" id="23_7r5f6"]
 [ext_resource type="Script" uid="uid://dwpgkkupvf1jo" path="res://Discord.gd" id="24_crcn0"]
@@ -291,8 +292,6 @@ icon_alignment = 1
 expand_icon = true
 script = ExtResource("21_seu75")
 menu = NodePath("Panel")
-teleportMenu = null
-teleportMenuOffset = null
 
 [node name="Panel" type="Panel" parent="Interface/Add"]
 visible = false
@@ -356,6 +355,7 @@ icon = ExtResource("11_1f20w")
 alignment = 0
 icon_alignment = 2
 expand_icon = true
+script = ExtResource("22_facbu")
 
 [node name="Top Bar" type="ColorRect" parent="Interface"]
 layout_mode = 1
@@ -775,7 +775,7 @@ offset_bottom = -210.0
 
 [node name="Player" type="AudioStreamPlayer" parent="."]
 
-[node name="Globals" type="Node" parent="." node_paths=PackedStringArray("_main", "_player")]
+[node name="Globals" type="Node" parent="." node_paths=PackedStringArray("_main", "_player", "_file_dialog", "_self")]
 script = ExtResource("32_htxhm")
 _play_texture = ExtResource("5_8inno")
 _pause_texture = ExtResource("4_lfnj1")
@@ -783,7 +783,16 @@ _default_cover = ExtResource("7_xn3w4")
 _default_cover_highres = ExtResource("13_seu75")
 _main = NodePath("..")
 _player = NodePath("../Interface")
+_file_dialog = NodePath("File")
+_self = NodePath(".")
 _highlight = Color(1, 1, 1, 0.376)
+
+[node name="File" type="FileDialog" parent="Globals"]
+title = "Open a File"
+initial_position = 1
+file_mode = 0
+access = 2
+use_native_dialog = true
 
 [node name="Discord" type="Node" parent="." node_paths=PackedStringArray("Player", "Main")]
 script = ExtResource("24_crcn0")
