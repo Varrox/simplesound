@@ -125,12 +125,22 @@ public partial class Globals : Node
         file_dialog.Filters = new[] { "*.mp3", "*.wav", "*.ogg" };
         file_dialog.FileMode = FileDialog.FileModeEnum.OpenFiles;
         file_dialog.OkButtonText = "Import audio files";
+        file_dialog.Title = "Select Audio files";
     }
 
     public static void SetFileDialogCover()
     {
         file_dialog.Filters = new[] { "*.jpeg", "*.jpg", "*.png", "*.webp" };
         file_dialog.FileMode = FileDialog.FileModeEnum.OpenFile;
-        file_dialog.OkButtonText = "Import cover";
+        file_dialog.OkButtonText = "Import Cover";
+        file_dialog.Title = "Select Cover";
+    }
+
+    public static void SetFileDialogPlaylist()
+    {
+        file_dialog.Filters = new[] { "*.ssl"};
+        file_dialog.FileMode = FileDialog.FileModeEnum.OpenFile;
+        file_dialog.OkButtonText = "Import Playlist";
+        file_dialog.Title = "Select Playlist";
     }
 }

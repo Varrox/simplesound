@@ -41,7 +41,6 @@ public partial class PlaylistCreatorOpener : EditorWindowOpener
 				playlist.Artist = creator.artist.Text;
 
 			Tools.AddToArray(ref Globals.main.playlists, playlist.Save());
-			GD.Print(Globals.main.playlists);
 			SaveSystem.SaveAllPlaylists(Globals.main.playlists);
             Globals.main.Refresh();
 		}
