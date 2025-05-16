@@ -42,7 +42,7 @@ public class ConvertToGodot
         }
     }
 
-    public static Color GetAverageColor(Texture2D texture, int samples)
+    public static Color GetAverageColor(Texture2D texture, int samples = 6)
     {
         Color color = new Color();
         Image image = texture.GetImage();
@@ -93,7 +93,7 @@ public class ConvertToGodot
     }
 
     /// <summary>
-    /// Loads shader code from a .gdshader into the shader type and caches it
+    /// Loads shader code from a .gdshader into the shader type and caches it WARNING: DO NOT USE, SHADERS AREN'T SUPPOSED TO BE CACHED LIKE THIS DOES
     /// </summary>
     /// <param name="path">the path to the .gdshader file</param>
     /// <param name="cachedShader">the path of the cached shader</param>

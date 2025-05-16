@@ -20,22 +20,6 @@ public class Tools
     }
 
     /// <summary>
-    /// Returns the first index of where a string is inside of an array.
-    /// If the string is not found, the function will return -1
-    /// </summary>
-    /// <param name="what">the string to be found inside of the array</param>
-    /// <param name="array">array to be searched through</param>
-    /// <returns>index</returns>
-    public static int FindString(string what, ref string[] array)
-    {
-        for (int i = 0; i < array.Length; i++)
-        {
-            if (array[i] == what) return i;
-        }
-        return -1;
-    }
-
-    /// <summary>
     /// Converts a value in seconds to a time step. (example : 60 seconds -> 1:00)
     /// </summary>
     /// <param name="time">time in seconds</param>

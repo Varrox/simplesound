@@ -9,29 +9,26 @@ public class SaveSystem
 
 	public static void InitData(out int playlistIndex, out int songIndex, out float currentTime, out float volume)
 	{
-        string appdata = UserData;
-        string saveData = Path.Combine(appdata, "savedata.txt");
-		string playlistSaver = Path.Combine(appdata, "savedplaylists.txt");
-		string playlists = Path.Combine(appdata, "Playlists");
-		string musicFiles = Path.Combine(appdata, "Music Folders");
-		string playlistCovers = Path.Combine(appdata, "Playlist Covers");
-
+        string playlists = Path.Combine(UserData, "Playlists");
         if (!Directory.Exists(playlists))
 		{
 			Directory.CreateDirectory(playlists);
 		}
 
-		if (!Directory.Exists(musicFiles))
+        string musicFiles = Path.Combine(UserData, "Music Folders");
+        if (!Directory.Exists(musicFiles))
 		{ 
 			Directory.CreateDirectory(musicFiles);
 		}
 
-		if (!Directory.Exists(playlistCovers))
+        string playlistCovers = Path.Combine(UserData, "Playlist Covers");
+        if (!Directory.Exists(playlistCovers))
 		{
 			Directory.CreateDirectory(playlistCovers);
 		}
 
-		if (!File.Exists(saveData))
+        string saveData = Path.Combine(UserData, "savedata.txt");
+        if (!File.Exists(saveData))
 		{
 			File.Create(saveData).Close();
 			File.WriteAllText(saveData, "0\n0\n0.0\n0.0");
@@ -49,7 +46,8 @@ public class SaveSystem
 			volume = Convert.ToSingle(data[3]);
 		}
 
-		if (!File.Exists(playlistSaver))
+        string playlistSaver = Path.Combine(UserData, "savedplaylists.txt");
+        if (!File.Exists(playlistSaver))
 		{
 			File.Create(playlistSaver).Close();
 		}

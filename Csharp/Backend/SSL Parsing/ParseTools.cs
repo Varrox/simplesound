@@ -75,7 +75,10 @@ namespace SSLParser
         /// <returns>formatted code</returns>
         public static string FormatCode(string text)
         {
-            return text.Split("//")[0].Trim();
+            int s = text.IndexOf("//");
+            if (s == -1)
+                return text.Trim();
+            return text.Substring(0, s).Trim();
         }
 
         /// <summary>

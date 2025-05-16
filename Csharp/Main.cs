@@ -1,5 +1,7 @@
 using Godot;
 using SSLParser;
+using System;
+using System.Collections.Generic;
 
 public partial class Main : Control
 {
@@ -74,10 +76,10 @@ public partial class Main : Control
 		player.VolumeDb = volume;
 		volumeSlider.Value = volume;
 
-		// load playlists
-		LoadPlaylists();
+        // load playlists
+        playlists = SaveSystem.GetAllPlaylists();
 
-		if (playlists.Length > 0)
+        if (playlists.Length > 0)
 		{
             LoadPlaylist(currentPlaylist);
         }
@@ -98,22 +100,16 @@ public partial class Main : Control
         }
     }
 
-	public void LoadPlaylists()
-	{
-		playlists = SaveSystem.GetAllPlaylists();
-	}
-
 	public void CheckIndex()
 	{
 		if (playlists[currentPlaylist] != currentPlaylistPath)
 		{
-			currentPlaylist = Tools.FindString(currentPlaylistPath, ref playlists);
+			currentPlaylist = Array.IndexOf(playlists, currentPlaylistPath);
 		}
 
 		if (song != currentSongPath)
 		{
-			string[] songs = playlist.Songs.ToArray();
-            currentSong = Tools.FindString(currentSongPath, ref songs);
+            currentSong = playlist.Songs.IndexOf(currentSongPath);
         }
 	}
 
@@ -206,10 +202,10 @@ public partial class Main : Control
 
     public void Refresh()
 	{
-		LoadPlaylists();
-		
-		if (playlists.Length > 0) 
-			LoadPlaylist(Tools.FindString(playlist.GetPath(), ref playlists));
+        playlists = SaveSystem.GetAllPlaylists();
+
+		if (playlists.Length > 0)
+			LoadPlaylist(Array.IndexOf(playlists, playlist.GetPath()));
 
         EmitSignal(SignalName.OnLoadSong);
         playlistvisualizer.UpdatePlaylists();

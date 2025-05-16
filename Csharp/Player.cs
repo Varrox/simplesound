@@ -94,17 +94,7 @@ public partial class Player : Node
             {
                 if(playlistIcon == null || playlistIconIndex != Globals.main.currentPlaylist)
                 {
-                    bool nuhuh = Globals.main.playlist.Cover == null;
-
-                    if (Globals.main.playlist.Cover != null)
-                    {
-                        var img = new Image();
-                        if (img.Load(Globals.main.playlist.Cover) == Error.Ok) playlistIcon = ImageTexture.CreateFromImage(img);
-                        else nuhuh = true;
-                    }
-
-                    if (nuhuh) playlistIcon = Globals.default_cover;
-
+                    playlistIcon = ConvertToGodot.LoadImage(Globals.main.playlist.Cover, ref Globals.default_cover);
                     playlistIconIndex = Globals.main.currentPlaylist;
                 }
                 

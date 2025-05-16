@@ -1,6 +1,5 @@
 TODO
 
-- Add playlist importing
 - Add folder explorer
 - Add lyrics viewer
 - Add max song display load limit
@@ -15,10 +14,12 @@ TODO
 - Add settings menu
 - Make playlist bar hiding
 - Add share button to songs (keep youtube link in song metadata)
+- Make covers all save as square aspect ratio
 
 FINISHED
 
 - Add playlist creation
+- Add playlist importing
 
 ULTIMATE GOAL:
 Create a music player like spotify, that allows for advanced song visualizers, shaders, 

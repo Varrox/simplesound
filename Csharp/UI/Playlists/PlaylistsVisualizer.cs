@@ -2,11 +2,10 @@ using Godot;
 using Godot.Collections;
 using SSLParser;
 
-public partial class PlaylistsVisualizer : Node
+public partial class PlaylistsVisualizer : ScrollContainer
 {
 	[Export] public PackedScene template;
     [Export] public VBoxContainer container;
-    [Export] public ScrollContainer scrollContainer;
     [Export] public Control moreMenu;
 
     [Signal] public delegate void OnSelectPlaylistEventHandler(int playlist, Texture2D img);
@@ -59,6 +58,6 @@ public partial class PlaylistsVisualizer : Node
             LoadDataIntoPlaylist(i, playlists[i] as PlaylistDisplay, i == Globals.main.currentPlaylist);
         }
 
-        scrollContainer.ScrollVertical = 4;
+        //scrollContainer.ScrollVertical = 4;
     }
 }
