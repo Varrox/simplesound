@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://5kfxiu06xug0"]
+[gd_scene load_steps=9 format=3 uid="uid://5kfxiu06xug0"]
 
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Fonts/DefaultFont.tres" id="1_8t6yf"]
 [ext_resource type="Script" uid="uid://bhqfe4m1n2gya" path="res://Csharp/UI/Playlist Creator/PlaylistCreator.cs" id="1_b0noq"]
+[ext_resource type="PackedScene" uid="uid://dhdg1uuqqaoj4" path="res://Prefabs/background.tscn" id="3_3os5s"]
 [ext_resource type="PackedScene" uid="uid://cjc5crjo31obe" path="res://Prefabs/pathdisplay.tscn" id="3_uox0n"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_acdqb"]
@@ -31,13 +32,7 @@ backgroundTheme = NodePath("HBoxContainer2/VBoxContainer2/ColorPickerButton")
 SubmitButton = NodePath("HBoxContainer/Create")
 CancelButton = NodePath("HBoxContainer/Cancel")
 
-[node name="Background" type="ColorRect" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.133196, 0.133196, 0.133196, 1)
+[node name="ColorRect" parent="." instance=ExtResource("3_3os5s")]
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="."]
 anchors_preset = 15

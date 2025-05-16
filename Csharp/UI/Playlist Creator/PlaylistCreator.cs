@@ -21,14 +21,12 @@ public partial class PlaylistCreator : EditorWindow
 
 	[Export] public Button SubmitButton, CancelButton;
 
-	public List<string> songs;
+	public List<string> songs = new List<string>();
 	public string cover_path;
 
 	public override void _Ready()
 	{
 		base._Ready();
-
-		songs = new List<string>();
 
 		addCover.ButtonDown += OpenCover;
 		coverDisplay.delete.ButtonDown += ClearCover;

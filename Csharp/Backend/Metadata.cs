@@ -1,4 +1,5 @@
-﻿using TagLib;
+﻿using System.Collections.Generic;
+using TagLib;
 
 public class Metadata
 {
@@ -69,6 +70,11 @@ public class Metadata
             };
             file.Tag.Pictures = new[] { picture };
         }
+
+        List<string> tags = new List<string>();
+
+        if(explicitLyrics)
+            tags.Add("Explicit");
 
         file.Tag.Comment = explicitLyrics ? "Explicit" : "";
 
