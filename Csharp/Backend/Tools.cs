@@ -1,3 +1,4 @@
+using Godot;
 using System.IO;
 
 public class Tools
@@ -41,19 +42,10 @@ public class Tools
     /// <returns>Timestamp</returns>
     public static string SecondsToTimestamp(float time)
     {
-        int mins = (int)time / 60;
+        int totalSeconds = Mathf.RoundToInt(time);
+        int mins = totalSeconds / 60;
 
-        string hours = (mins / 60).ToString();
-
-        string minsmodsixty = (mins % 60).ToString();
-
-        string minutes = (mins % 60) < 10 ? (mins < 10 ? $"{minsmodsixty}" : minsmodsixty) : minsmodsixty;
-
-        int inttimemodsixty = (int)(time % 60);
-
-        string seconds = inttimemodsixty < 10 ? $"0{inttimemodsixty}" : inttimemodsixty.ToString();
-
-        return (int)(time / 3600) != 0 ? $"{hours}:{minutes}:{seconds}" : $"{minutes}:{seconds}";
+        return (totalSeconds / 3600 != 0 ? $"{mins / 60}:" : "") + $"{mins % 60}:{totalSeconds % 60:D2}";
     }
 
     /// <summary>
