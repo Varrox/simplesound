@@ -12,7 +12,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bhcbq"]
 
-[node name="Window" type="Window" node_paths=PackedStringArray("playlist_name", "addCover", "addCoverDialog", "coverDisplay", "addSongs", "addSongsDialog", "songDisplayContainer", "album", "artist", "backgroundThemeEnabled", "backgroundTheme", "SubmitButton", "CancelButton")]
+[node name="Window" type="Window" node_paths=PackedStringArray("playlist_name", "addCover", "coverDisplay", "addSongs", "songDisplayContainer", "album", "artist", "backgroundThemeEnabled", "backgroundTheme", "SubmitButton", "CancelButton")]
 title = "Create Playlist"
 initial_position = 2
 size = Vector2i(550, 350)
@@ -20,10 +20,8 @@ min_size = Vector2i(450, 300)
 script = ExtResource("1_b0noq")
 playlist_name = NodePath("HBoxContainer2/VBoxContainer/Name")
 addCover = NodePath("HBoxContainer2/VBoxContainer/Cover")
-addCoverDialog = NodePath("")
 coverDisplay = NodePath("HBoxContainer2/VBoxContainer/Selected File")
 addSongs = NodePath("HBoxContainer2/VBoxContainer/Cover2")
-addSongsDialog = NodePath("")
 songDisplay = ExtResource("3_uox0n")
 songDisplayContainer = NodePath("HBoxContainer2/VBoxContainer/Panel/ScrollContainer/VBoxContainer")
 album = NodePath("HBoxContainer2/VBoxContainer2/Album")
@@ -33,7 +31,7 @@ backgroundTheme = NodePath("HBoxContainer2/VBoxContainer2/ColorPickerButton")
 SubmitButton = NodePath("HBoxContainer/Create")
 CancelButton = NodePath("HBoxContainer/Cancel")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

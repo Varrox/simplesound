@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://cbpkjhjnbrjm6"]
+[gd_scene load_steps=51 format=3 uid="uid://cbpkjhjnbrjm6"]
 
 [ext_resource type="Script" uid="uid://b81fhtdmrks0a" path="res://Csharp/Main.cs" id="1_l00ml"]
 [ext_resource type="Script" uid="uid://cvtqwvi0qvcvy" path="res://Csharp/Player.cs" id="2_632yu"]
@@ -24,7 +24,7 @@
 [ext_resource type="Script" uid="uid://bgymt3f23woi7" path="res://Csharp/UI/Songs/SongsVisualizer.cs" id="14_htxhm"]
 [ext_resource type="PackedScene" uid="uid://dlh34aq4t8tvu" path="res://Prefabs/songdisplay.tscn" id="14_t035w"]
 [ext_resource type="PackedScene" uid="uid://dcre7b1cn3b6i" path="res://Prefabs/songcontext.tscn" id="17_3m5kb"]
-[ext_resource type="PackedScene" uid="uid://dle5y658wmx03" path="res://Prefabs/Attribute Editor.tscn" id="17_f7c3k"]
+[ext_resource type="PackedScene" uid="uid://dle5y658wmx03" path="res://Windows/Attribute Editor.tscn" id="17_f7c3k"]
 [ext_resource type="Script" uid="uid://b8mk63lbeibcc" path="res://Csharp/UI/RefreshButton.cs" id="19_0odxb"]
 [ext_resource type="Texture2D" uid="uid://b8ldjgpmsaxgu" path="res://Icons/shuffle.png" id="20_fkbne"]
 [ext_resource type="Script" uid="uid://dk55q6mnaxkso" path="res://Csharp/UI/Playlist Creator/PlaylistCreatorOpener.cs" id="21_0rl1p"]
@@ -41,6 +41,10 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n3cvr"]
 shader = ExtResource("10_sha6j")
 shader_parameter/strength = 1.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_facbu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_b1qrp"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i82gy"]
 
@@ -152,6 +156,7 @@ offset_top = 116.0
 offset_right = 296.0
 offset_bottom = -114.0
 grow_vertical = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_facbu")
 script = ExtResource("11_kq58d")
 template = ExtResource("13_a7qgi")
 container = NodePath("VBoxContainer")
@@ -173,6 +178,7 @@ offset_right = -5.0
 offset_bottom = -109.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_b1qrp")
 script = ExtResource("14_htxhm")
 Template = ExtResource("14_t035w")
 main = NodePath("../..")
@@ -347,7 +353,7 @@ alignment = 0
 icon_alignment = 2
 expand_icon = true
 
-[node name="File" type="Button" parent="Interface/Add/Panel/VBoxContainer" node_paths=PackedStringArray("menu")]
+[node name="File" type="Button" parent="Interface/Add/Panel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_fonts/font = ExtResource("9_3b7g8")
@@ -358,7 +364,6 @@ alignment = 0
 icon_alignment = 2
 expand_icon = true
 script = ExtResource("22_facbu")
-menu = NodePath("../../..")
 
 [node name="Top Bar" type="ColorRect" parent="Interface"]
 layout_mode = 1
@@ -397,6 +402,7 @@ grow_vertical = 2
 [node name="Folders" type="Button" parent="Interface/Top Bar/HBoxContainer"]
 custom_minimum_size = Vector2(27.5, 0)
 layout_mode = 2
+tooltip_text = "Complete Music collection"
 focus_mode = 0
 theme_override_fonts/font = ExtResource("9_3b7g8")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_i5cru")
@@ -412,12 +418,13 @@ text = "Edit"
 
 [node name="Cloud" type="Button" parent="Interface/Top Bar/HBoxContainer"]
 layout_mode = 2
+tooltip_text = "Cloud Settings"
 focus_mode = 0
 theme_override_fonts/font = ExtResource("9_3b7g8")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_i5cru")
 text = "Cloud"
 
-[node name="Cloud2" type="Button" parent="Interface/Top Bar/HBoxContainer"]
+[node name="Downloader" type="Button" parent="Interface/Top Bar/HBoxContainer"]
 layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("9_3b7g8")
@@ -723,6 +730,7 @@ script = ExtResource("29_jq2sk")
 window = NodePath("AttributeEditor")
 
 [node name="AttributeEditor" parent="Interface/Player/Song Attributes/Edit Attributes" instance=ExtResource("17_f7c3k")]
+visible = false
 
 [node name="Name" type="Label" parent="Interface/Player/Song Attributes"]
 layout_mode = 1

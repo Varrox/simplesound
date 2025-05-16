@@ -28,7 +28,7 @@ public partial class AttributeEditorOpener : EditorWindowOpener
         if(!editor.cancelled)
         {
             Globals.main.EditMeta(editor.Name.Text, editor.Artist.Text, editor.coverpath, editor.ExplicitLyrics.ButtonPressed);
-            Globals.player.onLoadSong();
+            Globals.player.OnLoadSong();
             Globals.main.songsVisualizer.UpdateSong(Globals.main.currentSong, editor.Name.Text, editor.Artist.Text, Globals.player.TotalTime.Text, editor.ExplicitLyrics.ButtonPressed, Globals.player.SongCover.Texture);
         }
 

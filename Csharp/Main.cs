@@ -49,7 +49,7 @@ public partial class Main : Control
 
         GetTree().Root.ContentScaleFactor = (float)Mathf.Clamp((double)GetTree().Root.ContentScaleFactor, 0.5, 1.5);
 
-		if (playing && playlist != null)
+		if (playing && CanPlay())
 		{
 			if (!player.Playing)
 			{

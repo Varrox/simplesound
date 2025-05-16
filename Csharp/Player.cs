@@ -16,6 +16,9 @@ public partial class Player : Node
 
     public bool interrupted;
 
+    Texture2D playlistIcon;
+    int playlistIconIndex = -1;
+
     public override void _Ready()
 	{
         GetTree().Root.MinSize = new Vector2I(850, 350);
@@ -27,7 +30,7 @@ public partial class Player : Node
         Next.ButtonDown += () => move(1);
         Back.ButtonDown += () => move(-1);
 
-        Globals.main.OnLoadSong += onLoadSong;
+        Globals.main.OnLoadSong += OnLoadSong;
 
         Progress.DragEnded += setTime;
         Progress.DragStarted += () => canSetTime = true;
@@ -73,20 +76,48 @@ public partial class Player : Node
         }
     }
 
-    public void onLoadSong()
+    public void OnLoadSong()
     {
         if (Globals.main.CanPlay())
         {
             string name = Tools.GetMediaTitle(Globals.main.song);
             SongName.Text = name;
             SongName.TooltipText = name;
+
             string artist = Metadata.GetArtist(Globals.main.song);
             SongArtist.Text = artist;
             SongArtist.TooltipText = artist;
-            Texture2D cover = ConvertToGodot.GetCover(Globals.main.song);
-            SongCover.Texture = cover;
+
+            Texture2D cover = ConvertToGodot.GetCover(Globals.main.song, out bool failed);
+
+            if (failed && Globals.main.playlist.Type == Playlist.PlaylistType.Album)
+            {
+                if(playlistIcon == null || playlistIconIndex != Globals.main.currentPlaylist)
+                {
+                    bool nuhuh = Globals.main.playlist.Cover == null;
+
+                    if (Globals.main.playlist.Cover != null)
+                    {
+                        var img = new Image();
+                        if (img.Load(Globals.main.playlist.Cover) == Error.Ok) playlistIcon = ImageTexture.CreateFromImage(img);
+                        else nuhuh = true;
+                    }
+
+                    if (nuhuh) playlistIcon = Globals.default_cover;
+
+                    playlistIconIndex = Globals.main.currentPlaylist;
+                }
+                
+                SongCover.Texture = playlistIcon;
+            }
+            else
+            {
+                SongCover.Texture = cover;
+            }
+
+
             if (Globals.main.playlist.customInfo.backgroundPath != null) BackgroundImage.Texture = ConvertToGodot.LoadImage(Globals.main.playlist.customInfo.backgroundPath, ref cover);
-            else BackgroundImage.Texture = cover;
+            else BackgroundImage.Texture = SongCover.Texture;
 
             TotalTime.Text = Tools.SecondsToTimestamp(Metadata.GetTotalTime(Globals.main.song));
             Progress.MaxValue = Globals.main.player.Stream.GetLength();
@@ -122,6 +153,8 @@ public partial class Player : Node
         if(!interrupted)
         {
             if(Input.IsActionJustPressed("play")) Globals.main.Play();
+            else if (Input.IsActionJustPressed("next")) move(1);
+            else if (Input.IsActionJustPressed("back")) move(-1);
         }
 
         if (Globals.main.player.Stream != null) CurrentTime.Text = Tools.SecondsToTimestamp(Globals.main.time);

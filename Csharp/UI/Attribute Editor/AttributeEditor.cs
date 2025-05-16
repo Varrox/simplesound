@@ -4,7 +4,7 @@ public partial class AttributeEditor : EditorWindow
 {
     [Export] public TextEdit Name, Artist;
     [Export] public Button CoverButton;
-    [Export] public Label CoverLabel;
+    [Export] public PathDisplay CoverLabel;
     [Export] public CheckBox ExplicitLyrics;
     [Export] public Button SubmitButton, CancelButton;
 
@@ -38,7 +38,7 @@ public partial class AttributeEditor : EditorWindow
         this.explicitLyrics = explicitLyrics;
         Show();
         Visible = true;
-        CoverLabel.Text = "";
+        CoverLabel.set_path();
         coverpath = "";
 
         Globals.file_dialog.Reparent(this);
@@ -75,6 +75,6 @@ public partial class AttributeEditor : EditorWindow
     public void SubmitCover(string path)
     {
         coverpath = path;
-        CoverLabel.Text = path;
+        CoverLabel.set_path(path);
     }
 }

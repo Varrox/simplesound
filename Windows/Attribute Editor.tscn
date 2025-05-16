@@ -1,0 +1,94 @@
+[gd_scene load_steps=7 format=3 uid="uid://dle5y658wmx03"]
+
+[ext_resource type="Script" uid="uid://eh8a3k652ogt" path="res://Csharp/UI/Attribute Editor/AttributeEditor.cs" id="1_cj5je"]
+[ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Fonts/DefaultFont.tres" id="1_ot5f1"]
+[ext_resource type="PackedScene" uid="uid://cjc5crjo31obe" path="res://Prefabs/pathdisplay.tscn" id="3_6cib4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3g08v"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mixmj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iyibu"]
+
+[node name="Attribute editor" type="Window" node_paths=PackedStringArray("Name", "Artist", "CoverButton", "CoverLabel", "ExplicitLyrics", "SubmitButton", "CancelButton")]
+auto_translate_mode = 1
+title = "Edit song attributes"
+initial_position = 2
+size = Vector2i(250, 250)
+min_size = Vector2i(250, 200)
+script = ExtResource("1_cj5je")
+Name = NodePath("VBoxContainer/Name")
+Artist = NodePath("VBoxContainer/Artist")
+CoverButton = NodePath("VBoxContainer/Cover")
+CoverLabel = NodePath("VBoxContainer/Selected File")
+ExplicitLyrics = NodePath("VBoxContainer/Explicit Lyrics")
+SubmitButton = NodePath("VBoxContainer/HBoxContainer/Apply")
+CancelButton = NodePath("VBoxContainer/HBoxContainer/Cancel")
+
+[node name="Background" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.133196, 0.133196, 0.133196, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Name" type="TextEdit" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_ot5f1")
+placeholder_text = "Name"
+scroll_fit_content_height = true
+caret_blink = true
+
+[node name="Artist" type="TextEdit" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_ot5f1")
+placeholder_text = "Artist
+"
+scroll_fit_content_height = true
+caret_blink = true
+
+[node name="Explicit Lyrics" type="CheckBox" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+theme_override_fonts/font = ExtResource("1_ot5f1")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3g08v")
+text = "Explicit Lyrics"
+
+[node name="Cover" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_ot5f1")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_mixmj")
+text = "Select cover image"
+
+[node name="Selected File" parent="VBoxContainer" instance=ExtResource("3_6cib4")]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+alignment = 1
+
+[node name="Apply" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_ot5f1")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_iyibu")
+text = "Apply Changes"
+
+[node name="Cancel" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_ot5f1")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_iyibu")
+text = "Cancel"

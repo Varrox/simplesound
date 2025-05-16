@@ -5,10 +5,17 @@ using System.IO;
 
 public class ConvertToGodot
 {
-    public static Texture2D GetCover(string path)
+    public static Texture2D GetCover(string path, out bool failed)
     {
         byte[] pictureData = Metadata.GetCover(path, out string type);
-        if (pictureData == null) return Globals.default_cover;
+        if (pictureData == null)
+        {
+            failed = true;
+            return Globals.default_cover;
+        }
+
+        failed = false;
+
         Image image = new Image();
         Error error = Error.Failed;
         switch (type)
