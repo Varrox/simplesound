@@ -67,6 +67,10 @@ theme_override_fonts/font = ExtResource("1_ot5f1")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_3g08v")
 text = "Explicit Lyrics"
 
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 5.06)
+layout_mode = 2
+
 [node name="Cover" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_ot5f1")
