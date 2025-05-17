@@ -11,15 +11,16 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iyibu"]
 
-[node name="Attribute editor" type="Window" node_paths=PackedStringArray("Name", "Artist", "CoverButton", "CoverLabel", "ExplicitLyrics", "SubmitButton", "CancelButton")]
+[node name="Attribute editor" type="Window" node_paths=PackedStringArray("Name", "Artist", "Sharelink", "CoverButton", "CoverLabel", "ExplicitLyrics", "SubmitButton", "CancelButton")]
 auto_translate_mode = 1
 title = "Edit song attributes"
 initial_position = 2
-size = Vector2i(250, 250)
-min_size = Vector2i(250, 200)
+size = Vector2i(300, 250)
+min_size = Vector2i(250, 250)
 script = ExtResource("1_cj5je")
 Name = NodePath("VBoxContainer/Name")
 Artist = NodePath("VBoxContainer/Artist")
+Sharelink = NodePath("VBoxContainer/Share")
 CoverButton = NodePath("VBoxContainer/Cover")
 CoverLabel = NodePath("VBoxContainer/Selected File")
 ExplicitLyrics = NodePath("VBoxContainer/Explicit Lyrics")
@@ -50,6 +51,14 @@ caret_blink = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_ot5f1")
 placeholder_text = "Artist
+"
+scroll_fit_content_height = true
+caret_blink = true
+
+[node name="Share" type="TextEdit" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_ot5f1")
+placeholder_text = "Share Link
 "
 scroll_fit_content_height = true
 caret_blink = true

@@ -2,13 +2,13 @@ using Godot;
 
 public partial class AttributeEditor : EditorWindow
 {
-    [Export] public TextEdit Name, Artist;
+    [Export] public TextEdit Name, Artist, Sharelink;
     [Export] public Button CoverButton;
     [Export] public PathDisplay CoverLabel;
     [Export] public CheckBox ExplicitLyrics;
     [Export] public Button SubmitButton, CancelButton;
 
-    public string songname, artist, coverpath;
+    public string songname, artist, coverpath, sharelink;
     public bool explicitLyrics;
     bool coverChanged;
 
@@ -23,17 +23,20 @@ public partial class AttributeEditor : EditorWindow
     {
         if (Visible)
         { 
-            bool changed = (Name.Text != songname) || (Artist.Text != artist) || coverChanged || (explicitLyrics != ExplicitLyrics.ButtonPressed);
+            bool changed = (Name.Text != songname) || (Artist.Text != artist) || coverChanged || (explicitLyrics != ExplicitLyrics.ButtonPressed) || (sharelink != Sharelink.Text);
             SubmitButton.Visible = changed;
         }
     }
 
-    public void Open(string currentSong, string currentArtist, bool explicitLyrics)
+    public void Open(string currentSong, string currentArtist, string currentSharelink, bool explicitLyrics)
     {
         Name.Text = currentSong;
         songname = currentSong;
         Artist.Text = currentArtist;
         artist = currentArtist;
+        Sharelink.Text = currentSharelink;
+        sharelink = currentSharelink;
+
         ExplicitLyrics.ButtonPressed = explicitLyrics;
         this.explicitLyrics = explicitLyrics;
         Show();

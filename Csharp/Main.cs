@@ -190,9 +190,9 @@ public partial class Main : Control
 		return false;
 	}
 
-	public void EditMeta(string name, string artist, string coverpath, bool explicitLyrics)
+	public void EditMeta(string name, string artist, string coverpath, string sharelink, bool explicitLyrics)
 	{
-		if(playlist) Metadata.SetData(playlist.Songs[currentSong], name, artist, coverpath, explicitLyrics);
+		if(playlist) Metadata.SetData(playlist.Songs[currentSong], name, artist, coverpath, sharelink, explicitLyrics);
 	}
 
 	public void SaveData()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://cbpkjhjnbrjm6"]
+[gd_scene load_steps=53 format=3 uid="uid://cbpkjhjnbrjm6"]
 
 [ext_resource type="Script" uid="uid://b81fhtdmrks0a" path="res://Csharp/Main.cs" id="1_l00ml"]
 [ext_resource type="Script" uid="uid://cvtqwvi0qvcvy" path="res://Csharp/Player.cs" id="2_632yu"]
@@ -33,6 +33,8 @@
 [ext_resource type="Script" uid="uid://bw50lxnpt2ymm" path="res://Csharp/UI/ImportPlaylist.cs" id="22_facbu"]
 [ext_resource type="PackedScene" uid="uid://5kfxiu06xug0" path="res://Windows/CreatePlaylist.tscn" id="22_ok6jj"]
 [ext_resource type="Texture2D" uid="uid://bwftf22dhh4du" path="res://Icons/refresh.png" id="23_7r5f6"]
+[ext_resource type="PackedScene" uid="uid://b5ap2spi7sbp8" path="res://Windows/ImportFolder.tscn" id="23_b1qrp"]
+[ext_resource type="Script" uid="uid://b7fgu3kjwheaf" path="res://Csharp/UI/Import Folder/ImportFolderOpener.cs" id="23_come4"]
 [ext_resource type="Script" uid="uid://dwpgkkupvf1jo" path="res://Discord.gd" id="24_crcn0"]
 [ext_resource type="PackedScene" uid="uid://dtfoexo3o7b3p" path="res://Prefabs/playlistcontext.tscn" id="26_gbh2w"]
 [ext_resource type="Script" uid="uid://c5ep0n80r2l8p" path="res://Csharp/UI/Attribute Editor/AttributeEditorOpener.cs" id="29_jq2sk"]
@@ -302,7 +304,6 @@ script = ExtResource("21_seu75")
 menu = NodePath("Panel")
 
 [node name="Panel" type="Panel" parent="Interface/Add"]
-visible = false
 self_modulate = Color(0, 0, 0, 1)
 layout_mode = 1
 anchors_preset = 1
@@ -342,7 +343,8 @@ window = NodePath("Window")
 [node name="Window" parent="Interface/Add/Panel/VBoxContainer/Create" instance=ExtResource("22_ok6jj")]
 visible = false
 
-[node name="Folder" type="Button" parent="Interface/Add/Panel/VBoxContainer"]
+[node name="Folder" type="Button" parent="Interface/Add/Panel/VBoxContainer" node_paths=PackedStringArray("menu", "window")]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_fonts/font = ExtResource("9_3b7g8")
@@ -352,6 +354,12 @@ icon = ExtResource("11_1f20w")
 alignment = 0
 icon_alignment = 2
 expand_icon = true
+script = ExtResource("23_come4")
+menu = NodePath("../../..")
+window = NodePath("ImportFolder")
+
+[node name="ImportFolder" parent="Interface/Add/Panel/VBoxContainer/Folder" instance=ExtResource("23_b1qrp")]
+visible = false
 
 [node name="File" type="Button" parent="Interface/Add/Panel/VBoxContainer"]
 layout_mode = 2

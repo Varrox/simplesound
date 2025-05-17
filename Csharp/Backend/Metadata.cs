@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Godot;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using TagLib;
 
 public class Metadata
@@ -45,7 +48,7 @@ public class Metadata
         return TagLib.File.Create(path).Tag.Title;
     }
 
-    public static void SetData(string path, string name, string artist, string coverpath, bool explicitLyrics)
+    public static void SetData(string path, string name, string artist, string coverpath, string sharelink, bool explicitLyrics)
     {
         var file = TagLib.File.Create(path);
 
@@ -76,7 +79,10 @@ public class Metadata
         if(explicitLyrics)
             tags.Add("Explicit");
 
-        file.Tag.Comment = explicitLyrics ? "Explicit" : "";
+        if(sharelink != null || sharelink.Trim() != "")
+            tags.Add($"Link {sharelink}");
+        
+        file.Tag.Comment = string.Join(';', tags);
 
         file.Save();
     }
@@ -101,7 +107,31 @@ public class Metadata
 
     public static bool IsExplicit(string path)
     {
-        var file = TagLib.File.Create(path);
-        return file.Tag.Comment == "Explicit";
+        var comment = TagLib.File.Create(path).Tag.Comment;
+        if(comment == null)
+            return false;
+        string[] split = comment.Split(';');
+        return Array.IndexOf(split, "Explicit") != -1;
+    }
+    
+    public static string GetShareLink(string path)
+    {
+        var comment = TagLib.File.Create(path).Tag.Comment;
+
+        if (comment == null)
+            return null;
+
+        string[] tags = comment.Split(';');
+
+        for (int i = 0; i < tags.Length; i++)
+        {
+            if(tags[i].Trim().StartsWith("Link "))
+            {
+                GD.Print("Tag found");
+                return tags[i].Substring(5);
+            }
+        }
+
+        return null;
     }
 }
