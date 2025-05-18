@@ -15,8 +15,7 @@ public class Playlist
     public enum PlaylistType
     {
         Default,
-        Album,
-        Folder
+        Album
     }
 
     public Dictionary<string, Action<string>> ActionMapper;

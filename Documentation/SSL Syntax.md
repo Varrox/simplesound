@@ -20,14 +20,14 @@ In the backend of SSL it is just setting the parameters of the Playlist class th
 
 SSL has code comments too
 
-```
+```ssl
 Cover : D:\Songs\Songs of Innocence.png // Wtf even is this cover?
 ```
 
 SSL when it comes to defining lists (it did just say it can't understand them, but it can in this way) like the songs in a playlist  
 It is much different. You just list them line by line, nothing else.
 
-```
+```ssl
 Songs
 {
 	D:\Songs\Songs of Innocence\The Miracle.mp3
@@ -41,9 +41,28 @@ Songs
 
 Each song can have their own individual info, but it is saved in their metadata, and has separate syntax from SSL to make it easy to edit outside of simplesound.  
 
+To make a playlist so it can be synced over cloud properly, you can use shorthand paths local to the appdata folder of simplesound
+
+```ssl
+Config
+{
+	Cover : Songs of Innocence.png
+}
+
+Songs
+{
+	Songs of Innocence\The Miracle.mp3
+	Songs of Innocence\Every Breaking Wave.mp3
+	Songs of Innocence\California.mp3
+	Songs of Innocence\Song for Someone.mp3
+	Songs of Innocence\Iris.mp3
+	Songs of Innocence\Volcano.mp3
+}
+```
+
 Songs can also just include full folders too.
 
-```
+```ssl
 Songs
 {
 	D:\Songs\Songs of Innocence
@@ -53,7 +72,7 @@ Songs
 You can define custom attibutes such as `Overlay-Color` or `Volume-Reactive` using function like syntax.  
 For both you just input the color channels you want to use
 
-```
+```ssl
 Overlay-Color : rgb(255, 0, 0) // Red
 Volume-Reactive : Overlay-Color(r)
 ```

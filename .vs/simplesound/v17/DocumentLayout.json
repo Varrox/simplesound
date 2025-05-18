@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "D:\\Godot\\simplesound\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|d:\\godot\\simplesound\\csharp\\backend\\ssl parsing\\playlists.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|solutionrelative:csharp\\backend\\ssl parsing\\playlists.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|d:\\godot\\simplesound\\csharp\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|solutionrelative:csharp\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -13,10 +17,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|d:\\godot\\simplesound\\csharp\\ui\\importplaylist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|solutionrelative:csharp\\ui\\importplaylist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|d:\\godot\\simplesound\\csharp\\backend\\ssl parsing\\playlists.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|solutionrelative:csharp\\backend\\ssl parsing\\playlists.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EEFB3717-EAE8-4A87-B45A-4EB3AF3D0A2F}|Simplesound.csproj|d:\\godot\\simplesound\\csharp\\globals.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -42,11 +42,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Tools.cs",
               "DocumentMoniker": "D:\\Godot\\simplesound\\Csharp\\Backend\\Tools.cs",
               "RelativeDocumentMoniker": "Csharp\\Backend\\Tools.cs",
@@ -54,12 +54,11 @@
               "RelativeToolTip": "Csharp\\Backend\\Tools.cs",
               "ViewState": "AgIAABkAAAAAAAAAAAAgwDcAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-18T06:13:30.605Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-18T06:13:30.605Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Main.cs",
               "DocumentMoniker": "D:\\Godot\\simplesound\\Csharp\\Main.cs",
               "RelativeDocumentMoniker": "Csharp\\Main.cs",
@@ -72,7 +71,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "ImportPlaylist.cs",
               "DocumentMoniker": "D:\\Godot\\simplesound\\Csharp\\UI\\ImportPlaylist.cs",
               "RelativeDocumentMoniker": "Csharp\\UI\\ImportPlaylist.cs",
@@ -80,8 +79,7 @@
               "RelativeToolTip": "Csharp\\UI\\ImportPlaylist.cs",
               "ViewState": "AgIAABgAAAAAAAAAAAAowCcAAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-18T05:13:10.338Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-18T05:13:10.338Z"
             },
             {
               "$type": "Document",
@@ -93,8 +91,7 @@
               "RelativeToolTip": "Csharp\\UI\\Playlists\\PlaylistsVisualizer.cs",
               "ViewState": "AgIAABAAAAAAAAAAAAAgwB4AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-18T05:03:50.41Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-18T05:03:50.41Z"
             },
             {
               "$type": "Document",
@@ -106,8 +103,7 @@
               "RelativeToolTip": "Csharp\\Player.cs",
               "ViewState": "AgIAAAUAAAAAAAAAAAAQwB4AAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-18T03:05:18.374Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-18T03:05:18.374Z"
             },
             {
               "$type": "Document",
@@ -119,8 +115,7 @@
               "RelativeToolTip": "Csharp\\Globals.cs",
               "ViewState": "AgIAAGoAAAAAAAAAAAAqwIkAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-18T02:24:12.461Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-18T02:24:12.461Z"
             },
             {
               "$type": "Document",
@@ -132,18 +127,17 @@
               "RelativeToolTip": "Csharp\\UI\\Playlists\\PlaylistDisplay.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-18T02:22:37.737Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-18T02:22:37.737Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "Playlists.cs",
               "DocumentMoniker": "D:\\Godot\\simplesound\\Csharp\\Backend\\SSL Parsing\\Playlists.cs",
               "RelativeDocumentMoniker": "Csharp\\Backend\\SSL Parsing\\Playlists.cs",
               "ToolTip": "D:\\Godot\\simplesound\\Csharp\\Backend\\SSL Parsing\\Playlists.cs",
               "RelativeToolTip": "Csharp\\Backend\\SSL Parsing\\Playlists.cs",
-              "ViewState": "AgIAABsAAAAAAAAAAAAowFQAAAAaAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-18T00:59:38.167Z",
               "EditorCaption": ""
