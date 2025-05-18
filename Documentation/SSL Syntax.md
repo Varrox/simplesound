@@ -1,8 +1,8 @@
 # SSL Syntax
 
-The syntax is very similar to CSS and JSON. The only difference is that it has function like syntax, and it does not work with semi colons at the end of each line.  
+The syntax is a mix of both CSS and JSON. The only difference is that it has function like syntax, and it cannot have semi colons at the end of any line.  
 
-At the start of each SSL file, you want to define parameters about the playlist such as name, artist, and type.  
+At the start of each SSL file, you will (not required) to define parameters about the playlist such as name, artist, and type.  
 You can define these parameters in the Config{} area.
 
 Here is an example of that
@@ -46,6 +46,14 @@ Songs can also just include full folders too.
 ```
 Songs
 {
-	D:\\Songs\\Songs of Innocence
+	D:\Songs\Songs of Innocence
 }
+```
+
+You can define custom attibutes such as `Overlay-Color` or `Volume-Reactive` using function like syntax.  
+For both you just input the color channels you want to use
+
+```
+Overlay-Color : rgb(255, 0, 0) // Red
+Volume-Reactive : Overlay-Color(r)
 ```
