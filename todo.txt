@@ -19,9 +19,7 @@ TODO
 
 BUCKETS ISSUES
 
-- Make refresh specific parsing
 - Add threading to parsing
-- Ability to open appdata for app
 
 DOING
 - Make documentation for ssl
@@ -36,6 +34,10 @@ FINISHED
 - Fix shuffling not counting current song
 - Fix playlist names so they are ssl file independent
 - Make shuffling not play songs twice
+- Ability to open appdata for app
+
+SHELF
+- Make refresh specific parsing
 
 ULTIMATE GOAL:
 Create a music player like spotify, that allows for advanced song visualizers, shaders, 

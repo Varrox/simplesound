@@ -195,11 +195,6 @@ namespace SSLParser
             }
         }
 
-        public static void UpdatePlaylist(ref Playlist playlist)
-        {
-            // Work on it
-        }
-
         /// <summary>
         /// Splits only a line formatted like this -> Variable : Value
         /// </summary>

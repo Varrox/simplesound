@@ -72,6 +72,8 @@ public partial class Main : Control
         {
             EmitSignal(SignalName.OnLoadSong);
         }
+
+		// Done Loading
     }
 
     public override void _Process(double delta)
@@ -253,7 +255,7 @@ public partial class Main : Control
         playlists = SaveSystem.GetAllPlaylists();
 
 		if (playlists.Length > 0)
-			LoadPlaylist(Array.IndexOf(playlists, playlist.GetPath()));
+			LoadPlaylist(Array.IndexOf(playlists, playlist.Path));
 
 		Metadata.ResetCache();
 

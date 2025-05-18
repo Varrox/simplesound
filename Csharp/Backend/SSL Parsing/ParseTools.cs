@@ -167,5 +167,36 @@ namespace SSLParser
                     return (parenthases < set, true);
             }
         }
+
+        public static List<string> GetDifferences(string[] list1,  string[] list2, bool both = false)
+        {
+            List<string> differences = new List<string>();
+
+            for (int i = 0; i < list1.Length; i++)
+            {
+                int index = Array.IndexOf(list2, list1[i]);
+                if (index == -1)
+                {
+                    differences.Add(list1[i]);
+                }
+            }
+
+            if (both)
+            {
+                for (int i = 0; i < list2.Length; i++)
+                {
+                    if (!differences.Contains(list2[i]))
+                    {
+                        int index = Array.IndexOf(list1, list2[i]);
+                        if (index == -1)
+                        {
+                            differences.Add(list2[i]);
+                        }
+                    }
+                }
+            }
+            
+            return differences;
+        }
     }
 }

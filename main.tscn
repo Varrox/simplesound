@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=3 uid="uid://cbpkjhjnbrjm6"]
+[gd_scene load_steps=59 format=3 uid="uid://cbpkjhjnbrjm6"]
 
 [ext_resource type="Theme" uid="uid://cg2x5h7ufrntn" path="res://Styling/global_theme.tres" id="1_4lmeg"]
 [ext_resource type="Script" uid="uid://b81fhtdmrks0a" path="res://Csharp/Main.cs" id="1_l00ml"]
@@ -38,6 +38,7 @@
 [ext_resource type="Script" uid="uid://b7fgu3kjwheaf" path="res://Csharp/UI/Import Folder/ImportFolderOpener.cs" id="23_come4"]
 [ext_resource type="Script" uid="uid://dwpgkkupvf1jo" path="res://Discord.gd" id="24_crcn0"]
 [ext_resource type="PackedScene" uid="uid://dtfoexo3o7b3p" path="res://Prefabs/playlistcontext.tscn" id="26_gbh2w"]
+[ext_resource type="Script" uid="uid://dpypenx7j1p3m" path="res://Csharp/UI/Appdata.cs" id="29_0cp0l"]
 [ext_resource type="Script" uid="uid://c5ep0n80r2l8p" path="res://Csharp/UI/Attribute Editor/AttributeEditorOpener.cs" id="29_jq2sk"]
 [ext_resource type="Script" uid="uid://ba0kdfmjh8445" path="res://Csharp/Globals.cs" id="32_htxhm"]
 [ext_resource type="PackedScene" uid="uid://bw078i5dk5ff4" path="res://Windows/ConfirmationWindow.tscn" id="39_h8e4i"]
@@ -440,11 +441,12 @@ grow_vertical = 2
 [node name="Folders" type="Button" parent="Interface/Top Bar/Left"]
 custom_minimum_size = Vector2(27.5, 0)
 layout_mode = 2
-tooltip_text = "Complete Music collection"
+tooltip_text = "App data"
 focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_i5cru")
 icon = ExtResource("11_1f20w")
 expand_icon = true
+script = ExtResource("29_0cp0l")
 
 [node name="Edit" type="Button" parent="Interface/Top Bar/Left"]
 layout_mode = 2

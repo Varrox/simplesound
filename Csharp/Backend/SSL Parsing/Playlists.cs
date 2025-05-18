@@ -5,8 +5,22 @@ using System.IO;
 
 public class Playlist
 {
-    public string Name, Cover, Path, PathName;
+    public string Name, Cover, PathName;
     public List<string> Songs, Folders;
+
+    public string Path
+    {
+        set
+        {
+            _path = value;
+        }
+        get
+        {
+            return _path != null ? _path : System.IO.Path.Combine(SaveSystem.UserData, "Playlists", $"{Name}.ssl");
+        }
+    }
+
+    string _path;
 
     public string Artist;
     public CustomInfo customInfo;
@@ -72,14 +86,9 @@ public class Playlist
             output += "}";
         }
 
-        string path = Path == null ? GetPath() : Path;
+        string path = Path;
         File.WriteAllText(path, output);
         return path;
-    }
-
-    public string GetPath()
-    {
-        return System.IO.Path.Combine(SaveSystem.UserData, "Playlists", $"{Name}.ssl");
     }
 
     public void DeleteFile()
