@@ -1,7 +1,6 @@
 using Godot;
 using SSLParser;
 using System;
-using System.Collections.Generic;
 
 public partial class Main : Control
 {
@@ -13,7 +12,9 @@ public partial class Main : Control
 	public bool loop, playing, random;
 
 	public int currentPlaylist, currentSong;
+
 	public string currentPlaylistPath, currentSongPath;
+
     public int currentLookingAtPlaylist;
     public Playlist playlist;
 	public string[] playlists;
@@ -44,12 +45,16 @@ public partial class Main : Control
 
 	public override void _Process(double delta)
 	{
+		// Input
+
 		if (Input.IsActionJustPressed("save")) SaveData();
 		else if (Input.IsActionJustPressed("refresh")) Refresh();
 		else if (Input.IsActionJustPressed("scale_up")) GetTree().Root.ContentScaleFactor += 0.1f;
         else if (Input.IsActionJustPressed("scale_down")) GetTree().Root.ContentScaleFactor -= 0.1f;
 
         GetTree().Root.ContentScaleFactor = (float)Mathf.Clamp((double)GetTree().Root.ContentScaleFactor, 0.5, 1.5);
+
+		// Loop management
 
 		if (playing && CanPlay())
 		{
@@ -89,7 +94,7 @@ public partial class Main : Control
 
         if (CanPlay())
 		{
-            InitSong();
+            PlaySong(playlist.Songs[currentSong]);
 
             // show current playlist
             songsVisualizer.Load(currentPlaylist, (playlistvisualizer.container.GetChild(currentPlaylist) as PlaylistDisplay).Cover.Texture);
@@ -115,16 +120,26 @@ public partial class Main : Control
 
 	public void LoadPlaylist(int index)
 	{
-		currentPlaylist = index;
-		playlist = playlists.Length > 0 ? MainParser.ParsePlaylist(playlists[currentPlaylist]) : null;
+		if (index < 0)
+		{
+			playlist = null;
+			player.Stop();
+			player.Stream = null;
+			return;
+		}
+
+        currentPlaylist = index;
+        playlist = playlists.Length > 0 ? MainParser.ParsePlaylist(playlists[currentPlaylist]) : null;
 		currentPlaylistPath = playlist.Path;
     }
 
 	public void Play()
 	{
 		playing = !playing;
+
 		if(playing) player.Play(time);
 		else player.Stop();
+
 		EmitSignal("OnPlay", playing);
 	}
 
@@ -140,44 +155,41 @@ public partial class Main : Control
 			}
 			else currentSong += amount;
 			time = 0;
-			InitSong();
+			PlaySong(playlist.Songs[currentSong]);
 			playing = false;
 			Play();
 		}
 	}
 
-	public void InitSong()
+	public void PlaySong(string path)
 	{
 		if (CanPlay())
 		{
-            int lastIndex = playlist.Songs.Count - 1;
-            currentSong = currentSong < 0 ? lastIndex + currentSong + 1 : currentSong;
-            currentSong = currentSong > lastIndex ? currentSong - lastIndex - 1 : currentSong;
+			currentSong = Tools.Wrap(currentSong, 0, playlist.Songs.Count - 1);
 
-            if (FileAccess.FileExists(playlist.Songs[currentSong]))
+            if (FileAccess.FileExists(path))
             {
-                if (playlist.Songs[currentSong].EndsWith(".mp3"))
+                if (path.EndsWith(".mp3"))
                 {
-                    AudioStreamMP3 song = new AudioStreamMP3();
-                    song.Data = FileAccess.GetFileAsBytes(playlist.Songs[currentSong]);
-                    player.Stream = song;
+                    player.Stream = AudioStreamMP3.LoadFromBuffer(FileAccess.GetFileAsBytes(path));
                 }
-                else if (playlist.Songs[currentSong].EndsWith(".wav"))
+                else if (path.EndsWith(".wav"))
                 {
-                    player.Stream = AudioStreamWav.LoadFromBuffer(FileAccess.GetFileAsBytes(playlist.Songs[currentSong]));
+                    player.Stream = AudioStreamWav.LoadFromBuffer(FileAccess.GetFileAsBytes(path));
                 }
-                else if (playlist.Songs[currentSong].EndsWith(".ogg"))
+                else if (path.EndsWith(".ogg"))
                 {
-                    player.Stream = AudioStreamOggVorbis.LoadFromBuffer(FileAccess.GetFileAsBytes(playlist.Songs[currentSong]));
+                    player.Stream = AudioStreamOggVorbis.LoadFromBuffer(FileAccess.GetFileAsBytes(path));
                 }
-                EmitSignal(SignalName.OnLoadSong);
+
+                EmitSignal("OnLoadSong");
             }
             else // if the file doesn't exist
             {
-                GD.PrintErr($"{playlist.Songs[currentSong]} doesn't exist");
+                GD.PrintErr($"{path} doesn't exist");
                 playlist.Songs.RemoveAt(currentSong);
                 playlist.Save();
-                InitSong();
+                PlaySong(path);
             }
         }
 	}
@@ -195,10 +207,7 @@ public partial class Main : Control
 		if(playlist) Metadata.SetData(playlist.Songs[currentSong], name, artist, coverpath, sharelink, explicitLyrics);
 	}
 
-	public void SaveData()
-	{
-		SaveSystem.SaveData(currentPlaylist, currentSong, time, player.VolumeDb);
-	}
+	public void SaveData() => SaveSystem.SaveData(currentPlaylist, currentSong, time, player.VolumeDb);
 
     public void Refresh()
 	{

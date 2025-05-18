@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://cbpkjhjnbrjm6"]
+[gd_scene load_steps=57 format=3 uid="uid://cbpkjhjnbrjm6"]
 
 [ext_resource type="Script" uid="uid://b81fhtdmrks0a" path="res://Csharp/Main.cs" id="1_l00ml"]
 [ext_resource type="Script" uid="uid://cvtqwvi0qvcvy" path="res://Csharp/Player.cs" id="2_632yu"]
@@ -39,6 +39,7 @@
 [ext_resource type="PackedScene" uid="uid://dtfoexo3o7b3p" path="res://Prefabs/playlistcontext.tscn" id="26_gbh2w"]
 [ext_resource type="Script" uid="uid://c5ep0n80r2l8p" path="res://Csharp/UI/Attribute Editor/AttributeEditorOpener.cs" id="29_jq2sk"]
 [ext_resource type="Script" uid="uid://ba0kdfmjh8445" path="res://Csharp/Globals.cs" id="32_htxhm"]
+[ext_resource type="PackedScene" uid="uid://bw078i5dk5ff4" path="res://Windows/ConfirmationWindow.tscn" id="39_h8e4i"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n3cvr"]
 shader = ExtResource("10_sha6j")
@@ -46,15 +47,31 @@ shader_parameter/strength = 1.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_facbu"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gueqf"]
+bg_color = Color(0.180392, 0.180392, 0.180392, 0.807843)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7vj4a"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_come4"]
+bg_color = Color(0.137255, 0.137255, 0.137255, 0.941176)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kuk8b"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r3k7g"]
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_b1qrp"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i82gy"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r3k7g"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7vj4a"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kuk8b"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_come4"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i5cru"]
 
@@ -83,7 +100,7 @@ grow_vertical = 2
 script = ExtResource("1_l00ml")
 player = NodePath("Player")
 volumeSlider = NodePath("Interface/Player/Controls/Volume")
-playlistvisualizer = NodePath("Interface/Playlists")
+playlistvisualizer = NodePath("Interface/Side Panel/Playlists")
 songsVisualizer = NodePath("Interface/Song Display")
 
 [node name="Interface" type="Control" parent="." node_paths=PackedStringArray("Play", "Next", "Back", "Loop", "Shuffle", "Progress", "CurrentTime", "TotalTime", "SongName", "SongArtist", "SongCover", "BackgroundImage", "VolumeSlider", "backgroundColor")]
@@ -142,14 +159,14 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 1, 1, 0)
 
-[node name="Side" type="Panel" parent="Interface/Background"]
+[node name="Side Panel" type="Panel" parent="Interface"]
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
 offset_right = 303.0
 grow_vertical = 2
 
-[node name="Playlists" type="ScrollContainer" parent="Interface" node_paths=PackedStringArray("container", "moreMenu")]
+[node name="Playlists" type="ScrollContainer" parent="Interface/Side Panel" node_paths=PackedStringArray("container", "moreMenu")]
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
@@ -164,10 +181,134 @@ template = ExtResource("13_a7qgi")
 container = NodePath("VBoxContainer")
 moreMenu = NodePath("../Playlistcontext")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Interface/Playlists"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Interface/Side Panel/Playlists"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme_override_constants/separation = 7
+
+[node name="Playlistcontext" parent="Interface/Side Panel" instance=ExtResource("26_gbh2w")]
+visible = false
+layout_mode = 1
+offset_left = -157.0
+offset_top = -223.0
+offset_right = -15.0
+offset_bottom = -112.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_gueqf")
+
+[node name="Add" type="Button" parent="Interface/Side Panel" node_paths=PackedStringArray("menu")]
+layout_mode = 1
+offset_left = 256.0
+offset_top = 67.0
+offset_right = 288.0
+offset_bottom = 98.0
+focus_mode = 0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_7vj4a")
+text = "
+"
+icon = ExtResource("10_7e43v")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("21_seu75")
+menu = NodePath("Panel")
+
+[node name="Panel" type="Panel" parent="Interface/Side Panel/Add"]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -186.0
+offset_top = 34.0
+offset_bottom = 156.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_come4")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Interface/Side Panel/Add/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 7.5
+offset_top = 7.5
+offset_right = -7.5
+offset_bottom = -7.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Create" type="Button" parent="Interface/Side Panel/Add/Panel/VBoxContainer" node_paths=PackedStringArray("menu", "window")]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("9_3b7g8")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_kuk8b")
+text = "Create new"
+icon = ExtResource("10_7e43v")
+alignment = 0
+icon_alignment = 2
+expand_icon = true
+script = ExtResource("21_0rl1p")
+menu = NodePath("../../..")
+window = NodePath("Window")
+
+[node name="Window" parent="Interface/Side Panel/Add/Panel/VBoxContainer/Create" instance=ExtResource("22_ok6jj")]
+visible = false
+
+[node name="Folder" type="Button" parent="Interface/Side Panel/Add/Panel/VBoxContainer" node_paths=PackedStringArray("menu", "window")]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("9_3b7g8")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_kuk8b")
+text = "Import folder"
+icon = ExtResource("11_1f20w")
+alignment = 0
+icon_alignment = 2
+expand_icon = true
+script = ExtResource("23_come4")
+menu = NodePath("../../..")
+window = NodePath("ImportFolder")
+
+[node name="ImportFolder" parent="Interface/Side Panel/Add/Panel/VBoxContainer/Folder" instance=ExtResource("23_b1qrp")]
+visible = false
+
+[node name="File" type="Button" parent="Interface/Side Panel/Add/Panel/VBoxContainer" node_paths=PackedStringArray("menu")]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("9_3b7g8")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_kuk8b")
+text = "Import Playlist"
+icon = ExtResource("11_1f20w")
+alignment = 0
+icon_alignment = 2
+expand_icon = true
+script = ExtResource("22_facbu")
+menu = NodePath("../../..")
+
+[node name="Playlist" type="Button" parent="Interface"]
+layout_mode = 1
+offset_left = 15.0
+offset_top = 68.0
+offset_right = 47.0
+offset_bottom = 100.0
+scale = Vector2(0.8, 0.8)
+focus_mode = 0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_r3k7g")
+icon = ExtResource("8_8i1ca")
+expand_icon = true
+
+[node name="Label" type="Label" parent="Interface/Playlist"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 40.0
+offset_top = -13.5
+offset_right = 147.0
+offset_bottom = 13.5
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("9_3b7g8")
+theme_override_font_sizes/font_size = 19
+text = "My Playlists"
 
 [node name="Song Display" type="ScrollContainer" parent="Interface" node_paths=PackedStringArray("main", "PlaylistsVisualizer", "menu", "container")]
 layout_mode = 1
@@ -184,7 +325,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_b1qrp")
 script = ExtResource("14_htxhm")
 Template = ExtResource("14_t035w")
 main = NodePath("../..")
-PlaylistsVisualizer = NodePath("../Playlists")
+PlaylistsVisualizer = NodePath("../Side Panel/Playlists")
 menu = NodePath("../Songcontext")
 container = NodePath("VBoxContainer")
 
@@ -261,117 +402,9 @@ focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_i82gy")
 icon = ExtResource("5_8inno")
 
-[node name="Playlist" type="Button" parent="Interface"]
-layout_mode = 1
-offset_left = 15.0
-offset_top = 68.0
-offset_right = 47.0
-offset_bottom = 100.0
-scale = Vector2(0.8, 0.8)
-focus_mode = 0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_r3k7g")
-icon = ExtResource("8_8i1ca")
-expand_icon = true
-
-[node name="Label" type="Label" parent="Interface/Playlist"]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 40.0
-offset_top = -13.5
-offset_right = 147.0
-offset_bottom = 13.5
-grow_vertical = 2
-theme_override_fonts/font = ExtResource("9_3b7g8")
-theme_override_font_sizes/font_size = 19
-text = "My Playlists"
-
-[node name="Add" type="Button" parent="Interface" node_paths=PackedStringArray("menu")]
-layout_mode = 1
-offset_left = 256.0
-offset_top = 67.0
-offset_right = 288.0
-offset_bottom = 98.0
-focus_mode = 0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_7vj4a")
-text = "
-"
-icon = ExtResource("10_7e43v")
-icon_alignment = 1
-expand_icon = true
-script = ExtResource("21_seu75")
-menu = NodePath("Panel")
-
-[node name="Panel" type="Panel" parent="Interface/Add"]
-self_modulate = Color(0, 0, 0, 1)
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -186.0
-offset_top = 34.0
-offset_bottom = 156.0
-grow_horizontal = 0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Interface/Add/Panel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 7.5
-offset_top = 7.5
-offset_right = -7.5
-offset_bottom = -7.5
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Create" type="Button" parent="Interface/Add/Panel/VBoxContainer" node_paths=PackedStringArray("menu", "window")]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_fonts/font = ExtResource("9_3b7g8")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_kuk8b")
-text = "Create new"
-icon = ExtResource("10_7e43v")
-alignment = 0
-icon_alignment = 2
-expand_icon = true
-script = ExtResource("21_0rl1p")
-menu = NodePath("../../..")
-window = NodePath("Window")
-
-[node name="Window" parent="Interface/Add/Panel/VBoxContainer/Create" instance=ExtResource("22_ok6jj")]
+[node name="Songcontext" parent="Interface" instance=ExtResource("17_3m5kb")]
 visible = false
-
-[node name="Folder" type="Button" parent="Interface/Add/Panel/VBoxContainer" node_paths=PackedStringArray("menu", "window")]
-visible = false
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_fonts/font = ExtResource("9_3b7g8")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_kuk8b")
-text = "Import folder"
-icon = ExtResource("11_1f20w")
-alignment = 0
-icon_alignment = 2
-expand_icon = true
-script = ExtResource("23_come4")
-menu = NodePath("../../..")
-window = NodePath("ImportFolder")
-
-[node name="ImportFolder" parent="Interface/Add/Panel/VBoxContainer/Folder" instance=ExtResource("23_b1qrp")]
-visible = false
-
-[node name="File" type="Button" parent="Interface/Add/Panel/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_fonts/font = ExtResource("9_3b7g8")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_kuk8b")
-text = "Import Playlist"
-icon = ExtResource("11_1f20w")
-alignment = 0
-icon_alignment = 2
-expand_icon = true
-script = ExtResource("22_facbu")
+layout_mode = 1
 
 [node name="Top Bar" type="ColorRect" parent="Interface"]
 layout_mode = 1
@@ -381,7 +414,7 @@ offset_bottom = 52.0
 grow_horizontal = 2
 color = Color(0.136826, 0.136826, 0.136826, 1)
 
-[node name="Search" type="TextEdit" parent="Interface/Top Bar"]
+[node name="Search" type="LineEdit" parent="Interface/Top Bar"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -394,6 +427,7 @@ grow_vertical = 2
 tooltip_text = "Type in the name of an artist or song, or playlist"
 focus_mode = 1
 theme_override_fonts/font = ExtResource("9_3b7g8")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_come4")
 placeholder_text = " search for songs"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Interface/Top Bar"]
@@ -778,18 +812,6 @@ text = "Artist"
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Songcontext" parent="Interface" instance=ExtResource("17_3m5kb")]
-visible = false
-layout_mode = 1
-
-[node name="Playlistcontext" parent="Interface" instance=ExtResource("26_gbh2w")]
-visible = false
-layout_mode = 1
-offset_left = -865.0
-offset_top = -210.0
-offset_right = -865.0
-offset_bottom = -210.0
-
 [node name="Player" type="AudioStreamPlayer" parent="."]
 
 [node name="Globals" type="Node" parent="." node_paths=PackedStringArray("_main", "_player", "_file_dialog", "_self")]
@@ -803,6 +825,8 @@ _player = NodePath("../Interface")
 _file_dialog = NodePath("File Dialog")
 _self = NodePath(".")
 _highlight = Color(1, 1, 1, 0.376)
+_lower_highlight = Color(50, 50, 50, 0.162)
+_confirmation_window = ExtResource("39_h8e4i")
 
 [node name="File Dialog" type="FileDialog" parent="Globals"]
 title = "Open a File"

@@ -6,19 +6,39 @@ public partial class ImportPlaylist : Button
 {
 	[Export] ContextMenu menu;
 
+	Confirm sync;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		ButtonDown += ImportFile;
+		ButtonDown += SetStatic;
 	}
 
-	public void ImportFile()
+	public void SetStatic()
 	{
-		Globals.SetFileDialogPlaylist();
-		Globals.file_dialog.Popup();
+		ConfirmationWindow confirmationWindow = Globals.confirmation_window.Instantiate() as ConfirmationWindow;
 
-        Globals.file_dialog.FileSelected += ImportSSL;
-        Globals.file_dialog.Canceled += Cancel;
+		confirmationWindow.Message = "Import with cloud syncing enabled?";
+		confirmationWindow.AcceptText = "Yes";
+		confirmationWindow.DeclineText = "No";
+		confirmationWindow.freeOnClose = true;
+
+        GetTree().CurrentScene.AddChild(confirmationWindow);
+
+		confirmationWindow.OnClose += ImportFile;
+    }
+
+	public void ImportFile(Confirm sync)
+	{
+		this.sync = sync;
+		if (sync != Confirm.Cancelled)
+		{
+            Globals.SetFileDialogPlaylist();
+            Globals.file_dialog.Popup();
+
+            Globals.file_dialog.FileSelected += ImportSSL;
+            Globals.file_dialog.Canceled += Cancel;
+        }
     }
 
 	public void ImportSSL(string ssl_file)
@@ -28,6 +48,12 @@ public partial class ImportPlaylist : Button
 		File.Copy(ssl_file, newPath);
 
 		Playlist playlist = MainParser.ParsePlaylist(newPath);
+
+		if (sync == Confirm.Accepted)
+		{
+			playlist.Songs = SaveSystem.ImportSongs(playlist.Songs.ToArray(), playlist.Name);
+			playlist.Cover = SaveSystem.ImportCover(playlist.Cover, playlist.Name);
+        }
 
         Tools.AddToArray(ref Globals.main.playlists, playlist.Save());
         SaveSystem.SaveAllPlaylists(Globals.main.playlists);

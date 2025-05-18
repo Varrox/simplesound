@@ -23,12 +23,12 @@ public partial class Player : Node
 	{
         GetTree().Root.MinSize = new Vector2I(850, 350);
 
-        Loop.ButtonDown += setLoop;
-        Shuffle.ButtonDown += SetShuffle;
-        Play.ButtonDown += Globals.main.Play;
+        Loop.ButtonUp += setLoop;
+        Shuffle.ButtonUp += SetShuffle;
+        Play.ButtonUp += Globals.main.Play;
 
-        Next.ButtonDown += () => move(1);
-        Back.ButtonDown += () => move(-1);
+        Next.ButtonUp += () => move(1);
+        Back.ButtonUp += () => move(-1);
 
         Globals.main.OnLoadSong += OnLoadSong;
 

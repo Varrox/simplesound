@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public partial class PlaylistCreator : EditorWindow
 {
-	[Export] public TextEdit playlist_name;
+	[Export] public LineEdit playlist_name;
 
 	[Export] Button addCover;
 	[Export] PathDisplay coverDisplay;
@@ -13,8 +13,8 @@ public partial class PlaylistCreator : EditorWindow
 	[Export] Control songDisplayContainer;
 
 
-	[Export] public CheckBox album;
-	[Export] public TextEdit artist;
+	[Export] public CheckBox cloudSync, album;
+	[Export] public LineEdit artist;
 
 	[Export] public CheckBox backgroundThemeEnabled;
 	[Export] public ColorPickerButton backgroundTheme;

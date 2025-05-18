@@ -1,14 +1,18 @@
-[gd_scene load_steps=4 format=3 uid="uid://bw078i5dk5ff4"]
+[gd_scene load_steps=5 format=3 uid="uid://bw078i5dk5ff4"]
 
 [ext_resource type="Script" uid="uid://4t756wrga7li" path="res://Csharp/UI/ConfirmationWindow.cs" id="1_3wopc"]
 [ext_resource type="PackedScene" uid="uid://dhdg1uuqqaoj4" path="res://Prefabs/background.tscn" id="2_a7dhm"]
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Fonts/DefaultFont.tres" id="2_jua8g"]
 
-[node name="ConfirmationWindow" type="Window" node_paths=PackedStringArray("accept", "cancel", "message")]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a7dhm"]
+
+[node name="ConfirmationWindow" type="Window" node_paths=PackedStringArray("accept", "decline", "cancel", "message")]
 initial_position = 2
 size = Vector2i(250, 100)
+min_size = Vector2i(150, 100)
 script = ExtResource("1_3wopc")
 accept = NodePath("VBoxContainer/HBoxContainer/Accept")
+decline = NodePath("VBoxContainer/HBoxContainer/Decline")
 cancel = NodePath("VBoxContainer/HBoxContainer/Cancel")
 message = NodePath("VBoxContainer/Message")
 
@@ -26,11 +30,15 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Message" type="Label" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 42.24)
 layout_mode = 2
 size_flags_vertical = 6
 theme_override_fonts/font = ExtResource("2_jua8g")
 text = "Message"
 horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+text_overrun_behavior = 1
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
 layout_mode = 2
@@ -41,15 +49,28 @@ size_flags_vertical = 3
 alignment = 1
 
 [node name="Accept" type="Button" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(45, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("2_jua8g")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_a7dhm")
 text = "Ok"
 
-[node name="Cancel" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="Decline" type="Button" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(45, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("2_jua8g")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_a7dhm")
+text = "No"
+
+[node name="Cancel" type="Button" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(45, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("2_jua8g")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_a7dhm")
 text = "Cancel"

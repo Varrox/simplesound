@@ -27,7 +27,7 @@ public partial class PlaylistsVisualizer : ScrollContainer
 
     public void LoadDataIntoPlaylist(int i, PlaylistDisplay playlist, bool current)
     {
-        playlist.init(i == Globals.main.currentPlaylist ? Globals.main.playlist : MainParser.ParsePlaylist(Globals.main.playlists[i]), i, this, current, moreMenu);
+        playlist.init(i == Globals.main.currentPlaylist ? Globals.main.playlist : MainParser.ParsePlaylist(Globals.main.playlists[i]), i, current, moreMenu);
     }
 
     public void UpdatePlaylists()
@@ -50,7 +50,7 @@ public partial class PlaylistsVisualizer : ScrollContainer
                 playlists.RemoveAt(i);
             }
 
-            end = playlists.Count;
+            end = Globals.main.playlists.Length;
         }
 
         for(int i = 0; i < end; i++)

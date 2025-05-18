@@ -1,51 +1,47 @@
 using Godot;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
-public partial class PlaylistDisplay : Node
+public partial class PlaylistDisplay : Button
 {
     [Export] public TextureRect Cover;
     [Export] public Label Name, Songs;
-    [Export] public Button Register;
     [Export] public ContextMenu More;
-    [Export] public Color SelectedColor;
 
-    public const char dot = '\u00b7';
+    static readonly char dot = '\u00b7';
 
     int PlaylistIndex;
     PlaylistsVisualizer visualizer;
 
     public override void _Ready()
     {
-        Register.ButtonDown += Set;
-        Register.MouseEntered += () => More.Show();
-        Register.MouseExited += () => More.Hide();
+        More.Hide();
+        ButtonDown += Set;
+        MouseEntered += () => More.Show();
+        MouseExited += onExit;
         More.MouseEntered += () => More.Show();
+        More.OnClose += () => More.Hide();
+    }
+
+    public void onExit()
+    {
+        if (!More.menuOpen) More.Hide();
     }
 
     public void Set()
     {
-        visualizer.EmitSignal("OnSelectPlaylist", PlaylistIndex, Cover.Texture);
+        Globals.main.playlistvisualizer.EmitSignal("OnSelectPlaylist", PlaylistIndex, Cover.Texture);
         Globals.main.currentLookingAtPlaylist = PlaylistIndex;
-        Register.SelfModulate = SelectedColor;
+        SelfModulate = Globals.lower_highlight;
     }
 
     public void clearSelected(int index, Texture2D img)
     {
-        if (index != PlaylistIndex) Register.SelfModulate = new Color(1, 1, 1, 1);
+        if (index != PlaylistIndex) SelfModulate = new Color(1, 1, 1, 1);
     }
 
-
-    public void init(Playlist playlist, int index, PlaylistsVisualizer visualizer, bool current, Control menu)
+    public void init(Playlist playlist, int index, bool current, Control menu)
     {
-        bool nuhuh = playlist.Cover == null;
-
-        if (playlist.Cover != null)
-        {
-            var img = new Image();
-            if (img.Load(playlist.Cover) == Error.Ok) Cover.Texture = ImageTexture.CreateFromImage(img);
-            else nuhuh = true;
-        }
-
-        if(nuhuh) Cover.Texture = Globals.default_cover;
+        Cover.Texture = ConvertToGodot.LoadImage(playlist.Cover, ref Globals.default_cover);
 
         Name.Text = playlist.Name;
         if (playlist.Type != Playlist.PlaylistType.Album)
@@ -64,10 +60,8 @@ public partial class PlaylistDisplay : Node
 
         PlaylistIndex = index;
 
-        this.visualizer = visualizer;
-
         if (current) Set();
 
-        visualizer.OnSelectPlaylist += clearSelected;
+        Globals.main.playlistvisualizer.OnSelectPlaylist += clearSelected;
     }
 }

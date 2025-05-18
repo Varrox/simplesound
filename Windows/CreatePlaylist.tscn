@@ -13,7 +13,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bhcbq"]
 
-[node name="Window" type="Window" node_paths=PackedStringArray("playlist_name", "addCover", "coverDisplay", "addSongs", "songDisplayContainer", "album", "artist", "backgroundThemeEnabled", "backgroundTheme", "SubmitButton", "CancelButton")]
+[node name="Window" type="Window" node_paths=PackedStringArray("playlist_name", "addCover", "coverDisplay", "addSongs", "songDisplayContainer", "cloudSync", "album", "artist", "backgroundThemeEnabled", "backgroundTheme", "SubmitButton", "CancelButton")]
 title = "Create Playlist"
 initial_position = 2
 size = Vector2i(550, 350)
@@ -25,6 +25,7 @@ coverDisplay = NodePath("HBoxContainer2/VBoxContainer/Selected File")
 addSongs = NodePath("HBoxContainer2/VBoxContainer/Cover2")
 songDisplay = ExtResource("3_uox0n")
 songDisplayContainer = NodePath("HBoxContainer2/VBoxContainer/Panel/ScrollContainer/VBoxContainer")
+cloudSync = NodePath("HBoxContainer2/VBoxContainer2/Cloud")
 album = NodePath("HBoxContainer2/VBoxContainer2/Album")
 artist = NodePath("HBoxContainer2/VBoxContainer2/Artist")
 backgroundThemeEnabled = NodePath("HBoxContainer2/VBoxContainer2/Background Theme")
@@ -49,13 +50,12 @@ grow_vertical = 2
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Name" type="TextEdit" parent="HBoxContainer2/VBoxContainer"]
+[node name="Name" type="LineEdit" parent="HBoxContainer2/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("1_8t6yf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_acdqb")
 placeholder_text = "Name"
-scroll_fit_content_height = true
 
 [node name="HSeparator" type="HSeparator" parent="HBoxContainer2/VBoxContainer"]
 custom_minimum_size = Vector2(0, 10)
@@ -104,11 +104,24 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="VSeparator" type="VSeparator" parent="HBoxContainer2"]
+custom_minimum_size = Vector2(7.06, 0)
 layout_mode = 2
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Cloud" type="CheckBox" parent="HBoxContainer2/VBoxContainer2"]
+layout_mode = 2
+tooltip_text = "If disabled, songs on this playlist will not be synced to other devices. 
+But of course if you add songs yourself in the ssl file, you can choose"
+theme_override_fonts/font = ExtResource("1_8t6yf")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_r7omr")
+text = "Cloud Sync"
+
+[node name="HSeparator3" type="HSeparator" parent="HBoxContainer2/VBoxContainer2"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
 
 [node name="Album" type="CheckBox" parent="HBoxContainer2/VBoxContainer2"]
 layout_mode = 2
@@ -116,15 +129,15 @@ theme_override_fonts/font = ExtResource("1_8t6yf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_r7omr")
 text = "Album"
 
-[node name="Artist" type="TextEdit" parent="HBoxContainer2/VBoxContainer2"]
+[node name="Artist" type="LineEdit" parent="HBoxContainer2/VBoxContainer2"]
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("1_8t6yf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_acdqb")
 placeholder_text = "Artist"
-scroll_fit_content_height = true
 
-[node name="HSeparator" type="HSeparator" parent="HBoxContainer2/VBoxContainer2"]
+[node name="HSeparator4" type="HSeparator" parent="HBoxContainer2/VBoxContainer2"]
+custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
 [node name="Background Theme" type="CheckBox" parent="HBoxContainer2/VBoxContainer2"]

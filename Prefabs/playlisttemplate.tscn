@@ -17,41 +17,27 @@ anti_aliasing_size = 1.1
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2it5a"]
 
-[node name="Playlisttemplate" type="Control" node_paths=PackedStringArray("Cover", "Name", "Songs", "Register", "More")]
-custom_minimum_size = Vector2(280, 70)
-layout_mode = 3
+[node name="Playlist Button" type="Button" node_paths=PackedStringArray("Cover", "Name", "Songs", "More")]
+custom_minimum_size = Vector2(280, 65)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -140.0
-offset_top = -37.0
-offset_right = 140.0
-offset_bottom = 33.0
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 276.0
+offset_bottom = 61.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_35iy2")
-Cover = NodePath("Register/PanelContainer/Cover")
-Name = NodePath("Register/Name")
-Songs = NodePath("Register/Songs")
-Register = NodePath("Register")
-More = NodePath("Register/More")
-SelectedColor = Color(50, 50, 50, 0.162)
-
-[node name="Register" type="Button" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 1.75
-offset_bottom = -3.25
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(60, 60)
 theme_override_styles/focus = SubResource("StyleBoxEmpty_0xwl0")
+script = ExtResource("1_35iy2")
+Cover = NodePath("PanelContainer/Cover")
+Name = NodePath("Name")
+Songs = NodePath("Songs")
+More = NodePath("More")
 
-[node name="PanelContainer" type="PanelContainer" parent="Register"]
+[node name="PanelContainer" type="PanelContainer" parent="."]
 clip_children = 1
 layout_mode = 1
 anchors_preset = 4
@@ -65,14 +51,14 @@ grow_vertical = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_e08kb")
 
-[node name="Cover" type="TextureRect" parent="Register/PanelContainer"]
+[node name="Cover" type="TextureRect" parent="PanelContainer"]
 layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("1_hfn8r")
 expand_mode = 4
 stretch_mode = 6
 
-[node name="Name" type="Label" parent="Register"]
+[node name="Name" type="Label" parent="."]
 layout_mode = 0
 offset_left = 69.0
 offset_top = 16.0
@@ -82,7 +68,7 @@ theme_override_fonts/font = ExtResource("2_gsxcp")
 theme_override_font_sizes/font_size = 15
 text = "Name"
 
-[node name="Songs" type="Label" parent="Register"]
+[node name="Songs" type="Label" parent="."]
 layout_mode = 0
 offset_left = 69.0
 offset_top = 38.0
@@ -92,8 +78,7 @@ theme_override_fonts/font = ExtResource("2_gsxcp")
 theme_override_font_sizes/font_size = 9
 text = "0 songs"
 
-[node name="More" type="Button" parent="Register"]
-visible = false
+[node name="More" type="Button" parent="."]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0

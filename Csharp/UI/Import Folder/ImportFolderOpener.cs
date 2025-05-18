@@ -28,7 +28,7 @@ public partial class ImportFolderOpener : EditorWindowOpener
 
         if (!creator.cancelled)
         {
-            string[] files = Directory.GetFiles(SaveSystem.ImportSongs(creator.songs.ToArray(), creator.playlist_name.Text, false));
+            List<string> files = SaveSystem.ImportSongs(creator.songs.ToArray(), creator.playlist_name.Text, false);
             Playlist playlist = new Playlist(creator.playlist_name.Text, SaveSystem.ImportCover(creator.cover_path, creator.playlist_name.Text), new List<string>(files));
 
             if (creator.backgroundThemeEnabled.ButtonPressed)

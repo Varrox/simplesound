@@ -28,8 +28,9 @@ public partial class PlaylistCreatorOpener : EditorWindowOpener
 
 		if (!creator.cancelled)
 		{
-			string[] files = Directory.GetFiles(SaveSystem.ImportSongs(creator.songs.ToArray(), creator.playlist_name.Text, false));
-			Playlist playlist = new Playlist(creator.playlist_name.Text, SaveSystem.ImportCover(creator.cover_path, creator.playlist_name.Text), new List<string>(files));
+			bool sync = creator.cloudSync.ButtonPressed;
+            List<string> files = sync ? SaveSystem.ImportSongs(creator.songs.ToArray(), creator.playlist_name.Text, false) : creator.songs;
+			Playlist playlist = new Playlist(creator.playlist_name.Text, sync ? SaveSystem.ImportCover(creator.cover_path, creator.playlist_name.Text) : creator.cover_path, files);
 			
 			if (creator.backgroundThemeEnabled.ButtonPressed)
 				playlist.customInfo.overlayColor = "#" + creator.backgroundTheme.Color.ToHtml();

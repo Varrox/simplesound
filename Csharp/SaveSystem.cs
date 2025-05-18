@@ -95,8 +95,9 @@ public class SaveSystem
 		return newPath;
     }
 
-	public static string ImportSongs(string[] songs, string playlist_name, bool check_valid = true)
+	public static List<string> ImportSongs(string[] songs, string playlist_name, bool check_valid = true)
 	{
+		List<string> list = new List<string>();
 		string newPath = Path.Combine(UserData, "Music Folders", playlist_name);
 		Directory.CreateDirectory(newPath);
 
@@ -107,10 +108,13 @@ public class SaveSystem
 				if (Tools.ValidAudioFile(song)) continue;
 			}
 
-			File.Copy(song, Path.Combine(newPath, Path.GetFileName(song)));
-		}
+			string destinationPath = Path.Combine(newPath, Path.GetFileName(song));
 
-		return newPath;
+			File.Copy(song, destinationPath);
+            list.Add(destinationPath);
+        }
+
+		return list;
 	}
 
 	public static string ImportCover(string path, string playlist_name, bool check_valid = true)

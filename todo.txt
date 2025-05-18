@@ -15,11 +15,25 @@ TODO
 - Make playlist bar hiding
 - Add share button to songs (keep youtube link in song metadata)
 - Make covers all save as square aspect ratio
+- Remove scrollbar focus somehow
+
+BUCKETS ISSUES
+
+- Fix playlist names so they are ssl file independent
+- Make refresh specific parsing
+- Add threading to parsing
+- Fix shuffling not counting current song
+- Make shuffling not play songs twice
+- Ability to open appdata for app
+- Make documentation for ssl
 
 FINISHED
 
 - Add playlist creation
 - Add playlist importing
+- Fix context menu UIs
+- Make player UI so it does stuff on button release instead of on press
+- Add playlist sync options to be where sync is opposite of it rn
 
 ULTIMATE GOAL:
 Create a music player like spotify, that allows for advanced song visualizers, shaders, 

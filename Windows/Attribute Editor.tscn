@@ -40,27 +40,24 @@ offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Name" type="TextEdit" parent="VBoxContainer"]
+[node name="Name" type="LineEdit" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_ot5f1")
 placeholder_text = "Name"
-scroll_fit_content_height = true
 caret_blink = true
 
-[node name="Artist" type="TextEdit" parent="VBoxContainer"]
+[node name="Artist" type="LineEdit" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_ot5f1")
 placeholder_text = "Artist
 "
-scroll_fit_content_height = true
 caret_blink = true
 
-[node name="Share" type="TextEdit" parent="VBoxContainer"]
+[node name="Share" type="LineEdit" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_ot5f1")
 placeholder_text = "Share Link
 "
-scroll_fit_content_height = true
 caret_blink = true
 
 [node name="Explicit Lyrics" type="CheckBox" parent="VBoxContainer"]

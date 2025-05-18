@@ -52,4 +52,11 @@ public class Tools
     {
         return (path.EndsWith(".mp3") || path.EndsWith(".wav") || path.EndsWith(".ogg")) && File.Exists(path);
     }
+
+    public static int Wrap(int value, int min, int max)
+    {
+        value = value < min ? max + value + 1 : value;
+        value = value > max ? value - max - 1 : value;
+        return value;
+    }
 }

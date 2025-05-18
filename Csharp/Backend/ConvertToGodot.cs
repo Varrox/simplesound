@@ -44,14 +44,14 @@ public class ConvertToGodot
 
     public static Color GetAverageColor(Texture2D texture, int samples = 6)
     {
-        Color color = new Color();
         Image image = texture.GetImage();
-        int x = image.GetWidth() - 1;
-        int y = image.GetHeight() - 1;
+        Vector2I pos = new Vector2I(image.GetWidth() - 1, image.GetHeight() - 1);
+
+        Color color = new Color();
 
         for (int i = 0; i < samples; i++)
         {
-            color += image.GetPixel((x / samples) * i, (y / samples) * i);
+            color += image.GetPixel((pos.X / samples) * i, (pos.Y / samples) * i);
         }
 
         return color / samples;
@@ -87,9 +87,12 @@ public class ConvertToGodot
     /// <returns></returns>
     public static Texture2D LoadImage(string filename, ref Texture2D fallback)
     {
-        Image img = new Image();
-        if (img.Load(filename) == Error.Ok) return ImageTexture.CreateFromImage(img);
-        else return fallback;
+        if(filename != null)
+        {
+            Image img = new Image();
+            if (img.Load(filename) == Error.Ok) return ImageTexture.CreateFromImage(img);
+        }
+        return fallback;
     }
 
     /// <summary>
@@ -98,19 +101,11 @@ public class ConvertToGodot
     /// <param name="path">the path to the .gdshader file</param>
     /// <param name="cachedShader">the path of the cached shader</param>
     /// <returns>compiled shader</returns>
-    public static Shader LoadShader(string path, out string cachedShader)
+    public static Shader LoadShader(string path)
     {
         Shader shader = new Shader();
         shader.Code = File.ReadAllText(path);
         shader.ResourceName = Path.GetFileNameWithoutExtension(path);
-        string spath = Path.Combine(SaveSystem.UserData, "Cached Shaders");
-        if(ResourceSaver.Save(shader, spath) != Error.Ok)
-        {
-            Debug.ErrorLog($"Shader from \'{path}\' failed to cache");
-            cachedShader = null;
-        }
-        else
-            cachedShader = Path.Combine(spath, Path.GetFileNameWithoutExtension(path));
 
         return shader;
     }

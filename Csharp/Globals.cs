@@ -113,6 +113,34 @@ public partial class Globals : Node
 
     public static Color highlight;
 
+    [Export] Color _lower_highlight
+    {
+        set
+        {
+            lower_highlight = value;
+        }
+        get
+        {
+            return lower_highlight;
+        }
+    }
+
+    public static Color lower_highlight;
+
+    [Export] PackedScene _confirmation_window
+    {
+        set
+        {
+            confirmation_window = value;
+        }
+        get
+        {
+            return confirmation_window;
+        }
+    }
+
+    public static PackedScene confirmation_window;
+
     public static void ResetFileDialogParameters()
     {
         file_dialog.Filters = null;

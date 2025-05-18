@@ -11,15 +11,29 @@ public partial class ContextMenu : Button
     public override void _Ready()
     {
         ButtonDown += ToggleMenu;
+
+        if(menu != null)
+        {
+            menuOpen = false;
+            menu.Visible = false;
+        }
     }
 
     public override void _Process(double delta)
     {
-        if (menuOpen && (Input.IsMouseButtonPressed(MouseButton.Left) || Input.IsMouseButtonPressed(MouseButton.Right) || Input.IsMouseButtonPressed(MouseButton.Middle)))
+        if (menuOpen && !Globals.player.interrupted)
         {
-            if (isMouseInRect(menu) && !IsHovered())
+            if (!DisplayServer.WindowIsFocused())
             {
                 CloseMenu();
+            }
+
+            if(Input.IsMouseButtonPressed(MouseButton.Left) || Input.IsMouseButtonPressed(MouseButton.Right) || Input.IsMouseButtonPressed(MouseButton.Middle))
+            {
+                if (isMouseInRect(menu) && !IsHovered())
+                {
+                    CloseMenu();
+                }
             }
         }
     }
@@ -57,6 +71,6 @@ public partial class ContextMenu : Button
 
     public void TeleportMenu()
     {
-        menu.GlobalPosition = GlobalPosition + teleportMenuOffset;
+        menu.GlobalPosition = GlobalPosition + teleportMenuOffset - menu.PivotOffset;
     }
 }
