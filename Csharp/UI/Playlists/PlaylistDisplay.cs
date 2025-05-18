@@ -1,5 +1,4 @@
 using Godot;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 public partial class PlaylistDisplay : Button
 {
@@ -16,10 +15,10 @@ public partial class PlaylistDisplay : Button
     {
         More.Hide();
         ButtonDown += Set;
-        MouseEntered += () => More.Show();
+        MouseEntered += More.Show;
         MouseExited += onExit;
-        More.MouseEntered += () => More.Show();
-        More.OnClose += () => More.Hide();
+        More.MouseEntered += More.Show;
+        More.OnClose += More.Hide;
     }
 
     public void onExit()
@@ -29,7 +28,7 @@ public partial class PlaylistDisplay : Button
 
     public void Set()
     {
-        Globals.main.playlistvisualizer.EmitSignal("OnSelectPlaylist", PlaylistIndex, Cover.Texture);
+        Globals.main.playlistVisualizer.EmitSignal("OnSelectPlaylist", PlaylistIndex, Cover.Texture);
         Globals.main.currentLookingAtPlaylist = PlaylistIndex;
         SelfModulate = Globals.lower_highlight;
     }
@@ -62,6 +61,6 @@ public partial class PlaylistDisplay : Button
 
         if (current) Set();
 
-        Globals.main.playlistvisualizer.OnSelectPlaylist += clearSelected;
+        Globals.main.playlistVisualizer.OnSelectPlaylist += clearSelected;
     }
 }

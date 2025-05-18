@@ -139,6 +139,14 @@ public partial class Globals : Node
         }
     }
 
+    public static Vector2I main_window_minimum_size = new Vector2I(850, 350);
+
+    public override void _Ready()
+    {
+        GetTree().Root.MinSize = main_window_minimum_size;
+        GetTree().Root.CloseRequested += main.SaveData;
+    }
+
     public static PackedScene confirmation_window;
 
     public static void ResetFileDialogParameters()

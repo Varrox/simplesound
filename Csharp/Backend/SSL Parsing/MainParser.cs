@@ -6,6 +6,7 @@ namespace SSLParser
     public class MainParser
     {
         static LineAttributes line = new LineAttributes(null, 0);
+
         public static Playlist ParsePlaylist(string path)
         {
             string[] lines = File.ReadAllLines(path);
@@ -192,6 +193,11 @@ namespace SSLParser
                     }
                 }
             }
+        }
+
+        public static void UpdatePlaylist(ref Playlist playlist)
+        {
+            // Work on it
         }
 
         /// <summary>

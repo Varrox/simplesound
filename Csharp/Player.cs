@@ -21,25 +21,24 @@ public partial class Player : Node
 
     public override void _Ready()
 	{
-        GetTree().Root.MinSize = new Vector2I(850, 350);
-
-        Loop.ButtonUp += setLoop;
+        Loop.ButtonUp += SetLoop;
         Shuffle.ButtonUp += SetShuffle;
         Play.ButtonUp += Globals.main.Play;
 
-        Next.ButtonUp += () => move(1);
-        Back.ButtonUp += () => move(-1);
+        Next.ButtonUp += () => Move(1);
+        Back.ButtonUp += () => Move(-1);
 
         Globals.main.OnLoadSong += OnLoadSong;
+        Globals.main.OnChangePlaylist += OnChangePlaylist;
 
-        Progress.DragEnded += setTime;
+        Progress.DragEnded += SetTime;
         Progress.DragStarted += () => canSetTime = true;
 
-        Globals.main.OnPlay += Playicon;
-        Playicon(false);
+        Globals.main.OnPlay += PlayIcon;
+        Play.Icon = Globals.play_texture;
     }
 
-    public bool interrupt()
+    public bool Interrupt()
     {
         if(!interrupted)
         {
@@ -53,22 +52,25 @@ public partial class Player : Node
     public void SetShuffle()
     {
         Globals.main.random = !Globals.main.random;
+
+        Globals.main.offset = Globals.main.currentSong;
         Globals.main.shuffleIndex = Globals.main.currentSong;
+
         Shuffle.Icon = Globals.main.random ? ShuffleOn : ShuffleOff;
     }
 
-    public void setLoop()
+    public void SetLoop()
     {
         Globals.main.loop = !Globals.main.loop;
         Loop.Icon = Globals.main.loop ? LoopOn : LoopOff;
     }
 
-    public void Playicon(bool playing)
+    public void PlayIcon(bool playing)
     {
-        Play.Icon = !playing || !Globals.main.CanPlay()? Globals.play_texture : Globals.pause_texture;
+        Play.Icon = !playing || !Globals.main.CanPlay() ? Globals.play_texture : Globals.pause_texture;
     }
 
-    public void move(int by)
+    public void Move(int by)
     {
         if (!interrupted)
         {
@@ -131,11 +133,29 @@ public partial class Player : Node
         }
     }
 
-    public void setTime(bool value)
+    public void SetTime(bool value)
     {
         Globals.main.time = (float)Progress.Value;
         if (Globals.main.playing) Globals.main.player.Play(Globals.main.time);
         canSetTime = false;
+    }
+
+    public void OnChangePlaylist()
+    {
+        if (Globals.main.playlist.customInfo.overlayColor != null)
+        {
+            bc = ConvertToGodot.GetColor(Globals.main.playlist.customInfo.overlayColor);
+        }
+        else
+        {
+            bc = new Color();
+        }
+
+        Globals.main.player.PitchScale = Mathf.Clamp(Globals.main.playlist.customInfo.speed, 0.01f, 4f);
+
+        var effect = AudioServer.GetBusEffect(0, 0) as AudioEffectReverb;
+        effect.RoomSize = Globals.main.playlist.customInfo.reverb;
+        effect.Wet = Globals.main.playlist.customInfo.reverb / 100;
     }
 
     public override void _Process(double delta)
@@ -143,8 +163,8 @@ public partial class Player : Node
         if(!interrupted)
         {
             if(Input.IsActionJustPressed("play")) Globals.main.Play();
-            else if (Input.IsActionJustPressed("next")) move(1);
-            else if (Input.IsActionJustPressed("back")) move(-1);
+            else if (Input.IsActionJustPressed("next")) Move(1);
+            else if (Input.IsActionJustPressed("back")) Move(-1);
         }
 
         if (Globals.main.player.Stream != null) CurrentTime.Text = Tools.SecondsToTimestamp(Globals.main.time);
@@ -158,26 +178,12 @@ public partial class Player : Node
             Globals.main.time = (float)Progress.Value;
         }
 
-        if (Globals.main.playlist != null)
+        if (Globals.main.CanPlay())
         {
-            if (Globals.main.playlist.customInfo.overlayColor != null)
-            {
-                bc = ConvertToGodot.GetColor(Globals.main.playlist.customInfo.overlayColor);
-            }
-            else
-            {
-                bc = new Color();
-            }
-
             float max = 0.65f;
             backgroundColor.Color = backgroundColor.Color.Lerp(bc.Clamp(new Color(), new Color(max, max, max, max)), (float)delta * 2f);
 
             Globals.main.player.VolumeDb = (float)(VolumeSlider.Value != -50 ? VolumeSlider.Value : -80) + Globals.main.playlist.customInfo.volume;
-            Globals.main.player.PitchScale = Mathf.Clamp(Globals.main.playlist.customInfo.speed, 0.01f, 4f);
-
-            var effect = AudioServer.GetBusEffect(0, 0) as AudioEffectReverb;
-            effect.RoomSize = Globals.main.playlist.customInfo.reverb;
-            effect.Wet = Globals.main.playlist.customInfo.reverb / 100;
         }
     }
 }

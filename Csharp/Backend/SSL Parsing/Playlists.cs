@@ -5,7 +5,7 @@ using System.IO;
 
 public class Playlist
 {
-    public string Name, Cover, Path;
+    public string Name, Cover, Path, PathName;
     public List<string> Songs, Folders;
 
     public string Artist;
@@ -23,6 +23,9 @@ public class Playlist
     public string Save()
     {
         string output = "Config\n{\n";
+
+        if (Name != PathName)
+            output += $"{ParsingTools.TAB}Name : {Name}\n";
 
         if (Type != PlaylistType.Default)
             output += $"{ParsingTools.TAB}Type : {Type.ToString()}\n";

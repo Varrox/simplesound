@@ -19,12 +19,11 @@ TODO
 
 BUCKETS ISSUES
 
-- Fix playlist names so they are ssl file independent
 - Make refresh specific parsing
 - Add threading to parsing
-- Fix shuffling not counting current song
-- Make shuffling not play songs twice
 - Ability to open appdata for app
+
+DOING
 - Make documentation for ssl
 
 FINISHED
@@ -34,6 +33,9 @@ FINISHED
 - Fix context menu UIs
 - Make player UI so it does stuff on button release instead of on press
 - Add playlist sync options to be where sync is opposite of it rn
+- Fix shuffling not counting current song
+- Fix playlist names so they are ssl file independent
+- Make shuffling not play songs twice
 
 ULTIMATE GOAL:
 Create a music player like spotify, that allows for advanced song visualizers, shaders, 

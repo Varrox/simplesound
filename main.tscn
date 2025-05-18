@@ -1,8 +1,9 @@
-[gd_scene load_steps=57 format=3 uid="uid://cbpkjhjnbrjm6"]
+[gd_scene load_steps=58 format=3 uid="uid://cbpkjhjnbrjm6"]
 
+[ext_resource type="Theme" uid="uid://cg2x5h7ufrntn" path="res://Styling/global_theme.tres" id="1_4lmeg"]
 [ext_resource type="Script" uid="uid://b81fhtdmrks0a" path="res://Csharp/Main.cs" id="1_l00ml"]
 [ext_resource type="Script" uid="uid://cvtqwvi0qvcvy" path="res://Csharp/Player.cs" id="2_632yu"]
-[ext_resource type="FontFile" uid="uid://ckdni7vy5bpft" path="res://Fonts/VarelaRound-Regular.ttf" id="3_bbvvl"]
+[ext_resource type="FontFile" uid="uid://ckdni7vy5bpft" path="res://Styling/Fonts/VarelaRound-Regular.ttf" id="3_bbvvl"]
 [ext_resource type="Texture2D" uid="uid://c11jkh52sohaq" path="res://Icons/loopon.png" id="3_lifiy"]
 [ext_resource type="Texture2D" uid="uid://umqcsl8yhoem" path="res://Icons/back.png" id="4_0btiw"]
 [ext_resource type="Texture2D" uid="uid://b3au8pb3kdvei" path="res://Icons/pause.png" id="4_lfnj1"]
@@ -13,7 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://cksbdmhr2s8yy" path="res://Icons/DefaultCover.png" id="7_xn3w4"]
 [ext_resource type="Texture2D" uid="uid://bfwa3yivib7hh" path="res://Icons/playlist.png" id="8_8i1ca"]
 [ext_resource type="Texture2D" uid="uid://dvwv6fmmc3033" path="res://Icons/icon.svg" id="8_b1qrp"]
-[ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Fonts/DefaultFont.tres" id="9_3b7g8"]
+[ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Styling/Fonts/DefaultFont.tres" id="9_3b7g8"]
 [ext_resource type="Texture2D" uid="uid://5hwvlu7uerj6" path="res://Icons/plus.png" id="10_7e43v"]
 [ext_resource type="Shader" uid="uid://b27umdilyjk4d" path="res://Styling/blur.gdshader" id="10_sha6j"]
 [ext_resource type="Texture2D" uid="uid://c85envuiuo3ju" path="res://Icons/folder.png" id="11_1f20w"]
@@ -90,17 +91,18 @@ anti_aliasing_size = 1.1
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_68lop"]
 
-[node name="Main" type="Control" node_paths=PackedStringArray("player", "volumeSlider", "playlistvisualizer", "songsVisualizer")]
+[node name="Main" type="Control" node_paths=PackedStringArray("player", "volumeSlider", "playlistVisualizer", "songsVisualizer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_4lmeg")
 script = ExtResource("1_l00ml")
 player = NodePath("Player")
 volumeSlider = NodePath("Interface/Player/Controls/Volume")
-playlistvisualizer = NodePath("Interface/Side Panel/Playlists")
+playlistVisualizer = NodePath("Interface/Side Panel/Playlists")
 songsVisualizer = NodePath("Interface/Song Display")
 
 [node name="Interface" type="Control" parent="." node_paths=PackedStringArray("Play", "Next", "Back", "Loop", "Shuffle", "Progress", "CurrentTime", "TotalTime", "SongName", "SongArtist", "SongCover", "BackgroundImage", "VolumeSlider", "backgroundColor")]
@@ -306,11 +308,10 @@ offset_top = -13.5
 offset_right = 147.0
 offset_bottom = 13.5
 grow_vertical = 2
-theme_override_fonts/font = ExtResource("9_3b7g8")
 theme_override_font_sizes/font_size = 19
 text = "My Playlists"
 
-[node name="Song Display" type="ScrollContainer" parent="Interface" node_paths=PackedStringArray("main", "PlaylistsVisualizer", "menu", "container")]
+[node name="Song Display" type="ScrollContainer" parent="Interface" node_paths=PackedStringArray("menu", "container")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -324,8 +325,6 @@ grow_vertical = 2
 theme_override_styles/focus = SubResource("StyleBoxEmpty_b1qrp")
 script = ExtResource("14_htxhm")
 Template = ExtResource("14_t035w")
-main = NodePath("../..")
-PlaylistsVisualizer = NodePath("../Side Panel/Playlists")
 menu = NodePath("../Songcontext")
 container = NodePath("VBoxContainer")
 
@@ -367,7 +366,6 @@ offset_top = -39.0
 offset_right = 233.0
 offset_bottom = -3.0
 grow_vertical = 2
-theme_override_fonts/font = ExtResource("9_3b7g8")
 theme_override_font_sizes/font_size = 29
 text = "Name"
 
@@ -381,7 +379,6 @@ offset_top = 8.0
 offset_right = 233.0
 offset_bottom = 44.0
 grow_vertical = 2
-theme_override_fonts/font = ExtResource("9_3b7g8")
 theme_override_font_sizes/font_size = 16
 text = "0 songs"
 
@@ -426,11 +423,10 @@ offset_bottom = 18.0
 grow_vertical = 2
 tooltip_text = "Type in the name of an artist or song, or playlist"
 focus_mode = 1
-theme_override_fonts/font = ExtResource("9_3b7g8")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_come4")
 placeholder_text = " search for songs"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Interface/Top Bar"]
+[node name="Left" type="HBoxContainer" parent="Interface/Top Bar"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -441,39 +437,35 @@ offset_right = 176.0
 offset_bottom = 14.0
 grow_vertical = 2
 
-[node name="Folders" type="Button" parent="Interface/Top Bar/HBoxContainer"]
+[node name="Folders" type="Button" parent="Interface/Top Bar/Left"]
 custom_minimum_size = Vector2(27.5, 0)
 layout_mode = 2
 tooltip_text = "Complete Music collection"
 focus_mode = 0
-theme_override_fonts/font = ExtResource("9_3b7g8")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_i5cru")
 icon = ExtResource("11_1f20w")
 expand_icon = true
 
-[node name="Edit" type="Button" parent="Interface/Top Bar/HBoxContainer"]
+[node name="Edit" type="Button" parent="Interface/Top Bar/Left"]
 layout_mode = 2
 focus_mode = 0
-theme_override_fonts/font = ExtResource("9_3b7g8")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_i5cru")
 text = "Edit"
 
-[node name="Cloud" type="Button" parent="Interface/Top Bar/HBoxContainer"]
+[node name="Cloud" type="Button" parent="Interface/Top Bar/Left"]
 layout_mode = 2
 tooltip_text = "Cloud Settings"
 focus_mode = 0
-theme_override_fonts/font = ExtResource("9_3b7g8")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_i5cru")
 text = "Cloud"
 
-[node name="Downloader" type="Button" parent="Interface/Top Bar/HBoxContainer"]
+[node name="Downloader" type="Button" parent="Interface/Top Bar/Left"]
 layout_mode = 2
 focus_mode = 0
-theme_override_fonts/font = ExtResource("9_3b7g8")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_i5cru")
 text = "Downloader"
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="Interface/Top Bar"]
+[node name="Right" type="HBoxContainer" parent="Interface/Top Bar"]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -487,7 +479,7 @@ offset_bottom = 16.5
 grow_horizontal = 0
 grow_vertical = 2
 
-[node name="Settings2" type="Button" parent="Interface/Top Bar/HBoxContainer2"]
+[node name="Update" type="Button" parent="Interface/Top Bar/Right"]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
@@ -496,7 +488,7 @@ icon = ExtResource("12_s6aix")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Refresh" type="Button" parent="Interface/Top Bar/HBoxContainer2" node_paths=PackedStringArray("main")]
+[node name="Refresh" type="Button" parent="Interface/Top Bar/Right"]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
@@ -505,9 +497,8 @@ icon = ExtResource("23_7r5f6")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("19_0odxb")
-main = NodePath("../../../..")
 
-[node name="Settings" type="Button" parent="Interface/Top Bar/HBoxContainer2"]
+[node name="Settings" type="Button" parent="Interface/Top Bar/Right"]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
@@ -787,7 +778,6 @@ offset_right = 296.0
 offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_fonts/font = ExtResource("3_bbvvl")
 text = "Song
 "
 text_overrun_behavior = 3
@@ -807,7 +797,6 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.75, 0.75)
 theme_override_colors/font_color = Color(0.662452, 0.662452, 0.662452, 1)
-theme_override_fonts/font = ExtResource("3_bbvvl")
 text = "Artist"
 clip_text = true
 text_overrun_behavior = 3

@@ -7,7 +7,7 @@ public class SaveSystem
 {
 	public static readonly string UserData = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "simplesound");
 
-	public static void InitData(out int playlistIndex, out int songIndex, out float currentTime, out float volume)
+	public static void GetSaveData(out int playlistIndex, out int songIndex, out float currentTime, out float volume)
 	{
         string playlists = Path.Combine(UserData, "Playlists");
         if (!Directory.Exists(playlists))

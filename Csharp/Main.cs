@@ -6,7 +6,7 @@ public partial class Main : Control
 {
 	[Export] public AudioStreamPlayer player;
 	[Export] public Slider volumeSlider;
-	[Export] public PlaylistsVisualizer playlistvisualizer;
+	[Export] public PlaylistsVisualizer playlistVisualizer;
 	[Export] public SongsVisualizer songsVisualizer;
 
 	public bool loop, playing, random;
@@ -16,15 +16,19 @@ public partial class Main : Control
 	public string currentPlaylistPath, currentSongPath;
 
     public int currentLookingAtPlaylist;
+
     public Playlist playlist;
 	public string[] playlists;
 	
 	public float time, volume;
 
+	public int offset;
 	public int shuffleIndex;
+	public int randomOffset;
 
 	[Signal] public delegate void OnLoadSongEventHandler();
-	[Signal] public delegate void OnPlayEventHandler(bool playing);
+    [Signal] public delegate void OnChangePlaylistEventHandler();
+    [Signal] public delegate void OnPlayEventHandler(bool playing);
 
 	public string song
 	{
@@ -38,12 +42,39 @@ public partial class Main : Control
 
     public override void _Ready()
 	{
-        GetTree().Root.CloseRequested += SaveData;
+        SaveSystem.GetSaveData(out currentPlaylist, out currentSong, out time, out volume);
+        currentLookingAtPlaylist = currentPlaylist;
+		offset = currentSong;
 
-        LoadEverything();
-	}
+        // Volume
+        player.VolumeDb = volume;
+        volumeSlider.Value = volume;
 
-	public override void _Process(double delta)
+        // Load playlists
+        playlists = SaveSystem.GetAllPlaylists();
+
+        if (playlists.Length > 0)
+        {
+            LoadPlaylist(currentPlaylist);
+        }
+
+        // Initialize playlist displayer
+        playlistVisualizer.LoadAllPlaylistVisuals();
+
+        if (CanPlay())
+        {
+            PlaySong(playlist.Songs[currentSong]);
+
+            // Show current playlist
+            songsVisualizer.Load(currentPlaylist, (playlistVisualizer.container.GetChild(currentPlaylist) as PlaylistDisplay).Cover.Texture);
+        }
+        else
+        {
+            EmitSignal(SignalName.OnLoadSong);
+        }
+    }
+
+    public override void _Process(double delta)
 	{
 		// Input
 
@@ -72,39 +103,6 @@ public partial class Main : Control
 		}
 	}
 
-	public void LoadEverything()
-	{
-		SaveSystem.InitData(out currentPlaylist, out currentSong, out time, out volume);
-		currentLookingAtPlaylist = currentPlaylist;
-
-		// volume
-		player.VolumeDb = volume;
-		volumeSlider.Value = volume;
-
-        // load playlists
-        playlists = SaveSystem.GetAllPlaylists();
-
-        if (playlists.Length > 0)
-		{
-            LoadPlaylist(currentPlaylist);
-        }
-
-        // initialize playlist displayer
-        playlistvisualizer.LoadAllPlaylistVisuals();
-
-        if (CanPlay())
-		{
-            PlaySong(playlist.Songs[currentSong]);
-
-            // show current playlist
-            songsVisualizer.Load(currentPlaylist, (playlistvisualizer.container.GetChild(currentPlaylist) as PlaylistDisplay).Cover.Texture);
-        }
-		else
-		{
-            EmitSignal(SignalName.OnLoadSong);
-        }
-    }
-
 	public void CheckIndex()
 	{
 		if (playlists[currentPlaylist] != currentPlaylistPath)
@@ -131,6 +129,13 @@ public partial class Main : Control
         currentPlaylist = index;
         playlist = playlists.Length > 0 ? MainParser.ParsePlaylist(playlists[currentPlaylist]) : null;
 		currentPlaylistPath = playlist.Path;
+
+		EmitSignal("OnChangePlaylist");
+
+		// Set shuffle to be different
+
+		GD.Randomize();
+		randomOffset = (int)GD.Randi();
     }
 
 	public void Play()
@@ -149,23 +154,58 @@ public partial class Main : Control
 		{
 			if (random && !set)
 			{
-				shuffleIndex += amount;
-				GD.Seed((ulong)shuffleIndex);
-				currentSong = GD.RandRange(0, playlist.Songs.Count - 1); 
+				offset += amount;
+
+				if (offset == shuffleIndex)
+				{
+                    currentSong = shuffleIndex;
+                }
+				else
+				{
+					for(int i = 0; i < 6; i++)
+					{
+                        GD.Seed((ulong)(offset * 3 + randomOffset + i));
+                        int randomNumber = GD.RandRange(0, playlist.Songs.Count - 1);
+                        if (randomNumber != currentSong)
+                        {
+                            currentSong = randomNumber;
+                            offset += i / 3;
+                            break;
+                        }
+                    }
+                }
 			}
-			else currentSong += amount;
-			time = 0;
-			PlaySong(playlist.Songs[currentSong]);
+			else
+			{
+				currentSong += amount;
+            }
+
+			PlaySong(song);
+
 			playing = false;
 			Play();
 		}
 	}
 
+	public void SetSong(int index)
+	{
+		if (CanPlay())
+		{
+			offset = index;
+			shuffleIndex = index;
+			currentSong = index;
+            PlaySong(song);
+            playing = false;
+            Play();
+        }
+    }
+
 	public void PlaySong(string path)
 	{
 		if (CanPlay())
 		{
-			currentSong = Tools.Wrap(currentSong, 0, playlist.Songs.Count - 1);
+            time = 0;
+            currentSong = Tools.Wrap(currentSong, 0, playlist.Songs.Count - 1);
 
             if (FileAccess.FileExists(path))
             {
@@ -187,9 +227,13 @@ public partial class Main : Control
             else // if the file doesn't exist
             {
                 GD.PrintErr($"{path} doesn't exist");
-                playlist.Songs.RemoveAt(currentSong);
-                playlist.Save();
-                PlaySong(path);
+
+				if (playlist.Songs[currentSong] == path)
+				{
+                    playlist.Songs.RemoveAt(currentSong);
+                    playlist.Save();
+					PlaySong(song);
+                }
             }
         }
 	}
@@ -202,11 +246,6 @@ public partial class Main : Control
 		return false;
 	}
 
-	public void EditMeta(string name, string artist, string coverpath, string sharelink, bool explicitLyrics)
-	{
-		if(playlist) Metadata.SetData(playlist.Songs[currentSong], name, artist, coverpath, sharelink, explicitLyrics);
-	}
-
 	public void SaveData() => SaveSystem.SaveData(currentPlaylist, currentSong, time, player.VolumeDb);
 
     public void Refresh()
@@ -216,7 +255,9 @@ public partial class Main : Control
 		if (playlists.Length > 0)
 			LoadPlaylist(Array.IndexOf(playlists, playlist.GetPath()));
 
+		Metadata.ResetCache();
+
         EmitSignal(SignalName.OnLoadSong);
-        playlistvisualizer.UpdatePlaylists();
+        playlistVisualizer.UpdatePlaylists();
     }
 }

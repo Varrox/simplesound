@@ -1,6 +1,6 @@
 [gd_resource type="FontVariation" load_steps=2 format=3 uid="uid://c51c0k1xp8ef5"]
 
-[ext_resource type="FontFile" uid="uid://ckdni7vy5bpft" path="res://Fonts/VarelaRound-Regular.ttf" id="1_uf013"]
+[ext_resource type="FontFile" uid="uid://ckdni7vy5bpft" path="res://Styling/Fonts/VarelaRound-Regular.ttf" id="1_uf013"]
 
 [resource]
 base_font = ExtResource("1_uf013")

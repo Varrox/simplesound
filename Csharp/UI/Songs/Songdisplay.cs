@@ -14,10 +14,10 @@ public partial class Songdisplay : Button
 	public override void _Ready()
 	{
 		ButtonUp += SetSong;
-		MouseEntered += onEnter;
-		MouseExited += onExit;
-		More.MouseEntered += onEnter;
-		More.OnClose += () => More.Hide();
+		MouseEntered += OnEnter;
+		MouseExited += OnExit;
+		More.MouseEntered += OnEnter;
+		More.OnClose += More.Hide;
 		Globals.main.OnLoadSong += SetHighlight;
 	}
 
@@ -48,40 +48,36 @@ public partial class Songdisplay : Button
 		Playbutton.Texture = playing ? Globals.pause_texture : Globals.play_texture;
     }
 
-	public void onEnter()
+	public void OnEnter()
 	{
         More.Show();
         Playbutton.Show();
 		Number.SelfModulate = new Color(1, 1, 1, 0);
     }
 
-	public void onExit()
+	public void OnExit()
 	{
 		if(!More.menuOpen) More.Hide();
         Playbutton.Hide();
         Number.SelfModulate = new Color(1, 1, 1, 1);
     }
 
-    public void init(string name, string artist, string time, int playlist, int song, bool explicitLyrics, SongsVisualizer visualizer, Texture2D cover, Control menu)
+    public void Init(string name, string artist, string time, int playlist, int song, bool explicitLyrics, Playlist.PlaylistType type, Texture2D cover, Control menu)
 	{
 		Number.Text = (song + 1).ToString();
+
 		this.song = song;
 		this.playlist = playlist;
+
 		Name.Text = name;
 		Artist.Text = artist;
 		Time.Text = time;
 
-		if (visualizer.Playlist.Type == Playlist.PlaylistType.Album)
-		{
-            (Cover.GetParent() as Control).Visible = false;
-			Spacer.Visible = false;
-		}
-		else
-		{
-            Cover.Texture = cover;
-            (Cover.GetParent() as Control).Visible = true;
-            Spacer.Visible = true;
-        }
+		bool album = type == Playlist.PlaylistType.Album;
+
+        Cover.Texture = cover;
+        (Cover.GetParent() as Control).Visible = !album;
+        Spacer.Visible = !album;
 
         More.menu = menu;
 		this.explicitLyrics.Visible = explicitLyrics;
@@ -91,16 +87,8 @@ public partial class Songdisplay : Button
 
 	public void SetSong()
 	{
-		if(Globals.main.currentPlaylist != playlist)
-		{
-            Globals.main.LoadPlaylist(playlist);
-        }
-
-		if(!isPlaying)
-		{
-            Globals.main.currentSong = 0;
-            Globals.main.MoveSong(song, true);
-        }
+		if(Globals.main.currentPlaylist != playlist) Globals.main.LoadPlaylist(playlist);
+		if(!isPlaying) Globals.main.SetSong(song);
 		else Globals.main.Play();
 	}
 }

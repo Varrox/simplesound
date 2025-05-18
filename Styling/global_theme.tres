@@ -1,0 +1,6 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://cg2x5h7ufrntn"]
+
+[ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Styling/Fonts/DefaultFont.tres" id="1_787rk"]
+
+[resource]
+default_font = ExtResource("1_787rk")

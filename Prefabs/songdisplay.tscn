@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://dlh34aq4t8tvu"]
 
 [ext_resource type="Script" uid="uid://bmrqlfbbcjwbk" path="res://Csharp/UI/Songs/Songdisplay.cs" id="1_qnwii"]
-[ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Fonts/DefaultFont.tres" id="2_rrqbv"]
+[ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Styling/Fonts/DefaultFont.tres" id="2_rrqbv"]
 [ext_resource type="Texture2D" uid="uid://cksbdmhr2s8yy" path="res://Icons/DefaultCover.png" id="3_aqj3n"]
 [ext_resource type="Texture2D" uid="uid://23nnkoswyxm8" path="res://Icons/play.png" id="4_4uf0g"]
 [ext_resource type="Texture2D" uid="uid://bfdwehd6cajgg" path="res://Icons/more.png" id="4_26211"]

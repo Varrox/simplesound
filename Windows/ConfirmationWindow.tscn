@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://4t756wrga7li" path="res://Csharp/UI/ConfirmationWindow.cs" id="1_3wopc"]
 [ext_resource type="PackedScene" uid="uid://dhdg1uuqqaoj4" path="res://Prefabs/background.tscn" id="2_a7dhm"]
-[ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Fonts/DefaultFont.tres" id="2_jua8g"]
+[ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Styling/Fonts/DefaultFont.tres" id="2_jua8g"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a7dhm"]
 

@@ -15,7 +15,7 @@ public partial class PlaylistCreatorOpener : EditorWindowOpener
 
 	public void OpenCreator()
 	{
-		if (Globals.player.interrupt())
+		if (Globals.player.Interrupt())
 		{
 			menu.CloseMenu();
 			(window as PlaylistCreator).Open();
@@ -29,9 +29,11 @@ public partial class PlaylistCreatorOpener : EditorWindowOpener
 		if (!creator.cancelled)
 		{
 			bool sync = creator.cloudSync.ButtonPressed;
-            List<string> files = sync ? SaveSystem.ImportSongs(creator.songs.ToArray(), creator.playlist_name.Text, false) : creator.songs;
-			Playlist playlist = new Playlist(creator.playlist_name.Text, sync ? SaveSystem.ImportCover(creator.cover_path, creator.playlist_name.Text) : creator.cover_path, files);
-			
+			string filename = creator.playlist_name.Text.Replace("\\", "-").Replace("/", "-");
+            List<string> files = sync ? SaveSystem.ImportSongs(creator.songs.ToArray(), filename, false) : creator.songs;
+			Playlist playlist = new Playlist(creator.playlist_name.Text, sync ? SaveSystem.ImportCover(creator.cover_path, filename) : creator.cover_path, files);
+			playlist.PathName = filename;
+
 			if (creator.backgroundThemeEnabled.ButtonPressed)
 				playlist.customInfo.overlayColor = "#" + creator.backgroundTheme.Color.ToHtml();
 

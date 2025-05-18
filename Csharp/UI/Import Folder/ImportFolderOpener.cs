@@ -15,7 +15,7 @@ public partial class ImportFolderOpener : EditorWindowOpener
 
     public void OpenImporter()
     {
-        if (Globals.player.interrupt())
+        if (Globals.player.Interrupt())
         {
             menu.CloseMenu();
             (window as PlaylistCreator).Open();

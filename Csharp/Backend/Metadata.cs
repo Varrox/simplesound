@@ -25,6 +25,12 @@ public class Metadata
         }
     }
 
+    public static void ResetCache()
+    {
+        FileList.Clear();
+        TagList.Clear();
+    }
+
     public static string GetArtist(string path)
     {
         InitializeFileListKey(ref path);
