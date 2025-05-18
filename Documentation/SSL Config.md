@@ -7,8 +7,8 @@
 `Artist` : `string` - The artist the playlist is made by.  
 
 `Type` : `PlaylistType` - The type of playlist is.  
-> Default
-> Album
+> Default  
+> Album  
 
 `Overlay-Color` : `string` - The color overlayed over the background image  
 `Background-Image` : `string` - The path of the playlist's background image  
