@@ -13,6 +13,6 @@
 `Overlay-Color` : `string` - The color overlayed over the background image  
 `Background-Image` : `string` - The path of the playlist's background image  
 
-`Volume` : `float` - The volume all songs are played at
-`Speed` : `float` - The speed / pitch all songs are played at
-`Reverb` : `float` - The reverb all songs are played at
+`Volume` : `float` - The volume all songs are played at  
+`Speed` : `float` - The speed / pitch all songs are played at  
+`Reverb` : `float` - The reverb all songs are played at  
