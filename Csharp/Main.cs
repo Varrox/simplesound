@@ -224,6 +224,8 @@ public partial class Main : Control
                     player.Stream = AudioStreamOggVorbis.LoadFromBuffer(FileAccess.GetFileAsBytes(path));
                 }
 
+				
+
                 EmitSignal("OnLoadSong");
             }
             else // if the file doesn't exist

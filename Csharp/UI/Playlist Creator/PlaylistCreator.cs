@@ -24,6 +24,8 @@ public partial class PlaylistCreator : EditorWindow
 	public List<string> songs = new List<string>();
 	public string cover_path;
 
+	bool cleared = false;
+
 	public override void _Ready()
 	{
 		base._Ready();
@@ -39,9 +41,9 @@ public partial class PlaylistCreator : EditorWindow
 		CancelButton.ButtonDown += Cancel;
 	}
 
-	public void Open()
+	public void Clear()
 	{
-		playlist_name.Text = "";
+        playlist_name.Text = "";
         coverDisplay.set_path();
 
         foreach (Node child in songDisplayContainer.GetChildren())
@@ -49,10 +51,20 @@ public partial class PlaylistCreator : EditorWindow
             child.QueueFree();
         }
 
+        songs.Clear();
+
         album.ButtonPressed = false;
-		artist.Text = "";
-		backgroundThemeEnabled.ButtonPressed = false;
-		backgroundTheme.Color = new Color(1, 1, 1);
+        artist.Text = "";
+        backgroundThemeEnabled.ButtonPressed = false;
+        backgroundTheme.Color = new Color(1, 1, 1);
+
+		cleared = true;
+    }
+
+	public void Open()
+	{
+		if (!cleared)
+			Clear();
 
         Globals.file_dialog.Reparent(this);
 
