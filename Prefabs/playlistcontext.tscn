@@ -14,8 +14,7 @@ anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
 offset_left = -142.0
-offset_right = 0.000610352
-offset_bottom = 111.0
+offset_bottom = 149.0
 grow_horizontal = 0
 grow_vertical = 2
 pivot_offset = Vector2(142, 0)
@@ -40,16 +39,26 @@ focus_mode = 0
 text = "Edit"
 alignment = 0
 
-[node name="Remove" type="Button" parent="VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-focus_mode = 0
-text = "Remove"
-alignment = 0
-
 [node name="Delete" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+tooltip_text = "Deletes playlist file"
 focus_mode = 0
 text = "Delete"
+alignment = 0
+
+[node name="Open" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "Opens file explorer up to the playlist file"
+focus_mode = 0
+text = "Open"
+alignment = 0
+
+[node name="Share" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+tooltip_text = "Compresses whole playlist into ZIP file with all dependencies."
+focus_mode = 0
+text = "Share (ZIP)"
 alignment = 0
