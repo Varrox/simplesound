@@ -10,7 +10,7 @@ public partial class Songdisplay : Button
 	[Export] public Panel explicitLyrics;
 
 	int playlist, song;
-	public bool isPlaying;
+	public bool isPlaying, hidden;
 	public override void _Ready()
 	{
 		ButtonUp += SetSong;

@@ -16,7 +16,6 @@ func _process(_delta: float) -> void:
 		if !devset:
 			var username:String = DiscordRPC.get_current_user().get("username")
 			if username != '':
-				print(username)
 				dev = username == "varrox"
 				devset = true
 		DiscordRPC.details = "Listening to " + Player.SongName.text

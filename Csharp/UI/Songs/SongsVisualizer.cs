@@ -1,17 +1,58 @@
 using Godot;
 using SSLParser;
 
-public partial class SongsVisualizer : Control
+public partial class SongsVisualizer : ScrollContainer
 {
 	[Export] public PackedScene Template;
 	[Export] public Control menu, container;
+
+    int lastScroll = 0;
+
+    string[] songs;
+    bool album;
 
 	public override void _Ready()
 	{
 		Globals.main.playlistVisualizer.OnSelectPlaylist += Load;
 	}
 
-	public void Load(int playlist, Texture2D playDisp)
+    public bool IsHidden(Songdisplay songdisplay)
+    {
+        return !songdisplay.GetRect().Intersects(GetRect());
+    }
+
+    public override void _Process(double delta)
+    {
+        if(!album)
+        {
+            if (lastScroll != ScrollVertical)
+            {
+                for (int i = 1; i < container.GetChildCount(); i++)
+                {
+                    Songdisplay child = container.GetChild(i) as Songdisplay;
+                    bool hidden = IsHidden(child);
+
+                    if (hidden != child.hidden)
+                    {
+                        if (hidden)
+                        {
+                            child.Cover.Texture = null;
+                        }
+                        else
+                        {
+                            child.Cover.Texture = ConvertToGodot.GetCover(songs[i - 1], out bool failed);
+                        }
+
+                        child.hidden = hidden;
+                    }
+                }
+
+                lastScroll = ScrollVertical;
+            }
+        }
+    }
+
+    public void Load(int playlist, Texture2D playDisp)
 	{
 		Globals.main.currentLookingAtPlaylist = playlist;
 
@@ -20,7 +61,9 @@ public partial class SongsVisualizer : Control
         if (playlist == Globals.main.currentPlaylist) Playlist = Globals.main.playlist;
 		else Playlist = MainParser.ParsePlaylist(Globals.main.playlists[playlist]);
 
-		var SongDisplays = container.GetChildren();
+        album = Playlist.Type == Playlist.PlaylistType.Album;
+
+        var SongDisplays = container.GetChildren();
 		(SongDisplays[0].GetChild(0).GetChild(0) as TextureRect).Texture = playDisp;
         (SongDisplays[0].GetChild(1) as Label).Text = Playlist.Name;
 
@@ -70,8 +113,9 @@ public partial class SongsVisualizer : Control
             }
 
 			// init the playlist
-			disp.Init(Tools.GetMediaTitle(Playlist.Songs[i]), Metadata.GetArtist(Playlist.Songs[i]), Tools.SecondsToTimestamp(Metadata.GetTotalTime(Playlist.Songs[i])), playlist, i, Metadata.IsExplicit(Playlist.Songs[i]), Playlist.Type, Playlist.Type != Playlist.PlaylistType.Album ? ConvertToGodot.GetCover(Playlist.Songs[i], out bool failed) : null, menu);
+			disp.Init(Tools.GetMediaTitle(Playlist.Songs[i]), Metadata.GetArtist(Playlist.Songs[i]), Tools.SecondsToTimestamp(Metadata.GetTotalTime(Playlist.Songs[i])), playlist, i, Metadata.IsExplicit(Playlist.Songs[i]), Playlist.Type, !album || !IsHidden(disp) ? ConvertToGodot.GetCover(Playlist.Songs[i], out bool failed) : null, menu);
         }
+
 	}
 
 	public void UpdateSong(int index, string sname, string artist, string time, bool explicitlyrics, Texture2D texture)
