@@ -1,3 +1,6 @@
+// This shader is based off of this shader: https://www.shadertoy.com/view/4tSyzy
+// I have modified it to be sample count independent, so you can get the same visuals with 16 samples as the original with 30 samples.
+
 shader_type canvas_item;
 render_mode unshaded;
 
@@ -8,13 +11,11 @@ uniform float blur_size:hint_range(0.001, 1, 0.001) = 0.25;
 
 varying float sigma;
 
-float gaussian(vec2 i) 
-{
+float gaussian(vec2 i) {
     return 1.0 / (2.0 * PI * sigma) * exp(-((pow2(i.x) + pow2(i.y)) / (2.0 * sigma)));
 }
 
-vec3 blur(vec2 screen_uv, sampler2D input_texture, float size, vec2 scale)
-{
+vec3 blur(vec2 screen_uv, sampler2D input_texture, float size, vec2 scale) {
 	vec3 result = vec3(1.);
 	float steps = size / float(samples);
 	float accum = 0.0;
@@ -31,7 +32,7 @@ vec3 blur(vec2 screen_uv, sampler2D input_texture, float size, vec2 scale)
 			accum += weight;
 		}
 	}
-
+	
 	return result / accum;
 }
 
