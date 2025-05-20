@@ -16,7 +16,7 @@ TODO
 - Add share button to songs (keep youtube link in song metadata)
 - Make covers all save as square aspect ratio
 - Remove scrollbar focus somehow
-- Fix song number not showing up when song is being played
+- Make background image blur so it is only updated when it's image is changed
 
 BUCKETS ISSUES
 

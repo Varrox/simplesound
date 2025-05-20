@@ -182,7 +182,9 @@ public partial class Main : Control
 				currentSong += amount;
             }
 
-			PlaySong(song);
+            currentSong = Tools.Wrap(currentSong, 0, playlist.Songs.Count - 1);
+
+            PlaySong(song);
 
 			playing = false;
 			Play();
@@ -207,7 +209,6 @@ public partial class Main : Control
 		if (CanPlay())
 		{
             time = 0;
-            currentSong = Tools.Wrap(currentSong, 0, playlist.Songs.Count - 1);
 
             if (FileAccess.FileExists(path))
             {

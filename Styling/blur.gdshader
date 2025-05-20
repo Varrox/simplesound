@@ -1,39 +1,41 @@
 shader_type canvas_item;
+render_mode unshaded;
+
+uniform int samples:hint_range(1, 32, 1) = 8;
+uniform float blur_size:hint_range(0.001, 1, 0.001) = 0.25;
 
 #define pow2(x) (x * x)
-#define iResolution 1.0/SCREEN_PIXEL_SIZE
 
-uniform float strength : hint_range(0.0, 5.0, 0.1) = 1.0;
-const float pi = atan(1.0) * 4.0;
-const int samples = 30;
-const float sigma = float(samples) * 0.25;
+varying float sigma;
 
-float gaussian(vec2 i) {
-    return 1.0 / (2.0 * pi * pow2(sigma)) * exp(-((pow2(i.x) + pow2(i.y)) / (2.0 * pow2(sigma))));
+float gaussian(vec2 i) 
+{
+    return 1.0 / (2.0 * PI * sigma) * exp(-((pow2(i.x) + pow2(i.y)) / (2.0 * sigma)));
 }
 
-vec3 blur(sampler2D sp, vec2 uv, vec2 scale) {
-    vec3 col = vec3(0.0);
-    float accum = 0.0;
-    float weight;
-    vec2 offset;
+vec3 blur(vec2 screen_uv, sampler2D input_texture, float size, vec2 scale)
+{
+	vec3 result = vec3(1.);
+	float steps = size / float(samples);
+	float accum = 0.0;
+	float weight;
+	vec2 offset;
 
-    for (int x = -samples / 2; x < samples / 2; ++x) {
-        for (int y = -samples / 2; y < samples / 2; ++y) {
-            offset = vec2(float(x), float(y));
-            weight = gaussian(offset);
-            col += texture(sp, uv + scale * offset).rgb * weight;
-            accum += weight;
-        }
-    }
+	for(float x = -size; x < size; x += steps)
+	{
+		for(float y = -size; y < size; y += steps)
+		{
+			offset = vec2(x, y);
+			weight = gaussian(offset);
+			result += texture(input_texture, screen_uv + offset * size).rgb * weight;
+			accum += weight;
+		}
+	}
 
-    return col / accum;
+	return result / accum;
 }
 
 void fragment() {
-    vec2 ps = vec2(1.0) / iResolution.xy * .000001 * strength;
-    vec2 uv = UV ;
-
-    COLOR.rgb = blur(TEXTURE, uv, ps );
-    COLOR.a = 1.0;
+	sigma = pow2(float(blur_size) * 0.25);
+	COLOR = vec4(blur(UV, TEXTURE, blur_size / 2.0, vec2(1.0) / 1.0 / SCREEN_PIXEL_SIZE * .000001 * blur_size), 1.);
 }

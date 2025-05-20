@@ -12,11 +12,11 @@
 [ext_resource type="Texture2D" uid="uid://n02mi4hbtm0b" path="res://Icons/shuffleon.png" id="7_oidy5"]
 [ext_resource type="Texture2D" uid="uid://b3phnmlkksrac" path="res://Icons/loop.png" id="7_uv8rp"]
 [ext_resource type="Texture2D" uid="uid://cksbdmhr2s8yy" path="res://Icons/DefaultCover.png" id="7_xn3w4"]
+[ext_resource type="Shader" uid="uid://6mp1f8uww708" path="res://Styling/blur.gdshader" id="8_0cp0l"]
 [ext_resource type="Texture2D" uid="uid://bfwa3yivib7hh" path="res://Icons/playlist.png" id="8_8i1ca"]
 [ext_resource type="Texture2D" uid="uid://dvwv6fmmc3033" path="res://Icons/icon.svg" id="8_b1qrp"]
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Styling/Fonts/DefaultFont.tres" id="9_3b7g8"]
 [ext_resource type="Texture2D" uid="uid://5hwvlu7uerj6" path="res://Icons/plus.png" id="10_7e43v"]
-[ext_resource type="Shader" uid="uid://b27umdilyjk4d" path="res://Styling/blur.gdshader" id="10_sha6j"]
 [ext_resource type="Texture2D" uid="uid://c85envuiuo3ju" path="res://Icons/folder.png" id="11_1f20w"]
 [ext_resource type="Script" uid="uid://dcnfao6qa81tk" path="res://Csharp/UI/Playlists/PlaylistsVisualizer.cs" id="11_kq58d"]
 [ext_resource type="Texture2D" uid="uid://0yw8m2y164lr" path="res://Icons/settings.png" id="12_s6aix"]
@@ -44,8 +44,9 @@
 [ext_resource type="PackedScene" uid="uid://bw078i5dk5ff4" path="res://Windows/ConfirmationWindow.tscn" id="39_h8e4i"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n3cvr"]
-shader = ExtResource("10_sha6j")
-shader_parameter/strength = 1.0
+shader = ExtResource("8_0cp0l")
+shader_parameter/samples = 16
+shader_parameter/blur_size = 0.25
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_facbu"]
 
