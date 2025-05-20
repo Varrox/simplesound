@@ -32,7 +32,7 @@ public partial class SongsVisualizer : ScrollContainer
                     Songdisplay child = container.GetChild(i) as Songdisplay;
                     bool hidden = IsHidden(child);
 
-                    if (hidden != child.hidden)
+                    if (hidden != (child.Cover.Texture == null))
                     {
                         if (hidden)
                         {
@@ -42,8 +42,6 @@ public partial class SongsVisualizer : ScrollContainer
                         {
                             child.Cover.Texture = ConvertToGodot.GetCover(songs[i - 1], out bool failed);
                         }
-
-                        child.hidden = hidden;
                     }
                 }
 
@@ -62,6 +60,7 @@ public partial class SongsVisualizer : ScrollContainer
 		else Playlist = MainParser.ParsePlaylist(Globals.main.playlists[playlist]);
 
         album = Playlist.Type == Playlist.PlaylistType.Album;
+        songs = Playlist.Songs.ToArray();
 
         var SongDisplays = container.GetChildren();
 		(SongDisplays[0].GetChild(0).GetChild(0) as TextureRect).Texture = playDisp;
