@@ -43,6 +43,8 @@ public partial class SongsVisualizer : ScrollContainer
                             child.Cover.Texture = ConvertToGodot.GetCover(songs[i - 1], out bool failed);
                         }
                     }
+
+                    
                 }
 
                 lastScroll = ScrollVertical;

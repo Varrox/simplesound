@@ -1,25 +1,74 @@
-[gd_scene load_steps=4 format=3 uid="uid://da3r1vmve1qwd"]
+[gd_scene load_steps=9 format=3 uid="uid://da3r1vmve1qwd"]
 
+[ext_resource type="Script" uid="uid://dipiuc5nsuh2m" path="res://Csharp/UI/StreamDisplay.cs" id="1_gaihk"]
 [ext_resource type="Texture2D" uid="uid://cksbdmhr2s8yy" path="res://Icons/DefaultCover.png" id="1_lpmxw"]
+[ext_resource type="Shader" uid="uid://6mp1f8uww708" path="res://Styling/blur.gdshader" id="2_lpmxw"]
 [ext_resource type="FontFile" uid="uid://ckdni7vy5bpft" path="res://Styling/Fonts/VarelaRound-Regular.ttf" id="5_tsl3i"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gaihk"]
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color(0, 0, 0, 0.34117648)
+shadow_size = 5
+shadow_offset = Vector2(5, 5)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bmsx4"]
+shader = ExtResource("2_lpmxw")
+shader_parameter/samples = 12
+shader_parameter/blur_size = 0.4670000221825
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1qe5s"]
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 anti_aliasing_size = 1.1
 
-[node name="StreamDisplay" type="Window"]
+[sub_resource type="Theme" id="Theme_ukmcm"]
+Label/styles/focus = null
+
+[node name="StreamDisplay" type="Window" node_paths=PackedStringArray("cover_art", "background", "song", "artist")]
+transparent_bg = true
+oversampling_override = 1.0
 title = "Stream Display"
-initial_position = 1
 size = Vector2i(500, 200)
-unresizable = true
 borderless = true
 transparent = true
+unfocusable = true
+mouse_passthrough = true
+script = ExtResource("1_gaihk")
+cover_art = NodePath("PanelContainer/Cover")
+background = NodePath("Panel/ColorRect")
+song = NodePath("Name")
+artist = NodePath("Artist")
+
+[node name="Panel" type="PanelContainer" parent="."]
+clip_children = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 25.0
+offset_top = 40.0
+offset_right = -50.0
+offset_bottom = -46.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_gaihk")
+
+[node name="ColorRect" type="TextureRect" parent="Panel"]
+material = SubResource("ShaderMaterial_bmsx4")
+layout_mode = 2
+expand_mode = 2
+stretch_mode = 6
+
+[node name="ColorRect2" type="ColorRect" parent="Panel"]
+layout_mode = 2
+color = Color(0.35906926, 0.35906905, 0.35906902, 0.3254902)
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
-clip_children = 1
+clip_children = 2
 clip_contents = true
 anchors_preset = 8
 anchor_left = 0.5
@@ -50,10 +99,11 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -103.0
 offset_top = -22.0
-offset_right = 215.0
+offset_right = 187.0
 offset_bottom = 21.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = SubResource("Theme_ukmcm")
 theme_override_fonts/font = ExtResource("5_tsl3i")
 text = "Song
 "
@@ -67,7 +117,7 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -103.0
 offset_top = 4.0
-offset_right = 75.0
+offset_right = 243.66669
 offset_bottom = 24.0
 grow_horizontal = 2
 grow_vertical = 2

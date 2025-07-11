@@ -28,6 +28,7 @@ DiscordRPCLoader="*res://addons/discord-rpc-gd/nodes/discord_autoload.gd"
 [display]
 
 window/subwindows/embed_subwindows=false
+window/per_pixel_transparency/allowed=true
 
 [dotnet]
 
