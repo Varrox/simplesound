@@ -5,7 +5,6 @@ x Add folder explorer
 - Add max song display load limit
 - Add song position rearange
 - Lerp background image to transition
-- Make top card playbutton functionality
 - Add sorting
 - Add basic gdshader support to ssl
 - Add images to ssl
@@ -26,6 +25,7 @@ DOING
 
 FINISHED
 
+- Make top card playbutton functionality
 - Add playlist creation
 - Add playlist importing
 - Fix context menu UIs

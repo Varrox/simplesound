@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=3 uid="uid://cbpkjhjnbrjm6"]
+[gd_scene load_steps=64 format=3 uid="uid://cbpkjhjnbrjm6"]
 
 [ext_resource type="Theme" uid="uid://cg2x5h7ufrntn" path="res://Styling/global_theme.tres" id="1_4lmeg"]
 [ext_resource type="Script" uid="uid://b81fhtdmrks0a" path="res://Csharp/Main.cs" id="1_l00ml"]
@@ -38,6 +38,7 @@
 [ext_resource type="Script" uid="uid://b7fgu3kjwheaf" path="res://Csharp/UI/Import Folder/ImportFolderOpener.cs" id="23_come4"]
 [ext_resource type="Script" uid="uid://dwpgkkupvf1jo" path="res://Discord.gd" id="24_crcn0"]
 [ext_resource type="PackedScene" uid="uid://dtfoexo3o7b3p" path="res://Prefabs/playlistcontext.tscn" id="26_gbh2w"]
+[ext_resource type="Script" uid="uid://qupwebtnhh44" path="res://Csharp/UI/Playlists/PlaylistPlayer.cs" id="28_wnkbs"]
 [ext_resource type="Script" uid="uid://dpypenx7j1p3m" path="res://Csharp/UI/Appdata.cs" id="29_0cp0l"]
 [ext_resource type="Script" uid="uid://c5ep0n80r2l8p" path="res://Csharp/UI/Attribute Editor/AttributeEditorOpener.cs" id="29_jq2sk"]
 [ext_resource type="Script" uid="uid://cfj2rfmrqlm1e" path="res://Csharp/UI/StreamerButton.cs" id="30_d2t1y"]
@@ -409,6 +410,7 @@ grow_vertical = 2
 focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_i82gy")
 icon = ExtResource("5_8inno")
+script = ExtResource("28_wnkbs")
 
 [node name="Songcontext" parent="Interface" instance=ExtResource("17_3m5kb")]
 visible = false

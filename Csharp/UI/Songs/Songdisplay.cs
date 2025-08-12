@@ -52,7 +52,7 @@ public partial class Songdisplay : Button
 	{
         More.Show();
         Playbutton.Show();
-		Number.SelfModulate = new Color(1, 1, 1, 0);
+        Number.SelfModulate = new Color(1, 1, 1, 0);
     }
 
 	public void OnExit()
