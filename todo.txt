@@ -1,6 +1,6 @@
 TODO
 
-- Add folder explorer
+x Add folder explorer
 - Add lyrics viewer
 - Add max song display load limit
 - Add song position rearange
@@ -15,7 +15,6 @@ TODO
 - Make playlist bar hiding
 - Add share button to songs (keep youtube link in song metadata)
 - Make covers all save as square aspect ratio
-- Remove scrollbar focus somehow
 - Make background image blur so it is only updated when it's image is changed
 
 BUCKETS ISSUES
@@ -36,6 +35,7 @@ FINISHED
 - Fix playlist names so they are ssl file independent
 - Make shuffling not play songs twice
 - Ability to open appdata for app
+- Remove scrollbar focus somehow
 
 SHELF
 - Make refresh specific parsing

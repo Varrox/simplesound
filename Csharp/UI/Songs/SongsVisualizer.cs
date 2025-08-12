@@ -18,7 +18,7 @@ public partial class SongsVisualizer : ScrollContainer
 
     public bool IsHidden(Songdisplay songdisplay)
     {
-        return !songdisplay.GetRect().Intersects(GetRect());
+        return !songdisplay.GetGlobalRect().Intersects(GetRect());
     }
 
     public override void _Process(double delta)
@@ -43,8 +43,6 @@ public partial class SongsVisualizer : ScrollContainer
                             child.Cover.Texture = ConvertToGodot.GetCover(songs[i - 1], out bool failed);
                         }
                     }
-
-                    
                 }
 
                 lastScroll = ScrollVertical;
@@ -113,7 +111,7 @@ public partial class SongsVisualizer : ScrollContainer
 				disp = SongDisplays[i] as Songdisplay;
             }
 
-			// init the playlist
+            // init the playlist
 			disp.Init(Tools.GetMediaTitle(Playlist.Songs[i]), Metadata.GetArtist(Playlist.Songs[i]), Tools.SecondsToTimestamp(Metadata.GetTotalTime(Playlist.Songs[i])), playlist, i, Metadata.IsExplicit(Playlist.Songs[i]), Playlist.Type, !album || !IsHidden(disp) ? ConvertToGodot.GetCover(Playlist.Songs[i], out bool failed) : null, menu);
         }
 

@@ -14,7 +14,7 @@
 
 [node name="Register" type="Button" node_paths=PackedStringArray("Number", "Name", "Artist", "Time", "Cover", "Playbutton", "Spacer", "More", "explicitLyrics")]
 custom_minimum_size = Vector2(0, 60)
-anchors_preset = 14
+anchors_preset = -1
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
@@ -39,7 +39,7 @@ explicitLyrics = NodePath("Number/HFlowContainer/Text/Name/Explicit")
 
 [node name="Number" type="Label" parent="."]
 layout_mode = 1
-anchors_preset = 4
+anchors_preset = -1
 anchor_top = 0.5
 anchor_bottom = 0.5
 offset_left = 9.0
@@ -55,7 +55,7 @@ vertical_alignment = 1
 
 [node name="HFlowContainer" type="HFlowContainer" parent="Number"]
 layout_mode = 1
-anchors_preset = 4
+anchors_preset = -1
 anchor_top = 0.5
 anchor_bottom = 0.5
 offset_left = 40.0
@@ -102,7 +102,7 @@ text = "Song"
 [node name="Explicit" type="Panel" parent="Number/HFlowContainer/Text/Name"]
 modulate = Color(10, 10, 10, 1)
 layout_mode = 1
-anchors_preset = 6
+anchors_preset = -1
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
@@ -118,7 +118,7 @@ mouse_filter = 2
 [node name="Label" type="Label" parent="Number/HFlowContainer/Text/Name/Explicit"]
 modulate = Color(0.0142752, 0.0142752, 0.0142752, 1)
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -147,7 +147,7 @@ text = "Artist"
 
 [node name="Length" type="Label" parent="."]
 layout_mode = 1
-anchors_preset = 6
+anchors_preset = -1
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
@@ -168,7 +168,7 @@ vertical_alignment = 1
 [node name="More" type="Button" parent="."]
 visible = false
 layout_mode = 1
-anchors_preset = 6
+anchors_preset = -1
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
@@ -191,7 +191,7 @@ teleportMenuOffset = Vector2(30, 32)
 [node name="Play" type="TextureRect" parent="."]
 visible = false
 layout_mode = 1
-anchors_preset = 4
+anchors_preset = -1
 anchor_top = 0.5
 anchor_bottom = 0.5
 offset_left = 9.0

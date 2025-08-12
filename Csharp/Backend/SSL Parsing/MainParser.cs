@@ -149,7 +149,18 @@ namespace SSLParser
 
                     if (Tools.ValidAudioFile(songPath))
                     {
-                        playlist.Songs.Add(songPath);
+                        if (!Metadata.IsFileCorrupt(songPath))
+                        {
+                            playlist.Songs.Add(songPath);
+                        }
+                        else
+                        {
+                            Debug.ErrorLog($"{songPath} is corrupted");
+                        }
+                    }
+                    else
+                    {
+                        Debug.ErrorLog($"{songPath} is not a valid audio file");
                     }
 
                     if (trimmedLine.EndsWith("}"))

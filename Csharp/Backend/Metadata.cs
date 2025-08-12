@@ -9,19 +9,42 @@ public class Metadata
     public static Dictionary<string, string[]> TagList = new Dictionary<string, string[]>();
     public static Dictionary<string, TagLib.File> FileList = new Dictionary<string, TagLib.File>();
 
-    public static void InitializeFileListKey(ref string path)
+    public static bool InitializeFileListKey(ref string path)
     {
-        if (!FileList.ContainsKey(path))
-            FileList.Add(path, TagLib.File.Create(path));
+        if (FileList.ContainsKey(path))
+            return true;
+        else if (IsFileCorrupt(path))
+            return false;
+
+        TagLib.File file = TagLib.File.Create(path);
+        FileList.Add(path, file);
+
+        return true;
+    }
+
+    public static bool IsFileCorrupt(string path)
+    {
+        try
+        {
+            TagLib.File file = TagLib.File.Create(path);
+
+            return file.PossiblyCorrupt;
+        }
+        catch
+        {
+            return true;
+        }
     }
 
     public static void InitializeTagListKey(ref string path)
     {
         if (!TagList.ContainsKey(path))
         {
-            InitializeFileListKey(ref path);
-            var comment = FileList[path].Tag.Comment;
-            TagList.Add(path, comment != null ? comment.Split(';') : null);
+            if (InitializeFileListKey(ref path))
+            {
+                string comment = FileList[path].Tag.Comment;
+                TagList.Add(path, comment != null ? comment.Split(';') : null);
+            }
         }
     }
 
@@ -129,7 +152,10 @@ public class Metadata
 
     public static string ImageMimeConvert(string path)
     {
-        return $"image/{Path.GetExtension(path).Substring(1).Replace("jpg", "jpeg")}";
+        string extention = Path.GetExtension(path);
+        if (extention != string.Empty)
+            return $"image/{Path.GetExtension(path).Substring(1).Replace("jpg", "jpeg")}";
+        return null;
     }
 
     public static bool IsExplicit(string path)

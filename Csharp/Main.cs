@@ -82,10 +82,6 @@ public partial class Main : Control
 
 		if (Input.IsActionJustPressed("save")) SaveData();
 		else if (Input.IsActionJustPressed("refresh")) Refresh();
-		else if (Input.IsActionJustPressed("scale_up")) GetTree().Root.ContentScaleFactor += 0.1f;
-        else if (Input.IsActionJustPressed("scale_down")) GetTree().Root.ContentScaleFactor -= 0.1f;
-
-        GetTree().Root.ContentScaleFactor = (float)Mathf.Clamp((double)GetTree().Root.ContentScaleFactor, 0.5, 1.5);
 
 		// Loop management
 

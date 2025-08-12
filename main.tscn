@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://cbpkjhjnbrjm6"]
+[gd_scene load_steps=63 format=3 uid="uid://cbpkjhjnbrjm6"]
 
 [ext_resource type="Theme" uid="uid://cg2x5h7ufrntn" path="res://Styling/global_theme.tres" id="1_4lmeg"]
 [ext_resource type="Script" uid="uid://b81fhtdmrks0a" path="res://Csharp/Main.cs" id="1_l00ml"]
@@ -45,6 +45,7 @@
 [ext_resource type="Texture2D" uid="uid://0eme23vp72kb" path="res://Icons/forward arrow.png" id="32_0n3wm"]
 [ext_resource type="Script" uid="uid://ba0kdfmjh8445" path="res://Csharp/Globals.cs" id="32_htxhm"]
 [ext_resource type="PackedScene" uid="uid://bw078i5dk5ff4" path="res://Windows/ConfirmationWindow.tscn" id="39_h8e4i"]
+[ext_resource type="Script" uid="uid://cqf4nqygajv02" path="res://zoomer.gd" id="46_qnost"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n3cvr"]
 shader = ExtResource("8_0cp0l")
@@ -168,14 +169,14 @@ color = Color(1, 1, 1, 0)
 
 [node name="Side Panel" type="Panel" parent="Interface"]
 layout_mode = 1
-anchors_preset = 9
+anchors_preset = -1
 anchor_bottom = 1.0
 offset_right = 303.0
 grow_vertical = 2
 
 [node name="Playlists" type="ScrollContainer" parent="Interface/Side Panel" node_paths=PackedStringArray("container", "moreMenu")]
 layout_mode = 1
-anchors_preset = 9
+anchors_preset = -1
 anchor_bottom = 1.0
 offset_left = 8.0
 offset_top = 116.0
@@ -197,6 +198,7 @@ theme_override_constants/separation = 7
 [node name="Playlistcontext" parent="Interface/Side Panel" instance=ExtResource("26_gbh2w")]
 visible = false
 layout_mode = 1
+anchors_preset = -1
 offset_left = -157.0
 offset_top = -223.0
 offset_right = -15.0
@@ -205,6 +207,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_gueqf")
 
 [node name="Add" type="Button" parent="Interface/Side Panel" node_paths=PackedStringArray("menu")]
 layout_mode = 1
+anchors_preset = -1
 offset_left = 256.0
 offset_top = 67.0
 offset_right = 288.0
@@ -218,11 +221,13 @@ icon_alignment = 1
 expand_icon = true
 script = ExtResource("21_seu75")
 menu = NodePath("Panel")
+teleportMenu = null
+teleportMenuOffset = null
 
 [node name="Panel" type="Panel" parent="Interface/Side Panel/Add"]
 visible = false
 layout_mode = 1
-anchors_preset = 1
+anchors_preset = -1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -186.0
@@ -233,7 +238,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_come4")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Interface/Side Panel/Add/Panel"]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 7.5
@@ -293,6 +298,7 @@ menu = NodePath("../../..")
 
 [node name="Playlist" type="Button" parent="Interface"]
 layout_mode = 1
+anchors_preset = -1
 offset_left = 15.0
 offset_top = 68.0
 offset_right = 47.0
@@ -305,7 +311,7 @@ expand_icon = true
 
 [node name="Label" type="Label" parent="Interface/Playlist"]
 layout_mode = 1
-anchors_preset = 4
+anchors_preset = -1
 anchor_top = 0.5
 anchor_bottom = 0.5
 offset_left = 40.0
@@ -318,7 +324,7 @@ text = "My Playlists"
 
 [node name="Song Display" type="ScrollContainer" parent="Interface" node_paths=PackedStringArray("menu", "container")]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 308.0
@@ -345,7 +351,7 @@ layout_mode = 2
 [node name="PanelContainer" type="PanelContainer" parent="Interface/Song Display/VBoxContainer/Top card"]
 clip_children = 1
 layout_mode = 1
-anchors_preset = 4
+anchors_preset = -1
 anchor_top = 0.5
 anchor_bottom = 0.5
 offset_left = 25.0
@@ -363,7 +369,7 @@ stretch_mode = 6
 
 [node name="Label" type="Label" parent="Interface/Song Display/VBoxContainer/Top card"]
 layout_mode = 1
-anchors_preset = 4
+anchors_preset = -1
 anchor_top = 0.5
 anchor_bottom = 0.5
 offset_left = 150.0
@@ -376,7 +382,7 @@ text = "Name"
 
 [node name="Label2" type="Label" parent="Interface/Song Display/VBoxContainer/Top card"]
 layout_mode = 1
-anchors_preset = 4
+anchors_preset = -1
 anchor_top = 0.5
 anchor_bottom = 0.5
 offset_left = 150.0
@@ -389,7 +395,7 @@ text = "0 songs"
 
 [node name="Button" type="Button" parent="Interface/Song Display/VBoxContainer/Top card"]
 layout_mode = 1
-anchors_preset = 6
+anchors_preset = -1
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
@@ -407,10 +413,11 @@ icon = ExtResource("5_8inno")
 [node name="Songcontext" parent="Interface" instance=ExtResource("17_3m5kb")]
 visible = false
 layout_mode = 1
+anchors_preset = -1
 
 [node name="Top Bar" type="ColorRect" parent="Interface"]
 layout_mode = 1
-anchors_preset = 10
+anchors_preset = -1
 anchor_right = 1.0
 offset_bottom = 52.0
 grow_horizontal = 2
@@ -418,7 +425,7 @@ color = Color(0.136826, 0.136826, 0.136826, 1)
 
 [node name="Search" type="LineEdit" parent="Interface/Top Bar"]
 layout_mode = 1
-anchors_preset = 4
+anchors_preset = -1
 anchor_top = 0.5
 anchor_bottom = 0.5
 offset_left = 309.0
@@ -433,7 +440,7 @@ placeholder_text = " search for songs"
 
 [node name="Left" type="HBoxContainer" parent="Interface/Top Bar"]
 layout_mode = 1
-anchors_preset = 4
+anchors_preset = -1
 anchor_top = 0.5
 anchor_bottom = 0.5
 offset_left = 12.0
@@ -471,9 +478,25 @@ focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_i5cru")
 text = "Downloader"
 
+[node name="Zoom amount" type="Label" parent="Interface/Top Bar"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -298.0
+offset_top = -10.0
+offset_right = -254.0
+offset_bottom = 10.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "100%"
+horizontal_alignment = 2
+
 [node name="Right" type="HBoxContainer" parent="Interface/Top Bar"]
 layout_mode = 1
-anchors_preset = 6
+anchors_preset = -1
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
@@ -526,7 +549,7 @@ expand_icon = true
 
 [node name="Player" type="ColorRect" parent="Interface"]
 layout_mode = 1
-anchors_preset = 12
+anchors_preset = -1
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -548,7 +571,7 @@ pivot_offset = Vector2(576, 0)
 
 [node name="Shuffle" type="Button" parent="Interface/Player/Controls"]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -570,7 +593,7 @@ expand_icon = true
 
 [node name="Back" type="Button" parent="Interface/Player/Controls"]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -592,7 +615,7 @@ expand_icon = true
 
 [node name="Play" type="Button" parent="Interface/Player/Controls"]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -612,7 +635,7 @@ expand_icon = true
 
 [node name="Next" type="Button" parent="Interface/Player/Controls"]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -634,7 +657,7 @@ expand_icon = true
 
 [node name="Loop" type="Button" parent="Interface/Player/Controls"]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -654,7 +677,7 @@ expand_icon = true
 
 [node name="Progress" type="HSlider" parent="Interface/Player/Controls"]
 layout_mode = 1
-anchors_preset = 12
+anchors_preset = -1
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -669,7 +692,7 @@ step = 0.01
 
 [node name="Current Time" type="Label" parent="Interface/Player/Controls/Progress"]
 layout_mode = 1
-anchors_preset = 4
+anchors_preset = -1
 anchor_top = 0.5
 anchor_bottom = 0.5
 offset_left = -60.0
@@ -684,7 +707,7 @@ horizontal_alignment = 2
 
 [node name="Total Time" type="Label" parent="Interface/Player/Controls/Progress"]
 layout_mode = 1
-anchors_preset = 6
+anchors_preset = -1
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
@@ -701,7 +724,7 @@ text = "0:00"
 
 [node name="Volume" type="HSlider" parent="Interface/Player/Controls"]
 layout_mode = 1
-anchors_preset = 3
+anchors_preset = -1
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -719,7 +742,7 @@ step = 0.01
 
 [node name="Mute" type="Button" parent="Interface/Player/Controls/Volume"]
 layout_mode = 1
-anchors_preset = 4
+anchors_preset = -1
 anchor_top = 0.5
 anchor_bottom = 0.5
 offset_left = -27.0
@@ -734,7 +757,6 @@ flat = true
 
 [node name="Song Attributes" type="Control" parent="Interface/Player"]
 layout_mode = 1
-anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 120.0
@@ -762,7 +784,7 @@ stretch_mode = 6
 
 [node name="Edit Attributes" type="Button" parent="Interface/Player/Song Attributes" node_paths=PackedStringArray("window")]
 layout_mode = 1
-anchors_preset = 2
+anchors_preset = -1
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = -104.0
@@ -784,7 +806,7 @@ visible = false
 
 [node name="Name" type="Label" parent="Interface/Player/Song Attributes"]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -801,7 +823,7 @@ text_overrun_behavior = 3
 
 [node name="Artist" type="Label" parent="Interface/Player/Song Attributes"]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -845,3 +867,7 @@ use_native_dialog = true
 script = ExtResource("24_crcn0")
 Player = NodePath("../Interface")
 Main = NodePath("..")
+
+[node name="Zoomer" type="Node" parent="." node_paths=PackedStringArray("zoom_display")]
+script = ExtResource("46_qnost")
+zoom_display = NodePath("../Interface/Top Bar/Zoom amount")
