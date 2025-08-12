@@ -2,7 +2,7 @@ TODO
 
 x Add folder explorer
 - Add lyrics viewer
-- Add max song display load limit
+x Add max song display load limit
 - Add song position rearange
 - Lerp background image to transition
 - Add sorting

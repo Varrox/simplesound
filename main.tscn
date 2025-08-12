@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=3 uid="uid://cbpkjhjnbrjm6"]
+[gd_scene load_steps=66 format=3 uid="uid://cbpkjhjnbrjm6"]
 
 [ext_resource type="Theme" uid="uid://cg2x5h7ufrntn" path="res://Styling/global_theme.tres" id="1_4lmeg"]
 [ext_resource type="Script" uid="uid://b81fhtdmrks0a" path="res://Csharp/Main.cs" id="1_l00ml"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://5hwvlu7uerj6" path="res://Icons/plus.png" id="10_7e43v"]
 [ext_resource type="Texture2D" uid="uid://c85envuiuo3ju" path="res://Icons/folder.png" id="11_1f20w"]
 [ext_resource type="Script" uid="uid://dcnfao6qa81tk" path="res://Csharp/UI/Playlists/PlaylistsVisualizer.cs" id="11_kq58d"]
+[ext_resource type="Script" uid="uid://schxe0nc0yhj" path="res://scroll_spacer.gd" id="12_f6a44"]
 [ext_resource type="Texture2D" uid="uid://0yw8m2y164lr" path="res://Icons/settings.png" id="12_s6aix"]
 [ext_resource type="PackedScene" uid="uid://4mmerh1u4xho" path="res://Prefabs/playlisttemplate.tscn" id="13_a7qgi"]
 [ext_resource type="Texture2D" uid="uid://d4mh3dd6oqgn4" path="res://Icons/DefaultCoverHighres.png" id="13_seu75"]
@@ -54,6 +55,8 @@ shader_parameter/samples = 16
 shader_parameter/blur_size = 0.25
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_facbu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wnkbs"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gueqf"]
 bg_color = Color(0.180392, 0.180392, 0.180392, 0.807843)
@@ -187,14 +190,26 @@ grow_vertical = 2
 theme_override_styles/focus = SubResource("StyleBoxEmpty_facbu")
 script = ExtResource("11_kq58d")
 template = ExtResource("13_a7qgi")
-container = NodePath("VBoxContainer")
+container = NodePath("HBoxContainer/VBoxContainer")
 moreMenu = NodePath("../Playlistcontext")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Interface/Side Panel/Playlists"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Interface/Side Panel/Playlists"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Interface/Side Panel/Playlists/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 7
+
+[node name="VSeparator" type="VSeparator" parent="Interface/Side Panel/Playlists/HBoxContainer" node_paths=PackedStringArray("scroll_container")]
+layout_mode = 2
+theme_override_constants/separation = 0
+theme_override_styles/separator = SubResource("StyleBoxEmpty_wnkbs")
+script = ExtResource("12_f6a44")
+scroll_container = NodePath("../..")
 
 [node name="Playlistcontext" parent="Interface/Side Panel" instance=ExtResource("26_gbh2w")]
 visible = false
@@ -338,18 +353,23 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_b1qrp")
 script = ExtResource("14_htxhm")
 Template = ExtResource("14_t035w")
 menu = NodePath("../Songcontext")
-container = NodePath("VBoxContainer")
+container = NodePath("HBoxContainer/Container")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Interface/Song Display"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Interface/Song Display"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Top card" type="Panel" parent="Interface/Song Display/VBoxContainer"]
+[node name="Container" type="VBoxContainer" parent="Interface/Song Display/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Top card" type="Panel" parent="Interface/Song Display/HBoxContainer/Container"]
 custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="Interface/Song Display/VBoxContainer/Top card"]
+[node name="Icon" type="PanelContainer" parent="Interface/Song Display/HBoxContainer/Container/Top card"]
 clip_children = 1
 layout_mode = 1
 anchors_preset = -1
@@ -362,13 +382,13 @@ offset_bottom = 50.0
 grow_vertical = 2
 theme_override_styles/panel = ExtResource("21_jy3dx")
 
-[node name="TextureRect" type="TextureRect" parent="Interface/Song Display/VBoxContainer/Top card/PanelContainer"]
+[node name="TextureRect" type="TextureRect" parent="Interface/Song Display/HBoxContainer/Container/Top card/Icon"]
 layout_mode = 2
 texture = ExtResource("7_xn3w4")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="Label" type="Label" parent="Interface/Song Display/VBoxContainer/Top card"]
+[node name="Playlist name" type="Label" parent="Interface/Song Display/HBoxContainer/Container/Top card"]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.5
@@ -381,7 +401,7 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 29
 text = "Name"
 
-[node name="Label2" type="Label" parent="Interface/Song Display/VBoxContainer/Top card"]
+[node name="Song count" type="Label" parent="Interface/Song Display/HBoxContainer/Container/Top card"]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.5
@@ -394,7 +414,7 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 16
 text = "0 songs"
 
-[node name="Button" type="Button" parent="Interface/Song Display/VBoxContainer/Top card"]
+[node name="Play" type="Button" parent="Interface/Song Display/HBoxContainer/Container/Top card"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 1.0
@@ -411,6 +431,13 @@ focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_i82gy")
 icon = ExtResource("5_8inno")
 script = ExtResource("28_wnkbs")
+
+[node name="VSeparator" type="VSeparator" parent="Interface/Song Display/HBoxContainer" node_paths=PackedStringArray("scroll_container")]
+layout_mode = 2
+theme_override_constants/separation = 0
+theme_override_styles/separator = SubResource("StyleBoxEmpty_wnkbs")
+script = ExtResource("12_f6a44")
+scroll_container = NodePath("../..")
 
 [node name="Songcontext" parent="Interface" instance=ExtResource("17_3m5kb")]
 visible = false
