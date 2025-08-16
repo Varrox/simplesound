@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=3 uid="uid://cbpkjhjnbrjm6"]
+[gd_scene load_steps=68 format=3 uid="uid://cbpkjhjnbrjm6"]
 
 [ext_resource type="Theme" uid="uid://cg2x5h7ufrntn" path="res://Styling/global_theme.tres" id="1_4lmeg"]
 [ext_resource type="Script" uid="uid://b81fhtdmrks0a" path="res://Csharp/Main.cs" id="1_l00ml"]
@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://bfwa3yivib7hh" path="res://Icons/playlist.png" id="8_8i1ca"]
 [ext_resource type="Texture2D" uid="uid://dvwv6fmmc3033" path="res://Icons/icon.svg" id="8_b1qrp"]
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Styling/Fonts/DefaultFont.tres" id="9_3b7g8"]
+[ext_resource type="Texture2D" uid="uid://iufihc6y4dma" path="res://Icons/unmute.png" id="9_hrvbo"]
 [ext_resource type="Texture2D" uid="uid://5hwvlu7uerj6" path="res://Icons/plus.png" id="10_7e43v"]
 [ext_resource type="Texture2D" uid="uid://c85envuiuo3ju" path="res://Icons/folder.png" id="11_1f20w"]
 [ext_resource type="Script" uid="uid://dcnfao6qa81tk" path="res://Csharp/UI/Playlists/PlaylistsVisualizer.cs" id="11_kq58d"]
@@ -47,6 +48,7 @@
 [ext_resource type="Texture2D" uid="uid://0eme23vp72kb" path="res://Icons/forward arrow.png" id="32_0n3wm"]
 [ext_resource type="Script" uid="uid://ba0kdfmjh8445" path="res://Csharp/Globals.cs" id="32_htxhm"]
 [ext_resource type="PackedScene" uid="uid://bw078i5dk5ff4" path="res://Windows/ConfirmationWindow.tscn" id="39_h8e4i"]
+[ext_resource type="Texture2D" uid="uid://brujrc442p3b5" path="res://Icons/mute.png" id="42_0cbny"]
 [ext_resource type="Script" uid="uid://cqf4nqygajv02" path="res://zoomer.gd" id="46_qnost"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n3cvr"]
@@ -115,7 +117,7 @@ volumeSlider = NodePath("Interface/Player/Controls/Volume")
 playlistVisualizer = NodePath("Interface/Side Panel/Playlists")
 songsVisualizer = NodePath("Interface/Song Display")
 
-[node name="Interface" type="Control" parent="." node_paths=PackedStringArray("Play", "Next", "Back", "Loop", "Shuffle", "Progress", "CurrentTime", "TotalTime", "SongName", "SongArtist", "SongCover", "BackgroundImage", "VolumeSlider", "backgroundColor")]
+[node name="Interface" type="Control" parent="." node_paths=PackedStringArray("Play", "Next", "Back", "Loop", "Shuffle", "Progress", "CurrentTime", "TotalTime", "SongName", "SongArtist", "SongCover", "BackgroundImage", "VolumeSlider", "MuteButton", "backgroundColor")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -132,6 +134,8 @@ LoopOn = ExtResource("3_lifiy")
 LoopOff = ExtResource("7_uv8rp")
 ShuffleOn = ExtResource("7_oidy5")
 ShuffleOff = ExtResource("20_fkbne")
+Mute = ExtResource("42_0cbny")
+Unmute = ExtResource("9_hrvbo")
 Progress = NodePath("Player/Controls/Progress")
 CurrentTime = NodePath("Player/Controls/Progress/Current Time")
 TotalTime = NodePath("Player/Controls/Progress/Total Time")
@@ -140,6 +144,7 @@ SongArtist = NodePath("Player/Song Attributes/Artist")
 SongCover = NodePath("Player/Song Attributes/PanelContainer/Cover")
 BackgroundImage = NodePath("Background/Image")
 VolumeSlider = NodePath("Player/Controls/Volume")
+MuteButton = NodePath("Player/Controls/Volume/Mute")
 backgroundColor = NodePath("Background/Color")
 
 [node name="Background" type="Control" parent="Interface"]
@@ -442,7 +447,6 @@ scroll_container = NodePath("../..")
 [node name="Songcontext" parent="Interface" instance=ExtResource("17_3m5kb")]
 visible = false
 layout_mode = 1
-anchors_preset = -1
 
 [node name="Top Bar" type="ColorRect" parent="Interface"]
 layout_mode = 1
@@ -770,19 +774,21 @@ max_value = 0.0
 step = 0.01
 
 [node name="Mute" type="Button" parent="Interface/Player/Controls/Volume"]
+modulate = Color(0.7666196, 0.76661956, 0.76661956, 1)
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = -27.0
-offset_top = -10.9996
-offset_right = 5.0
-offset_bottom = 20.0004
+offset_left = -29.0
+offset_top = -15.999661
+offset_right = 13.666748
+offset_bottom = 24.00034
 grow_vertical = 2
 scale = Vector2(0.75, 0.75)
 theme_override_styles/focus = SubResource("StyleBoxEmpty_6x3o4")
-text = "M"
+icon = ExtResource("42_0cbny")
 flat = true
+expand_icon = true
 
 [node name="Song Attributes" type="Control" parent="Interface/Player"]
 layout_mode = 1

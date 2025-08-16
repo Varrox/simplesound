@@ -3,18 +3,20 @@ using Godot;
 public partial class Player : Node
 {
     [Export] public Button Play, Next, Back, Loop, Shuffle;
-    [Export] public Texture2D LoopOn, LoopOff, ShuffleOn, ShuffleOff;
+    [Export] public Texture2D LoopOn, LoopOff, ShuffleOn, ShuffleOff, Mute, Unmute;
     [Export] public Slider Progress;
     [Export] public Label CurrentTime, TotalTime, SongName, SongArtist;
     [Export] public TextureRect SongCover, BackgroundImage;
     [Export] public Slider VolumeSlider;
+    [Export] public Button MuteButton;
     [Export] public ColorRect backgroundColor;
 
     Color bc;
 
     bool canSetTime;
 
-    public bool interrupted;
+    public bool interrupted, muted;
+    public double muted_volume;
 
     Texture2D playlistIcon;
     int playlistIconIndex = -1;
@@ -36,6 +38,42 @@ public partial class Player : Node
 
         Globals.main.OnPlay += PlayIcon;
         Play.Icon = Globals.play_texture;
+
+        MuteButton.ButtonUp += MuteVolume;
+        VolumeSlider.DragStarted += VolumeUnmute;
+
+        MuteButton.Icon = muted ? Unmute : Mute;
+    }
+
+    public void MuteVolume()
+    {
+        muted = !muted;
+        MuteButton.Icon = muted ? Unmute : Mute;
+        if (muted)
+        {
+            muted_volume = Mathf.Max(VolumeSlider.Value, -49);
+            if (Globals.main.player.VolumeDb == -80f)
+            {
+                muted = false;
+                MuteButton.Icon = muted ? Unmute : Mute;
+                VolumeSlider.Value = muted_volume;
+            }
+            else
+            {
+                Globals.main.player.VolumeDb = -80f;
+                VolumeSlider.Value = -50;
+            }
+        }
+        else
+        {
+            VolumeSlider.Value = muted_volume;
+        }
+    }
+
+    public void VolumeUnmute()
+    {
+        muted = false;
+        MuteButton.Icon = muted ? Unmute : Mute;
     }
 
     public bool Interrupt()
@@ -183,7 +221,12 @@ public partial class Player : Node
             float max = 0.65f;
             backgroundColor.Color = backgroundColor.Color.Lerp(bc.Clamp(new Color(), new Color(max, max, max, max)), (float)delta * 2f);
 
-            Globals.main.player.VolumeDb = (float)(VolumeSlider.Value != -50 ? VolumeSlider.Value : -80) + Globals.main.playlist.customInfo.volume;
+            if (!muted)
+            {
+                Globals.main.player.VolumeDb = (float)(VolumeSlider.Value != -50 ? VolumeSlider.Value : -80) + Globals.main.playlist.customInfo.volume;
+                MuteButton.Icon = Globals.main.player.VolumeDb == -80 ? Unmute : Mute;
+            }
+                
         }
     }
 }
