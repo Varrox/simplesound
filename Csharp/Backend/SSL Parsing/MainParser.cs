@@ -36,10 +36,6 @@ namespace SSLParser
                 {
                     ParseSongs(ref playlist, ref lines, ref i);
                 }
-                else if (trimmedStartLine.StartsWith("Folders"))
-                {
-                    ParseFolders(ref playlist, ref lines, ref i);
-                }
             }
 
             return playlist;
@@ -132,38 +128,57 @@ namespace SSLParser
             for (int i = index + 1; i < lines.Length; i++)
             {
                 line.line = i;
-                string trimmedLine = lines[i].Trim();
-                if (trimmedLine == "}")
+                string trimmed_line = lines[i].Trim();
+                if (trimmed_line == "}")
                 {
                     index = i;
                     return;
                 }
-                else if (trimmedLine == "{")
+                else if (trimmed_line == "{")
                 {
                     continue;
                 }
 
-                if (trimmedLine.Length > 0)
+                if (trimmed_line.Length > 0)
                 {
-                    string songPath = Path.Combine(SaveSystem.UserData, "Music Folders", ParsingTools.FormatCode(trimmedLine));
+                    string input_path = Path.Combine(SaveSystem.UserData, "Music Folders", ParsingTools.FormatCode(trimmed_line));
 
-                    if (Tools.ValidAudioFile(songPath))
+                    if (Tools.ValidAudioFile(input_path))
                     {
-                        if (!Metadata.IsFileCorrupt(songPath))
+                        if (!Metadata.IsFileCorrupt(input_path))
                         {
-                            playlist.Songs.Add(songPath);
+                            playlist.Songs.Add(input_path);
                         }
                         else
                         {
-                            Debug.ErrorLog($"{songPath} is corrupted");
+                            Debug.ErrorLog($"{input_path} is corrupted");
                         }
                     }
                     else
                     {
-                        Debug.ErrorLog($"{songPath} is not a valid audio file");
+                        if (Directory.Exists(input_path))
+                        {
+                            string[] paths = Directory.GetFiles(input_path);
+                            foreach (string path in paths)
+                            {
+                                if (Tools.ValidAudioFile(path))
+                                {
+                                    if (!Metadata.IsFileCorrupt(path))
+                                    {
+                                        playlist.Songs.Add(path);
+                                    }
+                                    else
+                                    {
+                                        Debug.ErrorLog($"{path} is corrupted");
+                                    }
+                                }
+                            }
+                        }
+                        else
+                            Debug.ErrorLog($"{input_path} is not a valid audio file or folder / directory");
                     }
 
-                    if (trimmedLine.EndsWith("}"))
+                    if (trimmed_line.EndsWith("}"))
                     {
                         index = i;
                         return;
@@ -178,26 +193,26 @@ namespace SSLParser
             for (int i = index + 1; i < lines.Length; i++)
             {
                 line.line = i;
-                string trimmedLine = ParsingTools.FormatCode(lines[i]);
+                string trimmed_line = ParsingTools.FormatCode(lines[i]);
                 
-                if (trimmedLine == "}")
+                if (trimmed_line == "}")
                 {
                     index = i;
                     return;
                 }
-                else if (trimmedLine == "{")
+                else if (trimmed_line == "{")
                 {
                     continue;
                 }
 
-                if (trimmedLine.Length > 0)
+                if (trimmed_line.Length > 0)
                 {
-                    if (Directory.Exists(trimmedLine))
+                    if (Directory.Exists(trimmed_line))
                     {
-                        playlist.Folders.Add(trimmedLine);
+                        playlist.Folders.Add(trimmed_line);
                     }
 
-                    if (trimmedLine.EndsWith("}"))
+                    if (trimmed_line.EndsWith("}"))
                     {
                         index = i;
                         return;

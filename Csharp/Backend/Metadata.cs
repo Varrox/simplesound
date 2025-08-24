@@ -127,6 +127,7 @@ public class Metadata
                 MimeType = fileType,
                 Type = TagLib.PictureType.FrontCover
             };
+
             FileList[path].Tag.Pictures = new[] { picture };
         }
 
