@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=3 uid="uid://cbpkjhjnbrjm6"]
+[gd_scene load_steps=71 format=3 uid="uid://cbpkjhjnbrjm6"]
 
 [ext_resource type="Theme" uid="uid://cg2x5h7ufrntn" path="res://Styling/global_theme.tres" id="1_4lmeg"]
 [ext_resource type="Script" uid="uid://b81fhtdmrks0a" path="res://Csharp/Main.cs" id="1_l00ml"]
@@ -20,7 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://5hwvlu7uerj6" path="res://Icons/plus.png" id="10_7e43v"]
 [ext_resource type="Texture2D" uid="uid://c85envuiuo3ju" path="res://Icons/folder.png" id="11_1f20w"]
 [ext_resource type="Script" uid="uid://dcnfao6qa81tk" path="res://Csharp/UI/Playlists/PlaylistsVisualizer.cs" id="11_kq58d"]
-[ext_resource type="Script" uid="uid://schxe0nc0yhj" path="res://scroll_spacer.gd" id="12_f6a44"]
+[ext_resource type="Script" uid="uid://schxe0nc0yhj" path="res://Styling/scroll_spacer.gd" id="12_f6a44"]
 [ext_resource type="Texture2D" uid="uid://0yw8m2y164lr" path="res://Icons/settings.png" id="12_s6aix"]
 [ext_resource type="PackedScene" uid="uid://4mmerh1u4xho" path="res://Prefabs/playlisttemplate.tscn" id="13_a7qgi"]
 [ext_resource type="Texture2D" uid="uid://d4mh3dd6oqgn4" path="res://Icons/DefaultCoverHighres.png" id="13_seu75"]
@@ -50,6 +50,8 @@
 [ext_resource type="PackedScene" uid="uid://bw078i5dk5ff4" path="res://Windows/ConfirmationWindow.tscn" id="39_h8e4i"]
 [ext_resource type="Texture2D" uid="uid://brujrc442p3b5" path="res://Icons/mute.png" id="42_0cbny"]
 [ext_resource type="Script" uid="uid://cqf4nqygajv02" path="res://zoomer.gd" id="46_qnost"]
+[ext_resource type="Script" uid="uid://dshtlldgdpwlu" path="res://Styling/background_image_transition.gd" id="51_uypp3"]
+[ext_resource type="Shader" uid="uid://bdi2g0ydm4uf7" path="res://Styling/transition.gdshader" id="52_blkrb"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n3cvr"]
 shader = ExtResource("8_0cp0l")
@@ -103,6 +105,10 @@ anti_aliasing_size = 1.1
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_68lop"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_abqjc"]
+shader = ExtResource("52_blkrb")
+shader_parameter/t = 0.0
+
 [node name="Main" type="Control" node_paths=PackedStringArray("player", "volumeSlider", "playlistVisualizer", "songsVisualizer")]
 layout_mode = 3
 anchors_preset = 15
@@ -142,7 +148,7 @@ TotalTime = NodePath("Player/Controls/Progress/Total Time")
 SongName = NodePath("Player/Song Attributes/Name")
 SongArtist = NodePath("Player/Song Attributes/Artist")
 SongCover = NodePath("Player/Song Attributes/PanelContainer/Cover")
-BackgroundImage = NodePath("Background/Image")
+BackgroundImage = NodePath("../SubViewport")
 VolumeSlider = NodePath("Player/Controls/Volume")
 MuteButton = NodePath("Player/Controls/Volume/Mute")
 backgroundColor = NodePath("Background/Color")
@@ -164,7 +170,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("8_b1qrp")
-expand_mode = 3
+expand_mode = 4
 stretch_mode = 6
 
 [node name="Color" type="ColorRect" parent="Interface/Background"]
@@ -904,3 +910,16 @@ Main = NodePath("..")
 [node name="Zoomer" type="Node" parent="." node_paths=PackedStringArray("zoom_display")]
 script = ExtResource("46_qnost")
 zoom_display = NodePath("../Interface/Top Bar/Zoom amount")
+
+[node name="SubViewport" type="SubViewport" parent="." node_paths=PackedStringArray("transitioner", "target_texture_rect")]
+script = ExtResource("51_uypp3")
+transitioner = NodePath("Transitioner")
+target_texture_rect = NodePath("../Interface/Background/Image")
+
+[node name="Transitioner" type="ColorRect" parent="SubViewport"]
+material = SubResource("ShaderMaterial_abqjc")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

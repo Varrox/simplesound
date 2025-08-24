@@ -6,7 +6,8 @@ public partial class Player : Node
     [Export] public Texture2D LoopOn, LoopOff, ShuffleOn, ShuffleOff, Mute, Unmute;
     [Export] public Slider Progress;
     [Export] public Label CurrentTime, TotalTime, SongName, SongArtist;
-    [Export] public TextureRect SongCover, BackgroundImage;
+    [Export] public TextureRect SongCover;
+    [Export] public SubViewport BackgroundImage;
     [Export] public Slider VolumeSlider;
     [Export] public Button MuteButton;
     [Export] public ColorRect backgroundColor;
@@ -145,9 +146,9 @@ public partial class Player : Node
                 SongCover.Texture = cover;
             }
 
+            Texture2D background_texture = Globals.main.playlist.customInfo.backgroundPath != null ? ConvertToGodot.LoadImage(Globals.main.playlist.customInfo.backgroundPath, ref cover) : SongCover.Texture;
 
-            if (Globals.main.playlist.customInfo.backgroundPath != null) BackgroundImage.Texture = ConvertToGodot.LoadImage(Globals.main.playlist.customInfo.backgroundPath, ref cover);
-            else BackgroundImage.Texture = SongCover.Texture;
+            BackgroundImage.Set("target_texture", background_texture);
 
             TotalTime.Text = Tools.SecondsToTimestamp(Metadata.GetTotalTime(Globals.main.song));
             Progress.MaxValue = Globals.main.player.Stream.GetLength();
@@ -167,7 +168,7 @@ public partial class Player : Node
             Progress.Editable = false;
 
             SongCover.Texture = Globals.default_cover;
-            BackgroundImage.Texture = Globals.default_cover_highres;
+            BackgroundImage.Set("target_texture", Globals.default_cover_highres);
         }
     }
 

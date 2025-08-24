@@ -4,7 +4,6 @@ x Add folder explorer
 - Add lyrics viewer
 x Add max song display load limit
 - Add song position rearange
-- Lerp background image to transition
 - Add sorting
 - Add basic gdshader support to ssl
 - Add images to ssl
@@ -13,8 +12,7 @@ x Add max song display load limit
 - Add settings menu
 - Make playlist bar hiding
 - Add share button to songs (keep youtube link in song metadata)
-x Make covers all save as square aspect ratio
-- Make background image blur so it is only updated when it's image is changed
+x Make background image blur so it is only updated when it's image is changed
 
 BUCKETS ISSUES
 
@@ -36,6 +34,8 @@ FINISHED
 - Make shuffling not play songs twice
 - Ability to open appdata for app
 - Remove scrollbar focus somehow
+x Make covers all save as square aspect ratio
+- Lerp background image to transition
 
 SHELF
 - Make refresh specific parsing
