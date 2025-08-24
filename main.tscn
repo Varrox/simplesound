@@ -248,6 +248,8 @@ icon_alignment = 1
 expand_icon = true
 script = ExtResource("21_seu75")
 menu = NodePath("Panel")
+teleportMenu = null
+teleportMenuOffset = null
 
 [node name="Panel" type="Panel" parent="Interface/Side Panel/Add"]
 visible = false
@@ -321,6 +323,16 @@ expand_icon = true
 script = ExtResource("22_facbu")
 menu = NodePath("../../..")
 
+[node name="Label" type="Label" parent="Interface/Side Panel"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 46.0
+offset_top = 71.0
+offset_right = 153.0
+offset_bottom = 98.0
+theme_override_font_sizes/font_size = 15
+text = "My Playlists"
+
 [node name="Playlist" type="Button" parent="Interface"]
 layout_mode = 1
 anchors_preset = -1
@@ -333,19 +345,6 @@ focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_r3k7g")
 icon = ExtResource("8_8i1ca")
 expand_icon = true
-
-[node name="Label" type="Label" parent="Interface/Playlist"]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 40.0
-offset_top = -13.5
-offset_right = 147.0
-offset_bottom = 13.5
-grow_vertical = 2
-theme_override_font_sizes/font_size = 19
-text = "My Playlists"
 
 [node name="Song Display" type="ScrollContainer" parent="Interface" node_paths=PackedStringArray("menu", "container")]
 layout_mode = 1

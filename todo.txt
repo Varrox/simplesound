@@ -1,8 +1,6 @@
 TODO
 
-x Add folder explorer
 - Add lyrics viewer
-x Add max song display load limit
 - Add song position rearange
 - Add sorting
 - Add basic gdshader support to ssl
@@ -12,6 +10,11 @@ x Add max song display load limit
 - Add settings menu
 - Make playlist bar hiding
 - Add share button to songs (keep youtube link in song metadata)
+
+NAH
+
+x Add folder explorer
+x Add max song display load limit
 x Make background image blur so it is only updated when it's image is changed
 
 BUCKETS ISSUES

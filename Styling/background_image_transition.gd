@@ -4,6 +4,7 @@ extends SubViewport
 @export var target_texture_rect:TextureRect
 
 var transition_value:float
+var target_transition_value:float
 
 var target_texture:Texture2D:
 	set(value):
@@ -11,15 +12,14 @@ var target_texture:Texture2D:
 		target_texture = value
 		
 		transition_value = 0.0
-		
-		var mix_tween = get_tree().create_tween()
-		mix_tween.set_trans(Tween.TRANS_SINE)
-		mix_tween.tween_property(self, "transition_value", 1.0, 0.7)
+		target_transition_value = 1.0
 
 var past_target_texture:Texture2D
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	var shader:ShaderMaterial = transitioner.material as ShaderMaterial
+	
+	transition_value = Helper.smooth(transition_value, target_transition_value, 4)
 	
 	shader.set_shader_parameter("past_image", past_target_texture)
 	shader.set_shader_parameter("new_image", target_texture)
