@@ -129,9 +129,10 @@ public partial class Player : Node
             SongArtist.Text = artist;
             SongArtist.TooltipText = artist;
 
-            Texture2D cover = ConvertToGodot.GetCover(Globals.main.song, out bool failed);
+            Texture2D cover = ConvertToGodot.GetCover(Globals.main.song);
+            SongCover.Texture = cover;
 
-            if (failed && Globals.main.playlist.Type == Playlist.PlaylistType.Album)
+            if (cover == Globals.default_cover && Globals.main.playlist.Type == Playlist.PlaylistType.Album)
             {
                 if(playlistIcon == null || playlistIconIndex != Globals.main.currentPlaylist)
                 {

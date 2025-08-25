@@ -34,13 +34,15 @@ public partial class SongsVisualizer : ScrollContainer
 
                     if (hidden != (child.Cover.Texture == null))
                     {
+                        child.Cover.Visible = !hidden;
                         if (hidden)
                         {
                             child.Cover.Texture = null;
+                            
                         }
                         else
                         {
-                            child.Cover.Texture = ConvertToGodot.GetCover(songs[i - 1], out bool failed);
+                            child.Cover.Texture = ConvertToGodot.GetCover(songs[i - 1]);
                         }
                     }
                 }
@@ -112,7 +114,7 @@ public partial class SongsVisualizer : ScrollContainer
             }
 
             // init the playlist
-			disp.Init(Tools.GetMediaTitle(Playlist.Songs[i]), Metadata.GetArtist(Playlist.Songs[i]), Tools.SecondsToTimestamp(Metadata.GetTotalTime(Playlist.Songs[i])), playlist, i, Metadata.IsExplicit(Playlist.Songs[i]), Playlist.Type, !album || !IsHidden(disp) ? ConvertToGodot.GetCover(Playlist.Songs[i], out bool failed) : null, menu);
+			disp.Init(Tools.GetMediaTitle(Playlist.Songs[i]), Metadata.GetArtist(Playlist.Songs[i]), Tools.SecondsToTimestamp(Metadata.GetTotalTime(Playlist.Songs[i])), playlist, i, Metadata.IsExplicit(Playlist.Songs[i]), Playlist.Type, !album || !IsHidden(disp) ? ConvertToGodot.GetCover(Playlist.Songs[i]) : null, menu);
         }
 
 	}

@@ -5,19 +5,16 @@ using System.IO;
 
 public class ConvertToGodot
 {
-    public static Texture2D GetCover(string path, out bool failed)
+    public static Texture2D GetCover(string path)
     {
         byte[] pictureData = Metadata.GetCover(path, out string type);
+        
         if (pictureData == null)
-        {
-            failed = true;
             return Globals.default_cover;
-        }
-
-        failed = false;
 
         Image image = new Image();
         Error error = Error.Failed;
+
         switch (type)
         {
             case "image/jpeg":
@@ -31,15 +28,7 @@ public class ConvertToGodot
                 break;
         }
 
-        if (error == Error.Ok)
-        {
-            Texture2D t = new Texture2D();
-            return ImageTexture.CreateFromImage(image);
-        }
-        else
-        {
-            return Globals.default_cover;
-        }
+        return error == Error.Ok ? ImageTexture.CreateFromImage(image) : Globals.default_cover;
     }
 
     public static Color GetAverageColor(Texture2D texture, int samples = 6)

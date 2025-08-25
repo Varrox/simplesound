@@ -10,6 +10,18 @@ public partial class PlaylistsVisualizer : ScrollContainer
 
     [Signal] public delegate void OnSelectPlaylistEventHandler(int playlist, Texture2D img);
 
+    public override void _Process(double delta)
+    {
+        for (int i = 0; i < container.GetChildCount(); i++)
+        {
+            if (container.GetChild(i) is Playlist) 
+            {
+                PlaylistDisplay display = (container.GetChild(i) as PlaylistDisplay);
+                display.Cover.Visible = container.GetGlobalRect().Intersects(display.GetGlobalRect());
+            }
+        }
+    }
+
     public void LoadAllPlaylistVisuals() // only done once for init
     {
         for (int i = 0; i < Globals.main.playlists.Length; i++)

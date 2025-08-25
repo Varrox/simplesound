@@ -76,6 +76,7 @@ public partial class Songdisplay : Button
 		bool album = type == Playlist.PlaylistType.Album;
 
         Cover.Texture = cover;
+		Cover.Visible = Cover.Texture != null;
         (Cover.GetParent() as Control).Visible = !album;
         Spacer.Visible = !album;
 

@@ -911,6 +911,7 @@ script = ExtResource("46_qnost")
 zoom_display = NodePath("../Interface/Top Bar/Zoom amount")
 
 [node name="SubViewport" type="SubViewport" parent="." node_paths=PackedStringArray("transitioner", "target_texture_rect")]
+size = Vector2i(256, 256)
 script = ExtResource("51_uypp3")
 transitioner = NodePath("Transitioner")
 target_texture_rect = NodePath("../Interface/Background/Image")
