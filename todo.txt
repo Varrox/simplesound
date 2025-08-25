@@ -5,7 +5,6 @@ TODO
 - Add sorting
 - Add basic gdshader support to ssl
 - Add images to ssl
-- Add music video playing
 - Add update button
 - Add settings menu
 - Make playlist bar hiding
@@ -26,6 +25,7 @@ DOING
 
 FINISHED
 
+- Add music video playing
 - Make top card playbutton functionality
 - Add playlist creation
 - Add playlist importing

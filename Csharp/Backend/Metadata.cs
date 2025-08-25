@@ -174,10 +174,28 @@ public class Metadata
             if(TagList[path][i].Trim().StartsWith("Link "))
             {
                 GD.Print("Tag found");
-                return TagList[path][i].Substring(5);
+                return TagList[path][i].Substring(5).Trim();
             }
         }
 
         return null;
+    }
+
+    public static string GetVideo(string path)
+    {
+        InitializeTagListKey(ref path);
+
+        if (TagList[path] == null)
+            return "";
+
+        for (int i = 0; i < TagList[path].Length; i++)
+        {
+            if (TagList[path][i].Trim().StartsWith("Video "))
+            {
+                return TagList[path][i].Substring(6).Trim();
+            }
+        }
+
+        return "";
     }
 }

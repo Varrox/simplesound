@@ -109,7 +109,7 @@ anti_aliasing_size = 1.1
 shader = ExtResource("52_blkrb")
 shader_parameter/t = 0.0
 
-[node name="Main" type="Control" node_paths=PackedStringArray("player", "volumeSlider", "playlistVisualizer", "songsVisualizer")]
+[node name="Main" type="Control" node_paths=PackedStringArray("player", "video_player", "volumeSlider", "playlistVisualizer", "songsVisualizer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -119,6 +119,7 @@ grow_vertical = 2
 theme = ExtResource("1_4lmeg")
 script = ExtResource("1_l00ml")
 player = NodePath("Player")
+video_player = NodePath("Interface/Background/Video")
 volumeSlider = NodePath("Interface/Player/Controls/Volume")
 playlistVisualizer = NodePath("Interface/Side Panel/Playlists")
 songsVisualizer = NodePath("Interface/Song Display")
@@ -181,6 +182,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 1, 1, 0)
+
+[node name="Video" type="VideoStreamPlayer" parent="Interface/Background"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+volume_db = -80.0
+expand = true
 
 [node name="Side Panel" type="Panel" parent="Interface"]
 layout_mode = 1

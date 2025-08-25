@@ -31,6 +31,22 @@ public class ConvertToGodot
         return error == Error.Ok ? ImageTexture.CreateFromImage(image) : Globals.default_cover;
     }
 
+    public static VideoStreamTheora GetVideo(string path)
+    {
+        string video_path = Metadata.GetVideo(path);
+
+        if (video_path == string.Empty)
+            return null;
+
+        if (File.Exists(video_path) && video_path.EndsWith(".ogv"))
+        {
+            Debug.Log("KMS");
+            return Godot.ResourceLoader.Load(video_path) as VideoStreamTheora;
+        }
+
+        return null;
+    }
+
     public static Color GetAverageColor(Texture2D texture, int samples = 6)
     {
         Image image = texture.GetImage();

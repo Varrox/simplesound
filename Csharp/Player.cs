@@ -146,7 +146,7 @@ public partial class Player : Node
             {
                 SongCover.Texture = cover;
             }
-
+            
             Texture2D background_texture = Globals.main.playlist.customInfo.backgroundPath != null ? ConvertToGodot.LoadImage(Globals.main.playlist.customInfo.backgroundPath, ref cover) : SongCover.Texture;
 
             BackgroundImage.Set("target_texture", background_texture);
@@ -176,7 +176,16 @@ public partial class Player : Node
     public void SetTime(bool value)
     {
         Globals.main.time = (float)Progress.Value;
-        if (Globals.main.playing) Globals.main.player.Play(Globals.main.time);
+        if (Globals.main.playing)
+        {
+            Globals.main.player.Play(Globals.main.time);
+
+            if (Globals.main.video_player.Stream != null)
+            {
+                Globals.main.video_player.StreamPosition = Globals.main.time;
+            }
+        }
+        
         canSetTime = false;
     }
 

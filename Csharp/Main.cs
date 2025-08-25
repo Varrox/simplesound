@@ -5,7 +5,8 @@ using System;
 public partial class Main : Control
 {
 	[Export] public AudioStreamPlayer player;
-	[Export] public Slider volumeSlider;
+    [Export] public VideoStreamPlayer video_player;
+    [Export] public Slider volumeSlider;
 	[Export] public PlaylistsVisualizer playlistVisualizer;
 	[Export] public SongsVisualizer songsVisualizer;
 
@@ -94,9 +95,14 @@ public partial class Main : Control
 				{
 					time = 0;
 					player.Play(time);
+
+					video_player.Play();
+					video_player.StreamPosition = time;
+
 					EmitSignal("OnPlay", playing);
 				}
 			}
+
 			time = player.GetPlaybackPosition();
 		}
 	}
@@ -121,6 +127,10 @@ public partial class Main : Control
 			playlist = null;
 			player.Stop();
 			player.Stream = null;
+
+			video_player.Stop();
+			video_player.Stream = null;
+
 			return;
 		}
 
@@ -140,8 +150,25 @@ public partial class Main : Control
 	{
 		playing = !playing;
 
-		if(playing) player.Play(time);
-		else player.Stop();
+		if (playing) 
+		{
+            player.Play(time);
+
+			if (video_player.Stream != null)
+			{
+                video_player.Play();
+                video_player.StreamPosition = time;
+            }
+        }
+		else
+		{
+			if (video_player.Stream != null)
+			{
+                video_player.Stop();
+            }
+
+            player.Stop();
+        }
 
 		EmitSignal("OnPlay", playing);
 	}
@@ -221,7 +248,10 @@ public partial class Main : Control
                     player.Stream = AudioStreamOggVorbis.LoadFromBuffer(FileAccess.GetFileAsBytes(path));
                 }
 
-				
+                VideoStreamTheora video = ConvertToGodot.GetVideo(Globals.main.song);
+
+                video_player.Visible = video != null;
+				video_player.Stream = video;
 
                 EmitSignal("OnLoadSong");
             }
