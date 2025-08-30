@@ -5,81 +5,86 @@ using SSLParser;
 
 public class SaveSystem
 {
-	public static readonly string UserData = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "simplesound");
+	public static readonly string USER_DATA = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "simplesound");
 
-	public static void GetSaveData(out int playlistIndex, out int songIndex, out float currentTime, out float volume)
+	public static void GetSaveData(out int playlist_index, out int song_index, out float current_time, out float volume, out bool shuffled)
 	{
-        string playlists = Path.Combine(UserData, "Playlists");
+        string playlists = Path.Combine(USER_DATA, "Playlists");
         if (!Directory.Exists(playlists))
-		{
 			Directory.CreateDirectory(playlists);
-		}
 
-        string musicFiles = Path.Combine(UserData, "Music Folders");
-        if (!Directory.Exists(musicFiles))
-		{ 
-			Directory.CreateDirectory(musicFiles);
-		}
+        string music_files = Path.Combine(USER_DATA, "Music Folders");
+        if (!Directory.Exists(music_files))
+			Directory.CreateDirectory(music_files);
 
-        string playlistCovers = Path.Combine(UserData, "Playlist Covers");
-        if (!Directory.Exists(playlistCovers))
+        string playlist_covers = Path.Combine(USER_DATA, "Playlist Covers");
+        if (!Directory.Exists(playlist_covers))
+			Directory.CreateDirectory(playlist_covers);
+
+        playlist_index = 0;
+        song_index = 0;
+        current_time = 0;
+        volume = 0;
+        shuffled = false;
+
+        string save_data = Path.Combine(USER_DATA, "savedata.txt");
+
+        if (!File.Exists(save_data))
 		{
-			Directory.CreateDirectory(playlistCovers);
-		}
-
-        string saveData = Path.Combine(UserData, "savedata.txt");
-        if (!File.Exists(saveData))
-		{
-			File.Create(saveData).Close();
-			File.WriteAllText(saveData, "0\n0\n0.0\n0.0");
-            playlistIndex = 0;
-            songIndex = 0;
-			currentTime = 0;
-			volume = 0;
+			File.Create(save_data).Close();
+			File.WriteAllText(save_data, "0\n0\n0.0\n0.0\nfalse");
         }
 		else
 		{
-			string[] data = File.ReadAllLines(saveData);
-			playlistIndex = Convert.ToInt32(data[0]);
-			songIndex = Convert.ToInt32(data[1]);
-			currentTime = Convert.ToSingle(data[2]);
-			volume = Convert.ToSingle(data[3]);
-		}
+			string[] data = File.ReadAllLines(save_data);
 
-        string playlistSaver = Path.Combine(UserData, "savedplaylists.txt");
-        if (!File.Exists(playlistSaver))
-		{
-			File.Create(playlistSaver).Close();
-		}
-	}
+			for(int i = 0; i < data.Length; i++)
+			{
+				switch(i)
+				{
+					case 0:
+                        playlist_index = Convert.ToInt32(data[0]);
 
-	public static void SaveData(int playlistIndex, int songIndex, float currentTime, float volume)
-	{
-        string saveData = Path.Combine(UserData, "savedata.txt");
-
-        if (File.Exists(saveData))
-        {
-            StreamWriter writer = new StreamWriter(saveData);
-            writer.Write($"{playlistIndex}\n{songIndex}\n{currentTime}\n{volume}");
-            writer.Close();
+                        break;
+					case 1:
+                        song_index = Convert.ToInt32(data[1]);
+                        break;
+					case 2:
+                        current_time = Convert.ToSingle(data[2]);
+                        break;
+					case 3:
+						volume = Convert.ToSingle(data[3]);
+						break;
+					case 4:
+                        shuffled = Convert.ToBoolean(data[4]);
+                        break;
+				}
+			}
         }
+    }
+
+	public static void SaveData(int playlist_index, int song_index, float current_time, float volume, bool shuffled)
+	{
+        string save_data = Path.Combine(USER_DATA, "savedata.txt");
+        File.WriteAllText(save_data, $"{playlist_index}\n{song_index}\n{current_time}\n{volume}\n{shuffled}");
     }
 
 	public static string[] GetAllPlaylists()
 	{
-		return File.ReadAllLines(Path.Combine(UserData, "savedplaylists.txt"));
+        string playlist_save = Path.Combine(USER_DATA, "savedplaylists.txt");
+        return File.Exists(playlist_save) ? File.ReadAllLines(playlist_save) : null;
 	}
 
     public static void SaveAllPlaylists(string[] playlists)
     {
-        File.WriteAllLines(Path.Combine(UserData, "savedplaylists.txt"), playlists);
+        File.WriteAllLines(Path.Combine(USER_DATA, "savedplaylists.txt"), playlists);
     }
 
     public static string ImportFolder(string path)
 	{
         // Create new folder
-		string newPath = Path.Combine(UserData, "Music Folders", Path.GetDirectoryName(path));
-        Directory.CreateDirectory(newPath);
+		string new_path = Path.Combine(USER_DATA, "Music Folders", Path.GetDirectoryName(path));
+        Directory.CreateDirectory(new_path);
 
 		// Copy all music files to the folder
 		string[] songs = Directory.GetFiles(path);
@@ -88,18 +93,18 @@ public class SaveSystem
 		{ 
 			if(Tools.ValidAudioFile(song))
             {
-				File.Copy(song, Path.Combine(newPath, Path.GetFileName(song)));
+				File.Copy(song, Path.Combine(new_path, Path.GetFileName(song)));
 			}
 		}
 
-		return newPath;
+		return new_path;
     }
 
 	public static List<string> ImportSongs(string[] songs, string playlist_name, bool check_valid = true)
 	{
 		List<string> list = new List<string>();
-		string newPath = Path.Combine(UserData, "Music Folders", playlist_name);
-		Directory.CreateDirectory(newPath);
+		string new_path = Path.Combine(USER_DATA, "Music Folders", playlist_name);
+		Directory.CreateDirectory(new_path);
 
 		foreach(string song in songs)
 		{
@@ -108,10 +113,10 @@ public class SaveSystem
 				if (Tools.ValidAudioFile(song)) continue;
 			}
 
-			string destinationPath = Path.Combine(newPath, Path.GetFileName(song));
+			string destination_path = Path.Combine(new_path, Path.GetFileName(song));
 
-			File.Copy(song, destinationPath);
-            list.Add(destinationPath);
+			File.Copy(song, destination_path);
+            list.Add(destination_path);
         }
 
 		return list;
@@ -125,7 +130,7 @@ public class SaveSystem
 		}
 
 
-        string newPath = Path.Combine(UserData, "Playlist Covers", playlist_name + Path.GetExtension(path));
+        string newPath = Path.Combine(USER_DATA, "Playlist Covers", playlist_name + Path.GetExtension(path));
         File.Copy(path, newPath);
 
 		return newPath;

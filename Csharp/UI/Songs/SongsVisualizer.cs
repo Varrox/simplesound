@@ -10,7 +10,7 @@ public partial class SongsVisualizer : ScrollContainer
 
     Thread update_songs_thread;
 
-    int lastScroll = 0;
+    int last_scroll = 0;
 
     string[] songs;
     bool album;
@@ -29,7 +29,7 @@ public partial class SongsVisualizer : ScrollContainer
     {
         if(!album)
         {
-            if (lastScroll != ScrollVertical)
+            if (last_scroll != ScrollVertical)
             {
                 for (int i = 1; i < container.GetChildCount(); i++)
                 {
@@ -42,18 +42,18 @@ public partial class SongsVisualizer : ScrollContainer
                     child.cover.Texture = hidden ? null : ConvertToGodot.GetCover(songs[i - 1]);
                 }
 
-                lastScroll = ScrollVertical;
+                last_scroll = ScrollVertical;
             }
         }
     }
 
     public void Load(int playlist_index, Texture2D playlist_cover)
 	{
-		Globals.main.currentLookingAtPlaylist = playlist_index;
+		Globals.main.current_looked_at_playlist = playlist_index;
 
         Playlist playlist = null;
 
-        if (playlist_index == Globals.main.currentPlaylist) playlist = Globals.main.playlist;
+        if (playlist_index == Globals.main.current_playlist) playlist = Globals.main.playlist;
 		else playlist = MainParser.ParsePlaylist(Globals.main.playlists[playlist_index]);
 
         album = playlist.Type == Playlist.PlaylistType.Album;
@@ -135,10 +135,10 @@ public partial class SongsVisualizer : ScrollContainer
 
 	public void UpdateSong(int index, string song_name, string artist, string time, bool explicit_lyrics, Texture2D texture)
 	{
-		if(Globals.main.currentLookingAtPlaylist == Globals.main.currentPlaylist)
+		if(Globals.main.current_looked_at_playlist == Globals.main.current_playlist)
 		{
             SongDisplay disp = container.GetChild(index + 1) as SongDisplay;
-            disp.Init(song_name, artist, time, Globals.main.currentLookingAtPlaylist, index, explicit_lyrics, Globals.main.playlist.Type, texture, menu);
+            disp.Init(song_name, artist, time, Globals.main.current_looked_at_playlist, index, explicit_lyrics, Globals.main.playlist.Type, texture, menu);
         }
     }
 }

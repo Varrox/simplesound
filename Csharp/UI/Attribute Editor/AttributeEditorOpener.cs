@@ -28,10 +28,10 @@ public partial class AttributeEditorOpener : EditorWindowOpener
         if(!editor.cancelled)
         {
             if (Globals.main.playlist)
-                Metadata.SetData(Globals.main.song, editor.Name.Text, editor.Artist.Text, editor.coverpath, editor.Sharelink.Text, editor.ExplicitLyrics.ButtonPressed);
+                Metadata.SetData(Globals.main.song, editor.Name.Text, editor.Artist.Text, editor.cover_path, editor.Sharelink.Text, editor.ExplicitLyrics.ButtonPressed);
 
             Globals.player.OnLoadSong();
-            Globals.main.songsVisualizer.UpdateSong(Globals.main.currentSong, editor.Name.Text, editor.Artist.Text, Globals.player.TotalTime.Text, editor.ExplicitLyrics.ButtonPressed, Globals.player.SongCover.Texture);
+            Globals.main.songsVisualizer.UpdateSong(Globals.main.current_song, editor.Name.Text, editor.Artist.Text, Globals.player.TotalTime.Text, editor.ExplicitLyrics.ButtonPressed, Globals.player.SongCover.Texture);
         }
 
         Globals.player.interrupted = false;

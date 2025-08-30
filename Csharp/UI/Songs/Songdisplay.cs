@@ -26,13 +26,13 @@ public partial class SongDisplay : Button
 		playing = false;
         Globals.main.OnPlay -= SetTextures;
 
-        if (Globals.main.currentPlaylist == playlist && Globals.main.currentSong == song) // highlight
+        if (Globals.main.current_playlist == playlist && Globals.main.current_song == song) // highlight
 		{
 			Globals.main.OnPlay += SetTextures;
 			playing = true;
 			SelfModulate = Globals.highlight;
 		}
-		else if (Globals.main.currentPlaylist != playlist || Globals.main.currentSong != song) // un-highlight
+		else if (Globals.main.current_playlist != playlist || Globals.main.current_song != song) // un-highlight
         {
 			play_button.Texture = Globals.play_texture;
             Globals.main.OnPlay -= SetTextures;
@@ -58,7 +58,7 @@ public partial class SongDisplay : Button
 
 	public void OnExit()
 	{
-		if(!more.menuOpen) more.Hide();
+		if(!more.menu_open) more.Hide();
         play_button.Hide();
 		play_button.Texture = null;
         number.SelfModulate = new Color(1, 1, 1, 1);
@@ -92,7 +92,7 @@ public partial class SongDisplay : Button
 
 	public void SetSong()
 	{
-		if(Globals.main.currentPlaylist != playlist) Globals.main.LoadPlaylist(playlist);
+		if(Globals.main.current_playlist != playlist) Globals.main.LoadPlaylist(playlist);
 		if(!playing) Globals.main.SetSong(song);
 		else Globals.main.Play();
 	}

@@ -30,7 +30,7 @@ static func get_user() -> String:
 	return OS.get_environment("USERNAME") if OS.get_name() == "Windows" else OS.get_environment("USER")
 
 static func get_random_string(length:int):
-	var output:String
+	var output:String = ''
 	
 	for i in length:
 		output += char(randi_range(33, 126))
@@ -38,7 +38,7 @@ static func get_random_string(length:int):
 	return output
 
 static func get_random_vector2() -> Vector2:
-	var rotation = randi_range(0, 2 * PI)
+	var rotation:float = randf_range(0.0, 2.0 * PI)
 	return Vector2(cos(rotation), sin(rotation))
 
 static func did_hell_break_loose() -> bool:

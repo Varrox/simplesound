@@ -1,6 +1,5 @@
 ﻿using Godot;
 using System.Collections.Generic;
-using System.IO;
 
 public partial class ImportFolderOpener : EditorWindowOpener
 {
@@ -32,7 +31,7 @@ public partial class ImportFolderOpener : EditorWindowOpener
             Playlist playlist = new Playlist(creator.playlist_name.Text, SaveSystem.ImportCover(creator.cover_path, creator.playlist_name.Text), new List<string>(files));
 
             if (creator.backgroundThemeEnabled.ButtonPressed)
-                playlist.customInfo.overlayColor = "#" + creator.backgroundTheme.Color.ToHtml();
+                playlist.customInfo.overlay_color = "#" + creator.backgroundTheme.Color.ToHtml();
 
             if (creator.album.ButtonPressed)
                 playlist.Type = Playlist.PlaylistType.Album;
@@ -40,8 +39,8 @@ public partial class ImportFolderOpener : EditorWindowOpener
             if (creator.artist.Text.Trim() != "")
                 playlist.Artist = creator.artist.Text;
 
-            Tools.AddToArray(ref Globals.main.playlists, playlist.Save());
-            SaveSystem.SaveAllPlaylists(Globals.main.playlists);
+            Globals.main.playlists.Add(playlist.Save());
+            SaveSystem.SaveAllPlaylists(Globals.main.playlists.ToArray());
             Globals.main.Refresh();
         }
 

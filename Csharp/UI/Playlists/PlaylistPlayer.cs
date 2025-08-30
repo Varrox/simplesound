@@ -10,19 +10,19 @@ public partial class PlaylistPlayer : Button
 
 	public void Play() 
 	{ 
-		if(Globals.main.currentPlaylist == Globals.main.currentLookingAtPlaylist)
+		if(Globals.main.current_playlist == Globals.main.current_looked_at_playlist)
 		{
 			Globals.main.Play();
 		}
 		else
 		{
-            Globals.main.LoadPlaylist(Globals.main.currentLookingAtPlaylist);
+            Globals.main.LoadPlaylist(Globals.main.current_looked_at_playlist);
             Globals.main.SetSong(0);
         }
 	}
 
     public override void _Process(double delta)
     {
-        Icon = (Globals.main.currentPlaylist == Globals.main.currentLookingAtPlaylist) && Globals.main.playing ? Globals.pause_texture : Globals.play_texture;
+        Icon = (Globals.main.current_playlist == Globals.main.current_looked_at_playlist) && Globals.main.playing ? Globals.pause_texture : Globals.play_texture;
     }
 }

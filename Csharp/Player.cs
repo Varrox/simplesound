@@ -14,13 +14,13 @@ public partial class Player : Node
 
     Color bc;
 
-    bool canSetTime;
+    bool can_set_time;
 
     public bool interrupted, muted;
     public double muted_volume;
 
-    Texture2D playlistIcon;
-    int playlistIconIndex = -1;
+    Texture2D playlist_icon;
+    int playlist_icon_index = -1;
 
     public override void _Ready()
 	{
@@ -35,7 +35,7 @@ public partial class Player : Node
         Globals.main.OnChangePlaylist += OnChangePlaylist;
 
         Progress.DragEnded += SetTime;
-        Progress.DragStarted += () => canSetTime = true;
+        Progress.DragStarted += () => can_set_time = true;
 
         Globals.main.OnPlay += PlayIcon;
         Play.Icon = Globals.play_texture;
@@ -44,6 +44,13 @@ public partial class Player : Node
         VolumeSlider.DragStarted += VolumeUnmute;
 
         MuteButton.Icon = muted ? Unmute : Mute;
+
+        CallDeferred("SetUpPostMain");
+    }
+
+    public void SetUpPostMain()
+    {
+        Shuffle.Icon = Globals.main.shuffled ? ShuffleOn : ShuffleOff;
     }
 
     public void MuteVolume()
@@ -90,12 +97,12 @@ public partial class Player : Node
 
     public void SetShuffle()
     {
-        Globals.main.random = !Globals.main.random;
+        Globals.main.shuffled = !Globals.main.shuffled;
 
-        Globals.main.offset = Globals.main.currentSong;
-        Globals.main.shuffleIndex = Globals.main.currentSong;
+        Globals.main.offset = Globals.main.current_song;
+        Globals.main.shuffle_index = Globals.main.current_song;
 
-        Shuffle.Icon = Globals.main.random ? ShuffleOn : ShuffleOff;
+        Shuffle.Icon = Globals.main.shuffled ? ShuffleOn : ShuffleOff;
     }
 
     public void SetLoop()
@@ -134,20 +141,20 @@ public partial class Player : Node
 
             if (cover == Globals.default_cover && Globals.main.playlist.Type == Playlist.PlaylistType.Album)
             {
-                if(playlistIcon == null || playlistIconIndex != Globals.main.currentPlaylist)
+                if(playlist_icon == null || playlist_icon_index != Globals.main.current_playlist)
                 {
-                    playlistIcon = ConvertToGodot.LoadImage(Globals.main.playlist.Cover, ref Globals.default_cover);
-                    playlistIconIndex = Globals.main.currentPlaylist;
+                    playlist_icon = ConvertToGodot.LoadImage(Globals.main.playlist.Cover, ref Globals.default_cover);
+                    playlist_icon_index = Globals.main.current_playlist;
                 }
                 
-                SongCover.Texture = playlistIcon;
+                SongCover.Texture = playlist_icon;
             }
             else
             {
                 SongCover.Texture = cover;
             }
             
-            Texture2D background_texture = Globals.main.playlist.customInfo.backgroundPath != null ? ConvertToGodot.LoadImage(Globals.main.playlist.customInfo.backgroundPath, ref cover) : SongCover.Texture;
+            Texture2D background_texture = Globals.main.playlist.customInfo.background_path != null ? ConvertToGodot.LoadImage(Globals.main.playlist.customInfo.background_path, ref cover) : SongCover.Texture;
 
             BackgroundImage.Set("target_texture", background_texture);
 
@@ -186,14 +193,14 @@ public partial class Player : Node
             }
         }
         
-        canSetTime = false;
+        can_set_time = false;
     }
 
     public void OnChangePlaylist()
     {
-        if (Globals.main.playlist.customInfo.overlayColor != null)
+        if (Globals.main.playlist.customInfo.overlay_color != null)
         {
-            bc = ConvertToGodot.GetColor(Globals.main.playlist.customInfo.overlayColor);
+            bc = ConvertToGodot.GetColor(Globals.main.playlist.customInfo.overlay_color);
         }
         else
         {
@@ -218,7 +225,7 @@ public partial class Player : Node
 
         if (Globals.main.player.Stream != null) CurrentTime.Text = Tools.SecondsToTimestamp(Globals.main.time);
 
-        if (!canSetTime)
+        if (!can_set_time)
         {
             Progress.Value = Globals.main.time;
         }

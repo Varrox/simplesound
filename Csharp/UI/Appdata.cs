@@ -4,6 +4,6 @@ public partial class Appdata : Button
 {
 	public override void _Ready()
 	{
-		ButtonUp += () => OS.ShellShowInFileManager(SaveSystem.UserData);
+		ButtonUp += () => OS.ShellShowInFileManager(SaveSystem.USER_DATA);
 	}
 }

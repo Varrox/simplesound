@@ -16,6 +16,7 @@ DOING
 
 FINISHED
 
+- Add shuffle option to save file
 - Add music video playing
 - Make top card playbutton functionality
 - Add playlist creation

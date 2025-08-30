@@ -22,9 +22,9 @@ namespace SSLParser
 
             int starts = 1;
             int ends = 0;
-            int lastCut = index + 1;
-            bool stringWrap = false;
-            string[] output = new string[0];
+            int last_cut = index + 1;
+            bool string_wrap = false;
+            List<string> output = new List<string>();
 
             for (int i = index + 1; i < line.Length; i++)
             {
@@ -32,12 +32,12 @@ namespace SSLParser
 
                 if (line[i] == '"')
                 {
-                    stringWrap = !stringWrap;
+                    string_wrap = !string_wrap;
                 }
 
                 // skip string
 
-                else if (!stringWrap)
+                else if (!string_wrap)
                 {
                     if (line[i] == '(' || line[i] == '{')
                     {
@@ -51,7 +51,7 @@ namespace SSLParser
 
                         if (starts == ends)
                         {
-                            Tools.AddToArray(ref output, line.Substring(lastCut, i - lastCut).Trim());
+                            output.Add(line.Substring(last_cut, i - last_cut).Trim());
                             break;
                         }
                     }
@@ -59,13 +59,13 @@ namespace SSLParser
                     {
                         // finish argument
 
-                        Tools.AddToArray(ref output, line.Substring(lastCut, i - lastCut).Trim());
-                        lastCut = i + 1;
+                        output.Add(line.Substring(last_cut, i - last_cut).Trim());
+                        last_cut = i + 1;
                     }
                 }
             }
 
-            return output;
+            return output.ToArray();
         }
 
         /// <summary>
@@ -75,10 +75,10 @@ namespace SSLParser
         /// <returns>formatted code</returns>
         public static string FormatCode(string text)
         {
-            int s = text.IndexOf("//");
-            if (s == -1)
+            int comment_start = text.IndexOf("//");
+            if (comment_start == -1)
                 return text.Trim();
-            return text.Substring(0, s).Trim();
+            return text.Substring(0, comment_start).Trim();
         }
 
         /// <summary>
@@ -106,11 +106,12 @@ namespace SSLParser
                 }
 
                 field = type.GetField(variable);
+
                 if (field != null)
                 {
-                    object newValue = ConvertType(value, field.FieldType);
-                    if (newValue != null)
-                        field.SetValue(obj, newValue);
+                    object new_value = ConvertType(value, field.FieldType);
+                    if (new_value != null)
+                        field.SetValue(obj, new_value);
                     else
                         Debug.ErrorLog($"{line.ToString()} {variable} is not a variable that can be set properly in SSL");
                 }

@@ -10,14 +10,8 @@ public class Playlist
 
     public string Path
     {
-        set
-        {
-            _path = value;
-        }
-        get
-        {
-            return _path != null ? _path : System.IO.Path.Combine(SaveSystem.UserData, "Playlists", $"{Name}.ssl");
-        }
+        set { _path = value; }
+        get { return _path != null ? _path : System.IO.Path.Combine(SaveSystem.USER_DATA, "Playlists", $"{Name}.ssl"); }
     }
 
     string _path;
@@ -48,17 +42,17 @@ public class Playlist
             if (Artist.Trim() != "")
                 output += $"{ParsingTools.TAB}Artist : {Artist}\n";
 
-        if (customInfo.overlayColor != null)
-            if(customInfo.overlayColor.Trim() != "")
-                output += $"{ParsingTools.TAB}Overlay-Color : {customInfo.overlayColor}\n";
+        if (customInfo.overlay_color != null)
+            if(customInfo.overlay_color.Trim() != "")
+                output += $"{ParsingTools.TAB}Overlay-Color : {customInfo.overlay_color}\n";
 
         if (Cover != null)
             if(Cover.Trim() != "")
                 output += $"{ParsingTools.TAB}Cover : {Cover}\n";
 
-        if (customInfo.backgroundPath != null)
-            if (customInfo.backgroundPath.Trim() != "")
-                output += $"{ParsingTools.TAB}Background-Image : {customInfo.backgroundPath}\n";
+        if (customInfo.background_path != null)
+            if (customInfo.background_path.Trim() != "")
+                output += $"{ParsingTools.TAB}Background-Image : {customInfo.background_path}\n";
 
         output += "}\n\n";
 
@@ -94,7 +88,7 @@ public class Playlist
     public void DeleteFile()
     {
         File.Delete(Path);
-        string playlistSaver = System.IO.Path.Combine(SaveSystem.UserData, "savedplaylists.txt");
+        string playlistSaver = System.IO.Path.Combine(SaveSystem.USER_DATA, "savedplaylists.txt");
         List<string> paths = new List<string>(File.ReadAllLines(playlistSaver));
         paths.Remove(Path);
         File.WriteAllLines(playlistSaver, paths);
@@ -120,8 +114,8 @@ public class Playlist
 
         ActionMapper = new Dictionary<string, Action<string>>()
         {
-            ["Overlay-Color"] = color => customInfo.overlayColor = color,
-            ["Background-Image"] = path => customInfo.backgroundPath = path,
+            ["Overlay-Color"] = color => customInfo.overlay_color = color,
+            ["Background-Image"] = path => customInfo.background_path = path,
             ["Volume"] = amount => customInfo.volume = Convert.ToSingle(amount),
             ["Speed"] = amount => customInfo.speed = Convert.ToSingle(amount),
             ["Reverb"] = amount => customInfo.reverb = Convert.ToSingle(amount),
@@ -154,8 +148,8 @@ public class Playlist
 
 public struct CustomInfo
 {
-    public string overlayColor, backgroundPath;
-    public bool4 overlayReactive, backgroundReactive;
+    public string overlay_color, background_path;
+    public bool4 overlay_reactive, background_reactive;
     public float volume = 0, speed = 1, reverb = 0;
 
     public CustomInfo()
@@ -166,10 +160,9 @@ public struct CustomInfo
 
 public struct UICustomization
 {
-    public string DefualtFont;
-    public string DefualtColor;
-    public string DefualtFontColor;
-
+    public string default_font;
+    public string default_color;
+    public string default_font_color;
 
     public UICustomization()
     {

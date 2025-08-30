@@ -44,7 +44,7 @@ public partial class PlaylistCreator : EditorWindow
 	public void Clear()
 	{
         playlist_name.Text = "";
-        coverDisplay.set_path();
+        coverDisplay.SetPath();
 
         foreach (Node child in songDisplayContainer.GetChildren())
         {
@@ -88,14 +88,14 @@ public partial class PlaylistCreator : EditorWindow
 	public void SetCover(string path)
 	{
 		cover_path = path;
-		coverDisplay.set_path(cover_path);
+		coverDisplay.SetPath(cover_path);
         DisconnectSetCover();
     }
 	
 	public void ClearCover()
 	{
 		cover_path = "";
-        coverDisplay.set_path(cover_path);
+        coverDisplay.SetPath(cover_path);
     }
 
 	public void OpenSongs()
@@ -119,7 +119,7 @@ public partial class PlaylistCreator : EditorWindow
 				if(!songs.Contains(path))
 				{
 					var disp = songDisplay.Instantiate() as PathDisplay;
-					disp.set_path(path);
+					disp.SetPath(path);
 					
 					songDisplayContainer.AddChild(disp);
 					songs.Add(path);

@@ -5,7 +5,7 @@ public partial class ContextMenu : Button
     [Export] public Control menu;
     [Export] public bool teleportMenu;
     [Export] public Vector2 teleportMenuOffset;
-    public bool menuOpen;
+    public bool menu_open;
 
     [Signal] public delegate void OnCloseEventHandler();
     public override void _Ready()
@@ -14,14 +14,14 @@ public partial class ContextMenu : Button
 
         if(menu != null)
         {
-            menuOpen = false;
+            menu_open = false;
             menu.Visible = false;
         }
     }
 
     public override void _Process(double delta)
     {
-        if (menuOpen && !Globals.player.interrupted)
+        if (menu_open && !Globals.player.interrupted)
         {
             if (!DisplayServer.WindowIsFocused())
             {
@@ -30,7 +30,7 @@ public partial class ContextMenu : Button
 
             if(Input.IsMouseButtonPressed(MouseButton.Left) || Input.IsMouseButtonPressed(MouseButton.Right) || Input.IsMouseButtonPressed(MouseButton.Middle))
             {
-                if (isMouseInRect(menu) && !IsHovered())
+                if (IsMouseInRect(menu) && !IsHovered())
                 {
                     CloseMenu();
                 }
@@ -38,34 +38,34 @@ public partial class ContextMenu : Button
         }
     }
 
-    public static bool isMouseInRect(Control control)
+    public static bool IsMouseInRect(Control control)
     {
-        Vector2I pos = DisplayServer.MouseGetPosition() - DisplayServer.WindowGetPosition();
+        Vector2I mouse_position = DisplayServer.MouseGetPosition() - DisplayServer.WindowGetPosition();
         Rect2 rect = control.GetGlobalRect();
-        Vector2 rpos = rect.GetCenter();
-        bool x = pos.X > rpos.X + Mathf.Abs(rect.Size.X / 2) || pos.X < rpos.X - Mathf.Abs(rect.Size.X / 2);
-        bool y = pos.Y > rpos.Y + Mathf.Abs(rect.Size.Y / 2) || pos.Y < rpos.Y - Mathf.Abs(rect.Size.Y / 2);
+        Vector2 rect_position = rect.GetCenter();
+        bool x = mouse_position.X > rect_position.X + Mathf.Abs(rect.Size.X / 2) || mouse_position.X < rect_position.X - Mathf.Abs(rect.Size.X / 2);
+        bool y = mouse_position.Y > rect_position.Y + Mathf.Abs(rect.Size.Y / 2) || mouse_position.Y < rect_position.Y - Mathf.Abs(rect.Size.Y / 2);
         return x || y;
     }
 
     public void ToggleMenu()
     {
-        menuOpen = !menuOpen;
-        if (menuOpen && teleportMenu) TeleportMenu();
-        menu.Visible = menuOpen;
+        menu_open = !menu_open;
+        if (menu_open && teleportMenu) TeleportMenu();
+        menu.Visible = menu_open;
     }
 
     public void CloseMenu()
     {
-        menuOpen = false;
+        menu_open = false;
         menu.Visible = false;
         EmitSignal("OnClose");
     }
 
     public void OpenMenu()
     {
-        menuOpen = true;
-        if (menuOpen && teleportMenu) TeleportMenu();
+        menu_open = true;
+        if (menu_open && teleportMenu) TeleportMenu();
         menu.Visible = true;
     }
 

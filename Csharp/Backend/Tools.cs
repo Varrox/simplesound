@@ -4,32 +4,16 @@ using System.IO;
 public class Tools
 {
     /// <summary>
-    /// Creates an array with a length of an input array plus 1.
-    /// And copies the old array over, and sets the last index of the array to be and input item.
-    /// Inefficiently adding an item to an array
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="array">base array</param>
-    /// <param name="item">the item to be added</param>
-    public static void AddToArray<T>(ref T[] array, T item)
-    {
-        T[] newArray = new T[array.Length + 1];
-        array.CopyTo(newArray, 0);
-        newArray[array.Length] = item;
-        array = newArray;
-    }
-
-    /// <summary>
     /// Converts a value in seconds to a time step. (example : 60 seconds -> 1:00)
     /// </summary>
     /// <param name="time">time in seconds</param>
     /// <returns>Timestamp</returns>
     public static string SecondsToTimestamp(float time)
     {
-        int totalSeconds = Mathf.RoundToInt(time);
-        int mins = totalSeconds / 60;
+        int total_seconds = Mathf.RoundToInt(time);
+        int mins = total_seconds / 60;
 
-        return (totalSeconds / 3600 != 0 ? $"{mins / 60}:" : "") + $"{mins % 60}:{totalSeconds % 60:D2}";
+        return (total_seconds / 3600 != 0 ? $"{mins / 60}:" : "") + $"{mins % 60}:{total_seconds % 60:D2}";
     }
 
     /// <summary>
@@ -51,12 +35,5 @@ public class Tools
     public static bool ValidAudioFile(string path)
     {
         return (path.EndsWith(".mp3") || path.EndsWith(".wav") || path.EndsWith(".ogg")) && File.Exists(path);
-    }
-
-    public static int Wrap(int value, int min, int max)
-    {
-        value = value < min ? max + value + 1 : value;
-        value = value > max ? value - max - 1 : value;
-        return value;
     }
 }

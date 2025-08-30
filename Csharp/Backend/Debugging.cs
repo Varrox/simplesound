@@ -30,7 +30,7 @@ public struct LineAttributes
         this.line = line;
     }
 
-    public string ToString()
+    public readonly override string ToString()
     {
         return $"{Path.GetFileName(path)}:{line}";
     }

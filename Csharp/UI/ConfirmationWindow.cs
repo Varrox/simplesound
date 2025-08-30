@@ -12,7 +12,7 @@ public partial class ConfirmationWindow : Window
     [Signal] public delegate void OnCancelEventHandler();
     [Signal] public delegate void OnCloseEventHandler(Confirm confirm);
 
-    public bool freeOnClose = false;
+    public bool free_on_close = false;
 
     public override void _Ready()
     {
@@ -38,7 +38,7 @@ public partial class ConfirmationWindow : Window
     { 
         Visible = false;
         EmitSignal("OnClose", (int)confirm);
-        if (freeOnClose) QueueFree();
+        if (free_on_close) QueueFree();
     }
 
     public void Accept()

@@ -40,7 +40,6 @@ public class ConvertToGodot
 
         if (File.Exists(video_path) && video_path.EndsWith(".ogv"))
         {
-            Debug.Log("KMS");
             return Godot.ResourceLoader.Load(video_path) as VideoStreamTheora;
         }
 
@@ -70,13 +69,13 @@ public class ConvertToGodot
         }
         else
         {
-            string[] color_vals = ParsingTools.GetInParenthases(text, out string argument);
+            string[] color_values = ParsingTools.GetInParenthases(text, out string argument);
             switch(argument)
             {
                 case "rgb":
-                    return new Color(Convert.ToSingle(color_vals[0]), Convert.ToSingle(color_vals[1]), Convert.ToSingle(color_vals[2]), 1);
+                    return new Color(Convert.ToSingle(color_values[0]), Convert.ToSingle(color_values[1]), Convert.ToSingle(color_values[2]), 1);
                 case "rgba":
-                    return new Color(Convert.ToSingle(color_vals[0]), Convert.ToSingle(color_vals[1]), Convert.ToSingle(color_vals[2]), Convert.ToSingle(color_vals[3]));
+                    return new Color(Convert.ToSingle(color_values[0]), Convert.ToSingle(color_values[1]), Convert.ToSingle(color_values[2]), Convert.ToSingle(color_values[3]));
             }
             
             GD.PrintErr($"Could not parse color properly, invalid method name \'{text}\'");

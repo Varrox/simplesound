@@ -8,7 +8,7 @@ public partial class PlaylistDisplay : Button
 
     static readonly char dot = '\u00b7';
 
-    int PlaylistIndex;
+    int playlist_index;
     PlaylistsVisualizer visualizer;
 
     public override void _Ready()
@@ -16,29 +16,29 @@ public partial class PlaylistDisplay : Button
         More.Hide();
         ButtonDown += Set;
         MouseEntered += More.Show;
-        MouseExited += onExit;
+        MouseExited += OnExit;
         More.MouseEntered += More.Show;
         More.OnClose += More.Hide;
     }
 
-    public void onExit()
+    public void OnExit()
     {
-        if (!More.menuOpen) More.Hide();
+        if (!More.menu_open) More.Hide();
     }
 
     public void Set()
     {
-        Globals.main.playlistVisualizer.EmitSignal("OnSelectPlaylist", PlaylistIndex, Cover.Texture);
-        Globals.main.currentLookingAtPlaylist = PlaylistIndex;
+        Globals.main.playlistVisualizer.EmitSignal("OnSelectPlaylist", playlist_index, Cover.Texture);
+        Globals.main.current_looked_at_playlist = playlist_index;
         SelfModulate = Globals.lower_highlight;
     }
 
-    public void clearSelected(int index, Texture2D img)
+    public void ClearSelected(int index, Texture2D img)
     {
-        if (index != PlaylistIndex) SelfModulate = new Color(1, 1, 1, 1);
+        if (index != playlist_index) SelfModulate = new Color(1, 1, 1, 1);
     }
 
-    public void init(Playlist playlist, int index, bool current, Control menu)
+    public void Init(Playlist playlist, int index, bool current, Control menu)
     {
         Cover.Texture = ConvertToGodot.LoadImage(playlist.Cover, ref Globals.default_cover);
 
@@ -57,10 +57,10 @@ public partial class PlaylistDisplay : Button
 
         More.menu = menu;
 
-        PlaylistIndex = index;
+        playlist_index = index;
 
         if (current) Set();
 
-        Globals.main.playlistVisualizer.OnSelectPlaylist += clearSelected;
+        Globals.main.playlistVisualizer.OnSelectPlaylist += ClearSelected;
     }
 }

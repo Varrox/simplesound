@@ -16,23 +16,23 @@ namespace SSLParser
 
             for (int i = 0; i < lines.Length; i++)
             {
-                string trimmedStartLine = lines[i].Trim();
+                string trimmed_start_line = lines[i].Trim();
 
-                if (trimmedStartLine.Length == 0) continue;
+                if (trimmed_start_line.Length == 0) continue;
 
-                if (trimmedStartLine.StartsWith("Config"))
+                if (trimmed_start_line.StartsWith("Config"))
                 {
                     ParseConfiguration(ref playlist, ref lines, ref i);
                 }
-                else if (trimmedStartLine.StartsWith("Sound"))
+                else if (trimmed_start_line.StartsWith("Sound"))
                 {
                     ParseSound(ref playlist, ref lines, ref i);
                 }
-                else if (trimmedStartLine.StartsWith("UI"))
+                else if (trimmed_start_line.StartsWith("UI"))
                 {
 
                 }
-                else if (trimmedStartLine.StartsWith("Songs"))
+                else if (trimmed_start_line.StartsWith("Songs"))
                 {
                     ParseSongs(ref playlist, ref lines, ref i);
                 }
@@ -46,27 +46,27 @@ namespace SSLParser
             for (int i = index + 1; i < lines.Length; i++)
             {
                 line.line = i;
-                string trimmedLine = ParsingTools.FormatCode(lines[i]);
+                string trimmed_line = ParsingTools.FormatCode(lines[i]);
 
-                if (trimmedLine == "}")
+                if (trimmed_line == "}")
                 {
                     index = i;
                     return;
                 }
-                else if (trimmedLine == "{")
+                else if (trimmed_line == "{")
                 {
                     continue;
                 }
 
-                if (trimmedLine.Length > 0)
+                if (trimmed_line.Length > 0)
                 {
-                    string[] split = SplitLine(trimmedLine);
+                    string[] split = SplitLine(trimmed_line);
                     string var = split[0];
                     string value = split[1];
 
                     ParsingTools.SetVariable(ref line, var, value, ref playlist);
 
-                    if (trimmedLine.EndsWith("}"))
+                    if (trimmed_line.EndsWith("}"))
                     {
                         index = i;
                         return;
@@ -80,40 +80,40 @@ namespace SSLParser
             for (int i = index + 1; i < lines.Length; i++)
             {
                 line.line = i;
-                string trimmedLine = ParsingTools.FormatCode(lines[i]);
+                string trimmed_line = ParsingTools.FormatCode(lines[i]);
 
-                if (trimmedLine == "}")
+                if (trimmed_line == "}")
                 {
                     index = i;
                     return;
                 }
-                else if (trimmedLine == "{")
+                else if (trimmed_line == "{")
                 {
                     continue;
                 }
 
-                if (trimmedLine.Length > 0)
+                if (trimmed_line.Length > 0)
                 {
-                    string[] split = SplitLine(trimmedLine);
+                    string[] split = SplitLine(trimmed_line);
                     string var = split[0];
                     string value = split[1];
 
                     if(var == "VolumeReactive")
                     {
-                        string[] colors = ParsingTools.GetInParenthases(value, out string selectedVar);
+                        string[] colors = ParsingTools.GetInParenthases(value, out string selected_variable);
                         bool4 color = new bool4(colors[0].Contains('r'), colors[0].Contains('g'), colors[0].Contains('b'), colors[0].Contains('a'));
-                        switch (selectedVar)
+                        switch (selected_variable)
                         {
                             case "Overlay-Color":
-                                playlist.customInfo.overlayReactive = color;
+                                playlist.customInfo.overlay_reactive = color;
                                 break;
                             case "Background-Image":
-                                playlist.customInfo.backgroundReactive = color;
+                                playlist.customInfo.background_reactive = color;
                                 break;
                         }
                     }
 
-                    if (trimmedLine.EndsWith("}"))
+                    if (trimmed_line.EndsWith("}"))
                     {
                         index = i;
                         return;
@@ -141,7 +141,7 @@ namespace SSLParser
 
                 if (trimmed_line.Length > 0)
                 {
-                    string input_path = Path.Combine(SaveSystem.UserData, "Music Folders", ParsingTools.FormatCode(trimmed_line));
+                    string input_path = Path.Combine(SaveSystem.USER_DATA, "Music Folders", ParsingTools.FormatCode(trimmed_line));
 
                     if (Tools.ValidAudioFile(input_path))
                     {

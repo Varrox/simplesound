@@ -21,7 +21,7 @@ public partial class ImportPlaylist : Button
 		confirmationWindow.Message = "Import with cloud syncing enabled?";
 		confirmationWindow.AcceptText = "Yes";
 		confirmationWindow.DeclineText = "No";
-		confirmationWindow.freeOnClose = true;
+		confirmationWindow.free_on_close = true;
 
         GetTree().CurrentScene.AddChild(confirmationWindow);
 
@@ -43,11 +43,11 @@ public partial class ImportPlaylist : Button
 
 	public void ImportSSL(string ssl_file)
 	{
-		string newPath = Path.Combine(SaveSystem.UserData, "Playlists", Path.GetFileName(ssl_file));
+		string new_path = Path.Combine(SaveSystem.USER_DATA, "Playlists", Path.GetFileName(ssl_file));
 
-		File.Copy(ssl_file, newPath);
+		File.Copy(ssl_file, new_path);
 
-		Playlist playlist = MainParser.ParsePlaylist(newPath);
+		Playlist playlist = MainParser.ParsePlaylist(new_path);
 
 		if (sync == Confirm.Accepted)
 		{
@@ -55,8 +55,8 @@ public partial class ImportPlaylist : Button
 			playlist.Cover = SaveSystem.ImportCover(playlist.Cover, playlist.Name);
         }
 
-        Tools.AddToArray(ref Globals.main.playlists, playlist.Save());
-        SaveSystem.SaveAllPlaylists(Globals.main.playlists);
+		Globals.main.playlists.Add(playlist.Save());
+        SaveSystem.SaveAllPlaylists(Globals.main.playlists.ToArray());
         Globals.main.Refresh();
     }
 

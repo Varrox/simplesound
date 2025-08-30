@@ -1,5 +1,4 @@
 using Godot;
-using System.IO;
 using System.Collections.Generic;
 
 public partial class PlaylistCreatorOpener : EditorWindowOpener
@@ -29,13 +28,15 @@ public partial class PlaylistCreatorOpener : EditorWindowOpener
 		if (!creator.cancelled)
 		{
 			bool sync = creator.cloudSync.ButtonPressed;
-			string filename = creator.playlist_name.Text.Replace("\\", "-").Replace("/", "-");
-            List<string> files = sync ? SaveSystem.ImportSongs(creator.songs.ToArray(), filename, false) : creator.songs;
-			Playlist playlist = new Playlist(creator.playlist_name.Text, sync ? SaveSystem.ImportCover(creator.cover_path, filename) : creator.cover_path, files);
-			playlist.PathName = filename;
+			string file_name = creator.playlist_name.Text.Replace("\\", "-").Replace("/", "-");
+
+            List<string> files = sync ? SaveSystem.ImportSongs(creator.songs.ToArray(), file_name, false) : creator.songs;
+			Playlist playlist = new Playlist(creator.playlist_name.Text, sync ? SaveSystem.ImportCover(creator.cover_path, file_name) : creator.cover_path, files);
+			
+			playlist.PathName = file_name;
 
 			if (creator.backgroundThemeEnabled.ButtonPressed)
-				playlist.customInfo.overlayColor = "#" + creator.backgroundTheme.Color.ToHtml();
+				playlist.customInfo.overlay_color = "#" + creator.backgroundTheme.Color.ToHtml();
 
 			if (creator.album.ButtonPressed)
 				playlist.Type = Playlist.PlaylistType.Album;
@@ -45,8 +46,9 @@ public partial class PlaylistCreatorOpener : EditorWindowOpener
 
 			creator.Clear();
 
-			Tools.AddToArray(ref Globals.main.playlists, playlist.Save());
-			SaveSystem.SaveAllPlaylists(Globals.main.playlists);
+			Globals.main.playlists.Add(playlist.Save());
+
+			SaveSystem.SaveAllPlaylists(Globals.main.playlists.ToArray());
             Globals.main.Refresh();
 		}
 

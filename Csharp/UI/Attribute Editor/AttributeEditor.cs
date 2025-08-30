@@ -8,9 +8,9 @@ public partial class AttributeEditor : EditorWindow
     [Export] public CheckBox ExplicitLyrics;
     [Export] public Button SubmitButton, CancelButton;
 
-    public string songname, artist, coverpath, sharelink;
-    public bool explicitLyrics;
-    bool coverChanged;
+    public string song_name, artist, cover_path, share_link;
+    public bool explicit_lyrics;
+    bool cover_changed;
 
     public override void _Ready()
     {
@@ -23,7 +23,7 @@ public partial class AttributeEditor : EditorWindow
     {
         if (Visible)
         { 
-            bool changed = (Name.Text != songname) || (Artist.Text != artist) || coverChanged || (explicitLyrics != ExplicitLyrics.ButtonPressed) || (sharelink != Sharelink.Text);
+            bool changed = (Name.Text != song_name) || (Artist.Text != artist) || cover_changed || (explicit_lyrics != ExplicitLyrics.ButtonPressed) || (share_link != Sharelink.Text);
             SubmitButton.Visible = changed;
         }
     }
@@ -31,18 +31,18 @@ public partial class AttributeEditor : EditorWindow
     public void Open(string currentSong, string currentArtist, string currentSharelink, bool explicitLyrics)
     {
         Name.Text = currentSong;
-        songname = currentSong;
+        song_name = currentSong;
         Artist.Text = currentArtist;
         artist = currentArtist;
         Sharelink.Text = currentSharelink;
-        sharelink = currentSharelink;
+        share_link = currentSharelink;
 
         ExplicitLyrics.ButtonPressed = explicitLyrics;
-        this.explicitLyrics = explicitLyrics;
+        this.explicit_lyrics = explicitLyrics;
         Show();
         Visible = true;
-        CoverLabel.set_path();
-        coverpath = "";
+        CoverLabel.SetPath();
+        cover_path = "";
 
         Globals.file_dialog.Reparent(this);
         Globals.file_dialog.FileSelected += SubmitCover;
@@ -53,7 +53,7 @@ public partial class AttributeEditor : EditorWindow
     {
         Visible = false;
         Hide();
-        coverChanged = false;
+        cover_changed = false;
 
         EmitSignal("OnClose");
         cancelled = false;
@@ -72,12 +72,12 @@ public partial class AttributeEditor : EditorWindow
     public void Cover()
     {
         Globals.file_dialog.Popup();
-        coverChanged = true;
+        cover_changed = true;
     }
 
     public void SubmitCover(string path)
     {
-        coverpath = path;
-        CoverLabel.set_path(path);
+        cover_path = path;
+        CoverLabel.SetPath(path);
     }
 }
