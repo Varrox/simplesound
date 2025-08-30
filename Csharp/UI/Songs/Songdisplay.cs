@@ -51,6 +51,7 @@ public partial class Songdisplay : Button
 	public void OnEnter()
 	{
         More.Show();
+		SetTextures(isPlaying);
         Playbutton.Show();
         Number.SelfModulate = new Color(1, 1, 1, 0);
     }
@@ -59,6 +60,7 @@ public partial class Songdisplay : Button
 	{
 		if(!More.menuOpen) More.Hide();
         Playbutton.Hide();
+		Playbutton.Texture = null;
         Number.SelfModulate = new Color(1, 1, 1, 1);
     }
 
@@ -75,15 +77,21 @@ public partial class Songdisplay : Button
 
 		bool album = type == Playlist.PlaylistType.Album;
 
+		bool hidden = Cover.Texture == null;
+
         Cover.Texture = cover;
-		Cover.Visible = Cover.Texture != null;
-        (Cover.GetParent() as Control).Visible = !album;
+        (Cover.GetParent() as Control).Visible = !album && !hidden;
         Spacer.Visible = !album;
 
         More.menu = menu;
 		this.explicitLyrics.Visible = explicitLyrics;
 
 		SetHighlight();
+
+		if (hidden)
+		{
+			ProcessMode = ProcessModeEnum.Disabled;
+		}
     }
 
 	public void SetSong()

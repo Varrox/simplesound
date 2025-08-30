@@ -35,10 +35,11 @@ public partial class SongsVisualizer : ScrollContainer
                     if (hidden != (child.Cover.Texture == null))
                     {
                         child.Cover.Visible = !hidden;
+                        child.ProcessMode = hidden ? ProcessModeEnum.Disabled : ProcessModeEnum.Inherit;
+
                         if (hidden)
                         {
                             child.Cover.Texture = null;
-                            
                         }
                         else
                         {
