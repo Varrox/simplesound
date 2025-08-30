@@ -18,7 +18,7 @@ x Make background image blur so it is only updated when it's image is changed
 
 BUCKETS ISSUES
 
-- Add threading to parsing
+- Add threading to playlist loading
 
 DOING
 - Make documentation for ssl

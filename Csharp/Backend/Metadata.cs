@@ -6,8 +6,8 @@ using TagLib;
 
 public class Metadata
 {
-    public static Dictionary<string, string[]> TagList = new Dictionary<string, string[]>();
-    public static Dictionary<string, TagLib.File> FileList = new Dictionary<string, TagLib.File>();
+    public static Dictionary<string, string[]> TagList = new Dictionary<string, string[]>(); // File to tag
+    public static Dictionary<string, TagLib.File> FileList = new Dictionary<string, TagLib.File>(); // File to taglib file
 
     public static bool InitializeFileListKey(ref string path)
     {

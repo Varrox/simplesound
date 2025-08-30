@@ -67,7 +67,7 @@ public partial class Main : Control
             PlaySong(playlist.Songs[currentSong]);
 
             // Show current playlist
-            songsVisualizer.Load(currentPlaylist, (playlistVisualizer.container.GetChild(currentPlaylist) as PlaylistDisplay).Cover.Texture);
+            //songsVisualizer.Load(currentPlaylist, (playlistVisualizer.container.GetChild(currentPlaylist) as PlaylistDisplay).Cover.Texture);
         }
         else
         {

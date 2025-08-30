@@ -66,32 +66,26 @@ public partial class Songdisplay : Button
 
     public void Init(string name, string artist, string time, int playlist, int song, bool explicitLyrics, Playlist.PlaylistType type, Texture2D cover, Control menu)
 	{
-		Number.Text = (song + 1).ToString();
+		Number.SetThreadSafe("text", (song + 1).ToString());
 
 		this.song = song;
 		this.playlist = playlist;
 
-		Name.Text = name;
-		Artist.Text = artist;
-		Time.Text = time;
+		Name.SetThreadSafe("text", name);
+		Artist.SetThreadSafe("text", artist);
+		Time.SetThreadSafe("text", time);
 
-		bool album = type == Playlist.PlaylistType.Album;
+        Cover.SetThreadSafe("texture", cover);
 
-		bool hidden = Cover.Texture == null;
+        bool album = type == Playlist.PlaylistType.Album;
 
-        Cover.Texture = cover;
-        (Cover.GetParent() as Control).Visible = !album && !hidden;
-        Spacer.Visible = !album;
+        (Cover.GetParent() as Control).SetThreadSafe("visible", !album);
+        Spacer.SetThreadSafe("visible", !album);
+        this.explicitLyrics.SetThreadSafe("visible", explicitLyrics);
 
         More.menu = menu;
-		this.explicitLyrics.Visible = explicitLyrics;
 
-		SetHighlight();
-
-		if (hidden)
-		{
-			ProcessMode = ProcessModeEnum.Disabled;
-		}
+		CallThreadSafe("SetHighlight");
     }
 
 	public void SetSong()
