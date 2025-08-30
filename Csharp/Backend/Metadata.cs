@@ -6,18 +6,18 @@ using TagLib;
 
 public class Metadata
 {
-    public static Dictionary<string, string[]> TagList = new Dictionary<string, string[]>(); // File to tag
-    public static Dictionary<string, TagLib.File> FileList = new Dictionary<string, TagLib.File>(); // File to taglib file
+    public static Dictionary<string, string[]> tag_list = new Dictionary<string, string[]>(); // File to tag
+    public static Dictionary<string, TagLib.File> file_list = new Dictionary<string, TagLib.File>(); // File to taglib file
 
     public static bool InitializeFileListKey(ref string path)
     {
-        if (FileList.ContainsKey(path))
+        if (file_list.ContainsKey(path))
             return true;
         else if (IsFileCorrupt(path))
             return false;
 
         TagLib.File file = TagLib.File.Create(path);
-        FileList.Add(path, file);
+        file_list.Add(path, file);
 
         return true;
     }
@@ -38,38 +38,38 @@ public class Metadata
 
     public static void InitializeTagListKey(ref string path)
     {
-        if (!TagList.ContainsKey(path))
+        if (!tag_list.ContainsKey(path))
         {
             if (InitializeFileListKey(ref path))
             {
-                string comment = FileList[path].Tag.Comment;
-                TagList.Add(path, comment != null ? comment.Split(';') : null);
+                string comment = file_list[path].Tag.Comment;
+                tag_list.Add(path, comment != null ? comment.Split(';') : null);
             }
         }
     }
 
     public static void ResetCache()
     {
-        FileList.Clear();
-        TagList.Clear();
+        file_list.Clear();
+        tag_list.Clear();
     }
 
     public static string GetArtist(string path)
     {
         InitializeFileListKey(ref path);
-        return FileList[path].Tag.FirstPerformer ?? "Unknown Artist";
+        return file_list[path].Tag.FirstPerformer ?? "Unknown Artist";
     }
 
     public static float GetTotalTime(string path)
     {
         InitializeFileListKey(ref path);
-        return (float)FileList[path].Properties.Duration.TotalSeconds;
+        return (float)file_list[path].Properties.Duration.TotalSeconds;
     }
 
     public static byte[] GetCover(string path, out string type)
     {
         InitializeFileListKey(ref path);
-        IPicture[] pictures = FileList[path].Tag.Pictures;
+        IPicture[] pictures = file_list[path].Tag.Pictures;
 
         if (pictures.Length > 0)
         {
@@ -84,97 +84,97 @@ public class Metadata
     public static void WriteToComment(string path, string comment)
     {
         InitializeFileListKey(ref path);
-        FileList[path].Tag.Comment = comment;
-        FileList[path].Save();
+        file_list[path].Tag.Comment = comment;
+        file_list[path].Save();
     }
 
     public static string GetComment(string path)
     {
         InitializeFileListKey(ref path);
-        return FileList[path].Tag.Comment;
+        return file_list[path].Tag.Comment;
     }
 
     public static string[] GetLyrics(string path)
     {
         InitializeFileListKey(ref path);
-        return FileList[path].Tag.Lyrics.Split('\n');
+        return file_list[path].Tag.Lyrics.Split('\n');
     }
 
     public static string GetName(string path)
     {
         InitializeFileListKey(ref path);
-        return FileList[path].Tag.Title;
+        return file_list[path].Tag.Title;
     }
 
-    public static void SetData(string path, string name, string artist, string coverpath, string sharelink, bool explicitLyrics)
+    public static void SetData(string path, string name, string artist, string cover_path, string share_link, bool explicit_lyrics)
     {
         InitializeFileListKey(ref path);
 
-        FileList[path].Tag.Title = name ?? FileList[path].Tag.Title;
+        file_list[path].Tag.Title = name ?? file_list[path].Tag.Title;
 
         if (artist != null)
-            FileList[path].Tag.Performers = new[] {artist};
+            file_list[path].Tag.Performers = new[] {artist};
 
-        string fileType = ImageMimeConvert(coverpath);
+        string file_type = ImageMimeConvert(cover_path);
 
-        if(fileType != null)
+        if(file_type != null)
         {
-            byte[] data = System.IO.File.ReadAllBytes(coverpath);
+            byte[] data = System.IO.File.ReadAllBytes(cover_path);
 
             var picture = new TagLib.Picture
             {
                 Data = new ByteVector(data),
-                MimeType = fileType,
+                MimeType = file_type,
                 Type = TagLib.PictureType.FrontCover
             };
 
-            FileList[path].Tag.Pictures = new[] { picture };
+            file_list[path].Tag.Pictures = new[] { picture };
         }
 
         List<string> tags = new List<string>();
 
-        if(explicitLyrics)
+        if(explicit_lyrics)
             tags.Add("Explicit");
 
-        if(sharelink != null || sharelink.Trim() != "")
-            tags.Add($"Link {sharelink}");
+        if(share_link != null || share_link.Trim() != "")
+            tags.Add($"Link {share_link}");
 
         if (tags.Count > 0)
         {
-            FileList[path].Tag.Comment = string.Join(';', tags);
+            file_list[path].Tag.Comment = string.Join(';', tags);
 
-            if (!FileList.ContainsKey(path))
-                TagList.Add(path, null);
-            TagList[path] = tags.ToArray();
+            if (!file_list.ContainsKey(path))
+                tag_list.Add(path, null);
+            tag_list[path] = tags.ToArray();
         }
 
-        FileList[path].Save();
+        file_list[path].Save();
     }
 
     public static string ImageMimeConvert(string path)
     {
         string extention = Path.GetExtension(path);
         if (extention != string.Empty)
-            return $"image/{Path.GetExtension(path).Substring(1).Replace("jpg", "jpeg")}";
+            return $"image/{extention.Substring(1).Replace("jpg", "jpeg")}";
         return null;
     }
 
     public static bool IsExplicit(string path)
     {
         InitializeTagListKey(ref path);
-        return Array.IndexOf(TagList[path] ?? new string[] {} , "Explicit") != -1;
+        return Array.IndexOf(tag_list[path] ?? new string[] {} , "Explicit") != -1;
     }
     
     public static string GetShareLink(string path)
     {
         InitializeTagListKey(ref path);
 
-        for (int i = 0; i < TagList[path].Length; i++)
+        for (int i = 0; i < tag_list[path].Length; i++)
         {
-            if(TagList[path][i].Trim().StartsWith("Link "))
+            if(tag_list[path][i].Trim().StartsWith("Link "))
             {
                 GD.Print("Tag found");
-                return TagList[path][i].Substring(5).Trim();
+                return tag_list[path][i].Substring(5).Trim();
             }
         }
 
@@ -185,14 +185,14 @@ public class Metadata
     {
         InitializeTagListKey(ref path);
 
-        if (TagList[path] == null)
+        if (tag_list[path] == null)
             return "";
 
-        for (int i = 0; i < TagList[path].Length; i++)
+        for (int i = 0; i < tag_list[path].Length; i++)
         {
-            if (TagList[path][i].Trim().StartsWith("Video "))
+            if (tag_list[path][i].Trim().StartsWith("Video "))
             {
-                return TagList[path][i].Substring(6).Trim();
+                return tag_list[path][i].Substring(6).Trim();
             }
         }
 

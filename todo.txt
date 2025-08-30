@@ -1,26 +1,17 @@
 TODO
 
-- Add lyrics viewer
-- Add song position rearange
-- Add sorting
-- Add basic gdshader support to ssl
-- Add images to ssl
-- Add update button
-- Add settings menu
-- Make playlist bar hiding
 - Add share button to songs (keep youtube link in song metadata)
-
-NAH
-
-x Add folder explorer
-x Add max song display load limit
-x Make background image blur so it is only updated when it's image is changed
-
-BUCKETS ISSUES
-
-- Add threading to playlist loading
+- Add update button
+- Make playlist bar hiding
+- Add settings menu
+- Add lyrics viewer
+- Add sorting
+- Add song position rearange
+- Add images to ssl
+- Add basic gdshader support to ssl
 
 DOING
+
 - Make documentation for ssl
 
 FINISHED
@@ -39,10 +30,16 @@ FINISHED
 - Remove scrollbar focus somehow
 x Make covers all save as square aspect ratio
 - Lerp background image to transition
+- Add threading to playlist loading
 
 SHELF
+
 - Make refresh specific parsing
+- Add folder explorer
+- Add max song display load limit
+- Make background image blur so it is only updated when it's image is changed
 
 ULTIMATE GOAL:
+
 Create a music player like spotify, that allows for advanced song visualizers, shaders, 
 ui customization, and other features.

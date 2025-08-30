@@ -7,9 +7,9 @@ public class ConvertToGodot
 {
     public static Texture2D GetCover(string path)
     {
-        byte[] pictureData = Metadata.GetCover(path, out string type);
+        byte[] picture_data = Metadata.GetCover(path, out string type);
         
-        if (pictureData == null)
+        if (picture_data == null)
             return Globals.default_cover;
 
         Image image = new Image();
@@ -18,13 +18,13 @@ public class ConvertToGodot
         switch (type)
         {
             case "image/jpeg":
-                error = image.LoadJpgFromBuffer(pictureData);
+                error = image.LoadJpgFromBuffer(picture_data);
                 break;
             case "image/png":
-                error = image.LoadPngFromBuffer(pictureData);
+                error = image.LoadPngFromBuffer(picture_data);
                 break;
             case "image/webp":
-                error = image.LoadWebpFromBuffer(pictureData);
+                error = image.LoadWebpFromBuffer(picture_data);
                 break;
         }
 
@@ -70,13 +70,13 @@ public class ConvertToGodot
         }
         else
         {
-            string[] colorVals = ParsingTools.GetInParenthases(text, out string argument);
+            string[] color_vals = ParsingTools.GetInParenthases(text, out string argument);
             switch(argument)
             {
                 case "rgb":
-                    return new Color(Convert.ToSingle(colorVals[0]), Convert.ToSingle(colorVals[1]), Convert.ToSingle(colorVals[2]), 1);
+                    return new Color(Convert.ToSingle(color_vals[0]), Convert.ToSingle(color_vals[1]), Convert.ToSingle(color_vals[2]), 1);
                 case "rgba":
-                    return new Color(Convert.ToSingle(colorVals[0]), Convert.ToSingle(colorVals[1]), Convert.ToSingle(colorVals[2]), Convert.ToSingle(colorVals[3]));
+                    return new Color(Convert.ToSingle(color_vals[0]), Convert.ToSingle(color_vals[1]), Convert.ToSingle(color_vals[2]), Convert.ToSingle(color_vals[3]));
             }
             
             GD.PrintErr($"Could not parse color properly, invalid method name \'{text}\'");
@@ -87,15 +87,15 @@ public class ConvertToGodot
     /// <summary>
     /// Loads an image file into a Texture2D
     /// </summary>
-    /// <param name="filename">path to the image</param>
+    /// <param name="file_name">path to the image</param>
     /// <param name="fallback">the Texture2D to be returned if the image fails to load</param>
     /// <returns></returns>
-    public static Texture2D LoadImage(string filename, ref Texture2D fallback)
+    public static Texture2D LoadImage(string file_name, ref Texture2D fallback)
     {
-        if(filename != null)
+        if(file_name != null)
         {
             Image img = new Image();
-            if (img.Load(filename) == Error.Ok) return ImageTexture.CreateFromImage(img);
+            if (img.Load(file_name) == Error.Ok) return ImageTexture.CreateFromImage(img);
         }
         return fallback;
     }

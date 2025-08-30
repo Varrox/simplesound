@@ -20,7 +20,7 @@ public partial class SongsVisualizer : ScrollContainer
 		Globals.main.playlistVisualizer.OnSelectPlaylist += Load;
 	}
 
-    public bool IsHidden(Songdisplay songdisplay)
+    public bool IsHidden(SongDisplay songdisplay)
     {
         return !songdisplay.GetGlobalRect().Intersects(GetRect());
     }
@@ -33,13 +33,13 @@ public partial class SongsVisualizer : ScrollContainer
             {
                 for (int i = 1; i < container.GetChildCount(); i++)
                 {
-                    Songdisplay child = container.GetChild(i) as Songdisplay;
+                    SongDisplay child = container.GetChild(i) as SongDisplay;
                     bool hidden = IsHidden(child);
 
-                    child.Cover.Visible = !hidden;
+                    child.cover.Visible = !hidden;
                     child.ProcessMode = hidden ? ProcessModeEnum.Disabled : ProcessModeEnum.Inherit;
 
-                    child.Cover.Texture = hidden ? null : ConvertToGodot.GetCover(songs[i - 1]);
+                    child.cover.Texture = hidden ? null : ConvertToGodot.GetCover(songs[i - 1]);
                 }
 
                 lastScroll = ScrollVertical;
@@ -47,55 +47,42 @@ public partial class SongsVisualizer : ScrollContainer
         }
     }
 
-    public void Load(int playlist, Texture2D playDisp)
+    public void Load(int playlist_index, Texture2D playlist_cover)
 	{
-		Globals.main.currentLookingAtPlaylist = playlist;
+		Globals.main.currentLookingAtPlaylist = playlist_index;
 
-        Playlist Playlist = null;
+        Playlist playlist = null;
 
-        if (playlist == Globals.main.currentPlaylist) Playlist = Globals.main.playlist;
-		else Playlist = MainParser.ParsePlaylist(Globals.main.playlists[playlist]);
+        if (playlist_index == Globals.main.currentPlaylist) playlist = Globals.main.playlist;
+		else playlist = MainParser.ParsePlaylist(Globals.main.playlists[playlist_index]);
 
-        album = Playlist.Type == Playlist.PlaylistType.Album;
+        album = playlist.Type == Playlist.PlaylistType.Album;
 
-        Array<Node> SongDisplays = container.GetChildren();
+        Array<Node> song_displays = container.GetChildren();
 
-		(SongDisplays[0].GetChild(0).GetChild(0) as TextureRect).Texture = playDisp;
-        (SongDisplays[0].GetChild(1) as Label).Text = Playlist.Name;
+		(song_displays[0].GetChild(0).GetChild(0) as TextureRect).Texture = playlist_cover;
+        (song_displays[0].GetChild(1) as Label).Text = playlist.Name;
 
-		if (Playlist.Songs != null)
+		if (playlist.Songs != null)
 		{
-            songs = Playlist.Songs.ToArray();
+            songs = playlist.Songs.ToArray();
 
-            (SongDisplays[0].GetChild(2) as Label).Text = $"{Playlist.Songs.Count} song" + (Playlist.Songs.Count != 1 ? "s" : "");
-            SongDisplays.RemoveAt(0);
+            (song_displays[0].GetChild(2) as Label).Text = $"{playlist.Songs.Count} song" + (playlist.Songs.Count != 1 ? "s" : "");
+            song_displays.RemoveAt(0);
         }
 		else
 		{
-			(SongDisplays[0].GetChild(2) as Label).Text = "0 songs";
+			(song_displays[0].GetChild(2) as Label).Text = "0 songs";
 
-            for (int i = 1; i < SongDisplays.Count; i++)
+            for (int i = 1; i < song_displays.Count; i++)
             {
-                Songdisplay display = SongDisplays[i] as Songdisplay;
+                SongDisplay display = song_displays[i] as SongDisplay;
                 Globals.main.OnPlay -= display.SetTextures;
                 Globals.main.OnLoadSong -= display.SetHighlight;
-                SongDisplays[i].QueueFree();
+                song_displays[i].QueueFree();
             }
 
             return;
-        }
-
-		if(SongDisplays.Count > songs.Length) // delete overflow
-		{
-			for(int i = songs.Length; i < SongDisplays.Count; i++)
-			{
-                Songdisplay display = SongDisplays[i] as Songdisplay;
-                Globals.main.OnPlay -= display.SetTextures;
-                Globals.main.OnLoadSong -= display.SetHighlight;
-				SongDisplays[i].QueueFree();
-                SongDisplays.RemoveAt(i);
-				i--;
-			}
         }
 
         if (update_songs_thread != null)
@@ -103,41 +90,55 @@ public partial class SongsVisualizer : ScrollContainer
             update_songs_thread.Join();
         }
 
-        update_songs_thread = new Thread(new ThreadStart(() => UpdateAllSongs(ref Playlist, ref SongDisplays, playlist)));
+        if (song_displays.Count > songs.Length) // delete overflow
+		{
+			for(int i = songs.Length; i < song_displays.Count; i++)
+			{
+                SongDisplay song_display = song_displays[i] as SongDisplay;
+                Globals.main.OnPlay -= song_display.SetTextures;
+                Globals.main.OnLoadSong -= song_display.SetHighlight;
+
+				song_displays[i].QueueFree();
+                song_displays.RemoveAt(i);
+				i--;
+			}
+        }
+
+        update_songs_thread = new Thread(new ThreadStart(() => UpdateAllSongs(ref playlist, ref song_displays, playlist_index)));
         update_songs_thread.Start();
     }
 
-    public void UpdateAllSongs(ref Playlist Playlist, ref Array<Node> SongDisplays, int playlist)
+    public void UpdateAllSongs(ref Playlist playlist, ref Array<Node> song_displays, int playlist_index)
     {
-        for (int i = 0; i < Playlist.Songs.Count; i++) // update all
+        for (int i = 0; i < playlist.Songs.Count; i++) // update all
         {
             //GD.Print("Iteration: ", i, ", Thread: ", Thread.CurrentThread.ManagedThreadId);
 
-            Songdisplay disp = null;
+            SongDisplay disp = null;
 
-            if (i >= SongDisplays.Count) // create song display if one does not exist
+            if (i >= song_displays.Count) // create song display if one does not exist
             {
-                disp = Template.Instantiate() as Songdisplay;
+                disp = Template.Instantiate() as SongDisplay;
                 container.CallThreadSafe("add_child", disp);
             }
             else // use ones that already exist
             {
-                disp = SongDisplays[i] as Songdisplay;
+                disp = song_displays[i] as SongDisplay;
             }
 
             bool hidden = (bool)CallThreadSafe("IsHidden", disp);
 
             // init the playlist
-            disp.Init(Tools.GetMediaTitle(Playlist.Songs[i]), Metadata.GetArtist(Playlist.Songs[i]), Tools.SecondsToTimestamp(Metadata.GetTotalTime(Playlist.Songs[i])), playlist, i, Metadata.IsExplicit(Playlist.Songs[i]), Playlist.Type, !album || !hidden ? ConvertToGodot.GetCover(Playlist.Songs[i]) : null, menu);
+            disp.Init(Tools.GetMediaTitle(playlist.Songs[i]), Metadata.GetArtist(playlist.Songs[i]), Tools.SecondsToTimestamp(Metadata.GetTotalTime(playlist.Songs[i])), playlist_index, i, Metadata.IsExplicit(playlist.Songs[i]), playlist.Type, !album || !hidden ? ConvertToGodot.GetCover(playlist.Songs[i]) : null, menu);
         }
     }
 
-	public void UpdateSong(int index, string sname, string artist, string time, bool explicitlyrics, Texture2D texture)
+	public void UpdateSong(int index, string song_name, string artist, string time, bool explicit_lyrics, Texture2D texture)
 	{
 		if(Globals.main.currentLookingAtPlaylist == Globals.main.currentPlaylist)
 		{
-            Songdisplay disp = container.GetChild(index + 1) as Songdisplay;
-            disp.Init(sname, artist, time, Globals.main.currentLookingAtPlaylist, index, explicitlyrics, Globals.main.playlist.Type, texture, menu);
+            SongDisplay disp = container.GetChild(index + 1) as SongDisplay;
+            disp.Init(song_name, artist, time, Globals.main.currentLookingAtPlaylist, index, explicit_lyrics, Globals.main.playlist.Type, texture, menu);
         }
     }
 }
