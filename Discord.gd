@@ -1,4 +1,4 @@
-extends Node
+class_name DiscordUpdater extends Node
 
 @export var Player:Node
 @export var Main:Node
@@ -9,6 +9,9 @@ var dev:bool = false
 var details:String
 var state:String
 
+signal update
+signal update_details
+signal update_state
 
 func _ready() -> void:
 	DiscordRPC.app_id = 1313226375007703160
@@ -36,8 +39,15 @@ func _process(_delta: float) -> void:
 	var new_state = Player.CurrentTime.text + (" (Paused)" if !Main.playing else "")
 	
 	if details != new_details || state != new_state:
-		details = new_details
-		state = new_state
+		if details != new_details:
+			update_details.emit()
+			details = new_details
+		
+		if state != new_state:
+			update_state.emit()
+			state = new_state
+		
+		update.emit()
 		
 		DiscordRPC.details = details
 		DiscordRPC.state = state

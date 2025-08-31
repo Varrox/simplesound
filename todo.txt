@@ -1,7 +1,7 @@
 TODO
 
 - Add share button to songs (keep youtube link in song metadata)
-- Add update button
+- Add update button - make save data so it saves in json or ssl
 - Make playlist bar hiding
 - Add settings menu
 - Add lyrics viewer

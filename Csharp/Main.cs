@@ -1,6 +1,5 @@
 using Godot;
 using SSLParser;
-using System;
 using System.Collections.Generic;
 
 public partial class Main : Control
@@ -24,9 +23,7 @@ public partial class Main : Control
 	
 	public float time, volume;
 
-	public int offset;
-	public int shuffle_index;
-	public int random_offset;
+	public int offset, shuffle_index, random_offset;
 
 	[Signal] public delegate void OnLoadSongEventHandler();
     [Signal] public delegate void OnChangePlaylistEventHandler();
@@ -44,36 +41,36 @@ public partial class Main : Control
 
     public override void _Ready()
 	{
+		// Load Save data
+
         SaveSystem.GetSaveData(out current_playlist, out current_song, out time, out volume, out shuffled);
         current_looked_at_playlist = current_playlist;
+
 		offset = current_song;
 
 		if (shuffled)
 			shuffle_index = current_song;
 
-        // Volume
+        // Set Volume
+
         player.VolumeDb = volume;
         volumeSlider.Value = volume;
 
         // Load playlists
+
         playlists = new List<string>(SaveSystem.GetAllPlaylists());
 
         if (playlists.Count > 0)
-        {
             LoadPlaylist(current_playlist);
-        }
 
         // Initialize playlist displayer
+
         playlistVisualizer.LoadAllPlaylistVisuals();
 
         if (CanPlay())
-        {
             PlaySong(playlist.Songs[current_song]);
-        }
         else
-        {
-            EmitSignal(SignalName.OnLoadSong);
-        }
+            EmitSignal(SignalName.OnLoadSong); // Emit anyways just so it can display no songs
 
 		// Done Loading
     }
@@ -83,7 +80,6 @@ public partial class Main : Control
 		// Input
 
 		if (Input.IsActionJustPressed("save")) SaveData();
-		else if (Input.IsActionJustPressed("refresh")) Refresh();
 
 		// Loop management
 

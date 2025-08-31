@@ -16,16 +16,16 @@ public partial class ImportPlaylist : Button
 
 	public void SetStatic()
 	{
-		ConfirmationWindow confirmationWindow = Globals.confirmation_window.Instantiate() as ConfirmationWindow;
+		ConfirmationWindow confirmation_window = Globals.confirmation_window.Instantiate() as ConfirmationWindow;
 
-		confirmationWindow.Message = "Import with cloud syncing enabled?";
-		confirmationWindow.AcceptText = "Yes";
-		confirmationWindow.DeclineText = "No";
-		confirmationWindow.free_on_close = true;
+		confirmation_window.Message = "Import with cloud syncing enabled?";
+		confirmation_window.AcceptText = "Yes";
+		confirmation_window.DeclineText = "No";
+		confirmation_window.free_on_close = true;
 
-        GetTree().CurrentScene.AddChild(confirmationWindow);
+        GetTree().CurrentScene.AddChild(confirmation_window);
 
-		confirmationWindow.OnClose += ImportFile;
+		confirmation_window.OnClose += ImportFile;
     }
 
 	public void ImportFile(Confirm sync)

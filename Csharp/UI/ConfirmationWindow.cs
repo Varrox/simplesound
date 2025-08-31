@@ -12,26 +12,26 @@ public partial class ConfirmationWindow : Window
     [Signal] public delegate void OnCancelEventHandler();
     [Signal] public delegate void OnCloseEventHandler(Confirm confirm);
 
-    public bool free_on_close = false;
+    public bool free_on_close = false, front = true;
 
     public override void _Ready()
     {
         accept.Text = AcceptText;
-        cancel.Text = CancelText;
+        accept.Visible = AcceptText != string.Empty;
 
-        if (DeclineText != null)
-        {
-            decline.Text = DeclineText;
-            decline.Visible = true;
-        }
-        else
-            decline.Visible = false;
+        cancel.Text = CancelText;
+        cancel.Visible = CancelText != string.Empty;
+
+        decline.Text = DeclineText;
+        decline.Visible = DeclineText != string.Empty;
 
         message.Text = Message;
 
         accept.ButtonUp += Accept;
         decline.ButtonUp += Decline;
         cancel.ButtonUp += Cancel;
+
+        AlwaysOnTop = front;
     }
 
     public void Close(Confirm confirm)

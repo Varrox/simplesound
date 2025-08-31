@@ -27,4 +27,3 @@ func _process(_delta: float) -> void:
 		shader.set_shader_parameter("t", transition_value)
 		
 		target_texture_rect.texture = get_texture()
-	

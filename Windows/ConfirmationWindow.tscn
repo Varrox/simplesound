@@ -7,6 +7,7 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a7dhm"]
 
 [node name="ConfirmationWindow" type="Window" node_paths=PackedStringArray("accept", "decline", "cancel", "message")]
+oversampling_override = 1.0
 initial_position = 2
 size = Vector2i(250, 100)
 min_size = Vector2i(150, 100)
@@ -19,7 +20,7 @@ message = NodePath("VBoxContainer/Message")
 [node name="ColorRect" parent="." instance=ExtResource("2_a7dhm")]
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-anchors_preset = 15
+anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 10.0
