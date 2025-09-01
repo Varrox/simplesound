@@ -65,13 +65,6 @@ shader_parameter/blur_size = 0.25
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wnkbs"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gueqf"]
-bg_color = Color(0.180392, 0.180392, 0.180392, 0.807843)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
-
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7vj4a"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_come4"]
@@ -146,11 +139,18 @@ anti_aliasing_size = 1.1
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_68lop"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gueqf"]
+bg_color = Color(0.180392, 0.180392, 0.180392, 0.807843)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_abqjc"]
 shader = ExtResource("52_blkrb")
 shader_parameter/t = 0.0
 
-[node name="Main" type="Control" node_paths=PackedStringArray("player", "video_player", "volumeSlider", "playlistVisualizer", "songsVisualizer")]
+[node name="Main" type="Control" node_paths=PackedStringArray("player", "video_player", "volumeSlider", "playlist_visualizer", "songs_visualizer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -162,8 +162,8 @@ script = ExtResource("1_l00ml")
 player = NodePath("Player")
 video_player = NodePath("Interface/Background/Video")
 volumeSlider = NodePath("Interface/Player/Controls/Volume")
-playlistVisualizer = NodePath("Interface/Side Panel/Playlists")
-songsVisualizer = NodePath("Interface/Song Display")
+playlist_visualizer = NodePath("Interface/Side Panel/Playlists")
+songs_visualizer = NodePath("Interface/Song Display")
 
 [node name="Interface" type="Control" parent="." node_paths=PackedStringArray("Play", "Next", "Back", "Loop", "Shuffle", "Progress", "CurrentTime", "TotalTime", "SongName", "SongArtist", "SongCover", "BackgroundImage", "VolumeSlider", "MuteButton", "backgroundColor")]
 layout_mode = 1
@@ -173,17 +173,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_632yu")
-Play = NodePath("Player/Controls/Play")
-Next = NodePath("Player/Controls/Next")
-Back = NodePath("Player/Controls/Back")
-Loop = NodePath("Player/Controls/Loop")
-Shuffle = NodePath("Player/Controls/Shuffle")
 LoopOn = ExtResource("3_lifiy")
 LoopOff = ExtResource("7_uv8rp")
 ShuffleOn = ExtResource("7_oidy5")
 ShuffleOff = ExtResource("20_fkbne")
 Mute = ExtResource("42_0cbny")
 Unmute = ExtResource("9_hrvbo")
+Play = NodePath("Player/Controls/Play")
+Next = NodePath("Player/Controls/Next")
+Back = NodePath("Player/Controls/Back")
+Loop = NodePath("Player/Controls/Loop")
+Shuffle = NodePath("Player/Controls/Shuffle")
 Progress = NodePath("Player/Controls/Progress")
 CurrentTime = NodePath("Player/Controls/Progress/Current Time")
 TotalTime = NodePath("Player/Controls/Progress/Total Time")
@@ -254,7 +254,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_facbu")
 script = ExtResource("11_kq58d")
 template = ExtResource("13_a7qgi")
 container = NodePath("HBoxContainer/VBoxContainer")
-moreMenu = NodePath("../Playlistcontext")
+moreMenu = NodePath("../../Playlistcontext")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Interface/Side Panel/Playlists"]
 layout_mode = 2
@@ -274,16 +274,6 @@ theme_override_styles/separator = SubResource("StyleBoxEmpty_wnkbs")
 script = ExtResource("12_f6a44")
 scroll_container = NodePath("../..")
 
-[node name="Playlistcontext" parent="Interface/Side Panel" instance=ExtResource("26_gbh2w")]
-visible = false
-layout_mode = 1
-anchors_preset = -1
-offset_left = -157.0
-offset_top = -223.0
-offset_right = -15.0
-offset_bottom = -112.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_gueqf")
-
 [node name="Add" type="Button" parent="Interface/Side Panel" node_paths=PackedStringArray("menu")]
 layout_mode = 1
 anchors_preset = -1
@@ -299,9 +289,9 @@ icon = ExtResource("10_7e43v")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("21_seu75")
-menu = NodePath("Panel")
 teleportMenu = null
 teleportMenuOffset = null
+menu = NodePath("Panel")
 
 [node name="Panel" type="Panel" parent="Interface/Side Panel/Add"]
 visible = false
@@ -499,10 +489,6 @@ theme_override_styles/separator = SubResource("StyleBoxEmpty_wnkbs")
 script = ExtResource("12_f6a44")
 scroll_container = NodePath("../..")
 
-[node name="Songcontext" parent="Interface" instance=ExtResource("17_3m5kb")]
-visible = false
-layout_mode = 1
-
 [node name="Top Bar" type="ColorRect" parent="Interface"]
 layout_mode = 1
 anchors_preset = -1
@@ -525,6 +511,7 @@ tooltip_text = "Type in the name of an artist or song, or playlist"
 focus_mode = 1
 theme_override_styles/focus = SubResource("StyleBoxEmpty_come4")
 placeholder_text = " search for songs"
+editable = false
 
 [node name="Left" type="HBoxContainer" parent="Interface/Top Bar"]
 layout_mode = 1
@@ -551,6 +538,7 @@ script = ExtResource("29_0cp0l")
 layout_mode = 2
 focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_i5cru")
+disabled = true
 text = "Edit"
 
 [node name="Cloud" type="Button" parent="Interface/Top Bar/Left"]
@@ -558,29 +546,15 @@ layout_mode = 2
 tooltip_text = "Cloud Settings"
 focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_i5cru")
+disabled = true
 text = "Cloud"
 
 [node name="Downloader" type="Button" parent="Interface/Top Bar/Left"]
 layout_mode = 2
 focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_i5cru")
+disabled = true
 text = "Downloader"
-
-[node name="Zoom amount" type="Label" parent="Interface/Top Bar"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -298.0
-offset_top = -10.0
-offset_right = -254.0
-offset_bottom = 10.0
-grow_horizontal = 0
-grow_vertical = 2
-text = "100%"
-horizontal_alignment = 2
 
 [node name="Right" type="HBoxContainer" parent="Interface/Top Bar"]
 layout_mode = 1
@@ -589,16 +563,21 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -243.0
-offset_top = -16.0
-offset_right = -11.0
-offset_bottom = 16.5
+offset_left = -280.0
+offset_top = -14.0
+offset_right = -10.0
+offset_bottom = 14.0
 grow_horizontal = 0
 grow_vertical = 2
+alignment = 2
+
+[node name="Zoom amount" type="Label" parent="Interface/Top Bar/Right"]
+layout_mode = 2
+text = "100%"
+horizontal_alignment = 2
 
 [node name="Stream" type="Button" parent="Interface/Top Bar/Right"]
 layout_mode = 2
-size_flags_horizontal = 3
 focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_wx3lt")
 text = "Streamer Mode"
@@ -608,8 +587,8 @@ script = ExtResource("30_d2t1y")
 stream_display = ExtResource("31_gngh3")
 
 [node name="Update" type="Button" parent="Interface/Top Bar/Right"]
+custom_minimum_size = Vector2(28, 0)
 layout_mode = 2
-size_flags_horizontal = 3
 focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_wx3lt")
 icon_alignment = 1
@@ -619,8 +598,8 @@ updatable = ExtResource("32_0n3wm")
 non_updatable = ExtResource("38_6iyjs")
 
 [node name="Refresh" type="Button" parent="Interface/Top Bar/Right" node_paths=PackedStringArray("refesh_texture_animation")]
+custom_minimum_size = Vector2(28, 0)
 layout_mode = 2
-size_flags_horizontal = 3
 focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_wx3lt")
 icon_alignment = 1
@@ -639,7 +618,7 @@ offset_right = -1.5
 offset_bottom = -2.0
 grow_horizontal = 2
 grow_vertical = 2
-pivot_offset = Vector2(14, 14)
+pivot_offset = Vector2(12.5, 12)
 texture = ExtResource("23_7r5f6")
 expand_mode = 1
 
@@ -649,10 +628,11 @@ libraries = {
 }
 
 [node name="Settings" type="Button" parent="Interface/Top Bar/Right"]
+custom_minimum_size = Vector2(28, 0)
 layout_mode = 2
-size_flags_horizontal = 3
 focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_wx3lt")
+disabled = true
 icon = ExtResource("12_s6aix")
 icon_alignment = 1
 expand_icon = true
@@ -952,6 +932,20 @@ text = "Artist"
 clip_text = true
 text_overrun_behavior = 3
 
+[node name="Playlistcontext" parent="Interface" instance=ExtResource("26_gbh2w")]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+offset_left = -1006.0
+offset_top = -223.0
+offset_right = -864.0
+offset_bottom = -112.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_gueqf")
+
+[node name="Songcontext" parent="Interface" instance=ExtResource("17_3m5kb")]
+visible = false
+layout_mode = 1
+
 [node name="Player" type="AudioStreamPlayer" parent="."]
 
 [node name="Globals" type="Node" parent="." node_paths=PackedStringArray("_main", "_player", "_file_dialog", "_self")]
@@ -960,13 +954,13 @@ _play_texture = ExtResource("5_8inno")
 _pause_texture = ExtResource("4_lfnj1")
 _default_cover = ExtResource("7_xn3w4")
 _default_cover_highres = ExtResource("13_seu75")
+_highlight = Color(1, 1, 1, 0.376)
+_lower_highlight = Color(50, 50, 50, 0.162)
+_confirmation_window = ExtResource("39_h8e4i")
 _main = NodePath("..")
 _player = NodePath("../Interface")
 _file_dialog = NodePath("File Dialog")
 _self = NodePath(".")
-_highlight = Color(1, 1, 1, 0.376)
-_lower_highlight = Color(50, 50, 50, 0.162)
-_confirmation_window = ExtResource("39_h8e4i")
 
 [node name="File Dialog" type="FileDialog" parent="Globals"]
 title = "Open a File"
@@ -980,15 +974,14 @@ script = ExtResource("24_crcn0")
 Player = NodePath("../Interface")
 Main = NodePath("..")
 
-[node name="HTTPRequest" type="HTTPRequest" parent="Discord" node_paths=PackedStringArray("discord", "song", "artist")]
+[node name="HTTPRequest" type="HTTPRequest" parent="Discord" node_paths=PackedStringArray("discord", "main")]
 script = ExtResource("52_4w656")
 discord = NodePath("..")
-song = NodePath("../../Interface/Player/Song Attributes/Name")
-artist = NodePath("../../Interface/Player/Song Attributes/Artist")
+main = NodePath("../..")
 
 [node name="Zoomer" type="Node" parent="." node_paths=PackedStringArray("zoom_display")]
 script = ExtResource("46_qnost")
-zoom_display = NodePath("../Interface/Top Bar/Zoom amount")
+zoom_display = NodePath("../Interface/Top Bar/Right/Zoom amount")
 
 [node name="SubViewport" type="SubViewport" parent="." node_paths=PackedStringArray("transitioner", "target_texture_rect")]
 size = Vector2i(256, 256)

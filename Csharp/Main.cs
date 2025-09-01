@@ -1,5 +1,6 @@
 using Godot;
 using SSLParser;
+using System;
 using System.Collections.Generic;
 
 public partial class Main : Control
@@ -7,14 +8,14 @@ public partial class Main : Control
 	[Export] public AudioStreamPlayer player;
     [Export] public VideoStreamPlayer video_player;
     [Export] public Slider volumeSlider;
-	[Export] public PlaylistsVisualizer playlistVisualizer;
-	[Export] public SongsVisualizer songsVisualizer;
+	[Export] public PlaylistsVisualizer playlist_visualizer;
+	[Export] public SongsVisualizer songs_visualizer;
 
 	public bool loop, playing, shuffled;
 
-	public int current_playlist, current_song;
+	public int playlist_index, song_index;
 
-	public string current_playlist_path, current_song_path;
+	public string current_playlist_path, current_song_path, current_share_link;
 
     public int current_looked_at_playlist;
 
@@ -25,16 +26,16 @@ public partial class Main : Control
 
 	public int offset, shuffle_index, random_offset;
 
-	[Signal] public delegate void OnLoadSongEventHandler();
-    [Signal] public delegate void OnChangePlaylistEventHandler();
-    [Signal] public delegate void OnPlayEventHandler(bool playing);
+    public Action OnLoadSong;
+    public Action OnChangePlaylist;
+    public Action<bool> OnPlay;
 
 	public string song
 	{
 		get
 		{
 			if(CanPlay())
-				return playlist.Songs[current_song];
+				return playlist.Songs[song_index];
 			else return null;
         }
 	}
@@ -43,13 +44,20 @@ public partial class Main : Control
 	{
 		// Load Save data
 
-        SaveSystem.GetSaveData(out current_playlist, out current_song, out time, out volume, out shuffled);
-        current_looked_at_playlist = current_playlist;
+        SaveData save_data = SaveSystem.GetSaveData();
 
-		offset = current_song;
+		playlist_index = save_data.playlist_index;
+		song_index = save_data.song_index;
+		time = save_data.time;
+		volume = save_data.volume;
+		shuffled = save_data.shuffled;
+
+        current_looked_at_playlist = playlist_index;
+
+		offset = song_index;
 
 		if (shuffled)
-			shuffle_index = current_song;
+			shuffle_index = song_index;
 
         // Set Volume
 
@@ -61,16 +69,16 @@ public partial class Main : Control
         playlists = new List<string>(SaveSystem.GetAllPlaylists());
 
         if (playlists.Count > 0)
-            LoadPlaylist(current_playlist);
+            LoadPlaylist(playlist_index);
 
         // Initialize playlist displayer
 
-        playlistVisualizer.LoadAllPlaylistVisuals();
+        playlist_visualizer.LoadAllPlaylistVisuals();
 
         if (CanPlay())
-            PlaySong(playlist.Songs[current_song]);
+            PlaySong(playlist.Songs[song_index]);
         else
-            EmitSignal(SignalName.OnLoadSong); // Emit anyways just so it can display no songs
+            OnLoadSong?.Invoke(); // Emit anyways just so it can display no songs
 
 		// Done Loading
     }
@@ -96,7 +104,7 @@ public partial class Main : Control
 					video_player.Play();
 					video_player.StreamPosition = time;
 
-					EmitSignal("OnPlay", playing);
+					OnPlay?.Invoke(playing);
 				}
 			}
 
@@ -106,14 +114,14 @@ public partial class Main : Control
 
 	public void CheckIndex()
 	{
-		if (playlists[current_playlist] != current_playlist_path)
+		if (playlists[playlist_index] != current_playlist_path)
 		{
-			current_playlist = playlists.IndexOf(current_playlist_path);
+			playlist_index = playlists.IndexOf(current_playlist_path);
 		}
 
 		if (song != current_song_path)
 		{
-            current_song = playlist.Songs.IndexOf(current_song_path);
+            song_index = playlist.Songs.IndexOf(current_song_path);
         }
 	}
 
@@ -131,11 +139,11 @@ public partial class Main : Control
 			return;
 		}
 
-        current_playlist = index;
-        playlist = playlists.Count > 0 ? MainParser.ParsePlaylist(playlists[current_playlist]) : null;
+        playlist_index = index;
+        playlist = playlists.Count > 0 ? MainParser.ParsePlaylist(playlists[playlist_index]) : null;
 		current_playlist_path = playlist.Path;
 
-		EmitSignal("OnChangePlaylist");
+        OnChangePlaylist?.Invoke();
 
 		// Set shuffle to be different
 
@@ -167,8 +175,8 @@ public partial class Main : Control
             player.Stop();
         }
 
-		EmitSignal("OnPlay", playing);
-	}
+        OnPlay?.Invoke(playing);
+    }
 
 	public void MoveSong(int amount, bool set = false)
 	{
@@ -180,7 +188,7 @@ public partial class Main : Control
 
 				if (offset == shuffle_index)
 				{
-                    current_song = shuffle_index;
+                    song_index = shuffle_index;
                 }
 				else
 				{
@@ -188,9 +196,9 @@ public partial class Main : Control
 					{
                         GD.Seed((ulong)(offset * 3 + random_offset + i));
                         int randomNumber = GD.RandRange(0, playlist.Songs.Count - 1);
-                        if (randomNumber != current_song)
+                        if (randomNumber != song_index)
                         {
-                            current_song = randomNumber;
+                            song_index = randomNumber;
                             offset += i / 3;
                             break;
                         }
@@ -199,10 +207,10 @@ public partial class Main : Control
 			}
 			else
 			{
-				current_song += amount;
+				song_index += amount;
             }
 
-            current_song = Mathf.Wrap(current_song, 0, playlist.Songs.Count - 1);
+            song_index = Mathf.Wrap(song_index, 0, playlist.Songs.Count - 1);
 
             PlaySong(song);
 
@@ -217,7 +225,7 @@ public partial class Main : Control
 		{
 			offset = index;
 			shuffle_index = index;
-			current_song = index;
+			song_index = index;
             PlaySong(song);
             playing = false;
             Play();
@@ -251,15 +259,17 @@ public partial class Main : Control
                 video_player.Visible = video != null;
 				video_player.Stream = video;
 
-                EmitSignal("OnLoadSong");
+                current_share_link = Metadata.GetShareLink(path);
+
+                OnLoadSong?.Invoke();
             }
             else // if the file doesn't exist
             {
                 GD.PrintErr($"{path} doesn't exist");
 
-				if (playlist.Songs[current_song] == path)
+				if (playlist.Songs[song_index] == path)
 				{
-                    playlist.Songs.RemoveAt(current_song);
+                    playlist.Songs.RemoveAt(song_index);
                     playlist.Save();
 					PlaySong(song);
                 }
@@ -275,7 +285,7 @@ public partial class Main : Control
 		return false;
 	}
 
-	public void SaveData() => SaveSystem.SaveData(current_playlist, current_song, time, player.VolumeDb, shuffled);
+	public void SaveData() => new SaveData {playlist_index = playlist_index, song_index = song_index, time = time, volume = player.VolumeDb, shuffled = shuffled }.Save();
 
     public void Refresh()
 	{
@@ -286,7 +296,7 @@ public partial class Main : Control
 
 		Metadata.ResetCache();
 
-        EmitSignal(SignalName.OnLoadSong);
-        playlistVisualizer.UpdatePlaylists();
+        OnLoadSong?.Invoke();
+        playlist_visualizer.UpdatePlaylists();
     }
 }

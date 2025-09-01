@@ -14,6 +14,8 @@ public partial class Update : Button
 
     public string download_folder;
 
+    const string repo_link = "https://api.github.com/repos/Varrox/simplesound/releases/latest";
+
     CurrentRequest request;
 
     enum CurrentRequest
@@ -28,6 +30,7 @@ public partial class Update : Button
         if (OS.HasFeature("editor"))
         {
             can_be_updated = false;
+            Visible = false;
             return;
         }
 
@@ -38,7 +41,7 @@ public partial class Update : Button
         http_client.RequestCompleted += HttpClientRequestCompleted;
 
         request = CurrentRequest.Version;
-        http_client.Request("https://api.github.com/repos/realbucketofchicken/Simplaudio/releases/latest");
+        http_client.Request(repo_link);
 
         ButtonUp += StartUpdate;
 	}
@@ -48,7 +51,7 @@ public partial class Update : Button
         if (!can_be_updated || updating) return;
 
         request = CurrentRequest.Download;
-        http_client.Request("https://api.github.com/repos/godotengine/godot/releases/latest");
+        http_client.Request(repo_link);
     }
 
     private void HttpClientRequestCompleted(long result, long responseCode, string[] headers, byte[] body)
@@ -167,7 +170,7 @@ public partial class Update : Button
         {
             string name = ((string)assets[i]["name"]).ToLower();
 
-            if (name == "Godot_v4.4.1-stable_mono_win64.zip".ToLower())//(name.Contains(OS.GetName().ToLower()))
+            if (name.Contains(OS.GetName().ToLower()))
             {
                 download_index = i;
             }

@@ -109,7 +109,7 @@ namespace SSLParser
 
                 if (field != null)
                 {
-                    object new_value = ConvertType(value, field.FieldType);
+                    object new_value = ConvertStringToValue(value, field.FieldType);
                     if (new_value != null)
                         field.SetValue(obj, new_value);
                     else
@@ -126,7 +126,7 @@ namespace SSLParser
             }
         }
 
-        public static object ConvertType(string value, Type type)
+        public static object ConvertStringToValue(string value, Type type)
         {
             if (type == typeof(string))
             {
@@ -140,6 +140,32 @@ namespace SSLParser
             {
                 return Convert.ChangeType(value, type, CultureInfo.InvariantCulture);
             }
+        }
+
+        public static string ConvertValueToString(object value)
+        {
+            if (value.GetType() == typeof(string))
+            {
+                return (string)value;
+            }
+            else if (value.GetType().IsEnum)
+            {
+                return Enum.GetName(value.GetType(), value);
+            }
+            else if (value.GetType() == typeof(int))
+            {
+                return ((int)value).ToString();
+            }
+            else if (value.GetType() == typeof(float))
+            {
+                return ((float)value).ToString();
+            }
+            else if (value.GetType() == typeof(bool))
+            {
+                return ((bool)value).ToString().ToLower();
+            }
+
+            return "";
         }
 
         /// <summary>

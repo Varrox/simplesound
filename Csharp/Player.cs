@@ -12,7 +12,7 @@ public partial class Player : Node
     [Export] public Button MuteButton;
     [Export] public ColorRect backgroundColor;
 
-    Color bc;
+    Color background_color;
 
     bool can_set_time;
 
@@ -99,8 +99,8 @@ public partial class Player : Node
     {
         Globals.main.shuffled = !Globals.main.shuffled;
 
-        Globals.main.offset = Globals.main.current_song;
-        Globals.main.shuffle_index = Globals.main.current_song;
+        Globals.main.offset = Globals.main.song_index;
+        Globals.main.shuffle_index = Globals.main.song_index;
 
         Shuffle.Icon = Globals.main.shuffled ? ShuffleOn : ShuffleOff;
     }
@@ -141,10 +141,10 @@ public partial class Player : Node
 
             if (cover == Globals.default_cover && Globals.main.playlist.Type == Playlist.PlaylistType.Album)
             {
-                if(playlist_icon == null || playlist_icon_index != Globals.main.current_playlist)
+                if(playlist_icon == null || playlist_icon_index != Globals.main.playlist_index)
                 {
-                    playlist_icon = ConvertToGodot.LoadImage(Globals.main.playlist.Cover, ref Globals.default_cover);
-                    playlist_icon_index = Globals.main.current_playlist;
+                    playlist_icon = ConvertToGodot.LoadImage(Globals.main.playlist.Cover) ?? Globals.default_cover;
+                    playlist_icon_index = Globals.main.playlist_index;
                 }
                 
                 SongCover.Texture = playlist_icon;
@@ -154,7 +154,7 @@ public partial class Player : Node
                 SongCover.Texture = cover;
             }
             
-            Texture2D background_texture = Globals.main.playlist.customInfo.background_path != null ? ConvertToGodot.LoadImage(Globals.main.playlist.customInfo.background_path, ref cover) : SongCover.Texture;
+            Texture2D background_texture = Globals.main.playlist.customInfo.background_path != null ? ConvertToGodot.LoadImage(Globals.main.playlist.customInfo.background_path) ?? cover : SongCover.Texture;
 
             BackgroundImage.Set("target_texture", background_texture);
 
@@ -168,7 +168,7 @@ public partial class Player : Node
             SongName.TooltipText = "";
             SongArtist.Text = "No artist";
             SongArtist.TooltipText = "";
-            bc = new Color(0, 0, 0, 0);
+            background_color = new Color(0, 0, 0, 0);
 
             TotalTime.Text = "0:00";
             Progress.MaxValue = 1;
@@ -200,11 +200,11 @@ public partial class Player : Node
     {
         if (Globals.main.playlist.customInfo.overlay_color != null)
         {
-            bc = ConvertToGodot.GetColor(Globals.main.playlist.customInfo.overlay_color);
+            background_color = ConvertToGodot.GetColor(Globals.main.playlist.customInfo.overlay_color);
         }
         else
         {
-            bc = new Color();
+            background_color = new Color();
         }
 
         Globals.main.player.PitchScale = Mathf.Clamp(Globals.main.playlist.customInfo.speed, 0.01f, 4f);
@@ -237,7 +237,7 @@ public partial class Player : Node
         if (Globals.main.CanPlay())
         {
             float max = 0.65f;
-            backgroundColor.Color = backgroundColor.Color.Lerp(bc.Clamp(new Color(), new Color(max, max, max, max)), (float)delta * 2f);
+            backgroundColor.Color = backgroundColor.Color.Lerp(background_color.Clamp(new Color(), new Color(max, max, max, max)), (float)delta * 2f);
 
             if (!muted)
             {

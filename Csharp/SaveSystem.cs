@@ -7,66 +7,30 @@ public class SaveSystem
 {
 	public static readonly string USER_DATA = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "simplesound");
 
-	public static void GetSaveData(out int playlist_index, out int song_index, out float current_time, out float volume, out bool shuffled)
+	public static SaveData GetSaveData()
 	{
-        string playlists = Path.Combine(USER_DATA, "Playlists");
-        if (!Directory.Exists(playlists))
-			Directory.CreateDirectory(playlists);
-
-        string music_files = Path.Combine(USER_DATA, "Music Folders");
-        if (!Directory.Exists(music_files))
-			Directory.CreateDirectory(music_files);
-
-        string playlist_covers = Path.Combine(USER_DATA, "Playlist Covers");
-        if (!Directory.Exists(playlist_covers))
-			Directory.CreateDirectory(playlist_covers);
-
-        playlist_index = 0;
-        song_index = 0;
-        current_time = 0;
-        volume = 0;
-        shuffled = false;
-
-        string save_data = Path.Combine(USER_DATA, "savedata.txt");
-
-        if (!File.Exists(save_data))
+		foreach(string folder_name in new[] { "Playlists" , "Music Folders" , "Playlist Covers" }) // Add folders
 		{
-			File.Create(save_data).Close();
-			File.WriteAllText(save_data, "0\n0\n0.0\n0.0\nfalse");
+			string path = Path.Combine(USER_DATA, folder_name);
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+        }
+
+        string save_data_path = Path.Combine(USER_DATA, "savedata.ssl");
+
+		SaveData save_data;
+
+        if (!File.Exists(save_data_path))
+		{
+			save_data = new();
+			save_data.Save();
         }
 		else
 		{
-			string[] data = File.ReadAllLines(save_data);
-
-			for(int i = 0; i < data.Length; i++)
-			{
-				switch(i)
-				{
-					case 0:
-                        playlist_index = Convert.ToInt32(data[0]);
-
-                        break;
-					case 1:
-                        song_index = Convert.ToInt32(data[1]);
-                        break;
-					case 2:
-                        current_time = Convert.ToSingle(data[2]);
-                        break;
-					case 3:
-						volume = Convert.ToSingle(data[3]);
-						break;
-					case 4:
-                        shuffled = Convert.ToBoolean(data[4]);
-                        break;
-				}
-			}
+            MainParser.ParseFile(save_data_path, out save_data);
         }
-    }
 
-	public static void SaveData(int playlist_index, int song_index, float current_time, float volume, bool shuffled)
-	{
-        string save_data = Path.Combine(USER_DATA, "savedata.txt");
-        File.WriteAllText(save_data, $"{playlist_index}\n{song_index}\n{current_time}\n{volume}\n{shuffled}");
+        return save_data;
     }
 
 	public static string[] GetAllPlaylists()
@@ -130,11 +94,22 @@ public class SaveSystem
 		}
 
 
-        string newPath = Path.Combine(USER_DATA, "Playlist Covers", playlist_name + Path.GetExtension(path));
-        File.Copy(path, newPath);
+        string new_path = Path.Combine(USER_DATA, "Playlist Covers", playlist_name + Path.GetExtension(path));
+        File.Copy(path, new_path);
 
-		return newPath;
+		return new_path;
     }
+}
+
+public class SaveData
+{
+	public int playlist_index, song_index;
+	public float time, volume;
+	public bool shuffled;
+
+	static string path = Path.Combine(SaveSystem.USER_DATA, "savedata.ssl");
+
+	public void Save() => File.WriteAllText(path, MainParser.StringifyObject(this));
 }
 
 public struct bool4

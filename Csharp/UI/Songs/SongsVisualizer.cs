@@ -17,7 +17,7 @@ public partial class SongsVisualizer : ScrollContainer
 
 	public override void _Ready()
 	{
-		Globals.main.playlistVisualizer.OnSelectPlaylist += Load;
+		Globals.main.playlist_visualizer.OnSelectPlaylist += Load;
 	}
 
     public bool IsHidden(SongDisplay songdisplay)
@@ -53,7 +53,7 @@ public partial class SongsVisualizer : ScrollContainer
 
         Playlist playlist = null;
 
-        if (playlist_index == Globals.main.current_playlist) playlist = Globals.main.playlist;
+        if (playlist_index == Globals.main.playlist_index) playlist = Globals.main.playlist;
 		else playlist = MainParser.ParsePlaylist(Globals.main.playlists[playlist_index]);
 
         album = playlist.Type == Playlist.PlaylistType.Album;
@@ -129,16 +129,16 @@ public partial class SongsVisualizer : ScrollContainer
             bool hidden = (bool)CallThreadSafe("IsHidden", disp);
 
             // init the playlist
-            disp.Init(Tools.GetMediaTitle(playlist.Songs[i]), Metadata.GetArtist(playlist.Songs[i]), Tools.SecondsToTimestamp(Metadata.GetTotalTime(playlist.Songs[i])), playlist_index, i, Metadata.IsExplicit(playlist.Songs[i]), playlist.Type, !album || !hidden ? ConvertToGodot.GetCover(playlist.Songs[i]) : null, menu);
+            disp.Init(Tools.GetMediaTitle(playlist.Songs[i]), Metadata.GetArtist(playlist.Songs[i]), Tools.SecondsToTimestamp(Metadata.GetTotalTime(playlist.Songs[i])), playlist_index, i, Metadata.IsExplicit(playlist.Songs[i]), playlist.Type, !album || !hidden ? ConvertToGodot.GetCover(playlist.Songs[i]) : null);
         }
     }
 
 	public void UpdateSong(int index, string song_name, string artist, string time, bool explicit_lyrics, Texture2D texture)
 	{
-		if(Globals.main.current_looked_at_playlist == Globals.main.current_playlist)
+		if(Globals.main.current_looked_at_playlist == Globals.main.playlist_index)
 		{
             SongDisplay disp = container.GetChild(index + 1) as SongDisplay;
-            disp.Init(song_name, artist, time, Globals.main.current_looked_at_playlist, index, explicit_lyrics, Globals.main.playlist.Type, texture, menu);
+            disp.Init(song_name, artist, time, Globals.main.current_looked_at_playlist, index, explicit_lyrics, Globals.main.playlist.Type, texture);
         }
     }
 }

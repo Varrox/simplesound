@@ -31,7 +31,7 @@ public partial class AttributeEditorOpener : EditorWindowOpener
                 Metadata.SetData(Globals.main.song, editor.Name.Text, editor.Artist.Text, editor.cover_path, editor.Sharelink.Text, editor.ExplicitLyrics.ButtonPressed);
 
             Globals.player.OnLoadSong();
-            Globals.main.songsVisualizer.UpdateSong(Globals.main.current_song, editor.Name.Text, editor.Artist.Text, Globals.player.TotalTime.Text, editor.ExplicitLyrics.ButtonPressed, Globals.player.SongCover.Texture);
+            Globals.main.songs_visualizer.UpdateSong(Globals.main.song_index, editor.Name.Text, editor.Artist.Text, Globals.player.TotalTime.Text, editor.ExplicitLyrics.ButtonPressed, Globals.player.SongCover.Texture);
         }
 
         Globals.player.interrupted = false;

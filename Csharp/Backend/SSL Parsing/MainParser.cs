@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 
 namespace SSLParser
 {
@@ -219,6 +222,106 @@ namespace SSLParser
                     }
                 }
             }
+        }
+
+        public static void ParseFile<T>(string path, out T output_object) where T : new()
+        {
+            string[] lines = File.ReadAllLines(path);
+            line.path = path;
+
+            output_object = new();
+
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string trimmed_start_line = lines[i].Trim();
+
+                if (trimmed_start_line.Length == 0) continue;
+
+                if (trimmed_start_line.StartsWith(typeof(T).Name))
+                {
+                    for (int j = i + 1; j < lines.Length; j++)
+                    {
+                        line.line = j;
+                        string trimmed_line = ParsingTools.FormatCode(lines[j]);
+
+                        if (trimmed_line == "}")
+                        {
+                            i = j;
+                            break;
+                        }
+                        else if (trimmed_line == "{")
+                        {
+                            continue;
+                        }
+
+                        if (trimmed_line.Length > 0)
+                        {
+                            string[] split = SplitLine(trimmed_line);
+                            string var = split[0];
+                            string value = split[1];
+
+                            ParsingTools.SetVariable(ref line, var, value, ref output_object);
+
+                            if (trimmed_line.EndsWith("}"))
+                            {
+                                i = j;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public static string StringifyObject<T>(T input_object)
+        {
+            string output = $"{typeof(T).Name}\n" + "{\n", after = "";
+            
+            foreach (FieldInfo prop in typeof(T).GetFields())
+            {
+                if (prop.FieldType == typeof(Array) || prop.FieldType == typeof(List<>)) // Iterable
+                {
+                    IEnumerable array = null;
+
+                    if (prop.FieldType == typeof(Array))
+                    {
+                        array = prop.GetValue(input_object) as Array;
+                    }
+                    else
+                    {
+                        object list = prop.GetValue(input_object);
+
+                        Type type = typeof(List<>).GetGenericArguments()[0];
+                        Type genericListType = typeof(List<>).MakeGenericType(type);
+                        
+                        array = (IList)Activator.CreateInstance(genericListType);
+                    }
+
+                    if (array != null)
+                    {
+                        after += prop.Name + "\n{\n";
+
+                        foreach (object item in array)
+                        {
+                            after += $"\t{ParsingTools.ConvertValueToString(item)}";
+                        }
+
+                        after += "\n}\n\n";
+                    }
+
+                    continue;
+                }
+
+                // Non-Iterable
+
+                object variable = prop.GetValue(input_object);
+
+                output += $"\t{prop.Name} : {ParsingTools.ConvertValueToString(variable)}\n";
+            }
+
+            output += "}\n\n" + after;
+            
+            return output;
         }
 
         /// <summary>

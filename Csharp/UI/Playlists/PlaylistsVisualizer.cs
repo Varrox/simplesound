@@ -1,6 +1,7 @@
 using Godot;
 using Godot.Collections;
 using SSLParser;
+using System;
 
 public partial class PlaylistsVisualizer : ScrollContainer
 {
@@ -8,7 +9,7 @@ public partial class PlaylistsVisualizer : ScrollContainer
     [Export] public VBoxContainer container;
     [Export] public Control moreMenu;
 
-    [Signal] public delegate void OnSelectPlaylistEventHandler(int playlist, Texture2D image);
+    public Action<int, Texture2D> OnSelectPlaylist;
 
     public override void _Process(double delta)
     {
@@ -39,7 +40,7 @@ public partial class PlaylistsVisualizer : ScrollContainer
 
     public void LoadDataIntoPlaylist(int i, PlaylistDisplay playlist, bool current)
     {
-        playlist.Init(i == Globals.main.current_playlist ? Globals.main.playlist : MainParser.ParsePlaylist(Globals.main.playlists[i]), i, current, moreMenu);
+        playlist.Init(i == Globals.main.playlist_index ? Globals.main.playlist : MainParser.ParsePlaylist(Globals.main.playlists[i]), i, current, moreMenu);
     }
 
     public void UpdatePlaylists()
@@ -67,7 +68,7 @@ public partial class PlaylistsVisualizer : ScrollContainer
 
         for(int i = 0; i < end; i++)
         {
-            LoadDataIntoPlaylist(i, playlists[i] as PlaylistDisplay, i == Globals.main.current_playlist);
+            LoadDataIntoPlaylist(i, playlists[i] as PlaylistDisplay, i == Globals.main.playlist_index);
         }
     }
 }

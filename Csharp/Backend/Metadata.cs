@@ -43,7 +43,7 @@ public class Metadata
             if (InitializeFileListKey(ref path))
             {
                 string comment = file_list[path].Tag.Comment;
-                tag_list.Add(path, comment != null ? comment.Split(';') : null);
+                tag_list.Add(path, comment?.Split(';'));
             }
         }
     }
@@ -169,11 +169,13 @@ public class Metadata
     {
         InitializeTagListKey(ref path);
 
+        if(tag_list[path] == null)
+            return null;
+
         for (int i = 0; i < tag_list[path].Length; i++)
         {
             if(tag_list[path][i].Trim().StartsWith("Link "))
             {
-                GD.Print("Tag found");
                 return tag_list[path][i].Substring(5).Trim();
             }
         }

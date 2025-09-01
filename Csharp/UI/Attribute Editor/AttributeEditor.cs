@@ -55,7 +55,7 @@ public partial class AttributeEditor : EditorWindow
         Hide();
         cover_changed = false;
 
-        EmitSignal("OnClose");
+        OnClose?.Invoke();
         cancelled = false;
 
         Globals.file_dialog.Reparent(Globals.self);

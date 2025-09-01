@@ -89,14 +89,14 @@ public class ConvertToGodot
     /// <param name="file_name">path to the image</param>
     /// <param name="fallback">the Texture2D to be returned if the image fails to load</param>
     /// <returns></returns>
-    public static Texture2D LoadImage(string file_name, ref Texture2D fallback)
+    public static Texture2D LoadImage(string file_name)
     {
         if(file_name != null)
         {
             Image img = new Image();
             if (img.Load(file_name) == Error.Ok) return ImageTexture.CreateFromImage(img);
         }
-        return fallback;
+        return null;
     }
 
     /// <summary>

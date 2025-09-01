@@ -1,7 +1,6 @@
 TODO
 
-- Add share button to songs (keep youtube link in song metadata)
-- Add update button - make save data so it saves in json or ssl
+- Make Github repo public, and make builds
 - Make playlist bar hiding
 - Add settings menu
 - Add lyrics viewer
@@ -16,6 +15,8 @@ DOING
 
 FINISHED
 
+- Add update button
+- Add share button to songs (keep youtube link in song metadata)
 - Add shuffle option to save file
 - Add music video playing
 - Make top card playbutton functionality

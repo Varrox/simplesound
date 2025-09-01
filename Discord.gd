@@ -49,6 +49,12 @@ func _process(_delta: float) -> void:
 		
 		update.emit()
 		
+		if DiscordRPC.large_image != "logotrans":
+			DiscordRPC.small_image = "logotrans"
+		else:
+			DiscordRPC.small_image = ""
+		
+		
 		DiscordRPC.details = details
 		DiscordRPC.state = state
 		

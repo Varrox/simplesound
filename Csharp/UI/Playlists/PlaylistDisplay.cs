@@ -6,17 +6,18 @@ public partial class PlaylistDisplay : Button
     [Export] public Label Name, Songs;
     [Export] public ContextMenu More;
 
-    static readonly char dot = '\u00b7';
+    const char dot = '\u00b7';
 
     int playlist_index;
-    PlaylistsVisualizer visualizer;
 
     public override void _Ready()
     {
         More.Hide();
         ButtonDown += Set;
+
         MouseEntered += More.Show;
         MouseExited += OnExit;
+
         More.MouseEntered += More.Show;
         More.OnClose += More.Hide;
     }
@@ -28,7 +29,7 @@ public partial class PlaylistDisplay : Button
 
     public void Set()
     {
-        Globals.main.playlistVisualizer.EmitSignal("OnSelectPlaylist", playlist_index, Cover.Texture);
+        Globals.main.playlist_visualizer.OnSelectPlaylist?.Invoke(playlist_index, Cover.Texture);
         Globals.main.current_looked_at_playlist = playlist_index;
         SelfModulate = Globals.lower_highlight;
     }
@@ -40,19 +41,20 @@ public partial class PlaylistDisplay : Button
 
     public void Init(Playlist playlist, int index, bool current, Control menu)
     {
-        Cover.Texture = ConvertToGodot.LoadImage(playlist.Cover, ref Globals.default_cover);
+        Cover.Texture = ConvertToGodot.LoadImage(playlist.Cover) ?? Globals.default_cover;
 
         Name.Text = playlist.Name;
+
         if (playlist.Type != Playlist.PlaylistType.Album)
-        { 
+        {
             if (playlist.Songs == null)
                 Songs.Text = "0 songs";
             else
-                Songs.Text = (playlist.Songs.Count.ToString() + (playlist.Songs.Count != 1 ? " songs" : " song")) + (playlist.Artist != null ? $" {dot} {playlist.Artist}" : "");
+                Songs.Text = $"{playlist.Songs.Count}{(playlist.Songs.Count != 1 ? " songs" : " song")}{(playlist.Artist != null ? $" {dot} {playlist.Artist}" : "")}";
         }
         else
         {
-            Songs.Text = $"Album  {dot}  " + (playlist.Artist != null ? playlist.Artist : playlist.Songs.Count.ToString() + (playlist.Songs.Count != 1 ? " songs" : " song"));
+            Songs.Text = $"Album  {dot}  {(playlist.Artist ?? (playlist.Songs.Count.ToString() + (playlist.Songs.Count != 1 ? " songs" : " song")))}";
         }
 
         More.menu = menu;
@@ -61,6 +63,6 @@ public partial class PlaylistDisplay : Button
 
         if (current) Set();
 
-        Globals.main.playlistVisualizer.OnSelectPlaylist += ClearSelected;
+        Globals.main.playlist_visualizer.OnSelectPlaylist += ClearSelected;
     }
 }
