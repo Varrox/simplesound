@@ -4,7 +4,7 @@ using System;
 
 public partial class ShareMenu : ContextMenu
 {
-	[Export] public Button clip_board, share_link, file_browse;
+	[Export] public Button share_link, file_browse;
 
 	[Export] public Texture2D Share, Back;
 
@@ -19,14 +19,8 @@ public partial class ShareMenu : ContextMenu
 		OnOpen += GetSongData;
 		OnClose += () => Icon = Share;
 
-		clip_board.ButtonUp += CopySongToClipboard;
 		share_link.ButtonUp += CopyShareLinkToClipboard;
 		file_browse.ButtonUp += FileBrowseSong;
-    }
-
-	public void CopySongToClipboard()
-	{
-        DisplayServer.ClipboardSet(file);
     }
 
     public void CopyShareLinkToClipboard()
