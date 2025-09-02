@@ -173,17 +173,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_632yu")
+Play = NodePath("Player/Controls/Play")
+Next = NodePath("Player/Controls/Next")
+Back = NodePath("Player/Controls/Back")
+Loop = NodePath("Player/Controls/Loop")
+Shuffle = NodePath("Player/Controls/Shuffle")
 LoopOn = ExtResource("3_lifiy")
 LoopOff = ExtResource("7_uv8rp")
 ShuffleOn = ExtResource("7_oidy5")
 ShuffleOff = ExtResource("20_fkbne")
 Mute = ExtResource("42_0cbny")
 Unmute = ExtResource("9_hrvbo")
-Play = NodePath("Player/Controls/Play")
-Next = NodePath("Player/Controls/Next")
-Back = NodePath("Player/Controls/Back")
-Loop = NodePath("Player/Controls/Loop")
-Shuffle = NodePath("Player/Controls/Shuffle")
 Progress = NodePath("Player/Controls/Progress")
 CurrentTime = NodePath("Player/Controls/Progress/Current Time")
 TotalTime = NodePath("Player/Controls/Progress/Total Time")
@@ -274,7 +274,7 @@ theme_override_styles/separator = SubResource("StyleBoxEmpty_wnkbs")
 script = ExtResource("12_f6a44")
 scroll_container = NodePath("../..")
 
-[node name="Add" type="Button" parent="Interface/Side Panel" node_paths=PackedStringArray("menu")]
+[node name="Add" type="Button" parent="Interface/Side Panel" node_paths=PackedStringArray("menu", "sub_menus")]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 256.0
@@ -289,9 +289,8 @@ icon = ExtResource("10_7e43v")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("21_seu75")
-teleportMenu = null
-teleportMenuOffset = null
 menu = NodePath("Panel")
+sub_menus = []
 
 [node name="Panel" type="Panel" parent="Interface/Side Panel/Add"]
 visible = false
@@ -954,13 +953,13 @@ _play_texture = ExtResource("5_8inno")
 _pause_texture = ExtResource("4_lfnj1")
 _default_cover = ExtResource("7_xn3w4")
 _default_cover_highres = ExtResource("13_seu75")
-_highlight = Color(1, 1, 1, 0.376)
-_lower_highlight = Color(50, 50, 50, 0.162)
-_confirmation_window = ExtResource("39_h8e4i")
 _main = NodePath("..")
 _player = NodePath("../Interface")
 _file_dialog = NodePath("File Dialog")
 _self = NodePath(".")
+_highlight = Color(1, 1, 1, 0.376)
+_lower_highlight = Color(50, 50, 50, 0.162)
+_confirmation_window = ExtResource("39_h8e4i")
 
 [node name="File Dialog" type="FileDialog" parent="Globals"]
 title = "Open a File"

@@ -1,0 +1,122 @@
+[gd_scene load_steps=6 format=3 uid="uid://djve16b56k6h0"]
+
+[ext_resource type="PackedScene" uid="uid://dhdg1uuqqaoj4" path="res://Prefabs/background.tscn" id="1_8mof8"]
+[ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Styling/Fonts/DefaultFont.tres" id="2_v3qo6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5cf4u"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wg6k2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qr8t8"]
+
+[node name="DownloadWindow" type="Window"]
+oversampling_override = 1.0
+initial_position = 2
+size = Vector2i(550, 350)
+force_native = true
+
+[node name="ColorRect" parent="." instance=ExtResource("1_8mof8")]
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="."]
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -55.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Location" type="LineEdit" parent="HBoxContainer2/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("2_v3qo6")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_5cf4u")
+placeholder_text = "Location"
+
+[node name="Playlist" type="OptionButton" parent="HBoxContainer2/VBoxContainer2"]
+custom_minimum_size = Vector2(0, 55.98)
+layout_mode = 2
+expand_icon = true
+
+[node name="HSeparator3" type="HSeparator" parent="HBoxContainer2/VBoxContainer2"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="VSeparator" type="VSeparator" parent="HBoxContainer2"]
+custom_minimum_size = Vector2(7.06, 0)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Name" type="LineEdit" parent="HBoxContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("2_v3qo6")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_5cf4u")
+placeholder_text = "Link"
+
+[node name="HSeparator" type="HSeparator" parent="HBoxContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="Cover2" type="Button" parent="HBoxContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("2_v3qo6")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wg6k2")
+text = "Add Song(s)"
+
+[node name="Panel" type="Panel" parent="HBoxContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(0, 79.7)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer2/VBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.5
+offset_top = 2.5
+offset_right = -2.5
+offset_bottom = -2.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer2/VBoxContainer/Panel/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Create" type="Button" parent="HBoxContainer2/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_v3qo6")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_qr8t8")
+text = "Download"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -61.0
+offset_top = -39.045
+offset_right = 61.0
+offset_bottom = -11.045
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="Cancel" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_v3qo6")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_qr8t8")
+text = "Close"

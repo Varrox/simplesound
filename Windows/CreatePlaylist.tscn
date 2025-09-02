@@ -14,16 +14,17 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bhcbq"]
 
 [node name="Window" type="Window" node_paths=PackedStringArray("playlist_name", "addCover", "coverDisplay", "addSongs", "songDisplayContainer", "cloudSync", "album", "artist", "backgroundThemeEnabled", "backgroundTheme", "SubmitButton", "CancelButton")]
+oversampling_override = 1.0
 title = "Create Playlist"
 initial_position = 2
 size = Vector2i(550, 350)
 min_size = Vector2i(450, 300)
 script = ExtResource("1_b0noq")
-playlist_name = NodePath("HBoxContainer2/VBoxContainer/Name")
-addCover = NodePath("HBoxContainer2/VBoxContainer/Cover")
-coverDisplay = NodePath("HBoxContainer2/VBoxContainer/Selected File")
-addSongs = NodePath("HBoxContainer2/VBoxContainer/Cover2")
 songDisplay = ExtResource("3_uox0n")
+playlist_name = NodePath("HBoxContainer2/VBoxContainer/Name")
+addCover = NodePath("HBoxContainer2/VBoxContainer2/Cover")
+coverDisplay = NodePath("HBoxContainer2/VBoxContainer2/Selected File")
+addSongs = NodePath("HBoxContainer2/VBoxContainer/Cover2")
 songDisplayContainer = NodePath("HBoxContainer2/VBoxContainer/Panel/ScrollContainer/VBoxContainer")
 cloudSync = NodePath("HBoxContainer2/VBoxContainer2/Cloud")
 album = NodePath("HBoxContainer2/VBoxContainer2/Album")
@@ -36,7 +37,7 @@ CancelButton = NodePath("HBoxContainer/Cancel")
 [node name="ColorRect" parent="." instance=ExtResource("3_3os5s")]
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="."]
-anchors_preset = 15
+anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 10.0
@@ -61,20 +62,6 @@ placeholder_text = "Name"
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
-[node name="Cover" type="Button" parent="HBoxContainer2/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 4
-theme_override_fonts/font = ExtResource("1_8t6yf")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_yiuwm")
-text = "Select cover"
-
-[node name="Selected File" parent="HBoxContainer2/VBoxContainer" instance=ExtResource("3_uox0n")]
-layout_mode = 2
-
-[node name="HSeparator2" type="HSeparator" parent="HBoxContainer2/VBoxContainer"]
-custom_minimum_size = Vector2(0, 10)
-layout_mode = 2
-
 [node name="Cover2" type="Button" parent="HBoxContainer2/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
@@ -89,7 +76,7 @@ size_flags_vertical = 3
 
 [node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer2/VBoxContainer/Panel"]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 2.5
@@ -111,15 +98,17 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Cloud" type="CheckBox" parent="HBoxContainer2/VBoxContainer2"]
+[node name="Cover" type="Button" parent="HBoxContainer2/VBoxContainer2"]
 layout_mode = 2
-tooltip_text = "If disabled, songs on this playlist will not be synced to other devices. 
-But of course if you add songs yourself in the ssl file, you can choose"
+size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("1_8t6yf")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_r7omr")
-text = "Cloud Sync"
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yiuwm")
+text = "Select cover"
 
-[node name="HSeparator3" type="HSeparator" parent="HBoxContainer2/VBoxContainer2"]
+[node name="Selected File" parent="HBoxContainer2/VBoxContainer2" instance=ExtResource("3_uox0n")]
+layout_mode = 2
+
+[node name="HSeparator2" type="HSeparator" parent="HBoxContainer2/VBoxContainer2"]
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
@@ -152,8 +141,21 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_bhcbq")
 text = "
 "
 
+[node name="HSeparator3" type="HSeparator" parent="HBoxContainer2/VBoxContainer2"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="Cloud" type="CheckBox" parent="HBoxContainer2/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 4
+tooltip_text = "If disabled, songs on this playlist will not be synced to other devices. 
+But of course if you add songs yourself in the ssl file, you can choose"
+theme_override_fonts/font = ExtResource("1_8t6yf")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_r7omr")
+text = "Cloud Sync"
+
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-anchors_preset = 7
+anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5

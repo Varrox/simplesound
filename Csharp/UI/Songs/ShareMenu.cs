@@ -50,7 +50,5 @@ public partial class ShareMenu : ContextMenu
 		link = Metadata.GetShareLink(file);
 
 		Icon = Back;
-
-		GD.Print(file);
 	}
 }

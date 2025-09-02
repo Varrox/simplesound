@@ -1,6 +1,9 @@
+using Godot;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Reflection;
 
 namespace SSLParser
@@ -94,6 +97,7 @@ namespace SSLParser
             if(variable != "" && value != "")
             {
                 Type type = typeof(T);
+
                 FieldInfo field = type.GetField("ActionMapper");
                 if (field != null)
                 {
@@ -130,6 +134,10 @@ namespace SSLParser
         {
             if (type == typeof(string))
             {
+                if (value.StartsWith('"') && value.EndsWith('"'))
+                {
+                    return value.Substring(1, value.Length - 2);
+                }
                 return value;
             }
             else if (type.IsEnum)
@@ -138,34 +146,177 @@ namespace SSLParser
             }
             else
             {
+                bool iterable = false;
+
+                if (type.IsArray)
+                    iterable = true;
+                else if (type.IsGenericType)
+                    if (type.GetGenericTypeDefinition() == typeof(List<>))
+                        iterable = true;
+
+                if (iterable)
+                {
+                    Type array_item_type = type.GetGenericArguments()[0];
+
+                    return typeof(ParsingTools).GetMethod("ParseArray").MakeGenericMethod(array_item_type).Invoke(null, new object[] { value, "," });
+                }
+
                 return Convert.ChangeType(value, type, CultureInfo.InvariantCulture);
             }
         }
 
+        public static object ConvertStringToObject(string value)
+        {
+            if (value.StartsWith('"') && value.EndsWith('"'))
+            {
+                return value.Substring(1, value.Length - 2);
+            }
+            else if (value.StartsWith('[') && value.EndsWith(']'))
+            {
+                return ParseArrayAny(value);
+            }
+
+            return value; // If no type was found, just return as string
+        }
+
         public static string ConvertValueToString(object value)
         {
-            if (value.GetType() == typeof(string))
+            Type type = value.GetType();
+
+            if (type == typeof(string))
             {
-                return (string)value;
+                return $"\"{(string)value}\"";
             }
-            else if (value.GetType().IsEnum)
+            else if (type.IsEnum)
             {
-                return Enum.GetName(value.GetType(), value);
+                return Enum.GetName(type, value);
             }
-            else if (value.GetType() == typeof(int))
+            else if (type == typeof(int))
             {
                 return ((int)value).ToString();
             }
-            else if (value.GetType() == typeof(float))
+            else if (type == typeof(float))
             {
                 return ((float)value).ToString();
             }
-            else if (value.GetType() == typeof(bool))
+            else if (type == typeof(bool))
             {
                 return ((bool)value).ToString().ToLower();
             }
+            else if (IsTypeEnumeral(type))
+            {
+                Array array;
 
+                if (type.GetGenericTypeDefinition() == typeof(List<>))
+                {
+                    array = Enumerable.Range(0, ((IList)value).Count).Select(i => ((IList)value)[i]).ToArray();
+                }
+                else
+                {
+                    array = (Array)value;
+                }
+
+                return StringifyArray(array);
+            }
+                
             return "";
+        }
+
+        public static List<string> SmartSplit(string line, string split_chars)
+        {
+            int starts = 0, ends = 0, last_cut = 0;
+            bool wrap = false, last_ignore = false;
+            List<string> result = new List<string>();
+
+            for(int i  = 0; i < line.Length; i++)
+            {
+                char c = line[i];
+
+                if(c == '\\')
+                    last_ignore = true;
+
+                else if (c == '"' && !last_ignore)
+                    wrap = !wrap;
+                
+                if (!last_ignore && !wrap)
+                {
+                    if ("({[".Contains(c))
+                        starts++;
+                    else if (")}]".Contains(c))
+                        ends++;
+                    else if (split_chars.Contains(c) && (starts == ends))
+                    {
+                        result.Add(line.Substring(last_cut, i - last_cut).Trim());
+                        last_cut = i + 1;
+                    }
+                }
+                
+                if(i == line.Length - 1)
+                    result.Add(line.Substring(last_cut, i + 1 - last_cut).Trim());
+
+                last_ignore = false;
+            }
+
+            return result;
+        }
+
+        public static string StringifyArray(Array array, string start = "[", string end = "]", string in_between = ", ")
+        {
+            string result = start;
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                result += $"{ParsingTools.ConvertValueToString(array.GetValue(i))}{(i == array.Length - 1 ? end : in_between)}";
+            }
+
+            return result;
+        }
+
+        public static List<T> ParseArray<T>(string array, string split = ",")
+        {
+            List<T> result = new List<T>();
+
+            array = array.Trim();
+            array = array.Substring(1, array.Length - 2); // Remove []
+
+            List<string> list = SmartSplit(array, split);
+
+            for(int i = 0; i < list.Count; i++)
+            {
+                result.Add((T)ConvertStringToValue(list[i], typeof(T)));
+            }
+
+            return result;
+        }
+
+        public static List<object> ParseArrayAny(string array, string split = ",")
+        {
+            List<object> result = new List<object>();
+
+            array = array.Trim();
+            array = array.Substring(1, array.Length - 2); // Remove []
+
+            List<string> list = SmartSplit(array, split);
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                result.Add(ConvertStringToObject(list[i]));
+            }
+
+            return result;
+        }
+
+        public static bool IsTypeEnumeral(Type type)
+        {
+            bool iterable = false;
+
+            if (type.IsArray)
+                iterable = true;
+            else if (type.IsGenericType)
+                if (type.GetGenericTypeDefinition() == typeof(List<>))
+                    iterable = true;
+
+            return iterable;
         }
 
         /// <summary>
@@ -195,9 +346,9 @@ namespace SSLParser
             }
         }
 
-        public static List<string> GetDifferences(string[] list1,  string[] list2, bool both = false)
+        public static List<T> GetDifferences<T>(T[] list1,  T[] list2, bool both = false)
         {
-            List<string> differences = new List<string>();
+            List<T> differences = new List<T>();
 
             for (int i = 0; i < list1.Length; i++)
             {

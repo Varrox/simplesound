@@ -44,6 +44,18 @@ public partial class Main : Control
 	{
 		// Load Save data
 
+		GD.Print(ParsingTools.StringifyArray(new[] { new[]{"Sigma", "Rizz" }, new[] { "Gooning", "Rizzing", "Ohio" } }));
+
+		List<List<string>> ar = ParsingTools.ParseArray<List<string>>("[[\"Sigma\", \"Rizz\"], [\"Gooning\", \"Rizzing\", \"Ohio\"]]");
+
+		for (int i = 0; i < ar.Count; i++)
+		{
+			for (int j = 0; j < ar[i].Count; j++)
+			{
+				GD.Print(ar[i][j]);
+			}
+		}
+
         SaveData save_data = SaveSystem.GetSaveData();
 
 		playlist_index = save_data.playlist_index;

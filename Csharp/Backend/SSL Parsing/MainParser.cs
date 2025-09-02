@@ -224,12 +224,15 @@ namespace SSLParser
             }
         }
 
-        public static void ParseFile<T>(string path, out T output_object) where T : new()
+        public static void ParseFile<T>(string path, out T output_object, out List<string> tags) where T : new()
         {
             string[] lines = File.ReadAllLines(path);
             line.path = path;
 
+            int current_char = 0;
+
             output_object = new();
+            tags = new List<string>();
 
             for (int i = 0; i < lines.Length; i++)
             {
@@ -237,12 +240,20 @@ namespace SSLParser
 
                 if (trimmed_start_line.Length == 0) continue;
 
-                if (trimmed_start_line.StartsWith(typeof(T).Name))
+                current_char += lines[i].Length;
+
+                if(trimmed_start_line.StartsWith('#'))
+                {
+                    tags.Add(trimmed_start_line.Substring(1).Trim());
+                }
+                else if (trimmed_start_line.StartsWith(typeof(T).Name))
                 {
                     for (int j = i + 1; j < lines.Length; j++)
                     {
                         line.line = j;
                         string trimmed_line = ParsingTools.FormatCode(lines[j]);
+
+                        current_char += lines[j].Length;
 
                         if (trimmed_line == "}")
                         {
@@ -257,7 +268,19 @@ namespace SSLParser
                         if (trimmed_line.Length > 0)
                         {
                             string[] split = SplitLine(trimmed_line);
+
                             string var = split[0];
+
+                            FieldInfo field = output_object.GetType().GetField(var);
+
+                            if (ParsingTools.IsTypeEnumeral(field.FieldType))
+                            {
+                                int ending = GetEnding(string.Join("", lines), current_char - split[1].Length, '}'); // FIX MEE
+
+
+                                continue;
+                            }
+
                             string value = split[1];
 
                             ParsingTools.SetVariable(ref line, var, value, ref output_object);
@@ -275,42 +298,48 @@ namespace SSLParser
 
         public static string StringifyObject<T>(T input_object)
         {
-            string output = $"{typeof(T).Name}\n" + "{\n", after = "";
+            string output = $"{typeof(T).Name}\n" + "{\n";
             
             foreach (FieldInfo prop in typeof(T).GetFields())
             {
-                if (prop.FieldType == typeof(Array) || prop.FieldType == typeof(List<>)) // Iterable
+                if (prop.FieldType == typeof(Array) || prop.FieldType == typeof(List<>)) // Iterable Array
                 {
                     IEnumerable array = null;
 
-                    if (prop.FieldType == typeof(Array))
-                    {
+                    if (prop.FieldType == typeof(Array)) // Good
                         array = prop.GetValue(input_object) as Array;
-                    }
-                    else
+                    else // Bad
                     {
                         object list = prop.GetValue(input_object);
 
-                        Type type = typeof(List<>).GetGenericArguments()[0];
-                        Type genericListType = typeof(List<>).MakeGenericType(type);
+                        //Type type = prop.FieldType.GetGenericArguments()[0];
+                        //Type genericListType = typeof(list).MakeGenericType(type);
                         
-                        array = (IList)Activator.CreateInstance(genericListType);
+                        array = (IList)Activator.CreateInstance(list.GetType());
                     }
 
                     if (array != null)
                     {
-                        after += prop.Name + "\n{\n";
+                        output += '\t' + prop.Name + " :\n\t{\n";
 
                         foreach (object item in array)
-                        {
-                            after += $"\t{ParsingTools.ConvertValueToString(item)}";
-                        }
+                            output += $"\t\t{ParsingTools.ConvertValueToString(item)}\n";
 
-                        after += "\n}\n\n";
+                        output += "\t}\n\n";
                     }
 
                     continue;
                 }
+                /*else if(prop.FieldType == typeof(Dictionary<,>)) // Iterable Dictionary Not good
+                {
+                    object dict = prop.GetValue(input_object);
+
+
+                    Type key = prop.FieldType.GetGenericArguments()[0];
+                    Type value = prop.FieldType.GetGenericArguments()[1].GetType();
+
+                    var dictionary = Activator.CreateInstance(prop.FieldType) as IDictionary<key.GetType(), value.GetType()>;
+                }*/
 
                 // Non-Iterable
 
@@ -319,9 +348,42 @@ namespace SSLParser
                 output += $"\t{prop.Name} : {ParsingTools.ConvertValueToString(variable)}\n";
             }
 
-            output += "}\n\n" + after;
+            output += "}";
             
             return output;
+        }
+
+        public static int GetEnding(string text, int start_index, char ender)
+        {
+            int starts = 0, ends = 0;
+            bool wrap = false, last_ignore = false;
+
+            for (int i = start_index; i < text.Length; i++)
+            {
+                char c = text[i];
+
+                if (c == '\\')
+                    last_ignore = true;
+
+                else if (c == '"' && !last_ignore)
+                    wrap = !wrap;
+
+                if (!last_ignore && !wrap)
+                {
+                    if ("({[".Contains(c))
+                        starts++;
+                    else if (")}]".Contains(c))
+                        ends++;
+                    else if (c == ender && (starts == ends))
+                    {
+                        return i;
+                    }
+                }
+
+                last_ignore = false;
+            }
+
+            return -1;
         }
 
         /// <summary>

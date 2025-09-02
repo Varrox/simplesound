@@ -60,7 +60,7 @@ focus_mode = 0
 text = "Delete"
 alignment = 0
 
-[node name="Share" type="Button" parent="VBoxContainer" node_paths=PackedStringArray("clip_board", "share_link", "file_browse", "menu")]
+[node name="Share" type="Button" parent="VBoxContainer" node_paths=PackedStringArray("share_link", "file_browse", "menu", "sub_menus")]
 layout_mode = 2
 size_flags_vertical = 3
 focus_mode = 0
@@ -69,19 +69,21 @@ icon = ExtResource("1_a1dky")
 alignment = 0
 expand_icon = true
 script = ExtResource("2_rsdy2")
-clip_board = NodePath("")
 share_link = NodePath("../../Control/VBoxContainer/Share link")
 file_browse = NodePath("../../Control/VBoxContainer/File browse")
 Share = ExtResource("1_a1dky")
 Back = ExtResource("3_tpxmu")
 menu = NodePath("../../Control")
+teleportMenu = null
 teleportMenuOffset = null
+sub_menus = []
 
 [node name="Control" type="Panel" parent="."]
+visible = false
 layout_mode = 0
-offset_left = -205.0
+offset_left = -209.0
 offset_top = 108.0
-offset_right = -1.0
+offset_right = -5.0
 offset_bottom = 186.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control"]

@@ -1,6 +1,7 @@
 TODO
 
 - Make Github repo public, and make builds
+- Add song downloading - For youtube, soundcloud, and spotify
 - Make playlist bar hiding
 - Add settings menu
 - Add lyrics viewer
