@@ -1,4 +1,5 @@
 using Godot;
+using SSLParser;
 
 public partial class Player : Node
 {
@@ -200,7 +201,7 @@ public partial class Player : Node
     {
         if (Globals.main.playlist.customInfo.overlay_color != null)
         {
-            background_color = ConvertToGodot.GetColor(Globals.main.playlist.customInfo.overlay_color);
+            background_color = ParsingTools.ParseColor(Globals.main.playlist.customInfo.overlay_color);
         }
         else
         {

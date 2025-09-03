@@ -27,7 +27,7 @@ public class SaveSystem
         }
 		else
 		{
-            MainParser.ParseFile(save_data_path, out save_data);
+            MainParser.ParseFile(save_data_path, out save_data, out List<string> tags);
         }
 
         return save_data;

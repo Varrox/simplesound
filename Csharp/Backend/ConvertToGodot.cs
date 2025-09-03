@@ -1,6 +1,4 @@
 ﻿using Godot;
-using SSLParser;
-using System;
 using System.IO;
 
 public class ConvertToGodot
@@ -61,28 +59,6 @@ public class ConvertToGodot
         return color / samples;
     }
 
-    public static Color GetColor(string text)
-    {
-        if (text[0] == '#')
-        {
-            return Color.FromHtml(text);
-        }
-        else
-        {
-            string[] color_values = ParsingTools.GetInParenthases(text, out string argument);
-            switch(argument)
-            {
-                case "rgb":
-                    return new Color(Convert.ToSingle(color_values[0]), Convert.ToSingle(color_values[1]), Convert.ToSingle(color_values[2]), 1);
-                case "rgba":
-                    return new Color(Convert.ToSingle(color_values[0]), Convert.ToSingle(color_values[1]), Convert.ToSingle(color_values[2]), Convert.ToSingle(color_values[3]));
-            }
-            
-            GD.PrintErr($"Could not parse color properly, invalid method name \'{text}\'");
-            return new Color();
-        }
-    }
-
     /// <summary>
     /// Loads an image file into a Texture2D
     /// </summary>
@@ -96,21 +72,7 @@ public class ConvertToGodot
             Image img = new Image();
             if (img.Load(file_name) == Error.Ok) return ImageTexture.CreateFromImage(img);
         }
+
         return null;
-    }
-
-    /// <summary>
-    /// Loads shader code from a .gdshader into the shader type and caches it WARNING: DO NOT USE, SHADERS AREN'T SUPPOSED TO BE CACHED LIKE THIS DOES
-    /// </summary>
-    /// <param name="path">the path to the .gdshader file</param>
-    /// <param name="cachedShader">the path of the cached shader</param>
-    /// <returns>compiled shader</returns>
-    public static Shader LoadShader(string path)
-    {
-        Shader shader = new Shader();
-        shader.Code = File.ReadAllText(path);
-        shader.ResourceName = Path.GetFileNameWithoutExtension(path);
-
-        return shader;
     }
 }

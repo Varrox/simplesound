@@ -229,8 +229,6 @@ namespace SSLParser
             string[] lines = File.ReadAllLines(path);
             line.path = path;
 
-            int current_char = 0;
-
             output_object = new();
             tags = new List<string>();
 
@@ -239,8 +237,6 @@ namespace SSLParser
                 string trimmed_start_line = lines[i].Trim();
 
                 if (trimmed_start_line.Length == 0) continue;
-
-                current_char += lines[i].Length;
 
                 if(trimmed_start_line.StartsWith('#'))
                 {
@@ -252,8 +248,6 @@ namespace SSLParser
                     {
                         line.line = j;
                         string trimmed_line = ParsingTools.FormatCode(lines[j]);
-
-                        current_char += lines[j].Length;
 
                         if (trimmed_line == "}")
                         {
@@ -275,8 +269,9 @@ namespace SSLParser
 
                             if (ParsingTools.IsTypeEnumeral(field.FieldType))
                             {
-                                int ending = GetEnding(string.Join("", lines), current_char - split[1].Length, '}'); // FIX MEE
+                                (int, int) ending = GetEnding(lines, j, lines[j].Length - var.Length, '}');
 
+                                // Get inbetween text then pass it to ParsingTools.ParseArray with filed.FieldType and \n, as split parameter
 
                                 continue;
                             }
@@ -353,37 +348,40 @@ namespace SSLParser
             return output;
         }
 
-        public static int GetEnding(string text, int start_index, char ender)
+        public static (int, int) GetEnding(string[] text, int start_index, int start_char, char ender)
         {
             int starts = 0, ends = 0;
             bool wrap = false, last_ignore = false;
 
-            for (int i = start_index; i < text.Length; i++)
+            for(int i = start_index; i < text.Length; i++)
             {
-                char c = text[i];
-
-                if (c == '\\')
-                    last_ignore = true;
-
-                else if (c == '"' && !last_ignore)
-                    wrap = !wrap;
-
-                if (!last_ignore && !wrap)
+                for (int j = i == start_index ? start_char : 0; j < text[i].Length; j++)
                 {
-                    if ("({[".Contains(c))
-                        starts++;
-                    else if (")}]".Contains(c))
-                        ends++;
-                    else if (c == ender && (starts == ends))
-                    {
-                        return i;
-                    }
-                }
+                    char c = text[i][j];
 
-                last_ignore = false;
+                    if (c == '\\')
+                        last_ignore = true;
+
+                    else if (c == '"' && !last_ignore)
+                        wrap = !wrap;
+
+                    if (!last_ignore && !wrap)
+                    {
+                        if ("({[".Contains(c))
+                            starts++;
+                        else if (")}]".Contains(c))
+                            ends++;
+                        else if (c == ender && (starts == ends))
+                        {
+                            return (i, j);
+                        }
+                    }
+
+                    last_ignore = false;
+                }
             }
 
-            return -1;
+            return (-1, -1);
         }
 
         /// <summary>
@@ -395,6 +393,7 @@ namespace SSLParser
         {
             line = ParsingTools.FormatCode(line);
             int index = line.IndexOf(':');
+
             return new[] {line.Substring(0, index).Trim(), line.Substring(index + 1).Trim()};
         }
     }

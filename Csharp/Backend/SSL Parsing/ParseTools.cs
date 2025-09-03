@@ -207,10 +207,10 @@ namespace SSLParser
             {
                 Array array;
 
-                if (type.GetGenericTypeDefinition() == typeof(List<>))
+                if (type.IsGenericType)
                 {
                     array = Enumerable.Range(0, ((IList)value).Count).Select(i => ((IList)value)[i]).ToArray();
-                }
+                } 
                 else
                 {
                     array = (Array)value;
@@ -317,6 +317,28 @@ namespace SSLParser
                     iterable = true;
 
             return iterable;
+        }
+
+        public static Color ParseColor(string text)
+        {
+            if (text[0] == '#')
+            {
+                return Color.FromHtml(text);
+            }
+            else
+            {
+                string[] color_values = ParsingTools.GetInParenthases(text, out string argument);
+                switch (argument)
+                {
+                    case "rgb":
+                        return new Color(Convert.ToSingle(color_values[0]), Convert.ToSingle(color_values[1]), Convert.ToSingle(color_values[2]), 1);
+                    case "rgba":
+                        return new Color(Convert.ToSingle(color_values[0]), Convert.ToSingle(color_values[1]), Convert.ToSingle(color_values[2]), Convert.ToSingle(color_values[3]));
+                }
+
+                Debug.ErrorLog($"Could not parse color properly, invalid method name \'{text}\'");
+                return new Color();
+            }
         }
 
         /// <summary>
