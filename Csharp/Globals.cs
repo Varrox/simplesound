@@ -1,4 +1,5 @@
 ﻿using Godot;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 public partial class Globals : Node
 {
@@ -76,6 +77,22 @@ public partial class Globals : Node
 
     public static Player player;
 
+    [Export]
+    Discord _discord
+    {
+        set
+        {
+            discord = value;
+        }
+
+        get
+        {
+            return discord;
+        }
+    }
+
+    public static Discord discord;
+
     [Export] FileDialog _file_dialog
     {
         set
@@ -144,7 +161,13 @@ public partial class Globals : Node
     public override void _Ready()
     {
         GetTree().Root.MinSize = main_window_minimum_size;
-        GetTree().Root.CloseRequested += main.SaveData;
+        GetTree().Root.CloseRequested += OnClose;
+    }
+
+    public static void OnClose()
+    {
+        main.SaveData();
+        Discord.ShutDown();
     }
 
     public static PackedScene confirmation_window;

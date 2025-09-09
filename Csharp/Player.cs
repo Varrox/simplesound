@@ -179,6 +179,8 @@ public partial class Player : Node
             SongCover.Texture = Globals.default_cover;
             BackgroundImage.Set("target_texture", Globals.default_cover_highres);
         }
+
+        Globals.discord.UpdateSong();
     }
 
     public void SetTime(bool value)

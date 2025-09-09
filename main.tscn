@@ -1,4 +1,4 @@
-[gd_scene load_steps=77 format=3 uid="uid://cbpkjhjnbrjm6"]
+[gd_scene load_steps=76 format=3 uid="uid://cbpkjhjnbrjm6"]
 
 [ext_resource type="Theme" uid="uid://cg2x5h7ufrntn" path="res://Styling/global_theme.tres" id="1_4lmeg"]
 [ext_resource type="Script" uid="uid://b81fhtdmrks0a" path="res://Csharp/Main.cs" id="1_l00ml"]
@@ -38,7 +38,6 @@
 [ext_resource type="Texture2D" uid="uid://bwftf22dhh4du" path="res://Icons/refresh.png" id="23_7r5f6"]
 [ext_resource type="PackedScene" uid="uid://b5ap2spi7sbp8" path="res://Windows/ImportFolder.tscn" id="23_b1qrp"]
 [ext_resource type="Script" uid="uid://b7fgu3kjwheaf" path="res://Csharp/UI/Import Folder/ImportFolderOpener.cs" id="23_come4"]
-[ext_resource type="Script" uid="uid://dwpgkkupvf1jo" path="res://discord.gd" id="24_crcn0"]
 [ext_resource type="PackedScene" uid="uid://dtfoexo3o7b3p" path="res://Prefabs/playlistcontext.tscn" id="26_gbh2w"]
 [ext_resource type="Script" uid="uid://qupwebtnhh44" path="res://Csharp/UI/Playlists/PlaylistPlayer.cs" id="28_wnkbs"]
 [ext_resource type="Script" uid="uid://dpypenx7j1p3m" path="res://Csharp/UI/Appdata.cs" id="29_0cp0l"]
@@ -53,8 +52,8 @@
 [ext_resource type="Texture2D" uid="uid://brujrc442p3b5" path="res://Icons/mute.png" id="42_0cbny"]
 [ext_resource type="Script" uid="uid://cqf4nqygajv02" path="res://zoomer.gd" id="46_qnost"]
 [ext_resource type="Script" uid="uid://dshtlldgdpwlu" path="res://Styling/background_image_transition.gd" id="51_uypp3"]
-[ext_resource type="Script" uid="uid://ci4w647ettu4e" path="res://icon_finder.gd" id="52_4w656"]
 [ext_resource type="Shader" uid="uid://bdi2g0ydm4uf7" path="res://Styling/transition.gdshader" id="52_blkrb"]
+[ext_resource type="Script" uid="uid://dn1xjyy7q4ft5" path="res://Csharp/Discord/Discord.cs" id="53_e71vb"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n3cvr"]
 shader = ExtResource("8_0cp0l")
@@ -850,6 +849,7 @@ expand_icon = true
 
 [node name="Song Attributes" type="Control" parent="Interface/Player"]
 layout_mode = 1
+anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 120.0
@@ -946,10 +946,14 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_gueqf")
 [node name="Songcontext" parent="Interface" instance=ExtResource("17_3m5kb")]
 visible = false
 layout_mode = 1
+anchors_preset = 6
+offset_top = -75.0
+offset_right = 0.0
+offset_bottom = 75.0
 
 [node name="Player" type="AudioStreamPlayer" parent="."]
 
-[node name="Globals" type="Node" parent="." node_paths=PackedStringArray("_main", "_player", "_file_dialog", "_self")]
+[node name="Globals" type="Node" parent="." node_paths=PackedStringArray("_main", "_player", "_discord", "_file_dialog", "_self")]
 script = ExtResource("32_htxhm")
 _play_texture = ExtResource("5_8inno")
 _pause_texture = ExtResource("4_lfnj1")
@@ -957,6 +961,7 @@ _default_cover = ExtResource("7_xn3w4")
 _default_cover_highres = ExtResource("13_seu75")
 _main = NodePath("..")
 _player = NodePath("../Interface")
+_discord = NodePath("../Discord")
 _file_dialog = NodePath("File Dialog")
 _self = NodePath(".")
 _highlight = Color(1, 1, 1, 0.376)
@@ -970,15 +975,8 @@ file_mode = 0
 access = 2
 use_native_dialog = true
 
-[node name="Discord" type="Node" parent="." node_paths=PackedStringArray("Player", "Main")]
-script = ExtResource("24_crcn0")
-Player = NodePath("../Interface")
-Main = NodePath("..")
-
-[node name="HTTPRequest" type="HTTPRequest" parent="Discord" node_paths=PackedStringArray("discord", "main")]
-script = ExtResource("52_4w656")
-discord = NodePath("..")
-main = NodePath("../..")
+[node name="Discord" type="Node" parent="."]
+script = ExtResource("53_e71vb")
 
 [node name="Zoomer" type="Node" parent="." node_paths=PackedStringArray("zoom_display")]
 script = ExtResource("46_qnost")
