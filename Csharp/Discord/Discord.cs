@@ -59,7 +59,7 @@ public partial class Discord : Node
             State = Globals.player.SongArtist.Text,
             Assets = new Assets()
             {
-                LargeImageKey = string.IsNullOrEmpty(link) ? "logotrans" : link,
+                LargeImageKey = string.IsNullOrEmpty(cover_link) ? "logotrans" : cover_link,
                 LargeImageText = name == "varrox" ? $"btw I ({client.CurrentUser.DisplayName}) made this software" : "simplesound is an open source music player",
                 LargeImageUrl = "https://github.com/Varrox/simplesound"
             },

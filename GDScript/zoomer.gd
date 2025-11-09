@@ -24,7 +24,7 @@ func _process(delta: float) -> void:
 	if zoom != get_tree().root.content_scale_factor:
 		get_tree().root.content_scale_factor = zoom
 		
-		zoom_display.text = str(round(100 * zoom), '%')
+		zoom_display.text = str(int(round(100 * zoom)), '%')
 		
 		if last_time < 0.0:
 			zoom_display.show()

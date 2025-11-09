@@ -149,7 +149,7 @@ corner_radius_bottom_left = 5
 shader = ExtResource("52_blkrb")
 shader_parameter/t = 0.0
 
-[node name="Main" type="Control" node_paths=PackedStringArray("player", "video_player", "volumeSlider", "playlist_visualizer", "songs_visualizer")]
+[node name="Main" type="Control" unique_id=14097904 node_paths=PackedStringArray("player", "video_player", "volumeSlider", "playlist_visualizer", "songs_visualizer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -164,7 +164,7 @@ volumeSlider = NodePath("Interface/Player/Controls/Volume")
 playlist_visualizer = NodePath("Interface/Side Panel/Playlists")
 songs_visualizer = NodePath("Interface/Song Display")
 
-[node name="Interface" type="Control" parent="." node_paths=PackedStringArray("Play", "Next", "Back", "Loop", "Shuffle", "Progress", "CurrentTime", "TotalTime", "SongName", "SongArtist", "SongCover", "BackgroundImage", "VolumeSlider", "MuteButton", "backgroundColor")]
+[node name="Interface" type="Control" parent="." unique_id=164668924 node_paths=PackedStringArray("Play", "Next", "Back", "Loop", "Shuffle", "Progress", "CurrentTime", "TotalTime", "SongName", "SongArtist", "SongCover", "BackgroundImage", "VolumeSlider", "MuteButton", "backgroundColor")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -194,7 +194,7 @@ VolumeSlider = NodePath("Player/Controls/Volume")
 MuteButton = NodePath("Player/Controls/Volume/Mute")
 backgroundColor = NodePath("Background/Color")
 
-[node name="Background" type="Control" parent="Interface"]
+[node name="Background" type="Control" parent="Interface" unique_id=291196361]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -202,7 +202,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Image" type="TextureRect" parent="Interface/Background"]
+[node name="Image" type="TextureRect" parent="Interface/Background" unique_id=212901943]
 material = SubResource("ShaderMaterial_n3cvr")
 layout_mode = 1
 anchors_preset = 15
@@ -214,7 +214,7 @@ texture = ExtResource("8_b1qrp")
 expand_mode = 4
 stretch_mode = 6
 
-[node name="Color" type="ColorRect" parent="Interface/Background"]
+[node name="Color" type="ColorRect" parent="Interface/Background" unique_id=1246253791]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -223,7 +223,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 1, 1, 0)
 
-[node name="Video" type="VideoStreamPlayer" parent="Interface/Background"]
+[node name="Video" type="VideoStreamPlayer" parent="Interface/Background" unique_id=797067042]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -233,14 +233,14 @@ grow_vertical = 2
 volume_db = -80.0
 expand = true
 
-[node name="Side Panel" type="Panel" parent="Interface"]
+[node name="Side Panel" type="Panel" parent="Interface" unique_id=638521110]
 layout_mode = 1
 anchors_preset = -1
 anchor_bottom = 1.0
 offset_right = 303.0
 grow_vertical = 2
 
-[node name="Playlists" type="ScrollContainer" parent="Interface/Side Panel" node_paths=PackedStringArray("container", "moreMenu")]
+[node name="Playlists" type="ScrollContainer" parent="Interface/Side Panel" unique_id=1191279535 node_paths=PackedStringArray("container", "moreMenu")]
 layout_mode = 1
 anchors_preset = -1
 anchor_bottom = 1.0
@@ -255,25 +255,25 @@ template = ExtResource("13_a7qgi")
 container = NodePath("HBoxContainer/VBoxContainer")
 moreMenu = NodePath("../../Playlistcontext")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Interface/Side Panel/Playlists"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Interface/Side Panel/Playlists" unique_id=654042858]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Interface/Side Panel/Playlists/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Interface/Side Panel/Playlists/HBoxContainer" unique_id=663656003]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 7
 
-[node name="VSeparator" type="VSeparator" parent="Interface/Side Panel/Playlists/HBoxContainer" node_paths=PackedStringArray("scroll_container")]
+[node name="VSeparator" type="VSeparator" parent="Interface/Side Panel/Playlists/HBoxContainer" unique_id=432466973 node_paths=PackedStringArray("scroll_container")]
 layout_mode = 2
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxEmpty_wnkbs")
 script = ExtResource("12_f6a44")
 scroll_container = NodePath("../..")
 
-[node name="Add" type="Button" parent="Interface/Side Panel" node_paths=PackedStringArray("menu", "sub_menus")]
+[node name="Add" type="Button" parent="Interface/Side Panel" unique_id=977385184 node_paths=PackedStringArray("menu", "sub_menus")]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 256.0
@@ -289,11 +289,9 @@ icon_alignment = 1
 expand_icon = true
 script = ExtResource("21_seu75")
 menu = NodePath("Panel")
-teleportMenu = null
-teleportMenuOffset = null
 sub_menus = []
 
-[node name="Panel" type="Panel" parent="Interface/Side Panel/Add"]
+[node name="Panel" type="Panel" parent="Interface/Side Panel/Add" unique_id=768656514]
 visible = false
 layout_mode = 1
 anchors_preset = -1
@@ -305,7 +303,7 @@ offset_bottom = 156.0
 grow_horizontal = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_come4")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Interface/Side Panel/Add/Panel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Interface/Side Panel/Add/Panel" unique_id=238070728]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -317,7 +315,7 @@ offset_bottom = -7.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Create" type="Button" parent="Interface/Side Panel/Add/Panel/VBoxContainer" node_paths=PackedStringArray("menu", "window")]
+[node name="Create" type="Button" parent="Interface/Side Panel/Add/Panel/VBoxContainer" unique_id=968487249 node_paths=PackedStringArray("menu", "window")]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_fonts/font = ExtResource("9_3b7g8")
@@ -331,10 +329,10 @@ script = ExtResource("21_0rl1p")
 menu = NodePath("../../..")
 window = NodePath("Window")
 
-[node name="Window" parent="Interface/Side Panel/Add/Panel/VBoxContainer/Create" instance=ExtResource("22_ok6jj")]
+[node name="Window" parent="Interface/Side Panel/Add/Panel/VBoxContainer/Create" unique_id=1160141599 instance=ExtResource("22_ok6jj")]
 visible = false
 
-[node name="Folder" type="Button" parent="Interface/Side Panel/Add/Panel/VBoxContainer" node_paths=PackedStringArray("menu", "window")]
+[node name="Folder" type="Button" parent="Interface/Side Panel/Add/Panel/VBoxContainer" unique_id=253478485 node_paths=PackedStringArray("menu", "window")]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
@@ -349,10 +347,10 @@ script = ExtResource("23_come4")
 menu = NodePath("../../..")
 window = NodePath("ImportFolder")
 
-[node name="ImportFolder" parent="Interface/Side Panel/Add/Panel/VBoxContainer/Folder" instance=ExtResource("23_b1qrp")]
+[node name="ImportFolder" parent="Interface/Side Panel/Add/Panel/VBoxContainer/Folder" unique_id=989930022 instance=ExtResource("23_b1qrp")]
 visible = false
 
-[node name="File" type="Button" parent="Interface/Side Panel/Add/Panel/VBoxContainer" node_paths=PackedStringArray("menu")]
+[node name="File" type="Button" parent="Interface/Side Panel/Add/Panel/VBoxContainer" unique_id=523501450 node_paths=PackedStringArray("menu")]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_fonts/font = ExtResource("9_3b7g8")
@@ -365,7 +363,7 @@ expand_icon = true
 script = ExtResource("22_facbu")
 menu = NodePath("../../..")
 
-[node name="Label" type="Label" parent="Interface/Side Panel"]
+[node name="Label" type="Label" parent="Interface/Side Panel" unique_id=1895627161]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 46.0
@@ -375,7 +373,7 @@ offset_bottom = 98.0
 theme_override_font_sizes/font_size = 15
 text = "My Playlists"
 
-[node name="Playlist" type="Button" parent="Interface"]
+[node name="Playlist" type="Button" parent="Interface" unique_id=751213369]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 15.0
@@ -388,7 +386,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_r3k7g")
 icon = ExtResource("8_8i1ca")
 expand_icon = true
 
-[node name="Song Display" type="ScrollContainer" parent="Interface" node_paths=PackedStringArray("menu", "container")]
+[node name="Song Display" type="ScrollContainer" parent="Interface" unique_id=1804847451 node_paths=PackedStringArray("menu", "container")]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -405,21 +403,21 @@ Template = ExtResource("14_t035w")
 menu = NodePath("../Songcontext")
 container = NodePath("HBoxContainer/Container")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Interface/Song Display"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Interface/Song Display" unique_id=78974350]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Container" type="VBoxContainer" parent="Interface/Song Display/HBoxContainer"]
+[node name="Container" type="VBoxContainer" parent="Interface/Song Display/HBoxContainer" unique_id=933878103]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Top card" type="Panel" parent="Interface/Song Display/HBoxContainer/Container"]
+[node name="Top card" type="Panel" parent="Interface/Song Display/HBoxContainer/Container" unique_id=1802359906]
 custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
 
-[node name="Icon" type="PanelContainer" parent="Interface/Song Display/HBoxContainer/Container/Top card"]
+[node name="Icon" type="PanelContainer" parent="Interface/Song Display/HBoxContainer/Container/Top card" unique_id=1147541334]
 clip_children = 1
 layout_mode = 1
 anchors_preset = -1
@@ -432,13 +430,13 @@ offset_bottom = 50.0
 grow_vertical = 2
 theme_override_styles/panel = ExtResource("21_jy3dx")
 
-[node name="TextureRect" type="TextureRect" parent="Interface/Song Display/HBoxContainer/Container/Top card/Icon"]
+[node name="TextureRect" type="TextureRect" parent="Interface/Song Display/HBoxContainer/Container/Top card/Icon" unique_id=803486648]
 layout_mode = 2
 texture = ExtResource("7_xn3w4")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="Playlist name" type="Label" parent="Interface/Song Display/HBoxContainer/Container/Top card"]
+[node name="Playlist name" type="Label" parent="Interface/Song Display/HBoxContainer/Container/Top card" unique_id=1152091530]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.5
@@ -451,7 +449,7 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 29
 text = "Name"
 
-[node name="Song count" type="Label" parent="Interface/Song Display/HBoxContainer/Container/Top card"]
+[node name="Song count" type="Label" parent="Interface/Song Display/HBoxContainer/Container/Top card" unique_id=684426772]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.5
@@ -464,7 +462,7 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 16
 text = "0 songs"
 
-[node name="Play" type="Button" parent="Interface/Song Display/HBoxContainer/Container/Top card"]
+[node name="Play" type="Button" parent="Interface/Song Display/HBoxContainer/Container/Top card" unique_id=1739860587]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 1.0
@@ -482,14 +480,14 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_i82gy")
 icon = ExtResource("5_8inno")
 script = ExtResource("28_wnkbs")
 
-[node name="VSeparator" type="VSeparator" parent="Interface/Song Display/HBoxContainer" node_paths=PackedStringArray("scroll_container")]
+[node name="VSeparator" type="VSeparator" parent="Interface/Song Display/HBoxContainer" unique_id=1962172910 node_paths=PackedStringArray("scroll_container")]
 layout_mode = 2
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxEmpty_wnkbs")
 script = ExtResource("12_f6a44")
 scroll_container = NodePath("../..")
 
-[node name="Top Bar" type="ColorRect" parent="Interface"]
+[node name="Top Bar" type="ColorRect" parent="Interface" unique_id=1268311251]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -497,7 +495,7 @@ offset_bottom = 52.0
 grow_horizontal = 2
 color = Color(0.136826, 0.136826, 0.136826, 1)
 
-[node name="Search" type="LineEdit" parent="Interface/Top Bar"]
+[node name="Search" type="LineEdit" parent="Interface/Top Bar" unique_id=302747481]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.5
@@ -513,7 +511,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_come4")
 placeholder_text = " search for songs"
 editable = false
 
-[node name="Left" type="HBoxContainer" parent="Interface/Top Bar"]
+[node name="Left" type="HBoxContainer" parent="Interface/Top Bar" unique_id=331342659]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.5
@@ -524,7 +522,7 @@ offset_right = 176.0
 offset_bottom = 14.0
 grow_vertical = 2
 
-[node name="Folders" type="Button" parent="Interface/Top Bar/Left"]
+[node name="Folders" type="Button" parent="Interface/Top Bar/Left" unique_id=519215062]
 custom_minimum_size = Vector2(27.5, 0)
 layout_mode = 2
 tooltip_text = "App data"
@@ -534,14 +532,14 @@ icon = ExtResource("11_1f20w")
 expand_icon = true
 script = ExtResource("29_0cp0l")
 
-[node name="Edit" type="Button" parent="Interface/Top Bar/Left"]
+[node name="Edit" type="Button" parent="Interface/Top Bar/Left" unique_id=1041777590]
 layout_mode = 2
 focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_i5cru")
 disabled = true
 text = "Edit"
 
-[node name="Cloud" type="Button" parent="Interface/Top Bar/Left"]
+[node name="Cloud" type="Button" parent="Interface/Top Bar/Left" unique_id=1490561989]
 layout_mode = 2
 tooltip_text = "Cloud Settings"
 focus_mode = 0
@@ -549,14 +547,14 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_i5cru")
 disabled = true
 text = "Cloud"
 
-[node name="Downloader" type="Button" parent="Interface/Top Bar/Left"]
+[node name="Downloader" type="Button" parent="Interface/Top Bar/Left" unique_id=1673368361]
 layout_mode = 2
 focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_i5cru")
 disabled = true
 text = "Downloader"
 
-[node name="Right" type="HBoxContainer" parent="Interface/Top Bar"]
+[node name="Right" type="HBoxContainer" parent="Interface/Top Bar" unique_id=1972233890]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 1.0
@@ -571,12 +569,12 @@ grow_horizontal = 0
 grow_vertical = 2
 alignment = 2
 
-[node name="Zoom amount" type="Label" parent="Interface/Top Bar/Right"]
+[node name="Zoom amount" type="Label" parent="Interface/Top Bar/Right" unique_id=1415807281]
 layout_mode = 2
 text = "100%"
 horizontal_alignment = 2
 
-[node name="Stream" type="Button" parent="Interface/Top Bar/Right"]
+[node name="Stream" type="Button" parent="Interface/Top Bar/Right" unique_id=1363850799]
 layout_mode = 2
 focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_wx3lt")
@@ -586,7 +584,7 @@ expand_icon = true
 script = ExtResource("30_d2t1y")
 stream_display = ExtResource("31_gngh3")
 
-[node name="Update" type="Button" parent="Interface/Top Bar/Right"]
+[node name="Update" type="Button" parent="Interface/Top Bar/Right" unique_id=925467314]
 custom_minimum_size = Vector2(28, 0)
 layout_mode = 2
 focus_mode = 0
@@ -597,7 +595,7 @@ script = ExtResource("37_abqjc")
 updatable = ExtResource("32_0n3wm")
 non_updatable = ExtResource("38_6iyjs")
 
-[node name="Refresh" type="Button" parent="Interface/Top Bar/Right" node_paths=PackedStringArray("refesh_texture_animation")]
+[node name="Refresh" type="Button" parent="Interface/Top Bar/Right" unique_id=953963470 node_paths=PackedStringArray("refesh_texture_animation")]
 custom_minimum_size = Vector2(28, 0)
 layout_mode = 2
 focus_mode = 0
@@ -607,7 +605,7 @@ expand_icon = true
 script = ExtResource("19_0odxb")
 refesh_texture_animation = NodePath("AnimationPlayer")
 
-[node name="TextureRect" type="TextureRect" parent="Interface/Top Bar/Right/Refresh"]
+[node name="TextureRect" type="TextureRect" parent="Interface/Top Bar/Right/Refresh" unique_id=727025634]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -622,12 +620,12 @@ pivot_offset = Vector2(12.5, 12)
 texture = ExtResource("23_7r5f6")
 expand_mode = 1
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Interface/Top Bar/Right/Refresh"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Interface/Top Bar/Right/Refresh" unique_id=549007236]
 libraries = {
 &"": SubResource("AnimationLibrary_4w656")
 }
 
-[node name="Settings" type="Button" parent="Interface/Top Bar/Right"]
+[node name="Settings" type="Button" parent="Interface/Top Bar/Right" unique_id=501507118]
 custom_minimum_size = Vector2(28, 0)
 layout_mode = 2
 focus_mode = 0
@@ -637,7 +635,7 @@ icon = ExtResource("12_s6aix")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Player" type="ColorRect" parent="Interface"]
+[node name="Player" type="ColorRect" parent="Interface" unique_id=930252818]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 1.0
@@ -648,7 +646,7 @@ grow_horizontal = 2
 grow_vertical = 0
 color = Color(0.0509804, 0.0509804, 0.0509804, 1)
 
-[node name="Controls" type="Control" parent="Interface/Player"]
+[node name="Controls" type="Control" parent="Interface/Player" unique_id=1065715383]
 layout_mode = 1
 anchor_top = 1.00617
 anchor_right = 1.0
@@ -659,7 +657,7 @@ grow_horizontal = 2
 grow_vertical = 0
 pivot_offset = Vector2(576, 0)
 
-[node name="Shuffle" type="Button" parent="Interface/Player/Controls"]
+[node name="Shuffle" type="Button" parent="Interface/Player/Controls" unique_id=872846605]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -681,7 +679,7 @@ icon = ExtResource("20_fkbne")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Back" type="Button" parent="Interface/Player/Controls"]
+[node name="Back" type="Button" parent="Interface/Player/Controls" unique_id=202036208]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -703,7 +701,7 @@ icon = ExtResource("4_0btiw")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Play" type="Button" parent="Interface/Player/Controls"]
+[node name="Play" type="Button" parent="Interface/Player/Controls" unique_id=1287565051]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -723,7 +721,7 @@ icon = ExtResource("4_lfnj1")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Next" type="Button" parent="Interface/Player/Controls"]
+[node name="Next" type="Button" parent="Interface/Player/Controls" unique_id=1880351366]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -745,7 +743,7 @@ icon = ExtResource("6_e5vtu")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Loop" type="Button" parent="Interface/Player/Controls"]
+[node name="Loop" type="Button" parent="Interface/Player/Controls" unique_id=1580156266]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -765,7 +763,7 @@ icon = ExtResource("7_uv8rp")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Progress" type="HSlider" parent="Interface/Player/Controls"]
+[node name="Progress" type="HSlider" parent="Interface/Player/Controls" unique_id=82174511]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 1.0
@@ -780,7 +778,7 @@ grow_vertical = 0
 focus_mode = 0
 step = 0.01
 
-[node name="Current Time" type="Label" parent="Interface/Player/Controls/Progress"]
+[node name="Current Time" type="Label" parent="Interface/Player/Controls/Progress" unique_id=60779300]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.5
@@ -795,7 +793,7 @@ theme_override_fonts/font = ExtResource("3_bbvvl")
 text = "0:00"
 horizontal_alignment = 2
 
-[node name="Total Time" type="Label" parent="Interface/Player/Controls/Progress"]
+[node name="Total Time" type="Label" parent="Interface/Player/Controls/Progress" unique_id=1044105771]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 1.0
@@ -812,7 +810,7 @@ scale = Vector2(0.75, 0.75)
 theme_override_fonts/font = ExtResource("3_bbvvl")
 text = "0:00"
 
-[node name="Volume" type="HSlider" parent="Interface/Player/Controls"]
+[node name="Volume" type="HSlider" parent="Interface/Player/Controls" unique_id=111862397]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 1.0
@@ -830,7 +828,7 @@ min_value = -50.0
 max_value = 0.0
 step = 0.01
 
-[node name="Mute" type="Button" parent="Interface/Player/Controls/Volume"]
+[node name="Mute" type="Button" parent="Interface/Player/Controls/Volume" unique_id=2043952974]
 modulate = Color(0.7666196, 0.76661956, 0.76661956, 1)
 layout_mode = 1
 anchors_preset = -1
@@ -847,7 +845,7 @@ icon = ExtResource("42_0cbny")
 flat = true
 expand_icon = true
 
-[node name="Song Attributes" type="Control" parent="Interface/Player"]
+[node name="Song Attributes" type="Control" parent="Interface/Player" unique_id=74537140]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -858,7 +856,7 @@ offset_right = 160.0
 offset_bottom = -19.0
 grow_vertical = 0
 
-[node name="PanelContainer" type="PanelContainer" parent="Interface/Player/Song Attributes"]
+[node name="PanelContainer" type="PanelContainer" parent="Interface/Player/Song Attributes" unique_id=13376162]
 clip_children = 1
 clip_contents = true
 layout_mode = 0
@@ -869,13 +867,13 @@ offset_bottom = 5.0
 scale = Vector2(2, 2)
 theme_override_styles/panel = SubResource("StyleBoxFlat_28euk")
 
-[node name="Cover" type="TextureRect" parent="Interface/Player/Song Attributes/PanelContainer"]
+[node name="Cover" type="TextureRect" parent="Interface/Player/Song Attributes/PanelContainer" unique_id=184891046]
 layout_mode = 2
 texture = ExtResource("7_xn3w4")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="Edit Attributes" type="Button" parent="Interface/Player/Song Attributes" node_paths=PackedStringArray("window")]
+[node name="Edit Attributes" type="Button" parent="Interface/Player/Song Attributes" unique_id=2018817777 node_paths=PackedStringArray("window")]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 1.0
@@ -894,10 +892,10 @@ flat = true
 script = ExtResource("29_jq2sk")
 window = NodePath("AttributeEditor")
 
-[node name="AttributeEditor" parent="Interface/Player/Song Attributes/Edit Attributes" instance=ExtResource("17_f7c3k")]
+[node name="AttributeEditor" parent="Interface/Player/Song Attributes/Edit Attributes" unique_id=1605960294 instance=ExtResource("17_f7c3k")]
 visible = false
 
-[node name="Name" type="Label" parent="Interface/Player/Song Attributes"]
+[node name="Name" type="Label" parent="Interface/Player/Song Attributes" unique_id=916219751]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -914,7 +912,7 @@ text = "Song
 "
 text_overrun_behavior = 3
 
-[node name="Artist" type="Label" parent="Interface/Player/Song Attributes"]
+[node name="Artist" type="Label" parent="Interface/Player/Song Attributes" unique_id=119670755]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -933,7 +931,7 @@ text = "Artist"
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Playlistcontext" parent="Interface" instance=ExtResource("26_gbh2w")]
+[node name="Playlistcontext" parent="Interface" unique_id=957626048 instance=ExtResource("26_gbh2w")]
 visible = false
 layout_mode = 1
 anchors_preset = -1
@@ -943,7 +941,7 @@ offset_right = -864.0
 offset_bottom = -112.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_gueqf")
 
-[node name="Songcontext" parent="Interface" instance=ExtResource("17_3m5kb")]
+[node name="Songcontext" parent="Interface" unique_id=196847728 instance=ExtResource("17_3m5kb")]
 visible = false
 layout_mode = 1
 anchors_preset = 6
@@ -951,9 +949,9 @@ offset_top = -75.0
 offset_right = 0.0
 offset_bottom = 75.0
 
-[node name="Player" type="AudioStreamPlayer" parent="."]
+[node name="Player" type="AudioStreamPlayer" parent="." unique_id=488316782]
 
-[node name="Globals" type="Node" parent="." node_paths=PackedStringArray("_main", "_player", "_discord", "_file_dialog", "_self")]
+[node name="Globals" type="Node" parent="." unique_id=71517921 node_paths=PackedStringArray("_main", "_player", "_discord", "_file_dialog", "_self")]
 script = ExtResource("32_htxhm")
 _play_texture = ExtResource("5_8inno")
 _pause_texture = ExtResource("4_lfnj1")
@@ -968,27 +966,27 @@ _highlight = Color(1, 1, 1, 0.376)
 _lower_highlight = Color(50, 50, 50, 0.162)
 _confirmation_window = ExtResource("39_h8e4i")
 
-[node name="File Dialog" type="FileDialog" parent="Globals"]
+[node name="File Dialog" type="FileDialog" parent="Globals" unique_id=1989544037]
 title = "Open a File"
 initial_position = 1
 file_mode = 0
 access = 2
 use_native_dialog = true
 
-[node name="Discord" type="Node" parent="."]
+[node name="Discord" type="Node" parent="." unique_id=46493677]
 script = ExtResource("53_e71vb")
 
-[node name="Zoomer" type="Node" parent="." node_paths=PackedStringArray("zoom_display")]
+[node name="Zoomer" type="Node" parent="." unique_id=1869739749 node_paths=PackedStringArray("zoom_display")]
 script = ExtResource("46_qnost")
 zoom_display = NodePath("../Interface/Top Bar/Right/Zoom amount")
 
-[node name="SubViewport" type="SubViewport" parent="." node_paths=PackedStringArray("transitioner", "target_texture_rect")]
+[node name="SubViewport" type="SubViewport" parent="." unique_id=748581528 node_paths=PackedStringArray("transitioner", "target_texture_rect")]
 size = Vector2i(256, 256)
 script = ExtResource("51_uypp3")
 transitioner = NodePath("Transitioner")
 target_texture_rect = NodePath("../Interface/Background/Image")
 
-[node name="Transitioner" type="ColorRect" parent="SubViewport"]
+[node name="Transitioner" type="ColorRect" parent="SubViewport" unique_id=839690620]
 material = SubResource("ShaderMaterial_abqjc")
 anchors_preset = 15
 anchor_right = 1.0
