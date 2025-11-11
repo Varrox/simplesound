@@ -20,6 +20,7 @@ public partial class PlaylistDisplay : Button
 
         More.MouseEntered += More.Show;
         More.OnClose += More.Hide;
+        More.menu = Globals.playlist_menu;
     }
 
     public void OnExit()
@@ -39,10 +40,9 @@ public partial class PlaylistDisplay : Button
         if (index != playlist_index) SelfModulate = new Color(1, 1, 1, 1);
     }
 
-    public void Init(Playlist playlist, int index, bool current, Control menu)
+    public void Init(Playlist playlist, int index)
     {
         Cover.Texture = ConvertToGodot.LoadImage(playlist.Cover) ?? Globals.default_cover;
-
         Name.Text = playlist.Name;
 
         if (playlist.Type != Playlist.PlaylistType.Album)
@@ -54,14 +54,12 @@ public partial class PlaylistDisplay : Button
         }
         else
         {
-            Songs.Text = $"Album  {dot}  {(playlist.Artist ?? (playlist.Songs.Count.ToString() + (playlist.Songs.Count != 1 ? " songs" : " song")))}";
+            Songs.Text = $"Album  {dot}  {playlist.Artist ?? (playlist.Songs.Count.ToString() + (playlist.Songs.Count != 1 ? " songs" : " song"))}";
         }
-
-        More.menu = menu;
 
         playlist_index = index;
 
-        if (current) Set();
+        if (index == Globals.main.current_looked_at_playlist) Set();
 
         Globals.main.playlist_visualizer.OnSelectPlaylist += ClearSelected;
     }

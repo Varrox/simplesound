@@ -16,6 +16,7 @@ public class MainParser
         line.path = path;
 
         Playlist playlist = new Playlist(Path.GetFileNameWithoutExtension(path), null, null);
+        playlist.text = File.ReadAllText(path);
 
         for (int i = 0; i < lines.Length; i++)
         {

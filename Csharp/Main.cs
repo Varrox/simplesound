@@ -15,27 +15,30 @@ public partial class Main : Control
 
 	public int playlist_index, song_index;
 
-	public string current_playlist_path, current_song_path, current_share_link;
+	public string current_song_path, current_share_link;
 
     public int current_looked_at_playlist;
 
-    public Playlist playlist;
-	public List<string> playlists;
-	
-	public float time, volume;
+    public Playlist playlist{
+		get{
+			return playlists[playlist_index];
+		}
+	}
+
+	public List<string> playlist_paths;
+    public List<Playlist> playlists;
+
+    public float time, volume;
 
 	public int offset, shuffle_index, random_offset;
 
     public Action OnLoadSong;
-    public Action OnChangePlaylist;
+    public Action OnLoadPlaylist;
     public Action<bool> OnPlay;
 
-	public string song
-	{
-		get
-		{
-			if(CanPlay())
-				return playlist.Songs[song_index];
+	public string song{
+		get{
+			if(SongAvailable()) return playlists[playlist_index].Songs[song_index];
 			else return null;
         }
 	}
@@ -43,18 +46,6 @@ public partial class Main : Control
     public override void _Ready()
 	{
 		// Load Save data
-
-		GD.Print(ParsingTools.StringifyArray(new[] { new[]{"Sigma", "Rizz" }, new[] { "Gooning", "Rizzing", "Ohio" } }));
-
-		List<List<string>> ar = ParsingTools.ParseArray<List<string>>("[[\"Sigma\", \"Rizz\"], [\"Gooning\", \"Rizzing\", \"Ohio\"]]");
-
-		for (int i = 0; i < ar.Count; i++)
-		{
-			for (int j = 0; j < ar[i].Count; j++)
-			{
-				GD.Print(ar[i][j]);
-			}
-		}
 
         SaveData save_data = SaveSystem.GetSaveData();
 
@@ -78,16 +69,21 @@ public partial class Main : Control
 
         // Load playlists
 
-        playlists = new List<string>(SaveSystem.GetAllPlaylists());
+        playlist_paths = new List<string>(SaveSystem.GetAllPlaylists());
+        playlists = new List<Playlist>(new Playlist[playlist_paths.Count]);
 
-        if (playlists.Count > 0)
-            LoadPlaylist(playlist_index);
+        for (int i = 0; i < playlist_paths.Count; i++)
+		{
+			playlists[i] = MainParser.ParsePlaylist(playlist_paths[i]);
+		}
+
+        LoadPlaylist(playlist_index);
 
         // Initialize playlist displayer
 
         playlist_visualizer.LoadAllPlaylistVisuals();
 
-        if (CanPlay())
+        if (SongAvailable())
             PlaySong(playlist.Songs[song_index]);
         else
             OnLoadSong?.Invoke(); // Emit anyways just so it can display no songs
@@ -103,7 +99,7 @@ public partial class Main : Control
 
 		// Loop management
 
-		if (playing && CanPlay())
+		if (playing && SongAvailable())
 		{
 			if (!player.Playing)
 			{
@@ -126,9 +122,9 @@ public partial class Main : Control
 
 	public void CheckIndex()
 	{
-		if (playlists[playlist_index] != current_playlist_path)
+		if (playlist_paths[playlist_index] != playlist.Path)
 		{
-			playlist_index = playlists.IndexOf(current_playlist_path);
+			playlist_index = playlist_paths.IndexOf(playlist.Path);
 		}
 
 		if (song != current_song_path)
@@ -141,7 +137,6 @@ public partial class Main : Control
 	{
 		if (index < 0)
 		{
-			playlist = null;
 			player.Stop();
 			player.Stream = null;
 
@@ -152,15 +147,18 @@ public partial class Main : Control
 		}
 
         playlist_index = index;
-        playlist = playlists.Count > 0 ? MainParser.ParsePlaylist(playlists[playlist_index]) : null;
-		current_playlist_path = playlist.Path;
 
-        OnChangePlaylist?.Invoke();
+        OnLoadPlaylist?.Invoke();
 
 		// Set shuffle to be different
 
-		GD.Randomize();
-		random_offset = (int)GD.Randi();
+		Reshuffle();
+    }
+
+	public void Reshuffle()
+	{
+        GD.Randomize();
+        random_offset = (int)GD.Randi();
     }
 
 	public void Play()
@@ -192,7 +190,7 @@ public partial class Main : Control
 
 	public void MoveSong(int amount, bool set = false)
 	{
-		if (CanPlay())
+		if (SongAvailable())
 		{
 			if (shuffled && !set)
 			{
@@ -233,7 +231,7 @@ public partial class Main : Control
 
 	public void SetSong(int index)
 	{
-		if (CanPlay())
+		if (SongAvailable())
 		{
 			offset = index;
 			shuffle_index = index;
@@ -246,7 +244,7 @@ public partial class Main : Control
 
 	public void PlaySong(string path)
 	{
-		if (CanPlay())
+		if (SongAvailable())
 		{
 			if (player.Stream != null) 
 				time = 0;
@@ -266,7 +264,7 @@ public partial class Main : Control
                     player.Stream = AudioStreamOggVorbis.LoadFromBuffer(FileAccess.GetFileAsBytes(path));
                 }
 
-                VideoStreamTheora video = ConvertToGodot.GetVideo(Globals.main.song);
+                VideoStreamTheora video = ConvertToGodot.GetVideoFromFile(Globals.main.song);
 
                 video_player.Visible = video != null;
 				video_player.Stream = video;
@@ -289,11 +287,11 @@ public partial class Main : Control
         }
 	}
 
-	public bool CanPlay()
+	public bool SongAvailable()
 	{
-		if (playlist)
-			if (playlist.Songs != null)
-				if (playlist.Songs.Count > 0) return true;
+		if (playlists[playlist_index] != null)
+			if (playlists[playlist_index].Songs != null)
+				if (playlists[playlist_index].Songs.Count > 0) return true;
 		return false;
 	}
 
@@ -301,12 +299,20 @@ public partial class Main : Control
 
     public void Refresh()
 	{
-        playlists = new List<string>(SaveSystem.GetAllPlaylists());
+        playlist_paths = new List<string>(SaveSystem.GetAllPlaylists());
+        playlists = new List<Playlist>(new Playlist[playlist_paths.Count]);
 
-		if (playlists.Count > 0)
-			LoadPlaylist(playlists.IndexOf(playlist.Path));
+        for (int i = 0; i < playlist_paths.Count; i++)
+        {
+            playlists[i] = MainParser.ParsePlaylist(playlist_paths[i]);
+            GD.Print(playlists[i].Name);
+        }
 
-		Metadata.ResetCache();
+        LoadPlaylist(playlist_index);
+
+        // Done Loading
+
+        Metadata.ResetCache();
 
         OnLoadSong?.Invoke();
         playlist_visualizer.UpdatePlaylists();

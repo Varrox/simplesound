@@ -8,7 +8,7 @@ public partial class SongsMore : ContextMenu
         base._Ready();
         OnOpen += () => ShareMenu.song = display.song;
 
-        menu = Globals.main.songs_visualizer.menu;
+        menu = Globals.song_menu;
 
         sub_menus.Add(ShareMenu.instance);
     }

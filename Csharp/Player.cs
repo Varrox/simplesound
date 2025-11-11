@@ -33,7 +33,7 @@ public partial class Player : Node
         Back.ButtonUp += () => Move(-1);
 
         Globals.main.OnLoadSong += OnLoadSong;
-        Globals.main.OnChangePlaylist += OnChangePlaylist;
+        Globals.main.OnLoadPlaylist += ApplyPlaylistSettings;
 
         Progress.DragEnded += SetTime;
         Progress.DragStarted += () => can_set_time = true;
@@ -114,7 +114,7 @@ public partial class Player : Node
 
     public void PlayIcon(bool playing)
     {
-        Play.Icon = !playing || !Globals.main.CanPlay() ? Globals.play_texture : Globals.pause_texture;
+        Play.Icon = !playing || !Globals.main.SongAvailable() ? Globals.play_texture : Globals.pause_texture;
     }
 
     public void Move(int by)
@@ -127,7 +127,7 @@ public partial class Player : Node
 
     public void OnLoadSong()
     {
-        if (Globals.main.CanPlay())
+        if (Globals.main.SongAvailable())
         {
             string name = Tools.GetMediaTitle(Globals.main.song);
             SongName.Text = name;
@@ -198,8 +198,7 @@ public partial class Player : Node
         
         can_set_time = false;
     }
-
-    public void OnChangePlaylist()
+    public void ApplyPlaylistSettings()
     {
         if (Globals.main.playlist.customInfo.overlay_color != null)
         {
@@ -237,7 +236,7 @@ public partial class Player : Node
             Globals.main.time = (float)Progress.Value;
         }
 
-        if (Globals.main.CanPlay())
+        if (Globals.main.SongAvailable())
         {
             float max = 0.65f;
             backgroundColor.Color = backgroundColor.Color.Lerp(background_color.Clamp(new Color(), new Color(max, max, max, max)), (float)delta * 2f);

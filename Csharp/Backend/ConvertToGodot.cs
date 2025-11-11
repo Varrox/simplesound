@@ -29,7 +29,7 @@ public class ConvertToGodot
         return error == Error.Ok ? ImageTexture.CreateFromImage(image) : Globals.default_cover;
     }
 
-    public static VideoStreamTheora GetVideo(string path)
+    public static VideoStreamTheora GetVideoFromFile(string path)
     {
         string video_path = Metadata.GetVideo(path);
 
@@ -38,7 +38,7 @@ public class ConvertToGodot
 
         if (File.Exists(video_path) && video_path.EndsWith(".ogv"))
         {
-            return Godot.ResourceLoader.Load(video_path) as VideoStreamTheora;
+            return ResourceLoader.Load(video_path) as VideoStreamTheora;
         }
 
         return null;

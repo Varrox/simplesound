@@ -7,7 +7,6 @@ public partial class PlaylistsVisualizer : ScrollContainer
 {
 	[Export] public PackedScene template;
     [Export] public VBoxContainer container;
-    [Export] public Control moreMenu;
 
     public Action<int, Texture2D> OnSelectPlaylist;
 
@@ -25,7 +24,7 @@ public partial class PlaylistsVisualizer : ScrollContainer
 
     public void LoadAllPlaylistVisuals() // only done once for init
     {
-        for (int i = 0; i < Globals.main.playlists.Count; i++)
+        for (int i = 0; i < Globals.main.playlist_paths.Count; i++)
         {
             LoadPlaylist(i);
         }
@@ -35,32 +34,32 @@ public partial class PlaylistsVisualizer : ScrollContainer
     {
         PlaylistDisplay playlist = template.Instantiate() as PlaylistDisplay;
         container.AddChild(playlist);
-        LoadDataIntoPlaylist(i, playlist, i == Globals.main.current_looked_at_playlist);
+        LoadDataIntoPlaylist(i, playlist);
     }
 
-    public void LoadDataIntoPlaylist(int i, PlaylistDisplay playlist, bool current)
+    public void LoadDataIntoPlaylist(int i, PlaylistDisplay playlist)
     {
-        playlist.Init(i == Globals.main.playlist_index ? Globals.main.playlist : MainParser.ParsePlaylist(Globals.main.playlists[i]), i, current, moreMenu);
+        playlist.Init(Globals.main.playlists[i], i);
     }
 
     public void UpdatePlaylists()
     {
-        Array<Node> playlists = container.GetChildren();
-        int end = playlists.Count;
+        Array<Node> playlist_buttons = container.GetChildren();
+        int end = playlist_buttons.Count;
 
-        if (playlists.Count < Globals.main.playlists.Count) // less
+        if (playlist_buttons.Count < Globals.main.playlists.Count) // less
         {
-            for(int i = playlists.Count; i < Globals.main.playlists.Count; i++)
+            for(int i = playlist_buttons.Count; i < Globals.main.playlists.Count; i++)
             {
                 LoadPlaylist(i);
             }
         }
-        else if (playlists.Count > Globals.main.playlists.Count) // more
+        else if (playlist_buttons.Count > Globals.main.playlists.Count) // more
         {
-            for (int i = playlists.Count; i < Globals.main.playlists.Count; i++) // delete the extra
+            for (int i = playlist_buttons.Count; i < Globals.main.playlists.Count; i++) // delete the extra
             {
-                playlists[i].QueueFree();
-                playlists.RemoveAt(i);
+                playlist_buttons[i].QueueFree();
+                playlist_buttons.RemoveAt(i);
             }
 
             end = Globals.main.playlists.Count;
@@ -68,7 +67,7 @@ public partial class PlaylistsVisualizer : ScrollContainer
 
         for(int i = 0; i < end; i++)
         {
-            LoadDataIntoPlaylist(i, playlists[i] as PlaylistDisplay, i == Globals.main.playlist_index);
+            LoadDataIntoPlaylist(i, playlist_buttons[i] as PlaylistDisplay);
         }
     }
 }

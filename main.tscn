@@ -289,6 +289,8 @@ icon_alignment = 1
 expand_icon = true
 script = ExtResource("21_seu75")
 menu = NodePath("Panel")
+teleportMenu = null
+teleportMenuOffset = null
 sub_menus = []
 
 [node name="Panel" type="Panel" parent="Interface/Side Panel/Add" unique_id=768656514]
@@ -951,7 +953,7 @@ offset_bottom = 75.0
 
 [node name="Player" type="AudioStreamPlayer" parent="." unique_id=488316782]
 
-[node name="Globals" type="Node" parent="." unique_id=71517921 node_paths=PackedStringArray("_main", "_player", "_discord", "_file_dialog", "_self")]
+[node name="Globals" type="Node" parent="." unique_id=71517921 node_paths=PackedStringArray("_main", "_player", "_discord", "_file_dialog", "_self", "_playlist_menu", "_song_menu")]
 script = ExtResource("32_htxhm")
 _play_texture = ExtResource("5_8inno")
 _pause_texture = ExtResource("4_lfnj1")
@@ -965,6 +967,8 @@ _self = NodePath(".")
 _highlight = Color(1, 1, 1, 0.376)
 _lower_highlight = Color(50, 50, 50, 0.162)
 _confirmation_window = ExtResource("39_h8e4i")
+_playlist_menu = NodePath("../Interface/Playlistcontext")
+_song_menu = NodePath("../Interface/Songcontext")
 
 [node name="File Dialog" type="FileDialog" parent="Globals" unique_id=1989544037]
 title = "Open a File"

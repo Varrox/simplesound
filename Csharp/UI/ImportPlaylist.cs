@@ -55,8 +55,8 @@ public partial class ImportPlaylist : Button
 			playlist.Cover = SaveSystem.ImportCover(playlist.Cover, playlist.Name);
         }
 
-		Globals.main.playlists.Add(playlist.Save());
-        SaveSystem.SaveAllPlaylists(Globals.main.playlists.ToArray());
+		Globals.main.playlist_paths.Add(playlist.Save());
+        SaveSystem.SaveAllPlaylists(Globals.main.playlist_paths.ToArray());
         Globals.main.Refresh();
     }
 

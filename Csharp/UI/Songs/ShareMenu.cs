@@ -43,7 +43,7 @@ public partial class ShareMenu : ContextMenu
 		}
 		else
 		{
-            playlist = MainParser.ParsePlaylist(Globals.main.playlists[Globals.main.current_looked_at_playlist]);
+            playlist = MainParser.ParsePlaylist(Globals.main.playlist_paths[Globals.main.current_looked_at_playlist]);
         }
 
         file = playlist.Songs[song];

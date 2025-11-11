@@ -1,5 +1,4 @@
 ﻿using Godot;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 public partial class Globals : Node
 {
@@ -156,6 +155,36 @@ public partial class Globals : Node
         }
     }
 
+    public static PackedScene confirmation_window;
+
+    [Export] Control _playlist_menu
+    {
+        set
+        {
+            playlist_menu = value;
+        }
+        get
+        {
+            return playlist_menu;
+        }
+    }
+
+    public static Control playlist_menu;
+
+    [Export] Control _song_menu
+    {
+        set
+        {
+            song_menu = value;
+        }
+        get
+        {
+            return song_menu;
+        }
+    }
+
+    public static Control song_menu;
+
     public static Vector2I main_window_minimum_size = new Vector2I(850, 350);
 
     public override void _Ready()
@@ -170,12 +199,9 @@ public partial class Globals : Node
         Discord.ShutDown();
     }
 
-    public static PackedScene confirmation_window;
-
     public static void ResetFileDialogParameters()
     {
         file_dialog.Filters = null;
-        
         file_dialog.OkButtonText = "";
     }
 

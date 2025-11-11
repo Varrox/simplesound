@@ -6,7 +6,7 @@ using System.Threading;
 public partial class SongsVisualizer : ScrollContainer
 {
 	[Export] public PackedScene Template;
-	[Export] public Control menu, container;
+	[Export] public Control container;
 
     Thread update_songs_thread;
 
@@ -51,10 +51,7 @@ public partial class SongsVisualizer : ScrollContainer
 	{
 		Globals.main.current_looked_at_playlist = playlist_index;
 
-        Playlist playlist = null;
-
-        if (playlist_index == Globals.main.playlist_index) playlist = Globals.main.playlist;
-		else playlist = MainParser.ParsePlaylist(Globals.main.playlists[playlist_index]);
+        Playlist playlist = Globals.main.playlists[playlist_index];
 
         album = playlist.Type == Playlist.PlaylistType.Album;
 

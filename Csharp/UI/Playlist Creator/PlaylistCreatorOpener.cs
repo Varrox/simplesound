@@ -46,9 +46,9 @@ public partial class PlaylistCreatorOpener : EditorWindowOpener
 
 			creator.Clear();
 
-			Globals.main.playlists.Add(playlist.Save());
+			Globals.main.playlist_paths.Add(playlist.Save());
 
-			SaveSystem.SaveAllPlaylists(Globals.main.playlists.ToArray());
+			SaveSystem.SaveAllPlaylists(Globals.main.playlist_paths.ToArray());
             Globals.main.Refresh();
 		}
 

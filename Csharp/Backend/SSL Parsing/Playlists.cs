@@ -16,6 +16,8 @@ public class Playlist
 
     string _path;
 
+    public string text;
+
     public string Artist;
     public CustomInfo customInfo;
 
@@ -28,6 +30,29 @@ public class Playlist
 
     public Dictionary<string, Action<string>> ActionMapper;
 
+    /// <summary>
+    /// Loads from _path
+    /// </summary>
+    public void Load()
+    {
+        Playlist playlist = MainParser.ParsePlaylist(_path);
+        Name = playlist.Name;
+        Cover = playlist.Cover;
+        Path = playlist.Path;
+
+        Songs = playlist.Songs;
+        Folders = playlist.Folders;
+        Type = playlist.Type;
+
+        text = playlist.text;
+        Artist = playlist.Artist;
+        customInfo = playlist.customInfo;
+    }
+
+    /// <summary>
+    /// Saves to _path
+    /// </summary>
+    /// <returns></returns>
     public string Save()
     {
         string output = "Config\n{\n";
@@ -120,6 +145,20 @@ public class Playlist
             ["Speed"] = amount => customInfo.speed = Convert.ToSingle(amount),
             ["Reverb"] = amount => customInfo.reverb = Convert.ToSingle(amount),
         };
+    }
+
+    public Playlist(string path)
+    {
+        ActionMapper = new Dictionary<string, Action<string>>()
+        {
+            ["Overlay-Color"] = color => customInfo.overlay_color = color,
+            ["Background-Image"] = path => customInfo.background_path = path,
+            ["Volume"] = amount => customInfo.volume = Convert.ToSingle(amount),
+            ["Speed"] = amount => customInfo.speed = Convert.ToSingle(amount),
+            ["Reverb"] = amount => customInfo.reverb = Convert.ToSingle(amount),
+        };
+
+        _path = path;
     }
 
     public static Playlist CreateFromFolder(string directory, string coverpath, bool sync)
