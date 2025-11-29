@@ -1,4 +1,10 @@
 # simplesound
 
-a simple music / audio player made in Godot. It is meant to mirror how spotify looks like, and works, but with cloud syncing of music, and all ran with local files.
-it has it's own simple programming language that looks like a mix of both CSS and JSON. it's documentation is here.
+a simple music / audio player made in Godot. It is meant to mirror how spotify looks like, and works, and all ran with local files.
+it has it's own simple object format that looks like JSON but with class / object definitions. it's documentation is here.
+
+Goals:
+* Add cloud syncing
+* Fix up all bugs and random code inconsistencies
+* Implement Searching
+* Add playlist and song re-ordering.
