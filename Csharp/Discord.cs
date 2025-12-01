@@ -140,8 +140,8 @@ public partial class Discord : Node
             converted_url = "https://i.ytimg.com/vi_webp/";
 
             var split = url.Right(-("https://").Length).Split("/");
-            string video_id = split[split.Length];
-            converted_url += video_id.Substring("watch?v=".Length).Split("?")[0];
+            string video_id = split[split.Length - 1];
+            converted_url += video_id.Substring("watch?v=".Length - 1).Split("?")[0];
             converted_url += "/maxresdefault.webp";
         }
 

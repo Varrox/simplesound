@@ -200,17 +200,9 @@ public partial class Player : Node
     public void ApplyPlaylistSettings()
     {
         if(Globals.main.playlist == null)
-        {
             return;
-        }
 
         background_color = Globals.main.playlist.custom_info.overlay_color != null ? Color.FromHtml(Globals.main.playlist.custom_info.overlay_color) : new Color(0.0f, 0.0f, 0.0f, 0.0f);
-
-        Globals.main.player.PitchScale = Mathf.Clamp(Globals.main.playlist.custom_info.speed, 0.01f, 4f);
-
-        var effect = AudioServer.GetBusEffect(0, 0) as AudioEffectReverb;
-        effect.RoomSize = Globals.main.playlist.custom_info.reverb;
-        effect.Wet = Globals.main.playlist.custom_info.reverb / 100;
     }
 
     public override void _Process(double delta)
@@ -240,10 +232,9 @@ public partial class Player : Node
 
             if (!muted)
             {
-                Globals.main.player.VolumeDb = (float)(VolumeSlider.Value != -50 ? VolumeSlider.Value : -80) + Globals.main.playlist.custom_info.volume;
+                Globals.main.player.VolumeDb = (float)(VolumeSlider.Value != -50 ? VolumeSlider.Value : -80);
                 MuteButton.Icon = Globals.main.player.VolumeDb == -80 ? Unmute : Mute;
             }
-                
         }
     }
 }

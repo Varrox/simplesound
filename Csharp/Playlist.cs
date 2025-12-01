@@ -6,7 +6,7 @@ using System.IO;
 public class Playlist
 {
     public string name, cover;
-    public List<string> songs, folders;
+    public List<string> songs;
 
     public string GetPath()
     {
@@ -44,66 +44,55 @@ public class Playlist
         File.WriteAllLines(playlistSaver, paths);
     }
 
-    public void LoadFromFolders()
-    {
-        foreach (string f in folders)
-        {
-            songs.AddRange(Directory.GetFiles(f));
-        }
-    }
-
     public Playlist(string name, string coverpath, List<string> songs)
     {
         this.name = name;
         this.cover = coverpath;
-        this.songs = songs;
+        this.songs = ProcessSongs(songs);
         custom_info = new CustomInfo();
     }
 
     public static Playlist CreateFromFile(string path)
     {
-        GD.Print(path);
-        return JsonConvert.DeserializeObject<Playlist>(File.ReadAllText(path));
+        Playlist playlist = JsonConvert.DeserializeObject<Playlist>(File.ReadAllText(path));
+        playlist.songs = ProcessSongs(playlist.songs);
+        return playlist;
+    }
+
+    public static List<string> ProcessSongs(List<string> songs)
+    {
+        for(int i = 0; i < songs.Count; i++)
+        {
+            if(!File.Exists(songs[i]))
+            {
+                string directory = songs[i];
+                songs.RemoveAt(i);
+                if (Directory.Exists(directory))
+                {
+                    string[] files = Directory.GetFiles(directory);
+                    foreach(string f in files)
+                    {
+                        if(Tools.ValidAudioFile(f))
+                        {
+                            songs.Insert(i, f);
+                        }
+                    }
+                }
+            }
+        }
+
+        return songs;
     }
 
     [JsonConstructor] public Playlist()
     {
         
     }
-
-    public static Playlist CreateFromFolder(string directory, string coverpath, bool sync)
-    {
-        Playlist playlist = new Playlist(System.IO.Path.GetDirectoryName(directory), coverpath, null);
-
-        if (!sync)
-        {
-            playlist.songs = new List<string>();
-            foreach (string song in Directory.GetFiles(directory))
-            {
-                if (Tools.ValidAudioFile(song))
-                {
-                    playlist.songs.Add(song);
-                }
-            }
-        }
-        else
-        {
-            playlist.folders = new List<string>(new[] { directory });
-        }
-
-        return playlist;
-    }
 }
 
 public struct CustomInfo
 {
     public string overlay_color, background_path;
-    public float volume = 0, speed = 1, reverb = 0;
-
-    public CustomInfo()
-    {
-
-    }
 }
 
 public struct UICustomization
@@ -111,9 +100,4 @@ public struct UICustomization
     public string default_font;
     public string default_color;
     public string default_font_color;
-
-    public UICustomization()
-    {
-
-    }
 }
