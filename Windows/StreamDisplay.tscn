@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://da3r1vmve1qwd"]
 
-[ext_resource type="Script" uid="uid://dipiuc5nsuh2m" path="res://Csharp/UI/StreamDisplay.cs" id="1_gaihk"]
+[ext_resource type="Script" uid="uid://bso3qe68ptmm4" path="res://Csharp/UI/Streamer Display/StreamDisplay.cs" id="1_gaihk"]
 [ext_resource type="Texture2D" uid="uid://cksbdmhr2s8yy" path="res://Icons/DefaultCover.png" id="1_lpmxw"]
 [ext_resource type="Shader" uid="uid://6mp1f8uww708" path="res://Styling/blur.gdshader" id="2_lpmxw"]
 [ext_resource type="FontFile" uid="uid://ckdni7vy5bpft" path="res://Styling/Fonts/VarelaRound-Regular.ttf" id="5_tsl3i"]

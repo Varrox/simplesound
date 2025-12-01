@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using SSLParser;
+using Newtonsoft.Json;
 
 public class SaveSystem
 {
@@ -16,7 +16,7 @@ public class SaveSystem
                 Directory.CreateDirectory(path);
         }
 
-        string save_data_path = Path.Combine(USER_DATA, "savedata.ssl");
+        string save_data_path = Path.Combine(USER_DATA, "savedata.json");
 
 		SaveData save_data;
 
@@ -27,7 +27,7 @@ public class SaveSystem
         }
 		else
 		{
-            MainParser.ParseFile(save_data_path, out save_data, out List<string> tags);
+			save_data = JsonConvert.DeserializeObject<SaveData>(File.ReadAllText(save_data_path));
         }
 
         return save_data;
@@ -103,24 +103,14 @@ public class SaveSystem
 
 public class SaveData
 {
-	public int playlist_index, song_index;
+	public int playlist_index, song_index, looked_at_playlist;
 	public float time, volume;
 	public bool shuffled;
 
-	static string path = Path.Combine(SaveSystem.USER_DATA, "savedata.ssl");
+	static readonly string path = Path.Combine(SaveSystem.USER_DATA, "savedata.json");
 
-	public void Save() => File.WriteAllText(path, MainParser.StringifyObject(this));
-}
-
-public struct bool4
-{
-    public bool r, g, b, a;
-    
-    public bool4(bool r, bool g, bool b, bool a)
+    public void Save()
     {
-        this.r = r;
-        this.g = g;
-        this.b = b;
-        this.a = a;
+        File.WriteAllText(path, JsonConvert.SerializeObject(this, Formatting.Indented));
     }
 }

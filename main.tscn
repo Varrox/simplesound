@@ -28,7 +28,6 @@
 [ext_resource type="PackedScene" uid="uid://dlh34aq4t8tvu" path="res://Prefabs/songdisplay.tscn" id="14_t035w"]
 [ext_resource type="PackedScene" uid="uid://dcre7b1cn3b6i" path="res://Prefabs/songcontext.tscn" id="17_3m5kb"]
 [ext_resource type="PackedScene" uid="uid://dle5y658wmx03" path="res://Windows/Attribute Editor.tscn" id="17_f7c3k"]
-[ext_resource type="Script" uid="uid://b8mk63lbeibcc" path="res://Csharp/UI/RefreshButton.cs" id="19_0odxb"]
 [ext_resource type="Texture2D" uid="uid://b8ldjgpmsaxgu" path="res://Icons/shuffle.png" id="20_fkbne"]
 [ext_resource type="Script" uid="uid://dk55q6mnaxkso" path="res://Csharp/UI/Playlist Creator/PlaylistCreatorOpener.cs" id="21_0rl1p"]
 [ext_resource type="StyleBox" uid="uid://bhcyqvvim6l5e" path="res://Styling/Rounded Corners.tres" id="21_jy3dx"]
@@ -40,20 +39,21 @@
 [ext_resource type="Script" uid="uid://b7fgu3kjwheaf" path="res://Csharp/UI/Import Folder/ImportFolderOpener.cs" id="23_come4"]
 [ext_resource type="PackedScene" uid="uid://dtfoexo3o7b3p" path="res://Prefabs/playlistcontext.tscn" id="26_gbh2w"]
 [ext_resource type="Script" uid="uid://qupwebtnhh44" path="res://Csharp/UI/Playlists/PlaylistPlayer.cs" id="28_wnkbs"]
-[ext_resource type="Script" uid="uid://dpypenx7j1p3m" path="res://Csharp/UI/Appdata.cs" id="29_0cp0l"]
+[ext_resource type="Script" uid="uid://bag5mx17s8q1c" path="res://Csharp/UI/Buttons/Appdata.cs" id="29_0cp0l"]
 [ext_resource type="Script" uid="uid://c5ep0n80r2l8p" path="res://Csharp/UI/Attribute Editor/AttributeEditorOpener.cs" id="29_jq2sk"]
-[ext_resource type="Script" uid="uid://cfj2rfmrqlm1e" path="res://Csharp/UI/StreamerButton.cs" id="30_d2t1y"]
+[ext_resource type="Script" uid="uid://kvvf8qxb33ti" path="res://Csharp/UI/Streamer Display/StreamerButton.cs" id="30_d2t1y"]
 [ext_resource type="PackedScene" uid="uid://da3r1vmve1qwd" path="res://Windows/StreamDisplay.tscn" id="31_gngh3"]
 [ext_resource type="Texture2D" uid="uid://0eme23vp72kb" path="res://Icons/forward arrow.png" id="32_0n3wm"]
 [ext_resource type="Script" uid="uid://ba0kdfmjh8445" path="res://Csharp/Globals.cs" id="32_htxhm"]
-[ext_resource type="Script" uid="uid://dmxd1o51ll7np" path="res://Csharp/UI/Update.cs" id="37_abqjc"]
+[ext_resource type="Script" uid="uid://cheuagrd5va2f" path="res://Csharp/UI/Buttons/Refresh.cs" id="37_6iyjs"]
+[ext_resource type="Script" uid="uid://gwm4ru46vy21" path="res://Csharp/UI/Buttons/Update.cs" id="37_abqjc"]
 [ext_resource type="Texture2D" uid="uid://ca2kw05t4eecf" path="res://Icons/back arrow.png" id="38_6iyjs"]
 [ext_resource type="PackedScene" uid="uid://bw078i5dk5ff4" path="res://Windows/ConfirmationWindow.tscn" id="39_h8e4i"]
 [ext_resource type="Texture2D" uid="uid://brujrc442p3b5" path="res://Icons/mute.png" id="42_0cbny"]
 [ext_resource type="Script" uid="uid://cqf4nqygajv02" path="res://GDScript/zoomer.gd" id="46_qnost"]
 [ext_resource type="Script" uid="uid://dshtlldgdpwlu" path="res://Styling/background_image_transition.gd" id="51_uypp3"]
 [ext_resource type="Shader" uid="uid://bdi2g0ydm4uf7" path="res://Styling/transition.gdshader" id="52_blkrb"]
-[ext_resource type="Script" uid="uid://dn1xjyy7q4ft5" path="res://Csharp/Discord/Discord.cs" id="53_e71vb"]
+[ext_resource type="Script" uid="uid://dn1xjyy7q4ft5" path="res://Csharp/Discord.cs" id="53_e71vb"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n3cvr"]
 shader = ExtResource("8_0cp0l")
@@ -149,7 +149,7 @@ corner_radius_bottom_left = 5
 shader = ExtResource("52_blkrb")
 shader_parameter/t = 0.0
 
-[node name="Main" type="Control" unique_id=14097904 node_paths=PackedStringArray("player", "video_player", "volumeSlider", "playlist_visualizer", "songs_visualizer")]
+[node name="Main2" type="Control" unique_id=14097904 node_paths=PackedStringArray("player", "video_player", "volumeSlider", "playlist_visualizer", "songs_visualizer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -602,7 +602,7 @@ focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_wx3lt")
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("19_0odxb")
+script = ExtResource("37_6iyjs")
 refesh_texture_animation = NodePath("AnimationPlayer")
 
 [node name="TextureRect" type="TextureRect" parent="Interface/Top Bar/Right/Refresh" unique_id=727025634]

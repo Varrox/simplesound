@@ -97,8 +97,8 @@ public partial class Discord : Node
             return;
         }
 
-        request.CancelRequest();
-        request.Request(link, ["Content-Type: application/json"]);
+        request.CallDeferredThreadGroup("cancel_request");
+        request.CallDeferredThreadGroup("request", new Variant[] { link, new string[] { "Content-Type: application/json" } });
     }
 
     void RequestFinished(long result, long responseCode, string[] headers, byte[] body)

@@ -27,37 +27,35 @@ public partial class PlaylistCreatorOpener : EditorWindowOpener
 		{
 			bool sync = creator.cloudSync.ButtonPressed;
 
-            string file_name = creator.playlist_name.Text.Replace("\\", "-").Replace("/", "-");
+            string file_name = creator.playlist_name.Text.Replace('\\', '-').Replace('/', '-').Replace(':', '-');
 
             var cover_path = sync ? SaveSystem.ImportCover(creator.cover_path, file_name) : creator.cover_path;
 
-            List<string> songs = sync ? SaveSystem.ImportSongs(creator.songs.ToArray(), file_name, false) : creator.songs;
+            List<string> songs = sync ? SaveSystem.ImportSongs(creator.songs.ToArray(), file_name, false) : new List<string>(creator.songs.ToArray());
 
 			Playlist playlist = new Playlist(creator.playlist_name.Text, cover_path, songs);
-			
-			playlist.PathName = file_name;
 
 			if (creator.backgroundThemeEnabled.ButtonPressed)
-				playlist.customInfo.overlay_color = "#" + creator.backgroundTheme.Color.ToHtml();
+				playlist.custom_info.overlay_color = "#" + creator.backgroundTheme.Color.ToHtml();
 
 			if (creator.album.ButtonPressed)
-				playlist.Type = Playlist.PlaylistType.Album;
+				playlist.type = Playlist.PlaylistType.Album;
 
 			if (creator.artist.Text.Trim() != "")
-				playlist.Artist = creator.artist.Text;
+				playlist.artist = creator.artist.Text;
 
-			creator.Clear();
+            creator.Clear();
 
-			for(int i = 0; i < creator.songs.Count; i++)
-			{
-				GD.Print($"Song {i}: {creator.songs[i]}");
-			}
+            for (int i = 0; i < songs.Count; i++)
+            {
+                GD.Print($"Song {i}: {songs[i]}");
+            }
 
 			Globals.main.playlist_paths.Add(playlist.Save());
 
 			SaveSystem.SaveAllPlaylists(Globals.main.playlist_paths.ToArray());
             Globals.main.Refresh();
-		}
+        }
 
 		Globals.player.interrupted = false;
 	}

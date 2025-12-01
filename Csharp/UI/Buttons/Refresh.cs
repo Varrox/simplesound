@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class RefreshButton : Button
+public partial class Refresh : Button
 {
 	[Export] public AnimationPlayer refesh_texture_animation;
 	public override void _Ready()
