@@ -105,7 +105,7 @@ public partial class Discord : Node
     {
         if (result != (long)HttpRequest.Result.Success)
         {
-            Debug.ErrorLog($"Https request failed. Something went wrong server side: {result}");
+            GD.PushError($"Https request failed. Something went wrong server side: {result}");
             return;
         }
 

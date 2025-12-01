@@ -58,7 +58,7 @@ public partial class Update : Button
     {
         if (result != (long)HttpRequest.Result.Success)
         {
-            Debug.ErrorLog($"Https request failed. Something went wrong server side: {result}");
+            GD.PushError($"Https request failed. Something went wrong server side: {result}");
             return;
         }
 
@@ -76,7 +76,7 @@ public partial class Update : Button
                 Download(json);
                 break;
             case CurrentRequest.Downloading:
-                Debug.Log("Downloaded! Now installing");
+                GD.Print("Downloaded! Now installing");
                 Install(http_client.DownloadFile);
                 http_client.DownloadFile = string.Empty; // Clear
                 updating = false;
@@ -108,7 +108,7 @@ public partial class Update : Button
 
         if (error != Error.Ok)
         {
-            Debug.ErrorLog("Install Failed. Zip is corrupted");
+            GD.PushError("Install Failed. Zip is corrupted");
             return;
         }
 
@@ -119,7 +119,7 @@ public partial class Update : Button
             string path = Path.Combine(download_folder, files[i].Substring(files[i].IndexOf("/") + 1));
             if (!files[i].EndsWith('/'))
             {
-                Debug.Log(path);
+                GD.Print(path);
                 File.WriteAllBytes(path, zip_reader.ReadFile(files[i]));
             }
             else
@@ -160,7 +160,7 @@ public partial class Update : Button
 
     public void Download(Dictionary json)
     {
-        Debug.Log("Downloading");
+        GD.Print("Downloading");
 
         Array<Dictionary> assets = (Array<Dictionary>)json["assets"];
 
@@ -178,7 +178,7 @@ public partial class Update : Button
 
         if (download_index == -1)
         {
-            Debug.ErrorLog("Current platform not found in available downloads");
+            GD.PushError("Current platform not found in available downloads");
             return;
         }
 

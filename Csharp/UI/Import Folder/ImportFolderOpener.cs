@@ -6,8 +6,6 @@ public partial class ImportFolderOpener : EditorWindowOpener
     [Export] ContextMenu menu;
     public override void _Ready()
     {
-        base._Ready();
-
         ButtonDown += OpenImporter;
         window.OnClose += CreatePlaylist;
     }

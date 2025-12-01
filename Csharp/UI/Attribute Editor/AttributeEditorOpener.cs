@@ -4,8 +4,6 @@ public partial class AttributeEditorOpener : EditorWindowOpener
 {
     public override void _Ready()
     {
-        base._Ready();
-
         ButtonDown += EditAttributes;
         window.OnClose += SubmitMeta;
     }

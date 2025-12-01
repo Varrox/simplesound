@@ -129,12 +129,12 @@ public partial class PlaylistCreator : EditorWindow
 				}
 				else
 				{
-					Debug.ErrorLog($"{path} is already in this playlist.");
+					GD.PushError($"{path} is already in this playlist.");
 				}
 			}
 			else
 			{
-				Debug.ErrorLog($"{path} is not a valid audio file, it cannot be added to this playlist.");
+                GD.PushError($"{path} is not a valid audio file, it cannot be added to this playlist.");
 			}
 		}
         DisconnectAddSongs();
@@ -147,8 +147,8 @@ public partial class PlaylistCreator : EditorWindow
 
         Globals.file_dialog.Reparent(Globals.self);
 
-        EmitSignal("OnClose");
-	}
+		OnClose?.Invoke();
+    }
 	public void Cancel()
 	{
 		cancelled = true;

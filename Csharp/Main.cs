@@ -19,9 +19,18 @@ public partial class Main : Control
 
     public int current_looked_at_playlist;
 
-    public Playlist playlist{
-		get{
-			return playlists[playlist_index];
+    public Playlist playlist
+	{
+		get
+		{
+			if (playlists != null)
+			{
+				if (playlists.Count > playlist_index)
+				{
+					return playlists[playlist_index];
+                }
+			}
+			return null;
 		}
 	}
 
@@ -67,15 +76,22 @@ public partial class Main : Control
         player.VolumeDb = volume;
         volumeSlider.Value = volume;
 
-        // Load playlists
+		// Load playlists
 
-        playlist_paths = new List<string>(SaveSystem.GetAllPlaylists());
+		string[] playlist_paths_array = SaveSystem.GetAllPlaylists();
+
+        playlist_paths = new List<string>(playlist_paths_array ?? new string[0]);
         playlists = new List<Playlist>(new Playlist[playlist_paths.Count]);
 
-        for (int i = 0; i < playlist_paths.Count; i++)
+        if (playlist_paths_array == null)
 		{
-			playlists[i] = MainParser.ParsePlaylist(playlist_paths[i]);
-		}
+			return;
+        }
+
+        for (int i = 0; i < playlist_paths.Count; i++)
+        {
+            playlists[i] = MainParser.ParsePlaylist(playlist_paths[i]);
+        }
 
         LoadPlaylist(playlist_index);
 
@@ -289,9 +305,11 @@ public partial class Main : Control
 
 	public bool SongAvailable()
 	{
-		if (playlists[playlist_index] != null)
-			if (playlists[playlist_index].Songs != null)
-				if (playlists[playlist_index].Songs.Count > 0) return true;
+		if(playlists != null)
+			if (playlists.Count > playlist_index)
+				if (playlists[playlist_index] != null)
+					if (playlists[playlist_index].Songs != null)
+						if (playlists[playlist_index].Songs.Count > 0) return true;
 		return false;
 	}
 
@@ -305,7 +323,6 @@ public partial class Main : Control
         for (int i = 0; i < playlist_paths.Count; i++)
         {
             playlists[i] = MainParser.ParsePlaylist(playlist_paths[i]);
-            GD.Print(playlists[i].Name);
         }
 
         LoadPlaylist(playlist_index);

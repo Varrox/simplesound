@@ -200,6 +200,11 @@ public partial class Player : Node
     }
     public void ApplyPlaylistSettings()
     {
+        if(Globals.main.playlist == null)
+        {
+            return;
+        }
+        
         if (Globals.main.playlist.customInfo.overlay_color != null)
         {
             background_color = ParsingTools.ParseColor(Globals.main.playlist.customInfo.overlay_color);
