@@ -195,7 +195,7 @@ public partial class Globals : Node
 
     public static void OnClose()
     {
-        main.SaveData();
+        main.Save();
         Discord.ShutDown();
     }
 

@@ -38,7 +38,7 @@ public partial class ImportFolderOpener : EditorWindowOpener
                 playlist.artist = creator.artist.Text;
 
             Globals.main.playlist_paths.Add(playlist.Save());
-            SaveSystem.SaveAllPlaylists(Globals.main.playlist_paths.ToArray());
+            Globals.main.Save();
             Globals.main.Refresh();
         }
 

@@ -57,7 +57,7 @@ public partial class Main : Control
 	{
 		// Load Save data
 
-        SaveData save_data = SaveSystem.GetSaveData();
+        SaveData save_data = SaveData.GetSaveData();
 
 		playlist_index = save_data.playlist_index;
 		song_index = save_data.song_index;
@@ -76,17 +76,13 @@ public partial class Main : Control
         player.VolumeDb = volume;
         volumeSlider.Value = volume;
 
-		// Load playlists
+        // Load playlists
 
-		string[] playlist_paths_array = SaveSystem.GetAllPlaylists();
-
-        playlist_paths = new List<string>(playlist_paths_array ?? new string[0]);
+        playlist_paths = save_data.playlists ?? new List<string>();
         playlists = new List<Playlist>(new Playlist[playlist_paths.Count]);
 
-        if (playlist_paths_array == null)
-		{
-			return;
-        }
+        if (save_data.playlists == null)
+            return;
 
         for (int i = 0; i < playlist_paths.Count; i++)
         {
@@ -111,7 +107,7 @@ public partial class Main : Control
 	{
 		// Input
 
-		if (Input.IsActionJustPressed("save")) SaveData();
+		if (Input.IsActionJustPressed("save")) Save();
 
 		// Loop management
 
@@ -313,11 +309,12 @@ public partial class Main : Control
 		return false;
 	}
 
-	public void SaveData() => new SaveData {playlist_index = playlist_index, song_index = song_index, looked_at_playlist = looked_at_playlist, time = time, volume = player.VolumeDb, shuffled = shuffled }.Save();
+	public void Save() => new SaveData {playlist_index = playlist_index, song_index = song_index, looked_at_playlist = looked_at_playlist, time = time, volume = player.VolumeDb, shuffled = shuffled, playlists = playlist_paths }.Save();
 
     public void Refresh()
 	{
-        playlist_paths = new List<string>(SaveSystem.GetAllPlaylists());
+        SaveData save_data = SaveData.GetSaveData();
+        playlist_paths = save_data.playlists ?? new List<string>();
         playlists = new List<Playlist>(new Playlist[playlist_paths.Count]);
 
         for (int i = 0; i < playlist_paths.Count; i++)
