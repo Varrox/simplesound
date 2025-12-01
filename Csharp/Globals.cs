@@ -195,7 +195,7 @@ public partial class Globals : Node
 
     public static void OnClose()
     {
-        main.SaveData();
+        main.Save();
         Discord.ShutDown();
     }
 
@@ -223,7 +223,7 @@ public partial class Globals : Node
 
     public static void SetFileDialogPlaylist()
     {
-        file_dialog.Filters = new[] { "*.ssl"};
+        file_dialog.Filters = new[] { "*.json"};
         file_dialog.FileMode = FileDialog.FileModeEnum.OpenFile;
         file_dialog.OkButtonText = "Import Playlist";
         file_dialog.Title = "Select Playlist";

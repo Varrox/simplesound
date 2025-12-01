@@ -4,8 +4,6 @@ public partial class AttributeEditorOpener : EditorWindowOpener
 {
     public override void _Ready()
     {
-        base._Ready();
-
         ButtonDown += EditAttributes;
         window.OnClose += SubmitMeta;
     }
@@ -27,7 +25,7 @@ public partial class AttributeEditorOpener : EditorWindowOpener
 
         if(!editor.cancelled)
         {
-            if (Globals.main.playlist)
+            if (Globals.main.playlist != null)
                 Metadata.SetData(Globals.main.song, editor.Name.Text, editor.Artist.Text, editor.cover_path, editor.Sharelink.Text, editor.ExplicitLyrics.ButtonPressed);
 
             Globals.player.OnLoadSong();

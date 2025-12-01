@@ -31,7 +31,7 @@ public partial class PlaylistDisplay : Button
     public void Set()
     {
         Globals.main.playlist_visualizer.OnSelectPlaylist?.Invoke(playlist_index, Cover.Texture);
-        Globals.main.current_looked_at_playlist = playlist_index;
+        Globals.main.looked_at_playlist = playlist_index;
         SelfModulate = Globals.lower_highlight;
     }
 
@@ -42,24 +42,24 @@ public partial class PlaylistDisplay : Button
 
     public void Init(Playlist playlist, int index)
     {
-        Cover.Texture = ConvertToGodot.LoadImage(playlist.Cover) ?? Globals.default_cover;
-        Name.Text = playlist.Name;
+        Cover.Texture = ConvertToGodot.LoadImage(playlist.cover) ?? Globals.default_cover;
+        Name.Text = playlist.name;
 
-        if (playlist.Type != Playlist.PlaylistType.Album)
+        if (playlist.type != Playlist.PlaylistType.Album)
         {
-            if (playlist.Songs == null)
+            if (playlist.songs == null)
                 Songs.Text = "0 songs";
             else
-                Songs.Text = $"{playlist.Songs.Count}{(playlist.Songs.Count != 1 ? " songs" : " song")}{(playlist.Artist != null ? $" {dot} {playlist.Artist}" : "")}";
+                Songs.Text = $"{playlist.songs.Count}{(playlist.songs.Count != 1 ? " songs" : " song")}{(playlist.artist != null ? $" {dot} {playlist.artist}" : "")}";
         }
         else
         {
-            Songs.Text = $"Album  {dot}  {playlist.Artist ?? (playlist.Songs.Count.ToString() + (playlist.Songs.Count != 1 ? " songs" : " song"))}";
+            Songs.Text = $"Album  {dot}  {playlist.artist ?? (playlist.songs.Count.ToString() + (playlist.songs.Count != 1 ? " songs" : " song"))}";
         }
 
         playlist_index = index;
 
-        if (index == Globals.main.current_looked_at_playlist) Set();
+        if (index == Globals.main.looked_at_playlist) Set();
 
         Globals.main.playlist_visualizer.OnSelectPlaylist += ClearSelected;
     }

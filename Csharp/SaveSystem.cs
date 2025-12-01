@@ -1,48 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using SSLParser;
+using Newtonsoft.Json;
 
 public class SaveSystem
 {
 	public static readonly string USER_DATA = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "simplesound");
-
-	public static SaveData GetSaveData()
-	{
-		foreach(string folder_name in new[] { "Playlists" , "Music Folders" , "Playlist Covers" }) // Add folders
-		{
-			string path = Path.Combine(USER_DATA, folder_name);
-            if (!Directory.Exists(path))
-                Directory.CreateDirectory(path);
-        }
-
-        string save_data_path = Path.Combine(USER_DATA, "savedata.ssl");
-
-		SaveData save_data;
-
-        if (!File.Exists(save_data_path))
-		{
-			save_data = new();
-			save_data.Save();
-        }
-		else
-		{
-            MainParser.ParseFile(save_data_path, out save_data, out List<string> tags);
-        }
-
-        return save_data;
-    }
-
-	public static string[] GetAllPlaylists()
-	{
-        string playlist_save = Path.Combine(USER_DATA, "savedplaylists.txt");
-        return File.Exists(playlist_save) ? File.ReadAllLines(playlist_save) : null;
-	}
-
-    public static void SaveAllPlaylists(string[] playlists)
-    {
-        File.WriteAllLines(Path.Combine(USER_DATA, "savedplaylists.txt"), playlists);
-    }
 
     public static string ImportFolder(string path)
 	{
@@ -103,24 +66,39 @@ public class SaveSystem
 
 public class SaveData
 {
-	public int playlist_index, song_index;
+	public int playlist_index, song_index, looked_at_playlist;
 	public float time, volume;
 	public bool shuffled;
+	public List<string> playlists;
 
-	static string path = Path.Combine(SaveSystem.USER_DATA, "savedata.ssl");
+	static readonly string path = Path.Combine(SaveSystem.USER_DATA, "savedata.json");
 
-	public void Save() => File.WriteAllText(path, MainParser.StringifyObject(this));
-}
-
-public struct bool4
-{
-    public bool r, g, b, a;
-    
-    public bool4(bool r, bool g, bool b, bool a)
+    public void Save()
     {
-        this.r = r;
-        this.g = g;
-        this.b = b;
-        this.a = a;
+        File.WriteAllText(path, JsonConvert.SerializeObject(this, Formatting.Indented));
+    }
+
+    public static SaveData GetSaveData()
+    {
+        foreach (string folder_name in new[] { "Playlists", "Music Folders", "Playlist Covers" }) // Add folders
+        {
+            string folder_path = Path.Combine(SaveSystem.USER_DATA, folder_name);
+            if (!Directory.Exists(folder_path))
+                Directory.CreateDirectory(folder_path);
+        }
+
+        SaveData save_data;
+
+        if (!File.Exists(path))
+        {
+            save_data = new();
+            save_data.Save();
+        }
+        else
+        {
+            save_data = JsonConvert.DeserializeObject<SaveData>(File.ReadAllText(path));
+        }
+
+        return save_data;
     }
 }

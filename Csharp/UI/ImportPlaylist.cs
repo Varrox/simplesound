@@ -1,5 +1,4 @@
 using Godot;
-using SSLParser;
 using System.IO;
 
 public partial class ImportPlaylist : Button
@@ -36,33 +35,33 @@ public partial class ImportPlaylist : Button
             Globals.SetFileDialogPlaylist();
             Globals.file_dialog.Popup();
 
-            Globals.file_dialog.FileSelected += ImportSSL;
+            Globals.file_dialog.FileSelected += Import;
             Globals.file_dialog.Canceled += Cancel;
         }
     }
 
-	public void ImportSSL(string ssl_file)
+	public void Import(string ssl_file)
 	{
 		string new_path = Path.Combine(SaveSystem.USER_DATA, "Playlists", Path.GetFileName(ssl_file));
 
 		File.Copy(ssl_file, new_path);
 
-		Playlist playlist = MainParser.ParsePlaylist(new_path);
+		Playlist playlist = Playlist.CreateFromFile(new_path);
 
 		if (sync == Confirm.Accepted)
 		{
-			playlist.Songs = SaveSystem.ImportSongs(playlist.Songs.ToArray(), playlist.Name);
-			playlist.Cover = SaveSystem.ImportCover(playlist.Cover, playlist.Name);
+			playlist.songs = SaveSystem.ImportSongs(playlist.songs.ToArray(), playlist.name);
+			playlist.cover = SaveSystem.ImportCover(playlist.cover, playlist.name);
         }
 
 		Globals.main.playlist_paths.Add(playlist.Save());
-        SaveSystem.SaveAllPlaylists(Globals.main.playlist_paths.ToArray());
+		Globals.main.Save();
         Globals.main.Refresh();
     }
 
 	public void Cancel()
 	{
-        Globals.file_dialog.FileSelected -= ImportSSL; 
+        Globals.file_dialog.FileSelected -= Import; 
 		Globals.file_dialog.Canceled -= Cancel;
 		menu.CloseMenu();
     }

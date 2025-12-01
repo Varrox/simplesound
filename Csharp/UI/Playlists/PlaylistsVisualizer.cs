@@ -1,6 +1,5 @@
 using Godot;
 using Godot.Collections;
-using SSLParser;
 using System;
 
 public partial class PlaylistsVisualizer : ScrollContainer

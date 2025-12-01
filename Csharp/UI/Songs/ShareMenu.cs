@@ -1,5 +1,4 @@
 using Godot;
-using SSLParser;
 using System;
 
 public partial class ShareMenu : ContextMenu
@@ -35,18 +34,7 @@ public partial class ShareMenu : ContextMenu
 
     public void GetSongData()
 	{
-		Playlist playlist;
-
-		if (Globals.main.playlist_index == Globals.main.current_looked_at_playlist)
-		{
-			playlist = Globals.main.playlist;
-		}
-		else
-		{
-            playlist = MainParser.ParsePlaylist(Globals.main.playlist_paths[Globals.main.current_looked_at_playlist]);
-        }
-
-        file = playlist.Songs[song];
+        file = Globals.main.playlists[Globals.main.looked_at_playlist].songs[song];
 		link = Metadata.GetShareLink(file);
 
 		Icon = Back;

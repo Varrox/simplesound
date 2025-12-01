@@ -1,5 +1,4 @@
 using Godot;
-using SSLParser;
 using System;
 using System.Collections.Generic;
 
@@ -17,11 +16,20 @@ public partial class Main : Control
 
 	public string current_song_path, current_share_link;
 
-    public int current_looked_at_playlist;
+    public int looked_at_playlist;
 
-    public Playlist playlist{
-		get{
-			return playlists[playlist_index];
+    public Playlist playlist
+	{
+		get
+		{
+			if (playlists != null)
+			{
+				if (playlists.Count > playlist_index)
+				{
+					return playlists[playlist_index];
+                }
+			}
+			return null;
 		}
 	}
 
@@ -36,9 +44,11 @@ public partial class Main : Control
     public Action OnLoadPlaylist;
     public Action<bool> OnPlay;
 
-	public string song{
-		get{
-			if(SongAvailable()) return playlists[playlist_index].Songs[song_index];
+	public string song
+	{
+		get
+		{
+			if(SongAvailable()) return playlists[playlist_index].songs[song_index];
 			else return null;
         }
 	}
@@ -47,15 +57,14 @@ public partial class Main : Control
 	{
 		// Load Save data
 
-        SaveData save_data = SaveSystem.GetSaveData();
+        SaveData save_data = SaveData.GetSaveData();
 
 		playlist_index = save_data.playlist_index;
 		song_index = save_data.song_index;
 		time = save_data.time;
 		volume = save_data.volume;
 		shuffled = save_data.shuffled;
-
-        current_looked_at_playlist = playlist_index;
+        looked_at_playlist = save_data.looked_at_playlist;
 
 		offset = song_index;
 
@@ -69,13 +78,16 @@ public partial class Main : Control
 
         // Load playlists
 
-        playlist_paths = new List<string>(SaveSystem.GetAllPlaylists());
+        playlist_paths = save_data.playlists ?? new List<string>();
         playlists = new List<Playlist>(new Playlist[playlist_paths.Count]);
 
+        if (save_data.playlists == null)
+            return;
+
         for (int i = 0; i < playlist_paths.Count; i++)
-		{
-			playlists[i] = MainParser.ParsePlaylist(playlist_paths[i]);
-		}
+        {
+            playlists[i] = Playlist.CreateFromFile(playlist_paths[i]);
+        }
 
         LoadPlaylist(playlist_index);
 
@@ -84,7 +96,7 @@ public partial class Main : Control
         playlist_visualizer.LoadAllPlaylistVisuals();
 
         if (SongAvailable())
-            PlaySong(playlist.Songs[song_index]);
+            PlaySong(playlist.songs[song_index]);
         else
             OnLoadSong?.Invoke(); // Emit anyways just so it can display no songs
 
@@ -95,7 +107,7 @@ public partial class Main : Control
 	{
 		// Input
 
-		if (Input.IsActionJustPressed("save")) SaveData();
+		if (Input.IsActionJustPressed("save")) Save();
 
 		// Loop management
 
@@ -122,14 +134,14 @@ public partial class Main : Control
 
 	public void CheckIndex()
 	{
-		if (playlist_paths[playlist_index] != playlist.Path)
+		if (playlist_paths[playlist_index] != playlist.GetPath())
 		{
-			playlist_index = playlist_paths.IndexOf(playlist.Path);
+			playlist_index = playlist_paths.IndexOf(playlist.GetPath());
 		}
 
 		if (song != current_song_path)
 		{
-            song_index = playlist.Songs.IndexOf(current_song_path);
+            song_index = playlist.songs.IndexOf(current_song_path);
         }
 	}
 
@@ -205,10 +217,10 @@ public partial class Main : Control
 					for(int i = 0; i < 6; i++)
 					{
                         GD.Seed((ulong)(offset * 3 + random_offset + i));
-                        int randomNumber = GD.RandRange(0, playlist.Songs.Count - 1);
-                        if (randomNumber != song_index)
+                        int random_number = GD.RandRange(0, playlist.songs.Count);
+                        if (random_number != song_index)
                         {
-                            song_index = randomNumber;
+                            song_index = random_number;
                             offset += i / 3;
                             break;
                         }
@@ -220,7 +232,7 @@ public partial class Main : Control
 				song_index += amount;
             }
 
-            song_index = Mathf.Wrap(song_index, 0, playlist.Songs.Count - 1);
+            song_index = Mathf.Wrap(song_index, 0, playlist.songs.Count);
 
             PlaySong(song);
 
@@ -277,9 +289,9 @@ public partial class Main : Control
             {
                 GD.PrintErr($"{path} doesn't exist");
 
-				if (playlist.Songs[song_index] == path)
+				if (playlist.songs[song_index] == path)
 				{
-                    playlist.Songs.RemoveAt(song_index);
+                    playlist.songs.RemoveAt(song_index);
                     playlist.Save();
 					PlaySong(song);
                 }
@@ -289,23 +301,25 @@ public partial class Main : Control
 
 	public bool SongAvailable()
 	{
-		if (playlists[playlist_index] != null)
-			if (playlists[playlist_index].Songs != null)
-				if (playlists[playlist_index].Songs.Count > 0) return true;
+		if(playlists != null)
+			if (playlists.Count > playlist_index)
+				if (playlists[playlist_index] != null)
+					if (playlists[playlist_index].songs != null)
+						if (playlists[playlist_index].songs.Count > 0) return true;
 		return false;
 	}
 
-	public void SaveData() => new SaveData {playlist_index = playlist_index, song_index = song_index, time = time, volume = player.VolumeDb, shuffled = shuffled }.Save();
+	public void Save() => new SaveData {playlist_index = playlist_index, song_index = song_index, looked_at_playlist = looked_at_playlist, time = time, volume = player.VolumeDb, shuffled = shuffled, playlists = playlist_paths }.Save();
 
     public void Refresh()
 	{
-        playlist_paths = new List<string>(SaveSystem.GetAllPlaylists());
+        SaveData save_data = SaveData.GetSaveData();
+        playlist_paths = save_data.playlists ?? new List<string>();
         playlists = new List<Playlist>(new Playlist[playlist_paths.Count]);
 
         for (int i = 0; i < playlist_paths.Count; i++)
         {
-            playlists[i] = MainParser.ParsePlaylist(playlist_paths[i]);
-            GD.Print(playlists[i].Name);
+            playlists[i] = Playlist.CreateFromFile(playlist_paths[i]);
         }
 
         LoadPlaylist(playlist_index);

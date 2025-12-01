@@ -14,6 +14,8 @@ public partial class AttributeEditor : EditorWindow
 
     public override void _Ready()
     {
+        base._Ready();
+
         SubmitButton.ButtonDown += Submit;
         CoverButton.ButtonDown += Cover;
         CancelButton.ButtonDown += Cancel;

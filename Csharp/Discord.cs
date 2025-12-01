@@ -97,15 +97,15 @@ public partial class Discord : Node
             return;
         }
 
-        request.CancelRequest();
-        request.Request(link, ["Content-Type: application/json"]);
+        request.CallDeferredThreadGroup("cancel_request");
+        request.CallDeferredThreadGroup("request", new Variant[] { link, new string[] { "Content-Type: application/json" } });
     }
 
     void RequestFinished(long result, long responseCode, string[] headers, byte[] body)
     {
         if (result != (long)HttpRequest.Result.Success)
         {
-            Debug.ErrorLog($"Https request failed. Something went wrong server side: {result}");
+            GD.PushError($"Https request failed. Something went wrong server side: {result}");
             return;
         }
 
@@ -140,8 +140,8 @@ public partial class Discord : Node
             converted_url = "https://i.ytimg.com/vi_webp/";
 
             var split = url.Right(-("https://").Length).Split("/");
-            string video_id = split[split.Length];
-            converted_url += video_id.Substring("watch?v=".Length).Split("?")[0];
+            string video_id = split[split.Length - 1];
+            converted_url += video_id.Substring("watch?v=".Length - 1).Split("?")[0];
             converted_url += "/maxresdefault.webp";
         }
 

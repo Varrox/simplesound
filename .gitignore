@@ -9,6 +9,8 @@ export.cfg
 export_credentials.cfg
 *.tmp
 
+Simplesound - Backup.csproj
+
 # Imported translations (automatically generated from CSV files)
 *.translation
 
