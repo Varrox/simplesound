@@ -9,5 +9,3 @@ Goals:
 * Fix up all bugs and random code inconsistencies
 * Implement Searching
 * Add playlist and song re-ordering.
-
-> Note: Yes I am aware of the first version being broken, I will try my best to fix it ASAP
