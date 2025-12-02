@@ -31,7 +31,7 @@ public partial class PlaylistCreatorOpener : EditorWindowOpener
 
             var cover_path = sync ? SaveSystem.ImportCover(creator.cover_path, file_name) : creator.cover_path;
 
-            List<string> songs = sync ? SaveSystem.ImportSongs(creator.songs.ToArray(), file_name, false) : new List<string>(creator.songs.ToArray());
+            List<string> songs = sync ? SaveSystem.ImportSongs(creator.songs.ToArray(), file_name, false) : new(creator.songs);
 
 			Playlist playlist = new Playlist(creator.playlist_name.Text, cover_path, songs);
 
@@ -45,11 +45,6 @@ public partial class PlaylistCreatorOpener : EditorWindowOpener
 				playlist.artist = creator.artist.Text;
 
             creator.Clear();
-
-            for (int i = 0; i < songs.Count; i++)
-            {
-                GD.Print($"Song {i}: {songs[i]}");
-            }
 
 			Globals.main.playlist_paths.Add(playlist.Save());
 			Globals.main.Save();

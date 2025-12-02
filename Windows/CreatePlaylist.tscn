@@ -13,19 +13,20 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bhcbq"]
 
-[node name="Window" type="Window" node_paths=PackedStringArray("playlist_name", "addCover", "coverDisplay", "addSongs", "songDisplayContainer", "cloudSync", "album", "artist", "backgroundThemeEnabled", "backgroundTheme", "SubmitButton", "CancelButton")]
+[node name="Window" type="Window" unique_id=874625055 node_paths=PackedStringArray("playlist_name", "addCover", "coverDisplay", "addSongs", "songDisplayContainer", "panel", "cloudSync", "album", "artist", "backgroundThemeEnabled", "backgroundTheme", "SubmitButton", "CancelButton")]
 oversampling_override = 1.0
 title = "Create Playlist"
 initial_position = 2
-size = Vector2i(550, 350)
+size = Vector2i(600, 350)
 min_size = Vector2i(450, 300)
 script = ExtResource("1_b0noq")
-songDisplay = ExtResource("3_uox0n")
 playlist_name = NodePath("HBoxContainer2/VBoxContainer/Name")
 addCover = NodePath("HBoxContainer2/VBoxContainer2/Cover")
 coverDisplay = NodePath("HBoxContainer2/VBoxContainer2/Selected File")
 addSongs = NodePath("HBoxContainer2/VBoxContainer/Cover2")
+songDisplay = ExtResource("3_uox0n")
 songDisplayContainer = NodePath("HBoxContainer2/VBoxContainer/Panel/ScrollContainer/VBoxContainer")
+panel = NodePath("HBoxContainer2/VBoxContainer/Panel")
 cloudSync = NodePath("HBoxContainer2/VBoxContainer2/Cloud")
 album = NodePath("HBoxContainer2/VBoxContainer2/Album")
 artist = NodePath("HBoxContainer2/VBoxContainer2/Artist")
@@ -34,10 +35,10 @@ backgroundTheme = NodePath("HBoxContainer2/VBoxContainer2/ColorPickerButton")
 SubmitButton = NodePath("HBoxContainer/Create")
 CancelButton = NodePath("HBoxContainer/Cancel")
 
-[node name="ColorRect" parent="." instance=ExtResource("3_3os5s")]
+[node name="ColorRect" parent="." unique_id=1354321475 instance=ExtResource("3_3os5s")]
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="."]
-anchors_preset = -1
+[node name="HBoxContainer2" type="HBoxContainer" parent="." unique_id=1414908470]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 10.0
@@ -47,34 +48,34 @@ offset_bottom = -55.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer2"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer2" unique_id=878386457]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Name" type="LineEdit" parent="HBoxContainer2/VBoxContainer"]
+[node name="Name" type="LineEdit" parent="HBoxContainer2/VBoxContainer" unique_id=1236150103]
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("1_8t6yf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_acdqb")
 placeholder_text = "Name"
 
-[node name="HSeparator" type="HSeparator" parent="HBoxContainer2/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="HBoxContainer2/VBoxContainer" unique_id=261354492]
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
-[node name="Cover2" type="Button" parent="HBoxContainer2/VBoxContainer"]
+[node name="Cover2" type="Button" parent="HBoxContainer2/VBoxContainer" unique_id=1543300614]
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("1_8t6yf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_yiuwm")
 text = "Add Song(s)"
 
-[node name="Panel" type="Panel" parent="HBoxContainer2/VBoxContainer"]
+[node name="Panel" type="Panel" parent="HBoxContainer2/VBoxContainer" unique_id=1120451052]
 custom_minimum_size = Vector2(0, 79.7)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer2/VBoxContainer/Panel"]
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer2/VBoxContainer/Panel" unique_id=531190408]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -86,66 +87,66 @@ offset_bottom = -2.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer2/VBoxContainer/Panel/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer2/VBoxContainer/Panel/ScrollContainer" unique_id=1925917653]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="VSeparator" type="VSeparator" parent="HBoxContainer2"]
+[node name="VSeparator" type="VSeparator" parent="HBoxContainer2" unique_id=1218646127]
 custom_minimum_size = Vector2(7.06, 0)
 layout_mode = 2
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer2"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer2" unique_id=1572833832]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Cover" type="Button" parent="HBoxContainer2/VBoxContainer2"]
+[node name="Cover" type="Button" parent="HBoxContainer2/VBoxContainer2" unique_id=623857352]
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("1_8t6yf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_yiuwm")
 text = "Select cover"
 
-[node name="Selected File" parent="HBoxContainer2/VBoxContainer2" instance=ExtResource("3_uox0n")]
+[node name="Selected File" parent="HBoxContainer2/VBoxContainer2" unique_id=1186275209 instance=ExtResource("3_uox0n")]
 layout_mode = 2
 
-[node name="HSeparator2" type="HSeparator" parent="HBoxContainer2/VBoxContainer2"]
+[node name="HSeparator2" type="HSeparator" parent="HBoxContainer2/VBoxContainer2" unique_id=284551003]
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
-[node name="Album" type="CheckBox" parent="HBoxContainer2/VBoxContainer2"]
+[node name="Album" type="CheckBox" parent="HBoxContainer2/VBoxContainer2" unique_id=1588255886]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_8t6yf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_r7omr")
 text = "Album"
 
-[node name="Artist" type="LineEdit" parent="HBoxContainer2/VBoxContainer2"]
+[node name="Artist" type="LineEdit" parent="HBoxContainer2/VBoxContainer2" unique_id=455932430]
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("1_8t6yf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_acdqb")
 placeholder_text = "Artist"
 
-[node name="HSeparator4" type="HSeparator" parent="HBoxContainer2/VBoxContainer2"]
+[node name="HSeparator4" type="HSeparator" parent="HBoxContainer2/VBoxContainer2" unique_id=602701414]
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
-[node name="Background Theme" type="CheckBox" parent="HBoxContainer2/VBoxContainer2"]
+[node name="Background Theme" type="CheckBox" parent="HBoxContainer2/VBoxContainer2" unique_id=739392275]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_8t6yf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_r7omr")
 text = "Background Theme"
 
-[node name="ColorPickerButton" type="ColorPickerButton" parent="HBoxContainer2/VBoxContainer2"]
+[node name="ColorPickerButton" type="ColorPickerButton" parent="HBoxContainer2/VBoxContainer2" unique_id=676398692]
 layout_mode = 2
 theme_override_styles/focus = SubResource("StyleBoxEmpty_bhcbq")
 text = "
 "
 
-[node name="HSeparator3" type="HSeparator" parent="HBoxContainer2/VBoxContainer2"]
+[node name="HSeparator3" type="HSeparator" parent="HBoxContainer2/VBoxContainer2" unique_id=320939632]
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
-[node name="Cloud" type="CheckBox" parent="HBoxContainer2/VBoxContainer2"]
+[node name="Cloud" type="CheckBox" parent="HBoxContainer2/VBoxContainer2" unique_id=221899050]
 layout_mode = 2
 size_flags_vertical = 4
 tooltip_text = "If disabled, songs on this playlist will not be synced to other devices. 
@@ -154,8 +155,8 @@ theme_override_fonts/font = ExtResource("1_8t6yf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_r7omr")
 text = "Cloud Sync"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-anchors_preset = -1
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=463861364]
+anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -168,13 +169,13 @@ grow_horizontal = 2
 grow_vertical = 0
 alignment = 1
 
-[node name="Create" type="Button" parent="HBoxContainer"]
+[node name="Create" type="Button" parent="HBoxContainer" unique_id=2060439743]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_8t6yf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_r7omr")
 text = "Create"
 
-[node name="Cancel" type="Button" parent="HBoxContainer"]
+[node name="Cancel" type="Button" parent="HBoxContainer" unique_id=1208944921]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_8t6yf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_r7omr")

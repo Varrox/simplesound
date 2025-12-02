@@ -11,6 +11,7 @@ public partial class PlaylistCreator : EditorWindow
 	[Export] Button addSongs;
 	[Export] PackedScene songDisplay;
 	[Export] Control songDisplayContainer;
+	[Export] Panel panel;
 
 
 	[Export] public CheckBox cloudSync, album;
@@ -67,6 +68,7 @@ public partial class PlaylistCreator : EditorWindow
 			Clear();
 
         Globals.file_dialog.Reparent(this);
+		FilesDropped += DropSongs;
 
         Show();
 	}
@@ -110,6 +112,14 @@ public partial class PlaylistCreator : EditorWindow
 	void DisconnectAddSongs() { Globals.file_dialog.FilesSelected -= AddSongs; Globals.file_dialog.Canceled -= DisconnectAddSongs; }
     void DisconnectSetCover() { Globals.file_dialog.FileSelected -= SetCover; Globals.file_dialog.Canceled -= DisconnectSetCover; }
 
+	public void DropSongs(string[] files)
+	{
+		if(panel.GetGlobalRect().HasPoint(GetMousePosition()))
+		{
+			AddSongs(files);
+		}	
+	}
+
     public void AddSongs(string[] paths)
 	{
 		foreach(string path in paths)
@@ -146,8 +156,9 @@ public partial class PlaylistCreator : EditorWindow
 		Hide();
 
         Globals.file_dialog.Reparent(Globals.self);
+		FilesDropped -= DropSongs;
 
-		OnClose?.Invoke();
+        OnClose?.Invoke();
     }
 	public void Cancel()
 	{
