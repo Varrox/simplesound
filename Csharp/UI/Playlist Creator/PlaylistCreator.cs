@@ -84,14 +84,14 @@ public partial class PlaylistCreator : EditorWindow
         Globals.file_dialog.Popup();
 
 		Globals.file_dialog.FileSelected += SetCover;
-        Globals.file_dialog.Canceled += DisconnectSetCover;
+        Globals.file_dialog.Canceled += CancelSetCover;
     }
 
 	public void SetCover(string path)
 	{
 		cover_path = path;
 		coverDisplay.SetPath(cover_path);
-        DisconnectSetCover();
+        CancelSetCover();
     }
 	
 	public void ClearCover()
@@ -106,11 +106,11 @@ public partial class PlaylistCreator : EditorWindow
 		Globals.file_dialog.Popup();
 
         Globals.file_dialog.FilesSelected += AddSongs;
-        Globals.file_dialog.Canceled += DisconnectAddSongs;
+        Globals.file_dialog.Canceled += CancelAddSongs;
     }
 
-	void DisconnectAddSongs() { Globals.file_dialog.FilesSelected -= AddSongs; Globals.file_dialog.Canceled -= DisconnectAddSongs; }
-    void DisconnectSetCover() { Globals.file_dialog.FileSelected -= SetCover; Globals.file_dialog.Canceled -= DisconnectSetCover; }
+	void CancelAddSongs() { Globals.file_dialog.FilesSelected -= AddSongs; Globals.file_dialog.Canceled -= CancelAddSongs; }
+    void CancelSetCover() { Globals.file_dialog.FileSelected -= SetCover; Globals.file_dialog.Canceled -= CancelSetCover; }
 
 	public void DropSongs(string[] files)
 	{
@@ -147,7 +147,7 @@ public partial class PlaylistCreator : EditorWindow
                 GD.PushError($"{path} is not a valid audio file, it cannot be added to this playlist.");
 			}
 		}
-        DisconnectAddSongs();
+        CancelAddSongs();
     }
 
 	public void Submit()
