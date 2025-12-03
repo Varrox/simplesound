@@ -110,6 +110,8 @@ public partial class Discord : Node
 
         string text = body.GetStringFromUtf8();
 
+        // Idc if it can break, it works
+
         if (link.Contains("open.spotify.com") || link.Contains("soundcloud.com"))
         {
             string meta = "<meta property=\"og:image\" content=";
