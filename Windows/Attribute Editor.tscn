@@ -11,8 +11,9 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iyibu"]
 
-[node name="Attribute editor" type="Window" node_paths=PackedStringArray("Name", "Artist", "Sharelink", "CoverButton", "CoverLabel", "ExplicitLyrics", "SubmitButton", "CancelButton")]
+[node name="Attribute editor" type="Window" unique_id=397200673 node_paths=PackedStringArray("Name", "Artist", "Sharelink", "CoverButton", "CoverLabel", "ExplicitLyrics", "SubmitButton", "CancelButton")]
 auto_translate_mode = 1
+oversampling_override = 1.0
 title = "Edit song attributes"
 initial_position = 2
 size = Vector2i(300, 250)
@@ -27,9 +28,9 @@ ExplicitLyrics = NodePath("VBoxContainer/Explicit Lyrics")
 SubmitButton = NodePath("VBoxContainer/HBoxContainer/Apply")
 CancelButton = NodePath("VBoxContainer/HBoxContainer/Cancel")
 
-[node name="ColorRect" parent="." instance=ExtResource("2_j2mdm")]
+[node name="ColorRect" parent="." unique_id=1042828171 instance=ExtResource("2_j2mdm")]
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=598437280]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -40,60 +41,67 @@ offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Name" type="LineEdit" parent="VBoxContainer"]
+[node name="Name" type="LineEdit" parent="VBoxContainer" unique_id=1525246124]
 layout_mode = 2
+tooltip_text = "Name of the song."
 theme_override_fonts/font = ExtResource("1_ot5f1")
 placeholder_text = "Name"
 caret_blink = true
 
-[node name="Artist" type="LineEdit" parent="VBoxContainer"]
+[node name="Artist" type="LineEdit" parent="VBoxContainer" unique_id=2005550133]
 layout_mode = 2
+tooltip_text = "The artist(s) who made the song."
 theme_override_fonts/font = ExtResource("1_ot5f1")
 placeholder_text = "Artist
 "
 caret_blink = true
 
-[node name="Share" type="LineEdit" parent="VBoxContainer"]
+[node name="Share" type="LineEdit" parent="VBoxContainer" unique_id=810669860]
 layout_mode = 2
+tooltip_text = "The link (URL) to share this song via external platforms (link is also used to extract cover art for discord rich presence)."
 theme_override_fonts/font = ExtResource("1_ot5f1")
 placeholder_text = "Share Link
 "
 caret_blink = true
 
-[node name="Explicit Lyrics" type="CheckBox" parent="VBoxContainer"]
+[node name="Explicit Lyrics" type="CheckBox" parent="VBoxContainer" unique_id=2003182571]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
+tooltip_text = "Toggles whether or not this song has explicit lyrics."
 theme_override_fonts/font = ExtResource("1_ot5f1")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_3g08v")
 text = "Explicit Lyrics"
 
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer" unique_id=1874090028]
 custom_minimum_size = Vector2(0, 5.06)
 layout_mode = 2
 
-[node name="Cover" type="Button" parent="VBoxContainer"]
+[node name="Cover" type="Button" parent="VBoxContainer" unique_id=1017338183]
 layout_mode = 2
+tooltip_text = "Opens a file dialog to select an image as the cover art for this song."
 theme_override_fonts/font = ExtResource("1_ot5f1")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_mixmj")
 text = "Select cover image"
 
-[node name="Selected File" parent="VBoxContainer" instance=ExtResource("3_6cib4")]
+[node name="Selected File" parent="VBoxContainer" unique_id=262419127 instance=ExtResource("3_6cib4")]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=366126135]
 layout_mode = 2
 size_flags_vertical = 10
 alignment = 1
 
-[node name="Apply" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="Apply" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=1208880014]
 layout_mode = 2
+tooltip_text = "Applies all changes done to the metadata of this song."
 theme_override_fonts/font = ExtResource("1_ot5f1")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_iyibu")
 text = "Apply Changes"
 
-[node name="Cancel" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="Cancel" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=1813568189]
 layout_mode = 2
+tooltip_text = "Cancels all changes done to the metadata of this song."
 theme_override_fonts/font = ExtResource("1_ot5f1")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_iyibu")
 text = "Cancel"

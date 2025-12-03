@@ -20,11 +20,11 @@ initial_position = 2
 size = Vector2i(600, 350)
 min_size = Vector2i(450, 300)
 script = ExtResource("1_b0noq")
+songDisplay = ExtResource("3_uox0n")
 playlist_name = NodePath("HBoxContainer2/VBoxContainer/Name")
 addCover = NodePath("HBoxContainer2/VBoxContainer2/Cover")
 coverDisplay = NodePath("HBoxContainer2/VBoxContainer2/Selected File")
 addSongs = NodePath("HBoxContainer2/VBoxContainer/Cover2")
-songDisplay = ExtResource("3_uox0n")
 songDisplayContainer = NodePath("HBoxContainer2/VBoxContainer/Panel/ScrollContainer/VBoxContainer")
 panel = NodePath("HBoxContainer2/VBoxContainer/Panel")
 cloudSync = NodePath("HBoxContainer2/VBoxContainer2/Cloud")
@@ -55,6 +55,7 @@ size_flags_horizontal = 3
 [node name="Name" type="LineEdit" parent="HBoxContainer2/VBoxContainer" unique_id=1236150103]
 layout_mode = 2
 size_flags_vertical = 4
+tooltip_text = "The name of the playlist."
 theme_override_fonts/font = ExtResource("1_8t6yf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_acdqb")
 placeholder_text = "Name"
@@ -66,6 +67,7 @@ layout_mode = 2
 [node name="Cover2" type="Button" parent="HBoxContainer2/VBoxContainer" unique_id=1543300614]
 layout_mode = 2
 size_flags_vertical = 4
+tooltip_text = "Opens a dialog to select audio files."
 theme_override_fonts/font = ExtResource("1_8t6yf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_yiuwm")
 text = "Add Song(s)"
@@ -102,6 +104,7 @@ size_flags_horizontal = 3
 [node name="Cover" type="Button" parent="HBoxContainer2/VBoxContainer2" unique_id=623857352]
 layout_mode = 2
 size_flags_vertical = 4
+tooltip_text = "Opens a file dialog to select an image."
 theme_override_fonts/font = ExtResource("1_8t6yf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_yiuwm")
 text = "Select cover"
@@ -115,6 +118,7 @@ layout_mode = 2
 
 [node name="Album" type="CheckBox" parent="HBoxContainer2/VBoxContainer2" unique_id=1588255886]
 layout_mode = 2
+tooltip_text = "Toggles whether or not this playlist is considered an album."
 theme_override_fonts/font = ExtResource("1_8t6yf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_r7omr")
 text = "Album"
@@ -122,6 +126,7 @@ text = "Album"
 [node name="Artist" type="LineEdit" parent="HBoxContainer2/VBoxContainer2" unique_id=455932430]
 layout_mode = 2
 size_flags_vertical = 4
+tooltip_text = "The artist of this playlist / album."
 theme_override_fonts/font = ExtResource("1_8t6yf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_acdqb")
 placeholder_text = "Artist"
