@@ -64,8 +64,7 @@ public partial class Discord : Node
                 LargeImageUrl = "https://github.com/Varrox/simplesound"
             },
             Type = ActivityType.Listening,
-            Buttons = new[]{ new DiscordRPC.Button() { Label = "Open song", Url = "https://lachee.dev/" } },
-            DetailsUrl = Globals.main.current_share_link
+            Buttons = new[]{ new DiscordRPC.Button() { Label = "Open song", Url = Globals.main.current_share_link } }
         };
 
         client.SetPresence(presence);

@@ -47,6 +47,10 @@ public class Metadata
                 return true;
             }
         }
+        else
+        {
+            return true;
+        }
 
         return false;
     }
