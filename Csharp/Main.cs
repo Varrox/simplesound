@@ -57,14 +57,14 @@ public partial class Main : Control
 	{
 		// Load Save data
 
-        SaveData save_data = SaveData.GetSaveData();
+		Globals.save_data = SaveData.GetSaveData();
 
-		playlist_index = save_data.playlist_index;
-		song_index = save_data.song_index;
-		time = save_data.time;
-		volume = save_data.volume;
-		shuffled = save_data.shuffled;
-        looked_at_playlist = save_data.looked_at_playlist;
+		playlist_index = Globals.save_data.playlist_index;
+		song_index = Globals.save_data.song_index;
+		time = Globals.save_data.time;
+		volume = Globals.save_data.volume;
+		shuffled = Globals.save_data.shuffled;
+        looked_at_playlist = Globals.save_data.looked_at_playlist;
 
 		offset = song_index;
 
@@ -78,10 +78,10 @@ public partial class Main : Control
 
         // Load playlists
 
-        playlist_paths = save_data.playlists ?? new List<string>();
+        playlist_paths = Globals.save_data.playlists ?? new List<string>();
         playlists = new List<Playlist>(new Playlist[playlist_paths.Count]);
 
-        if (save_data.playlists == null)
+        if (Globals.save_data.playlists == null)
             return;
 
         for (int i = 0; i < playlist_paths.Count; i++)
@@ -309,7 +309,18 @@ public partial class Main : Control
 		return false;
 	}
 
-	public void Save() => new SaveData {playlist_index = playlist_index, song_index = song_index, looked_at_playlist = looked_at_playlist, time = time, volume = player.VolumeDb, shuffled = shuffled, playlists = playlist_paths }.Save();
+	public void Save() 
+	{
+		Globals.save_data.playlist_index = playlist_index;
+		Globals.save_data.song_index = song_index;
+		Globals.save_data.looked_at_playlist = looked_at_playlist;
+		Globals.save_data.time = time;
+		Globals.save_data.volume = player.VolumeDb;
+		Globals.save_data.shuffled = shuffled;
+		Globals.save_data.playlists = playlist_paths;
+
+        Globals.save_data.Save();
+	}
 
     public void Refresh()
 	{

@@ -897,10 +897,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_68lop")
 button_mask = 4
 flat = true
 script = ExtResource("29_jq2sk")
-window = NodePath("AttributeEditor")
-
-[node name="AttributeEditor" parent="Interface/Player/Song Attributes/Edit Attributes" unique_id=1605960294 instance=ExtResource("17_f7c3k")]
-visible = false
+window = NodePath("../../../../Globals/AttributeEditor")
 
 [node name="Name" type="Label" parent="Interface/Player/Song Attributes" unique_id=916219751]
 layout_mode = 1
@@ -951,14 +948,12 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_gueqf")
 [node name="Songcontext" parent="Interface" unique_id=196847728 instance=ExtResource("17_3m5kb")]
 visible = false
 layout_mode = 1
-anchors_preset = 6
 offset_top = -75.0
-offset_right = 0.0
-offset_bottom = 75.0
+offset_bottom = 43.0
 
 [node name="Player" type="AudioStreamPlayer" parent="." unique_id=488316782]
 
-[node name="Globals" type="Node" parent="." unique_id=71517921 node_paths=PackedStringArray("_main", "_player", "_discord", "_file_dialog", "_self", "_playlist_menu", "_song_menu")]
+[node name="Globals" type="Node" parent="." unique_id=71517921 node_paths=PackedStringArray("_main", "_player", "_discord", "_attribute_editor", "_file_dialog", "_self", "_playlist_menu", "_song_menu")]
 script = ExtResource("32_htxhm")
 _play_texture = ExtResource("5_8inno")
 _pause_texture = ExtResource("4_lfnj1")
@@ -970,6 +965,7 @@ _confirmation_window = ExtResource("39_h8e4i")
 _main = NodePath("..")
 _player = NodePath("../Interface")
 _discord = NodePath("../Discord")
+_attribute_editor = NodePath("AttributeEditor")
 _file_dialog = NodePath("File Dialog")
 _self = NodePath(".")
 _playlist_menu = NodePath("../Interface/Playlistcontext")
@@ -981,6 +977,9 @@ initial_position = 1
 file_mode = 0
 access = 2
 use_native_dialog = true
+
+[node name="AttributeEditor" parent="Globals" unique_id=1605960294 instance=ExtResource("17_f7c3k")]
+visible = false
 
 [node name="Discord" type="Node" parent="." unique_id=46493677]
 script = ExtResource("53_e71vb")

@@ -92,6 +92,22 @@ public partial class Globals : Node
 
     public static Discord discord;
 
+    [Export]
+    AttributeEditor _attribute_editor
+    {
+        set
+        {
+            attribute_editor = value;
+        }
+
+        get
+        {
+            return attribute_editor;
+        }
+    }
+
+    public static AttributeEditor attribute_editor;
+
     [Export] FileDialog _file_dialog
     {
         set
@@ -186,6 +202,8 @@ public partial class Globals : Node
     public static Control song_menu;
 
     public static Vector2I main_window_minimum_size = new Vector2I(850, 350);
+
+    public static SaveData save_data;
 
     public override void _Ready()
     {

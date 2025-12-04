@@ -9,7 +9,7 @@ public partial class SongDisplay : Button
 	[Export] public SongsMore more;
 	[Export] public Panel explicit_lyrics;
 
-	public int playlist, song;
+	public int song;
 	public bool playing;
 	public override void _Ready()
 	{
@@ -26,13 +26,13 @@ public partial class SongDisplay : Button
 		playing = false;
         Globals.main.OnPlay -= SetTextures;
 
-        if (Globals.main.playlist_index == playlist && Globals.main.song_index == song) // highlight
+        if (Globals.main.playlist_index == Globals.main.looked_at_playlist && Globals.main.song_index == song) // highlight
 		{
 			Globals.main.OnPlay += SetTextures;
 			playing = true;
 			SelfModulate = Globals.highlight;
 		}
-		else if (Globals.main.playlist_index != playlist || Globals.main.song_index != song) // un-highlight
+		else if (Globals.main.playlist_index != Globals.main.looked_at_playlist || Globals.main.song_index != song) // un-highlight
         {
 			play_button.Texture = Globals.play_texture;
             Globals.main.OnPlay -= SetTextures;
@@ -64,12 +64,12 @@ public partial class SongDisplay : Button
         number.SelfModulate = new Color(1, 1, 1, 1);
     }
 
-    public void Init(string name, string artist, string time, int playlist, int song, bool explicit_lyrics, Playlist.PlaylistType type, Texture2D cover)
+    public void Init(string name, string artist, string time, int song, bool explicit_lyrics, Playlist.PlaylistType type, Texture2D cover)
 	{
 		number.SetThreadSafe("text", (song + 1).ToString());
 
 		this.song = song;
-		this.playlist = playlist;
+		
 
 		this.name.SetThreadSafe("text", name);
 		this.artist.SetThreadSafe("text", artist);
@@ -90,7 +90,7 @@ public partial class SongDisplay : Button
 
 	public void SetSong()
 	{
-		if(Globals.main.playlist_index != playlist) Globals.main.LoadPlaylist(playlist);
+		if(Globals.main.playlist_index != Globals.main.looked_at_playlist) Globals.main.LoadPlaylist(Globals.main.looked_at_playlist);
 		if(!playing) Globals.main.SetSong(song);
 		else Globals.main.Play();
 	}

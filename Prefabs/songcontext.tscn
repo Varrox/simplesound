@@ -1,5 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://dcre7b1cn3b6i"]
+[gd_scene load_steps=8 format=3 uid="uid://dcre7b1cn3b6i"]
 
+[ext_resource type="Script" uid="uid://o0n8r7mxyki" path="res://Csharp/UI/Attribute Editor/AttributeEditorOpenerGlobal.cs" id="1_3sdvf"]
 [ext_resource type="Texture2D" uid="uid://bfdwehd6cajgg" path="res://Icons/more.png" id="1_a1dky"]
 [ext_resource type="Script" uid="uid://crcrxiepo802r" path="res://Csharp/UI/Songs/ShareMenu.cs" id="2_rsdy2"]
 [ext_resource type="Texture2D" uid="uid://c85envuiuo3ju" path="res://Icons/folder.png" id="3_nnx5l"]
@@ -13,54 +14,51 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[node name="Songcontext" type="Panel"]
-anchors_preset = -1
+[node name="Songcontext" type="Panel" unique_id=1810165372]
+anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
 offset_left = -142.0
-offset_right = 0.00061035156
-offset_bottom = 150.0
+offset_right = 0.0009765625
+offset_bottom = 118.0
 grow_horizontal = 0
 grow_vertical = 2
 pivot_offset = Vector2(142, 0)
 theme_override_styles/panel = SubResource("StyleBoxFlat_gueqf")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1326792036]
 layout_mode = 1
-anchors_preset = -1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 5.0
-offset_top = 5.0
-offset_right = -4.9996033
-offset_bottom = -5.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
 
-[node name="Edit" type="Button" parent="VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=690104626]
+layout_mode = 2
+
+[node name="Edit" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1564475278]
 layout_mode = 2
 size_flags_vertical = 3
 focus_mode = 0
 text = "Edit Metadata"
 alignment = 0
+script = ExtResource("1_3sdvf")
 
-[node name="Remove" type="Button" parent="VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-focus_mode = 0
-text = "Remove"
-alignment = 0
-
-[node name="Delete" type="Button" parent="VBoxContainer"]
+[node name="Delete" type="Button" parent="MarginContainer/VBoxContainer" unique_id=640502061]
 layout_mode = 2
 size_flags_vertical = 3
 focus_mode = 0
 text = "Delete"
 alignment = 0
 
-[node name="Share" type="Button" parent="VBoxContainer" node_paths=PackedStringArray("share_link", "file_browse", "menu", "sub_menus")]
+[node name="Share" type="Button" parent="MarginContainer/VBoxContainer" unique_id=444445067 node_paths=PackedStringArray("share_link", "file_browse", "menu", "sub_menus")]
 layout_mode = 2
 size_flags_vertical = 3
 focus_mode = 0
@@ -69,16 +67,16 @@ icon = ExtResource("1_a1dky")
 alignment = 0
 expand_icon = true
 script = ExtResource("2_rsdy2")
-share_link = NodePath("../../Control/VBoxContainer/Share link")
-file_browse = NodePath("../../Control/VBoxContainer/File browse")
+share_link = NodePath("../../../Control/VBoxContainer/Share link")
+file_browse = NodePath("../../../Control/VBoxContainer/File browse")
 Share = ExtResource("1_a1dky")
 Back = ExtResource("3_tpxmu")
-menu = NodePath("../../Control")
+menu = NodePath("../../../Control")
 teleportMenu = null
 teleportMenuOffset = null
 sub_menus = []
 
-[node name="Control" type="Panel" parent="."]
+[node name="Control" type="Panel" parent="." unique_id=1602453918]
 visible = false
 layout_mode = 0
 offset_left = -209.0
@@ -86,7 +84,7 @@ offset_top = 108.0
 offset_right = -5.0
 offset_bottom = 186.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control" unique_id=477499698]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -98,7 +96,7 @@ offset_bottom = -5.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Share link" type="Button" parent="Control/VBoxContainer"]
+[node name="Share link" type="Button" parent="Control/VBoxContainer" unique_id=1189602057]
 layout_mode = 2
 size_flags_vertical = 3
 focus_mode = 0
@@ -107,7 +105,7 @@ icon = ExtResource("4_wve4k")
 alignment = 0
 expand_icon = true
 
-[node name="File browse" type="Button" parent="Control/VBoxContainer"]
+[node name="File browse" type="Button" parent="Control/VBoxContainer" unique_id=358891637]
 layout_mode = 2
 size_flags_vertical = 3
 focus_mode = 0

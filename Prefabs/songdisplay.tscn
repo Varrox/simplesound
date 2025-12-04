@@ -12,7 +12,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_31pnr"]
 
-[node name="Register" type="Button" node_paths=PackedStringArray("number", "name", "artist", "time", "cover", "play_button", "spacer", "more", "explicit_lyrics")]
+[node name="Register" type="Button" unique_id=127370609 node_paths=PackedStringArray("number", "name", "artist", "time", "cover", "play_button", "spacer", "more", "explicit_lyrics")]
 custom_minimum_size = Vector2(0, 60)
 anchors_preset = 14
 anchor_top = 0.5
@@ -37,7 +37,7 @@ spacer = NodePath("Number/HFlowContainer/Spacer")
 more = NodePath("More")
 explicit_lyrics = NodePath("Number/HFlowContainer/Text/Name/Explicit")
 
-[node name="Number" type="Label" parent="."]
+[node name="Number" type="Label" parent="." unique_id=1571747147]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.5
@@ -53,7 +53,7 @@ text = "1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HFlowContainer" type="HFlowContainer" parent="Number"]
+[node name="HFlowContainer" type="HFlowContainer" parent="Number" unique_id=1871505846]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.5
@@ -65,7 +65,7 @@ offset_bottom = 25.5
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="Number/HFlowContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="Number/HFlowContainer" unique_id=1499834726]
 clip_children = 1
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
@@ -73,7 +73,7 @@ size_flags_stretch_ratio = 0.0
 mouse_filter = 2
 theme_override_styles/panel = ExtResource("6_2m43a")
 
-[node name="Cover" type="TextureRect" parent="Number/HFlowContainer/PanelContainer"]
+[node name="Cover" type="TextureRect" parent="Number/HFlowContainer/PanelContainer" unique_id=1903642]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 mouse_filter = 2
@@ -81,18 +81,18 @@ texture = ExtResource("3_aqj3n")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="Spacer" type="Control" parent="Number/HFlowContainer"]
+[node name="Spacer" type="Control" parent="Number/HFlowContainer" unique_id=1109561641]
 custom_minimum_size = Vector2(7.395, 0)
 layout_mode = 2
 
-[node name="Text" type="Control" parent="Number/HFlowContainer"]
+[node name="Text" type="Control" parent="Number/HFlowContainer" unique_id=1503666349]
 clip_children = 2
 custom_minimum_size = Vector2(60, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="Name" type="Label" parent="Number/HFlowContainer/Text"]
+[node name="Name" type="Label" parent="Number/HFlowContainer/Text" unique_id=627121899]
 layout_mode = 0
 offset_top = 7.0
 offset_right = 40.0
@@ -100,7 +100,7 @@ offset_bottom = 30.0
 theme_override_fonts/font = ExtResource("2_rrqbv")
 text = "Song"
 
-[node name="Explicit" type="Panel" parent="Number/HFlowContainer/Text/Name"]
+[node name="Explicit" type="Panel" parent="Number/HFlowContainer/Text/Name" unique_id=2009592990]
 modulate = Color(10, 10, 10, 1)
 layout_mode = 1
 anchors_preset = -1
@@ -116,7 +116,7 @@ grow_horizontal = 0
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Label" type="Label" parent="Number/HFlowContainer/Text/Name/Explicit"]
+[node name="Label" type="Label" parent="Number/HFlowContainer/Text/Name/Explicit" unique_id=947183856]
 modulate = Color(0.0142752, 0.0142752, 0.0142752, 1)
 layout_mode = 1
 anchors_preset = -1
@@ -136,7 +136,7 @@ text = "E"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Artist" type="Label" parent="Number/HFlowContainer/Text"]
+[node name="Artist" type="Label" parent="Number/HFlowContainer/Text" unique_id=805583777]
 layout_mode = 0
 offset_top = 27.0
 offset_right = 43.0
@@ -146,7 +146,7 @@ theme_override_fonts/font = ExtResource("2_rrqbv")
 theme_override_font_sizes/font_size = 11
 text = "Artist"
 
-[node name="Length" type="Label" parent="."]
+[node name="Length" type="Label" parent="." unique_id=442115050]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 1.0
@@ -166,7 +166,7 @@ text = "0:00"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="More" type="Button" parent="." node_paths=PackedStringArray("display", "sub_menus")]
+[node name="More" type="Button" parent="." unique_id=1763249806 node_paths=PackedStringArray("display", "sub_menus")]
 visible = false
 layout_mode = 1
 anchors_preset = -1
@@ -191,7 +191,7 @@ teleportMenu = true
 teleportMenuOffset = Vector2(30, 32)
 sub_menus = []
 
-[node name="Play" type="TextureRect" parent="."]
+[node name="Play" type="TextureRect" parent="." unique_id=209218632]
 visible = false
 layout_mode = 1
 anchors_preset = -1

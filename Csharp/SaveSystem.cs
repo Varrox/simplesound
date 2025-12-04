@@ -70,8 +70,9 @@ public class SaveData
 	public float time, volume;
 	public bool shuffled;
 	public List<string> playlists;
+	public ApplicationMetadata application_metadata = new ApplicationMetadata();
 
-	static readonly string path = Path.Combine(SaveSystem.USER_DATA, "savedata.json");
+    static readonly string path = Path.Combine(SaveSystem.USER_DATA, "savedata.json");
 
     public void Save()
     {
@@ -100,5 +101,14 @@ public class SaveData
         }
 
         return save_data;
+    }
+}
+
+public struct ApplicationMetadata
+{
+	public bool remove_song_warning = true;
+
+    public ApplicationMetadata()
+    {
     }
 }

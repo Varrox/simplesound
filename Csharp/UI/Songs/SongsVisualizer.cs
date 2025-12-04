@@ -11,8 +11,13 @@ public partial class SongsVisualizer : ScrollContainer
 
     int last_scroll = 0;
 
-    string[] songs;
-    bool album;
+    Playlist playlist
+    {
+        get
+        {
+            return Globals.main.playlists[Globals.main.looked_at_playlist];
+        }
+    }
 
 	public override void _Ready()
 	{
@@ -26,7 +31,7 @@ public partial class SongsVisualizer : ScrollContainer
 
     public override void _Process(double delta)
     {
-        if(!album)
+        if(playlist.type != Playlist.PlaylistType.Album)
         {
             if (last_scroll != ScrollVertical)
             {
@@ -38,7 +43,7 @@ public partial class SongsVisualizer : ScrollContainer
                     child.cover.Visible = !hidden;
                     child.ProcessMode = hidden ? ProcessModeEnum.Disabled : ProcessModeEnum.Inherit;
 
-                    child.cover.Texture = hidden ? null : ConvertToGodot.GetCover(songs[i - 1]);
+                    child.cover.Texture = hidden ? null : ConvertToGodot.GetCover(playlist.songs[i - 1]);
                 }
 
                 last_scroll = ScrollVertical;
@@ -50,10 +55,6 @@ public partial class SongsVisualizer : ScrollContainer
 	{
 		Globals.main.looked_at_playlist = playlist_index;
 
-        Playlist playlist = Globals.main.playlists[playlist_index];
-
-        album = playlist.type == Playlist.PlaylistType.Album;
-
         Array<Node> song_displays = container.GetChildren();
 
 		(song_displays[0].GetChild(0).GetChild(0) as TextureRect).Texture = playlist_cover;
@@ -61,8 +62,6 @@ public partial class SongsVisualizer : ScrollContainer
 
 		if (playlist.songs != null)
 		{
-            songs = playlist.songs.ToArray();
-
             (song_displays[0].GetChild(2) as Label).Text = $"{playlist.songs.Count} song" + (playlist.songs.Count != 1 ? "s" : "");
             song_displays.RemoveAt(0);
         }
@@ -86,9 +85,9 @@ public partial class SongsVisualizer : ScrollContainer
             update_songs_thread.Join();
         }
 
-        if (song_displays.Count > songs.Length) // delete overflow
+        if (song_displays.Count > playlist.songs.Count) // delete overflow
 		{
-			for(int i = songs.Length; i < song_displays.Count; i++)
+			for(int i = playlist.songs.Count; i < song_displays.Count; i++)
 			{
                 SongDisplay song_display = song_displays[i] as SongDisplay;
                 Globals.main.OnPlay -= song_display.SetTextures;
@@ -100,16 +99,14 @@ public partial class SongsVisualizer : ScrollContainer
 			}
         }
 
-        update_songs_thread = new Thread(new ThreadStart(() => UpdateAllSongs(ref playlist, ref song_displays, playlist_index)));
+        update_songs_thread = new Thread(new ThreadStart(() => UpdateAllSongs(ref song_displays)));
         update_songs_thread.Start();
     }
 
-    public void UpdateAllSongs(ref Playlist playlist, ref Array<Node> song_displays, int playlist_index)
+    public void UpdateAllSongs(ref Array<Node> song_displays)
     {
         for (int i = 0; i < playlist.songs.Count; i++) // update all
         {
-            //GD.Print("Iteration: ", i, ", Thread: ", Thread.CurrentThread.ManagedThreadId);
-
             SongDisplay disp = null;
 
             if (i >= song_displays.Count) // create song display if one does not exist
@@ -125,7 +122,7 @@ public partial class SongsVisualizer : ScrollContainer
             bool hidden = (bool)CallThreadSafe("IsHidden", disp);
 
             // init the playlist
-            disp.Init(Tools.GetMediaTitle(playlist.songs[i]), Metadata.GetArtist(playlist.songs[i]), Tools.SecondsToTimestamp(Metadata.GetTotalTime(playlist.songs[i])), playlist_index, i, Metadata.IsExplicit(playlist.songs[i]), playlist.type, !album || !hidden ? ConvertToGodot.GetCover(playlist.songs[i]) : null);
+            disp.Init(Tools.GetMediaTitle(playlist.songs[i]), Metadata.GetArtist(playlist.songs[i]), Tools.SecondsToTimestamp(Metadata.GetTotalTime(playlist.songs[i])), i, Metadata.IsExplicit(playlist.songs[i]), playlist.type, playlist.type != Playlist.PlaylistType.Album || !hidden ? ConvertToGodot.GetCover(playlist.songs[i]) : null);
         }
     }
 
@@ -134,7 +131,16 @@ public partial class SongsVisualizer : ScrollContainer
 		if(Globals.main.looked_at_playlist == Globals.main.playlist_index)
 		{
             SongDisplay disp = container.GetChild(index + 1) as SongDisplay;
-            disp.Init(song_name, artist, time, Globals.main.looked_at_playlist, index, explicit_lyrics, Globals.main.playlist.type, texture);
+            disp.Init(song_name, artist, time, index, explicit_lyrics, Globals.main.playlist.type, texture);
         }
+    }
+
+    public void RemoveSong(int index)
+    {
+        SongDisplay song_display = container.GetChild(index + 1) as SongDisplay;
+        Globals.main.OnPlay -= song_display.SetTextures;
+        Globals.main.OnLoadSong -= song_display.SetHighlight;
+
+        song_display.QueueFree();
     }
 }

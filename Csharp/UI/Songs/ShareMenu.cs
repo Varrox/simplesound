@@ -7,7 +7,6 @@ public partial class ShareMenu : ContextMenu
 
 	[Export] public Texture2D Share, Back;
 
-	public static int song;
     public static string file, link;
 	public static ShareMenu instance;
 
@@ -34,7 +33,7 @@ public partial class ShareMenu : ContextMenu
 
     public void GetSongData()
 	{
-        file = Globals.main.playlists[Globals.main.looked_at_playlist].songs[song];
+        file = Globals.main.playlists[Globals.main.looked_at_playlist].songs[SongsMore.song];
 		link = Metadata.GetShareLink(file);
 
 		Icon = Back;

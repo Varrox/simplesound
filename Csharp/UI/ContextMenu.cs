@@ -112,4 +112,9 @@ public partial class ContextMenu : Button
     {
         menu.GlobalPosition = GlobalPosition + teleportMenuOffset - menu.PivotOffset;
     }
+
+    public override void _ExitTree()
+    {
+        CloseMenu();
+    }
 }

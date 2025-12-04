@@ -4,7 +4,7 @@ public partial class AttributeEditorOpener : EditorWindowOpener
 {
     public override void _Ready()
     {
-        ButtonDown += EditAttributes;
+        ButtonUp += EditAttributes;
         window.OnClose += SubmitMeta;
     }
 
@@ -12,10 +12,12 @@ public partial class AttributeEditorOpener : EditorWindowOpener
     {
         if (Globals.main.song != null) 
         {
-            if (Globals.player.Interrupt())
+            if (!Globals.player.Interrupt())
             {
-                (window as AttributeEditor).Open(Globals.player.SongName.Text, Globals.player.SongArtist.Text, Metadata.GetShareLink(Globals.main.song), Metadata.IsExplicit(Globals.main.song));
+                return;
             }
+
+            (window as AttributeEditor).Open(Globals.player.SongName.Text, Globals.player.SongArtist.Text, Metadata.GetShareLink(Globals.main.song), Metadata.IsExplicit(Globals.main.song));
         }
     }
 
