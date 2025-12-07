@@ -1,4 +1,4 @@
-[gd_scene load_steps=76 format=3 uid="uid://cbpkjhjnbrjm6"]
+[gd_scene format=3 uid="uid://cbpkjhjnbrjm6"]
 
 [ext_resource type="Theme" uid="uid://cg2x5h7ufrntn" path="res://Styling/global_theme.tres" id="1_4lmeg"]
 [ext_resource type="Script" uid="uid://b81fhtdmrks0a" path="res://Csharp/Main.cs" id="1_l00ml"]
@@ -289,6 +289,8 @@ icon_alignment = 1
 expand_icon = true
 script = ExtResource("21_seu75")
 menu = NodePath("Panel")
+teleportMenu = null
+teleportMenuOffset = null
 sub_menus = []
 
 [node name="Panel" type="Panel" parent="Interface/Side Panel/Add" unique_id=768656514]

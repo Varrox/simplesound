@@ -31,7 +31,10 @@ public partial class SongsVisualizer : ScrollContainer
 
     public override void _Process(double delta)
     {
-        if(playlist.type != Playlist.PlaylistType.Album)
+        if(playlist == null)
+            return;
+
+        if (playlist.type != Playlist.PlaylistType.Album)
         {
             if (last_scroll != ScrollVertical)
             {
