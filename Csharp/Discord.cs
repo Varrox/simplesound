@@ -142,7 +142,7 @@ public partial class Discord : Node
 
             var split = url.Right(-("https://").Length).Split("/");
             string video_id = split[split.Length - 1];
-            converted_url += video_id.Substring("watch?v=".Length - 1).Split("?")[0];
+            converted_url += video_id.Length > 0 ? video_id.Substring("watch?v=".Length - 1).Split("?")[0] : "";
             converted_url += "/maxresdefault.webp";
         }
 

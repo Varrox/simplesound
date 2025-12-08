@@ -45,10 +45,6 @@ public partial class AttributeEditor : EditorWindow
         Visible = true;
         CoverLabel.SetPath();
         cover_path = "";
-
-        Globals.file_dialog.Reparent(this);
-        Globals.file_dialog.FileSelected += SubmitCover;
-        Globals.SetFileDialogCover();
     }
 
     public void Submit()
@@ -59,10 +55,6 @@ public partial class AttributeEditor : EditorWindow
 
         OnClose?.Invoke();
         cancelled = false;
-
-        Globals.file_dialog.Reparent(Globals.self);
-        Globals.file_dialog.FileSelected -= SubmitCover;
-        Globals.ResetFileDialogParameters();
     }
 
     public void Cancel()
@@ -73,6 +65,9 @@ public partial class AttributeEditor : EditorWindow
 
     public void Cover()
     {
+        Globals.file_dialog.Reparent(this);
+        Globals.file_dialog.FileSelected += SubmitCover;
+        Globals.SetFileDialogCover();
         Globals.file_dialog.Popup();
         cover_changed = true;
     }
@@ -81,5 +76,8 @@ public partial class AttributeEditor : EditorWindow
     {
         cover_path = path;
         CoverLabel.SetPath(path);
+        Globals.file_dialog.Reparent(Globals.self);
+        Globals.file_dialog.FileSelected -= SubmitCover;
+        Globals.ResetFileDialogParameters();
     }
 }
