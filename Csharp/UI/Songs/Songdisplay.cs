@@ -11,7 +11,7 @@ public partial class SongDisplay : Button
 
 	public int song;
 	public bool playing;
-	public bool is_visible;
+	public bool is_visible = false;
 	public override void _Ready()
 	{
 		ButtonUp += SetSong;
