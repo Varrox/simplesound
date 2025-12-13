@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dlh34aq4t8tvu"]
+[gd_scene format=3 uid="uid://dlh34aq4t8tvu"]
 
 [ext_resource type="Script" uid="uid://b2tb0otyqrctn" path="res://Csharp/UI/Songs/SongDisplay.cs" id="1_3iym1"]
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Styling/Fonts/DefaultFont.tres" id="2_rrqbv"]
@@ -84,6 +84,7 @@ stretch_mode = 6
 [node name="Spacer" type="Control" parent="Number/HFlowContainer" unique_id=1109561641]
 custom_minimum_size = Vector2(7.395, 0)
 layout_mode = 2
+mouse_filter = 2
 
 [node name="Text" type="Control" parent="Number/HFlowContainer" unique_id=1503666349]
 clip_children = 2

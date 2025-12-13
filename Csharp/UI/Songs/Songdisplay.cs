@@ -11,6 +11,7 @@ public partial class SongDisplay : Button
 
 	public int song;
 	public bool playing;
+	public bool is_visible;
 	public override void _Ready()
 	{
 		ButtonUp += SetSong;
@@ -20,6 +21,24 @@ public partial class SongDisplay : Button
 		more.OnClose += more.Hide;
 		Globals.main.OnLoadSong += SetHighlight;
 	}
+
+    public override void _Input(InputEvent @event)
+    {
+        if (is_visible)
+		{
+            if (@event is InputEventMouseButton)
+			{
+				if((@event as InputEventMouseButton).ButtonIndex == MouseButton.Right)
+				{
+					if(GetGlobalRect().HasPoint(GetGlobalMousePosition()))
+					{
+						more.OpenMenu();
+						more.menu.GlobalPosition = GetGlobalMousePosition();
+					}
+				}
+			}
+		}
+    }
 
 	public void SetHighlight()
 	{

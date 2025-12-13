@@ -9,7 +9,7 @@ public partial class SongsVisualizer : ScrollContainer
 
     Thread update_songs_thread;
 
-    int last_scroll = 0;
+    int last_scroll = -1;
 
     Playlist playlist
     {
@@ -43,6 +43,7 @@ public partial class SongsVisualizer : ScrollContainer
                     SongDisplay child = container.GetChild(i) as SongDisplay;
                     bool hidden = IsHidden(child);
 
+                    child.is_visible = !hidden;
                     child.cover.Visible = !hidden;
                     child.ProcessMode = hidden ? ProcessModeEnum.Disabled : ProcessModeEnum.Inherit;
 
