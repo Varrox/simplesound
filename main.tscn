@@ -44,6 +44,7 @@
 [ext_resource type="Script" uid="uid://kvvf8qxb33ti" path="res://Csharp/UI/Streamer Display/StreamerButton.cs" id="30_d2t1y"]
 [ext_resource type="PackedScene" uid="uid://da3r1vmve1qwd" path="res://Windows/StreamDisplay.tscn" id="31_gngh3"]
 [ext_resource type="Texture2D" uid="uid://0eme23vp72kb" path="res://Icons/forward arrow.png" id="32_0n3wm"]
+[ext_resource type="Script" uid="uid://bry5q12g6oc8q" path="res://GDScript/link_opener.gd" id="32_4w656"]
 [ext_resource type="Script" uid="uid://ba0kdfmjh8445" path="res://Csharp/Globals.cs" id="32_htxhm"]
 [ext_resource type="Script" uid="uid://cheuagrd5va2f" path="res://Csharp/UI/Buttons/Refresh.cs" id="37_6iyjs"]
 [ext_resource type="Script" uid="uid://gwm4ru46vy21" path="res://Csharp/UI/Buttons/Update.cs" id="37_abqjc"]
@@ -533,13 +534,6 @@ icon = ExtResource("11_1f20w")
 expand_icon = true
 script = ExtResource("29_0cp0l")
 
-[node name="Edit" type="Button" parent="Interface/Top Bar/Left" unique_id=1041777590]
-layout_mode = 2
-focus_mode = 0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_i5cru")
-disabled = true
-text = "Edit"
-
 [node name="Cloud" type="Button" parent="Interface/Top Bar/Left" unique_id=1490561989]
 layout_mode = 2
 tooltip_text = "Cloud Settings"
@@ -554,6 +548,14 @@ focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_i5cru")
 disabled = true
 text = "Downloader"
+
+[node name="Github" type="Button" parent="Interface/Top Bar/Left" unique_id=1830871381]
+layout_mode = 2
+focus_mode = 0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_i5cru")
+text = "Github"
+script = ExtResource("32_4w656")
+link = "https://github.com/Varrox/simplesound"
 
 [node name="Right" type="HBoxContainer" parent="Interface/Top Bar" unique_id=1972233890]
 layout_mode = 1
