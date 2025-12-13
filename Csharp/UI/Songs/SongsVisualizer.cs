@@ -87,6 +87,7 @@ public partial class SongsVisualizer : ScrollContainer
         if (update_songs_thread != null)
         {
             update_songs_thread.Join();
+            update_songs_thread = null;
         }
 
         if (song_displays.Count > playlist.songs.Count) // delete overflow
