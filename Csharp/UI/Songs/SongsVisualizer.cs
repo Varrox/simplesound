@@ -119,7 +119,7 @@ public partial class SongsVisualizer : ScrollContainer
 
             if (i >= song_displays.Count) // create song display if one does not exist
             {
-                disp = Template.Instantiate() as SongDisplay;
+                disp = (SongDisplay)Template.Instantiate();
                 container.CallThreadSafe("add_child", disp);
             }
             else // use ones that already exist
