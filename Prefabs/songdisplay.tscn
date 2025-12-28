@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dlh34aq4t8tvu"]
 
-[ext_resource type="Script" uid="uid://b2tb0otyqrctn" path="res://Csharp/UI/Songs/SongDisplay.cs" id="1_3iym1"]
+[ext_resource type="Script" uid="uid://b2tb0otyqrctn" path="res://Csharp/UI/Songs/Songdisplay.cs" id="1_3iym1"]
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Styling/Fonts/DefaultFont.tres" id="2_rrqbv"]
 [ext_resource type="Texture2D" uid="uid://cksbdmhr2s8yy" path="res://Icons/DefaultCover.png" id="3_aqj3n"]
 [ext_resource type="Texture2D" uid="uid://23nnkoswyxm8" path="res://Icons/play.png" id="4_4uf0g"]
@@ -12,7 +12,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_31pnr"]
 
-[node name="Register" type="Button" unique_id=127370609 node_paths=PackedStringArray("number", "name", "artist", "time", "cover", "play_button", "spacer", "more", "explicit_lyrics")]
+[node name="Register" type="Button" unique_id=127370609 node_paths=PackedStringArray("number", "artist", "time", "cover", "play_button", "spacer", "more", "explicit_lyrics")]
 custom_minimum_size = Vector2(0, 60)
 anchors_preset = 14
 anchor_top = 0.5
@@ -28,7 +28,6 @@ icon_alignment = 1
 expand_icon = true
 script = ExtResource("1_3iym1")
 number = NodePath("Number")
-name = NodePath("Number/HFlowContainer/Text/Name")
 artist = NodePath("Number/HFlowContainer/Text/Artist")
 time = NodePath("Length")
 cover = NodePath("Number/HFlowContainer/PanelContainer/Cover")
