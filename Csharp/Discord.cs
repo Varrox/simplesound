@@ -60,6 +60,7 @@ public partial class Discord : Node
             Assets = new Assets()
             {
                 LargeImageKey = string.IsNullOrEmpty(cover_link) ? "logotrans" : cover_link,
+                SmallImageKey = string.IsNullOrEmpty(cover_link) ? "" : "logotrans",
                 LargeImageText = name == "varrox" ? $"btw I ({client.CurrentUser.DisplayName}) made this software" : "simplesound is an open source music player",
                 LargeImageUrl = "https://github.com/Varrox/simplesound"
             },
