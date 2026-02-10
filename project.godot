@@ -23,6 +23,10 @@ boot_splash/use_filter=false
 config/icon="res://Icons/logotrans.png"
 config/windows_native_icon="res://Icons/mainicon.ico"
 
+[audio]
+
+buses/default_bus_layout="uid://c34ugugid1knj"
+
 [display]
 
 window/subwindows/embed_subwindows=false

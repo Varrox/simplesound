@@ -62,8 +62,15 @@ public partial class SongsVisualizer : ScrollContainer
     {
         Globals.main.looked_at_playlist = playlist_index;
 
+        if (update_songs_thread != null)
+        {
+            update_songs_thread.Join();
+            update_songs_thread = null;
+        }
+
         Array<Node> song_displays = container.GetChildren();
         song_displays.RemoveAt(0);
+
 
         cover.Texture = playlist_cover;
         playlist_name.Text = playlist.name;
@@ -87,6 +94,7 @@ public partial class SongsVisualizer : ScrollContainer
             return;
         }
 
+
         if (song_displays.Count > playlist.songs.Count) // delete overflow
         {
             for (int i = playlist.songs.Count; i < song_displays.Count; i++)
@@ -101,11 +109,6 @@ public partial class SongsVisualizer : ScrollContainer
             }
         }
 
-        if (update_songs_thread != null)
-        {
-            update_songs_thread.Join();
-            update_songs_thread = null;
-        }
 
         update_songs_thread = new Thread(new ThreadStart(() => UpdateAllSongs(ref song_displays)));
         update_songs_thread.Start();
@@ -129,8 +132,6 @@ public partial class SongsVisualizer : ScrollContainer
             }
 
             bool hidden = (bool)CallThreadSafe("IsHidden", disp);
-
-            GD.Print("sdfsdf");
 
             // init the playlist
             disp.Init(Tools.GetMediaTitle(playlist.songs[i]), Metadata.GetArtist(playlist.songs[i]), Tools.SecondsToTimestamp(Metadata.GetTotalTime(playlist.songs[i])), i, Metadata.IsExplicit(playlist.songs[i]), playlist.type, playlist.type != Playlist.PlaylistType.Album || !hidden ? ConvertToGodot.GetCover(playlist.songs[i]) : null);
