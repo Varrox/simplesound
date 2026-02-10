@@ -13,6 +13,8 @@ public partial class Discord : Node
 
     public static string cover_link;
 
+    const string logo = "logotrans", logo_gay = "logogay", logo_chrimis = "logochrimis";
+
     public override void _Ready()
     {
         // Create the client and setup some basic events
@@ -59,8 +61,8 @@ public partial class Discord : Node
             State = Globals.player.SongArtist.Text,
             Assets = new Assets()
             {
-                LargeImageKey = string.IsNullOrEmpty(cover_link) ? "logotrans" : cover_link,
-                SmallImageKey = string.IsNullOrEmpty(cover_link) ? "" : "logotrans",
+                LargeImageKey = string.IsNullOrEmpty(cover_link) ? GetLogo() : cover_link,
+                SmallImageKey = string.IsNullOrEmpty(cover_link) ? "" : GetLogo(),
                 LargeImageText = name == "varrox" ? $"btw I ({client.CurrentUser.DisplayName}) made this software" : "simplesound is an open source music player",
                 LargeImageUrl = "https://github.com/Varrox/simplesound"
             },
@@ -69,6 +71,16 @@ public partial class Discord : Node
         };
 
         client.SetPresence(presence);
+    }
+
+    public string GetLogo(){
+        int month = (int)Time.GetDateDictFromSystem()["month"];
+        if(month == 6)
+            return logo_gay;
+        else if(month == 12)
+            return logo_chrimis;
+        else
+            return logo;
     }
 
     public static void ShutDown()
@@ -83,7 +95,6 @@ public partial class Discord : Node
 
         if (string.IsNullOrEmpty(input_link))
         {
-            cover_link = "logotrans";
             FinishUpdateSong();
             return;
         }
@@ -92,7 +103,6 @@ public partial class Discord : Node
 
         if (link != input_link)
         {
-            cover_link = "logotrans";
             FinishUpdateSong();
             return;
         }
