@@ -44,7 +44,11 @@ public partial class SongsVisualizer : ScrollContainer
                 for (int i = 1; i < container.GetChildCount(); i++)
                 {
                     SongDisplay child = container.GetChild(i) as SongDisplay;
+
                     bool hidden = IsHidden(child);
+
+                    if(!child.is_visible == hidden)
+                        continue;
 
                     child.is_visible = !hidden;
                     child.cover.Visible = !hidden;
