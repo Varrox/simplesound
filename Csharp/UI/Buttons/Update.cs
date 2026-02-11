@@ -67,7 +67,7 @@ public partial class Update : Button
         {
             case CurrentRequest.Version:
                 can_be_updated = (string)json["name"] != (string)ProjectSettings.GetSetting("application/config/version");
-                TooltipText = $"Newest version: {json["name"]}";
+                TooltipText = $"Update Available! {json["name"]}";
                 Visible = can_be_updated;
                 break;
             case CurrentRequest.Download:
