@@ -8,12 +8,31 @@
 [ext_resource type="Texture2D" uid="uid://ca2kw05t4eecf" path="res://Icons/back arrow.png" id="3_tpxmu"]
 [ext_resource type="Texture2D" uid="uid://b3phnmlkksrac" path="res://Icons/loop.png" id="4_wve4k"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gueqf"]
-bg_color = Color(0.180392, 0.180392, 0.180392, 0.807843)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wno4e"]
+bg_color = Color(0.24313726, 0.24313726, 0.24313726, 0.88235295)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 0)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tg3lx"]
+bg_color = Color(0.24313726, 0.24313726, 0.24313726, 0.88235295)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 0)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [node name="Songcontext" type="Panel" unique_id=1810165372]
 anchors_preset = 6
@@ -27,7 +46,7 @@ offset_bottom = 118.0
 grow_horizontal = 0
 grow_vertical = 2
 pivot_offset = Vector2(142, 0)
-theme_override_styles/panel = SubResource("StyleBoxFlat_gueqf")
+theme_override_styles/panel = SubResource("StyleBoxFlat_wno4e")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1326792036]
 layout_mode = 1
@@ -36,10 +55,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=690104626]
 layout_mode = 2
@@ -75,8 +94,8 @@ Share = ExtResource("1_a1dky")
 Back = ExtResource("3_tpxmu")
 teleportMenu = null
 teleportMenuOffset = null
-share_link = NodePath("../../../Control/VBoxContainer/Share link")
-file_browse = NodePath("../../../Control/VBoxContainer/File browse")
+share_link = NodePath("../../../Control/MarginContainer/VBoxContainer/Share link")
+file_browse = NodePath("../../../Control/MarginContainer/VBoxContainer/File browse")
 menu = NodePath("../../../Control")
 
 [node name="Control" type="Panel" parent="." unique_id=1602453918]
@@ -86,20 +105,24 @@ offset_left = -209.0
 offset_top = 108.0
 offset_right = -5.0
 offset_bottom = 186.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_tg3lx")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control" unique_id=477499698]
+[node name="MarginContainer" type="MarginContainer" parent="Control" unique_id=659511728]
 layout_mode = 1
-anchors_preset = -1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 5.0
-offset_top = 5.0
-offset_right = -5.0
-offset_bottom = -5.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
 
-[node name="Share link" type="Button" parent="Control/VBoxContainer" unique_id=1189602057]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/MarginContainer" unique_id=477499698]
+layout_mode = 2
+
+[node name="Share link" type="Button" parent="Control/MarginContainer/VBoxContainer" unique_id=1189602057]
 layout_mode = 2
 size_flags_vertical = 3
 focus_mode = 0
@@ -108,7 +131,7 @@ icon = ExtResource("4_wve4k")
 alignment = 0
 expand_icon = true
 
-[node name="File browse" type="Button" parent="Control/VBoxContainer" unique_id=358891637]
+[node name="File browse" type="Button" parent="Control/MarginContainer/VBoxContainer" unique_id=358891637]
 layout_mode = 2
 size_flags_vertical = 3
 focus_mode = 0

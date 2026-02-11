@@ -1,13 +1,19 @@
-[gd_scene load_steps=2 format=3 uid="uid://dtfoexo3o7b3p"]
+[gd_scene format=3 uid="uid://dtfoexo3o7b3p"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gueqf"]
-bg_color = Color(0.180392, 0.180392, 0.180392, 0.807843)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kf1t7"]
+bg_color = Color(0.24313726, 0.24313726, 0.24313726, 0.88235295)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 0)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
-[node name="Playlist Context" type="Panel"]
+[node name="Playlist Context" type="Panel" unique_id=256548730]
 anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
@@ -18,28 +24,31 @@ offset_bottom = 149.0
 grow_horizontal = 0
 grow_vertical = 2
 pivot_offset = Vector2(142, 0)
-theme_override_styles/panel = SubResource("StyleBoxFlat_gueqf")
+theme_override_styles/panel = SubResource("StyleBoxFlat_kf1t7")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1828403897]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 5.0
-offset_top = 5.0
-offset_right = -5.0
-offset_bottom = -5.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
 
-[node name="Edit" type="Button" parent="VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1908354285]
+layout_mode = 2
+
+[node name="Edit" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1482731630]
 layout_mode = 2
 size_flags_vertical = 3
 focus_mode = 0
 text = "Edit"
 alignment = 0
 
-[node name="Delete" type="Button" parent="VBoxContainer"]
+[node name="Delete" type="Button" parent="MarginContainer/VBoxContainer" unique_id=994622531]
 layout_mode = 2
 size_flags_vertical = 3
 tooltip_text = "Deletes playlist file"
@@ -47,7 +56,7 @@ focus_mode = 0
 text = "Delete"
 alignment = 0
 
-[node name="Open" type="Button" parent="VBoxContainer"]
+[node name="Open" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1069496536]
 layout_mode = 2
 size_flags_vertical = 3
 tooltip_text = "Opens file explorer up to the playlist file"
@@ -55,7 +64,7 @@ focus_mode = 0
 text = "Open"
 alignment = 0
 
-[node name="Share" type="Button" parent="VBoxContainer"]
+[node name="Share" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1745365706]
 layout_mode = 2
 size_flags_vertical = 3
 tooltip_text = "Compresses whole playlist into ZIP file with all dependencies."

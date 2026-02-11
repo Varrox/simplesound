@@ -345,7 +345,7 @@ expand_icon = true
 script = ExtResource("21_seu75")
 menu = NodePath("../../../Panel2")
 teleportMenu = true
-teleportMenuOffset = Vector2(-148, 41)
+teleportMenuOffset = Vector2(-129, 41)
 sub_menus = []
 
 [node name="MarginContainer2" type="MarginContainer" parent="Interface/VBoxContainer/Side Panel" unique_id=203450228]
@@ -954,12 +954,12 @@ clip_text = true
 text_overrun_behavior = 3
 
 [node name="Panel2" parent="Interface" unique_id=1315656001 instance=ExtResource("19_blkrb")]
+visible = false
 layout_mode = 1
-anchors_preset = 1
 offset_left = -1050.0
 offset_top = 99.0
-offset_right = -864.0
-offset_bottom = 221.0
+offset_right = -884.0
+offset_bottom = 177.0
 
 [node name="Playlistcontext" parent="Interface" unique_id=957626048 instance=ExtResource("26_gbh2w")]
 visible = false
