@@ -17,7 +17,7 @@ public class Metadata
             return false;
 
         TagLib.File file = TagLib.File.Create(path);
-        file_list.Add(path, file);
+        file_list.TryAdd(path, file);
 
         return true;
     }

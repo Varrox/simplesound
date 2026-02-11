@@ -1,6 +1,6 @@
 extends Panel
 
-@export var open_min_size:int = 303.0
+@export var open_min_size:int = 303
 @export var closed_min_size:int = 60
 
 var target_min_size:float
@@ -28,5 +28,5 @@ func press():
 	closed_element.visible = closed
 	open_element.visible = !closed
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	custom_minimum_size.x = Helper.smooth(custom_minimum_size.x, target_min_size, 50)

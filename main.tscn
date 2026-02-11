@@ -185,17 +185,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_632yu")
-Play = NodePath("Player/Controls/HBoxContainer/Play")
-Next = NodePath("Player/Controls/HBoxContainer/Next")
-Back = NodePath("Player/Controls/HBoxContainer/Back")
-Loop = NodePath("Player/Controls/HBoxContainer/Loop")
-Shuffle = NodePath("Player/Controls/HBoxContainer/Shuffle")
 LoopOn = ExtResource("3_lifiy")
 LoopOff = ExtResource("7_uv8rp")
 ShuffleOn = ExtResource("7_oidy5")
 ShuffleOff = ExtResource("20_fkbne")
 Mute = ExtResource("42_0cbny")
 Unmute = ExtResource("9_hrvbo")
+Play = NodePath("Player/Controls/HBoxContainer/Play")
+Next = NodePath("Player/Controls/HBoxContainer/Next")
+Back = NodePath("Player/Controls/HBoxContainer/Back")
+Loop = NodePath("Player/Controls/HBoxContainer/Loop")
+Shuffle = NodePath("Player/Controls/HBoxContainer/Shuffle")
 Progress = NodePath("Player/Controls/Progress")
 CurrentTime = NodePath("Player/Controls/Progress/Current Time")
 TotalTime = NodePath("Player/Controls/Progress/Total Time")
@@ -309,7 +309,7 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 15
 text = "My Playlists"
 
-[node name="Add" type="Button" parent="Interface/Content/Side Panel/Open/VBoxContainer/HBoxContainer" unique_id=977385184 node_paths=PackedStringArray("menu", "sub_menus")]
+[node name="Add" type="Button" parent="Interface/Content/Side Panel/Open/VBoxContainer/HBoxContainer" unique_id=977385184 node_paths=PackedStringArray("menu")]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_horizontal = 10
@@ -322,10 +322,9 @@ icon = ExtResource("10_7e43v")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("21_seu75")
-menu = NodePath("../../../../../../Panel2")
 teleportMenu = true
 teleportMenuOffset = Vector2(-135, 32)
-sub_menus = []
+menu = NodePath("../../../../../../Panel2")
 
 [node name="HSeparator" type="HSeparator" parent="Interface/Content/Side Panel/Open/VBoxContainer" unique_id=166833490]
 layout_mode = 2
@@ -382,7 +381,7 @@ size_flags_horizontal = 0
 icon = ExtResource("8_8i1ca")
 expand_icon = true
 
-[node name="Add" type="Button" parent="Interface/Content/Side Panel/Collapsed/VBoxContainer" unique_id=1547991320 node_paths=PackedStringArray("menu", "sub_menus")]
+[node name="Add" type="Button" parent="Interface/Content/Side Panel/Collapsed/VBoxContainer" unique_id=1547991320 node_paths=PackedStringArray("menu")]
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
 size_flags_horizontal = 2
@@ -395,10 +394,9 @@ icon = ExtResource("10_7e43v")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("21_seu75")
-menu = NodePath("../../../../../Panel2")
 teleportMenu = true
 teleportMenuOffset = Vector2(0, 32)
-sub_menus = []
+menu = NodePath("../../../../../Panel2")
 
 [node name="HSeparator" type="HSeparator" parent="Interface/Content/Side Panel/Collapsed/VBoxContainer" unique_id=765403374]
 layout_mode = 2
@@ -962,15 +960,15 @@ _play_texture = ExtResource("5_8inno")
 _pause_texture = ExtResource("4_lfnj1")
 _default_cover = ExtResource("7_xn3w4")
 _default_cover_highres = ExtResource("13_seu75")
+_highlight = Color(0.27752772, 0.27752775, 0.27752757, 0.5882353)
+_lower_highlight = Color(50, 50, 50, 0.162)
+_confirmation_window = ExtResource("39_h8e4i")
 _main = NodePath("..")
 _player = NodePath("../Interface")
 _discord = NodePath("../Discord")
 _attribute_editor = NodePath("AttributeEditor")
 _file_dialog = NodePath("File Dialog")
 _self = NodePath(".")
-_highlight = Color(0.27752772, 0.27752775, 0.27752757, 0.5882353)
-_lower_highlight = Color(50, 50, 50, 0.162)
-_confirmation_window = ExtResource("39_h8e4i")
 _playlist_menu = NodePath("../Interface/Playlistcontext")
 _song_menu = NodePath("../Interface/Songcontext")
 

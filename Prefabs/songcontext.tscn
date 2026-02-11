@@ -81,7 +81,7 @@ text = "Remove"
 alignment = 0
 script = ExtResource("2_wno4e")
 
-[node name="Share" type="Button" parent="MarginContainer/VBoxContainer" unique_id=444445067 node_paths=PackedStringArray("share_link", "file_browse", "menu")]
+[node name="Share" type="Button" parent="MarginContainer/VBoxContainer" unique_id=444445067 node_paths=PackedStringArray("share_link", "file_browse", "menu", "sub_menus")]
 layout_mode = 2
 size_flags_vertical = 3
 focus_mode = 0
@@ -90,21 +90,21 @@ icon = ExtResource("1_a1dky")
 alignment = 0
 expand_icon = true
 script = ExtResource("2_rsdy2")
-Share = ExtResource("1_a1dky")
-Back = ExtResource("3_tpxmu")
-teleportMenu = null
-teleportMenuOffset = null
 share_link = NodePath("../../../Control/MarginContainer/VBoxContainer/Share link")
 file_browse = NodePath("../../../Control/MarginContainer/VBoxContainer/File browse")
+Share = ExtResource("1_a1dky")
+Back = ExtResource("3_tpxmu")
 menu = NodePath("../../../Control")
+teleportMenu = null
+sub_menus = []
 
 [node name="Control" type="Panel" parent="." unique_id=1602453918]
 visible = false
 layout_mode = 0
-offset_left = -209.0
-offset_top = 108.0
-offset_right = -5.0
-offset_bottom = 186.0
+offset_left = -207.0
+offset_top = 74.0
+offset_right = -3.0
+offset_bottom = 152.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_tg3lx")
 
 [node name="MarginContainer" type="MarginContainer" parent="Control" unique_id=659511728]

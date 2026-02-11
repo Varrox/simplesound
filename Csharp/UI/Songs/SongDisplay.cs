@@ -88,7 +88,6 @@ public partial class SongDisplay : Button
 
         this.song = song;
 
-
         this.name.SetThreadSafe("text", name);
         this.artist.SetThreadSafe("text", artist);
         this.time.SetThreadSafe("text", time);
