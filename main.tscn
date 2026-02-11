@@ -255,6 +255,7 @@ custom_minimum_size = Vector2(303, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_4w656")
 script = ExtResource("12_e71vb")
+closed_min_size = 62
 split = NodePath("..")
 open_button = NodePath("Playlist")
 closed_button = NodePath("MarginContainer2/VBoxContainer/Button")
@@ -302,9 +303,9 @@ scroll_container = NodePath("../..")
 
 [node name="Playlist" type="Button" parent="Interface/VBoxContainer/Side Panel" unique_id=751213369]
 layout_mode = 0
-offset_left = 15.0
+offset_left = 12.0
 offset_top = 65.0
-offset_right = 51.0
+offset_right = 48.0
 offset_bottom = 101.0
 size_flags_horizontal = 3
 focus_mode = 0
@@ -355,9 +356,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 15
+theme_override_constants/margin_left = 12
 theme_override_constants/margin_top = 65
-theme_override_constants/margin_right = 15
+theme_override_constants/margin_right = 13
 theme_override_constants/margin_bottom = 120
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Interface/VBoxContainer/Side Panel/MarginContainer2" unique_id=1384016583]
@@ -374,7 +375,7 @@ expand_icon = true
 [node name="Add" type="Button" parent="Interface/VBoxContainer/Side Panel/MarginContainer2/VBoxContainer" unique_id=1547991320 node_paths=PackedStringArray("menu", "sub_menus")]
 custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 2
 tooltip_text = "Add a playlist."
 focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_7vj4a")
