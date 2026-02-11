@@ -326,6 +326,8 @@ icon_alignment = 1
 expand_icon = true
 script = ExtResource("21_seu75")
 menu = NodePath("Panel")
+teleportMenu = null
+teleportMenuOffset = null
 sub_menus = []
 
 [node name="Panel" type="Panel" parent="Interface/VBoxContainer/Side Panel/Add" unique_id=768656514]
@@ -1016,7 +1018,7 @@ _discord = NodePath("../Discord")
 _attribute_editor = NodePath("AttributeEditor")
 _file_dialog = NodePath("File Dialog")
 _self = NodePath(".")
-_highlight = Color(1, 1, 1, 0.47058824)
+_highlight = Color(0.27752772, 0.27752775, 0.27752757, 0.5882353)
 _lower_highlight = Color(50, 50, 50, 0.162)
 _confirmation_window = ExtResource("39_h8e4i")
 _playlist_menu = NodePath("../Interface/Playlistcontext")

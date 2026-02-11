@@ -38,5 +38,5 @@ vec3 blur(vec2 screen_uv, sampler2D input_texture, float size, vec2 scale) {
 
 void fragment() {
 	sigma = pow2(float(blur_size) * 0.25);
-	COLOR = vec4(blur(UV, TEXTURE, blur_size / 2.0, vec2(1.0) / 1.0 / SCREEN_PIXEL_SIZE * .000001 * blur_size), 1.);
+	COLOR = vec4(blur(UV, TEXTURE, blur_size / 2.0, vec2(1.0) / 1.0 / SCREEN_PIXEL_SIZE * .000001 * blur_size) * 0.7, 1.);
 }
