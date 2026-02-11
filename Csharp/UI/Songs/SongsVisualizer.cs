@@ -29,7 +29,7 @@ public partial class SongsVisualizer : ScrollContainer
 
     public bool IsHidden(SongDisplay songdisplay)
     {
-        return !songdisplay.GetGlobalRect().Intersects(GetRect());
+        return !songdisplay.GetGlobalRect().Intersects(GetGlobalRect());
     }
 
     public override void _Process(double delta)

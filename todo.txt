@@ -8,7 +8,6 @@ TODO
 - Add song position rearange.
 - Add images to ssl.
 - Add basic gdshader support to ssl.
-- Rename SSL to something else because SSL is already taken.
 
 DOING
 
@@ -16,6 +15,7 @@ DOING
 
 FINISHED
 
+- Rename SSL to something else because SSL is already taken.
 - Make Github repo public, and make builds.
 - Add update button.
 - Add share button to songs (keep youtube link in song metadata).
