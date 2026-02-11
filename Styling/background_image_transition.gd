@@ -27,3 +27,5 @@ func _process(_delta: float) -> void:
 		shader.set_shader_parameter("t", transition_value)
 		
 		target_texture_rect.texture = get_texture()
+	
+	transitioner.process_mode = Node.PROCESS_MODE_ALWAYS if transition_value != 1.0 else Node.PROCESS_MODE_DISABLED
