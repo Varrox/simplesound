@@ -547,6 +547,7 @@ text = "Cloud"
 
 [node name="Downloader" type="Button" parent="Interface/Top Bar/Left" unique_id=1673368361]
 layout_mode = 2
+tooltip_text = "Menu for downloading music from streaming services."
 focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_i5cru")
 disabled = true
@@ -554,6 +555,7 @@ text = "Downloader"
 
 [node name="Github" type="Button" parent="Interface/Top Bar/Left" unique_id=1830871381]
 layout_mode = 2
+tooltip_text = "Opens the page to simplesound's source code in browser."
 focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_i5cru")
 text = "Github"
