@@ -17,7 +17,7 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("scale_down"):
 		zoom -= 0.1
 	
-	zoom = clamp(zoom, 0.5, 1.5)
+	zoom = clamp(zoom, 0.5, 1.3)
 	
 	last_time -= delta
 	

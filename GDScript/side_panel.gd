@@ -3,6 +3,8 @@ extends Panel
 @export var open_min_size:int = 303.0
 @export var closed_min_size:int = 60
 
+var target_min_size:float
+
 @export var split:HSplitContainer
 
 @export var open_button:Button
@@ -16,12 +18,15 @@ var closed = false
 func _ready() -> void:
 	open_button.button_up.connect(press)
 	closed_button.button_up.connect(press)
+	target_min_size = open_min_size
 
 func press():
 	closed = !closed
 	
-	custom_minimum_size.x = closed_min_size if closed else open_min_size
-	split.dragging_enabled = !closed
+	target_min_size = closed_min_size if closed else open_min_size
 	split.collapsed = closed
 	closed_element.visible = closed
 	open_element.visible = !closed
+
+func _process(delta: float) -> void:
+	custom_minimum_size.x = Helper.smooth(custom_minimum_size.x, target_min_size, 50)
