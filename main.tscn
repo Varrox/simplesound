@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://5hwvlu7uerj6" path="res://Icons/plus.png" id="10_7e43v"]
 [ext_resource type="Texture2D" uid="uid://c85envuiuo3ju" path="res://Icons/folder.png" id="11_1f20w"]
 [ext_resource type="Script" uid="uid://dcnfao6qa81tk" path="res://Csharp/UI/Playlists/PlaylistsVisualizer.cs" id="11_kq58d"]
+[ext_resource type="Script" uid="uid://bemg4hrkjfrtx" path="res://GDScript/side_panel.gd" id="12_e71vb"]
 [ext_resource type="Script" uid="uid://schxe0nc0yhj" path="res://GDScript/scroll_spacer.gd" id="12_f6a44"]
 [ext_resource type="Texture2D" uid="uid://0yw8m2y164lr" path="res://Icons/settings.png" id="12_s6aix"]
 [ext_resource type="PackedScene" uid="uid://bhjkk8guwyhku" path="res://Prefabs/playlistdisplay.scn" id="13_4w656"]
@@ -27,15 +28,11 @@
 [ext_resource type="Script" uid="uid://bgymt3f23woi7" path="res://Csharp/UI/Songs/SongsVisualizer.cs" id="14_htxhm"]
 [ext_resource type="PackedScene" uid="uid://dcre7b1cn3b6i" path="res://Prefabs/songcontext.tscn" id="17_3m5kb"]
 [ext_resource type="PackedScene" uid="uid://dle5y658wmx03" path="res://Windows/Attribute Editor.tscn" id="17_f7c3k"]
+[ext_resource type="PackedScene" uid="uid://dbwsclu2nt3nu" path="res://Prefabs/playlistcreatecontext.scn" id="19_blkrb"]
 [ext_resource type="Texture2D" uid="uid://b8ldjgpmsaxgu" path="res://Icons/shuffle.png" id="20_fkbne"]
-[ext_resource type="Script" uid="uid://dk55q6mnaxkso" path="res://Csharp/UI/Playlist Creator/PlaylistCreatorOpener.cs" id="21_0rl1p"]
 [ext_resource type="StyleBox" uid="uid://bhcyqvvim6l5e" path="res://Styling/Rounded Corners.tres" id="21_jy3dx"]
 [ext_resource type="Script" uid="uid://bcxwpol710ysq" path="res://Csharp/UI/ContextMenu.cs" id="21_seu75"]
-[ext_resource type="Script" uid="uid://bw50lxnpt2ymm" path="res://Csharp/UI/ImportPlaylist.cs" id="22_facbu"]
-[ext_resource type="PackedScene" uid="uid://5kfxiu06xug0" path="res://Windows/CreatePlaylist.tscn" id="22_ok6jj"]
 [ext_resource type="Texture2D" uid="uid://bwftf22dhh4du" path="res://Icons/refresh.png" id="23_7r5f6"]
-[ext_resource type="PackedScene" uid="uid://b5ap2spi7sbp8" path="res://Windows/ImportFolder.tscn" id="23_b1qrp"]
-[ext_resource type="Script" uid="uid://b7fgu3kjwheaf" path="res://Csharp/UI/Import Folder/ImportFolderOpener.cs" id="23_come4"]
 [ext_resource type="PackedScene" uid="uid://deg7587tnlkhk" path="res://Prefabs/songdisplay.scn" id="26_4w656"]
 [ext_resource type="PackedScene" uid="uid://dtfoexo3o7b3p" path="res://Prefabs/playlistcontext.tscn" id="26_gbh2w"]
 [ext_resource type="Script" uid="uid://qupwebtnhh44" path="res://Csharp/UI/Playlists/PlaylistPlayer.cs" id="28_wnkbs"]
@@ -71,18 +68,9 @@ border_blend = true
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wnkbs"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7vj4a"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_come4"]
-bg_color = Color(0.137255, 0.137255, 0.137255, 0.941176)
-corner_radius_top_left = 6
-corner_radius_top_right = 6
-corner_radius_bottom_right = 6
-corner_radius_bottom_left = 6
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kuk8b"]
-
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r3k7g"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7vj4a"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_b1qrp"]
 
@@ -262,10 +250,16 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 0
 
-[node name="Side Panel" type="Panel" parent="Interface/VBoxContainer" unique_id=638521110]
+[node name="Side Panel" type="Panel" parent="Interface/VBoxContainer" unique_id=638521110 node_paths=PackedStringArray("split", "open_button", "closed_button", "other_elements", "closed_element")]
 custom_minimum_size = Vector2(303, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_4w656")
+script = ExtResource("12_e71vb")
+split = NodePath("..")
+open_button = NodePath("Playlist")
+closed_button = NodePath("MarginContainer2/VBoxContainer/Button")
+other_elements = [NodePath("MarginContainer"), NodePath("Playlist"), NodePath("Add")]
+closed_element = NodePath("MarginContainer2")
 
 [node name="MarginContainer" type="MarginContainer" parent="Interface/VBoxContainer/Side Panel" unique_id=593187248]
 layout_mode = 1
@@ -306,16 +300,39 @@ theme_override_styles/separator = SubResource("StyleBoxEmpty_wnkbs")
 script = ExtResource("12_f6a44")
 scroll_container = NodePath("../..")
 
+[node name="Playlist" type="Button" parent="Interface/VBoxContainer/Side Panel" unique_id=751213369]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 65.0
+offset_right = 51.0
+offset_bottom = 101.0
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_r3k7g")
+icon = ExtResource("8_8i1ca")
+expand_icon = true
+
+[node name="Label" type="Label" parent="Interface/VBoxContainer/Side Panel/Playlist" unique_id=1895627161]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 46.0
+offset_top = 7.0
+offset_right = 153.0
+offset_bottom = 34.0
+theme_override_font_sizes/font_size = 15
+text = "My Playlists"
+
 [node name="Add" type="Button" parent="Interface/VBoxContainer/Side Panel" unique_id=977385184 node_paths=PackedStringArray("menu", "sub_menus")]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -46.0
-offset_top = 67.0
-offset_right = -14.0
-offset_bottom = 98.0
+offset_left = -52.0
+offset_top = 65.0
+offset_right = -15.0
+offset_bottom = 101.0
 grow_horizontal = 0
+size_flags_horizontal = 3
 tooltip_text = "Add a playlist."
 focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_7vj4a")
@@ -325,105 +342,52 @@ icon = ExtResource("10_7e43v")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("21_seu75")
-menu = NodePath("Panel")
-teleportMenu = null
-teleportMenuOffset = null
+menu = NodePath("../../../Panel2")
+teleportMenu = true
+teleportMenuOffset = Vector2(-148, 41)
 sub_menus = []
 
-[node name="Panel" type="Panel" parent="Interface/VBoxContainer/Side Panel/Add" unique_id=768656514]
+[node name="MarginContainer2" type="MarginContainer" parent="Interface/VBoxContainer/Side Panel" unique_id=203450228]
 visible = false
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -186.0
-offset_top = 34.0
-offset_bottom = 156.0
-grow_horizontal = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_come4")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Interface/VBoxContainer/Side Panel/Add/Panel" unique_id=238070728]
-layout_mode = 1
-anchors_preset = -1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 7.5
-offset_top = 7.5
-offset_right = -7.5
-offset_bottom = -7.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 65
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 120
 
-[node name="Create" type="Button" parent="Interface/VBoxContainer/Side Panel/Add/Panel/VBoxContainer" unique_id=968487249 node_paths=PackedStringArray("menu", "window")]
+[node name="VBoxContainer" type="VBoxContainer" parent="Interface/VBoxContainer/Side Panel/MarginContainer2" unique_id=1384016583]
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_fonts/font = ExtResource("9_3b7g8")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_kuk8b")
-text = "Create new"
-icon = ExtResource("10_7e43v")
-alignment = 0
-icon_alignment = 2
-expand_icon = true
-script = ExtResource("21_0rl1p")
-menu = NodePath("../../..")
-window = NodePath("Window")
+theme_override_constants/separation = 5
 
-[node name="Window" parent="Interface/VBoxContainer/Side Panel/Add/Panel/VBoxContainer/Create" unique_id=1160141599 instance=ExtResource("22_ok6jj")]
-visible = false
-
-[node name="Folder" type="Button" parent="Interface/VBoxContainer/Side Panel/Add/Panel/VBoxContainer" unique_id=253478485 node_paths=PackedStringArray("menu", "window")]
-visible = false
+[node name="Button" type="Button" parent="Interface/VBoxContainer/Side Panel/MarginContainer2/VBoxContainer" unique_id=1987622596]
+custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_fonts/font = ExtResource("9_3b7g8")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_kuk8b")
-text = "Import folder"
-icon = ExtResource("11_1f20w")
-alignment = 0
-icon_alignment = 2
-expand_icon = true
-script = ExtResource("23_come4")
-menu = NodePath("../../..")
-window = NodePath("ImportFolder")
-
-[node name="ImportFolder" parent="Interface/VBoxContainer/Side Panel/Add/Panel/VBoxContainer/Folder" unique_id=989930022 instance=ExtResource("23_b1qrp")]
-visible = false
-
-[node name="File" type="Button" parent="Interface/VBoxContainer/Side Panel/Add/Panel/VBoxContainer" unique_id=523501450 node_paths=PackedStringArray("menu")]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_fonts/font = ExtResource("9_3b7g8")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_kuk8b")
-text = "Import Playlist"
-icon = ExtResource("11_1f20w")
-alignment = 0
-icon_alignment = 2
-expand_icon = true
-script = ExtResource("22_facbu")
-menu = NodePath("../../..")
-
-[node name="Label" type="Label" parent="Interface/VBoxContainer/Side Panel" unique_id=1895627161]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 46.0
-offset_top = 71.0
-offset_right = 153.0
-offset_bottom = 98.0
-theme_override_font_sizes/font_size = 15
-text = "My Playlists"
-
-[node name="Playlist" type="Button" parent="Interface/VBoxContainer/Side Panel" unique_id=751213369]
-layout_mode = 1
-anchors_preset = -1
-offset_left = 15.0
-offset_top = 68.0
-offset_right = 47.0
-offset_bottom = 100.0
-scale = Vector2(0.8, 0.8)
-focus_mode = 0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_r3k7g")
+size_flags_horizontal = 0
 icon = ExtResource("8_8i1ca")
 expand_icon = true
+
+[node name="Add" type="Button" parent="Interface/VBoxContainer/Side Panel/MarginContainer2/VBoxContainer" unique_id=1547991320 node_paths=PackedStringArray("menu", "sub_menus")]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Add a playlist."
+focus_mode = 0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_7vj4a")
+text = "
+"
+icon = ExtResource("10_7e43v")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("21_seu75")
+menu = NodePath("../../../../../Panel2")
+teleportMenu = true
+teleportMenuOffset = Vector2(0, 41)
+sub_menus = []
 
 [node name="Control" type="Control" parent="Interface/VBoxContainer" unique_id=609902287]
 custom_minimum_size = Vector2(500, 0)
@@ -987,6 +951,14 @@ theme_override_colors/font_color = Color(0.662452, 0.662452, 0.662452, 1)
 text = "Artist"
 clip_text = true
 text_overrun_behavior = 3
+
+[node name="Panel2" parent="Interface" unique_id=1315656001 instance=ExtResource("19_blkrb")]
+layout_mode = 1
+anchors_preset = 1
+offset_left = -1050.0
+offset_top = 99.0
+offset_right = -864.0
+offset_bottom = 221.0
 
 [node name="Playlistcontext" parent="Interface" unique_id=957626048 instance=ExtResource("26_gbh2w")]
 visible = false
