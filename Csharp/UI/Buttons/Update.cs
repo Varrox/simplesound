@@ -7,8 +7,6 @@ public partial class Update : Button
 {
 	HttpRequest http_client;
 
-    [Export] Texture2D updatable, non_updatable;
-
     public bool updating;
 	public bool can_be_updated;
 
@@ -70,7 +68,7 @@ public partial class Update : Button
             case CurrentRequest.Version:
                 can_be_updated = (string)json["name"] != (string)ProjectSettings.GetSetting("application/config/version");
                 TooltipText = $"Newest version: {json["name"]}";
-                Icon = can_be_updated ? updatable : non_updatable;
+                Visible = can_be_updated;
                 break;
             case CurrentRequest.Download:
                 Download(json);

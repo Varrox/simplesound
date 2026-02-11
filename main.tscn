@@ -38,6 +38,7 @@
 [ext_resource type="Script" uid="uid://qupwebtnhh44" path="res://Csharp/UI/Playlists/PlaylistPlayer.cs" id="28_wnkbs"]
 [ext_resource type="Script" uid="uid://bag5mx17s8q1c" path="res://Csharp/UI/Buttons/Appdata.cs" id="29_0cp0l"]
 [ext_resource type="Script" uid="uid://c5ep0n80r2l8p" path="res://Csharp/UI/Attribute Editor/AttributeEditorOpener.cs" id="29_jq2sk"]
+[ext_resource type="Texture2D" uid="uid://ikqgrxysxg3y" path="res://Icons/update.png" id="30_abqjc"]
 [ext_resource type="Script" uid="uid://kvvf8qxb33ti" path="res://Csharp/UI/Streamer Display/StreamerButton.cs" id="30_d2t1y"]
 [ext_resource type="PackedScene" uid="uid://da3r1vmve1qwd" path="res://Windows/StreamDisplay.tscn" id="31_gngh3"]
 [ext_resource type="Texture2D" uid="uid://0eme23vp72kb" path="res://Icons/forward arrow.png" id="32_0n3wm"]
@@ -623,6 +624,7 @@ custom_minimum_size = Vector2(28, 0)
 layout_mode = 2
 focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_wx3lt")
+icon = ExtResource("30_abqjc")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("37_abqjc")
