@@ -2,16 +2,17 @@ TODO
 
 - Add song downloading - For youtube, soundcloud, and spotify.
 - Make playlist bar hiding.
-- Add settings menu.
 - Add lyrics viewer.
 - Add sorting.
 - Add song position rearange.
 - Add images to ssl.
 - Add basic gdshader support to ssl.
+- Make top bar same size as side bar when collapsed
+- Make documentation for ssl.
 
 DOING
 
-- Make documentation for ssl.
+- Add settings menu.
 
 FINISHED
 

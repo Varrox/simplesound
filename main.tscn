@@ -64,13 +64,18 @@ border_width_right = 2
 border_color = Color(1, 1, 1, 0)
 border_blend = true
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_facbu"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wnkbs"]
-
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r3k7g"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7vj4a"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_blkrb"]
+color = Color(0.49354547, 0.49354553, 0.49354553, 1)
+grow_begin = -10.0
+grow_end = -10.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_facbu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wnkbs"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_b1qrp"]
 
@@ -169,7 +174,7 @@ script = ExtResource("1_l00ml")
 player = NodePath("Player")
 video_player = NodePath("Interface/Background/Video")
 volumeSlider = NodePath("Interface/Player/Controls/Volume")
-playlist_visualizer = NodePath("Interface/VBoxContainer/Side Panel/MarginContainer/Playlists")
+playlist_visualizer = NodePath("Interface/VBoxContainer/Side Panel/Open/VBoxContainer/Playlists")
 songs_visualizer = NodePath("Interface/VBoxContainer/Control/MarginContainer/Song Display")
 
 [node name="Interface" type="Control" parent="." unique_id=164668924 node_paths=PackedStringArray("Play", "Next", "Back", "Loop", "Shuffle", "Progress", "CurrentTime", "TotalTime", "SongName", "SongArtist", "SongCover", "BackgroundImage", "VolumeSlider", "MuteButton", "backgroundColor")]
@@ -180,11 +185,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_632yu")
-Play = NodePath("Player/Controls/Play")
-Next = NodePath("Player/Controls/Next")
-Back = NodePath("Player/Controls/Back")
-Loop = NodePath("Player/Controls/Loop")
-Shuffle = NodePath("Player/Controls/Shuffle")
+Play = NodePath("Player/Controls/HBoxContainer/Play")
+Next = NodePath("Player/Controls/HBoxContainer/Next")
+Back = NodePath("Player/Controls/HBoxContainer/Back")
+Loop = NodePath("Player/Controls/HBoxContainer/Loop")
+Shuffle = NodePath("Player/Controls/HBoxContainer/Shuffle")
 LoopOn = ExtResource("3_lifiy")
 LoopOff = ExtResource("7_uv8rp")
 ShuffleOn = ExtResource("7_oidy5")
@@ -250,70 +255,48 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 0
 
-[node name="Side Panel" type="Panel" parent="Interface/VBoxContainer" unique_id=638521110 node_paths=PackedStringArray("split", "open_button", "closed_button", "other_elements", "closed_element")]
+[node name="Side Panel" type="Panel" parent="Interface/VBoxContainer" unique_id=638521110 node_paths=PackedStringArray("split", "open_button", "closed_button", "open_element", "closed_element")]
 custom_minimum_size = Vector2(303, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_4w656")
 script = ExtResource("12_e71vb")
-closed_min_size = 62
+closed_min_size = 58
 split = NodePath("..")
-open_button = NodePath("Playlist")
-closed_button = NodePath("MarginContainer2/VBoxContainer/Button")
-other_elements = [NodePath("MarginContainer"), NodePath("Playlist"), NodePath("Add")]
-closed_element = NodePath("MarginContainer2")
+open_button = NodePath("Open/VBoxContainer/HBoxContainer/Playlist")
+closed_button = NodePath("Collapsed/VBoxContainer/Button")
+open_element = NodePath("Open")
+closed_element = NodePath("Collapsed")
 
-[node name="MarginContainer" type="MarginContainer" parent="Interface/VBoxContainer/Side Panel" unique_id=593187248]
+[node name="Open" type="MarginContainer" parent="Interface/VBoxContainer/Side Panel" unique_id=418651616]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 99.0
-offset_bottom = -105.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 7
-theme_override_constants/margin_top = 7
-theme_override_constants/margin_right = 7
-theme_override_constants/margin_bottom = 7
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 59
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 115
 
-[node name="Playlists" type="ScrollContainer" parent="Interface/VBoxContainer/Side Panel/MarginContainer" unique_id=1191279535 node_paths=PackedStringArray("container")]
+[node name="VBoxContainer" type="VBoxContainer" parent="Interface/VBoxContainer/Side Panel/Open" unique_id=1303228829]
 layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxEmpty_facbu")
-script = ExtResource("11_kq58d")
-template = ExtResource("13_4w656")
-container = NodePath("HBoxContainer/VBoxContainer")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Interface/VBoxContainer/Side Panel/MarginContainer/Playlists" unique_id=654042858]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Interface/VBoxContainer/Side Panel/MarginContainer/Playlists/HBoxContainer" unique_id=663656003]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 theme_override_constants/separation = 7
 
-[node name="VSeparator" type="VSeparator" parent="Interface/VBoxContainer/Side Panel/MarginContainer/Playlists/HBoxContainer" unique_id=432466973 node_paths=PackedStringArray("scroll_container")]
+[node name="HBoxContainer" type="HBoxContainer" parent="Interface/VBoxContainer/Side Panel/Open/VBoxContainer" unique_id=227771680]
+custom_minimum_size = Vector2(0, 36)
 layout_mode = 2
-theme_override_constants/separation = 0
-theme_override_styles/separator = SubResource("StyleBoxEmpty_wnkbs")
-script = ExtResource("12_f6a44")
-scroll_container = NodePath("../..")
 
-[node name="Playlist" type="Button" parent="Interface/VBoxContainer/Side Panel" unique_id=751213369]
-layout_mode = 0
-offset_left = 12.0
-offset_top = 65.0
-offset_right = 48.0
-offset_bottom = 101.0
-size_flags_horizontal = 3
+[node name="Playlist" type="Button" parent="Interface/VBoxContainer/Side Panel/Open/VBoxContainer/HBoxContainer" unique_id=751213369]
+custom_minimum_size = Vector2(36, 0)
+layout_mode = 2
+size_flags_horizontal = 2
 focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_r3k7g")
 icon = ExtResource("8_8i1ca")
 expand_icon = true
 
-[node name="Label" type="Label" parent="Interface/VBoxContainer/Side Panel/Playlist" unique_id=1895627161]
+[node name="Label" type="Label" parent="Interface/VBoxContainer/Side Panel/Open/VBoxContainer/HBoxContainer/Playlist" unique_id=1895627161]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 46.0
@@ -323,17 +306,10 @@ offset_bottom = 34.0
 theme_override_font_sizes/font_size = 15
 text = "My Playlists"
 
-[node name="Add" type="Button" parent="Interface/VBoxContainer/Side Panel" unique_id=977385184 node_paths=PackedStringArray("menu", "sub_menus")]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -52.0
-offset_top = 65.0
-offset_right = -15.0
-offset_bottom = 101.0
-grow_horizontal = 0
-size_flags_horizontal = 3
+[node name="Add" type="Button" parent="Interface/VBoxContainer/Side Panel/Open/VBoxContainer/HBoxContainer" unique_id=977385184 node_paths=PackedStringArray("menu", "sub_menus")]
+custom_minimum_size = Vector2(36, 0)
+layout_mode = 2
+size_flags_horizontal = 10
 tooltip_text = "Add a playlist."
 focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_7vj4a")
@@ -343,12 +319,43 @@ icon = ExtResource("10_7e43v")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("21_seu75")
-menu = NodePath("../../../Panel2")
+menu = NodePath("../../../../../../Panel2")
 teleportMenu = true
 teleportMenuOffset = Vector2(-129, 41)
 sub_menus = []
 
-[node name="MarginContainer2" type="MarginContainer" parent="Interface/VBoxContainer/Side Panel" unique_id=203450228]
+[node name="HSeparator" type="HSeparator" parent="Interface/VBoxContainer/Side Panel/Open/VBoxContainer" unique_id=166833490]
+layout_mode = 2
+theme_override_constants/separation = 0
+theme_override_styles/separator = SubResource("StyleBoxLine_blkrb")
+
+[node name="Playlists" type="ScrollContainer" parent="Interface/VBoxContainer/Side Panel/Open/VBoxContainer" unique_id=1191279535 node_paths=PackedStringArray("container")]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/focus = SubResource("StyleBoxEmpty_facbu")
+script = ExtResource("11_kq58d")
+template = ExtResource("13_4w656")
+container = NodePath("HBoxContainer/VBoxContainer")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Interface/VBoxContainer/Side Panel/Open/VBoxContainer/Playlists" unique_id=654042858]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Interface/VBoxContainer/Side Panel/Open/VBoxContainer/Playlists/HBoxContainer" unique_id=663656003]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 7
+
+[node name="VSeparator" type="VSeparator" parent="Interface/VBoxContainer/Side Panel/Open/VBoxContainer/Playlists/HBoxContainer" unique_id=432466973 node_paths=PackedStringArray("scroll_container")]
+layout_mode = 2
+theme_override_constants/separation = 0
+theme_override_styles/separator = SubResource("StyleBoxEmpty_wnkbs")
+script = ExtResource("12_f6a44")
+scroll_container = NodePath("../..")
+
+[node name="Collapsed" type="MarginContainer" parent="Interface/VBoxContainer/Side Panel" unique_id=203450228]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -356,23 +363,23 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 12
-theme_override_constants/margin_top = 65
-theme_override_constants/margin_right = 13
-theme_override_constants/margin_bottom = 120
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 59
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 115
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Interface/VBoxContainer/Side Panel/MarginContainer2" unique_id=1384016583]
+[node name="VBoxContainer" type="VBoxContainer" parent="Interface/VBoxContainer/Side Panel/Collapsed" unique_id=1384016583]
 layout_mode = 2
-theme_override_constants/separation = 5
+theme_override_constants/separation = 6
 
-[node name="Button" type="Button" parent="Interface/VBoxContainer/Side Panel/MarginContainer2/VBoxContainer" unique_id=1987622596]
+[node name="Button" type="Button" parent="Interface/VBoxContainer/Side Panel/Collapsed/VBoxContainer" unique_id=1987622596]
 custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
 size_flags_horizontal = 0
 icon = ExtResource("8_8i1ca")
 expand_icon = true
 
-[node name="Add" type="Button" parent="Interface/VBoxContainer/Side Panel/MarginContainer2/VBoxContainer" unique_id=1547991320 node_paths=PackedStringArray("menu", "sub_menus")]
+[node name="Add" type="Button" parent="Interface/VBoxContainer/Side Panel/Collapsed/VBoxContainer" unique_id=1547991320 node_paths=PackedStringArray("menu", "sub_menus")]
 custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
 size_flags_horizontal = 2
@@ -667,28 +674,30 @@ color = Color(0.0509804, 0.0509804, 0.0509804, 1)
 
 [node name="Controls" type="Control" parent="Interface/Player" unique_id=1065715383]
 layout_mode = 1
-anchor_top = 1.00617
+anchors_preset = 15
 anchor_right = 1.0
-anchor_bottom = 1.00617
-offset_top = 3.33339
-offset_bottom = 3.33339
+anchor_bottom = 1.0
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
 pivot_offset = Vector2(576, 0)
 
-[node name="Shuffle" type="Button" parent="Interface/Player/Controls" unique_id=872846605]
+[node name="HBoxContainer" type="HBoxContainer" parent="Interface/Player/Controls" unique_id=1250907681]
 layout_mode = 1
-anchors_preset = -1
+anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -135.0
-offset_top = -80.0
-offset_right = -88.0
-offset_bottom = -44.0
+offset_left = -117.0
+offset_top = -26.0
+offset_right = 118.0
+offset_bottom = 14.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Shuffle" type="Button" parent="Interface/Player/Controls/HBoxContainer" unique_id=872846605]
+layout_mode = 2
+size_flags_horizontal = 3
 tooltip_text = "Toggle song shuffling."
 focus_mode = 0
 theme_override_fonts/font = ExtResource("3_bbvvl")
@@ -699,19 +708,9 @@ icon = ExtResource("20_fkbne")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Back" type="Button" parent="Interface/Player/Controls" unique_id=202036208]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -79.0
-offset_top = -80.0
-offset_right = -32.0
-offset_bottom = -44.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Back" type="Button" parent="Interface/Player/Controls/HBoxContainer" unique_id=202036208]
+layout_mode = 2
+size_flags_horizontal = 3
 tooltip_text = "Previous song."
 focus_mode = 0
 theme_override_fonts/font = ExtResource("3_bbvvl")
@@ -722,19 +721,9 @@ icon = ExtResource("4_0btiw")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Play" type="Button" parent="Interface/Player/Controls" unique_id=1287565051]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -23.5
-offset_top = -80.0
-offset_right = 23.5
-offset_bottom = -44.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Play" type="Button" parent="Interface/Player/Controls/HBoxContainer" unique_id=1287565051]
+layout_mode = 2
+size_flags_horizontal = 3
 tooltip_text = "Play / Pause."
 focus_mode = 0
 theme_override_fonts/font = ExtResource("3_bbvvl")
@@ -743,19 +732,9 @@ icon = ExtResource("4_lfnj1")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Next" type="Button" parent="Interface/Player/Controls" unique_id=1880351366]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 32.0
-offset_top = -80.0
-offset_right = 79.0
-offset_bottom = -44.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Next" type="Button" parent="Interface/Player/Controls/HBoxContainer" unique_id=1880351366]
+layout_mode = 2
+size_flags_horizontal = 3
 tooltip_text = "Next song."
 focus_mode = 0
 theme_override_fonts/font = ExtResource("3_bbvvl")
@@ -766,19 +745,9 @@ icon = ExtResource("6_e5vtu")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Loop" type="Button" parent="Interface/Player/Controls" unique_id=1580156266]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 88.0
-offset_top = -80.0
-offset_right = 135.0
-offset_bottom = -44.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Loop" type="Button" parent="Interface/Player/Controls/HBoxContainer" unique_id=1580156266]
+layout_mode = 2
+size_flags_horizontal = 3
 tooltip_text = "Toggle song looping."
 focus_mode = 0
 theme_override_fonts/font = ExtResource("3_bbvvl")
@@ -794,9 +763,9 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 326.0
-offset_top = -36.0
+offset_top = -32.000244
 offset_right = -326.0
-offset_bottom = -20.0
+offset_bottom = -16.000244
 grow_horizontal = 2
 grow_vertical = 0
 focus_mode = 0
@@ -842,9 +811,9 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -180.0
-offset_top = -36.0001
+offset_top = -32.000366
 offset_right = -55.0
-offset_bottom = -20.0001
+offset_bottom = -16.000366
 grow_horizontal = 0
 grow_vertical = 0
 focus_mode = 0

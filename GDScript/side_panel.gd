@@ -8,7 +8,7 @@ extends Panel
 @export var open_button:Button
 @export var closed_button:Button
 
-@export var other_elements:Array[Control]
+@export var open_element:Control
 @export var closed_element:Control
 
 var closed = false
@@ -24,6 +24,4 @@ func press():
 	split.dragging_enabled = !closed
 	split.collapsed = closed
 	closed_element.visible = closed
-	
-	for i in other_elements:
-		i.visible = !closed
+	open_element.visible = !closed
