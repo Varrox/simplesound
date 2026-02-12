@@ -41,12 +41,10 @@
 [ext_resource type="Texture2D" uid="uid://ikqgrxysxg3y" path="res://Icons/update.png" id="30_abqjc"]
 [ext_resource type="Script" uid="uid://kvvf8qxb33ti" path="res://Csharp/UI/Streamer Display/StreamerButton.cs" id="30_d2t1y"]
 [ext_resource type="PackedScene" uid="uid://da3r1vmve1qwd" path="res://Windows/StreamDisplay.tscn" id="31_gngh3"]
-[ext_resource type="Texture2D" uid="uid://0eme23vp72kb" path="res://Icons/forward arrow.png" id="32_0n3wm"]
 [ext_resource type="Script" uid="uid://bry5q12g6oc8q" path="res://GDScript/link_opener.gd" id="32_4w656"]
 [ext_resource type="Script" uid="uid://ba0kdfmjh8445" path="res://Csharp/Globals.cs" id="32_htxhm"]
 [ext_resource type="Script" uid="uid://cheuagrd5va2f" path="res://Csharp/UI/Buttons/Refresh.cs" id="37_6iyjs"]
 [ext_resource type="Script" uid="uid://gwm4ru46vy21" path="res://Csharp/UI/Buttons/Update.cs" id="37_abqjc"]
-[ext_resource type="Texture2D" uid="uid://ca2kw05t4eecf" path="res://Icons/back arrow.png" id="38_6iyjs"]
 [ext_resource type="PackedScene" uid="uid://bw078i5dk5ff4" path="res://Windows/ConfirmationWindow.tscn" id="39_h8e4i"]
 [ext_resource type="Texture2D" uid="uid://brujrc442p3b5" path="res://Icons/mute.png" id="42_0cbny"]
 [ext_resource type="Script" uid="uid://cqf4nqygajv02" path="res://GDScript/zoomer.gd" id="46_qnost"]
@@ -299,16 +297,20 @@ expand_icon = true
 
 [node name="Label" type="Label" parent="Interface/Content/Side Panel/Open/VBoxContainer/HBoxContainer/Playlist" unique_id=1895627161]
 layout_mode = 1
-anchors_preset = 4
+anchors_preset = 6
+anchor_left = 1.0
 anchor_top = 0.5
+anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = 36.0
-offset_top = -11.0
-offset_right = 143.0
-offset_bottom = 16.0
+offset_left = 7.0
+offset_top = -13.0
+offset_right = 114.0
+offset_bottom = 14.0
+grow_horizontal = 0
 grow_vertical = 2
 theme_override_font_sizes/font_size = 15
 text = "My Playlists"
+vertical_alignment = 1
 
 [node name="Add" type="Button" parent="Interface/Content/Side Panel/Open/VBoxContainer/HBoxContainer" unique_id=977385184 node_paths=PackedStringArray("menu", "sub_menus")]
 custom_minimum_size = Vector2(30, 0)
@@ -323,7 +325,7 @@ icon = ExtResource("10_7e43v")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("21_seu75")
-menu = NodePath("../../../../../../Panel2")
+menu = NodePath("../../../../../../Playlistcreationcontext")
 teleportMenu = true
 teleportMenuOffset = Vector2(-135, 32)
 sub_menus = []
@@ -396,7 +398,7 @@ icon = ExtResource("10_7e43v")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("21_seu75")
-menu = NodePath("../../../../../Panel2")
+menu = NodePath("../../../../../Playlistcreationcontext")
 teleportMenu = true
 teleportMenuOffset = Vector2(0, 32)
 sub_menus = []
@@ -628,8 +630,6 @@ icon = ExtResource("30_abqjc")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("37_abqjc")
-updatable = ExtResource("32_0n3wm")
-non_updatable = ExtResource("38_6iyjs")
 
 [node name="Refresh" type="Button" parent="Interface/Top Bar/Right" unique_id=953963470 node_paths=PackedStringArray("refesh_texture_animation")]
 custom_minimum_size = Vector2(28, 0)
@@ -932,7 +932,7 @@ text = "Artist"
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Panel2" parent="Interface" unique_id=1315656001 instance=ExtResource("19_blkrb")]
+[node name="Playlistcreationcontext" parent="Interface" unique_id=1315656001 instance=ExtResource("19_blkrb")]
 visible = false
 layout_mode = 1
 offset_left = -1050.0
