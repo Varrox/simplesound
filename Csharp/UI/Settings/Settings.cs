@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using Godot.Collections;
 
 public partial class Settings : EditorWindow
@@ -8,6 +7,8 @@ public partial class Settings : EditorWindow
     [Export] public VBoxContainer settings_container;
 
     Dictionary<string, Variant> values;
+
+    static readonly string[] quality_levels = new []{"Low", "Medium", "High"};
 
     public override void _Ready()
 	{
@@ -39,10 +40,7 @@ public partial class Settings : EditorWindow
                 input = new[]{new LineEdit()};
                 break;
             case "q":
-                input = new[]{new SpinBox()};
-                (input[0] as SpinBox).MaxValue = 3;
-                (input[0] as SpinBox).MinValue = 1;
-                (input[0] as SpinBox).Value = default_value.ToInt();
+                input = EnumSetting(quality_levels, default_value.ToInt());
                 break;
             case "str":
                 input = new[]{new LineEdit()};
@@ -80,7 +78,7 @@ public partial class Settings : EditorWindow
         {
             if(type == "q") 
             {
-                
+
                 GD.Print("Gup");
             }
         }
@@ -91,4 +89,19 @@ public partial class Settings : EditorWindow
 
         return container;
     } 
+    Control[] EnumSetting(string[] _enum, int value)
+    {
+        OptionButton b = new OptionButton();
+        
+        for(int i = 0; i < _enum.Length; i++)
+        {
+            b.GetPopup().AddItem(_enum[i]);
+        }
+
+        b.Selected = value;
+        
+        Control[] input = new[]{b};
+        return input;
+    }
 }
+
