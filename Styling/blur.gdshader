@@ -11,13 +11,15 @@ uniform float blur_size:hint_range(0.001, 1, 0.001) = 0.25;
 
 varying float sigma;
 
+global uniform int blur_quality;
+
 float gaussian(vec2 i) {
     return 1.0 / (2.0 * PI * sigma) * exp(-((pow2(i.x) + pow2(i.y)) / (2.0 * sigma)));
 }
 
 vec3 blur(vec2 screen_uv, sampler2D input_texture, float size, vec2 scale) {
 	vec3 result = vec3(1.);
-	float steps = size / float(samples);
+	float steps = size / float(samples * blur_quality);
 	float accum = 0.0;
 	float weight;
 	vec2 offset;
