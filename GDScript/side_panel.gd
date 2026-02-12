@@ -22,7 +22,7 @@ func _ready() -> void:
 
 func press():
 	closed = !closed
-	
+
 	target_min_size = closed_min_size if closed else open_min_size
 	split.collapsed = closed
 	closed_element.visible = closed
