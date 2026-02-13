@@ -4,13 +4,13 @@
 shader_type canvas_item;
 render_mode unshaded;
 
-uniform int samples:hint_range(1, 32, 1) = 8;
 uniform float blur_size:hint_range(0.001, 1, 0.001) = 0.25;
 
 #define pow2(x) (x * x)
 
 varying float sigma;
 
+const int samples = 5;
 global uniform int blur_quality;
 
 float gaussian(vec2 i) {

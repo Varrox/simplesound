@@ -17,7 +17,6 @@ shadow_offset = Vector2(5, 5)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bmsx4"]
 shader = ExtResource("2_lpmxw")
-shader_parameter/samples = 12
 shader_parameter/blur_size = 0.32400001539
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1qe5s"]

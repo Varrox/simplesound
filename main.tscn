@@ -56,7 +56,6 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n3cvr"]
 shader = ExtResource("8_0cp0l")
-shader_parameter/samples = 5
 shader_parameter/blur_size = 0.25
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4w656"]
@@ -611,7 +610,7 @@ layout_mode = 2
 text = "100%"
 horizontal_alignment = 2
 
-[node name="Stream" type="Button" parent="Interface/Top Bar/Right" unique_id=1363850799]
+[node name="Stream" type="Button" parent="Interface/Top Bar/Right" unique_id=1363850799 node_paths=PackedStringArray("texture")]
 layout_mode = 2
 tooltip_text = "Toggles a little window you can use in a streaming software to show what song is currently playing."
 focus_mode = 0
@@ -621,6 +620,7 @@ icon_alignment = 1
 expand_icon = true
 script = ExtResource("30_d2t1y")
 stream_display = ExtResource("31_gngh3")
+texture = NodePath("../../../Background/Image")
 
 [node name="Update" type="Button" parent="Interface/Top Bar/Right" unique_id=925467314]
 custom_minimum_size = Vector2(28, 0)
