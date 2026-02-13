@@ -10,6 +10,8 @@
 [ext_resource type="Resource" uid="uid://dq72h5uked4hc" path="res://Csharp/UI/Settings/Resources/downloader.tres" id="4_3eler"]
 [ext_resource type="Resource" uid="uid://covm6feqj4vyp" path="res://Csharp/UI/Settings/Resources/app_data.tres" id="5_njjsv"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7l07q"]
+
 [node name="Window" type="Window" unique_id=874625055 node_paths=PackedStringArray("settings_container", "tabs_container", "close_menu")]
 oversampling_override = 1.0
 title = "Settings"
@@ -18,9 +20,9 @@ size = Vector2i(600, 350)
 min_size = Vector2i(450, 300)
 script = ExtResource("1_c0o00")
 settings_tabs = Array[Object]([ExtResource("2_dp1jx"), ExtResource("3_7l07q"), ExtResource("4_3eler"), ExtResource("5_njjsv")])
-reset_texture = ExtResource("2_4ebue")
 settings_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer2/VBoxContainer2")
 tabs_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer")
+reset_texture = ExtResource("2_4ebue")
 close_menu = NodePath("MarginContainer/VBoxContainer/HBoxContainer/Close")
 
 [node name="ColorRect" parent="." unique_id=1354321475 instance=ExtResource("3_8qwbu")]
@@ -86,10 +88,13 @@ mouse_filter = 2
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=404514143]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1889021532]
+[node name="LinkButton" type="LinkButton" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=69504489]
 layout_mode = 2
-size_flags_vertical = 8
+size_flags_vertical = 4
+tooltip_text = "Opens the page to simplesound's source code in browser."
 theme_override_colors/font_color = Color(0.45064825, 0.4506483, 0.45064813, 1)
+theme_override_styles/focus = SubResource("StyleBoxEmpty_7l07q")
+uri = "https://github.com/Varrox/simplesound"
 script = ExtResource("2_c0o00")
 
 [node name="Close" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1390632733]
