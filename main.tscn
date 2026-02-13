@@ -43,6 +43,8 @@
 [ext_resource type="PackedScene" uid="uid://da3r1vmve1qwd" path="res://Windows/StreamDisplay.tscn" id="31_gngh3"]
 [ext_resource type="Script" uid="uid://bry5q12g6oc8q" path="res://GDScript/link_opener.gd" id="32_4w656"]
 [ext_resource type="Script" uid="uid://ba0kdfmjh8445" path="res://Csharp/Globals.cs" id="32_htxhm"]
+[ext_resource type="Script" uid="uid://cm1lylxwcslla" path="res://Csharp/UI/Settings/SettingsOpener.cs" id="35_abqjc"]
+[ext_resource type="PackedScene" uid="uid://cn1tw3g51dn0c" path="res://Windows/Settings.tscn" id="35_blkrb"]
 [ext_resource type="Script" uid="uid://cheuagrd5va2f" path="res://Csharp/UI/Buttons/Refresh.cs" id="37_6iyjs"]
 [ext_resource type="Script" uid="uid://gwm4ru46vy21" path="res://Csharp/UI/Buttons/Update.cs" id="37_abqjc"]
 [ext_resource type="PackedScene" uid="uid://bw078i5dk5ff4" path="res://Windows/ConfirmationWindow.tscn" id="39_h8e4i"]
@@ -659,16 +661,20 @@ expand_mode = 1
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Interface/Top Bar/Right/Refresh" unique_id=549007236]
 libraries/ = SubResource("AnimationLibrary_4w656")
 
-[node name="Settings" type="Button" parent="Interface/Top Bar/Right" unique_id=501507118]
+[node name="Settings" type="Button" parent="Interface/Top Bar/Right" unique_id=501507118 node_paths=PackedStringArray("window")]
 custom_minimum_size = Vector2(28, 0)
 layout_mode = 2
 tooltip_text = "Opens settings menu."
 focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_wx3lt")
-disabled = true
 icon = ExtResource("12_s6aix")
 icon_alignment = 1
 expand_icon = true
+script = ExtResource("35_abqjc")
+window = NodePath("Window")
+
+[node name="Window" parent="Interface/Top Bar/Right/Settings" unique_id=874625055 instance=ExtResource("35_blkrb")]
+visible = false
 
 [node name="Player" type="ColorRect" parent="Interface" unique_id=930252818]
 layout_mode = 1

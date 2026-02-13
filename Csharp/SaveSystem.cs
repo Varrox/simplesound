@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 public class SaveSystem
 {
-	public static readonly string USER_DATA = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "simplesound");
+	public static string USER_DATA = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "simplesound");
 
     public static string ImportFolder(string path)
 	{
@@ -101,14 +101,5 @@ public class SaveData
         }
 
         return save_data;
-    }
-}
-
-public struct ApplicationMetadata
-{
-	public bool remove_song_warning = true;
-
-    public ApplicationMetadata()
-    {
     }
 }

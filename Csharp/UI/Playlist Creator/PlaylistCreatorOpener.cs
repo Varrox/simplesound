@@ -6,7 +6,7 @@ public partial class PlaylistCreatorOpener : EditorWindowOpener
 	[Export] ContextMenu menu;
 	public override void _Ready()
 	{
-		ButtonDown += OpenCreator;
+		ButtonUp += OpenCreator;
 		window.OnClose += CreatePlaylist;
 	}
 
