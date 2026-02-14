@@ -320,9 +320,9 @@ icon = ExtResource("10_7e43v")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("21_seu75")
-menu = NodePath("../../../../../../Playlistcreationcontext")
 teleportMenu = true
 teleportMenuOffset = Vector2(-135, 32)
+menu = NodePath("../../../../../../Playlistcreationcontext")
 
 [node name="HSeparator" type="HSeparator" parent="Interface/Content/Side Panel/Open/VBoxContainer" unique_id=166833490]
 layout_mode = 2
@@ -392,9 +392,9 @@ icon = ExtResource("10_7e43v")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("21_seu75")
-menu = NodePath("../../../../../Playlistcreationcontext")
 teleportMenu = true
 teleportMenuOffset = Vector2(0, 32)
+menu = NodePath("../../../../../Playlistcreationcontext")
 
 [node name="HSeparator" type="HSeparator" parent="Interface/Content/Side Panel/Collapsed/VBoxContainer" unique_id=765403374]
 layout_mode = 2
@@ -928,7 +928,7 @@ offset_top = 99.0
 offset_right = -884.0
 offset_bottom = 177.0
 
-[node name="Playlistcontext" parent="Interface" unique_id=957626048 node_paths=PackedStringArray("sub_menus") instance=ExtResource("26_gbh2w")]
+[node name="Playlistcontext" parent="Interface" unique_id=957626048 instance=ExtResource("26_gbh2w")]
 visible = false
 layout_mode = 1
 anchors_preset = -1
@@ -937,7 +937,7 @@ offset_top = -223.0
 offset_right = -864.0
 offset_bottom = -74.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_gueqf")
-sub_menus = []
+theme_override_styles/panel = SubResource("StyleBoxFlat_gueqf")
 
 [node name="Songcontext" parent="Interface" unique_id=196847728 instance=ExtResource("17_3m5kb")]
 visible = false
@@ -960,15 +960,15 @@ _mute_texture = ExtResource("42_0cbny")
 _unmute_texture = ExtResource("9_hrvbo")
 _default_cover = ExtResource("7_xn3w4")
 _default_cover_highres = ExtResource("13_seu75")
+_highlight = Color(0.27752772, 0.27752775, 0.27752757, 0.5882353)
+_lower_highlight = Color(50, 50, 50, 0.162)
+_confirmation_window = ExtResource("39_h8e4i")
 _main = NodePath("..")
 _player = NodePath("../Interface")
 _discord = NodePath("../Discord")
 _attribute_editor = NodePath("AttributeEditor")
 _file_dialog = NodePath("File Dialog")
 _self = NodePath(".")
-_highlight = Color(0.27752772, 0.27752775, 0.27752757, 0.5882353)
-_lower_highlight = Color(50, 50, 50, 0.162)
-_confirmation_window = ExtResource("39_h8e4i")
 _playlist_menu = NodePath("../Interface/Playlistcontext")
 _song_menu = NodePath("../Interface/Songcontext")
 

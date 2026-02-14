@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://dcre7b1cn3b6i"]
 
+[ext_resource type="StyleBox" uid="uid://b82lq1vafwrvb" path="res://Styling/context_panel.tres" id="1_2gf2l"]
 [ext_resource type="Script" uid="uid://o0n8r7mxyki" path="res://Csharp/UI/Attribute Editor/AttributeEditorOpenerGlobal.cs" id="1_3sdvf"]
 [ext_resource type="Texture2D" uid="uid://bfdwehd6cajgg" path="res://Icons/more.png" id="1_a1dky"]
 [ext_resource type="Script" uid="uid://chi37xfryervn" path="res://Csharp/UI/ContextMenu.cs" id="1_tg3lx"]
@@ -9,33 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://ca2kw05t4eecf" path="res://Icons/back arrow.png" id="3_tpxmu"]
 [ext_resource type="Texture2D" uid="uid://b3phnmlkksrac" path="res://Icons/loop.png" id="4_wve4k"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wno4e"]
-bg_color = Color(0.24313726, 0.24313726, 0.24313726, 0.88235295)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(1, 1, 1, 0)
-border_blend = true
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tg3lx"]
-bg_color = Color(0.24313726, 0.24313726, 0.24313726, 0.88235295)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(1, 1, 1, 0)
-border_blend = true
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-
-[node name="Songcontext" type="Panel" unique_id=1810165372 node_paths=PackedStringArray("sub_menus")]
+[node name="Songcontext" type="Panel" unique_id=1810165372]
 anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
@@ -47,9 +22,9 @@ offset_bottom = 118.0
 grow_horizontal = 0
 grow_vertical = 2
 pivot_offset = Vector2(142, 0)
-theme_override_styles/panel = SubResource("StyleBoxFlat_wno4e")
+theme_override_styles/panel = ExtResource("1_2gf2l")
 script = ExtResource("1_tg3lx")
-sub_menus = [NodePath("MarginContainer/VBoxContainer/Share")]
+theme_override_styles/panel = ExtResource("1_2gf2l")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1326792036]
 layout_mode = 1
@@ -93,21 +68,21 @@ icon = ExtResource("1_a1dky")
 alignment = 0
 expand_icon = true
 script = ExtResource("2_rsdy2")
-share_link = NodePath("../../../Control/MarginContainer/VBoxContainer/Share link")
-file_browse = NodePath("../../../Control/MarginContainer/VBoxContainer/File browse")
 share = ExtResource("1_a1dky")
 back = ExtResource("3_tpxmu")
+share_link = NodePath("../../../Control/MarginContainer/VBoxContainer/Share link")
+file_browse = NodePath("../../../Control/MarginContainer/VBoxContainer/File browse")
 menu = NodePath("../../../Control")
 
-[node name="Control" type="Panel" parent="." unique_id=1602453918 node_paths=PackedStringArray("sub_menus")]
+[node name="Control" type="Panel" parent="." unique_id=1602453918]
 layout_mode = 0
 offset_left = -207.0
 offset_top = 74.0
 offset_right = -3.0
 offset_bottom = 152.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_tg3lx")
+theme_override_styles/panel = ExtResource("1_2gf2l")
 script = ExtResource("1_tg3lx")
-sub_menus = []
+theme_override_styles/panel = ExtResource("1_2gf2l")
 
 [node name="MarginContainer" type="MarginContainer" parent="Control" unique_id=659511728]
 layout_mode = 1
