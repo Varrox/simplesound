@@ -41,11 +41,22 @@ public partial class SongsVisualizer : ScrollContainer
         {
             if (last_scroll != ScrollVertical)
             {
+                int first = -1, last = -1;
+                bool after = false;
                 for (int i = 1; i < container.GetChildCount(); i++)
                 {
                     SongDisplay child = container.GetChild(i) as SongDisplay;
+                    
+                    if(!after)
+                        after = last != -1 && i > last;
 
-                    bool hidden = IsHidden(child);
+                    bool hidden = after ? true : IsHidden(child);
+
+                    if(first == -1 && !hidden)
+                        first = i - 1;
+                    
+                    if(last == -1 && hidden && i > first && first != -1)
+                        last = i - 1;
 
                     if(!child.is_visible == hidden)
                         continue;
