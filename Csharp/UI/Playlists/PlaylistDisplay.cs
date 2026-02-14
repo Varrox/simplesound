@@ -3,7 +3,7 @@ using Godot;
 public partial class PlaylistDisplay : Button
 {
     [Export] public TextureRect cover;
-    [Export] public Label name, songs;
+    [Export] public Label playlist_name, songs;
     [Export] public ContextMenuOpener more;
 
     const char dot = '\u00b7';
@@ -38,7 +38,7 @@ public partial class PlaylistDisplay : Button
     public void Init(Playlist playlist, int index)
     {
         cover.Texture = ConvertToGodot.LoadImage(playlist.cover) ?? Globals.default_cover;
-        name.Text = playlist.name;
+        playlist_name.Text = playlist.name;
 
         string amount = $"{playlist.songs.Count}{(playlist.songs.Count != 1 ? " songs" : " song")}";
 

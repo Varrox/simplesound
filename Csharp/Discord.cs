@@ -73,7 +73,6 @@ public partial class Discord : Node
         };
 
         client.SetPresence(presence);
-        GD.Print(cover_link);
     }
 
     public string GetLogo(){

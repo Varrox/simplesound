@@ -44,6 +44,7 @@
 [ext_resource type="Script" uid="uid://ba0kdfmjh8445" path="res://Csharp/Globals.cs" id="32_htxhm"]
 [ext_resource type="Script" uid="uid://cm1lylxwcslla" path="res://Csharp/UI/Settings/SettingsOpener.cs" id="35_abqjc"]
 [ext_resource type="PackedScene" uid="uid://cn1tw3g51dn0c" path="res://Windows/Settings.tscn" id="35_blkrb"]
+[ext_resource type="Shader" uid="uid://cxrpix7bw201g" path="res://Styling/anti_aliased.gdshader" id="37_4w656"]
 [ext_resource type="Script" uid="uid://cheuagrd5va2f" path="res://Csharp/UI/Buttons/Refresh.cs" id="37_6iyjs"]
 [ext_resource type="Script" uid="uid://gwm4ru46vy21" path="res://Csharp/UI/Buttons/Update.cs" id="37_abqjc"]
 [ext_resource type="PackedScene" uid="uid://bw078i5dk5ff4" path="res://Windows/ConfirmationWindow.tscn" id="39_h8e4i"]
@@ -91,6 +92,9 @@ corner_radius_top_left = 12
 corner_radius_top_right = 12
 corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4w656"]
+shader = ExtResource("37_4w656")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i82gy"]
 
@@ -148,6 +152,9 @@ corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 anti_aliasing_size = 1.1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6iyjs"]
+shader = ExtResource("37_4w656")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_68lop"]
 
@@ -455,6 +462,7 @@ grow_vertical = 2
 theme_override_styles/panel = ExtResource("21_jy3dx")
 
 [node name="TextureRect" type="TextureRect" parent="Interface/Content/Songs/MarginContainer/Song Display/Full Container/Container/Top card/Icon" unique_id=803486648]
+material = SubResource("ShaderMaterial_4w656")
 layout_mode = 2
 texture = ExtResource("7_xn3w4")
 expand_mode = 1
@@ -860,6 +868,7 @@ scale = Vector2(2, 2)
 theme_override_styles/panel = SubResource("StyleBoxFlat_28euk")
 
 [node name="Cover" type="TextureRect" parent="Interface/Player/Song Attributes/PanelContainer" unique_id=184891046]
+material = SubResource("ShaderMaterial_6iyjs")
 layout_mode = 2
 texture = ExtResource("7_xn3w4")
 expand_mode = 1

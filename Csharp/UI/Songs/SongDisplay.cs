@@ -2,7 +2,7 @@
 
 public partial class SongDisplay : Button
 {
-    [Export] public Label number, name, artist, time;
+    [Export] public Label number, song_name, artist, time;
     [Export] public TextureRect cover, play_button;
     [Export] public Control spacer;
     [Export] public SongsMore more;
@@ -89,7 +89,7 @@ public partial class SongDisplay : Button
 
         this.song = song;
 
-        this.name.SetThreadSafe("text", name);
+        this.song_name.SetThreadSafe("text", name);
         this.artist.SetThreadSafe("text", artist);
         this.time.SetThreadSafe("text", time);
 
