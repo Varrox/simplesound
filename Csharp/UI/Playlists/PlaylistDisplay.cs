@@ -18,6 +18,17 @@ public partial class PlaylistDisplay : Button
         MouseExited += OnExit;
     }
 
+    public override void _Input(InputEvent @event) {
+        if (@event is InputEventMouseButton) {
+            if ((@event as InputEventMouseButton).ButtonIndex == MouseButton.Right) {
+                if (GetGlobalRect().HasPoint(GetGlobalMousePosition())) {
+                    more.OpenMenu();
+                    more.menu.GlobalPosition = GetGlobalMousePosition();
+                }
+            }
+        }
+    }
+
     public void OnExit()
     {
         if (!more.menu_open) more.Hide();

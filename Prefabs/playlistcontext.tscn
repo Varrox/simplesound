@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://chi37xfryervn" path="res://Csharp/UI/ContextMenu.cs" id="1_6rfw2"]
 [ext_resource type="StyleBox" uid="uid://b82lq1vafwrvb" path="res://Styling/context_panel.tres" id="1_f7gkb"]
 
-[node name="Playlist Context" type="Panel" unique_id=256548730]
+[node name="Playlist Context" type="Panel" unique_id=256548730 node_paths=PackedStringArray("sub_menus")]
 anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
@@ -16,7 +16,7 @@ grow_vertical = 2
 pivot_offset = Vector2(142, 0)
 theme_override_styles/panel = ExtResource("1_f7gkb")
 script = ExtResource("1_6rfw2")
-theme_override_styles/panel = ExtResource("1_f7gkb")
+sub_menus = []
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1828403897]
 layout_mode = 1
@@ -37,6 +37,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 3
 focus_mode = 0
+disabled = true
 text = "Edit"
 alignment = 0
 
@@ -45,6 +46,7 @@ layout_mode = 2
 size_flags_vertical = 3
 tooltip_text = "Deletes playlist file"
 focus_mode = 0
+disabled = true
 text = "Delete"
 alignment = 0
 
@@ -53,13 +55,15 @@ layout_mode = 2
 size_flags_vertical = 3
 tooltip_text = "Opens file explorer up to the playlist file"
 focus_mode = 0
+disabled = true
 text = "Open"
 alignment = 0
 
 [node name="Share" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1745365706]
 layout_mode = 2
 size_flags_vertical = 3
-tooltip_text = "Compresses whole playlist into ZIP file with all dependencies."
+tooltip_text = "Compresses whole playlist into ZIP file with all dependencies. Should be placed in appdata folder."
 focus_mode = 0
+disabled = true
 text = "Share (ZIP)"
 alignment = 0

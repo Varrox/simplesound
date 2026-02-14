@@ -3,8 +3,6 @@ using System.IO;
 
 public partial class ImportPlaylist : Button
 {
-	[Export] public ContextMenu menu;
-
 	Confirm sync;
 
 	// Called when the node enters the scene tree for the first time.
@@ -63,6 +61,5 @@ public partial class ImportPlaylist : Button
 	{
         Globals.file_dialog.FileSelected -= Import; 
 		Globals.file_dialog.Canceled -= Cancel;
-		menu.opener.CloseMenu();
     }
 }

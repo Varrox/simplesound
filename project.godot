@@ -20,7 +20,8 @@ run/low_processor_mode=true
 boot_splash/show_image=false
 boot_splash/stretch_mode=0
 boot_splash/use_filter=false
-config/icon="res://Icons/logotrans.png"
+config/icon="uid://bdbco8a0mnjn6"
+config/macos_native_icon="uid://bdbco8a0mnjn6"
 config/windows_native_icon="res://Icons/mainicon.ico"
 
 [audio]

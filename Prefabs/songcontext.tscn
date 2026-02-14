@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://ca2kw05t4eecf" path="res://Icons/back arrow.png" id="3_tpxmu"]
 [ext_resource type="Texture2D" uid="uid://b3phnmlkksrac" path="res://Icons/loop.png" id="4_wve4k"]
 
-[node name="Songcontext" type="Panel" unique_id=1810165372]
+[node name="Songcontext" type="Panel" unique_id=1810165372 node_paths=PackedStringArray("sub_menus")]
 anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
@@ -24,7 +24,7 @@ grow_vertical = 2
 pivot_offset = Vector2(142, 0)
 theme_override_styles/panel = ExtResource("1_2gf2l")
 script = ExtResource("1_tg3lx")
-theme_override_styles/panel = ExtResource("1_2gf2l")
+sub_menus = [NodePath("MarginContainer/VBoxContainer/Share")]
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1326792036]
 layout_mode = 1
@@ -68,13 +68,13 @@ icon = ExtResource("1_a1dky")
 alignment = 0
 expand_icon = true
 script = ExtResource("2_rsdy2")
-share = ExtResource("1_a1dky")
-back = ExtResource("3_tpxmu")
 share_link = NodePath("../../../Control/MarginContainer/VBoxContainer/Share link")
 file_browse = NodePath("../../../Control/MarginContainer/VBoxContainer/File browse")
+share = ExtResource("1_a1dky")
+back = ExtResource("3_tpxmu")
 menu = NodePath("../../../Control")
 
-[node name="Control" type="Panel" parent="." unique_id=1602453918]
+[node name="Control" type="Panel" parent="." unique_id=1602453918 node_paths=PackedStringArray("sub_menus")]
 layout_mode = 0
 offset_left = -207.0
 offset_top = 74.0
@@ -82,7 +82,7 @@ offset_right = -3.0
 offset_bottom = 152.0
 theme_override_styles/panel = ExtResource("1_2gf2l")
 script = ExtResource("1_tg3lx")
-theme_override_styles/panel = ExtResource("1_2gf2l")
+sub_menus = []
 
 [node name="MarginContainer" type="MarginContainer" parent="Control" unique_id=659511728]
 layout_mode = 1

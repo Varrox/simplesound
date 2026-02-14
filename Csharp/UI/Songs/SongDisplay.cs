@@ -23,14 +23,10 @@ public partial class SongDisplay : Button
 
     public override void _Input(InputEvent @event)
     {
-        if (is_visible)
-        {
-            if (@event is InputEventMouseButton)
-            {
-                if ((@event as InputEventMouseButton).ButtonIndex == MouseButton.Right)
-                {
-                    if (GetGlobalRect().HasPoint(GetGlobalMousePosition()))
-                    {
+        if (is_visible) {
+            if (@event is InputEventMouseButton) {
+                if ((@event as InputEventMouseButton).ButtonIndex == MouseButton.Right) {
+                    if (GetGlobalRect().HasPoint(GetGlobalMousePosition())) {
                         more.OpenMenu();
                         more.menu.GlobalPosition = GetGlobalMousePosition();
                     }
