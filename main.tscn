@@ -607,6 +607,7 @@ stream_display = ExtResource("31_gngh3")
 texture = NodePath("../../../Background/Image")
 
 [node name="Update" type="Button" parent="Interface/Top Bar/Right" unique_id=925467314]
+visible = false
 custom_minimum_size = Vector2(28, 0)
 layout_mode = 2
 focus_mode = 0
