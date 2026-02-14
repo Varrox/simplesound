@@ -2,9 +2,9 @@ using Godot;
 
 public partial class PlaylistDisplay : Button
 {
-    [Export] public TextureRect Cover;
-    [Export] public Label Name, Songs;
-    [Export] public ContextMenu More;
+    [Export] public TextureRect cover;
+    [Export] public Label name, songs;
+    [Export] public ContextMenuOpener more;
 
     const char dot = '\u00b7';
 
@@ -12,25 +12,20 @@ public partial class PlaylistDisplay : Button
 
     public override void _Ready()
     {
-        More.Hide();
         ButtonDown += Set;
 
-        MouseEntered += More.Show;
+        MouseEntered += more.Show;
         MouseExited += OnExit;
-
-        More.MouseEntered += More.Show;
-        More.OnClose += More.Hide;
-        More.menu = Globals.playlist_menu;
     }
 
     public void OnExit()
     {
-        if (!More.menu_open) More.Hide();
+        if (!more.menu_open) more.Hide();
     }
 
     public void Set()
     {
-        Globals.main.playlist_visualizer.OnSelectPlaylist?.Invoke(playlist_index, Cover.Texture);
+        Globals.main.playlist_visualizer.OnSelectPlaylist?.Invoke(playlist_index, cover.Texture);
         Globals.main.looked_at_playlist = playlist_index;
         SelfModulate = Globals.lower_highlight;
     }
@@ -42,22 +37,26 @@ public partial class PlaylistDisplay : Button
 
     public void Init(Playlist playlist, int index)
     {
-        Cover.Texture = ConvertToGodot.LoadImage(playlist.cover) ?? Globals.default_cover;
-        Name.Text = playlist.name;
+        cover.Texture = ConvertToGodot.LoadImage(playlist.cover) ?? Globals.default_cover;
+        name.Text = playlist.name;
+
+        string amount = $"{playlist.songs.Count}{(playlist.songs.Count != 1 ? " songs" : " song")}";
 
         if (playlist.type != Playlist.PlaylistType.Album)
         {
             if (playlist.songs == null)
-                Songs.Text = "0 songs";
+                songs.Text = "0 songs";
             else
-                Songs.Text = $"{playlist.songs.Count}{(playlist.songs.Count != 1 ? " songs" : " song")}{(playlist.artist != null ? $" {dot} {playlist.artist}" : "")}";
+                songs.Text = $"{amount}{(playlist.artist != null ? $" {dot} {playlist.artist}" : "")}";
         }
         else
         {
-            Songs.Text = $"Album  {dot}  {playlist.artist ?? (playlist.songs.Count.ToString() + (playlist.songs.Count != 1 ? " songs" : " song"))}";
+            songs.Text = $"Album  {dot}  {playlist.artist ?? (playlist.songs.Count.ToString() + (playlist.songs.Count != 1 ? " songs" : " song"))}";
         }
 
         playlist_index = index;
+
+        TooltipText = $"{playlist.name} - {amount}";
 
         if (index == Globals.main.looked_at_playlist) Set();
 

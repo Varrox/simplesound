@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public partial class PlaylistCreatorOpener : EditorWindowOpener
 {
-	[Export] ContextMenu menu;
+	[Export] public ContextMenu menu;
 	public override void _Ready()
 	{
 		ButtonUp += OpenCreator;
@@ -14,7 +14,7 @@ public partial class PlaylistCreatorOpener : EditorWindowOpener
 	{
 		if (Globals.player.Interrupt())
 		{
-			menu.CloseMenu();
+			menu.opener.CloseMenu();
 			(window as PlaylistCreator).Open();
 		}
 	}

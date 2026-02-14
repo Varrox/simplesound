@@ -57,8 +57,8 @@ public partial class Discord : Node
 
         RichPresence presence = new RichPresence()
         {
-            Details = Globals.player.SongName.Text,
-            State = Globals.player.SongArtist.Text,
+            Details = Globals.player.song_name.Text,
+            State = Globals.player.song_artist.Text,
             Assets = new Assets()
             {
                 LargeImageKey = string.IsNullOrEmpty(cover_link) ? GetLogo() : cover_link,

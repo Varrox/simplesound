@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dle5y658wmx03"]
+[gd_scene format=3 uid="uid://dle5y658wmx03"]
 
 [ext_resource type="Script" uid="uid://eh8a3k652ogt" path="res://Csharp/UI/Attribute Editor/AttributeEditor.cs" id="1_cj5je"]
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Styling/Fonts/DefaultFont.tres" id="1_ot5f1"]
@@ -11,7 +11,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iyibu"]
 
-[node name="Attribute editor" type="Window" unique_id=397200673 node_paths=PackedStringArray("Name", "Artist", "Sharelink", "CoverButton", "CoverLabel", "ExplicitLyrics", "SubmitButton", "CancelButton")]
+[node name="Attribute editor" type="Window" unique_id=397200673 node_paths=PackedStringArray("name", "artist", "share_link", "cover_button", "cover_label", "explicit_lyrics", "submit_button", "cancel_button")]
 auto_translate_mode = 1
 oversampling_override = 1.0
 title = "Edit song attributes"
@@ -19,14 +19,14 @@ initial_position = 2
 size = Vector2i(300, 250)
 min_size = Vector2i(250, 250)
 script = ExtResource("1_cj5je")
-Name = NodePath("VBoxContainer/Name")
-Artist = NodePath("VBoxContainer/Artist")
-Sharelink = NodePath("VBoxContainer/Share")
-CoverButton = NodePath("VBoxContainer/Cover")
-CoverLabel = NodePath("VBoxContainer/Selected File")
-ExplicitLyrics = NodePath("VBoxContainer/Explicit Lyrics")
-SubmitButton = NodePath("VBoxContainer/HBoxContainer/Apply")
-CancelButton = NodePath("VBoxContainer/HBoxContainer/Cancel")
+name = NodePath("VBoxContainer/Name")
+artist = NodePath("VBoxContainer/Artist")
+share_link = NodePath("VBoxContainer/Share")
+cover_button = NodePath("VBoxContainer/Cover")
+cover_label = NodePath("VBoxContainer/Selected File")
+explicit_lyrics = NodePath("VBoxContainer/Explicit Lyrics")
+submit_button = NodePath("VBoxContainer/HBoxContainer/Submit")
+cancel_button = NodePath("VBoxContainer/HBoxContainer/Cancel")
 
 [node name="ColorRect" parent="." unique_id=1042828171 instance=ExtResource("2_j2mdm")]
 
@@ -92,7 +92,7 @@ layout_mode = 2
 size_flags_vertical = 10
 alignment = 1
 
-[node name="Apply" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=1208880014]
+[node name="Submit" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=1208880014]
 layout_mode = 2
 tooltip_text = "Applies all changes done to the metadata of this song."
 theme_override_fonts/font = ExtResource("1_ot5f1")

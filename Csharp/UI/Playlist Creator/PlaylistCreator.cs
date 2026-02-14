@@ -5,19 +5,15 @@ public partial class PlaylistCreator : EditorWindow
 {
 	[Export] public LineEdit playlist_name;
 
-	[Export] Button addCover;
-	[Export] PathDisplay coverDisplay;
+	[Export] public Button addCover, addSongs;
+	[Export] public PathDisplay coverDisplay;
 
-	[Export] Button addSongs;
-	[Export] PackedScene songDisplay;
-	[Export] Control songDisplayContainer;
-	[Export] Panel panel;
+	[Export] public PackedScene songDisplay;
+	[Export] public Control songDisplayContainer;
+	[Export] public Panel panel;
 
-
-	[Export] public CheckBox cloudSync, album;
+	[Export] public CheckBox cloudSync, album, backgroundThemeEnabled;
 	[Export] public LineEdit artist;
-
-	[Export] public CheckBox backgroundThemeEnabled;
 	[Export] public ColorPickerButton backgroundTheme;
 
 	[Export] public Button SubmitButton, CancelButton;
@@ -31,15 +27,15 @@ public partial class PlaylistCreator : EditorWindow
 	{
 		base._Ready();
 
-		addCover.ButtonDown += OpenCover;
-		coverDisplay.delete.ButtonDown += ClearCover;
+		addCover.ButtonUp += OpenCover;
+		coverDisplay.delete.ButtonUp += ClearCover;
 
-		addSongs.ButtonDown += OpenSongs;
+		addSongs.ButtonUp += OpenSongs;
 
 		// Submit / Cancel
 
-		SubmitButton.ButtonDown += Submit;
-		CancelButton.ButtonDown += Cancel;
+		SubmitButton.ButtonUp += Submit;
+		CancelButton.ButtonUp += Cancel;
 	}
 
 	public void Clear()
@@ -134,8 +130,8 @@ public partial class PlaylistCreator : EditorWindow
 					songDisplayContainer.AddChild(disp);
 					songs.Add(path);
 
-					disp.delete.ButtonDown += () => songs.Remove(path);
-					disp.delete.ButtonDown += () => disp.QueueFree();
+					disp.delete.ButtonUp += () => songs.Remove(path);
+					disp.delete.ButtonUp += () => disp.QueueFree();
 				}
 				else
 				{

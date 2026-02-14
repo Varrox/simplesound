@@ -40,9 +40,7 @@ public partial class Settings : EditorWindow
         {
             settings_container.GetChild(i).QueueFree();
         }
-
-
-        GD.Print(settings_tab);
+        
         string[] strings = settings_tabs[settings_tab].settings;
 
         if (strings == null)
@@ -141,7 +139,6 @@ public partial class Settings : EditorWindow
             }
         }
         else if (type == "q")
-
         {
             OptionButton button = (input[0] as OptionButton);
             button.CallDeferred("select", (int)(typeof(ApplicationMetadata).GetField(name).GetValue(Globals.save_data.application_metadata)) - 1);
@@ -185,7 +182,6 @@ public partial class Settings : EditorWindow
         {
             b.GetPopup().AddItem(_enum[i]);
         }
-
 
         Control[] input = new[] { b };
         return input;
@@ -330,12 +326,8 @@ public partial class Settings : EditorWindow
             return;
 
         FieldInfo field = typeof(ApplicationMetadata).GetField(constant, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-
-
-        object value = Convert.ChangeType(variant.Obj, field.FieldType);
-        field.SetValue(Globals.save_data.application_metadata, value);
-
-        GD.Print(Globals.save_data.application_metadata.blur_quality);
+        
+        field.SetValue(Globals.save_data.application_metadata, Convert.ChangeType(variant.Obj, field.FieldType));
 
         Globals.save_data.Save();
     }

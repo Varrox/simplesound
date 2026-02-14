@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 public partial class Main : Control
 {
-	[Export] public AudioStreamPlayer player;
+	[Export] public AudioStreamPlayer audio_player;
     [Export] public VideoStreamPlayer video_player;
-    [Export] public Slider volumeSlider;
+    [Export] public Player player;
 	[Export] public PlaylistsVisualizer playlist_visualizer;
 	[Export] public SongsVisualizer songs_visualizer;
 
@@ -73,8 +73,8 @@ public partial class Main : Control
 
         // Set Volume
 
-        player.VolumeDb = volume;
-        volumeSlider.Value = volume;
+        audio_player.VolumeDb = volume;
+        player.volume_slider.Value = volume;
 
         // Load playlists
 
@@ -113,13 +113,13 @@ public partial class Main : Control
 
 		if (playing && SongAvailable())
 		{
-			if (!player.Playing)
+			if (!audio_player.Playing)
 			{
 				if (!loop) MoveSong(1);
 				else
 				{
 					time = 0;
-					player.Play(time);
+					audio_player.Play(time);
 
 					video_player.Play();
 					video_player.StreamPosition = time;
@@ -128,7 +128,7 @@ public partial class Main : Control
 				}
 			}
 
-			time = player.GetPlaybackPosition();
+			time = audio_player.GetPlaybackPosition();
 		}
 	}
 
@@ -149,8 +149,8 @@ public partial class Main : Control
 	{
 		if (index < 0)
 		{
-			player.Stop();
-			player.Stream = null;
+			audio_player.Stop();
+			audio_player.Stream = null;
 
 			video_player.Stop();
 			video_player.Stream = null;
@@ -179,7 +179,7 @@ public partial class Main : Control
 
 		if (playing) 
 		{
-            player.Play(time);
+            audio_player.Play(time);
 
 			if (video_player.Stream != null)
 			{
@@ -194,7 +194,7 @@ public partial class Main : Control
                 video_player.Stop();
             }
 
-            player.Stop();
+            audio_player.Stop();
         }
 
         OnPlay?.Invoke(playing);
@@ -234,6 +234,13 @@ public partial class Main : Control
 
             song_index = Mathf.Wrap(song_index, 0, playlist.songs.Count);
 
+			if(Metadata.IsFileCorrupt(song)) // Skip if corrupted
+			{
+				MoveSong(amount);
+				return;
+			}
+				
+
             PlaySong(song);
 
 			playing = false;
@@ -258,22 +265,22 @@ public partial class Main : Control
 	{
 		if (SongAvailable())
 		{
-			if (player.Stream != null) 
+			if (audio_player.Stream != null) 
 				time = 0;
 
             if (FileAccess.FileExists(path))
             {
                 if (path.EndsWith(".mp3"))
                 {
-                    player.Stream = AudioStreamMP3.LoadFromBuffer(FileAccess.GetFileAsBytes(path));
+                    audio_player.Stream = AudioStreamMP3.LoadFromBuffer(FileAccess.GetFileAsBytes(path));
                 }
                 else if (path.EndsWith(".wav"))
                 {
-                    player.Stream = AudioStreamWav.LoadFromBuffer(FileAccess.GetFileAsBytes(path));
+                    audio_player.Stream = AudioStreamWav.LoadFromBuffer(FileAccess.GetFileAsBytes(path));
                 }
                 else if (path.EndsWith(".ogg"))
                 {
-                    player.Stream = AudioStreamOggVorbis.LoadFromBuffer(FileAccess.GetFileAsBytes(path));
+                    audio_player.Stream = AudioStreamOggVorbis.LoadFromBuffer(FileAccess.GetFileAsBytes(path));
                 }
 
                 VideoStreamTheora video = ConvertToGodot.GetVideoFromFile(Globals.main.song);
@@ -315,7 +322,7 @@ public partial class Main : Control
 		Globals.save_data.song_index = song_index;
 		Globals.save_data.looked_at_playlist = looked_at_playlist;
 		Globals.save_data.time = time;
-		Globals.save_data.volume = player.VolumeDb;
+		Globals.save_data.volume = audio_player.VolumeDb;
 		Globals.save_data.shuffled = shuffled;
 		Globals.save_data.playlists = playlist_paths;
 

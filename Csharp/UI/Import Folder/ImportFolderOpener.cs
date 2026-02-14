@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 public partial class ImportFolderOpener : EditorWindowOpener
 {
-    [Export] ContextMenu menu;
+    [Export] public ContextMenu menu;
     public override void _Ready()
     {
-        ButtonDown += OpenImporter;
+        ButtonUp += OpenImporter;
         window.OnClose += CreatePlaylist;
     }
 
@@ -14,7 +14,7 @@ public partial class ImportFolderOpener : EditorWindowOpener
     {
         if (Globals.player.Interrupt())
         {
-            menu.CloseMenu();
+            menu.opener.CloseMenu();
             (window as PlaylistCreator).Open();
         }
     }

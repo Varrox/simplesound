@@ -1,21 +1,19 @@
 using Godot;
 using System;
 
-public partial class ShareMenu : ContextMenu
+public partial class ShareMenu : ContextMenuOpener
 {
 	[Export] public Button share_link, file_browse;
 
-	[Export] public Texture2D Share, Back;
+	[Export] public Texture2D share, back;
 
     public static string file, link;
-	public static ShareMenu instance;
 
 	public override void _Ready()
 	{
 		base._Ready();
-		instance = this;
 		OnOpen += GetSongData;
-		OnClose += () => Icon = Share;
+		OnClose += () => Icon = share;
 
 		share_link.ButtonUp += CopyShareLinkToClipboard;
 		file_browse.ButtonUp += FileBrowseSong;
@@ -36,6 +34,6 @@ public partial class ShareMenu : ContextMenu
         file = Globals.main.playlists[Globals.main.looked_at_playlist].songs[SongsMore.song];
 		link = Metadata.GetShareLink(file);
 
-		Icon = Back;
+		Icon = back;
 	}
 }

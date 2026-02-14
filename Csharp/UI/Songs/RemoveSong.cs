@@ -17,10 +17,10 @@ public partial class RemoveSong : Button
 		{
 			confirmation_window = Globals.confirmation_window.Instantiate() as ConfirmationWindow;
 
-            confirmation_window.Message = $"Are you sure you want to delete this song \'{Metadata.GetName(Globals.main.playlists[Globals.main.looked_at_playlist].songs[SongsMore.song])}\' from this playlist?";
-            confirmation_window.AcceptText = "Yes";
-            confirmation_window.DeclineText = "No";
-            confirmation_window.CancelText = "";
+            confirmation_window.message = $"Are you sure you want to delete this song \'{Metadata.GetName(Globals.main.playlists[Globals.main.looked_at_playlist].songs[SongsMore.song])}\' from this playlist?";
+            confirmation_window.accept_text = "Yes";
+            confirmation_window.decline_text = "No";
+            confirmation_window.cancel_text = "";
             confirmation_window.free_on_close = true;
             confirmation_window.show_ignore = true;
 

@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://dtfoexo3o7b3p"]
 
+[ext_resource type="Script" uid="uid://chi37xfryervn" path="res://Csharp/UI/ContextMenu.cs" id="1_6rfw2"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kf1t7"]
 bg_color = Color(0.24313726, 0.24313726, 0.24313726, 0.88235295)
 border_width_left = 2
@@ -25,6 +27,7 @@ grow_horizontal = 0
 grow_vertical = 2
 pivot_offset = Vector2(142, 0)
 theme_override_styles/panel = SubResource("StyleBoxFlat_kf1t7")
+script = ExtResource("1_6rfw2")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1828403897]
 layout_mode = 1

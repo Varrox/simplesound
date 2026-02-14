@@ -4,7 +4,7 @@ using System.Threading;
 
 public partial class SongsVisualizer : ScrollContainer
 {
-    [Export] public PackedScene Template;
+    [Export] public PackedScene template;
     [Export] public Control container;
     [Export] public TextureRect cover;
     [Export] public Label playlist_name;
@@ -127,7 +127,7 @@ public partial class SongsVisualizer : ScrollContainer
             if (i >= song_displays.Count) // create song display if one does not exist
             {
                 
-                disp = Template.Instantiate() as SongDisplay;
+                disp = template.Instantiate() as SongDisplay;
                 container.CallThreadSafe("add_child", disp);
             }
             else // use ones that already exist
@@ -138,7 +138,8 @@ public partial class SongsVisualizer : ScrollContainer
             bool hidden = (bool)CallThreadSafe("IsHidden", disp);
 
             // init the playlist
-            disp.Init(Tools.GetMediaTitle(playlist.songs[i]), Metadata.GetArtist(playlist.songs[i]), Tools.SecondsToTimestamp(Metadata.GetTotalTime(playlist.songs[i])), i, Metadata.IsExplicit(playlist.songs[i]), playlist.type, playlist.type != Playlist.PlaylistType.Album || !hidden ? ConvertToGodot.GetCover(playlist.songs[i]) : null);
+
+            disp.Init(Tools.GetMediaTitle(playlist.songs[i]), Metadata.GetArtist(playlist.songs[i]), Tools.SecondsToTimestamp(Metadata.GetTotalTime(playlist.songs[i])), i, Metadata.IsExplicit(playlist.songs[i]), playlist.type, playlist.type != Playlist.PlaylistType.Album || !hidden ? ConvertToGodot.GetCover(playlist.songs[i]) : null, Metadata.IsFileCorrupt(playlist.songs[i]));
         }
     }
 
@@ -147,7 +148,7 @@ public partial class SongsVisualizer : ScrollContainer
         if (Globals.main.looked_at_playlist == Globals.main.playlist_index)
         {
             SongDisplay disp = container.GetChild(index + 1) as SongDisplay;
-            disp.Init(song_name, artist, time, index, explicit_lyrics, Globals.main.playlist.type, texture);
+            disp.Init(song_name, artist, time, index, explicit_lyrics, Globals.main.playlist.type, texture, false);
         }
     }
 

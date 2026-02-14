@@ -63,7 +63,7 @@ public partial class SongDisplay : Button
 
     public void SetTextures(bool playing)
     {
-        play_button.Texture = playing ? Globals.pause_texture : Globals.play_texture;
+        play_button.Texture = Disabled ? Globals.no_play_texture : (playing ? Globals.pause_texture : Globals.play_texture);
     }
 
     public void OnEnter()
@@ -82,8 +82,9 @@ public partial class SongDisplay : Button
         number.SelfModulate = new Color(1, 1, 1, 1);
     }
 
-    public void Init(string name, string artist, string time, int song, bool explicit_lyrics, Playlist.PlaylistType type, Texture2D cover)
+    public void Init(string name, string artist, string time, int song, bool explicit_lyrics, Playlist.PlaylistType type, Texture2D cover, bool corrupt)
     {
+        SetThreadSafe("disabled", corrupt);
         number.SetThreadSafe("text", (song + 1).ToString());
 
         this.song = song;
@@ -92,7 +93,8 @@ public partial class SongDisplay : Button
         this.artist.SetThreadSafe("text", artist);
         this.time.SetThreadSafe("text", time);
 
-        this.cover.SetThreadSafe("texture", cover);
+        if(cover != null)
+            this.cover.SetThreadSafe("texture", cover);
 
         SetThreadSafe("process_mode", (int)(cover == null ? ProcessModeEnum.Disabled : ProcessModeEnum.Inherit));
 

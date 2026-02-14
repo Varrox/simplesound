@@ -31,7 +31,7 @@
 [ext_resource type="PackedScene" uid="uid://dbwsclu2nt3nu" path="res://Prefabs/playlistcreatecontext.scn" id="19_blkrb"]
 [ext_resource type="Texture2D" uid="uid://b8ldjgpmsaxgu" path="res://Icons/shuffle.png" id="20_fkbne"]
 [ext_resource type="StyleBox" uid="uid://bhcyqvvim6l5e" path="res://Styling/Rounded Corners.tres" id="21_jy3dx"]
-[ext_resource type="Script" uid="uid://bcxwpol710ysq" path="res://Csharp/UI/ContextMenu.cs" id="21_seu75"]
+[ext_resource type="Script" uid="uid://bcxwpol710ysq" path="res://Csharp/UI/ContextMenuOpener.cs" id="21_seu75"]
 [ext_resource type="Texture2D" uid="uid://bwftf22dhh4du" path="res://Icons/refresh.png" id="23_7r5f6"]
 [ext_resource type="PackedScene" uid="uid://deg7587tnlkhk" path="res://Prefabs/songdisplay.scn" id="26_4w656"]
 [ext_resource type="PackedScene" uid="uid://dtfoexo3o7b3p" path="res://Prefabs/playlistcontext.tscn" id="26_gbh2w"]
@@ -48,6 +48,7 @@
 [ext_resource type="Script" uid="uid://gwm4ru46vy21" path="res://Csharp/UI/Buttons/Update.cs" id="37_abqjc"]
 [ext_resource type="PackedScene" uid="uid://bw078i5dk5ff4" path="res://Windows/ConfirmationWindow.tscn" id="39_h8e4i"]
 [ext_resource type="Texture2D" uid="uid://brujrc442p3b5" path="res://Icons/mute.png" id="42_0cbny"]
+[ext_resource type="Texture2D" uid="uid://dlroow6dpj2wv" path="res://Icons/no_play.png" id="46_abqjc"]
 [ext_resource type="Script" uid="uid://cqf4nqygajv02" path="res://GDScript/zoomer.gd" id="46_qnost"]
 [ext_resource type="Script" uid="uid://dshtlldgdpwlu" path="res://Styling/background_image_transition.gd" id="51_uypp3"]
 [ext_resource type="Shader" uid="uid://bdi2g0ydm4uf7" path="res://Styling/transition.gdshader" id="52_blkrb"]
@@ -161,7 +162,7 @@ corner_radius_bottom_left = 5
 shader = ExtResource("52_blkrb")
 shader_parameter/t = 0.0
 
-[node name="Main2" type="Control" unique_id=14097904 node_paths=PackedStringArray("player", "video_player", "volumeSlider", "playlist_visualizer", "songs_visualizer")]
+[node name="Main2" type="Control" unique_id=14097904 node_paths=PackedStringArray("audio_player", "video_player", "player", "playlist_visualizer", "songs_visualizer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -170,13 +171,13 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_4lmeg")
 script = ExtResource("1_l00ml")
-player = NodePath("Player")
+audio_player = NodePath("Player")
 video_player = NodePath("Interface/Background/Video")
-volumeSlider = NodePath("Interface/Player/Controls/Volume")
+player = NodePath("Interface")
 playlist_visualizer = NodePath("Interface/Content/Side Panel/Open/VBoxContainer/Playlists")
 songs_visualizer = NodePath("Interface/Content/Songs/MarginContainer/Song Display")
 
-[node name="Interface" type="Control" parent="." unique_id=164668924 node_paths=PackedStringArray("Play", "Next", "Back", "Loop", "Shuffle", "Progress", "CurrentTime", "TotalTime", "SongName", "SongArtist", "SongCover", "BackgroundImage", "VolumeSlider", "MuteButton", "backgroundColor")]
+[node name="Interface" type="Control" parent="." unique_id=164668924 node_paths=PackedStringArray("play", "next", "back", "loop", "shuffle", "progress", "current_time", "total_time", "song_name", "song_artist", "song_cover", "background_subviewport", "volume_slider", "mute_button", "background_color_rect")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -184,27 +185,21 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_632yu")
-Play = NodePath("Player/Controls/HBoxContainer/Play")
-Next = NodePath("Player/Controls/HBoxContainer/Next")
-Back = NodePath("Player/Controls/HBoxContainer/Back")
-Loop = NodePath("Player/Controls/HBoxContainer/Loop")
-Shuffle = NodePath("Player/Controls/HBoxContainer/Shuffle")
-LoopOn = ExtResource("3_lifiy")
-LoopOff = ExtResource("7_uv8rp")
-ShuffleOn = ExtResource("7_oidy5")
-ShuffleOff = ExtResource("20_fkbne")
-Mute = ExtResource("42_0cbny")
-Unmute = ExtResource("9_hrvbo")
-Progress = NodePath("Player/Controls/Progress")
-CurrentTime = NodePath("Player/Controls/Progress/Current Time")
-TotalTime = NodePath("Player/Controls/Progress/Total Time")
-SongName = NodePath("Player/Song Attributes/Name")
-SongArtist = NodePath("Player/Song Attributes/Artist")
-SongCover = NodePath("Player/Song Attributes/PanelContainer/Cover")
-BackgroundImage = NodePath("../SubViewport")
-VolumeSlider = NodePath("Player/Controls/Volume")
-MuteButton = NodePath("Player/Controls/Volume/Mute")
-backgroundColor = NodePath("Background/Color")
+play = NodePath("Player/Controls/HBoxContainer/Play")
+next = NodePath("Player/Controls/HBoxContainer/Next")
+back = NodePath("Player/Controls/HBoxContainer/Back")
+loop = NodePath("Player/Controls/HBoxContainer/Loop")
+shuffle = NodePath("Player/Controls/HBoxContainer/Shuffle")
+progress = NodePath("Player/Controls/Progress")
+current_time = NodePath("Player/Controls/Progress/Current Time")
+total_time = NodePath("Player/Controls/Progress/Total Time")
+song_name = NodePath("Player/Song Attributes/Name")
+song_artist = NodePath("Player/Song Attributes/Artist")
+song_cover = NodePath("Player/Song Attributes/PanelContainer/Cover")
+background_subviewport = NodePath("../SubViewport")
+volume_slider = NodePath("Player/Controls/Volume")
+mute_button = NodePath("Player/Controls/Volume/Mute")
+background_color_rect = NodePath("Background/Color")
 
 [node name="Background" type="Control" parent="Interface" unique_id=291196361]
 layout_mode = 1
@@ -312,7 +307,7 @@ theme_override_font_sizes/font_size = 15
 text = "My Playlists"
 vertical_alignment = 1
 
-[node name="Add" type="Button" parent="Interface/Content/Side Panel/Open/VBoxContainer/HBoxContainer" unique_id=977385184 node_paths=PackedStringArray("menu", "sub_menus")]
+[node name="Add" type="Button" parent="Interface/Content/Side Panel/Open/VBoxContainer/HBoxContainer" unique_id=977385184 node_paths=PackedStringArray("menu")]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_horizontal = 10
@@ -328,7 +323,6 @@ script = ExtResource("21_seu75")
 menu = NodePath("../../../../../../Playlistcreationcontext")
 teleportMenu = true
 teleportMenuOffset = Vector2(-135, 32)
-sub_menus = []
 
 [node name="HSeparator" type="HSeparator" parent="Interface/Content/Side Panel/Open/VBoxContainer" unique_id=166833490]
 layout_mode = 2
@@ -385,7 +379,7 @@ size_flags_horizontal = 0
 icon = ExtResource("8_8i1ca")
 expand_icon = true
 
-[node name="Add" type="Button" parent="Interface/Content/Side Panel/Collapsed/VBoxContainer" unique_id=1547991320 node_paths=PackedStringArray("menu", "sub_menus")]
+[node name="Add" type="Button" parent="Interface/Content/Side Panel/Collapsed/VBoxContainer" unique_id=1547991320 node_paths=PackedStringArray("menu")]
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
 size_flags_horizontal = 2
@@ -401,7 +395,6 @@ script = ExtResource("21_seu75")
 menu = NodePath("../../../../../Playlistcreationcontext")
 teleportMenu = true
 teleportMenuOffset = Vector2(0, 32)
-sub_menus = []
 
 [node name="HSeparator" type="HSeparator" parent="Interface/Content/Side Panel/Collapsed/VBoxContainer" unique_id=765403374]
 layout_mode = 2
@@ -427,7 +420,7 @@ theme_override_constants/margin_bottom = 115
 layout_mode = 2
 theme_override_styles/focus = SubResource("StyleBoxEmpty_b1qrp")
 script = ExtResource("14_htxhm")
-Template = ExtResource("26_4w656")
+template = ExtResource("26_4w656")
 container = NodePath("Full Container/Container")
 cover = NodePath("Full Container/Container/Top card/Icon/TextureRect")
 playlist_name = NodePath("Full Container/Container/Top card/Playlist name")
@@ -935,7 +928,7 @@ offset_top = 99.0
 offset_right = -884.0
 offset_bottom = 177.0
 
-[node name="Playlistcontext" parent="Interface" unique_id=957626048 instance=ExtResource("26_gbh2w")]
+[node name="Playlistcontext" parent="Interface" unique_id=957626048 node_paths=PackedStringArray("sub_menus") instance=ExtResource("26_gbh2w")]
 visible = false
 layout_mode = 1
 anchors_preset = -1
@@ -944,6 +937,7 @@ offset_top = -223.0
 offset_right = -864.0
 offset_bottom = -74.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_gueqf")
+sub_menus = []
 
 [node name="Songcontext" parent="Interface" unique_id=196847728 instance=ExtResource("17_3m5kb")]
 visible = false
@@ -957,6 +951,13 @@ offset_bottom = 43.0
 script = ExtResource("32_htxhm")
 _play_texture = ExtResource("5_8inno")
 _pause_texture = ExtResource("4_lfnj1")
+_no_play_texture = ExtResource("46_abqjc")
+_loop_on_texture = ExtResource("3_lifiy")
+_loop_off_texture = ExtResource("7_uv8rp")
+_shuffle_on_texture = ExtResource("7_oidy5")
+_shuffle_off_texture = ExtResource("20_fkbne")
+_mute_texture = ExtResource("42_0cbny")
+_unmute_texture = ExtResource("9_hrvbo")
 _default_cover = ExtResource("7_xn3w4")
 _default_cover_highres = ExtResource("13_seu75")
 _main = NodePath("..")
