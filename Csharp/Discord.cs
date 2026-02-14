@@ -55,14 +55,16 @@ public partial class Discord : Node
 
         string name = client.CurrentUser.Username;
 
+        bool cover = string.IsNullOrEmpty(cover_link) || cover_link.Length > 255;
+
         RichPresence presence = new RichPresence()
         {
             Details = Globals.player.song_name.Text,
             State = Globals.player.song_artist.Text,
             Assets = new Assets()
             {
-                LargeImageKey = string.IsNullOrEmpty(cover_link) ? GetLogo() : cover_link,
-                SmallImageKey = string.IsNullOrEmpty(cover_link) ? "" : GetLogo(),
+                LargeImageKey = cover ? GetLogo() : cover_link,
+                SmallImageKey = cover ? "" : GetLogo(),
                 LargeImageText = name == "varrox" ? $"btw I ({client.CurrentUser.DisplayName}) made this software" : "simplesound is an open source music player",
                 LargeImageUrl = "https://github.com/Varrox/simplesound"
             },
@@ -71,6 +73,7 @@ public partial class Discord : Node
         };
 
         client.SetPresence(presence);
+        GD.Print(cover_link);
     }
 
     public string GetLogo(){
@@ -95,6 +98,7 @@ public partial class Discord : Node
 
         if (string.IsNullOrEmpty(input_link))
         {
+            cover_link = "";
             FinishUpdateSong();
             return;
         }
@@ -103,6 +107,7 @@ public partial class Discord : Node
 
         if (link != input_link)
         {
+            cover_link = link;
             FinishUpdateSong();
             return;
         }
@@ -149,12 +154,12 @@ public partial class Discord : Node
         string converted_url = url;
         if (url.Contains("www.youtube") || url.Contains("https://youtu.be/"))
         {
-            converted_url = "https://i.ytimg.com/vi_webp/";
+            converted_url = "https://i.ytimg.com/vi/";
 
-            var split = url.Right(-("https://").Length).Split("/");
+            string[] split = url.Substring(("https://").Length - 1).Split("/");
             string video_id = split[split.Length - 1];
-            converted_url += video_id.Length > 0 ? video_id.Substring("watch?v=".Length - 1).Split("?")[0] : "";
-            converted_url += "/maxresdefault.webp";
+            converted_url += video_id.Length > 0 ? video_id.Substring("watch?v=".Length).Split("?=")[0] : "";
+            converted_url += "/hqdefault.jpg";
         }
 
         return converted_url;
