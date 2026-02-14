@@ -1,6 +1,6 @@
 # simplesound
 
-a simple music / audio player made in Godot. It is meant to mirror how spotify looks like, and works, and all ran with local files.
+a simple music / audio player made in Godot. It takes inspiration from how spotify's UI looks like and works, and it is all ran with local files.
 
 Feel free to report issues and bugs! It would help out a lot.
 
