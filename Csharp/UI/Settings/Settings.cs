@@ -133,6 +133,7 @@ public partial class Settings : EditorWindow
         {
             SpinBox i = (input[0] as SpinBox);
             i.ValueChanged += (double val) => NumberChanged(i, setting);
+
             if (i.Value != default_value.ToFloat())
             {
                 AddReset(input, type, default_value, where, name);
@@ -141,9 +142,11 @@ public partial class Settings : EditorWindow
         else if (type == "q")
         {
             OptionButton button = (input[0] as OptionButton);
-            button.CallDeferred("select", (int)(typeof(ApplicationMetadata).GetField(name).GetValue(Globals.save_data.application_metadata)) - 1);
+            int selected = (int)(typeof(ApplicationMetadata).GetField(name).GetValue(Globals.save_data.application_metadata)) - 1;
+            button.CallDeferred("select", selected);
             button.ItemSelected += (long index) => EnumItemSelected(button, (int)index, setting);
-            if (button.Selected != default_value.ToInt() - 1)
+
+            if (selected != default_value.ToInt() - 1)
             {
                 AddReset(input, type, default_value, where, name);
             }
@@ -152,6 +155,7 @@ public partial class Settings : EditorWindow
         {
             CheckButton check_box = (input[0] as CheckButton);
             check_box.Pressed += () => BoolChanged(check_box, setting);
+
             if (check_box.ButtonPressed != (default_value == "true"))
             {
                 AddReset(input, type, default_value, where, name);
@@ -162,7 +166,9 @@ public partial class Settings : EditorWindow
             SpinBox x = (input[0] as SpinBox), y = (input[1] as SpinBox);
             x.ValueChanged += (double val) => Vector2Changed(x, y, setting);
             y.ValueChanged += (double val) => Vector2Changed(x, y, setting);
+            
             Vector2 v = ParseVec2(default_value);
+
             if (x.Value != v.X || y.Value != v.Y)
             {
                 AddReset(input, type, default_value, where, name);
