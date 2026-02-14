@@ -86,7 +86,6 @@ public partial class SongsVisualizer : ScrollContainer
         Array<Node> song_displays = container.GetChildren();
         song_displays.RemoveAt(0);
 
-
         cover.Texture = playlist_cover;
         playlist_name.Text = playlist.name;
 
@@ -103,6 +102,7 @@ public partial class SongsVisualizer : ScrollContainer
                 SongDisplay display = song_displays[i] as SongDisplay;
                 Globals.main.OnPlay -= display.SetTextures;
                 Globals.main.OnLoadSong -= display.SetHighlight;
+
                 song_displays[i].QueueFree();
             }
 
@@ -115,6 +115,7 @@ public partial class SongsVisualizer : ScrollContainer
             for (int i = playlist.songs.Count; i < song_displays.Count; i++)
             {
                 SongDisplay song_display = song_displays[i] as SongDisplay;
+
                 Globals.main.OnPlay -= song_display.SetTextures;
                 Globals.main.OnLoadSong -= song_display.SetHighlight;
 
@@ -131,22 +132,30 @@ public partial class SongsVisualizer : ScrollContainer
 
     public void UpdateAllSongs(ref Array<Node> song_displays)
     {
+        int first = -1, last = -1;
+        bool after = false;
         for (int i = 0; i < playlist.songs.Count; i++) // update all
         {
             SongDisplay disp = null;
             
             if (i >= song_displays.Count) // create song display if one does not exist
             {
-                
                 disp = template.Instantiate() as SongDisplay;
                 container.CallThreadSafe("add_child", disp);
             }
             else // use ones that already exist
-            {
                 disp = song_displays[i] as SongDisplay;
-            }
 
-            bool hidden = (bool)CallThreadSafe("IsHidden", disp);
+            if(!after)
+                after = last != -1 && i > last;
+
+            bool hidden = after ? true : (bool)CallThreadSafe("IsHidden", disp);
+
+            if(first == -1 && !hidden)
+                first = i - 1;
+            
+            if(last == -1 && hidden && i > first && first != -1)
+                last = i - 1;
 
             // init the playlist
 

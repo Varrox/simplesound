@@ -52,7 +52,7 @@ public partial class SongDisplay : Button
         }
         else if (Globals.main.playlist_index != Globals.main.looked_at_playlist || Globals.main.song_index != song) // un-highlight
         {
-            play_button.Texture = Globals.play_texture;
+            play_button.Texture = Disabled ? Globals.no_play_texture : Globals.play_texture;
             Globals.main.OnPlay -= SetTextures;
             playing = false;
             SelfModulate = new Color(1, 1, 1, 1);
