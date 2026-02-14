@@ -5,6 +5,5 @@
 [resource]
 script = ExtResource("1_unyck")
 section_name = "App data"
-settings = PackedStringArray("Appdata Location:fl:c:appdata_location:")
 disabled = true
 metadata/_custom_type_script = "uid://6cs8xn6h2u1a"

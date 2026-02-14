@@ -79,6 +79,14 @@ public partial class Globals : Node
         file_dialog.Title = "Select Audio files";
     }
 
+    public static void SetFileDialogFile()
+    {
+        file_dialog.Filters = null;
+        file_dialog.FileMode = FileDialog.FileModeEnum.OpenFile;
+        file_dialog.OkButtonText = "Select file";
+        file_dialog.Title = "Select file";
+    }
+
     public static void SetFileDialogCover()
     {
         file_dialog.Filters = new[] { "*.jpeg", "*.jpg", "*.png", "*.webp" };

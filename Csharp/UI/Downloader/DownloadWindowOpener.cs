@@ -1,7 +1,8 @@
 using Godot;
 using System;
+using System.IO;
 
-public partial class SettingsOpener : EditorWindowOpener
+public partial class DownloadWindowOpener : EditorWindowOpener
 {
     public override void _Ready()
     {
@@ -13,7 +14,7 @@ public partial class SettingsOpener : EditorWindowOpener
 	{
 		if (Globals.player.Interrupt())
 		{
-			(window as Settings).Open();
+			(window as DownloadWindow).Open();
             ButtonPressed = false;
 		}
 	}

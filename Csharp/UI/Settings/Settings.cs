@@ -8,7 +8,7 @@ public partial class Settings : EditorWindow
     [Export] public Array<SettingsTab> settings_tabs;
     [Export] public VBoxContainer settings_container;
     [Export] public VBoxContainer tabs_container;
-    [Export] public Texture2D reset_texture;
+    [Export] public Texture2D reset_texture, file_texture;
 
     [Export] public Button close_menu;
     Dictionary<string, Variant> values;
@@ -29,9 +29,23 @@ public partial class Settings : EditorWindow
             button.ButtonUp += () => AddSettings(j);
         }
 
-        close_menu.ButtonUp += () => { Hide(); Globals.player.interrupted = false; };
+        close_menu.ButtonUp += Close;
 
         CallDeferred("AddSettings", 0);
+    }
+
+    public void Open()
+    {
+        Globals.file_dialog.Reparent(this);
+        Show();
+    }
+
+    public void Close()
+    {
+        Globals.file_dialog.Reparent(Globals.self);
+        Hide();
+        Globals.player.interrupted = false; 
+        AddSettings(0);
     }
 
     public void AddSettings(int settings_tab)
@@ -78,30 +92,36 @@ public partial class Settings : EditorWindow
         {
             case "int":
                 input = new[] { new SpinBox() };
-                (input[0] as SpinBox).Value = (int)(typeof(ApplicationMetadata).GetField(name).GetValue(Globals.save_data.application_metadata));
+                (input[0] as SpinBox).Value = (int)(GetSetting(where, name));
                 break;
             case "flt":
                 input = new[] { new SpinBox() };
                 (input[0] as SpinBox).Step = 0.01;
-                (input[0] as SpinBox).Value = (float)(typeof(ApplicationMetadata).GetField(name).GetValue(Globals.save_data.application_metadata));
+                (input[0] as SpinBox).Value = (float)(GetSetting(where, name));
                 break;
             case "q":
                 input = EnumSetting(quality_levels);
                 break;
             case "bool":
                 input = new[] { new CheckButton() };
-                (input[0] as CheckButton).ButtonPressed = (bool)(typeof(ApplicationMetadata).GetField(name).GetValue(Globals.save_data.application_metadata));
+                (input[0] as CheckButton).ButtonPressed = (bool)(GetSetting(where, name));
                 break;
             case "str":
                 input = new[] { new LineEdit() };
-                (input[0] as LineEdit).Text = (string)(typeof(ApplicationMetadata).GetField(name).GetValue(Globals.save_data.application_metadata));
+                (input[0] as LineEdit).Text = (string)(GetSetting(where, name));
                 break;
-            //case "fl":
-            //    input = new[] { new Label(), new Button() };
-            //    break;
+            case "fl":
+                input = new Control[] { new LineEdit(), new Button() };
+                (input[0] as LineEdit).Text = (string)(GetSetting(where, name));
+                (input[0] as LineEdit).SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+                (input[1] as Button).Icon = file_texture;
+                (input[1] as Button).ExpandIcon = true;
+                (input[1] as Button).TooltipText = "Open file manager to select location.";
+                (input[1] as Button).CustomMinimumSize = Vector2.One * 28;
+                break;
             case "v2":
                 input = new[] { new SpinBox(), new SpinBox() };
-                Vector2 v = (Vector2)(typeof(ApplicationMetadata).GetField(name).GetValue(Globals.save_data.application_metadata));
+                Vector2 v = (Vector2)(GetSetting(where, name));
                 (input[0] as SpinBox).Prefix = "x:";
                 (input[0] as SpinBox).MinValue = GetTree().Root.MinSize.X;
                 (input[0] as SpinBox).MaxValue = 3000;
@@ -115,7 +135,7 @@ public partial class Settings : EditorWindow
             default:
                 type = "str";
                 input = new[] { new LineEdit() };
-                (input[0] as LineEdit).Text = (string)(typeof(ApplicationMetadata).GetField(name).GetValue(Globals.save_data.application_metadata));
+                (input[0] as LineEdit).Text = (string)(GetSetting(where, name));
                 break;
         }
 
@@ -142,7 +162,7 @@ public partial class Settings : EditorWindow
         else if (type == "q")
         {
             OptionButton button = (input[0] as OptionButton);
-            int selected = (int)(typeof(ApplicationMetadata).GetField(name).GetValue(Globals.save_data.application_metadata)) - 1;
+            int selected = (int)(GetSetting(where, name)) - 1;
             button.CallDeferred("select", selected);
             button.ItemSelected += (long index) => EnumItemSelected(button, (int)index, setting);
 
@@ -174,10 +194,48 @@ public partial class Settings : EditorWindow
                 AddReset(input, type, default_value, where, name);
             }
         }
+        else if (type == "str")
+        {
+            LineEdit line_edit = (input[0] as LineEdit);
+            line_edit.TextChanged += (string text) => TextChanged(input, text, setting);
 
-        Globals.save_data.application_metadata.ApplySettings();
+            if (line_edit.Text != default_value)
+            {
+                AddReset(input, type, default_value, where, name);
+            }
+        }
+        else if (type == "fl")
+        {
+            LineEdit line_edit = (input[0] as LineEdit);
+            line_edit.TextChanged += (string text) => TextChanged(input, text, setting);
+
+            Button file_opener = (input[1] as Button);
+            file_opener.ButtonUp += () => FileLocation(input, setting);
+
+            if (line_edit.Text != default_value)
+            {
+                AddReset(input, type, default_value, where, name);
+            }
+        }        
+
+        Globals.save_data.application_settings.ApplySettings();
 
         return container;
+    }
+
+    Type FindType(string where)
+    {
+        return (where == "as" || where == "sg" ? typeof(ApplicationSettings) : typeof(CloudSettings));
+    }
+
+    object FindObject(string where)
+    {
+        return (where == "as" || where == "sg" ? Globals.save_data.application_settings : Globals.save_data.cloud_settings);
+    }
+
+    object GetSetting(string where, string name)
+    {
+        return FindType(where).GetField(name).GetValue(FindObject(where));
     }
 
     Control[] EnumSetting(string[] _enum)
@@ -193,6 +251,14 @@ public partial class Settings : EditorWindow
         return input;
     }
 
+    void FileLocation(Control[] input, string setting)
+    {
+        Globals.SetFileDialogFile();
+		Globals.file_dialog.Popup();
+
+        Globals.file_dialog.FileSelected += (string file) => {(input[0] as LineEdit).Text = file; TextChanged(input, file, setting);};
+    }
+
     public Vector2 ParseVec2(string v2)
     {
         return new Vector2(v2.Substring(0, v2.Find(",")).ToInt(), v2.Substring(v2.Find(",") + 1).ToInt());
@@ -205,10 +271,16 @@ public partial class Settings : EditorWindow
         VariableSet(new[] { x, y }, x.Value != v.X || y.Value != v.Y, type, default_value, where, name);
     }
 
-    public void BoolChanged(CheckButton btn, string setting)
+    public void BoolChanged(CheckButton button, string setting)
     {
         (string full_name, string type, string where, string name, string default_value) = ParseSetting(setting);
-        VariableSet(new[] { btn }, btn.ButtonPressed != (default_value == "true"), type, default_value, where, name);
+        VariableSet(new[] { button }, button.ButtonPressed != (default_value == "true"), type, default_value, where, name);
+    }
+
+    public void TextChanged(Control[] input, string text, string setting)
+    {
+        (string full_name, string type, string where, string name, string default_value) = ParseSetting(setting);
+        VariableSet(input, text != default_value, type, default_value, where, name);
     }
 
     public void NumberChanged(SpinBox spin, string setting)
@@ -228,7 +300,7 @@ public partial class Settings : EditorWindow
     {
         foreach (Node node in input[0].GetParent().GetChildren())
         {
-            if (node is Button && System.Array.IndexOf(input, node) == -1) // Delete Reset button
+            if (node is Button && System.Array.IndexOf(input, node) == -1) // Delete Reset button(s)
             {
                 node.QueueFree();
             }
@@ -287,11 +359,15 @@ public partial class Settings : EditorWindow
         {
             case "sg": // Shader Global
                 RenderingServer.GlobalShaderParameterSet(name, variant);
-                SetConstant(name, variant, type);
+                SetSetting(ref Globals.save_data.application_settings, name, variant, type);
                 break;
-            case "c": // Constant
-                SetConstant(name, variant, type);
-                Globals.save_data.application_metadata.ApplySettings();
+            case "as": // Application Setting
+                SetSetting(ref Globals.save_data.application_settings, name, variant, type);
+                Globals.save_data.application_settings.ApplySettings();
+                break;
+            case "cs": // Cloud Setting
+                SetSetting(ref Globals.save_data.cloud_settings, name, variant, type);
+                Globals.save_data.application_settings.ApplySettings();
                 break;
         }
     }
@@ -326,14 +402,14 @@ public partial class Settings : EditorWindow
         }
     }
 
-    public void SetConstant(string constant, Variant variant, string type)
+    public void SetSetting<T>(ref T obj, string constant, Variant variant, string type)
     {
         if (Globals.self == null)
             return;
 
-        FieldInfo field = typeof(ApplicationMetadata).GetField(constant, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        FieldInfo field = typeof(T).GetField(constant, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
         
-        field.SetValue(Globals.save_data.application_metadata, Convert.ChangeType(variant.Obj, field.FieldType));
+        field.SetValue(obj, Convert.ChangeType(variant.Obj, field.FieldType));
 
         Globals.save_data.Save();
     }

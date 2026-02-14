@@ -6,10 +6,10 @@ TODO
 - Add song position rearange.
 - Add images to ssl.
 - Add gdshader support to ssl.
+- Make documentation for playlists.
 
 DOING
 
-- Make documentation for playlists.
 - Add song downloading - For youtube, soundcloud, and spotify.
 
 FINISHED

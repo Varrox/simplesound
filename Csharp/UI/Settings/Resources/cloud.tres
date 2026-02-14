@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("1_wpxp0")
 section_name = "Cloud"
-disabled = true
+settings = PackedStringArray("Sync Application Settings:bool:cs:sync_application_settings:true")
 metadata/_custom_type_script = "uid://6cs8xn6h2u1a"

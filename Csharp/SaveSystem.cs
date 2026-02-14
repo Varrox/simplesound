@@ -70,7 +70,8 @@ public class SaveData
 	public float time, volume;
 	public bool shuffled;
 	public List<string> playlists;
-	public ApplicationMetadata application_metadata = new ApplicationMetadata();
+	public ApplicationSettings application_settings = new ApplicationSettings();
+	public CloudSettings cloud_settings = new CloudSettings();
 
     static readonly string path = Path.Combine(SaveSystem.USER_DATA, "savedata.json");
 
@@ -81,7 +82,7 @@ public class SaveData
 
     public static SaveData GetSaveData()
     {
-        foreach (string folder_name in new[] { "Playlists", "Music Folders", "Playlist Covers" }) // Add folders
+        foreach (string folder_name in new[] { "Playlists", "Music Folders", "Playlist Covers", "Downloaded Music" }) // Add folders
         {
             string folder_path = Path.Combine(SaveSystem.USER_DATA, folder_name);
             if (!Directory.Exists(folder_path))

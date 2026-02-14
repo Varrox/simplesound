@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("1_w158m")
 section_name = "Graphics / Display"
-settings = PackedStringArray("Blur Quality:q:sg:blur_quality:3", "VSync:bool:c:vsync:true")
+settings = PackedStringArray("Blur Quality:q:sg:blur_quality:3")
 metadata/_custom_type_script = "uid://6cs8xn6h2u1a"

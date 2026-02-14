@@ -13,7 +13,7 @@ public partial class RemoveSong : Button
 
     public void Remove()
 	{
-		if(Globals.save_data.application_metadata.remove_song_warning)
+		if(Globals.save_data.application_settings.remove_song_warning)
 		{
 			confirmation_window = Globals.confirmation_window.Instantiate() as ConfirmationWindow;
 
@@ -39,7 +39,7 @@ public partial class RemoveSong : Button
         {
             if (confirmation_window.ignored)
             {
-                Globals.save_data.application_metadata.remove_song_warning = false;
+                Globals.save_data.application_settings.remove_song_warning = false;
                 Globals.save_data.Save();
             }
 

@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("1_wc48w")
 section_name = "Downloader"
-disabled = true
+settings = PackedStringArray("YT-DLP Location:fl:as:ytdlp_location:")
 metadata/_custom_type_script = "uid://6cs8xn6h2u1a"
