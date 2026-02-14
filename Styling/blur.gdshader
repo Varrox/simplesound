@@ -4,12 +4,14 @@
 shader_type canvas_item;
 render_mode unshaded;
 
-uniform int samples:hint_range(1, 32, 1) = 8;
 uniform float blur_size:hint_range(0.001, 1, 0.001) = 0.25;
 
 #define pow2(x) (x * x)
 
 varying float sigma;
+
+const int samples = 5;
+global uniform int blur_quality;
 
 float gaussian(vec2 i) {
     return 1.0 / (2.0 * PI * sigma) * exp(-((pow2(i.x) + pow2(i.y)) / (2.0 * sigma)));
@@ -17,7 +19,7 @@ float gaussian(vec2 i) {
 
 vec3 blur(vec2 screen_uv, sampler2D input_texture, float size, vec2 scale) {
 	vec3 result = vec3(1.);
-	float steps = size / float(samples);
+	float steps = size / float(samples * blur_quality);
 	float accum = 0.0;
 	float weight;
 	vec2 offset;
@@ -38,5 +40,5 @@ vec3 blur(vec2 screen_uv, sampler2D input_texture, float size, vec2 scale) {
 
 void fragment() {
 	sigma = pow2(float(blur_size) * 0.25);
-	COLOR = vec4(blur(UV, TEXTURE, blur_size / 2.0, vec2(1.0) / 1.0 / SCREEN_PIXEL_SIZE * .000001 * blur_size), 1.);
+	COLOR = vec4(blur(UV, TEXTURE, blur_size / 2.0, vec2(1.0) / 1.0 / SCREEN_PIXEL_SIZE * .000001 * blur_size) * 0.7, 1.);
 }

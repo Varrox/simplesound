@@ -6,7 +6,7 @@ public partial class StreamerButton : Button
 	bool enabled = false;
 	StreamDisplay display;
 	[Export] PackedScene stream_display;
-
+	[Export] TextureRect texture;
 
     public override void _Ready()
 	{
@@ -34,9 +34,9 @@ public partial class StreamerButton : Button
 
 	public void SetStreamDisplayVariables()
 	{
-		display.cover_art.Texture = Globals.player.SongCover.Texture;
-		display.song.Text = Globals.player.SongName.Text;
-		display.artist.Text = Globals.player.SongArtist.Text;
-		display.background.Texture = display.cover_art.Texture;
+		display.cover_art.Texture = Globals.player.song_cover.Texture;
+		display.song.Text = Globals.player.song_name.Text;
+		display.artist.Text = Globals.player.song_artist.Text;
+		display.background.Texture = texture.Texture;
     }
 }

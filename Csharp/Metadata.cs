@@ -1,5 +1,4 @@
-﻿using Godot;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using TagLib;
@@ -18,7 +17,7 @@ public class Metadata
 
         TagLib.File file = TagLib.File.Create(path);
         file_list.Add(path, file);
-
+        
         return true;
     }
 
@@ -46,6 +45,10 @@ public class Metadata
                 tag_list.Add(path, comment?.Split(';'));
                 return true;
             }
+        }
+        else
+        {
+            return true;
         }
 
         return false;

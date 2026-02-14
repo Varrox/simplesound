@@ -3,8 +3,6 @@ using System.IO;
 
 public partial class ImportPlaylist : Button
 {
-	[Export] ContextMenu menu;
-
 	Confirm sync;
 
 	// Called when the node enters the scene tree for the first time.
@@ -17,9 +15,9 @@ public partial class ImportPlaylist : Button
 	{
 		ConfirmationWindow confirmation_window = Globals.confirmation_window.Instantiate() as ConfirmationWindow;
 
-		confirmation_window.Message = "Import with cloud syncing enabled?";
-		confirmation_window.AcceptText = "Yes";
-		confirmation_window.DeclineText = "No";
+		confirmation_window.message = "Import with cloud syncing enabled?";
+		confirmation_window.accept_text = "Yes";
+		confirmation_window.decline_text = "No";
 		confirmation_window.free_on_close = true;
 
         GetTree().CurrentScene.AddChild(confirmation_window);
@@ -63,6 +61,5 @@ public partial class ImportPlaylist : Button
 	{
         Globals.file_dialog.FileSelected -= Import; 
 		Globals.file_dialog.Canceled -= Cancel;
-		menu.CloseMenu();
     }
 }

@@ -1,21 +1,21 @@
 TODO
 
-- Add song downloading - For youtube, soundcloud, and spotify.
 - Make playlist bar hiding.
-- Add settings menu.
 - Add lyrics viewer.
 - Add sorting.
 - Add song position rearange.
 - Add images to ssl.
-- Add basic gdshader support to ssl.
-- Rename SSL to something else because SSL is already taken.
+- Add gdshader support to ssl.
 
 DOING
 
-- Make documentation for ssl.
+- Make documentation for playlists.
+- Add song downloading - For youtube, soundcloud, and spotify.
 
 FINISHED
 
+- Add settings menu.
+- Rename SSL to something else because SSL is already taken.
 - Make Github repo public, and make builds.
 - Add update button.
 - Add share button to songs (keep youtube link in song metadata).
@@ -35,13 +35,13 @@ FINISHED
 x Make covers all save as square aspect ratio.
 - Lerp background image to transition.
 - Add threading to playlist loading.
+- Make refresh specific parsing.
+- Make background image blur so it is only updated when it's image is changed.
 
 SHELF
 
-- Make refresh specific parsing.
 - Add folder explorer.
 - Add max song display load limit.
-- Make background image blur so it is only updated when it's image is changed.
 
 ULTIMATE GOAL:
 

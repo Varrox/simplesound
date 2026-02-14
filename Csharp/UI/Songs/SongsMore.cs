@@ -1,15 +1,17 @@
 ﻿using Godot;
-public partial class SongsMore : ContextMenu
+using Godot.Collections;
+public partial class SongsMore : ContextMenuOpener
 {
     [Export] public SongDisplay display;
+    public static int song;
 
     public override void _Ready()
     {
-        base._Ready();
-        OnOpen += () => ShareMenu.song = display.song;
-
         menu = Globals.song_menu;
+        teleportMenu = true;
 
-        sub_menus.Add(ShareMenu.instance);
+        OnOpen += () => song = display.song;
+
+        base._Ready();
     }
 }

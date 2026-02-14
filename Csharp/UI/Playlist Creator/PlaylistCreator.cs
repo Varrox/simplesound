@@ -5,18 +5,15 @@ public partial class PlaylistCreator : EditorWindow
 {
 	[Export] public LineEdit playlist_name;
 
-	[Export] Button addCover;
-	[Export] PathDisplay coverDisplay;
+	[Export] public Button addCover, addSongs;
+	[Export] public PathDisplay coverDisplay;
 
-	[Export] Button addSongs;
-	[Export] PackedScene songDisplay;
-	[Export] Control songDisplayContainer;
+	[Export] public PackedScene songDisplay;
+	[Export] public Control songDisplayContainer;
+	[Export] public Panel panel;
 
-
-	[Export] public CheckBox cloudSync, album;
+	[Export] public CheckBox cloudSync, album, backgroundThemeEnabled;
 	[Export] public LineEdit artist;
-
-	[Export] public CheckBox backgroundThemeEnabled;
 	[Export] public ColorPickerButton backgroundTheme;
 
 	[Export] public Button SubmitButton, CancelButton;
@@ -30,15 +27,15 @@ public partial class PlaylistCreator : EditorWindow
 	{
 		base._Ready();
 
-		addCover.ButtonDown += OpenCover;
-		coverDisplay.delete.ButtonDown += ClearCover;
+		addCover.ButtonUp += OpenCover;
+		coverDisplay.delete.ButtonUp += ClearCover;
 
-		addSongs.ButtonDown += OpenSongs;
+		addSongs.ButtonUp += OpenSongs;
 
 		// Submit / Cancel
 
-		SubmitButton.ButtonDown += Submit;
-		CancelButton.ButtonDown += Cancel;
+		SubmitButton.ButtonUp += Submit;
+		CancelButton.ButtonUp += Cancel;
 	}
 
 	public void Clear()
@@ -67,6 +64,7 @@ public partial class PlaylistCreator : EditorWindow
 			Clear();
 
         Globals.file_dialog.Reparent(this);
+		FilesDropped += DropSongs;
 
         Show();
 	}
@@ -82,14 +80,14 @@ public partial class PlaylistCreator : EditorWindow
         Globals.file_dialog.Popup();
 
 		Globals.file_dialog.FileSelected += SetCover;
-        Globals.file_dialog.Canceled += DisconnectSetCover;
+        Globals.file_dialog.Canceled += CancelSetCover;
     }
 
 	public void SetCover(string path)
 	{
 		cover_path = path;
 		coverDisplay.SetPath(cover_path);
-        DisconnectSetCover();
+        CancelSetCover();
     }
 	
 	public void ClearCover()
@@ -104,11 +102,19 @@ public partial class PlaylistCreator : EditorWindow
 		Globals.file_dialog.Popup();
 
         Globals.file_dialog.FilesSelected += AddSongs;
-        Globals.file_dialog.Canceled += DisconnectAddSongs;
+        Globals.file_dialog.Canceled += CancelAddSongs;
     }
 
-	void DisconnectAddSongs() { Globals.file_dialog.FilesSelected -= AddSongs; Globals.file_dialog.Canceled -= DisconnectAddSongs; }
-    void DisconnectSetCover() { Globals.file_dialog.FileSelected -= SetCover; Globals.file_dialog.Canceled -= DisconnectSetCover; }
+	void CancelAddSongs() { Globals.file_dialog.FilesSelected -= AddSongs; Globals.file_dialog.Canceled -= CancelAddSongs; }
+    void CancelSetCover() { Globals.file_dialog.FileSelected -= SetCover; Globals.file_dialog.Canceled -= CancelSetCover; }
+
+	public void DropSongs(string[] files)
+	{
+		if(panel.GetGlobalRect().HasPoint(GetMousePosition()))
+		{
+			AddSongs(files);
+		}	
+	}
 
     public void AddSongs(string[] paths)
 	{
@@ -124,8 +130,8 @@ public partial class PlaylistCreator : EditorWindow
 					songDisplayContainer.AddChild(disp);
 					songs.Add(path);
 
-					disp.delete.ButtonDown += () => songs.Remove(path);
-					disp.delete.ButtonDown += () => disp.QueueFree();
+					disp.delete.ButtonUp += () => songs.Remove(path);
+					disp.delete.ButtonUp += () => disp.QueueFree();
 				}
 				else
 				{
@@ -137,7 +143,7 @@ public partial class PlaylistCreator : EditorWindow
                 GD.PushError($"{path} is not a valid audio file, it cannot be added to this playlist.");
 			}
 		}
-        DisconnectAddSongs();
+        CancelAddSongs();
     }
 
 	public void Submit()
@@ -146,8 +152,9 @@ public partial class PlaylistCreator : EditorWindow
 		Hide();
 
         Globals.file_dialog.Reparent(Globals.self);
+		FilesDropped -= DropSongs;
 
-		OnClose?.Invoke();
+        OnClose?.Invoke();
     }
 	public void Cancel()
 	{

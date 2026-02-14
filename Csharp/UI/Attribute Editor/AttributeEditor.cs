@@ -2,67 +2,59 @@ using Godot;
 
 public partial class AttributeEditor : EditorWindow
 {
-    [Export] public LineEdit Name, Artist, Sharelink;
-    [Export] public Button CoverButton;
-    [Export] public PathDisplay CoverLabel;
-    [Export] public CheckBox ExplicitLyrics;
-    [Export] public Button SubmitButton, CancelButton;
+    [Export] public LineEdit name, artist, share_link;
+    [Export] public Button cover_button;
+    [Export] public PathDisplay cover_label;
+    [Export] public CheckBox explicit_lyrics;
+    [Export] public Button submit_button, cancel_button;
 
-    public string song_name, artist, cover_path, share_link;
-    public bool explicit_lyrics;
-    bool cover_changed;
+    public string song_name, _artist, cover_path, _share_link;
+    public bool _explicit_lyrics, cover_changed;
 
     public override void _Ready()
     {
         base._Ready();
 
-        SubmitButton.ButtonDown += Submit;
-        CoverButton.ButtonDown += Cover;
-        CancelButton.ButtonDown += Cancel;
+        submit_button.ButtonDown += Submit;
+        cover_button.ButtonDown += Cover;
+        cancel_button.ButtonDown += Cancel;
     }
 
     public override void _Process(double delta)
     {
         if (Visible)
         { 
-            bool changed = (Name.Text != song_name) || (Artist.Text != artist) || cover_changed || (explicit_lyrics != ExplicitLyrics.ButtonPressed) || (share_link != Sharelink.Text);
-            SubmitButton.Visible = changed;
+            bool changed = (name.Text != song_name) || (artist.Text != _artist) || cover_changed || (_explicit_lyrics != explicit_lyrics.ButtonPressed) || (_share_link != share_link.Text);
+            submit_button.Visible = changed;
         }
     }
 
-    public void Open(string currentSong, string currentArtist, string currentSharelink, bool explicitLyrics)
+    public void Open(string currentSong, string current_artist, string current_share_link, bool explicit_lyrics)
     {
-        Name.Text = currentSong;
+        name.Text = currentSong;
         song_name = currentSong;
-        Artist.Text = currentArtist;
-        artist = currentArtist;
-        Sharelink.Text = currentSharelink;
-        share_link = currentSharelink;
+        artist.Text = current_artist;
+        _artist = current_artist;
+        share_link.Text = current_share_link;
+        _share_link = current_share_link;
 
-        ExplicitLyrics.ButtonPressed = explicitLyrics;
-        this.explicit_lyrics = explicitLyrics;
-        Show();
-        Visible = true;
-        CoverLabel.SetPath();
+        this.explicit_lyrics.ButtonPressed = explicit_lyrics;
+        this._explicit_lyrics = explicit_lyrics;
+
+        cover_label.SetPath();
         cover_path = "";
 
-        Globals.file_dialog.Reparent(this);
-        Globals.file_dialog.FileSelected += SubmitCover;
-        Globals.SetFileDialogCover();
+        Show();
     }
 
     public void Submit()
     {
-        Visible = false;
         Hide();
+
         cover_changed = false;
 
         OnClose?.Invoke();
         cancelled = false;
-
-        Globals.file_dialog.Reparent(Globals.self);
-        Globals.file_dialog.FileSelected -= SubmitCover;
-        Globals.ResetFileDialogParameters();
     }
 
     public void Cancel()
@@ -73,13 +65,23 @@ public partial class AttributeEditor : EditorWindow
 
     public void Cover()
     {
+        Globals.file_dialog.Reparent(this);
+        Globals.file_dialog.FileSelected += SubmitCover;
+
+        Globals.SetFileDialogCover();
         Globals.file_dialog.Popup();
+
         cover_changed = true;
     }
 
     public void SubmitCover(string path)
     {
         cover_path = path;
-        CoverLabel.SetPath(path);
+        cover_label.SetPath(path);
+
+        Globals.file_dialog.Reparent(Globals.self);
+        Globals.file_dialog.FileSelected -= SubmitCover;
+
+        Globals.ResetFileDialogParameters();
     }
 }

@@ -4,18 +4,21 @@ public partial class AttributeEditorOpener : EditorWindowOpener
 {
     public override void _Ready()
     {
-        ButtonDown += EditAttributes;
-        window.OnClose += SubmitMeta;
+        ButtonUp += EditAttributes;
+        window = Globals.attribute_editor;
     }
 
     public void EditAttributes()
     {
         if (Globals.main.song != null) 
         {
-            if (Globals.player.Interrupt())
+            if (!Globals.player.Interrupt())
             {
-                (window as AttributeEditor).Open(Globals.player.SongName.Text, Globals.player.SongArtist.Text, Metadata.GetShareLink(Globals.main.song), Metadata.IsExplicit(Globals.main.song));
+                return;
             }
+
+            (window as AttributeEditor).Open(Globals.player.song_name.Text, Globals.player.song_artist.Text, Metadata.GetShareLink(Globals.main.song), Metadata.IsExplicit(Globals.main.song));
+            window.OnClose += SubmitMeta;
         }
     }
 
@@ -26,12 +29,13 @@ public partial class AttributeEditorOpener : EditorWindowOpener
         if(!editor.cancelled)
         {
             if (Globals.main.playlist != null)
-                Metadata.SetData(Globals.main.song, editor.Name.Text, editor.Artist.Text, editor.cover_path, editor.Sharelink.Text, editor.ExplicitLyrics.ButtonPressed);
+                Metadata.SetData(Globals.main.song, editor.name.Text, editor.artist.Text, editor.cover_path, editor.share_link.Text, editor.explicit_lyrics.ButtonPressed);
 
             Globals.player.OnLoadSong();
-            Globals.main.songs_visualizer.UpdateSong(Globals.main.song_index, editor.Name.Text, editor.Artist.Text, Globals.player.TotalTime.Text, editor.ExplicitLyrics.ButtonPressed, Globals.player.SongCover.Texture);
+            Globals.main.songs_visualizer.UpdateSong(Globals.main.song_index, editor.name.Text, editor.artist.Text, Globals.player.total_time.Text, editor.explicit_lyrics.ButtonPressed, Globals.player.song_cover.Texture);
         }
 
         Globals.player.interrupted = false;
+        window.OnClose -= SubmitMeta;
     }
 }

@@ -1,0 +1,103 @@
+[gd_scene format=3 uid="uid://cn1tw3g51dn0c"]
+
+[ext_resource type="Script" uid="uid://lbhqgj6ahfub" path="res://Csharp/UI/Settings/Settings.cs" id="1_c0o00"]
+[ext_resource type="Texture2D" uid="uid://bwftf22dhh4du" path="res://Icons/refresh.png" id="2_4ebue"]
+[ext_resource type="Script" uid="uid://b85d04ls7d2ww" path="res://GDScript/version_display.gd" id="2_c0o00"]
+[ext_resource type="Resource" uid="uid://35h514ucswjf" path="res://Csharp/UI/Settings/Resources/graphics_display.tres" id="2_dp1jx"]
+[ext_resource type="Theme" uid="uid://cg2x5h7ufrntn" path="res://Styling/global_theme.tres" id="2_u30gs"]
+[ext_resource type="Resource" uid="uid://de61txalakltv" path="res://Csharp/UI/Settings/Resources/cloud.tres" id="3_7l07q"]
+[ext_resource type="PackedScene" uid="uid://dhdg1uuqqaoj4" path="res://Prefabs/background.tscn" id="3_8qwbu"]
+[ext_resource type="Resource" uid="uid://dq72h5uked4hc" path="res://Csharp/UI/Settings/Resources/downloader.tres" id="4_3eler"]
+[ext_resource type="Resource" uid="uid://covm6feqj4vyp" path="res://Csharp/UI/Settings/Resources/app_data.tres" id="5_njjsv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7l07q"]
+
+[node name="Window" type="Window" unique_id=874625055 node_paths=PackedStringArray("settings_container", "tabs_container", "close_menu")]
+oversampling_override = 1.0
+title = "Settings"
+initial_position = 2
+size = Vector2i(600, 350)
+min_size = Vector2i(450, 300)
+script = ExtResource("1_c0o00")
+settings_tabs = Array[Object]([ExtResource("2_dp1jx"), ExtResource("3_7l07q"), ExtResource("4_3eler"), ExtResource("5_njjsv")])
+settings_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer2/VBoxContainer2")
+tabs_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer")
+reset_texture = ExtResource("2_4ebue")
+close_menu = NodePath("MarginContainer/VBoxContainer/HBoxContainer/Close")
+
+[node name="ColorRect" parent="." unique_id=1354321475 instance=ExtResource("3_8qwbu")]
+focus_mode = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1173840034]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("2_u30gs")
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1541276977]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1414908470]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2" unique_id=89824040]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer" unique_id=878386457]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1218646127]
+custom_minimum_size = Vector2(7.06, 0)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1237941533]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer2" unique_id=1572833832]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer" unique_id=1793015055]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=404514143]
+layout_mode = 2
+
+[node name="LinkButton" type="LinkButton" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=69504489]
+layout_mode = 2
+size_flags_vertical = 4
+tooltip_text = "Opens the page to simplesound's source code in browser."
+theme_override_colors/font_color = Color(0.45064825, 0.4506483, 0.45064813, 1)
+theme_override_styles/focus = SubResource("StyleBoxEmpty_7l07q")
+uri = "https://github.com/Varrox/simplesound"
+script = ExtResource("2_c0o00")
+
+[node name="Close" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1390632733]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "Close"

@@ -38,10 +38,8 @@ public class Playlist
     public void DeleteFile()
     {
         File.Delete(GetPath());
-        string playlistSaver = System.IO.Path.Combine(SaveSystem.USER_DATA, "savedplaylists.txt");
-        List<string> paths = new List<string>(File.ReadAllLines(playlistSaver));
-        paths.Remove(GetPath());
-        File.WriteAllLines(playlistSaver, paths);
+        Globals.save_data.playlists.Remove(GetPath());
+        Globals.save_data.Save();
     }
 
     public Playlist(string name, string coverpath, List<string> songs)
@@ -65,19 +63,37 @@ public class Playlist
         {
             if(!File.Exists(songs[i]))
             {
-                string directory = songs[i];
+                string path = songs[i];
                 songs.RemoveAt(i);
-                if (Directory.Exists(directory))
+                
+                if (Directory.Exists(path))
                 {
-                    string[] files = Directory.GetFiles(directory);
-                    foreach(string f in files)
-                    {
-                        if(Tools.ValidAudioFile(f))
-                        {
-                            songs.Insert(i, f);
-                        }
-                    }
+                    songs.InsertRange(i, GetSongsFromDirectory(path));
                 }
+            }
+        }
+
+        return songs;
+    }
+
+    public static List<string> GetSongsFromDirectory(string directory)
+    {
+        List<string> songs = new List<string>();
+
+        foreach(string d in Directory.GetDirectories(directory))
+        {
+            if (Directory.Exists(d))
+            {
+                songs.AddRange(GetSongsFromDirectory(d));
+            }
+        }
+
+        foreach(string s in Directory.GetFiles(directory))
+        {
+            
+            if(Tools.ValidAudioFile(s))
+            {
+                songs.Add(s);
             }
         }
 

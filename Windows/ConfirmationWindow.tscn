@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bw078i5dk5ff4"]
+[gd_scene format=3 uid="uid://bw078i5dk5ff4"]
 
 [ext_resource type="Script" uid="uid://4t756wrga7li" path="res://Csharp/UI/ConfirmationWindow.cs" id="1_3wopc"]
 [ext_resource type="PackedScene" uid="uid://dhdg1uuqqaoj4" path="res://Prefabs/background.tscn" id="2_a7dhm"]
@@ -6,21 +6,22 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a7dhm"]
 
-[node name="ConfirmationWindow" type="Window" node_paths=PackedStringArray("accept", "decline", "cancel", "message")]
+[node name="ConfirmationWindow" type="Window" unique_id=1666920691 node_paths=PackedStringArray("accept_button", "decline_button", "cancel_button", "ignore", "message_label")]
 oversampling_override = 1.0
 initial_position = 2
-size = Vector2i(250, 100)
+size = Vector2i(250, 150)
 min_size = Vector2i(150, 100)
 script = ExtResource("1_3wopc")
-accept = NodePath("VBoxContainer/HBoxContainer/Accept")
-decline = NodePath("VBoxContainer/HBoxContainer/Decline")
-cancel = NodePath("VBoxContainer/HBoxContainer/Cancel")
-message = NodePath("VBoxContainer/Message")
+accept_button = NodePath("VBoxContainer/HBoxContainer/Accept")
+decline_button = NodePath("VBoxContainer/HBoxContainer/Decline")
+cancel_button = NodePath("VBoxContainer/HBoxContainer/Cancel")
+ignore = NodePath("VBoxContainer/Ignore")
+message_label = NodePath("VBoxContainer/Message")
 
-[node name="ColorRect" parent="." instance=ExtResource("2_a7dhm")]
+[node name="ColorRect" parent="." unique_id=1268310791 instance=ExtResource("2_a7dhm")]
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-anchors_preset = -1
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=163816603]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 10.0
@@ -30,7 +31,7 @@ offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Message" type="Label" parent="VBoxContainer"]
+[node name="Message" type="Label" parent="VBoxContainer" unique_id=288635120]
 custom_minimum_size = Vector2(0, 42.24)
 layout_mode = 2
 size_flags_vertical = 6
@@ -41,15 +42,20 @@ vertical_alignment = 1
 autowrap_mode = 3
 text_overrun_behavior = 1
 
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer" unique_id=910370081]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="Ignore" type="CheckBox" parent="VBoxContainer" unique_id=1929015926]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Don't ask again"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=2055292986]
 layout_mode = 2
 size_flags_vertical = 3
 alignment = 1
 
-[node name="Accept" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="Accept" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=1598134306]
 custom_minimum_size = Vector2(45, 0)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -58,7 +64,7 @@ theme_override_fonts/font = ExtResource("2_jua8g")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_a7dhm")
 text = "Ok"
 
-[node name="Decline" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="Decline" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=609370182]
 custom_minimum_size = Vector2(45, 0)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -67,7 +73,7 @@ theme_override_fonts/font = ExtResource("2_jua8g")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_a7dhm")
 text = "No"
 
-[node name="Cancel" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="Cancel" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=1902915497]
 custom_minimum_size = Vector2(45, 0)
 layout_mode = 2
 size_flags_horizontal = 4

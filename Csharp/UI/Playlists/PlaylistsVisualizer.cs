@@ -16,7 +16,7 @@ public partial class PlaylistsVisualizer : ScrollContainer
             if (container.GetChild(i) is PlaylistDisplay) 
             {
                 PlaylistDisplay display = (container.GetChild(i) as PlaylistDisplay);
-                display.Cover.Visible = container.GetGlobalRect().Intersects(display.GetGlobalRect());
+                display.cover.Visible = container.GetGlobalRect().Intersects(display.GetGlobalRect());
             }
         }
     }
