@@ -1,5 +1,0 @@
-[gd_scene format=3 uid="uid://d2dtw1vqnyfj2"]
-
-[node name="YtdlpffmpegDownloadInstall" type="Window"]
-oversampling_override = 1.0
-initial_position = 2

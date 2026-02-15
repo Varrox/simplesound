@@ -32,7 +32,9 @@
 [ext_resource type="Texture2D" uid="uid://b8ldjgpmsaxgu" path="res://Icons/shuffle.png" id="20_fkbne"]
 [ext_resource type="StyleBox" uid="uid://bhcyqvvim6l5e" path="res://Styling/Rounded Corners.tres" id="21_jy3dx"]
 [ext_resource type="Script" uid="uid://bcxwpol710ysq" path="res://Csharp/UI/ContextMenuOpener.cs" id="21_seu75"]
+[ext_resource type="Script" uid="uid://d0tve0wh2kxhq" path="res://Csharp/UI/Downloader/DownloadWindowOpener.cs" id="22_4w656"]
 [ext_resource type="Texture2D" uid="uid://bwftf22dhh4du" path="res://Icons/refresh.png" id="23_7r5f6"]
+[ext_resource type="PackedScene" uid="uid://djve16b56k6h0" path="res://Windows/Downloading/DownloadWindow.tscn" id="23_e71vb"]
 [ext_resource type="PackedScene" uid="uid://deg7587tnlkhk" path="res://Prefabs/songdisplay.scn" id="26_4w656"]
 [ext_resource type="PackedScene" uid="uid://dtfoexo3o7b3p" path="res://Prefabs/playlistcontext.tscn" id="26_gbh2w"]
 [ext_resource type="Script" uid="uid://qupwebtnhh44" path="res://Csharp/UI/Playlists/PlaylistPlayer.cs" id="28_wnkbs"]
@@ -571,8 +573,8 @@ layout_mode = 2
 tooltip_text = "Menu for downloading music from streaming services."
 focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_i5cru")
-disabled = true
 text = "Downloader"
+script = ExtResource("22_4w656")
 
 [node name="Right" type="HBoxContainer" parent="Interface/Top Bar" unique_id=1972233890]
 layout_mode = 1
@@ -948,7 +950,7 @@ offset_bottom = 43.0
 
 [node name="Player" type="AudioStreamPlayer" parent="." unique_id=488316782]
 
-[node name="Globals" type="Node" parent="." unique_id=71517921 node_paths=PackedStringArray("_main", "_player", "_discord", "_attribute_editor", "_file_dialog", "_self", "_playlist_menu", "_song_menu")]
+[node name="Globals" type="Node" parent="." unique_id=71517921 node_paths=PackedStringArray("_main", "_player", "_discord", "_attribute_editor", "_download_window", "_file_dialog", "_self", "_playlist_menu", "_song_menu")]
 script = ExtResource("32_htxhm")
 _play_texture = ExtResource("5_8inno")
 _pause_texture = ExtResource("4_lfnj1")
@@ -965,6 +967,7 @@ _main = NodePath("..")
 _player = NodePath("../Interface")
 _discord = NodePath("../Discord")
 _attribute_editor = NodePath("AttributeEditor")
+_download_window = NodePath("DownloadWindow")
 _file_dialog = NodePath("File Dialog")
 _self = NodePath(".")
 _highlight = Color(0.27752772, 0.27752775, 0.27752757, 0.5882353)
@@ -981,6 +984,9 @@ access = 2
 use_native_dialog = true
 
 [node name="AttributeEditor" parent="Globals" unique_id=1605960294 instance=ExtResource("17_f7c3k")]
+visible = false
+
+[node name="DownloadWindow" parent="Globals" unique_id=1926010608 instance=ExtResource("23_e71vb")]
 visible = false
 
 [node name="Discord" type="Node" parent="." unique_id=46493677]

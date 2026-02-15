@@ -29,6 +29,9 @@ public partial class Globals : Node
     [Export] AttributeEditor _attribute_editor{set{ attribute_editor = value; }get{ return attribute_editor; }}
     public static AttributeEditor attribute_editor;
 
+    [Export] DownloadWindow _download_window{set{ download_window = value; }get{ return download_window; }}
+    public static DownloadWindow download_window;
+
     [Export] FileDialog _file_dialog{set{ file_dialog = value; }get { return file_dialog; }}
     public static FileDialog file_dialog;
 

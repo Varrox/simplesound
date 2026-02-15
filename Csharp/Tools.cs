@@ -34,6 +34,15 @@ public class Tools
     /// <returns>audio file validness</returns>
     public static bool ValidAudioFile(string path)
     {
-        return (path.EndsWith(".mp3") || path.EndsWith(".wav") || path.EndsWith(".ogg")) && File.Exists(path);
+        if(!File.Exists(path))
+            return false;
+
+        for(int i = 0; i < Constants.playable_formats.Length; i++)
+        {
+            if(path.EndsWith($".{Constants.playable_formats[i]}"))
+                return true;
+        }
+
+        return false;
     }
 }

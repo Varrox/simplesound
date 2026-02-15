@@ -102,6 +102,9 @@ public partial class Settings : EditorWindow
             case "q":
                 input = EnumSetting(quality_levels);
                 break;
+            case "af":
+                input = EnumSetting(Constants.download_formats);
+                break;
             case "bool":
                 input = new[] { new CheckButton() };
                 (input[0] as CheckButton).ButtonPressed = (bool)(GetSetting(where, name));
@@ -159,10 +162,10 @@ public partial class Settings : EditorWindow
                 AddReset(input, type, default_value, where, name);
             }
         }
-        else if (type == "q")
+        else if (type == "q" || type == "af")
         {
             OptionButton button = (input[0] as OptionButton);
-            int selected = (int)(GetSetting(where, name)) - 1;
+            int selected = (int)(GetSetting(where, name)) - (type == "q" ? 1 : 0);
             button.CallDeferred("select", selected);
             button.ItemSelected += (long index) => EnumItemSelected(button, (int)index, setting);
 
@@ -219,6 +222,7 @@ public partial class Settings : EditorWindow
         }        
 
         Globals.save_data.application_settings.ApplySettings();
+        Globals.save_data.cloud_settings.ApplySettings();
 
         return container;
     }
@@ -340,6 +344,9 @@ public partial class Settings : EditorWindow
             case "q":
                 variant = (input[0] as OptionButton).Selected + 1;
                 break;
+            case "af":
+                variant = (input[0] as OptionButton).Selected;
+                break;
             case "bool":
                 variant = (input[0] as CheckButton).ButtonPressed;
                 break;
@@ -367,7 +374,7 @@ public partial class Settings : EditorWindow
                 break;
             case "cs": // Cloud Setting
                 SetSetting(ref Globals.save_data.cloud_settings, name, variant, type);
-                Globals.save_data.application_settings.ApplySettings();
+                Globals.save_data.cloud_settings.ApplySettings();
                 break;
         }
     }
@@ -383,6 +390,9 @@ public partial class Settings : EditorWindow
                 (input[0] as SpinBox).Value = default_value.ToFloat();
                 break;
             case "q":
+                (input[0] as OptionButton).Select(default_value.ToInt() - 1);
+                break;
+            case "af":
                 (input[0] as OptionButton).Select(default_value.ToInt() - 1);
                 break;
             case "bool":

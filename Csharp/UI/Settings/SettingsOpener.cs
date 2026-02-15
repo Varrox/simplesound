@@ -14,7 +14,6 @@ public partial class SettingsOpener : EditorWindowOpener
 		if (Globals.player.Interrupt())
 		{
 			(window as Settings).Open();
-            ButtonPressed = false;
 		}
 	}
 }

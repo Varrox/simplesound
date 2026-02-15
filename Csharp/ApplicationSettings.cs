@@ -6,6 +6,7 @@ public class ApplicationSettings
 	public int blur_quality = 3;
 
     public string ytdlp_location = "";
+	public int download_format = 0;
 
     public ApplicationSettings() {}
 

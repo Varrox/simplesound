@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("1_wc48w")
 section_name = "Downloader"
-settings = PackedStringArray("YT-DLP Location:fl:as:ytdlp_location:")
+settings = PackedStringArray("yt-dlp Location:fl:as:ytdlp_location:", "Audio Format:af:as:download_format:1")
 metadata/_custom_type_script = "uid://6cs8xn6h2u1a"

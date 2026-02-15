@@ -6,13 +6,11 @@ public partial class PlaylistDisplay : Button
     [Export] public Label playlist_name, songs;
     [Export] public ContextMenuOpener more;
 
-    const char dot = '\u00b7';
-
     int playlist_index;
 
     public override void _Ready()
     {
-        ButtonDown += Set;
+        ButtonUp += Set;
 
         MouseEntered += more.Show;
         MouseExited += OnExit;
@@ -58,11 +56,11 @@ public partial class PlaylistDisplay : Button
             if (playlist.songs == null)
                 songs.Text = "0 songs";
             else
-                songs.Text = $"{amount}{(playlist.artist != null ? $" {dot} {playlist.artist}" : "")}";
+                songs.Text = $"{amount}{(playlist.artist != null ? $" {Constants.dot} {playlist.artist}" : "")}";
         }
         else
         {
-            songs.Text = $"Album  {dot}  {playlist.artist ?? (playlist.songs.Count.ToString() + (playlist.songs.Count != 1 ? " songs" : " song"))}";
+            songs.Text = $"Album  {Constants.dot}  {playlist.artist ?? (playlist.songs.Count.ToString() + (playlist.songs.Count != 1 ? " songs" : " song"))}";
         }
 
         playlist_index = index;

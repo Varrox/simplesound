@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 public class SaveSystem
 {
-	public static string USER_DATA = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "simplesound");
+	public static readonly string USER_DATA = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "simplesound");
 
     public static string ImportFolder(string path)
 	{
@@ -82,7 +82,7 @@ public class SaveData
 
     public static SaveData GetSaveData()
     {
-        foreach (string folder_name in new[] { "Playlists", "Music Folders", "Playlist Covers", "Downloaded Music" }) // Add folders
+        foreach (string folder_name in new[] { "Playlists", "Music", "Playlist Covers"}) // Add folders
         {
             string folder_path = Path.Combine(SaveSystem.USER_DATA, folder_name);
             if (!Directory.Exists(folder_path))

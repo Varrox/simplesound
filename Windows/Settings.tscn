@@ -17,14 +17,14 @@
 oversampling_override = 1.0
 title = "Settings"
 initial_position = 2
-size = Vector2i(600, 350)
+size = Vector2i(720, 380)
 min_size = Vector2i(450, 300)
 script = ExtResource("1_c0o00")
 settings_tabs = Array[Object]([ExtResource("2_dp1jx"), ExtResource("3_7l07q"), ExtResource("4_3eler"), ExtResource("5_njjsv")])
-settings_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer2/VBoxContainer2")
-tabs_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer")
 reset_texture = ExtResource("2_4ebue")
 file_texture = ExtResource("7_3eler")
+settings_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer2/VBoxContainer2")
+tabs_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer")
 close_menu = NodePath("MarginContainer/VBoxContainer/HBoxContainer/Close")
 
 [node name="ColorRect" parent="." unique_id=1354321475 instance=ExtResource("3_8qwbu")]

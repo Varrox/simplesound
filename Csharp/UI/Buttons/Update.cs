@@ -7,7 +7,6 @@ public partial class Update : Button
 {
     readonly string download_folder = new FileInfo(OS.GetExecutablePath()).Directory.FullName;
     readonly string download_file = $"{new FileInfo(OS.GetExecutablePath()).Directory.FullName}\\Download.zip";
-    const string repo_link = "https://api.github.com/repos/Varrox/simplesound/releases/latest";
 
 	HttpRequest http_client;
     bool updating, can_be_updated;
@@ -40,13 +39,13 @@ public partial class Update : Button
         if (!can_be_updated || updating) return;
 
         current_request = CurrentRequest.Download;
-        http_client.Request(repo_link);
+        http_client.Request(Constants.latest_release);
     }
 
     public void CheckUpdate()
     {
         current_request = CurrentRequest.Version;
-        http_client.Request(repo_link);
+        http_client.Request(Constants.latest_release);
     }
 
     private void RequestCompleted(long result, long responseCode, string[] headers, byte[] body)
