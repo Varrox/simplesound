@@ -10,7 +10,6 @@ public partial class SongDisplay : Button
 
     public int song;
     public bool playing;
-    public bool is_visible = false;
     public override void _Ready()
     {
         ButtonUp += SetSong;
@@ -23,13 +22,11 @@ public partial class SongDisplay : Button
 
     public override void _Input(InputEvent @event)
     {
-        if (is_visible) {
-            if (@event is InputEventMouseButton) {
-                if ((@event as InputEventMouseButton).ButtonIndex == MouseButton.Right) {
-                    if (GetGlobalRect().HasPoint(GetGlobalMousePosition())) {
-                        more.OpenMenu();
-                        more.menu.GlobalPosition = GetGlobalMousePosition();
-                    }
+        if (@event is InputEventMouseButton) {
+            if ((@event as InputEventMouseButton).ButtonIndex == MouseButton.Right) {
+                if (GetGlobalRect().HasPoint(GetGlobalMousePosition())) {
+                    more.OpenMenu();
+                    more.menu.GlobalPosition = GetGlobalMousePosition();
                 }
             }
         }
@@ -78,29 +75,26 @@ public partial class SongDisplay : Button
         number.SelfModulate = new Color(1, 1, 1, 1);
     }
 
-    public void Init(string name, string artist, string time, int song, bool explicit_lyrics, Playlist.PlaylistType type, Texture2D cover, bool corrupt)
+    public void Init(int song, SongData data, Playlist.PlaylistType type, Texture2D cover)
     {
-        SetThreadSafe("disabled", corrupt);
-        number.SetThreadSafe("text", (song + 1).ToString());
+        Disabled = data.corrupt;
+
+        number.Text = (song + 1).ToString();
 
         this.song = song;
 
-        this.song_name.SetThreadSafe("text", name);
-        this.artist.SetThreadSafe("text", artist);
-        this.time.SetThreadSafe("text", time);
-
-        if(cover != null)
-            this.cover.SetThreadSafe("texture", cover);
-
-        SetThreadSafe("process_mode", (int)(cover == null ? ProcessModeEnum.Disabled : ProcessModeEnum.Inherit));
+        this.song_name.Text = data.title;
+        this.artist.Text = data.artist;
+        this.time.Text = data.time;
 
         bool album = type == Playlist.PlaylistType.Album;
+        
+        this.cover.Texture = cover;
+        (this.cover.GetParent() as Control).Visible = !album;
+        spacer.Visible = !album;
+        this.explicit_lyrics.Visible = data.explicit_lyrics;
 
-        (this.cover.GetParent() as Control).SetThreadSafe("visible", !album);
-        spacer.SetThreadSafe("visible", !album);
-        this.explicit_lyrics.SetThreadSafe("visible", explicit_lyrics);
-
-        CallThreadSafe("SetHighlight");
+        SetHighlight();
     }
 
     public void SetSong()

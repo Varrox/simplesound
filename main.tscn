@@ -164,7 +164,28 @@ shader = ExtResource("37_4w656")
 shader = ExtResource("52_blkrb")
 shader_parameter/t = 0.0
 
-[node name="Main2" type="Control" unique_id=14097904 node_paths=PackedStringArray("audio_player", "video_player", "player", "playlist_visualizer", "songs_visualizer")]
+[sub_resource type="LabelSettings" id="LabelSettings_e71vb"]
+
+[sub_resource type="GDScript" id="GDScript_e71vb"]
+resource_name = "fps"
+script/source = "extends Label
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	var fps = int(1.0 / delta + 0.5)
+	
+	text = str(\"FPS: \", fps)
+	if fps >= 200:
+		label_settings.font_color = Color.WHITE
+	elif fps >= 60:
+		label_settings.font_color = Color.GREEN
+	elif fps >= 25:
+		label_settings.font_color = Color.YELLOW
+	else:
+		label_settings.font_color = Color.RED
+"
+
+[node name="Main" type="Control" unique_id=14097904 node_paths=PackedStringArray("audio_player", "video_player", "player", "playlist_visualizer", "songs_visualizer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -418,12 +439,16 @@ theme_override_constants/margin_top = 60
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 115
 
-[node name="Song Display" type="ScrollContainer" parent="Interface/Content/Songs/MarginContainer" unique_id=1804847451 node_paths=PackedStringArray("container", "cover", "playlist_name", "songs_count")]
+[node name="Song Display" type="ScrollContainer" parent="Interface/Content/Songs/MarginContainer" unique_id=1804847451 node_paths=PackedStringArray("container", "top_spacer", "bottom_spacer", "cover", "playlist_name", "songs_count")]
 layout_mode = 2
 theme_override_styles/focus = SubResource("StyleBoxEmpty_b1qrp")
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
 script = ExtResource("14_htxhm")
 template = ExtResource("26_4w656")
 container = NodePath("Full Container/Container")
+top_spacer = NodePath("Full Container/Container/Top")
+bottom_spacer = NodePath("Full Container/Container/Bottom")
 cover = NodePath("Full Container/Container/Top card/Icon/TextureRect")
 playlist_name = NodePath("Full Container/Container/Top card/Playlist name")
 songs_count = NodePath("Full Container/Container/Top card/Song count")
@@ -437,6 +462,7 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme_override_constants/separation = 0
 
 [node name="Top card" type="Panel" parent="Interface/Content/Songs/MarginContainer/Song Display/Full Container/Container" unique_id=1802359906]
 custom_minimum_size = Vector2(0, 150)
@@ -507,6 +533,12 @@ focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_i82gy")
 icon = ExtResource("5_8inno")
 script = ExtResource("28_wnkbs")
+
+[node name="Top" type="Panel" parent="Interface/Content/Songs/MarginContainer/Song Display/Full Container/Container" unique_id=1668146414]
+layout_mode = 2
+
+[node name="Bottom" type="Panel" parent="Interface/Content/Songs/MarginContainer/Song Display/Full Container/Container" unique_id=169923512]
+layout_mode = 2
 
 [node name="VSeparator" type="VSeparator" parent="Interface/Content/Songs/MarginContainer/Song Display/Full Container" unique_id=1962172910 node_paths=PackedStringArray("scroll_container")]
 layout_mode = 2
@@ -1009,3 +1041,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Label" type="Label" parent="." unique_id=1348915883]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+label_settings = SubResource("LabelSettings_e71vb")
+script = SubResource("GDScript_e71vb")

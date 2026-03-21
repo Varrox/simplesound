@@ -32,7 +32,17 @@ public partial class AttributeEditorOpener : EditorWindowOpener
                 Metadata.SetData(Globals.main.song, editor.name.Text, editor.artist.Text, editor.cover_path, editor.share_link.Text, editor.explicit_lyrics.ButtonPressed);
 
             Globals.player.OnLoadSong();
-            Globals.main.songs_visualizer.UpdateSong(Globals.main.song_index, editor.name.Text, editor.artist.Text, Globals.player.total_time.Text, editor.explicit_lyrics.ButtonPressed, Globals.player.song_cover.Texture);
+
+            SongData song_data = new SongData
+            {
+                title = editor.name.Text,
+                artist = editor.artist.Text,
+                time = Globals.player.total_time.Text,
+                explicit_lyrics = editor.explicit_lyrics.ButtonPressed,
+                corrupt = Metadata.IsFileCorrupt(Globals.main.song)
+            };
+
+            Globals.main.songs_visualizer.UpdateSong(Globals.main.song_index, song_data, ConvertToGodot.GetCover(Globals.main.song));
         }
 
         Globals.player.interrupted = false;

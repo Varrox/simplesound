@@ -347,6 +347,7 @@ public partial class Main : Control
         Metadata.ResetCache();
 
         OnLoadSong?.Invoke();
+		songs_visualizer.Update();
         playlist_visualizer.UpdatePlaylists();
     }
 }

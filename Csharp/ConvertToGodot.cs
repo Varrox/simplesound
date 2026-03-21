@@ -5,6 +5,7 @@ public class ConvertToGodot
 {
     public static Texture2D GetCover(string path)
     {
+        GD.Print(path);
         byte[] picture_data = Metadata.GetCover(path, out string type);
         
         if (picture_data == null)

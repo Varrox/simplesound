@@ -1,91 +1,138 @@
 using Godot;
-using Godot.Collections;
-using System.Threading;
+using System;
+using System.Collections.Generic;
 
 public partial class SongsVisualizer : ScrollContainer
 {
     [Export] public PackedScene template;
-    [Export] public Control container;
+    [Export] public VBoxContainer container;
+    [Export] public Control top_spacer, bottom_spacer;
     [Export] public TextureRect cover;
     [Export] public Label playlist_name;
     [Export] public Label songs_count;
 
-    Thread update_songs_thread;
+    int last_scroll = -1, last_first_song = -1;
+    Vector2 last_size = Vector2.Zero;
 
-    int last_scroll = -1;
+    SongDisplay[] song_displays;
+    Dictionary<int, SongData> song_datas;
 
-    Playlist playlist
+    const int min_y = 60;
+    int separation = 0, top_card_y, single_button_size;
+    int GetTotalHeight()
     {
-        get
-        {
-            return Globals.main.playlists[Globals.main.looked_at_playlist];
-        }
+        return (single_button_size * (Globals.main.playlists[Globals.main.looked_at_playlist].songs.Count + 2));
     }
 
     public override void _Ready()
     {
-        Globals.main.playlist_visualizer.OnSelectPlaylist += Load;
-    }
+        top_card_y = (int)(container.GetChild(0) as Control).Size.Y + separation;
+        single_button_size = (min_y + separation);
 
-    public bool IsHidden(SongDisplay songdisplay)
-    {
-        return !songdisplay.GetGlobalRect().Intersects(GetGlobalRect());
+        Globals.main.playlist_visualizer.OnSelectPlaylist += LoadPlaylist;
+
+        song_datas = new Dictionary<int, SongData>();
     }
 
     public override void _Process(double delta)
     {
+        Playlist playlist = Globals.main.playlists[Globals.main.looked_at_playlist];
+
         if (playlist == null)
             return;
-
-        if (playlist.type != Playlist.PlaylistType.Album)
+        
+        if (last_scroll != ScrollVertical || last_size != Size)
         {
-            if (last_scroll != ScrollVertical)
+            int max_displays = (int)((int)Size.Y / (float)single_button_size + 1f) + 1;
+            (int top, int bottom) = CalculateSize();
+            int first_song = GetFirstSong();
+            //GD.Print(top, " ", bottom, " ", first_song, " ", max_displays);
+
+            top_spacer.CustomMinimumSize = Vector2.Down * top;
+            bottom_spacer.CustomMinimumSize = Vector2.Down * bottom;
+
+            if (last_size != Size)
             {
-                int first = -1, last = -1;
-                bool after = false;
-                for (int i = 1; i < container.GetChildCount(); i++)
+                if(song_displays == null)
                 {
-                    SongDisplay child = container.GetChild(i) as SongDisplay;
-                    
-                    if(!after)
-                        after = last != -1 && i > last;
+                    song_displays = new SongDisplay[max_displays];
+                    for(int i = 0; i < song_displays.Length; i++)
+                    {
+                        song_displays[i] = template.Instantiate() as SongDisplay;
+                        container.AddChild(song_displays[i]);
 
-                    bool hidden = after ? true : IsHidden(child);
+                        SongData data = new SongData(playlist.songs[first_song + i]);
+                        song_displays[i].Init(first_song + i, data, playlist.type, playlist.type == Playlist.PlaylistType.Album ? null : ConvertToGodot.GetCover(playlist.songs[first_song + i]));
+                    }
+                }
+                else if(song_displays.Length != max_displays)
+                {
+                    if(song_displays.Length < max_displays)
+                    {
+                        SongDisplay[] displays = new SongDisplay[max_displays];
+                        song_displays.CopyTo(displays, 0);
+                        song_displays = displays;
 
-                    if(first == -1 && !hidden)
-                        first = i - 1;
-                    
-                    if(last == -1 && hidden && i > first && first != -1)
-                        last = i - 1;
+                        for(int i = 0; i < song_displays.Length; i++)
+                        {
+                            if(!container.GetChildren().Contains(song_displays[i]))
+                            {
+                                song_displays[i] = template.Instantiate() as SongDisplay;
+                                container.AddChild(song_displays[i]);
+                            }
+                        }
+                    }
+                    else if(song_displays.Length > max_displays)
+                    {
+                        for(int i = song_displays.Length - max_displays - 1; i >= 0; i--)
+                        {
+                            song_displays[i].QueueFree();
+                        }
 
-                    if(!child.is_visible == hidden)
-                        continue;
-
-                    child.is_visible = !hidden;
-                    child.cover.Visible = !hidden;
-                    child.ProcessMode = hidden ? ProcessModeEnum.Disabled : ProcessModeEnum.Inherit;
-
-                    child.cover.Texture = hidden ? null : ConvertToGodot.GetCover(playlist.songs[i - 1]);
+                        SongDisplay[] displays = new SongDisplay[max_displays];
+                        song_displays.CopyTo(displays, 0);
+                        song_displays = displays;
+                    }
                 }
 
-                last_scroll = ScrollVertical;
+                container.MoveChild(bottom_spacer, container.GetChildCount() - 1);
             }
+
+            if (first_song != last_first_song)
+            {
+                bool f = first_song > last_first_song;
+                song_datas.Remove(first_song > last_first_song ? last_first_song : first_song + song_datas.Count);
+                Texture2D last_cover = null;
+
+                for(int i = !f ? 0 : song_displays.Length - 1; !f ? i < song_displays.Length : i >= 0; i += !f ? 1 : -1)
+                {
+                    int song = first_song + i;
+                    if(!song_datas.ContainsKey(song))
+                    {
+                        SongData data = new SongData(playlist.songs[song]);
+                        song_datas[song] = data;
+                        song_displays[i].Init(song, song_datas[song], playlist.type, (playlist.type == Playlist.PlaylistType.Album) ? null : ConvertToGodot.GetCover(playlist.songs[song]));
+                        last_cover = song_displays[i].cover.Texture;
+                    }
+                    else // Swap
+                    {
+                        Texture2D cover = song_displays[i].cover.Texture;
+                        song_displays[i].Init(song, song_datas[song], playlist.type, (playlist.type == Playlist.PlaylistType.Album) ? null : last_cover);
+                        last_cover = cover;
+                    }
+                }
+
+                last_first_song = first_song;
+            }
+
+            last_scroll = ScrollVertical;
+            last_size = Size;
         }
     }
 
-    public void Load(int playlist_index, Texture2D playlist_cover)
+    private void LoadPlaylist(int playlist_index, Texture2D playlist_cover)
     {
-        Globals.main.looked_at_playlist = playlist_index;
-
-        if (update_songs_thread != null)
-        {
-            update_songs_thread.Join();
-            update_songs_thread = null;
-        }
-
-        Array<Node> song_displays = container.GetChildren();
-        song_displays.RemoveAt(0);
-
+        Playlist playlist = Globals.main.playlists[playlist_index];
         cover.Texture = playlist_cover;
         playlist_name.Text = playlist.name;
 
@@ -96,88 +143,43 @@ public partial class SongsVisualizer : ScrollContainer
         else
         {
             songs_count.Text = "0 songs";
+        }
 
-            for (int i = 0; i < song_displays.Count; i++)
-            {
-                SongDisplay display = song_displays[i] as SongDisplay;
-                Globals.main.OnPlay -= display.SetTextures;
-                Globals.main.OnLoadSong -= display.SetHighlight;
+        song_datas.Clear();
 
-                song_displays[i].QueueFree();
-            }
+        Update();
+    }
 
+    public (int, int) CalculateSize()
+    {
+        int top = (int)MathF.Min(MathF.Max(ScrollVertical - top_card_y, 0), GetTotalHeight() - (int)Size.Y - top_card_y);
+        top -= top % single_button_size;
+
+        int bottom = (int)MathF.Max(GetTotalHeight() - (top + (int)Size.Y) - top_card_y, 0);
+        bottom -= bottom % single_button_size;
+
+        return (top, bottom);
+    }
+
+    public int GetFirstSong()
+    {
+        int top = (int)MathF.Min(MathF.Max(ScrollVertical - top_card_y, 0), GetTotalHeight() - (int)Size.Y - top_card_y);
+        top -= top % single_button_size;
+        return (int)MathF.Max((top) / single_button_size, 0);
+    }
+
+    public void UpdateSong(int index, SongData song_data, Texture2D cover)
+    {
+        int first_song = GetFirstSong();
+        if (Globals.main.looked_at_playlist != Globals.main.playlist_index || index < first_song || index >= (song_displays.Length + first_song))
             return;
-        }
 
-
-        if (song_displays.Count > playlist.songs.Count) // delete overflow
-        {
-            for (int i = playlist.songs.Count; i < song_displays.Count; i++)
-            {
-                SongDisplay song_display = song_displays[i] as SongDisplay;
-
-                Globals.main.OnPlay -= song_display.SetTextures;
-                Globals.main.OnLoadSong -= song_display.SetHighlight;
-
-                song_displays[i].QueueFree();
-                song_displays.RemoveAt(i);
-                i--;
-            }
-        }
-
-
-        update_songs_thread = new Thread(new ThreadStart(() => UpdateAllSongs(ref song_displays)));
-        update_songs_thread.Start();
+        song_displays[index - first_song].Init(index, song_data, Globals.main.playlists[Globals.main.looked_at_playlist].type, cover);
     }
 
-    public void UpdateAllSongs(ref Array<Node> song_displays)
+    public void Update()
     {
-        int first = -1, last = -1;
-        bool after = false;
-        for (int i = 0; i < playlist.songs.Count; i++) // update all
-        {
-            SongDisplay disp = null;
-            
-            if (i >= song_displays.Count) // create song display if one does not exist
-            {
-                disp = template.Instantiate() as SongDisplay;
-                container.CallThreadSafe("add_child", disp);
-            }
-            else // use ones that already exist
-                disp = song_displays[i] as SongDisplay;
-
-            if(!after)
-                after = last != -1 && i > last;
-
-            bool hidden = after ? true : (bool)CallThreadSafe("IsHidden", disp);
-
-            if(first == -1 && !hidden)
-                first = i - 1;
-            
-            if(last == -1 && hidden && i > first && first != -1)
-                last = i - 1;
-
-            // init the playlist
-
-            disp.Init(Tools.GetMediaTitle(playlist.songs[i]), Metadata.GetArtist(playlist.songs[i]), Tools.SecondsToTimestamp(Metadata.GetTotalTime(playlist.songs[i])), i, Metadata.IsExplicit(playlist.songs[i]), playlist.type, playlist.type != Playlist.PlaylistType.Album || !hidden ? ConvertToGodot.GetCover(playlist.songs[i]) : null, Metadata.IsFileCorrupt(playlist.songs[i]));
-        }
-    }
-
-    public void UpdateSong(int index, string song_name, string artist, string time, bool explicit_lyrics, Texture2D texture)
-    {
-        if (Globals.main.looked_at_playlist == Globals.main.playlist_index)
-        {
-            SongDisplay disp = container.GetChild(index + 1) as SongDisplay;
-            disp.Init(song_name, artist, time, index, explicit_lyrics, Globals.main.playlist.type, texture, false);
-        }
-    }
-
-    public void RemoveSong(int index)
-    {
-        SongDisplay song_display = container.GetChild(index + 1) as SongDisplay;
-        Globals.main.OnPlay -= song_display.SetTextures;
-        Globals.main.OnLoadSong -= song_display.SetHighlight;
-
-        song_display.QueueFree();
+        last_scroll = -1;
+        last_first_song = -1;
     }
 }

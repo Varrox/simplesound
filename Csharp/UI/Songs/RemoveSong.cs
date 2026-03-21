@@ -61,6 +61,6 @@ public partial class RemoveSong : Button
 
         Globals.main.playlists[Globals.main.looked_at_playlist].songs.RemoveAt(SongsMore.song);
         Globals.main.playlists[Globals.main.looked_at_playlist].Save();
-        Globals.main.songs_visualizer.RemoveSong(SongsMore.song);
+        Globals.main.songs_visualizer.Update();
     }
 }
