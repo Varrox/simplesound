@@ -1043,6 +1043,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Label" type="Label" parent="." unique_id=1348915883]
+visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 20.0

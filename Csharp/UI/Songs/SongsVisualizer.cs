@@ -46,7 +46,6 @@ public partial class SongsVisualizer : ScrollContainer
             int max_displays = (int)((int)Size.Y / (float)single_button_size + 1f) + 1;
             (int top, int bottom) = CalculateSize();
             int first_song = GetFirstSong();
-            //GD.Print(top, " ", bottom, " ", first_song, " ", max_displays);
 
             top_spacer.CustomMinimumSize = Vector2.Down * top;
             bottom_spacer.CustomMinimumSize = Vector2.Down * bottom;
@@ -100,28 +99,52 @@ public partial class SongsVisualizer : ScrollContainer
 
             if (first_song != last_first_song)
             {
-                bool f = first_song > last_first_song;
-                song_datas.Remove(first_song > last_first_song ? last_first_song : first_song + song_datas.Count);
-                Texture2D last_cover = null;
+                int dt = first_song - last_first_song;
+                bool f = dt > 0;
+                bool[] set = new bool[song_displays.Length];
 
-                for(int i = !f ? 0 : song_displays.Length - 1; !f ? i < song_displays.Length : i >= 0; i += !f ? 1 : -1)
+                for(int i = 0; i < song_displays.Length; i++)
                 {
                     int song = first_song + i;
+                    
+                    //GD.Print($"{last_index} {i}");
+
                     if(!song_datas.ContainsKey(song))
                     {
                         SongData data = new SongData(playlist.songs[song]);
                         song_datas[song] = data;
+
                         song_displays[i].Init(song, song_datas[song], playlist.type, (playlist.type == Playlist.PlaylistType.Album) ? null : ConvertToGodot.GetCover(playlist.songs[song]));
-                        last_cover = song_displays[i].cover.Texture;
-                    }
-                    else // Swap
-                    {
-                        Texture2D cover = song_displays[i].cover.Texture;
-                        song_displays[i].Init(song, song_datas[song], playlist.type, (playlist.type == Playlist.PlaylistType.Album) ? null : last_cover);
-                        last_cover = cover;
+                        set[i] = true;
                     }
                 }
 
+                Texture2D last_cover = null;
+
+                for(int i = 0; i < song_displays.Length; i++)
+                {
+                    if(set[i])
+                        continue;
+
+                    int last_index = i + dt;
+                    int song = first_song + i;
+
+                    if(last_index != -1) // Swap
+                    {
+                        if((i == 0 && !f) || (i == song_displays.Length - 1 && f))
+                        {
+                            song_displays[i].Init(song, song_datas[song], playlist.type, (playlist.type == Playlist.PlaylistType.Album) ? null : ConvertToGodot.GetCover(playlist.songs[song]));
+                            last_cover = song_displays[i].cover.Texture;
+                        }
+                        else
+                        {
+                            Texture2D cover = song_displays[i].cover.Texture;
+                            song_displays[i].Init(song, song_datas[song], playlist.type, (playlist.type == Playlist.PlaylistType.Album) ? null : (song_displays[i + dt].cover.Texture));
+                            last_cover = cover;
+                        }
+                    }
+                }
+                
                 last_first_song = first_song;
             }
 
@@ -144,8 +167,6 @@ public partial class SongsVisualizer : ScrollContainer
         {
             songs_count.Text = "0 songs";
         }
-
-        song_datas.Clear();
 
         Update();
     }
@@ -179,6 +200,7 @@ public partial class SongsVisualizer : ScrollContainer
 
     public void Update()
     {
+        song_datas.Clear();
         last_scroll = -1;
         last_first_song = -1;
     }
