@@ -106,8 +106,6 @@ public partial class SongsVisualizer : ScrollContainer
                 for(int i = 0; i < song_displays.Length; i++)
                 {
                     int song = first_song + i;
-                    
-                    //GD.Print($"{last_index} {i}");
 
                     if(!song_datas.ContainsKey(song))
                     {
@@ -124,7 +122,10 @@ public partial class SongsVisualizer : ScrollContainer
                 for(int i = 0; i < song_displays.Length; i++)
                 {
                     if(set[i])
+                    {
+                        last_cover = song_displays[i].cover.Texture;
                         continue;
+                    }
 
                     int last_index = i + dt;
                     int song = first_song + i;
@@ -139,7 +140,7 @@ public partial class SongsVisualizer : ScrollContainer
                         else
                         {
                             Texture2D cover = song_displays[i].cover.Texture;
-                            song_displays[i].Init(song, song_datas[song], playlist.type, (playlist.type == Playlist.PlaylistType.Album) ? null : (song_displays[i + dt].cover.Texture));
+                            song_displays[i].Init(song, song_datas[song], playlist.type, (playlist.type == Playlist.PlaylistType.Album) ? null : last_cover);
                             last_cover = cover;
                         }
                     }
