@@ -4,19 +4,16 @@
 [ext_resource type="Script" uid="uid://b81fhtdmrks0a" path="res://Csharp/Main.cs" id="1_l00ml"]
 [ext_resource type="Script" uid="uid://cvtqwvi0qvcvy" path="res://Csharp/Player.cs" id="2_632yu"]
 [ext_resource type="FontFile" uid="uid://ckdni7vy5bpft" path="res://Styling/Fonts/VarelaRound-Regular.ttf" id="3_bbvvl"]
-[ext_resource type="Texture2D" uid="uid://c11jkh52sohaq" path="res://Icons/loopon.png" id="3_lifiy"]
 [ext_resource type="Texture2D" uid="uid://umqcsl8yhoem" path="res://Icons/back.png" id="4_0btiw"]
 [ext_resource type="Texture2D" uid="uid://b3au8pb3kdvei" path="res://Icons/pause.png" id="4_lfnj1"]
 [ext_resource type="Texture2D" uid="uid://23nnkoswyxm8" path="res://Icons/play.png" id="5_8inno"]
 [ext_resource type="Texture2D" uid="uid://ccy68bhx3rrxu" path="res://Icons/forward.png" id="6_e5vtu"]
-[ext_resource type="Texture2D" uid="uid://n02mi4hbtm0b" path="res://Icons/shuffleon.png" id="7_oidy5"]
 [ext_resource type="Texture2D" uid="uid://b3phnmlkksrac" path="res://Icons/loop.png" id="7_uv8rp"]
 [ext_resource type="Texture2D" uid="uid://cksbdmhr2s8yy" path="res://Icons/DefaultCover.png" id="7_xn3w4"]
 [ext_resource type="Shader" uid="uid://6mp1f8uww708" path="res://Styling/blur.gdshader" id="8_0cp0l"]
 [ext_resource type="Texture2D" uid="uid://bfwa3yivib7hh" path="res://Icons/playlist.png" id="8_8i1ca"]
 [ext_resource type="Texture2D" uid="uid://dvwv6fmmc3033" path="res://Icons/icon.svg" id="8_b1qrp"]
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Styling/Fonts/DefaultFont.tres" id="9_3b7g8"]
-[ext_resource type="Texture2D" uid="uid://iufihc6y4dma" path="res://Icons/unmute.png" id="9_hrvbo"]
 [ext_resource type="Texture2D" uid="uid://5hwvlu7uerj6" path="res://Icons/plus.png" id="10_7e43v"]
 [ext_resource type="Texture2D" uid="uid://c85envuiuo3ju" path="res://Icons/folder.png" id="11_1f20w"]
 [ext_resource type="Script" uid="uid://dcnfao6qa81tk" path="res://Csharp/UI/Playlists/PlaylistsVisualizer.cs" id="11_kq58d"]
@@ -35,7 +32,6 @@
 [ext_resource type="Script" uid="uid://d0tve0wh2kxhq" path="res://Csharp/UI/Downloader/DownloadWindowOpener.cs" id="22_4w656"]
 [ext_resource type="Texture2D" uid="uid://bwftf22dhh4du" path="res://Icons/refresh.png" id="23_7r5f6"]
 [ext_resource type="PackedScene" uid="uid://djve16b56k6h0" path="res://Windows/Downloading/DownloadWindow.tscn" id="23_e71vb"]
-[ext_resource type="PackedScene" uid="uid://deg7587tnlkhk" path="res://Prefabs/songdisplay.scn" id="26_4w656"]
 [ext_resource type="PackedScene" uid="uid://dtfoexo3o7b3p" path="res://Prefabs/playlistcontext.tscn" id="26_gbh2w"]
 [ext_resource type="Script" uid="uid://qupwebtnhh44" path="res://Csharp/UI/Playlists/PlaylistPlayer.cs" id="28_wnkbs"]
 [ext_resource type="Script" uid="uid://bag5mx17s8q1c" path="res://Csharp/UI/Buttons/Appdata.cs" id="29_0cp0l"]
@@ -51,7 +47,6 @@
 [ext_resource type="Script" uid="uid://gwm4ru46vy21" path="res://Csharp/UI/Buttons/Update.cs" id="37_abqjc"]
 [ext_resource type="PackedScene" uid="uid://bw078i5dk5ff4" path="res://Windows/ConfirmationWindow.tscn" id="39_h8e4i"]
 [ext_resource type="Texture2D" uid="uid://brujrc442p3b5" path="res://Icons/mute.png" id="42_0cbny"]
-[ext_resource type="Texture2D" uid="uid://dlroow6dpj2wv" path="res://Icons/no_play.png" id="46_abqjc"]
 [ext_resource type="Script" uid="uid://cqf4nqygajv02" path="res://GDScript/zoomer.gd" id="46_qnost"]
 [ext_resource type="Script" uid="uid://dshtlldgdpwlu" path="res://Styling/background_image_transition.gd" id="51_uypp3"]
 [ext_resource type="Shader" uid="uid://bdi2g0ydm4uf7" path="res://Styling/transition.gdshader" id="52_blkrb"]
@@ -185,7 +180,7 @@ func _process(delta: float) -> void:
 		label_settings.font_color = Color.RED
 "
 
-[node name="Main" type="Control" unique_id=14097904 node_paths=PackedStringArray("audio_player", "video_player", "player", "playlist_visualizer", "songs_visualizer")]
+[node name="Main" type="Control" unique_id=14097904 node_paths=PackedStringArray("player", "video_player", "playlist_visualizer", "songs_visualizer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -194,13 +189,12 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_4lmeg")
 script = ExtResource("1_l00ml")
-audio_player = NodePath("Player")
-video_player = NodePath("Interface/Background/Video")
 player = NodePath("Interface")
+video_player = NodePath("Interface/Background/Video")
 playlist_visualizer = NodePath("Interface/Content/Side Panel/Open/VBoxContainer/Playlists")
 songs_visualizer = NodePath("Interface/Content/Songs/MarginContainer/Song Display")
 
-[node name="Interface" type="Control" parent="." unique_id=164668924 node_paths=PackedStringArray("play", "next", "back", "loop", "shuffle", "progress", "current_time", "total_time", "song_name", "song_artist", "song_cover", "background_subviewport", "volume_slider", "mute_button", "background_color_rect")]
+[node name="Interface" type="Control" parent="." unique_id=164668924]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -208,21 +202,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_632yu")
-play = NodePath("Player/Controls/HBoxContainer/Play")
-next = NodePath("Player/Controls/HBoxContainer/Next")
-back = NodePath("Player/Controls/HBoxContainer/Back")
-loop = NodePath("Player/Controls/HBoxContainer/Loop")
-shuffle = NodePath("Player/Controls/HBoxContainer/Shuffle")
-progress = NodePath("Player/Controls/Progress")
-current_time = NodePath("Player/Controls/Progress/Current Time")
-total_time = NodePath("Player/Controls/Progress/Total Time")
-song_name = NodePath("Player/Song Attributes/Name")
-song_artist = NodePath("Player/Song Attributes/Artist")
-song_cover = NodePath("Player/Song Attributes/PanelContainer/Cover")
-background_subviewport = NodePath("../SubViewport")
-volume_slider = NodePath("Player/Controls/Volume")
-mute_button = NodePath("Player/Controls/Volume/Mute")
-background_color_rect = NodePath("Background/Color")
 
 [node name="Background" type="Control" parent="Interface" unique_id=291196361]
 layout_mode = 1
@@ -343,9 +322,9 @@ icon = ExtResource("10_7e43v")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("21_seu75")
-menu = NodePath("../../../../../../Playlistcreationcontext")
 teleportMenu = true
 teleportMenuOffset = Vector2(-135, 32)
+menu = NodePath("../../../../../../Playlistcreationcontext")
 
 [node name="HSeparator" type="HSeparator" parent="Interface/Content/Side Panel/Open/VBoxContainer" unique_id=166833490]
 layout_mode = 2
@@ -415,9 +394,9 @@ icon = ExtResource("10_7e43v")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("21_seu75")
-menu = NodePath("../../../../../Playlistcreationcontext")
 teleportMenu = true
 teleportMenuOffset = Vector2(0, 32)
+menu = NodePath("../../../../../Playlistcreationcontext")
 
 [node name="HSeparator" type="HSeparator" parent="Interface/Content/Side Panel/Collapsed/VBoxContainer" unique_id=765403374]
 layout_mode = 2
@@ -439,16 +418,13 @@ theme_override_constants/margin_top = 60
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 115
 
-[node name="Song Display" type="ScrollContainer" parent="Interface/Content/Songs/MarginContainer" unique_id=1804847451 node_paths=PackedStringArray("container", "top_spacer", "bottom_spacer", "cover", "playlist_name", "songs_count")]
+[node name="Song Display" type="ScrollContainer" parent="Interface/Content/Songs/MarginContainer" unique_id=1804847451 node_paths=PackedStringArray("container", "cover", "playlist_name", "songs_count")]
 layout_mode = 2
 theme_override_styles/focus = SubResource("StyleBoxEmpty_b1qrp")
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 2
 script = ExtResource("14_htxhm")
-template = ExtResource("26_4w656")
 container = NodePath("Full Container/Container")
-top_spacer = NodePath("Full Container/Container/Top")
-bottom_spacer = NodePath("Full Container/Container/Bottom")
 cover = NodePath("Full Container/Container/Top card/Icon/TextureRect")
 playlist_name = NodePath("Full Container/Container/Top card/Playlist name")
 songs_count = NodePath("Full Container/Container/Top card/Song count")
@@ -692,8 +668,9 @@ expand_icon = true
 script = ExtResource("35_abqjc")
 window = NodePath("Window")
 
-[node name="Window" parent="Interface/Top Bar/Right/Settings" unique_id=874625055 instance=ExtResource("35_blkrb")]
+[node name="Window" parent="Interface/Top Bar/Right/Settings" unique_id=874625055 node_paths=PackedStringArray("tabs") instance=ExtResource("35_blkrb")]
 visible = false
+tabs = {}
 
 [node name="Player" type="ColorRect" parent="Interface" unique_id=930252818]
 layout_mode = 1
@@ -982,24 +959,16 @@ offset_bottom = 43.0
 
 [node name="Player" type="AudioStreamPlayer" parent="." unique_id=488316782]
 
-[node name="Globals" type="Node" parent="." unique_id=71517921 node_paths=PackedStringArray("_main", "_player", "_discord", "_attribute_editor", "_download_window", "_file_dialog", "_self", "_playlist_menu", "_song_menu")]
+[node name="Globals" type="Node" parent="." unique_id=71517921 node_paths=PackedStringArray("_main", "_player", "_discord", "_attribute_editor", "_file_dialog", "_self", "_playlist_menu", "_song_menu")]
 script = ExtResource("32_htxhm")
 _play_texture = ExtResource("5_8inno")
 _pause_texture = ExtResource("4_lfnj1")
-_no_play_texture = ExtResource("46_abqjc")
-_loop_on_texture = ExtResource("3_lifiy")
-_loop_off_texture = ExtResource("7_uv8rp")
-_shuffle_on_texture = ExtResource("7_oidy5")
-_shuffle_off_texture = ExtResource("20_fkbne")
-_mute_texture = ExtResource("42_0cbny")
-_unmute_texture = ExtResource("9_hrvbo")
 _default_cover = ExtResource("7_xn3w4")
 _default_cover_highres = ExtResource("13_seu75")
 _main = NodePath("..")
 _player = NodePath("../Interface")
 _discord = NodePath("../Discord")
 _attribute_editor = NodePath("AttributeEditor")
-_download_window = NodePath("DownloadWindow")
 _file_dialog = NodePath("File Dialog")
 _self = NodePath(".")
 _highlight = Color(0.27752772, 0.27752775, 0.27752757, 0.5882353)
