@@ -2,7 +2,6 @@
 
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Styling/Fonts/DefaultFont.tres" id="1_8t6yf"]
 [ext_resource type="Script" uid="uid://bhqfe4m1n2gya" path="res://Csharp/UI/Playlist Creator/PlaylistCreator.cs" id="1_b0noq"]
-[ext_resource type="PackedScene" uid="uid://dhdg1uuqqaoj4" path="res://Prefabs/background.tscn" id="3_3os5s"]
 [ext_resource type="PackedScene" uid="uid://cjc5crjo31obe" path="res://Prefabs/pathdisplay.tscn" id="3_uox0n"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_acdqb"]
@@ -13,29 +12,27 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bhcbq"]
 
-[node name="Window" type="Window" unique_id=874625055 node_paths=PackedStringArray("playlist_name", "addCover", "coverDisplay", "addSongs", "songDisplayContainer", "panel", "cloudSync", "album", "artist", "backgroundThemeEnabled", "backgroundTheme", "SubmitButton", "CancelButton")]
+[node name="Window" type="Window" unique_id=874625055 node_paths=PackedStringArray("playlist_name", "addCover", "addSongs", "coverDisplay", "songDisplayContainer", "panel", "cloudSync", "album", "backgroundThemeEnabled", "artist", "backgroundTheme", "SubmitButton", "CancelButton")]
 oversampling_override = 1.0
 title = "Create Playlist"
 initial_position = 2
 size = Vector2i(600, 350)
 min_size = Vector2i(450, 300)
 script = ExtResource("1_b0noq")
-songDisplay = ExtResource("3_uox0n")
 playlist_name = NodePath("HBoxContainer2/VBoxContainer/Name")
 addCover = NodePath("HBoxContainer2/VBoxContainer2/Cover")
-coverDisplay = NodePath("HBoxContainer2/VBoxContainer2/Selected File")
 addSongs = NodePath("HBoxContainer2/VBoxContainer/Cover2")
+coverDisplay = NodePath("HBoxContainer2/VBoxContainer2/Selected File")
+songDisplay = ExtResource("3_uox0n")
 songDisplayContainer = NodePath("HBoxContainer2/VBoxContainer/Panel/ScrollContainer/VBoxContainer")
 panel = NodePath("HBoxContainer2/VBoxContainer/Panel")
 cloudSync = NodePath("HBoxContainer2/VBoxContainer2/Cloud")
 album = NodePath("HBoxContainer2/VBoxContainer2/Album")
-artist = NodePath("HBoxContainer2/VBoxContainer2/Artist")
 backgroundThemeEnabled = NodePath("HBoxContainer2/VBoxContainer2/Background Theme")
+artist = NodePath("HBoxContainer2/VBoxContainer2/Artist")
 backgroundTheme = NodePath("HBoxContainer2/VBoxContainer2/ColorPickerButton")
 SubmitButton = NodePath("HBoxContainer/Create")
 CancelButton = NodePath("HBoxContainer/Cancel")
-
-[node name="ColorRect" parent="." unique_id=1354321475 instance=ExtResource("3_3os5s")]
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="." unique_id=1414908470]
 anchors_preset = 15

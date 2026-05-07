@@ -6,7 +6,6 @@
 [ext_resource type="Resource" uid="uid://35h514ucswjf" path="res://Csharp/UI/Settings/Resources/graphics_display.tres" id="2_dp1jx"]
 [ext_resource type="Theme" uid="uid://cg2x5h7ufrntn" path="res://Styling/global_theme.tres" id="2_u30gs"]
 [ext_resource type="Resource" uid="uid://de61txalakltv" path="res://Csharp/UI/Settings/Resources/cloud.tres" id="3_7l07q"]
-[ext_resource type="PackedScene" uid="uid://dhdg1uuqqaoj4" path="res://Prefabs/background.tscn" id="3_8qwbu"]
 [ext_resource type="Resource" uid="uid://dq72h5uked4hc" path="res://Csharp/UI/Settings/Resources/downloader.tres" id="4_3eler"]
 [ext_resource type="Resource" uid="uid://covm6feqj4vyp" path="res://Csharp/UI/Settings/Resources/app_data.tres" id="5_njjsv"]
 [ext_resource type="Texture2D" uid="uid://c85envuiuo3ju" path="res://Icons/folder.png" id="7_3eler"]
@@ -21,14 +20,11 @@ size = Vector2i(720, 380)
 min_size = Vector2i(450, 300)
 script = ExtResource("1_c0o00")
 settings_tabs = Array[Object]([ExtResource("2_dp1jx"), ExtResource("3_7l07q"), ExtResource("4_3eler"), ExtResource("5_njjsv")])
-reset_texture = ExtResource("2_4ebue")
-file_texture = ExtResource("7_3eler")
 settings_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer2/VBoxContainer2")
 tabs_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer")
+reset_texture = ExtResource("2_4ebue")
+file_texture = ExtResource("7_3eler")
 close_menu = NodePath("MarginContainer/VBoxContainer/HBoxContainer/Close")
-
-[node name="ColorRect" parent="." unique_id=1354321475 instance=ExtResource("3_8qwbu")]
-focus_mode = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1173840034]
 anchors_preset = 15

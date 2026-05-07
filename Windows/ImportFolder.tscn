@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://cg285gfsvn0iu" path="res://Csharp/UI/Import Folder/ImportFolder.cs" id="1_aubqj"]
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Styling/Fonts/DefaultFont.tres" id="1_ewhmh"]
-[ext_resource type="PackedScene" uid="uid://dhdg1uuqqaoj4" path="res://Prefabs/background.tscn" id="1_uox0n"]
 [ext_resource type="PackedScene" uid="uid://cjc5crjo31obe" path="res://Prefabs/pathdisplay.tscn" id="2_uox0n"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_acdqb"]
@@ -17,8 +16,6 @@ size = Vector2i(250, 200)
 min_size = Vector2i(250, 200)
 max_size = Vector2i(250, 200)
 script = ExtResource("1_aubqj")
-
-[node name="ColorRect" parent="." unique_id=1185867938 instance=ExtResource("1_uox0n")]
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=93669704]
 anchors_preset = 15

@@ -1,6 +1,5 @@
 [gd_scene format=3 uid="uid://djve16b56k6h0"]
 
-[ext_resource type="PackedScene" uid="uid://dhdg1uuqqaoj4" path="res://Prefabs/background.tscn" id="1_8mof8"]
 [ext_resource type="Script" uid="uid://ddqjqicca0ftd" path="res://Csharp/UI/Downloader/DownloadWindow.cs" id="1_v3qo6"]
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Styling/Fonts/DefaultFont.tres" id="2_v3qo6"]
 [ext_resource type="Theme" uid="uid://cg2x5h7ufrntn" path="res://Styling/global_theme.tres" id="4_1qv4f"]
@@ -34,8 +33,6 @@ link = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/Downloading/Add Li
 add_link = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/Downloading/Add Link/Add")
 download = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/Downloading/Download")
 close = NodePath("MarginContainer/VBoxContainer/HBoxContainer/Close")
-
-[node name="ColorRect" parent="." unique_id=1374414892 instance=ExtResource("1_8mof8")]
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=2015795349]
 anchors_preset = 15

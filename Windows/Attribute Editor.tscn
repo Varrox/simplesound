@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://eh8a3k652ogt" path="res://Csharp/UI/Attribute Editor/AttributeEditor.cs" id="1_cj5je"]
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Styling/Fonts/DefaultFont.tres" id="1_ot5f1"]
-[ext_resource type="PackedScene" uid="uid://dhdg1uuqqaoj4" path="res://Prefabs/background.tscn" id="2_j2mdm"]
 [ext_resource type="PackedScene" uid="uid://cjc5crjo31obe" path="res://Prefabs/pathdisplay.tscn" id="3_6cib4"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3g08v"]
@@ -27,8 +26,6 @@ cover_label = NodePath("VBoxContainer/Selected File")
 explicit_lyrics = NodePath("VBoxContainer/Explicit Lyrics")
 submit_button = NodePath("VBoxContainer/HBoxContainer/Submit")
 cancel_button = NodePath("VBoxContainer/HBoxContainer/Cancel")
-
-[node name="ColorRect" parent="." unique_id=1042828171 instance=ExtResource("2_j2mdm")]
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=598437280]
 anchors_preset = 15
