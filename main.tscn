@@ -57,6 +57,10 @@
 [ext_resource type="Shader" uid="uid://bdi2g0ydm4uf7" path="res://Styling/transition.gdshader" id="52_blkrb"]
 [ext_resource type="Script" uid="uid://dn1xjyy7q4ft5" path="res://Csharp/Discord.cs" id="53_e71vb"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_abqjc"]
+shader = ExtResource("52_blkrb")
+shader_parameter/t = 0.0
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n3cvr"]
 shader = ExtResource("8_0cp0l")
 shader_parameter/blur_size = 0.25
@@ -160,10 +164,6 @@ shader = ExtResource("37_4w656")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_68lop"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_abqjc"]
-shader = ExtResource("52_blkrb")
-shader_parameter/t = 0.0
-
 [sub_resource type="LabelSettings" id="LabelSettings_e71vb"]
 
 [sub_resource type="GDScript" id="GDScript_e71vb"]
@@ -219,13 +219,27 @@ total_time = NodePath("Player/Controls/Progress/Total Time")
 song_name = NodePath("Player/Song Attributes/Name")
 song_artist = NodePath("Player/Song Attributes/Artist")
 song_cover = NodePath("Player/Song Attributes/PanelContainer/Cover")
-background_subviewport = NodePath("../SubViewport")
+background_subviewport = NodePath("Background/SubViewport")
 volume_slider = NodePath("Player/Controls/Volume")
 mute_button = NodePath("Player/Controls/Volume/Mute")
 background_color_rect = NodePath("Background/Color")
 
 [node name="Background" type="Control" parent="Interface" unique_id=291196361]
 layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport" type="SubViewport" parent="Interface/Background" unique_id=748581528 node_paths=PackedStringArray("transitioner", "target_texture_rect")]
+size = Vector2i(256, 256)
+script = ExtResource("51_uypp3")
+transitioner = NodePath("Transitioner")
+target_texture_rect = NodePath("../Image")
+
+[node name="Transitioner" type="ColorRect" parent="Interface/Background/SubViewport" unique_id=839690620]
+material = SubResource("ShaderMaterial_abqjc")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -343,9 +357,9 @@ icon = ExtResource("10_7e43v")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("21_seu75")
-menu = NodePath("../../../../../../Playlistcreationcontext")
 teleportMenu = true
 teleportMenuOffset = Vector2(-135, 32)
+menu = NodePath("../../../../../../Playlistcreationcontext")
 
 [node name="HSeparator" type="HSeparator" parent="Interface/Content/Side Panel/Open/VBoxContainer" unique_id=166833490]
 layout_mode = 2
@@ -415,9 +429,9 @@ icon = ExtResource("10_7e43v")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("21_seu75")
-menu = NodePath("../../../../../Playlistcreationcontext")
 teleportMenu = true
 teleportMenuOffset = Vector2(0, 32)
+menu = NodePath("../../../../../Playlistcreationcontext")
 
 [node name="HSeparator" type="HSeparator" parent="Interface/Content/Side Panel/Collapsed/VBoxContainer" unique_id=765403374]
 layout_mode = 2
@@ -995,6 +1009,9 @@ _mute_texture = ExtResource("42_0cbny")
 _unmute_texture = ExtResource("48_uit24")
 _default_cover = ExtResource("7_xn3w4")
 _default_cover_highres = ExtResource("13_seu75")
+_highlight = Color(0.27752772, 0.27752775, 0.27752757, 0.5882353)
+_lower_highlight = Color(50, 50, 50, 0.162)
+_confirmation_window = ExtResource("39_h8e4i")
 _main = NodePath("..")
 _player = NodePath("../Interface")
 _discord = NodePath("../Discord")
@@ -1002,9 +1019,6 @@ _attribute_editor = NodePath("AttributeEditor")
 _download_window = NodePath("DownloadWindow")
 _file_dialog = NodePath("File Dialog")
 _self = NodePath(".")
-_highlight = Color(0.27752772, 0.27752775, 0.27752757, 0.5882353)
-_lower_highlight = Color(50, 50, 50, 0.162)
-_confirmation_window = ExtResource("39_h8e4i")
 _playlist_menu = NodePath("../Interface/Playlistcontext")
 _song_menu = NodePath("../Interface/Songcontext")
 
@@ -1028,21 +1042,7 @@ script = ExtResource("53_e71vb")
 script = ExtResource("46_qnost")
 zoom_display = NodePath("../Interface/Top Bar/Right/Zoom amount")
 
-[node name="SubViewport" type="SubViewport" parent="." unique_id=748581528 node_paths=PackedStringArray("transitioner", "target_texture_rect")]
-size = Vector2i(256, 256)
-script = ExtResource("51_uypp3")
-transitioner = NodePath("Transitioner")
-target_texture_rect = NodePath("../Interface/Background/Image")
-
-[node name="Transitioner" type="ColorRect" parent="SubViewport" unique_id=839690620]
-material = SubResource("ShaderMaterial_abqjc")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Label" type="Label" parent="." unique_id=1348915883]
+[node name="FPS" type="Label" parent="." unique_id=1348915883]
 visible = false
 layout_mode = 0
 offset_right = 40.0
