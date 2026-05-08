@@ -127,10 +127,10 @@ public partial class SongsVisualizer : ScrollContainer
                         continue;
                     }
 
-                    int last_index = i + dt;
+                    int last_index = i - dt;
                     int song = first_song + i;
 
-                    if(last_index != -1) // Swap
+                    if(last_index != -1 && last_index != song_displays.Length) // Swap
                     {
                         if((i == 0 && !f) || (i == song_displays.Length - 1 && f))
                         {
@@ -139,8 +139,8 @@ public partial class SongsVisualizer : ScrollContainer
                         }
                         else
                         {
-                            Texture2D cover = song_displays[i].cover.Texture;
-                            song_displays[i].Init(song, song_datas[song], playlist.type, (playlist.type == Playlist.PlaylistType.Album) ? null : last_cover);
+                            Texture2D cover = song_displays[last_index].cover.Texture;
+                            song_displays[i].Init(last_index, song_datas[last_index], playlist.type, (playlist.type == Playlist.PlaylistType.Album) ? null : last_cover);
                             last_cover = cover;
                         }
                     }
