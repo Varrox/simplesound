@@ -75,7 +75,7 @@ public partial class SongDisplay : Button
         number.SelfModulate = new Color(1, 1, 1, 1);
     }
 
-    public void Init(int song, SongData data, Playlist.PlaylistType type, Texture2D cover)
+    public void Init(in int song, in SongData data, in Playlist.PlaylistType type, in Texture2D cover)
     {
         Disabled = data.corrupt;
 

@@ -19,6 +19,7 @@ public partial class SongsVisualizer : ScrollContainer
 
     const int min_y = 60;
     int separation = 0, top_card_y, single_button_size;
+    
     int GetTotalHeight()
     {
         return (single_button_size * Globals.main.playlists[Globals.main.looked_at_playlist].songs.Count);
@@ -44,7 +45,7 @@ public partial class SongsVisualizer : ScrollContainer
         
         if (last_scroll != ScrollVertical || last_size != Size)
         {
-            int max_displays = (int)Mathf.Ceil(Size.Y / single_button_size) + 1;
+            int max_displays = (int)Mathf.Ceil(Size.Y / single_button_size) + 3;
             int target_displays = Mathf.Min(max_displays, playlist.songs.Count);
             (int top, int bottom) = CalculateSize();
             int first_song = GetFirstSong();

@@ -36,7 +36,7 @@ public partial class PlaylistsVisualizer : ScrollContainer
         LoadDataIntoPlaylist(i, playlist);
     }
 
-    public void LoadDataIntoPlaylist(int i, PlaylistDisplay playlist)
+    public void LoadDataIntoPlaylist(int i, in PlaylistDisplay playlist)
     {
         playlist.Init(Globals.main.playlists[i], i);
     }
