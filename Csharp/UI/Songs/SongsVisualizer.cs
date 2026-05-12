@@ -1,11 +1,11 @@
 using Godot;
-using System;
 using System.Collections.Generic;
 
 public partial class SongsVisualizer : ScrollContainer
 {
     [Export] public PackedScene template;
-    [Export] public VBoxContainer container;
+    [Export] public Control top_card;
+    [Export] public VBoxContainer container; // Only children will be song displays. Is a sub VBoxContainer of the one containing top and bottom spacers, and top card.
     [Export] public Control top_spacer, bottom_spacer;
     [Export] public TextureRect cover;
     [Export] public Label playlist_name;
@@ -26,7 +26,7 @@ public partial class SongsVisualizer : ScrollContainer
 
     public override void _Ready()
     {
-        top_card_y = (int)(container.GetChild(0) as Control).Size.Y + separation;
+        top_card_y = (int)top_card.Size.Y + separation;
         single_button_size = (min_y + separation);
 
         Globals.main.playlist_visualizer.OnSelectPlaylist += LoadPlaylist;
@@ -73,7 +73,6 @@ public partial class SongsVisualizer : ScrollContainer
                     {
                         song_displays.Add(template.Instantiate() as SongDisplay);
                         container.AddChild(song_displays[i]);
-                        container.MoveChild(song_displays[i], container.GetChildCount() - 2);
 
                         int song = first_song + i;
 
@@ -88,7 +87,7 @@ public partial class SongsVisualizer : ScrollContainer
             int shift = first_song - last_first_song; // The amount to shift by
             int a_shift = Mathf.Abs(shift);
 
-            if(shift != 0 && ScrollVertical > top_card_y + single_button_size) // NOTE: Is only true if there has been any scrolling, and past the beginning.
+            if(shift != 0 && ScrollVertical > top_card_y + single_button_size || a_shift < song_displays.Count) // NOTE: Is only true if there has been any scrolling, and past the beginning.
             {
                 // If shift is less than 0, then the user has scrolled up.
                 // If shift is more than 0, then the user has scrolled down.
@@ -111,7 +110,7 @@ public partial class SongsVisualizer : ScrollContainer
                         song_displays.RemoveAt(last_index);
                         song_displays.Insert(0, display);
 
-                        container.MoveChild(display, 1);
+                        container.MoveChild(display, 0);
 
                         index = (a_shift - i) - 1;
                     }
@@ -121,7 +120,7 @@ public partial class SongsVisualizer : ScrollContainer
                         song_displays.RemoveAt(0);
                         song_displays.Add(display); // Add instead of insert because it is probably faster and makes more sense logic wise.
 
-                        container.MoveChild(display, last_index - 1);
+                        container.MoveChild(display, last_index);
 
                         index = song_displays.Count - (a_shift - i);
                     }
@@ -132,6 +131,7 @@ public partial class SongsVisualizer : ScrollContainer
                     song_displays[index].Init(song, data, playlist.type, (playlist.type == Playlist.PlaylistType.Album) ? null : ConvertToGodot.GetCover(playlist.songs[song]));
                 }
             }
+            
 
             last_scroll = ScrollVertical;
             last_size = Size;
@@ -141,17 +141,12 @@ public partial class SongsVisualizer : ScrollContainer
 
     private SongData GetSongData(int song, in Playlist playlist)
     {
-        if (!song_datas.ContainsKey(song))
-        {
-            if(song < playlist.songs.Count)
-            {
+        if (!song_datas.ContainsKey(song)) {
+            if(song < playlist.songs.Count) {
                 SongData data = new SongData(playlist.songs[song]);
                 song_datas[song] = data;
             }
-            else
-            {
-                song_datas[song] = new SongData{};
-            }
+            else song_datas[song] = new SongData{};
         }
         return song_datas[song];
     }
@@ -162,24 +157,18 @@ public partial class SongsVisualizer : ScrollContainer
         cover.Texture = playlist_cover;
         playlist_name.Text = playlist.name;
 
-        if (playlist.songs != null)
-        {
-            songs_count.Text = $"{playlist.songs.Count} song" + (playlist.songs.Count != 1 ? "s" : "");
-        }
-        else
-        {
-            songs_count.Text = "0 songs";
-        }
+        if (playlist.songs != null) songs_count.Text = $"{playlist.songs.Count} song" + (playlist.songs.Count != 1 ? "s" : "");
+        else songs_count.Text = "0 songs";
 
         Update();
     }
 
     public (int, int) CalculateSize()
     {
-        int top = (int)MathF.Min(MathF.Max(ScrollVertical - top_card_y, 0), GetTotalHeight() - (int)Size.Y - top_card_y);
+        int top = Mathf.Min(Mathf.Max(ScrollVertical - top_card_y, 0), GetTotalHeight() - (int)Size.Y - top_card_y);
         top -= top % single_button_size;
 
-        int bottom = (int)MathF.Max(GetTotalHeight() - (top + (int)Size.Y) - top_card_y, 0);
+        int bottom = Mathf.Max(GetTotalHeight() - (top + (int)Size.Y) - top_card_y, 0);
         bottom -= bottom % single_button_size;
 
         return (top, bottom);
@@ -187,9 +176,9 @@ public partial class SongsVisualizer : ScrollContainer
 
     public int GetFirstSong()
     {
-        int top = (int)MathF.Min(MathF.Max(ScrollVertical - top_card_y, 0), GetTotalHeight() - (int)Size.Y - top_card_y);
+        int top = Mathf.Min(Mathf.Max(ScrollVertical - top_card_y, 0), GetTotalHeight() - (int)Size.Y - top_card_y);
         top -= top % single_button_size;
-        return (int)MathF.Max((top) / single_button_size, 0);
+        return Mathf.Max((top) / single_button_size, 0);
     }
 
     public void UpdateSong(int index, in SongData song_data, in Texture2D cover)

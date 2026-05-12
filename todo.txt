@@ -1,7 +1,5 @@
 TODO
 
-- Make playlist bar hiding.
-- Add lyrics viewer.
 - Add sorting.
 - Add song position rearange.
 - Add images to ssl.
@@ -10,10 +8,12 @@ TODO
 
 DOING
 
-- Add song downloading - For youtube, soundcloud, and spotify.
+- Add lyrics viewer.
 
 FINISHED
 
+- Add song downloading - For youtube, soundcloud, and spotify.
+- Make playlist bar hiding.
 - Add settings menu.
 - Rename SSL to something else because SSL is already taken.
 - Make Github repo public, and make builds.

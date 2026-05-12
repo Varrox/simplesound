@@ -357,9 +357,9 @@ icon = ExtResource("10_7e43v")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("21_seu75")
+menu = NodePath("../../../../../../Playlistcreationcontext")
 teleportMenu = true
 teleportMenuOffset = Vector2(-135, 32)
-menu = NodePath("../../../../../../Playlistcreationcontext")
 
 [node name="HSeparator" type="HSeparator" parent="Interface/Content/Side Panel/Open/VBoxContainer" unique_id=166833490]
 layout_mode = 2
@@ -429,9 +429,9 @@ icon = ExtResource("10_7e43v")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("21_seu75")
+menu = NodePath("../../../../../Playlistcreationcontext")
 teleportMenu = true
 teleportMenuOffset = Vector2(0, 32)
-menu = NodePath("../../../../../Playlistcreationcontext")
 
 [node name="HSeparator" type="HSeparator" parent="Interface/Content/Side Panel/Collapsed/VBoxContainer" unique_id=765403374]
 layout_mode = 2
@@ -453,14 +453,15 @@ theme_override_constants/margin_top = 60
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 115
 
-[node name="Song Display" type="ScrollContainer" parent="Interface/Content/Songs/MarginContainer" unique_id=1804847451 node_paths=PackedStringArray("container", "top_spacer", "bottom_spacer", "cover", "playlist_name", "songs_count")]
+[node name="Song Display" type="ScrollContainer" parent="Interface/Content/Songs/MarginContainer" unique_id=1804847451 node_paths=PackedStringArray("top_card", "container", "top_spacer", "bottom_spacer", "cover", "playlist_name", "songs_count")]
 layout_mode = 2
 theme_override_styles/focus = SubResource("StyleBoxEmpty_b1qrp")
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 2
 script = ExtResource("14_htxhm")
 template = ExtResource("14_blkrb")
-container = NodePath("Full Container/Container")
+top_card = NodePath("Full Container/Container/Top card")
+container = NodePath("Full Container/Container/VBoxContainer")
 top_spacer = NodePath("Full Container/Container/Top")
 bottom_spacer = NodePath("Full Container/Container/Bottom")
 cover = NodePath("Full Container/Container/Top card/Icon/TextureRect")
@@ -550,6 +551,10 @@ script = ExtResource("28_wnkbs")
 
 [node name="Top" type="Panel" parent="Interface/Content/Songs/MarginContainer/Song Display/Full Container/Container" unique_id=1668146414]
 layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Interface/Content/Songs/MarginContainer/Song Display/Full Container/Container" unique_id=366499595]
+layout_mode = 2
+theme_override_constants/separation = 0
 
 [node name="Bottom" type="Panel" parent="Interface/Content/Songs/MarginContainer/Song Display/Full Container/Container" unique_id=169923512]
 layout_mode = 2
@@ -1009,9 +1014,6 @@ _mute_texture = ExtResource("42_0cbny")
 _unmute_texture = ExtResource("48_uit24")
 _default_cover = ExtResource("7_xn3w4")
 _default_cover_highres = ExtResource("13_seu75")
-_highlight = Color(0.27752772, 0.27752775, 0.27752757, 0.5882353)
-_lower_highlight = Color(50, 50, 50, 0.162)
-_confirmation_window = ExtResource("39_h8e4i")
 _main = NodePath("..")
 _player = NodePath("../Interface")
 _discord = NodePath("../Discord")
@@ -1019,6 +1021,9 @@ _attribute_editor = NodePath("AttributeEditor")
 _download_window = NodePath("DownloadWindow")
 _file_dialog = NodePath("File Dialog")
 _self = NodePath(".")
+_highlight = Color(0.27752772, 0.27752775, 0.27752757, 0.5882353)
+_lower_highlight = Color(50, 50, 50, 0.162)
+_confirmation_window = ExtResource("39_h8e4i")
 _playlist_menu = NodePath("../Interface/Playlistcontext")
 _song_menu = NodePath("../Interface/Songcontext")
 
