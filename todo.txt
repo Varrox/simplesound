@@ -2,10 +2,7 @@ TODO
 
 - Add sorting.
 - Add song position rearange.
-- Add images to ssl.
-- Add gdshader support to ssl.
-- Make documentation for playlists.
-- Sleep timer
+- Sleep timer.
 
 DOING
 
@@ -43,6 +40,10 @@ SHELF
 
 - Add folder explorer.
 - Add max song display load limit.
+- Make documentation for playlists.
+
+- Add images to ssl.
+- Add gdshader support to ssl.
 
 ULTIMATE GOAL:
 
