@@ -2,7 +2,7 @@
 
 a simple music / audio player made in Godot. It takes inspiration from how spotify's UI looks like and works, and it is all ran with local files.
 
-![Screenshot of simplesound in action](https://raw.githubusercontent.com/Varrox/simplesound/Github/screenshot_01.png)
+![Screenshot of simplesound in action](https://raw.githubusercontent.com/Varrox/simplesound/main/Github/screenshot_01.png)
 
 Feel free to report issues and bugs! It would help out a lot.
 
