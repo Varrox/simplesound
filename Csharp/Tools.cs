@@ -37,9 +37,9 @@ public class Tools
         if(!File.Exists(path))
             return false;
 
-        for(int i = 0; i < Constants.playable_formats.Length; i++)
+        for(int i = 0; i < Constants.PLAYABLE_FORMATS.Length; i++)
         {
-            if(path.EndsWith($".{Constants.playable_formats[i]}"))
+            if(path.EndsWith($".{Constants.PLAYABLE_FORMATS[i]}"))
                 return true;
         }
 

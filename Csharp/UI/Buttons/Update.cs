@@ -39,13 +39,13 @@ public partial class Update : Button
         if (!can_be_updated || updating) return;
 
         current_request = CurrentRequest.Download;
-        http_client.Request(Constants.latest_release);
+        http_client.Request(Constants.LATEST_RELEASE);
     }
 
     public void CheckUpdate()
     {
         current_request = CurrentRequest.Version;
-        http_client.Request(Constants.latest_release);
+        http_client.Request(Constants.LATEST_RELEASE);
     }
 
     private void RequestCompleted(long result, long responseCode, string[] headers, byte[] body)

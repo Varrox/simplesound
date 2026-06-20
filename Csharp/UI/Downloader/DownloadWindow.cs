@@ -150,7 +150,7 @@ public partial class DownloadWindow : EditorWindow
 
         string output_directory = Path.Combine(directory, file);
 
-        string selected_format = Constants.download_formats[Globals.save_data.application_settings.download_format];
+        string selected_format = Constants.DOWNLOAD_FORMATS[Globals.save_data.application_settings.download_format];
 
         List<string> arguments = new List<string>(new[]{
             "-x", 

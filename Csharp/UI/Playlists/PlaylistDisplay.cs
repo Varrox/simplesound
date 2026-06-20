@@ -56,11 +56,11 @@ public partial class PlaylistDisplay : Button
             if (playlist.songs == null)
                 songs.Text = "0 songs";
             else
-                songs.Text = $"{amount}{(playlist.artist != null ? $" {Constants.dot} {playlist.artist}" : "")}";
+                songs.Text = $"{amount}{(playlist.artist != null ? $" {Constants.DOT} {playlist.artist}" : "")}";
         }
         else
         {
-            songs.Text = $"Album  {Constants.dot}  {playlist.artist ?? (playlist.songs.Count.ToString() + (playlist.songs.Count != 1 ? " songs" : " song"))}";
+            songs.Text = $"Album  {Constants.DOT}  {playlist.artist ?? (playlist.songs.Count.ToString() + (playlist.songs.Count != 1 ? " songs" : " song"))}";
         }
 
         playlist_index = index;

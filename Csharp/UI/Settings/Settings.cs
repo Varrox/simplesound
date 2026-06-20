@@ -103,7 +103,7 @@ public partial class Settings : EditorWindow
                 input = EnumSetting(quality_levels);
                 break;
             case "af":
-                input = EnumSetting(Constants.download_formats);
+                input = EnumSetting(Constants.DOWNLOAD_FORMATS);
                 break;
             case "bool":
                 input = new[] { new CheckButton() };
