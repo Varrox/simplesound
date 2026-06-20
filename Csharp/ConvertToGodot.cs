@@ -47,7 +47,8 @@ public class ConvertToGodot
     /// <returns></returns>
     public static Texture2D LoadImage(string file_name) {
         if (file_name == string.Empty) return null;
-        try { return ResourceLoader.Load<Texture2D>(file_name); }
-        catch { return null; }
+        Image img = new Image();
+        if (img.Load(file_name) == Error.Ok) return ImageTexture.CreateFromImage(img);
+        return null;
     }
 }
