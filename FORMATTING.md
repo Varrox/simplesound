@@ -6,7 +6,7 @@
 Constants: UPPERCASE_SNAKE_CASE
 Variables / Arguments: snake_case
 Methods / Actions / Enums / Structs / Classes: PascalCase
-Private Indication: _[Identifier]
+Private Indication (exclude constants): _[Identifier]
 ```
 
 ## Spacing
