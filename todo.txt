@@ -30,7 +30,6 @@ FINISHED
 - Make shuffling not play songs twice.
 - Ability to open appdata for app.
 - Remove scrollbar focus somehow.
-x Make covers all save as square aspect ratio.
 - Lerp background image to transition.
 - Add threading to playlist loading.
 - Make refresh specific parsing.
@@ -38,12 +37,15 @@ x Make covers all save as square aspect ratio.
 
 SHELF
 
-- Add folder explorer.
-- Add max song display load limit.
 - Make documentation for playlists.
-
 - Add images to ssl.
 - Add gdshader support to ssl.
+
+SCRAPPED
+
+- Add max song display load limit.
+- Add folder explorer.
+- Make covers all save as square aspect ratio.
 
 ULTIMATE GOAL:
 
