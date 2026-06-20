@@ -50,7 +50,7 @@ public class Playlist
         custom_info = new CustomInfo();
     }
 
-    public static Playlist CreateFromFile(string path)
+    public static Playlist LoadFromFile(string path)
     {
         Playlist playlist = JsonConvert.DeserializeObject<Playlist>(File.ReadAllText(path));
         playlist.songs = ProcessSongs(playlist.songs);

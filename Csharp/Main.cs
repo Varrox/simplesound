@@ -18,17 +18,10 @@ public partial class Main : Control
 
     public int looked_at_playlist;
 
-    public Playlist playlist
-	{
-		get
-		{
-			if (playlists != null)
-			{
-				if (playlists.Count > playlist_index)
-				{
-					return playlists[playlist_index];
-                }
-			}
+    public Playlist playlist {
+		get {
+			if (playlists == null) return null;
+			if (playlists.Count > playlist_index) return playlists[playlist_index];
 			return null;
 		}
 	}
@@ -44,17 +37,14 @@ public partial class Main : Control
     public Action OnLoadPlaylist;
     public Action<bool> OnPlay;
 
-	public string song
-	{
-		get
-		{
-			if(SongAvailable()) return playlists[playlist_index].songs[song_index];
+	public string song {
+		get {
+			if(IsSongAvailable()) return playlists[playlist_index].songs[song_index];
 			else return null;
         }
 	}
 
-    public override void _Ready()
-	{
+    public override void _Ready() {
 		// Load Save data
 
 		Globals.save_data = SaveData.GetSaveData();
@@ -68,8 +58,7 @@ public partial class Main : Control
 
 		offset = song_index;
 
-		if (shuffled)
-			shuffle_index = song_index;
+		if (shuffled) shuffle_index = song_index;
 
         // Set Volume
 
@@ -81,13 +70,9 @@ public partial class Main : Control
         playlist_paths = Globals.save_data.playlists ?? new List<string>();
         playlists = new List<Playlist>(new Playlist[playlist_paths.Count]);
 
-        if (Globals.save_data.playlists == null)
-            return;
+        if (Globals.save_data.playlists == null) return;
 
-        for (int i = 0; i < playlist_paths.Count; i++)
-        {
-            playlists[i] = Playlist.CreateFromFile(playlist_paths[i]);
-        }
+        for (int i = 0; i < playlist_paths.Count; i++) playlists[i] = Playlist.LoadFromFile(playlist_paths[i]);
 
         LoadPlaylist(playlist_index);
 
@@ -95,29 +80,23 @@ public partial class Main : Control
 
         playlist_visualizer.LoadAllPlaylistVisuals();
 
-        if (SongAvailable())
-            PlaySong(playlist.songs[song_index]);
-        else
-            OnLoadSong?.Invoke(); // Emit anyways just so it can display no songs
+        if (IsSongAvailable()) PlaySong(playlist.songs[song_index]);
+        else OnLoadSong?.Invoke(); // Emit anyways just so it can display no songs
 
 		// Done Loading
     }
 
-    public override void _Process(double delta)
-	{
+    public override void _Process(double delta) {
 		// Input
 
 		if (Input.IsActionJustPressed("save")) Save();
 
 		// Loop management
 
-		if (playing && SongAvailable())
-		{
-			if (!audio_player.Playing)
-			{
+		if (playing && IsSongAvailable()) {
+			if (!audio_player.Playing) {
 				if (!loop) MoveSong(1);
-				else
-				{
+				else {
 					time = 0;
 					audio_player.Play(time);
 
@@ -132,23 +111,14 @@ public partial class Main : Control
 		}
 	}
 
-	public void CheckIndex()
-	{
-		if (playlist_paths[playlist_index] != playlist.GetPath())
-		{
-			playlist_index = playlist_paths.IndexOf(playlist.GetPath());
-		}
+	public void CheckIndex() {
+		if (playlist_paths[playlist_index] != playlist.GetPath()) playlist_index = playlist_paths.IndexOf(playlist.GetPath());
 
-		if (song != current_song_path)
-		{
-            song_index = playlist.songs.IndexOf(current_song_path);
-        }
+		if (song != current_song_path) song_index = playlist.songs.IndexOf(current_song_path);
 	}
 
-	public void LoadPlaylist(int index)
-	{
-		if (index < 0)
-		{
+	public void LoadPlaylist(int index) {
+		if (index < 0) {
 			audio_player.Stop();
 			audio_player.Stream = null;
 
@@ -167,32 +137,24 @@ public partial class Main : Control
 		Reshuffle();
     }
 
-	public void Reshuffle()
-	{
+	public void Reshuffle() {
         GD.Randomize();
         random_offset = (int)GD.Randi();
     }
 
-	public void Play()
-	{
+	public void Play() {
 		playing = !playing;
 
-		if (playing) 
-		{
+		if (playing) {
             audio_player.Play(time);
 
-			if (video_player.Stream != null)
-			{
+			if (video_player.Stream != null) {
                 video_player.Play();
                 video_player.StreamPosition = time;
             }
         }
-		else
-		{
-			if (video_player.Stream != null)
-			{
-                video_player.Stop();
-            }
+		else {
+			if (video_player.Stream != null) video_player.Stop();
 
             audio_player.Stop();
         }
@@ -200,104 +162,65 @@ public partial class Main : Control
         OnPlay?.Invoke(playing);
     }
 
-	public void MoveSong(int amount, bool set = false)
-	{
-		if (SongAvailable())
-		{
-			if (shuffled && !set)
-			{
-				offset += amount;
+	public void MoveSong(int amount, bool set = false) {
+		if (!IsSongAvailable()) return;
 
-				if (offset == shuffle_index)
-				{
-                    song_index = shuffle_index;
-                }
-				else
-				{
-					for(int i = 0; i < 6; i++)
-					{
-                        GD.Seed((ulong)(offset * 3 + random_offset + i));
-                        int random_number = GD.RandRange(0, playlist.songs.Count);
-                        if (random_number != song_index)
-                        {
-                            song_index = random_number;
-                            offset += i / 3;
-                            break;
-                        }
-                    }
-                }
+		if (shuffled && !set) {
+			offset += amount;
+
+			if (offset == shuffle_index) song_index = shuffle_index;
+			else {
+				for(int i = 0; i < 6; i++) {
+					GD.Seed((ulong)(offset * 3 + random_offset + i));
+					int random_number = GD.RandRange(0, playlist.songs.Count);
+					if (random_number != song_index) {
+						song_index = random_number;
+						offset += i / 3;
+						break;
+					}
+				}
 			}
-			else
-			{
-				song_index += amount;
-            }
-
-            song_index = Mathf.Wrap(song_index, 0, playlist.songs.Count);
-
-			if(Metadata.IsFileCorrupt(song)) // Skip if corrupted
-			{
-				MoveSong(amount);
-				return;
-			}
-				
-
-            PlaySong(song);
-
-			playing = false;
-			Play();
 		}
+		else song_index += amount;
+
+		song_index = Mathf.Wrap(song_index, 0, playlist.songs.Count);
+
+		if(Metadata.IsFileCorrupt(song)) { // Skip if corrupted
+			MoveSong(amount);
+			return;
+		}
+
+		PlaySong(song);
+
+		playing = false;
+		Play();
 	}
 
-	public void SetSong(int index)
-	{
-		if (SongAvailable())
-		{
-			offset = index;
-			shuffle_index = index;
-			song_index = index;
-            PlaySong(song);
-            playing = false;
-            Play();
-        }
+	public void SetSong(int index) {
+		if (!IsSongAvailable()) return;
+		
+		offset = index;
+		shuffle_index = index;
+		song_index = index;
+
+		PlaySong(song);
+
+		playing = false;
+
+		Play();
     }
 
-	public void PlaySong(string path)
-	{
-		if (SongAvailable())
-		{
-			if (audio_player.Stream != null) 
-				time = 0;
+	public void PlaySong(string path) {
+		if (IsSongAvailable()) {
+			if (audio_player.Stream != null) time = 0;
 
-            if (FileAccess.FileExists(path))
-            {
-                if (path.EndsWith(".mp3"))
-                {
-                    audio_player.Stream = AudioStreamMP3.LoadFromBuffer(FileAccess.GetFileAsBytes(path));
-                }
-                else if (path.EndsWith(".wav"))
-                {
-                    audio_player.Stream = AudioStreamWav.LoadFromBuffer(FileAccess.GetFileAsBytes(path));
-                }
-                else if (path.EndsWith(".ogg"))
-                {
-                    audio_player.Stream = AudioStreamOggVorbis.LoadFromBuffer(FileAccess.GetFileAsBytes(path));
-                }
-
-                VideoStreamTheora video = ConvertToGodot.GetVideoFromFile(Globals.main.song);
-
-                video_player.Visible = video != null;
-				video_player.Stream = video;
-
-                current_share_link = Metadata.GetShareLink(path);
-
-                OnLoadSong?.Invoke();
-            }
-            else // if the file doesn't exist
-            {
+            if (FileAccess.FileExists(path)) _LoadSong(path);
+            else { // if the file doesn't exist
                 GD.PrintErr($"{path} doesn't exist");
 
-				if (playlist.songs[song_index] == path)
-				{
+				// TODO : Better missing song management needed.
+
+				if (playlist.songs[song_index] == path) {
                     playlist.songs.RemoveAt(song_index);
                     playlist.Save();
 					PlaySong(song);
@@ -306,18 +229,39 @@ public partial class Main : Control
         }
 	}
 
-	public bool SongAvailable()
-	{
-		if(playlists != null)
-			if (playlists.Count > playlist_index)
-				if (playlists[playlist_index] != null)
-					if (playlists[playlist_index].songs != null)
-						if (playlists[playlist_index].songs.Count > 0) return true;
-		return false;
+	private void _LoadSong(in string path) {
+		switch (path.GetExtension()) {
+			case "mp3":
+				audio_player.Stream = AudioStreamMP3.LoadFromBuffer(FileAccess.GetFileAsBytes(path));
+				break;
+			case "wav":
+				audio_player.Stream = AudioStreamWav.LoadFromBuffer(FileAccess.GetFileAsBytes(path));
+				break;
+			case "ogg":
+				audio_player.Stream = AudioStreamOggVorbis.LoadFromBuffer(FileAccess.GetFileAsBytes(path));
+				break;
+		}
+
+		VideoStreamTheora video = ConvertToGodot.GetVideoFromFile(Globals.main.song);
+
+		video_player.Visible = video != null;
+		video_player.Stream = video;
+
+		current_share_link = Metadata.GetShareLink(path);
+
+		OnLoadSong?.Invoke();
 	}
 
-	public void Save() 
-	{
+	public bool IsSongAvailable() {
+		if (playlists == null) return false;
+		if (playlists.Count <= playlist_index) return false;
+		if (playlists[playlist_index] == null) return false;
+		if (playlists[playlist_index].songs == null) return false;
+		if (playlists[playlist_index].songs.Count == 0) return false;
+		return true;
+	}
+
+	public void Save() {
 		Globals.save_data.playlist_index = playlist_index;
 		Globals.save_data.song_index = song_index;
 		Globals.save_data.looked_at_playlist = looked_at_playlist;
@@ -329,16 +273,12 @@ public partial class Main : Control
         Globals.save_data.Save();
 	}
 
-    public void Refresh()
-	{
+    public void Refresh() {
         SaveData save_data = SaveData.GetSaveData();
         playlist_paths = save_data.playlists ?? new List<string>();
         playlists = new List<Playlist>(new Playlist[playlist_paths.Count]);
 
-        for (int i = 0; i < playlist_paths.Count; i++)
-        {
-            playlists[i] = Playlist.CreateFromFile(playlist_paths[i]);
-        }
+        for (int i = 0; i < playlist_paths.Count; i++) playlists[i] = Playlist.LoadFromFile(playlist_paths[i]);
 
         LoadPlaylist(playlist_index);
 

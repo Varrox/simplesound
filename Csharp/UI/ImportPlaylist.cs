@@ -6,13 +6,11 @@ public partial class ImportPlaylist : Button
 	Confirm sync;
 
 	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
+	public override void _Ready() {
 		ButtonDown += SetStatic;
 	}
 
-	public void SetStatic()
-	{
+	public void SetStatic() {
 		ConfirmationWindow confirmation_window = Globals.confirmation_window.Instantiate() as ConfirmationWindow;
 
 		confirmation_window.message = "Import with cloud syncing enabled?";
@@ -44,7 +42,7 @@ public partial class ImportPlaylist : Button
 
 		File.Copy(ssl_file, new_path);
 
-		Playlist playlist = Playlist.CreateFromFile(new_path);
+		Playlist playlist = Playlist.LoadFromFile(new_path);
 
 		if (sync == Confirm.Accepted)
 		{

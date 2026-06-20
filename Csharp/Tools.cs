@@ -8,8 +8,7 @@ public class Tools
     /// </summary>
     /// <param name="time">time in seconds</param>
     /// <returns>Timestamp</returns>
-    public static string SecondsToTimestamp(float time)
-    {
+    public static string SecondsToTimestamp(float time) {
         int total_seconds = Mathf.RoundToInt(time);
         int mins = total_seconds / 60;
 
@@ -22,8 +21,7 @@ public class Tools
     /// </summary>
     /// <param name="path">the media path</param>
     /// <returns>Media title</returns>
-    public static string GetMediaTitle(string path)
-    {
+    public static string GetMediaTitle(string path) {
         return Metadata.GetName(path) ?? Path.GetFileNameWithoutExtension(path);
     }
 
@@ -32,15 +30,11 @@ public class Tools
     /// </summary>
     /// <param name="path">audio filepath</param>
     /// <returns>audio file validness</returns>
-    public static bool ValidAudioFile(string path)
-    {
-        if(!File.Exists(path))
-            return false;
+    public static bool ValidAudioFile(string path) {
+        if(!File.Exists(path)) return false;
 
-        for(int i = 0; i < Constants.PLAYABLE_FORMATS.Length; i++)
-        {
-            if(path.EndsWith($".{Constants.PLAYABLE_FORMATS[i]}"))
-                return true;
+        for(int i = 0; i < Constants.PLAYABLE_FORMATS.Length; i++) {
+            if(path.GetExtension() == Constants.PLAYABLE_FORMATS[i]) return true;
         }
 
         return false;

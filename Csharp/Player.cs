@@ -108,7 +108,7 @@ public partial class Player : Node
         loop.Icon = Globals.main.loop ? Globals.loop_on_texture : Globals.loop_off_texture;
     }
 
-    public void SetPlayIcon(bool playing) => play.Icon = !playing || !Globals.main.SongAvailable() ? Globals.play_texture : Globals.pause_texture;
+    public void SetPlayIcon(bool playing) => play.Icon = !playing || !Globals.main.IsSongAvailable() ? Globals.play_texture : Globals.pause_texture;
 
     public void Move(int by)
     {
@@ -120,7 +120,7 @@ public partial class Player : Node
 
     public void OnLoadSong()
     {
-        if (Globals.main.SongAvailable())
+        if (Globals.main.IsSongAvailable())
         {
             string name = Tools.GetMediaTitle(Globals.main.song);
             song_name.Text = name;
@@ -219,7 +219,7 @@ public partial class Player : Node
             Globals.main.time = (float)progress.Value;
         }
 
-        if (Globals.main.SongAvailable())
+        if (Globals.main.IsSongAvailable())
         {
             float max = 0.65f;
             background_color_rect.Color = background_color_rect.Color.Lerp(background_color.Clamp(new Color(), new Color(max, max, max, max)), (float)delta * 2f);

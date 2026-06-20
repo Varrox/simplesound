@@ -10,8 +10,7 @@ public class ApplicationSettings
 
     public ApplicationSettings() {}
 
-	public void ApplySettings()
-	{
+	public void ApplySettings() {
 		RenderingServer.GlobalShaderParameterSet("blur_quality", blur_quality);
 	}
 }
