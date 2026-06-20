@@ -44,21 +44,6 @@ public class ConvertToGodot
         return null;
     }
 
-    public static Color GetAverageColor(Texture2D texture, int samples = 6)
-    {
-        Image image = texture.GetImage();
-        Vector2I pos = new Vector2I(image.GetWidth() - 1, image.GetHeight() - 1);
-
-        Color color = new Color();
-
-        for (int i = 0; i < samples; i++)
-        {
-            color += image.GetPixel((pos.X / samples) * i, (pos.Y / samples) * i);
-        }
-
-        return color / samples;
-    }
-
     /// <summary>
     /// Loads an image file into a Texture2D
     /// </summary>
