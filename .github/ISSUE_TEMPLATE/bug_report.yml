@@ -1,0 +1,58 @@
+name: Bug report
+description: Report a bug in simplesound
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        When reporting bugs, please follow the guidelines in this template. This helps identify the problem precisely and thus enables contributors to fix it faster.
+        - Write a descriptive issue title above.
+        - The golden rule is to **always open *one* issue for *one* bug**. If you notice several bugs and want to report them, make sure to create one new issue for each of them.
+        - Search [open](https://github.com/Varrox/simplesound/issues) and [closed](https://github.com/Varrox/simplesound/issues?q=is%3Aissue+is%3Aclosed) issues to ensure it has not already been reported. If you don't find a relevant match or if you're unsure, don't hesitate to **open a new issue**. The bugsquad will handle it from there if it's a duplicate.
+        - Verify that you are using a [supported simplesound version](https://github.com/Varrox/simplesound/blob/main/.github/SUPPORTED_VERSIONS.md). Please always check if your issue is reproducible in the latest version – it may already have been fixed!
+        - If you use a custom build, please test if your issue is reproducible in official builds too.
+
+  - type: textarea
+    attributes:
+      label: Tested versions
+      description: |
+        To properly fix a bug, we need to identify if the bug was recently introduced in the engine, or if it was always present.
+        - Please specify the simplesound version you found the issue in, including the **Git commit hash** if using a development or non-official build.
+        - If you can, **please test earlier simplesound versions** (previous stable branch, and development branch of the current feature release) and, if applicable, newer versions (development branch for the next feature release). Mention whether the bug is reproducible or not in the versions you tested. You can find all simplesound releases in our [github releases page](https://github.com/Varrox/simplesound/releases).
+        - The aim is for us to identify whether a bug is a **regression**, i.e. an issue that didn't exist in a previous version, but was introduced later on, breaking existing functionality.
+
+        - Reproducible in: development-v1.3-alpha [a3b28a6], v1.2-alpha, v1.01-alpha.
+        - Not reproducible in: v1.0-alpha.
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: System information
+      description: |
+        - Specify the OS version, and when relevant hardware information.
+        - For issues that are likely OS-specific and/or graphics-related, please specify the CPU model and architecture.
+        - For graphics-related issues, specify the GPU model.
+        - **Bug reports not including the required information may be closed at the maintainers' discretion.** If in doubt, always include all the requested information; it's better to include too much information than not enough information.
+        - **Starting from simplesound v1.3-alpha, you can copy this information to your clipboard by using *Copy System Info* at the bottom of the settings window.**
+      placeholder: Windows 11 - simplesound v1.3-alpha - NVIDIA GeForce RTX 3080 (NVIDIA; 32.0.15.9595) - AMD Ryzen 9 5950X 16-Core Processor (32 threads) - 31.88GiB memory
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Issue description
+      description: |
+        Describe your issue briefly. What doesn't work, and how do you expect it to work instead?
+        You can include images or videos with drag and drop, and format code blocks or logs with <code>\`\`\`</code> tags, on separate lines before and after the text.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Steps to reproduce
+      description: |
+        List of steps or sample code that reproduces the issue. Having reproducible issues is a prerequisite for contributors to be able to solve them.
+        If you include a minimal reproduction project below, you can detail how to use it here.
+    validations:
+      required: true
