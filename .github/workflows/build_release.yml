@@ -1,5 +1,5 @@
-name: Debug Build
-run-name: Building simplesound Debug Build
+name: Release Build
+run-name: Building simplesound Release Build
 on:
   workflow_dispatch:
     inputs:
@@ -44,41 +44,40 @@ jobs:
           mkdir -p ~/.local/share/godot/export_templates/${{ env.GODOT_VERSION }}.stable.mono
           unzip godot_export_templates.tpz -d ~/.local/share/godot/export_templates/${{ env.GODOT_VERSION }}.stable.mono
           mv ~/.local/share/godot/export_templates/${{ env.GODOT_VERSION }}.stable.mono/templates/* ~/.local/share/godot/export_templates/${{ env.GODOT_VERSION }}.stable.mono/
-      - name: Building debug Linux
+      - name: Building release Linux
         if: ${{ github.event.inputs.job_targets == 'linux' || github.event.inputs.job_targets == 'all'}}
         run: |
           mkdir -p ${{ env.EXPORT_FOLDER_LINUX }}
-          ./Godot_v${{ env.GODOT_VERSION }}-stable_mono_linux.x86_64 --import ${{ env.GODOT_PROJECT_LOCATION }} --quiet --headless --export-debug Linux ${{ env.MAIN_FOLDER }}/${{ env.EXPORT_FOLDER_LINUX }}/${{ env.APPLICATION_NAME }}.x86_64
-          chmod +x ${{ env.EXPORT_FOLDER_LINUX }}/${{ env.APPLICATION_NAME }}.sh
+          ./Godot_v${{ env.GODOT_VERSION }}-stable_mono_linux.x86_64 --import ${{ env.GODOT_PROJECT_LOCATION }} --quiet --headless --export-release Linux ${{ env.MAIN_FOLDER }}/${{ env.EXPORT_FOLDER_LINUX }}/${{ env.APPLICATION_NAME }}.x86_64
           chmod +x ${{ env.EXPORT_FOLDER_LINUX }}/${{ env.APPLICATION_NAME }}.x86_64
       - name: Tar files
         if: ${{ github.event.inputs.job_targets == 'linux' || github.event.inputs.job_targets == 'all'}}
-        run: tar -cvf ${{ env.APPLICATION_NAME }}_linux_debug.tar ${{ env.EXPORT_FOLDER_LINUX }}
-      - name: Uploading artifact debug Linux
+        run: tar -cvf ${{ env.APPLICATION_NAME }}_linux_release.tar ${{ env.EXPORT_FOLDER_LINUX }}
+      - name: Uploading artifact release Linux
         if: ${{ github.event.inputs.job_targets == 'linux' || github.event.inputs.job_targets == 'all'}}
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.APPLICATION_NAME }}_linux_debug.tar
-          path: ${{ env.APPLICATION_NAME }}_linux_debug.tar
-      - name: Building debug Windows
+          name: ${{ env.APPLICATION_NAME }}_linux_release.tar
+          path: ${{ env.APPLICATION_NAME }}_linux_release.tar
+      - name: Building release Windows
         if: ${{ github.event.inputs.job_targets == 'windows' || github.event.inputs.job_targets == 'all'}}
         run: |
           mkdir -p ${{ env.EXPORT_FOLDER_WINDOWS }}
-          ./Godot_v${{ env.GODOT_VERSION }}-stable_mono_linux.x86_64 --import ${{ env.GODOT_PROJECT_LOCATION }} --quiet --headless --export-debug Windows ${{ env.MAIN_FOLDER }}/${{ env.EXPORT_FOLDER_WINDOWS }}/${{ env.APPLICATION_NAME }}.exe
-      - name: Uploading artifact debug Windows
+          ./Godot_v${{ env.GODOT_VERSION }}-stable_mono_linux.x86_64 --import ${{ env.GODOT_PROJECT_LOCATION }} --quiet --headless --export-release Windows ${{ env.MAIN_FOLDER }}/${{ env.EXPORT_FOLDER_WINDOWS }}/${{ env.APPLICATION_NAME }}.exe
+      - name: Uploading artifact release Windows
         if: ${{ github.event.inputs.job_targets == 'windows' || github.event.inputs.job_targets == 'all'}}
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.APPLICATION_NAME }}_windows_debug.tar
+          name: ${{ env.APPLICATION_NAME }}_windows_release.tar
           path: ${{ env.EXPORT_FOLDER_WINDOWS }}/
-      - name: Building debug MacOS
+      - name: Building release MacOS
         if: ${{ github.event.inputs.job_targets == 'macOS' || github.event.inputs.job_targets == 'all'}}
         run: |
           mkdir -p ${{ env.EXPORT_FOLDER_MACOS }}
-          ./Godot_v${{ env.GODOT_VERSION }}-stable_mono_linux.x86_64 --import ${{ env.GODOT_PROJECT_LOCATION }} --quiet --headless --export-debug macOS ${{ env.MAIN_FOLDER }}/${{ env.EXPORT_FOLDER_MACOS }}/${{ env.APPLICATION_NAME }}.zip
-      - name: Uploading artifact debug MacOS
+          ./Godot_v${{ env.GODOT_VERSION }}-stable_mono_linux.x86_64 --import ${{ env.GODOT_PROJECT_LOCATION }} --quiet --headless --export-release macOS ${{ env.MAIN_FOLDER }}/${{ env.EXPORT_FOLDER_MACOS }}/${{ env.APPLICATION_NAME }}.zip
+      - name: Uploading artifact release MacOS
         if: ${{ github.event.inputs.job_targets == 'macOS' || github.event.inputs.job_targets == 'all'}}
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.APPLICATION_NAME }}_macOS_debug
+          name: ${{ env.APPLICATION_NAME }}_macOS_release
           path: ${{ env.EXPORT_FOLDER_MACOS }}/
