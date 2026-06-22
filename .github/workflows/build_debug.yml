@@ -31,7 +31,7 @@ jobs:
         run: |
           echo "MAIN_FOLDER=$(pwd)" >> $GITHUB_ENV
       - name: Installing dependencies
-          run: pacman -Syu --noconfirm git bash yasm python python-pip scons gcc diffutils make wget unzip tar mingw-w64 dotnet-sdk
+        run: pacman -Syu --noconfirm git bash yasm python python-pip scons gcc diffutils make wget unzip tar mingw-w64 dotnet-sdk
       - name: Prepare Godot
         run: |
           wget -q -O godot_linux.zip https://github.com/godotengine/godot-builds/releases/download/${{ env.GODOT_VERSION }}-stable/Godot_v${{ env.GODOT_VERSION }}-stable_mono_linux.x86_64.zip
