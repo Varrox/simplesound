@@ -232,20 +232,26 @@ public partial class Main : Control
 	private void _LoadSong(in string path) {
 		switch (path.GetExtension()) {
 			case "mp3":
-				audio_player.Stream = AudioStreamMP3.LoadFromBuffer(FileAccess.GetFileAsBytes(path));
+				audio_player.Stream = AudioStreamMP3.LoadFromFile(path);
 				break;
 			case "wav":
-				audio_player.Stream = AudioStreamWav.LoadFromBuffer(FileAccess.GetFileAsBytes(path));
+				audio_player.Stream = AudioStreamWav.LoadFromFile(path);
 				break;
 			case "ogg":
-				audio_player.Stream = AudioStreamOggVorbis.LoadFromBuffer(FileAccess.GetFileAsBytes(path));
+				audio_player.Stream = AudioStreamOggVorbis.LoadFromFile(path);
 				break;
 		}
 
-		VideoStreamTheora video = ConvertToGodot.GetVideoFromFile(Globals.main.song);
+		string video_path = Metadata.GetVideo(path);
 
-		video_player.Visible = video != null;
-		video_player.Stream = video;
+		if (video_path != null) {
+			if (FileAccess.FileExists(video_path) && video_path.EndsWith(".ogv")) {
+				VideoStreamTheora video = ResourceLoader.Load(video_path) as VideoStreamTheora;
+
+				video_player.Visible = video != null;
+				video_player.Stream = video;
+			}
+		}
 
 		current_share_link = Metadata.GetShareLink(path);
 
