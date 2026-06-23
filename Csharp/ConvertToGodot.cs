@@ -3,7 +3,7 @@ using System.IO;
 
 public class ConvertToGodot
 {
-    public static Texture2D GetCover(string path) {
+    public static Texture2D GetSongCover(string path) {
         byte[] picture_data = Metadata.GetCover(path, out string type);
         
         if (picture_data == null) return Globals.default_cover;
@@ -35,7 +35,7 @@ public class ConvertToGodot
     /// <param name="file_name">path to the image</param>
     /// <param name="fallback">the Texture2D to be returned if the image fails to load</param>
     /// <returns></returns>
-    public static Texture2D LoadImage(string file_name) {
+    public static Texture2D LoadImageFromFile(string file_name) {
         if (file_name == string.Empty || file_name == null) return null;
         Image img = new Image();
         if (img.Load(file_name) == Error.Ok) return ImageTexture.CreateFromImage(img);

@@ -55,7 +55,7 @@ public partial class SongsVisualizer : ScrollContainer
 
     private Texture2D GetCover(in Playlist playlist, in int song)
     {
-        return (playlist.type == Playlist.PlaylistType.Album) ? null : ConvertToGodot.GetCover(playlist.songs[song]);
+        return (playlist.type == Playlist.PlaylistType.Album) ? null : ConvertToGodot.GetSongCover(playlist.songs[song]);
     }
 
     private void UpdateSongs(in Playlist playlist)

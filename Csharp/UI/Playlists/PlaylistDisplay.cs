@@ -46,7 +46,7 @@ public partial class PlaylistDisplay : Button
 
     public void Init(Playlist playlist, int index)
     {
-        cover.Texture = ConvertToGodot.LoadImage(playlist.cover) ?? Globals.default_cover;
+        cover.Texture = ConvertToGodot.LoadImageFromFile(playlist.cover) ?? Globals.default_cover;
         playlist_name.Text = playlist.name;
 
         string amount = $"{playlist.songs.Count}{(playlist.songs.Count != 1 ? " songs" : " song")}";

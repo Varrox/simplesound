@@ -46,7 +46,7 @@ public partial class AttributeEditorOpenerGlobal : EditorWindowOpener
                 corrupt = Metadata.IsFileCorrupt(file)
             };
 
-            Globals.main.songs_visualizer.UpdateSong(SongsMore.song, song_data, ConvertToGodot.GetCover(file));
+            Globals.main.songs_visualizer.UpdateSong(SongsMore.song, song_data, ConvertToGodot.GetSongCover(file));
         }
 
         Globals.player.interrupted = false;

@@ -130,14 +130,14 @@ public partial class Player : Node
             song_artist.Text = artist;
             song_artist.TooltipText = artist;
 
-            Texture2D cover = ConvertToGodot.GetCover(Globals.main.song);
+            Texture2D cover = ConvertToGodot.GetSongCover(Globals.main.song);
             song_cover.Texture = cover;
 
             if (cover == Globals.default_cover && Globals.main.playlist.type == Playlist.PlaylistType.Album)
             {
                 if(playlist_icon == null || playlist_icon_index != Globals.main.playlist_index)
                 {
-                    playlist_icon = ConvertToGodot.LoadImage(Globals.main.playlist.cover) ?? Globals.default_cover;
+                    playlist_icon = ConvertToGodot.LoadImageFromFile(Globals.main.playlist.cover) ?? Globals.default_cover;
                     playlist_icon_index = Globals.main.playlist_index;
                 }
                 
@@ -148,7 +148,7 @@ public partial class Player : Node
                 song_cover.Texture = cover;
             }
             
-            Texture2D background_texture = Globals.main.playlist.custom_info.background_path != null ? ConvertToGodot.LoadImage(Globals.main.playlist.custom_info.background_path) ?? cover : song_cover.Texture;
+            Texture2D background_texture = Globals.main.playlist.custom_info.background_path != null ? ConvertToGodot.LoadImageFromFile(Globals.main.playlist.custom_info.background_path) ?? cover : song_cover.Texture;
 
             background_subviewport.Set("target_texture", background_texture);
 
