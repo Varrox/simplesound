@@ -12,6 +12,7 @@ public class ConvertToGodot
         Error error = Error.Failed;
 
         switch (type) {
+            case "image/jpg":
             case "image/jpeg":
                 error = image.LoadJpgFromBuffer(picture_data);
                 break;
@@ -23,6 +24,9 @@ public class ConvertToGodot
                 break;
             case "image/bmp":
                 error = image.LoadBmpFromBuffer(picture_data);
+                break;
+            case "image/svg+xml":
+                error = image.LoadSvgFromBuffer(picture_data);
                 break;
         }
 
