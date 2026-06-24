@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://cqa0miuyddnkx"]
+
+[ext_resource type="Script" uid="uid://c5sckwqxlg2v4" path="res://GDScript/sound_visualizer.gd" id="1_66esn"]
+
+[node name="Soundvisualizer" type="Control" unique_id=508323966 node_paths=PackedStringArray("bars")]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 28.0
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_66esn")
+min_height = 3
+bars = [NodePath("ColorRect"), NodePath("ColorRect2"), NodePath("ColorRect3"), NodePath("ColorRect4"), NodePath("ColorRect5"), NodePath("ColorRect6")]
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=586422079]
+custom_minimum_size = Vector2(3, 3)
+layout_mode = 0
+offset_right = 3.0
+offset_bottom = 3.0
+
+[node name="ColorRect2" type="ColorRect" parent="." unique_id=261469582]
+custom_minimum_size = Vector2(3, 3)
+layout_mode = 0
+offset_left = 5.0
+offset_right = 8.0
+offset_bottom = 3.0
+
+[node name="ColorRect3" type="ColorRect" parent="." unique_id=1813862639]
+custom_minimum_size = Vector2(3, 3)
+layout_mode = 0
+offset_left = 10.0
+offset_right = 13.0
+offset_bottom = 3.0
+
+[node name="ColorRect4" type="ColorRect" parent="." unique_id=771835513]
+custom_minimum_size = Vector2(3, 3)
+layout_mode = 0
+offset_left = 15.0
+offset_right = 18.0
+offset_bottom = 3.0
+
+[node name="ColorRect5" type="ColorRect" parent="." unique_id=1183437673]
+custom_minimum_size = Vector2(3, 3)
+layout_mode = 0
+offset_left = 20.0
+offset_right = 23.0
+offset_bottom = 3.0
+
+[node name="ColorRect6" type="ColorRect" parent="." unique_id=1277938157]
+custom_minimum_size = Vector2(3, 3)
+layout_mode = 0
+offset_left = 25.0
+offset_right = 28.0
+offset_bottom = 3.0
