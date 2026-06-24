@@ -25,5 +25,5 @@ func _process(delta: float) -> void:
 		var magnitude = lerp(magnitude_stereo.x, magnitude_stereo.y, 0.5)
 		var height = (magnitude * 75) / db_to_linear(GDScriptGlobals.audio_source.volume_db)
 		
-		bars[i].size.y = lerp(bars[i].size.y, minf(min_height + height, max_height), 20 * delta)
+		bars[i].size.y = Helper.smooth(bars[i].size.y, minf(min_height + height, max_height), 40)
 		bars[i].position.y = -bars[i].size.y / 2
