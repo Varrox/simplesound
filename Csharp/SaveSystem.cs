@@ -58,6 +58,7 @@ public class SaveData
 	public ApplicationSettings application_settings = new ApplicationSettings();
 	public CloudSettings cloud_settings = new CloudSettings();
 	public AudioSettings audio_settings = new AudioSettings();
+	public GraphicSettings graphic_settings = new GraphicSettings();
 
     static readonly string path = Path.Combine(SaveSystem.USER_DATA, "savedata.json");
 
@@ -66,7 +67,7 @@ public class SaveData
     }
 
     public static SaveData GetSaveData() {
-        foreach (string folder_name in new[] { "Playlists", "Music", "Playlist Covers"}) { // Add folders
+        foreach (string folder_name in new[] { "Playlists", "Music", "Playlist Covers" }) { // Add folders
             string folder_path = Path.Combine(SaveSystem.USER_DATA, folder_name);
             if (!Directory.Exists(folder_path)) Directory.CreateDirectory(folder_path);
         }

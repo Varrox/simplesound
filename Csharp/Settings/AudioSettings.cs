@@ -1,6 +1,6 @@
 using Godot;
 
-public class AudioSettings
+public class AudioSettings : ISettings
 {
     // Reverb
 

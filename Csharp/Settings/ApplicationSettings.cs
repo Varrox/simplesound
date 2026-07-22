@@ -1,12 +1,8 @@
 using Godot;
 
-public class ApplicationSettings
+public class ApplicationSettings : ISettings
 {
 	public bool remove_song_warning = true;
-
-	// Graphics
-
-	public int blur_quality = 3;
 
 	// Downloader
 
@@ -16,6 +12,6 @@ public class ApplicationSettings
     public ApplicationSettings() {}
 
 	public void ApplySettings() {
-		RenderingServer.GlobalShaderParameterSet("blur_quality", blur_quality);
-	}
+        
+    }
 }

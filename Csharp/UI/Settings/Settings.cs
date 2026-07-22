@@ -219,9 +219,11 @@ public partial class Settings : EditorWindow
             if (line_edit.Text != default_value) {
                 AddReset(input, type, default_value, where, name);
             }
-        }        
+        }
 
         Globals.save_data.application_settings.ApplySettings();
+        Globals.save_data.graphic_settings.ApplySettings();
+        Globals.save_data.audio_settings.ApplySettings();
         Globals.save_data.cloud_settings.ApplySettings();
 
         return container;
@@ -231,6 +233,7 @@ public partial class Settings : EditorWindow
         switch (where)
         {
             case "sg":
+                return typeof(GraphicSettings);
             case "as":
                 return typeof(ApplicationSettings);
             case "cs":
@@ -242,10 +245,11 @@ public partial class Settings : EditorWindow
         }
     }
 
-    object FindObject(string where) {
+    ISettings FindObject(string where) {
         switch (where)
         {
             case "sg":
+                return Globals.save_data.graphic_settings;
             case "as":
                 return Globals.save_data.application_settings;
             case "cs":
@@ -364,24 +368,9 @@ public partial class Settings : EditorWindow
                 break;
         }
 
-        switch (where) {
-            case "sg": // Shader Global
-                SetSetting(ref Globals.save_data.application_settings, name, variant, type);
-                Globals.save_data.application_settings.ApplySettings();
-                break;
-            case "as": // Application Setting
-                SetSetting(ref Globals.save_data.application_settings, name, variant, type);
-                Globals.save_data.application_settings.ApplySettings();
-                break;
-            case "cs": // Cloud Setting
-                SetSetting(ref Globals.save_data.cloud_settings, name, variant, type);
-                Globals.save_data.cloud_settings.ApplySettings();
-                break;
-            case "ad":
-                SetSetting(ref Globals.save_data.audio_settings, name, variant, type);
-                Globals.save_data.audio_settings.ApplySettings();
-                break;
-        }
+        ISettings obj = FindObject(where);
+        SetSetting(ref obj, name, variant, type, FindType(where));
+        obj.ApplySettings();
     }
 
     public void SetInputToDefaultValue(Control[] input, string type, string default_value) {
@@ -415,13 +404,20 @@ public partial class Settings : EditorWindow
         }
     }
 
-    public void SetSetting<T>(ref T obj, string constant, Variant variant, string type) {
+    public void SetSetting<T>(ref T obj, string constant, Variant variant, string type, Type obj_type) where T : ISettings {
         if (Globals.self == null) return;
 
-        FieldInfo field = typeof(T).GetField(constant, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        FieldInfo field = obj_type.GetField(constant, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
         
-        field.SetValue(obj, Convert.ChangeType(variant.Obj, field.FieldType));
+        if (field != null)
+        {
+            field.SetValue(obj, Convert.ChangeType(variant.Obj, field.FieldType));
 
-        Globals.save_data.Save();
+            Globals.save_data.Save();
+        }
+        else
+        {
+            GD.PrintErr($"Settings Field not found. Unable to set setting \'{constant}\'");
+        }
     }
 }
