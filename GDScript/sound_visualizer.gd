@@ -12,7 +12,7 @@ static var spectrum_instance:AudioEffectSpectrumAnalyzerInstance
 
 func _ready() -> void:
 	if !spectrum_instance:
-		spectrum_instance = AudioServer.get_bus_effect_instance(0, 1)
+		spectrum_instance = AudioServer.get_bus_effect_instance(0, 0)
 
 func _process(delta: float) -> void:
 	if !spectrum_instance || !visible:

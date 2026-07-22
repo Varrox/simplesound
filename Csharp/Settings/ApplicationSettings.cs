@@ -3,7 +3,12 @@ using Godot;
 public class ApplicationSettings
 {
 	public bool remove_song_warning = true;
+
+	// Graphics
+
 	public int blur_quality = 3;
+
+	// Downloader
 
     public string ytdlp_location = "";
 	public int download_format = 0;

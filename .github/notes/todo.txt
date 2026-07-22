@@ -3,13 +3,12 @@ TODO
 - Add sorting.
 - Add song position rearange.
 - Sleep timer.
-
-DOING
-
 - Add lyrics viewer.
+- Fix settings so it no longer uses stupid resource solution and uses procedural solution that is future proof
 
 FINISHED
 
+- Add Audio settings
 - Add song downloading - For youtube, soundcloud, and spotify.
 - Make playlist bar hiding.
 - Add settings menu.

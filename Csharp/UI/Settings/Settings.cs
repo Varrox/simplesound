@@ -57,7 +57,7 @@ public partial class Settings : EditorWindow
 
     protected (string, string, string, string, string) ParseSetting(string setting) {
         int i1 = setting.Find(":") + 1, i2 = setting.Find(":", i1) + 1, i3 = setting.Find(":", i2) + 1, i4 = setting.Find(":", i3);
-        string full_name = setting.Substring(0, i1);
+        string full_name = setting.Substring(0, i1 - 1);
         string type = setting.Substring(i1, i2 - i1 - 1);
         string where = setting.Substring(i2, i3 - i2 - 1);
         string name = setting.Substring(i3, i4 - i3);
@@ -65,8 +65,34 @@ public partial class Settings : EditorWindow
         return (full_name, type, where, name, default_value);
     }
 
+    public Control AddHeader(string header_title, string where, string name, string default_value) {
+        HBoxContainer container = new HBoxContainer();
+        settings_container.AddChild(container);
+
+        container.CustomMinimumSize = Vector2.Down * 25;
+
+        HSeparator l_h_separator = new HSeparator();
+        l_h_separator.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+
+        Label label = new Label();
+        label.Text = header_title;
+
+        HSeparator r_h_separator = new HSeparator();
+        r_h_separator.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+
+        container.AddChild(l_h_separator);
+        container.AddChild(label);
+        container.AddChild(r_h_separator);
+
+        return container;
+    }
+
     public Control AddSetting(string setting) {
         (string full_name, string type, string where, string name, string default_value) = ParseSetting(setting);
+
+        if(type == "h") {
+            return AddHeader(full_name, where, name, default_value);
+        }
 
         HBoxContainer container = new HBoxContainer();
         settings_container.AddChild(container);
@@ -129,7 +155,7 @@ public partial class Settings : EditorWindow
         }
 
         Label label = new Label();
-        label.Text = full_name;
+        label.Text = full_name + ":";
 
         container.AddChild(label);
 
@@ -202,11 +228,33 @@ public partial class Settings : EditorWindow
     }
 
     Type FindType(string where) {
-        return (where == "as" || where == "sg" ? typeof(ApplicationSettings) : typeof(CloudSettings));
+        switch (where)
+        {
+            case "sg":
+            case "as":
+                return typeof(ApplicationSettings);
+            case "cs":
+                return typeof(CloudSettings);
+            case "ad":
+                return typeof(AudioSettings);
+            default:
+                return null;
+        }
     }
 
     object FindObject(string where) {
-        return (where == "as" || where == "sg" ? Globals.save_data.application_settings : Globals.save_data.cloud_settings);
+        switch (where)
+        {
+            case "sg":
+            case "as":
+                return Globals.save_data.application_settings;
+            case "cs":
+                return Globals.save_data.cloud_settings;
+            case "ad":
+                return Globals.save_data.audio_settings;
+            default:
+                return null;
+        }
     }
 
     object GetSetting(string where, string name) {
@@ -318,8 +366,8 @@ public partial class Settings : EditorWindow
 
         switch (where) {
             case "sg": // Shader Global
-                RenderingServer.GlobalShaderParameterSet(name, variant);
                 SetSetting(ref Globals.save_data.application_settings, name, variant, type);
+                Globals.save_data.application_settings.ApplySettings();
                 break;
             case "as": // Application Setting
                 SetSetting(ref Globals.save_data.application_settings, name, variant, type);
@@ -328,6 +376,10 @@ public partial class Settings : EditorWindow
             case "cs": // Cloud Setting
                 SetSetting(ref Globals.save_data.cloud_settings, name, variant, type);
                 Globals.save_data.cloud_settings.ApplySettings();
+                break;
+            case "ad":
+                SetSetting(ref Globals.save_data.audio_settings, name, variant, type);
+                Globals.save_data.audio_settings.ApplySettings();
                 break;
         }
     }

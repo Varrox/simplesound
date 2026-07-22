@@ -57,6 +57,7 @@ public class SaveData
 	public List<string> playlists;
 	public ApplicationSettings application_settings = new ApplicationSettings();
 	public CloudSettings cloud_settings = new CloudSettings();
+	public AudioSettings audio_settings = new AudioSettings();
 
     static readonly string path = Path.Combine(SaveSystem.USER_DATA, "savedata.json");
 
