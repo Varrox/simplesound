@@ -1002,7 +1002,7 @@ offset_bottom = 43.0
 
 [node name="Player" type="AudioStreamPlayer" parent="." unique_id=488316782]
 
-[node name="Globals" type="Node" parent="." unique_id=71517921 node_paths=PackedStringArray("_main", "_player", "_discord", "_attribute_editor", "_download_window", "_file_dialog", "_self", "_playlist_menu", "_song_menu")]
+[node name="Globals" type="Node" parent="." unique_id=71517921 node_paths=PackedStringArray("_main", "_player", "_discord", "_self", "_attribute_editor", "_download_window", "_file_dialog", "_playlist_menu", "_song_menu")]
 script = ExtResource("32_htxhm")
 _play_texture = ExtResource("5_8inno")
 _pause_texture = ExtResource("4_lfnj1")
@@ -1018,18 +1018,18 @@ _default_cover_highres = ExtResource("13_seu75")
 _main = NodePath("..")
 _player = NodePath("../Interface")
 _discord = NodePath("../Discord")
+_self = NodePath(".")
 _attribute_editor = NodePath("AttributeEditor")
 _download_window = NodePath("DownloadWindow")
 _file_dialog = NodePath("File Dialog")
-_self = NodePath(".")
+_confirmation_window = ExtResource("39_h8e4i")
+_playlist_menu = NodePath("../Interface/Playlistcontext")
+_song_menu = NodePath("../Interface/Songcontext")
 _highlight = Color(0.2784314, 0.2784314, 0.2784314, 0.5882353)
 _text_highlight = Color(0.6872149, 0.6872149, 0.6872152, 0.78431374)
 _disabled_text_highlight = Color(0.24, 0.24, 0.24, 1)
 _playing_text_highlight = Color(0.40150005, 1, 0.37, 1)
 _lower_highlight = Color(50.00465, 50.00465, 50.00465, 0.3372549)
-_confirmation_window = ExtResource("39_h8e4i")
-_playlist_menu = NodePath("../Interface/Playlistcontext")
-_song_menu = NodePath("../Interface/Songcontext")
 _color_picker_panel_style = ExtResource("53_61oms")
 
 [node name="File Dialog" type="FileDialog" parent="Globals" unique_id=1989544037]
@@ -1045,9 +1045,10 @@ visible = false
 [node name="DownloadWindow" parent="Globals" unique_id=1926010608 instance=ExtResource("23_e71vb")]
 visible = false
 
-[node name="GDScript Globals" type="Node" parent="Globals" unique_id=142593709 node_paths=PackedStringArray("_audio_source")]
+[node name="GDScript Globals" type="Node" parent="Globals" unique_id=142593709 node_paths=PackedStringArray("_audio_source", "_globals")]
 script = ExtResource("55_e3yke")
 _audio_source = NodePath("../../Player")
+_globals = NodePath("..")
 
 [node name="Discord" type="Node" parent="." unique_id=46493677]
 script = ExtResource("53_e71vb")
