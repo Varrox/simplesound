@@ -91,6 +91,17 @@ public partial class Settings : EditorWindow
         button.ButtonUp += () => { reset_value(); button.QueueFree(); apply_setting(); };
     }
 
+    public HBoxContainer CreateSettingsItem(string full_name) {
+        HBoxContainer container = new HBoxContainer();
+        settings_container.AddChild(container);
+
+        Label label = new Label();
+        label.Text = full_name + ":";
+        container.AddChild(label);
+
+        return container;
+    }
+
     public void AddSettingsTab(string section_name, Action add_settings, bool disabled = false) {
         Button button = new Button();
 
@@ -182,12 +193,7 @@ public partial class Settings : EditorWindow
     public void AddIntSetting<T>(string full_name, T where, string instance_name, int default_value, int min_value = 0, int max_value = int.MaxValue) where T : ISettings {
         Type type = typeof(T);
 
-        HBoxContainer container = new HBoxContainer();
-        settings_container.AddChild(container);
-
-        Label label = new Label();
-        label.Text = full_name + ":";
-        container.AddChild(label);
+        HBoxContainer container = CreateSettingsItem(full_name);
 
         SpinBox spin_box = new SpinBox();
         int value = GetSetting<int>(where, type, instance_name);
@@ -210,12 +216,7 @@ public partial class Settings : EditorWindow
     public void AddFloatSetting<T>(string full_name, T where, string instance_name, float default_value, float min_value = 0.0f, float max_value = float.PositiveInfinity) where T : ISettings {
         Type type = typeof(T);
 
-        HBoxContainer container = new HBoxContainer();
-        settings_container.AddChild(container);
-
-        Label label = new Label();
-        label.Text = full_name + ":";
-        container.AddChild(label);
+        HBoxContainer container = CreateSettingsItem(full_name);
 
         SpinBox spin_box = new SpinBox();
         float value = GetSetting<float>(where, type, instance_name);
@@ -239,12 +240,7 @@ public partial class Settings : EditorWindow
     public void AddEnumSetting<T>(string full_name, T where, string instance_name, int default_value, string[] enum_values) where T : ISettings {
         Type type = typeof(T);
         
-        HBoxContainer container = new HBoxContainer();
-        settings_container.AddChild(container);
-
-        Label label = new Label();
-        label.Text = full_name + ":";
-        container.AddChild(label);
+        HBoxContainer container = CreateSettingsItem(full_name);
 
         OptionButton option_button = new OptionButton();
 
@@ -269,12 +265,7 @@ public partial class Settings : EditorWindow
     public void AddBoolSetting<T>(string full_name, T where, string instance_name, bool default_value) where T : ISettings {
         Type type = typeof(T);
 
-        HBoxContainer container = new HBoxContainer();
-        settings_container.AddChild(container);
-
-        Label label = new Label();
-        label.Text = full_name + ":";
-        container.AddChild(label);
+        HBoxContainer container = CreateSettingsItem(full_name);
 
         CheckButton check_button = new CheckButton();
         check_button.ButtonPressed = GetSetting<bool>(where, type, instance_name);
@@ -293,12 +284,7 @@ public partial class Settings : EditorWindow
     public void AddStringSetting<T>(string full_name, T where, string instance_name, string default_value) where T : ISettings {
         Type type = typeof(T);
 
-        HBoxContainer container = new HBoxContainer();
-        settings_container.AddChild(container);
-
-        Label label = new Label();
-        label.Text = full_name + ":";
-        container.AddChild(label);
+        HBoxContainer container = CreateSettingsItem(full_name);
 
         LineEdit line_edit = new LineEdit();
         line_edit.Text = GetSetting<string>(where, type, instance_name);
@@ -318,12 +304,7 @@ public partial class Settings : EditorWindow
     public void AddFileLocationSetting<T>(string full_name, T where, string instance_name) where T : ISettings {
         Type type = typeof(T);
 
-        HBoxContainer container = new HBoxContainer();
-        settings_container.AddChild(container);
-
-        Label label = new Label();
-        label.Text = full_name + ":";
-        container.AddChild(label);
+        HBoxContainer container = CreateSettingsItem(full_name);
 
         LineEdit line_edit = new LineEdit();
         line_edit.Text = GetSetting<string>(where, type, instance_name);
@@ -359,12 +340,7 @@ public partial class Settings : EditorWindow
     public void AddVector2Setting<T>(string full_name, T where, string instance_name, Vector2 default_value) where T : ISettings {
         Type type = typeof(T);
 
-        HBoxContainer container = new HBoxContainer();
-        settings_container.AddChild(container);
-
-        Label label = new Label();
-        label.Text = full_name + ":";
-        container.AddChild(label);
+        HBoxContainer container = CreateSettingsItem(full_name);
 
         SpinBox spin_box_x = new SpinBox(), spin_box_y = new SpinBox();
         Vector2 value = GetSetting<Vector2>(where, type, instance_name);
