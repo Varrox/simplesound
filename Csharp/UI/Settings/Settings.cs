@@ -14,13 +14,21 @@ public partial class Settings : EditorWindow
     private List<SettingsTab> _settings_tabs = new List<SettingsTab>();
     private int _selected_tab;
 
+    private const int SETTINGS_TAB_SIZE_X = 150, SETTINGS_TAB_SIZE_Y = 20;
+
+    private const int LABEL_PADDING = 15;
+
     private struct SettingsTab {
         public Action add_settings;
         public Button button;
+        public Label label;
+        public bool disabled;
 
-        public SettingsTab(Action add_settings, Button button) {
+        public SettingsTab(Action add_settings, Button button, Label label, bool disabled) {
             this.add_settings = add_settings;
             this.button = button;
+            this.label = label;
+            this.disabled = disabled;
         }
     }
 
@@ -42,6 +50,18 @@ public partial class Settings : EditorWindow
                 ClearSettings();
             
             _settings_tabs[tab].add_settings();
+
+            // Highlight
+
+            _settings_tabs[tab].button.SelfModulate = Globals.highlight;
+            _settings_tabs[tab].label.AddThemeColorOverride("font_color", Globals.text_highlight);
+
+            for(int i = 0; i < _settings_tabs.Count; i++) {
+                if (i != tab && !_settings_tabs[i].disabled) {
+                    _settings_tabs[i].button.SelfModulate = Colors.White;
+                    _settings_tabs[i].label.AddThemeColorOverride("font_color", Colors.White);
+                }
+            }
         }
         else GD.PrintErr($"Unable to select settings tab \'{tab}\'");
     }
@@ -73,16 +93,36 @@ public partial class Settings : EditorWindow
 
     public void AddSettingsTab(string section_name, Action add_settings, bool disabled = false) {
         Button button = new Button();
-        button.Text = section_name;
 
         tabs_container.AddChild(button);
+        
+        button.CustomMinimumSize = new Vector2(SETTINGS_TAB_SIZE_X + LABEL_PADDING, SETTINGS_TAB_SIZE_Y + LABEL_PADDING);
+
         button.Disabled = disabled;
+
+        Label label = new Label();
+        label.Text = section_name;
+
+        button.AddChild(label);
+
+        label.Size = button.CustomMinimumSize;
+        label.Position = Vector2.Zero;
+        label.CustomMaximumSize = button.CustomMinimumSize;
+        label.SetAnchorsPreset(Control.LayoutPreset.FullRect);
+
+        label.VerticalAlignment = VerticalAlignment.Center;
+        label.HorizontalAlignment = HorizontalAlignment.Center;
+
+        if (disabled) {
+            button.TooltipText = "Disabled";
+            label.AddThemeColorOverride("font_color", Globals.disabled_text_highlight);
+        }
 
         int tab_index = _settings_tabs.Count;
 
         button.ButtonUp += () => SelectSettingsTab(tab_index);
 
-        _settings_tabs.Add(new SettingsTab(add_settings, button));
+        _settings_tabs.Add(new SettingsTab(add_settings, button, label, disabled));
     }
 
     void AddAudioSettings() {
@@ -117,6 +157,9 @@ public partial class Settings : EditorWindow
 
     void AddGraphicSettings() {
         AddEnumSetting("Blur Quality", Globals.save_data.graphic_settings, "blur_quality", 2, Constants.QUALITY_LEVELS);
+    }
+
+        AddEnumSetting("Default Theme", Globals.save_data.)
     }
 
     public void AddHeader(string header_title) {
@@ -346,6 +389,9 @@ public partial class Settings : EditorWindow
 
         if (value != default_value) 
             AddResetButton(container, ResetVector2, ApplyVector2);
+    }
+
+            AddResetButton(container, ResetString, ApplyString);
     }
 
     public void Open() {

@@ -41,6 +41,12 @@ public partial class Globals : Node
     [Export] private Color _highlight{set{ highlight = value; }get{ return highlight; }}
     public static Color highlight;
 
+    [Export] private Color _text_highlight{set{ text_highlight = value; }get{ return text_highlight; }}
+    public static Color text_highlight;
+
+    [Export] private Color _disabled_text_highlight{set{ disabled_text_highlight = value; }get{ return disabled_text_highlight; }}
+    public static Color disabled_text_highlight;
+
     [Export] private Color _lower_highlight{set{ lower_highlight = value; }get{ return lower_highlight; }}
     public static Color lower_highlight;
 
