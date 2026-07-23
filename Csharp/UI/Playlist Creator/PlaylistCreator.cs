@@ -53,7 +53,7 @@ public partial class PlaylistCreator : EditorWindow
         album.ButtonPressed = false;
         artist.Text = "";
         backgroundThemeEnabled.ButtonPressed = false;
-        backgroundTheme.Color = new Color(1, 1, 1);
+        backgroundTheme.Color = Colors.White;
 
 		cleared = true;
     }

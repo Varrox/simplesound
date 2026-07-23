@@ -140,7 +140,7 @@ public partial class Player : Node
             song_name.TooltipText = "";
             song_artist.Text = "No artist";
             song_artist.TooltipText = "";
-            background_color = new Color(0, 0, 0, 0);
+            background_color = Colors.Transparent;
 
             total_time.Text = "0:00";
             progress.MaxValue = 1;
@@ -169,7 +169,7 @@ public partial class Player : Node
     public void ApplyPlaylistSettings() {
         if(Globals.main.playlist == null) return;
 
-        background_color = Globals.main.playlist.custom_info.overlay_color != null ? Color.FromHtml(Globals.main.playlist.custom_info.overlay_color) : new Color(0.0f, 0.0f, 0.0f, 0.0f);
+        background_color = Globals.main.playlist.custom_info.overlay_color != null ? Color.FromHtml(Globals.main.playlist.custom_info.overlay_color) : Colors.Transparent;
     }
 
     public override void _Process(double delta) {
@@ -190,7 +190,7 @@ public partial class Player : Node
 
         if (Globals.main.IsSongAvailable()) {
             float max = 0.65f;
-            background_color_rect.Color = background_color_rect.Color.Lerp(background_color.Clamp(new Color(), new Color(max, max, max, max)), (float)delta * 2f);
+            background_color_rect.Color = background_color_rect.Color.Lerp(background_color.Clamp(Colors.Transparent, new Color(max, max, max, max)), (float)delta * 2f);
 
             if (!muted) {
                 Globals.main.audio_player.VolumeDb = (float)(volume_slider.Value != -50 ? volume_slider.Value : -80);

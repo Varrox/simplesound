@@ -35,7 +35,7 @@ func _process(delta: float) -> void:
 			
 			tween = get_tree().create_tween()
 			tween.finished.connect(disable_zoom_display)
-			tween.tween_property(zoom_display, "self_modulate", Color(1.0, 1.0, 1.0, 1.0), 0.3)
+			tween.tween_property(zoom_display, "self_modulate", Color.WHITE, 0.3)
 		
 		last_time = 0.5 # Reset
 

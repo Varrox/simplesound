@@ -22,7 +22,7 @@ public partial class DownloadPlaylistDisplay : Button
 
 	public void ClearSelected(int index)
     {
-        if (index != playlist_index) SelfModulate = new Color(1, 1, 1, 1);
+        if (index != playlist_index) SelfModulate = Colors.White;
     }
 
 	public void Init(Playlist playlist, int index)

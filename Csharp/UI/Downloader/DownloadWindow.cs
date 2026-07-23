@@ -55,7 +55,7 @@ public partial class DownloadWindow : EditorWindow
     public void ClearNoneSelected(int index)
     {
         selected_playlist = index;
-        if (index != -1) no_playlist.SelfModulate = new Color(1, 1, 1, 1);
+        if (index != -1) no_playlist.SelfModulate = Colors.White;
     }
 
     public void Open()
