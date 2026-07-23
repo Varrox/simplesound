@@ -30,7 +30,6 @@ Label/styles/focus = null
 
 [node name="StreamDisplay" type="Window" unique_id=585710184 node_paths=PackedStringArray("cover_art", "background", "song", "artist")]
 transparent_bg = true
-oversampling_override = 1.0
 title = "Stream Display"
 size = Vector2i(500, 200)
 borderless = true

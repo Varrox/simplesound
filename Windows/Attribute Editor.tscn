@@ -12,7 +12,6 @@
 
 [node name="Attribute editor" type="Window" unique_id=397200673 node_paths=PackedStringArray("name", "artist", "share_link", "cover_button", "cover_label", "explicit_lyrics", "submit_button", "cancel_button")]
 auto_translate_mode = 1
-oversampling_override = 1.0
 title = "Edit song attributes"
 initial_position = 2
 size = Vector2i(300, 250)

@@ -19,7 +19,6 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qr8t8"]
 
 [node name="DownloadWindow" type="Window" unique_id=1926010608 node_paths=PackedStringArray("no_playlist", "playlist_container", "link_container", "link", "add_link", "download", "close")]
-oversampling_override = 1.0
 title = "Downloader"
 initial_position = 2
 size = Vector2i(550, 350)

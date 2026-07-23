@@ -13,7 +13,6 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bhcbq"]
 
 [node name="Window" type="Window" unique_id=874625055 node_paths=PackedStringArray("playlist_name", "addCover", "addSongs", "coverDisplay", "songDisplayContainer", "panel", "cloudSync", "album", "backgroundThemeEnabled", "artist", "backgroundTheme", "SubmitButton", "CancelButton")]
-oversampling_override = 1.0
 title = "Create Playlist"
 initial_position = 2
 size = Vector2i(600, 350)
