@@ -1,5 +1,6 @@
 using Godot;
 
+[GlobalClass]
 public partial class Player : Node
 {
     [Export] public Button play, next, back, loop, shuffle;
