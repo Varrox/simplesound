@@ -14,6 +14,17 @@ public partial class PlaylistDisplay : Button
 
         MouseEntered += more.Show;
         MouseExited += OnExit;
+
+        Globals.main.OnLoadSong += SetTextHighlight;
+    }
+
+    public void SetTextHighlight()
+    {
+        bool highlight = Globals.main.playlist_index == playlist_index;
+        if(highlight)
+            playlist_name.AddThemeColorOverride("font_color", Globals.playing_text_highlight);
+        else
+            playlist_name.AddThemeColorOverride("font_color", Colors.White);
     }
 
     public override void _Input(InputEvent @event) {
@@ -41,7 +52,7 @@ public partial class PlaylistDisplay : Button
 
     public void ClearSelected(int index, Texture2D img)
     {
-        if (index != playlist_index) SelfModulate = new Color(1, 1, 1, 1);
+        if (index != playlist_index) SelfModulate = Colors.White;
     }
 
     public void Init(Playlist playlist, int index)

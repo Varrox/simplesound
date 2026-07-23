@@ -40,14 +40,16 @@ public partial class SongDisplay : Button
             playing = true;
             SelfModulate = Globals.highlight;
             number.SelfModulate = new Color(1, 1, 1, 0);
+            song_name.AddThemeColorOverride("font_color", Globals.playing_text_highlight);
             if(!IsHovered()) sound_visualizer.Visible = true;
         }
         else if (Globals.main.playlist_index != Globals.main.looked_at_playlist || Globals.main.song_index != song) { // un-highlight
             play_button.Texture = Disabled ? Globals.no_play_texture : Globals.play_texture;
             Globals.main.OnPlay -= SetTextures;
             playing = false;
-            SelfModulate = new Color(1, 1, 1, 1);
             number.SelfModulate = new Color(1, 1, 1, 1);
+            SelfModulate = Colors.White;
+            song_name.AddThemeColorOverride("font_color", Colors.White);
             sound_visualizer.Visible = false;
         }
 
