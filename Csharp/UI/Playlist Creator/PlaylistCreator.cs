@@ -14,7 +14,7 @@ public partial class PlaylistCreator : EditorWindow
 
 	[Export] public CheckBox cloudSync, album, backgroundThemeEnabled;
 	[Export] public LineEdit artist;
-	[Export] public ColorPickerButton backgroundTheme;
+	[Export] public ThemeColorPickerButton backgroundTheme;
 
 	[Export] public Button SubmitButton, CancelButton;
 

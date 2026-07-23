@@ -3,6 +3,7 @@
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Styling/Fonts/DefaultFont.tres" id="1_8t6yf"]
 [ext_resource type="Script" uid="uid://bhqfe4m1n2gya" path="res://Csharp/UI/Playlist Creator/PlaylistCreator.cs" id="1_b0noq"]
 [ext_resource type="PackedScene" uid="uid://cjc5crjo31obe" path="res://Prefabs/pathdisplay.tscn" id="3_uox0n"]
+[ext_resource type="Script" uid="uid://cwqnuha5ybamg" path="res://Csharp/UI/ThemeColorPickerButton.cs" id="4_3os5s"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_acdqb"]
 
@@ -13,6 +14,7 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bhcbq"]
 
 [node name="Window" type="Window" unique_id=874625055 node_paths=PackedStringArray("playlist_name", "addCover", "addSongs", "coverDisplay", "songDisplayContainer", "panel", "cloudSync", "album", "backgroundThemeEnabled", "artist", "backgroundTheme", "SubmitButton", "CancelButton")]
+oversampling_override = 1.0
 title = "Create Playlist"
 initial_position = 2
 size = Vector2i(600, 350)
@@ -142,6 +144,8 @@ layout_mode = 2
 theme_override_styles/focus = SubResource("StyleBoxEmpty_bhcbq")
 text = "
 "
+color = Color(0.5449743, 0.54497427, 0.54497427, 1)
+script = ExtResource("4_3os5s")
 
 [node name="HSeparator3" type="HSeparator" parent="HBoxContainer2/VBoxContainer2" unique_id=320939632]
 custom_minimum_size = Vector2(0, 10)
