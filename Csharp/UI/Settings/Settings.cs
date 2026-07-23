@@ -87,20 +87,20 @@ public partial class Settings : EditorWindow
 
     void AddAudioSettings() {
         AddHeader("EQ");
-        AddFloatSetting("HZ 32", Globals.save_data.audio_settings, "hz_32", 0.0f);
-        AddFloatSetting("HZ 100", Globals.save_data.audio_settings, "hz_100", 0.0f);
-        AddFloatSetting("HZ 320", Globals.save_data.audio_settings, "hz_320", 0.0f);
-        AddFloatSetting("HZ 1000", Globals.save_data.audio_settings, "hz_1000", 0.0f);
-        AddFloatSetting("HZ 3200", Globals.save_data.audio_settings, "hz_3200", 0.0f);
-        AddFloatSetting("HZ 10000", Globals.save_data.audio_settings, "hz_10000", 0.0f);
+        AddFloatSetting("HZ 32", Globals.save_data.audio_settings, "hz_32", 0.0f, -60.0f, 24.0f);
+        AddFloatSetting("HZ 100", Globals.save_data.audio_settings, "hz_100", 0.0f, -60.0f, 24.0f);
+        AddFloatSetting("HZ 320", Globals.save_data.audio_settings, "hz_320", 0.0f, -60.0f, 24.0f);
+        AddFloatSetting("HZ 1000", Globals.save_data.audio_settings, "hz_1000", 0.0f, -60.0f, 24.0f);
+        AddFloatSetting("HZ 3200", Globals.save_data.audio_settings, "hz_3200", 0.0f, -60.0f, 24.0f);
+        AddFloatSetting("HZ 10000", Globals.save_data.audio_settings, "hz_10000", 0.0f, -60.0f, 24.0f);
 
         AddHeader("Reverb");
-        AddFloatSetting("Room Size", Globals.save_data.audio_settings, "room_size", 0.0f);
-        AddFloatSetting("Damping", Globals.save_data.audio_settings, "damping", 0.5f);
-        AddFloatSetting("Spread", Globals.save_data.audio_settings, "spread", 1.0f);
-        AddFloatSetting("High-Pass", Globals.save_data.audio_settings, "high_pass", 0.0f);
-        AddFloatSetting("Dry", Globals.save_data.audio_settings, "dry", 1.0f);
-        AddFloatSetting("Wet", Globals.save_data.audio_settings, "wet", 0.0f);
+        AddFloatSetting("Room Size", Globals.save_data.audio_settings, "room_size", 0.0f, 0.0f, 1.0f);
+        AddFloatSetting("Damping", Globals.save_data.audio_settings, "damping", 0.5f, 0.0f, 1.0f);
+        AddFloatSetting("Spread", Globals.save_data.audio_settings, "spread", 1.0f, 0.0f, 1.0f);
+        AddFloatSetting("High-Pass", Globals.save_data.audio_settings, "high_pass", 0.0f, 0.0f, 1.0f);
+        AddFloatSetting("Dry", Globals.save_data.audio_settings, "dry", 1.0f, 0.0f, 1.0f);
+        AddFloatSetting("Wet", Globals.save_data.audio_settings, "wet", 0.0f, 0.0f, 1.0f);
     }
 
     void AddCloudSettings() {
@@ -139,7 +139,7 @@ public partial class Settings : EditorWindow
         container.AddChild(r_h_separator);
     }
 
-    public void AddIntSetting<T>(string full_name, T where, string instance_name, int default_value) where T : ISettings {
+    public void AddIntSetting<T>(string full_name, T where, string instance_name, int default_value, int min_value = 0, int max_value = int.MaxValue) where T : ISettings {
         Type type = typeof(T);
 
         HBoxContainer container = new HBoxContainer();
@@ -153,6 +153,9 @@ public partial class Settings : EditorWindow
         int value = GetSetting<int>(where, type, instance_name);
         spin_box.Value = value;
 
+        spin_box.MinValue = min_value;
+        spin_box.MaxValue = max_value;
+
         void ApplyInt() { ApplySetting(spin_box.Value, where, type, instance_name); }
         void ResetInt() { spin_box.Value = default_value; }
 
@@ -164,7 +167,7 @@ public partial class Settings : EditorWindow
             AddResetButton(container, ResetInt, ApplyInt);
     }
 
-    public void AddFloatSetting<T>(string full_name, T where, string instance_name, float default_value) where T : ISettings {
+    public void AddFloatSetting<T>(string full_name, T where, string instance_name, float default_value, float min_value = 0.0f, float max_value = float.PositiveInfinity) where T : ISettings {
         Type type = typeof(T);
 
         HBoxContainer container = new HBoxContainer();
@@ -178,6 +181,9 @@ public partial class Settings : EditorWindow
         float value = GetSetting<float>(where, type, instance_name);
         spin_box.Step = 0.01;
         spin_box.Value = value;
+
+        spin_box.MinValue = min_value;
+        spin_box.MaxValue = max_value;
 
         void ApplyFloat() { ApplySetting(spin_box.Value, where, type, instance_name); }
         void ResetFloat() { spin_box.Value = default_value; }
