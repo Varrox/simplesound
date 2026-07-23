@@ -1,9 +1,0 @@
-[gd_resource type="Resource" format=3 uid="uid://dq72h5uked4hc"]
-
-[ext_resource type="Script" uid="uid://6cs8xn6h2u1a" path="res://Csharp/UI/Settings/SettingsTab.cs" id="1_wc48w"]
-
-[resource]
-script = ExtResource("1_wc48w")
-section_name = "Downloader"
-settings = PackedStringArray("yt-dlp Location:fl:as:ytdlp_location:", "Audio Format:af:as:download_format:1")
-metadata/_custom_type_script = "uid://6cs8xn6h2u1a"

@@ -3,12 +3,7 @@
 [ext_resource type="Script" uid="uid://lbhqgj6ahfub" path="res://Csharp/UI/Settings/Settings.cs" id="1_c0o00"]
 [ext_resource type="Texture2D" uid="uid://bwftf22dhh4du" path="res://Icons/refresh.png" id="2_4ebue"]
 [ext_resource type="Script" uid="uid://b85d04ls7d2ww" path="res://GDScript/version_display.gd" id="2_c0o00"]
-[ext_resource type="Resource" uid="uid://35h514ucswjf" path="res://Csharp/UI/Settings/Resources/graphics_display.tres" id="2_dp1jx"]
-[ext_resource type="Resource" uid="uid://b2fqc6dcj0fuo" path="res://Csharp/UI/Settings/Resources/audio.tres" id="2_njjsv"]
 [ext_resource type="Theme" uid="uid://cg2x5h7ufrntn" path="res://Styling/global_theme.tres" id="2_u30gs"]
-[ext_resource type="Resource" uid="uid://de61txalakltv" path="res://Csharp/UI/Settings/Resources/cloud.tres" id="3_7l07q"]
-[ext_resource type="Resource" uid="uid://dq72h5uked4hc" path="res://Csharp/UI/Settings/Resources/downloader.tres" id="4_3eler"]
-[ext_resource type="Resource" uid="uid://covm6feqj4vyp" path="res://Csharp/UI/Settings/Resources/app_data.tres" id="5_njjsv"]
 [ext_resource type="Texture2D" uid="uid://c85envuiuo3ju" path="res://Icons/folder.png" id="7_3eler"]
 [ext_resource type="Script" uid="uid://lbv20vk1ksc2" path="res://GDScript/copy_system_info.gd" id="10_3eler"]
 [ext_resource type="Script" uid="uid://schxe0nc0yhj" path="res://GDScript/scroll_spacer.gd" id="10_v2aqj"]
@@ -24,7 +19,6 @@ initial_position = 2
 size = Vector2i(720, 380)
 min_size = Vector2i(450, 300)
 script = ExtResource("1_c0o00")
-settings_tabs = Array[Object]([ExtResource("2_njjsv"), ExtResource("3_7l07q"), ExtResource("4_3eler"), ExtResource("5_njjsv"), ExtResource("2_dp1jx")])
 settings_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer2/ScrollContainer/HBoxContainer/VBoxContainer2")
 tabs_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer")
 reset_texture = ExtResource("2_4ebue")

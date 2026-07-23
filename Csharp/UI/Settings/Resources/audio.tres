@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="SettingsTab" format=3 uid="uid://b2fqc6dcj0fuo"]
-
-[ext_resource type="Script" uid="uid://6cs8xn6h2u1a" path="res://Csharp/UI/Settings/SettingsTab.cs" id="1_ik1fe"]
-
-[resource]
-script = ExtResource("1_ik1fe")
-section_name = "Audio"
-settings = PackedStringArray("EQ:h:::", "HZ 32:flt:ad:hz_32:0.0", "HZ 100:flt:ad:hz_100:0.0", "HZ 320:flt:ad:hz_320:0.0", "HZ 1000:flt:ad:hz_1000:0.0", "HZ 3200:flt:ad:hz_3200:0.0", "HZ 10000:flt:ad:hz_10000:0.0", "Reverb:h:::", "Room Size:flt:ad:room_size:0.0", "Damping:flt:ad:damping:0.5", "Spread:flt:ad:spread:1.0", "High-Pass:flt:ad:high_pass:0.0", "Dry:flt:ad:dry:1.0", "Wet:flt:ad:wet:0.0")
-metadata/_custom_type_script = "uid://6cs8xn6h2u1a"

@@ -1,71 +1,125 @@
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using Godot;
-using Godot.Collections;
 
 public partial class Settings : EditorWindow
 {
-    [Export] public Array<SettingsTab> settings_tabs;
     [Export] public VBoxContainer settings_container;
     [Export] public VBoxContainer tabs_container;
     [Export] public Texture2D reset_texture, file_texture;
 
     [Export] public Button close_menu;
-    Dictionary<string, Variant> values;
 
-    static readonly string[] quality_levels = new[] { "Low", "Medium", "High" };
+    private List<SettingsTab> _settings_tabs = new List<SettingsTab>();
+    private int _selected_tab;
+
+    private struct SettingsTab {
+        public Action add_settings;
+        public Button button;
+
+        public SettingsTab(Action add_settings, Button button) {
+            this.add_settings = add_settings;
+            this.button = button;
+        }
+    }
 
     public override void _Ready() {
         base._Ready();
 
-        for (int i = 0; i < settings_tabs.Count; i++) {
-            Button button = new Button();
-            button.Text = settings_tabs[i].section_name;
-            tabs_container.AddChild(button);
-            button.Disabled = settings_tabs[i].disabled;
-            int j = i;
-            button.ButtonUp += () => AddSettings(j);
-        }
+        AddSettingsTab("Audio", AddAudioSettings);
+        AddSettingsTab("Cloud", AddCloudSettings);
+        AddSettingsTab("Downloader", AddDownloaderSettings);
+        AddSettingsTab("App data", AddAppDataSettings, true);
+        AddSettingsTab("Graphics / Display", AddGraphicSettings);
 
         close_menu.ButtonUp += Close;
-
-        CallDeferred("AddSettings", 0);
     }
 
-    public void Open() {
-        Globals.file_dialog.Reparent(this);
-        Show();
+    public void SelectSettingsTab(int tab) {
+        if (tab >= 0 && tab < _settings_tabs.Count) {
+            if (settings_container.GetChildCount() > 0)
+                ClearSettings();
+            
+            _settings_tabs[tab].add_settings();
+        }
+        else GD.PrintErr($"Unable to select settings tab \'{tab}\'");
     }
 
-    public void Close() {
-        Globals.file_dialog.Reparent(Globals.self);
-        Hide();
-        AddSettings(0);
-    }
-
-    public void AddSettings(int settings_tab) {
+    public void ClearSettings() {
         for (int i = 0; i < settings_container.GetChildren().Count; i++) {
             settings_container.GetChild(i).QueueFree();
         }
-        
-        string[] strings = settings_tabs[settings_tab].settings;
-
-        if (strings == null) return;
-
-        for (int i = 0; i < strings.Length; i++) AddSetting(strings[i]);
     }
 
-    protected (string, string, string, string, string) ParseSetting(string setting) {
-        int i1 = setting.Find(":") + 1, i2 = setting.Find(":", i1) + 1, i3 = setting.Find(":", i2) + 1, i4 = setting.Find(":", i3);
-        string full_name = setting.Substring(0, i1 - 1);
-        string type = setting.Substring(i1, i2 - i1 - 1);
-        string where = setting.Substring(i2, i3 - i2 - 1);
-        string name = setting.Substring(i3, i4 - i3);
-        string default_value = setting.Substring(i4 + 1);
-        return (full_name, type, where, name, default_value);
+    public void ClearResetButton(HBoxContainer container) { // Delete Reset button(s)
+        foreach (Node node in container.GetChildren()) {
+            if (node is Button && node.HasMeta("reset")) {
+                node.QueueFree();
+            }
+        }
     }
 
-    public Control AddHeader(string header_title, string where, string name, string default_value) {
+    public void AddResetButton(HBoxContainer container, Action reset_value, Action apply_setting) {
+        Button button = new Button();
+        button.Icon = reset_texture;
+        button.ExpandIcon = true;
+
+        container.AddChild(button);
+        button.SetMeta("reset", true);
+        button.CustomMinimumSize = Vector2.One * 28;
+        button.ButtonUp += () => { reset_value(); button.QueueFree(); apply_setting(); };
+    }
+
+    public void AddSettingsTab(string section_name, Action add_settings, bool disabled = false) {
+        Button button = new Button();
+        button.Text = section_name;
+
+        tabs_container.AddChild(button);
+        button.Disabled = disabled;
+
+        int tab_index = _settings_tabs.Count;
+
+        button.ButtonUp += () => SelectSettingsTab(tab_index);
+
+        _settings_tabs.Add(new SettingsTab(add_settings, button));
+    }
+
+    void AddAudioSettings() {
+        AddHeader("EQ");
+        AddFloatSetting("HZ 32", Globals.save_data.audio_settings, "hz_32", 0.0f);
+        AddFloatSetting("HZ 100", Globals.save_data.audio_settings, "hz_100", 0.0f);
+        AddFloatSetting("HZ 320", Globals.save_data.audio_settings, "hz_320", 0.0f);
+        AddFloatSetting("HZ 1000", Globals.save_data.audio_settings, "hz_1000", 0.0f);
+        AddFloatSetting("HZ 3200", Globals.save_data.audio_settings, "hz_3200", 0.0f);
+        AddFloatSetting("HZ 10000", Globals.save_data.audio_settings, "hz_10000", 0.0f);
+
+        AddHeader("Reverb");
+        AddFloatSetting("Room Size", Globals.save_data.audio_settings, "room_size", 0.0f);
+        AddFloatSetting("Damping", Globals.save_data.audio_settings, "damping", 0.5f);
+        AddFloatSetting("Spread", Globals.save_data.audio_settings, "spread", 1.0f);
+        AddFloatSetting("High-Pass", Globals.save_data.audio_settings, "high_pass", 0.0f);
+        AddFloatSetting("Dry", Globals.save_data.audio_settings, "dry", 1.0f);
+        AddFloatSetting("Wet", Globals.save_data.audio_settings, "wet", 0.0f);
+    }
+
+    void AddCloudSettings() {
+        AddBoolSetting("Sync Application Settings", Globals.save_data.cloud_settings, "sync_application_settings", true);
+    }
+
+    void AddDownloaderSettings() {
+        AddFileLocationSetting("yt-dlp Location", Globals.save_data.application_settings, "ytdlp_location");
+        AddEnumSetting("Audio Format", Globals.save_data.application_settings, "download_format", 1, Constants.DOWNLOAD_FORMATS);
+    }
+
+    void AddAppDataSettings() {
+    }
+
+    void AddGraphicSettings() {
+        AddEnumSetting("Blur Quality", Globals.save_data.graphic_settings, "blur_quality", 2, Constants.QUALITY_LEVELS);
+    }
+
+    public void AddHeader(string header_title) {
         HBoxContainer container = new HBoxContainer();
         settings_container.AddChild(container);
 
@@ -83,341 +137,250 @@ public partial class Settings : EditorWindow
         container.AddChild(l_h_separator);
         container.AddChild(label);
         container.AddChild(r_h_separator);
-
-        return container;
     }
 
-    public Control AddSetting(string setting) {
-        (string full_name, string type, string where, string name, string default_value) = ParseSetting(setting);
-
-        if(type == "h") {
-            return AddHeader(full_name, where, name, default_value);
-        }
+    public void AddIntSetting<T>(string full_name, T where, string instance_name, int default_value) where T : ISettings {
+        Type type = typeof(T);
 
         HBoxContainer container = new HBoxContainer();
         settings_container.AddChild(container);
 
-        container.CustomMinimumSize = Vector2.Down * 28;
+        Label label = new Label();
+        label.Text = full_name + ":";
+        container.AddChild(label);
 
-        Control[] input;
+        SpinBox spin_box = new SpinBox();
+        int value = GetSetting<int>(where, type, instance_name);
+        spin_box.Value = value;
 
-        switch (type) {
-            case "int":
-                input = new[] { new SpinBox() };
-                (input[0] as SpinBox).Value = (int)(GetSetting(where, name));
-                break;
-            case "flt":
-                input = new[] { new SpinBox() };
-                (input[0] as SpinBox).Step = 0.01;
-                (input[0] as SpinBox).Value = (float)(GetSetting(where, name));
-                break;
-            case "q":
-                input = EnumSetting(quality_levels);
-                break;
-            case "af":
-                input = EnumSetting(Constants.DOWNLOAD_FORMATS);
-                break;
-            case "bool":
-                input = new[] { new CheckButton() };
-                (input[0] as CheckButton).ButtonPressed = (bool)(GetSetting(where, name));
-                break;
-            case "str":
-                input = new[] { new LineEdit() };
-                (input[0] as LineEdit).Text = (string)(GetSetting(where, name));
-                break;
-            case "fl":
-                input = new Control[] { new LineEdit(), new Button() };
-                (input[0] as LineEdit).Text = (string)(GetSetting(where, name));
-                (input[0] as LineEdit).SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
-                (input[1] as Button).Icon = file_texture;
-                (input[1] as Button).ExpandIcon = true;
-                (input[1] as Button).TooltipText = "Open file manager to select location.";
-                (input[1] as Button).CustomMinimumSize = Vector2.One * 28;
-                break;
-            case "v2":
-                input = new[] { new SpinBox(), new SpinBox() };
-                Vector2 v = (Vector2)(GetSetting(where, name));
-                (input[0] as SpinBox).Prefix = "x:";
-                (input[0] as SpinBox).MinValue = GetTree().Root.MinSize.X;
-                (input[0] as SpinBox).MaxValue = 3000;
-                (input[0] as SpinBox).Value = v.X;
+        void ApplyInt() { ApplySetting(spin_box.Value, where, type, instance_name); }
+        void ResetInt() { spin_box.Value = default_value; }
 
-                (input[1] as SpinBox).Prefix = "y:";
-                (input[1] as SpinBox).MinValue = GetTree().Root.MinSize.Y;
-                (input[1] as SpinBox).MaxValue = 3000;
-                (input[1] as SpinBox).Value = v.Y;
-                break;
-            default:
-                type = "str";
-                input = new[] { new LineEdit() };
-                (input[0] as LineEdit).Text = (string)(GetSetting(where, name));
-                break;
-        }
+        spin_box.ValueChanged += (double new_value) => ValueChanged(container, new_value, default_value, ResetInt, ApplyInt);
+
+        container.AddChild(spin_box);
+
+        if (value != default_value) 
+            AddResetButton(container, ResetInt, ApplyInt);
+    }
+
+    public void AddFloatSetting<T>(string full_name, T where, string instance_name, float default_value) where T : ISettings {
+        Type type = typeof(T);
+
+        HBoxContainer container = new HBoxContainer();
+        settings_container.AddChild(container);
 
         Label label = new Label();
         label.Text = full_name + ":";
-
         container.AddChild(label);
 
-        foreach (Control c in input) {
-            container.AddChild(c);
-        }
+        SpinBox spin_box = new SpinBox();
+        float value = GetSetting<float>(where, type, instance_name);
+        spin_box.Step = 0.01;
+        spin_box.Value = value;
 
-        if (type == "int" || type == "flt") {
-            SpinBox i = (input[0] as SpinBox);
-            i.ValueChanged += (double val) => NumberChanged(i, setting);
+        void ApplyFloat() { ApplySetting(spin_box.Value, where, type, instance_name); }
+        void ResetFloat() { spin_box.Value = default_value; }
 
-            if (i.Value != default_value.ToFloat())
-            {
-                AddReset(input, type, default_value, where, name);
-            }
-        }
-        else if (type == "q" || type == "af") {
-            OptionButton button = (input[0] as OptionButton);
-            int selected = (int)(GetSetting(where, name)) - (type == "q" ? 1 : 0);
-            button.CallDeferred("select", selected);
-            button.ItemSelected += (long index) => EnumItemSelected(button, (int)index, setting);
+        spin_box.ValueChanged += (double new_value) => ValueChanged(container, new_value, default_value, ResetFloat, ApplyFloat);
 
-            if (selected != default_value.ToInt() - 1) {
-                AddReset(input, type, default_value, where, name);
-            }
-        }
-        else if (type == "bool") {
-            CheckButton check_box = (input[0] as CheckButton);
-            check_box.Pressed += () => BoolChanged(check_box, setting);
+        container.AddChild(spin_box);
 
-            if (check_box.ButtonPressed != (default_value == "true")) {
-                AddReset(input, type, default_value, where, name);
-            }
-        }
-        else if (type == "v2") {
-            SpinBox x = (input[0] as SpinBox), y = (input[1] as SpinBox);
-            x.ValueChanged += (double val) => Vector2Changed(x, y, setting);
-            y.ValueChanged += (double val) => Vector2Changed(x, y, setting);
-            
-            Vector2 v = ParseVec2(default_value);
-
-            if (x.Value != v.X || y.Value != v.Y) {
-                AddReset(input, type, default_value, where, name);
-            }
-        }
-        else if (type == "str") {
-            LineEdit line_edit = (input[0] as LineEdit);
-            line_edit.TextChanged += (string text) => TextChanged(input, text, setting);
-
-            if (line_edit.Text != default_value) {
-                AddReset(input, type, default_value, where, name);
-            }
-        }
-        else if (type == "fl") {
-            LineEdit line_edit = (input[0] as LineEdit);
-            line_edit.TextChanged += (string text) => TextChanged(input, text, setting);
-
-            Button file_opener = (input[1] as Button);
-            file_opener.ButtonUp += () => FileLocation(input, setting);
-
-            if (line_edit.Text != default_value) {
-                AddReset(input, type, default_value, where, name);
-            }
-        }
-
-        Globals.save_data.application_settings.ApplySettings();
-        Globals.save_data.graphic_settings.ApplySettings();
-        Globals.save_data.audio_settings.ApplySettings();
-        Globals.save_data.cloud_settings.ApplySettings();
-
-        return container;
+        if (value != default_value) 
+            AddResetButton(container, ResetFloat, ApplyFloat);
     }
 
-    Type FindType(string where) {
-        switch (where)
-        {
-            case "sg":
-                return typeof(GraphicSettings);
-            case "as":
-                return typeof(ApplicationSettings);
-            case "cs":
-                return typeof(CloudSettings);
-            case "ad":
-                return typeof(AudioSettings);
-            default:
-                return null;
-        }
-    }
-
-    ISettings FindObject(string where) {
-        switch (where)
-        {
-            case "sg":
-                return Globals.save_data.graphic_settings;
-            case "as":
-                return Globals.save_data.application_settings;
-            case "cs":
-                return Globals.save_data.cloud_settings;
-            case "ad":
-                return Globals.save_data.audio_settings;
-            default:
-                return null;
-        }
-    }
-
-    object GetSetting(string where, string name) {
-        return FindType(where).GetField(name).GetValue(FindObject(where));
-    }
-
-    Control[] EnumSetting(string[] _enum) {
-        OptionButton b = new OptionButton();
-
-        for (int i = 0; i < _enum.Length; i++) {
-            b.GetPopup().AddItem(_enum[i]);
-        }
-
-        Control[] input = new[] { b };
-        return input;
-    }
-
-    void FileLocation(Control[] input, string setting) {
-        Globals.SetFileDialogFile();
-		Globals.file_dialog.Popup();
-
-        Globals.file_dialog.FileSelected += (string file) => {(input[0] as LineEdit).Text = file; TextChanged(input, file, setting);};
-    }
-
-    public Vector2 ParseVec2(string v2) {
-        return new Vector2(v2.Substring(0, v2.Find(",")).ToInt(), v2.Substring(v2.Find(",") + 1).ToInt());
-    }
-
-    public void Vector2Changed(SpinBox x, SpinBox y, string setting) {
-        (string full_name, string type, string where, string name, string default_value) = ParseSetting(setting);
-        Vector2 v = ParseVec2(default_value);
-        VariableSet(new[] { x, y }, x.Value != v.X || y.Value != v.Y, type, default_value, where, name);
-    }
-
-    public void BoolChanged(CheckButton button, string setting) {
-        (string full_name, string type, string where, string name, string default_value) = ParseSetting(setting);
-        VariableSet(new[] { button }, button.ButtonPressed != (default_value == "true"), type, default_value, where, name);
-    }
-
-    public void TextChanged(Control[] input, string text, string setting) {
-        (string full_name, string type, string where, string name, string default_value) = ParseSetting(setting);
-        VariableSet(input, text != default_value, type, default_value, where, name);
-    }
-
-    public void NumberChanged(SpinBox spin, string setting) {
-        (string full_name, string type, string where, string name, string default_value) = ParseSetting(setting);
-        VariableSet(new[] { spin }, spin.Value != default_value.ToFloat(), type, default_value, where, name);
-    }
-
-    public void EnumItemSelected(OptionButton button, int index, string setting) {
-        (string full_name, string type, string where, string name, string default_value) = ParseSetting(setting);
-
-        VariableSet(new[] { button }, index != default_value.ToInt() - 1, type, default_value, where, name);
-    }
-
-    public void VariableSet(Control[] input, bool is_delta, string type, string default_value, string where, string name) {
-        foreach (Node node in input[0].GetParent().GetChildren()) {
-            if (node is Button && System.Array.IndexOf(input, node) == -1) { // Delete Reset button(s)
-                node.QueueFree();
-            }
-        }
-
-        if (is_delta) { // Add reset button
-            AddReset(input, type, default_value, where, name);
-        }
-
-
-        ApplySetting(input, type, where, name);
-    }
-
-    public void AddReset(Control[] input, string type, string default_value, string where, string name) {
-        Button button = new Button();
-        button.Icon = reset_texture;
-        button.ExpandIcon = true;
-        input[input.Length - 1].AddSibling(button);
-        button.CustomMinimumSize = Vector2.One * 28;
-        button.ButtonUp += () => { SetInputToDefaultValue(input, type, default_value); button.QueueFree(); ApplySetting(input, type, where, name); };
-    }
-
-    public void ApplySetting(Control[] input, string type, string where, string name) {
-        Variant variant;
-
-        switch (type) {
-            case "int":
-                variant = (input[0] as SpinBox).Value;
-                break;
-            case "flt":
-                variant = (input[0] as SpinBox).Value;
-                break;
-            case "q":
-                variant = (input[0] as OptionButton).Selected + 1;
-                break;
-            case "af":
-                variant = (input[0] as OptionButton).Selected;
-                break;
-            case "bool":
-                variant = (input[0] as CheckButton).ButtonPressed;
-                break;
-            case "str":
-                variant = (input[0] as LineEdit).Text;
-                break;
-            case "v2":
-                variant = new Vector2((float)(input[0] as SpinBox).Value, (float)(input[1] as SpinBox).Value);
-                break;
-            default:
-                variant = (input[0] as LineEdit).Text;
-                break;
-        }
-
-        ISettings obj = FindObject(where);
-        SetSetting(ref obj, name, variant, type, FindType(where));
-        obj.ApplySettings();
-    }
-
-    public void SetInputToDefaultValue(Control[] input, string type, string default_value) {
-        switch (type) {
-            case "int":
-                (input[0] as SpinBox).Value = default_value.ToInt();
-                break;
-            case "flt":
-                (input[0] as SpinBox).Value = default_value.ToFloat();
-                break;
-            case "q":
-                (input[0] as OptionButton).Select(default_value.ToInt() - 1);
-                break;
-            case "af":
-                (input[0] as OptionButton).Select(default_value.ToInt() - 1);
-                break;
-            case "bool":
-                (input[0] as CheckButton).ButtonPressed = default_value == "true";
-                break;
-            case "str":
-                (input[0] as LineEdit).Text = default_value;
-                break;
-            case "v2":
-                Vector2 v = ParseVec2(default_value);
-                (input[0] as SpinBox).Value = v.X;
-                (input[1] as SpinBox).Value = v.Y;
-                break;
-            default:
-                (input[0] as LineEdit).Text = default_value;
-                break;
-        }
-    }
-
-    public void SetSetting<T>(ref T obj, string constant, Variant variant, string type, Type obj_type) where T : ISettings {
-        if (Globals.self == null) return;
-
-        FieldInfo field = obj_type.GetField(constant, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+    public void AddEnumSetting<T>(string full_name, T where, string instance_name, int default_value, string[] enum_values) where T : ISettings {
+        Type type = typeof(T);
         
-        if (field != null)
-        {
+        HBoxContainer container = new HBoxContainer();
+        settings_container.AddChild(container);
+
+        Label label = new Label();
+        label.Text = full_name + ":";
+        container.AddChild(label);
+
+        OptionButton option_button = new OptionButton();
+
+        for (int i = 0; i < enum_values.Length; i++) {
+            option_button.GetPopup().AddItem(enum_values[i]);
+        }
+
+        int value = GetSetting<int>(where, type, instance_name);
+        option_button.Select(value);
+
+        void ApplyEnum() { ApplySetting(option_button.Selected, where, type, instance_name); }
+        void ResetEnum() { option_button.Selected = default_value; }
+
+        option_button.ItemSelected += (long new_value) => ValueChanged(container, (int)new_value, default_value, ResetEnum, ApplyEnum);
+
+        container.AddChild(option_button);
+
+        if (value != default_value) 
+            AddResetButton(container, ResetEnum, ApplyEnum);
+    }
+
+    public void AddBoolSetting<T>(string full_name, T where, string instance_name, bool default_value) where T : ISettings {
+        Type type = typeof(T);
+
+        HBoxContainer container = new HBoxContainer();
+        settings_container.AddChild(container);
+
+        Label label = new Label();
+        label.Text = full_name + ":";
+        container.AddChild(label);
+
+        CheckButton check_button = new CheckButton();
+        check_button.ButtonPressed = GetSetting<bool>(where, type, instance_name);
+
+        void ApplyBool() { ApplySetting(check_button.ButtonPressed, where, type, instance_name); }
+        void ResetBool() { check_button.ButtonPressed = default_value; }
+
+        check_button.Pressed += () => ValueChanged(container, check_button.ButtonPressed, default_value, ResetBool, ApplyBool);
+
+        container.AddChild(check_button);
+
+        if (check_button.ButtonPressed != default_value)
+            AddResetButton(container, ResetBool, ApplyBool);
+    }
+
+    public void AddStringSetting<T>(string full_name, T where, string instance_name, string default_value) where T : ISettings {
+        Type type = typeof(T);
+
+        HBoxContainer container = new HBoxContainer();
+        settings_container.AddChild(container);
+
+        Label label = new Label();
+        label.Text = full_name + ":";
+        container.AddChild(label);
+
+        LineEdit line_edit = new LineEdit();
+        line_edit.Text = GetSetting<string>(where, type, instance_name);
+        line_edit.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+
+        void ApplyString() { ApplySetting(line_edit.Text, where, type, instance_name); }
+        void ResetString() { line_edit.Text = default_value; }
+
+        line_edit.TextChanged += (string new_value) => ValueChanged(container, new_value, default_value, ResetString, ApplyString);
+
+        container.AddChild(line_edit);
+
+        if (line_edit.Text != "") 
+            AddResetButton(container, ResetString, ApplyString);
+    }
+
+    public void AddFileLocationSetting<T>(string full_name, T where, string instance_name) where T : ISettings {
+        Type type = typeof(T);
+
+        HBoxContainer container = new HBoxContainer();
+        settings_container.AddChild(container);
+
+        Label label = new Label();
+        label.Text = full_name + ":";
+        container.AddChild(label);
+
+        LineEdit line_edit = new LineEdit();
+        line_edit.Text = GetSetting<string>(where, type, instance_name);
+        line_edit.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+
+        Button file_select_button = new Button();
+        file_select_button.Icon = file_texture;
+        file_select_button.ExpandIcon = true;
+        file_select_button.TooltipText = "Open file manager to select location.";
+        file_select_button.CustomMinimumSize = Vector2.One * 28;
+
+        void ApplyFileLocation() { ApplySetting(line_edit.Text, where, type, instance_name); }
+        void ResetFileLocation() { line_edit.Text = ""; }
+
+        void FileLocation() {
+            Globals.SetFileDialogFile();
+            Globals.file_dialog.Popup();
+
+            Globals.file_dialog.FileSelected += (string file) => {line_edit.Text = file; ValueChanged(container, file, "", ResetFileLocation, ApplyFileLocation);};
+        }
+
+        file_select_button.ButtonUp += FileLocation;
+
+        line_edit.TextChanged += (string new_value) => ValueChanged(container, new_value, "", ResetFileLocation, ApplyFileLocation);
+
+        container.AddChild(line_edit);
+        container.AddChild(file_select_button);
+
+        if (line_edit.Text != "") 
+            AddResetButton(container, ResetFileLocation, ApplyFileLocation);
+    }
+
+    public void AddVector2Setting<T>(string full_name, T where, string instance_name, Vector2 default_value) where T : ISettings {
+        Type type = typeof(T);
+
+        HBoxContainer container = new HBoxContainer();
+        settings_container.AddChild(container);
+
+        Label label = new Label();
+        label.Text = full_name + ":";
+        container.AddChild(label);
+
+        SpinBox spin_box_x = new SpinBox(), spin_box_y = new SpinBox();
+        Vector2 value = GetSetting<Vector2>(where, type, instance_name);
+
+        spin_box_x.Step = 0.01;
+        spin_box_x.Value = value.X;
+
+        spin_box_y.Step = 0.01;
+        spin_box_y.Value = value.Y;
+
+        void ApplyVector2() { ApplySetting(new Vector2((float)spin_box_x.Value, (float)spin_box_y.Value), where, type, instance_name); }
+        void ResetVector2() { spin_box_x.Value = default_value.X; spin_box_y.Value = default_value.Y; }
+
+        spin_box_x.ValueChanged += (double new_x_value) => ValueChanged(container, new Vector2((float)new_x_value, (float)spin_box_y.Value), default_value, ResetVector2, ApplyVector2);
+        spin_box_y.ValueChanged += (double new_y_value) => ValueChanged(container, new Vector2((float)spin_box_x.Value, (float)new_y_value), default_value, ResetVector2, ApplyVector2);
+
+        container.AddChild(spin_box_x);
+        container.AddChild(spin_box_y);
+
+        if (value != default_value) 
+            AddResetButton(container, ResetVector2, ApplyVector2);
+    }
+
+    public void Open() {
+        Globals.file_dialog.Reparent(this);
+        Show();
+        SelectSettingsTab(0);
+    }
+
+    public void Close() {
+        Globals.file_dialog.Reparent(Globals.self);
+        Hide();
+    }
+
+    T GetSetting<T>(ISettings where, Type type, string name) {
+        return (T)(type.GetField(name).GetValue(where));
+    }
+
+    public void ValueChanged<T>(HBoxContainer container, T new_value, T default_value, Action reset_setting, Action apply_setting) {
+        ClearResetButton(container);
+
+        if(!new_value.Equals(default_value))
+            AddResetButton(container, reset_setting, apply_setting);
+
+        apply_setting();
+    }
+
+    public void ApplySetting(Variant variant, ISettings where, Type type, string instance_name) {
+        SetSetting(ref where, type, instance_name, variant);
+        where.ApplySettings();
+    }
+
+    public void SetSetting<T>(ref T obj, Type type, string instance_name, Variant variant) where T : ISettings {
+        if (Globals.save_data == null) return;
+
+        FieldInfo field = type.GetField(instance_name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+        
+        if (field != null) {
             field.SetValue(obj, Convert.ChangeType(variant.Obj, field.FieldType));
 
             Globals.save_data.Save();
         }
-        else
-        {
-            GD.PrintErr($"Settings Field not found. Unable to set setting \'{constant}\'");
-        }
+        else GD.PrintErr($"Settings Field not found. Unable to set setting \'{instance_name}\'");
     }
 }

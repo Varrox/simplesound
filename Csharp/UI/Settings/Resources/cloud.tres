@@ -1,9 +1,0 @@
-[gd_resource type="Resource" format=3 uid="uid://de61txalakltv"]
-
-[ext_resource type="Script" uid="uid://6cs8xn6h2u1a" path="res://Csharp/UI/Settings/SettingsTab.cs" id="1_wpxp0"]
-
-[resource]
-script = ExtResource("1_wpxp0")
-section_name = "Cloud"
-settings = PackedStringArray("Sync Application Settings:bool:cs:sync_application_settings:true")
-metadata/_custom_type_script = "uid://6cs8xn6h2u1a"
