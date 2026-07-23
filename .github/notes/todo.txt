@@ -5,6 +5,7 @@ TODO
 - Sleep timer.
 - Add lyrics viewer.
 - Rework context menus
+- Make muting actually mute audio rather than making it extremely quiet
 
 FINISHED
 
