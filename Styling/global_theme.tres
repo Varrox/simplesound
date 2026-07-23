@@ -1,6 +1,10 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://cg2x5h7ufrntn"]
+[gd_resource type="Theme" format=3 uid="uid://cg2x5h7ufrntn"]
 
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Styling/Fonts/DefaultFont.tres" id="1_787rk"]
+[ext_resource type="StyleBox" uid="uid://bcwdihevqnrfe" path="res://Styling/Color Picker/color_picker_normal.tres" id="1_jybvc"]
+[ext_resource type="StyleBox" uid="uid://cxytxx6a7h42y" path="res://Styling/Color Picker/color_picker_disabled.tres" id="1_m7e64"]
 
 [resource]
 default_font = ExtResource("1_787rk")
+ColorPickerButton/styles/disabled = ExtResource("1_m7e64")
+ColorPickerButton/styles/normal = ExtResource("1_jybvc")
