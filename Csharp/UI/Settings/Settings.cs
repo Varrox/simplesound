@@ -159,9 +159,6 @@ public partial class Settings : EditorWindow
         AddEnumSetting("Blur Quality", Globals.save_data.graphic_settings, "blur_quality", 2, Constants.QUALITY_LEVELS);
     }
 
-        AddEnumSetting("Default Theme", Globals.save_data.)
-    }
-
     public void AddHeader(string header_title) {
         HBoxContainer container = new HBoxContainer();
         settings_container.AddChild(container);
