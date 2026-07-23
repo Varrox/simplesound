@@ -109,7 +109,7 @@ public partial class Settings : EditorWindow
 
     void AddDownloaderSettings() {
         AddFileLocationSetting("yt-dlp Location", Globals.save_data.application_settings, "ytdlp_location");
-        AddEnumSetting("Audio Format", Globals.save_data.application_settings, "download_format", 1, Constants.DOWNLOAD_FORMATS);
+        AddEnumSetting("Audio Format", Globals.save_data.application_settings, "download_format", 0, Constants.DOWNLOAD_FORMATS);
     }
 
     void AddAppDataSettings() {
