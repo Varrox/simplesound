@@ -29,7 +29,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Message" type="Label" parent="VBoxContainer" unique_id=288635120]
-custom_minimum_size = Vector2(0, 42.24)
+custom_minimum_size = Vector2(230, 42.24)
 layout_mode = 2
 size_flags_vertical = 6
 theme_override_fonts/font = ExtResource("2_jua8g")
