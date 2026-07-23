@@ -59,6 +59,9 @@ public partial class Globals : Node
     [Export] private ContextMenu _song_menu{set{ song_menu = value; }get{ return song_menu; }}
     public static ContextMenu song_menu;
 
+    [Export] private StyleBoxFlat _color_picker_panel_style{set{ color_picker_panel_style = value; }get{ return color_picker_panel_style; }}
+    public static StyleBoxFlat color_picker_panel_style;
+
     public static Vector2I main_window_minimum_size = new Vector2I(850, 350);
     public static SaveData save_data;
 
