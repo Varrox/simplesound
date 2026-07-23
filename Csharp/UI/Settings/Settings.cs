@@ -364,6 +364,24 @@ public partial class Settings : EditorWindow
             AddResetButton(container, ResetVector2, ApplyVector2);
     }
 
+    public void AddColorSetting<T>(string full_name, T where, string instance_name, Color default_value) where T : ISettings {
+        Type type = typeof(T);
+
+        HBoxContainer container = CreateSettingsItem(full_name);
+
+        ThemeColorPickerButton color_picker_button = new ThemeColorPickerButton();
+        color_picker_button.Color = Color.FromString(GetSetting<string>(where, type, instance_name) ?? "", default_value);
+
+        color_picker_button.CustomMinimumSize = new Vector2(84, 28);
+
+        void ApplyString() { ApplySetting(color_picker_button.Color.ToString(), where, type, instance_name); }
+        void ResetString() { color_picker_button.Color = default_value; }
+
+        color_picker_button.ColorChanged += (Color new_value) => ValueChanged(container, new_value, default_value, ResetString, ApplyString);
+
+        container.AddChild(color_picker_button);
+
+        if (color_picker_button.Text != "") 
             AddResetButton(container, ResetString, ApplyString);
     }
 
