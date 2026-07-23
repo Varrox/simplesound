@@ -3,6 +3,7 @@
 [GlobalClass]
 public partial class Globals : Node
 {
+    [ExportGroup("Textures")]
     // Textures
     [Export] private Texture2D _play_texture {set{ play_texture = value; }get { return play_texture; }}
     [Export] private Texture2D _pause_texture {set{ pause_texture = value; } get { return pause_texture; }}
@@ -18,6 +19,8 @@ public partial class Globals : Node
 
     public static Texture2D play_texture, pause_texture, no_play_texture, loop_on_texture, loop_off_texture, shuffle_on_texture, shuffle_off_texture, mute_texture, unmute_texture, default_cover, default_cover_highres;
 
+    [ExportGroup("Nodes")]
+
     [Export] private Main _main{set{ main = value; }get{ return main; }}
     public static Main main;
 
@@ -26,6 +29,11 @@ public partial class Globals : Node
 
     [Export] private Discord _discord{set{ discord = value; }get{ return discord; }}
     public static Discord discord;
+
+    [Export] private Node _self{set{ self = value; }get { return self; }}
+    public static Node self;
+
+    [ExportGroup("Windows")]
 
     [Export] private AttributeEditor _attribute_editor{set{ attribute_editor = value; }get{ return attribute_editor; }}
     public static AttributeEditor attribute_editor;
@@ -36,8 +44,16 @@ public partial class Globals : Node
     [Export] private FileDialog _file_dialog{set{ file_dialog = value; }get { return file_dialog; }}
     public static FileDialog file_dialog;
 
-    [Export] private Node _self{set{ self = value; }get { return self; }}
-    public static Node self;
+    [Export] private PackedScene _confirmation_window{set{ confirmation_window = value; }get{ return confirmation_window; }}
+    public static PackedScene confirmation_window;
+
+    [Export] private ContextMenu _playlist_menu{set{ playlist_menu = value; }get{ return playlist_menu; }}
+    public static ContextMenu playlist_menu;
+
+    [Export] private ContextMenu _song_menu{set{ song_menu = value; }get{ return song_menu; }}
+    public static ContextMenu song_menu;
+
+    [ExportGroup("Theming")]
 
     [Export] private Color _highlight{set{ highlight = value; }get{ return highlight; }}
     public static Color highlight;
@@ -53,15 +69,6 @@ public partial class Globals : Node
 
     [Export] private Color _lower_highlight{set{ lower_highlight = value; }get{ return lower_highlight; }}
     public static Color lower_highlight;
-
-    [Export] private PackedScene _confirmation_window{set{ confirmation_window = value; }get{ return confirmation_window; }}
-    public static PackedScene confirmation_window;
-
-    [Export] private ContextMenu _playlist_menu{set{ playlist_menu = value; }get{ return playlist_menu; }}
-    public static ContextMenu playlist_menu;
-
-    [Export] private ContextMenu _song_menu{set{ song_menu = value; }get{ return song_menu; }}
-    public static ContextMenu song_menu;
 
     [Export] private StyleBoxFlat _color_picker_panel_style{set{ color_picker_panel_style = value; }get{ return color_picker_panel_style; }}
     public static StyleBoxFlat color_picker_panel_style;
