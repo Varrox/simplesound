@@ -40,7 +40,7 @@ public class ConvertToGodot
     /// <param name="fallback">the Texture2D to be returned if the image fails to load</param>
     /// <returns></returns>
     public static Texture2D LoadImageFromFile(string file_name) {
-        if (file_name == string.Empty || file_name == null) return null;
+        if (file_name == string.Empty || file_name == null || !File.Exists(file_name)) return null;
         Image img = new Image();
         if (img.Load(file_name) == Error.Ok) return ImageTexture.CreateFromImage(img);
         return null;
