@@ -4,10 +4,11 @@ TODO
 - Add song position rearange.
 - Sleep timer.
 - Add lyrics viewer.
-- Fix settings so it no longer uses stupid resource solution and uses procedural solution that is future proof
+- Rework context menus
 
 FINISHED
 
+- Fix settings so it no longer uses stupid resource solution and uses procedural solution that is future proof
 - Add Audio settings
 - Add song downloading - For youtube, soundcloud, and spotify.
 - Make playlist bar hiding.
