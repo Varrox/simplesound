@@ -37,11 +37,11 @@ public partial class Settings : EditorWindow
     public override void _Ready() {
         base._Ready();
 
-        AddSettingsTab("Audio", AddAudioSettings);
-        AddSettingsTab("Cloud", AddCloudSettings);
-        AddSettingsTab("Downloader", AddDownloaderSettings);
-        AddSettingsTab("App data", AddAppDataSettings, true);
-        AddSettingsTab("Graphics / Display", AddGraphicSettings);
+        AddSettingsTab("Audio", AddAudioSettings, false, "EQ, Reverb, etc.");
+        AddSettingsTab("Cloud", AddCloudSettings, false, "Login, sync settings, etc.");
+        AddSettingsTab("Downloader", AddDownloaderSettings, false, "yt-dlp executable, download formats, etc.");
+        AddSettingsTab("App data", AddAppDataSettings, true, "");
+        AddSettingsTab("Graphics / Display", AddGraphicSettings, false, "VSync, background blur quality, etc.");
 
         close_menu.ButtonUp += Close;
     }
@@ -106,7 +106,7 @@ public partial class Settings : EditorWindow
         return container;
     }
 
-    public void AddSettingsTab(string section_name, Action add_settings, bool disabled = false) {
+    public void AddSettingsTab(string section_name, Action add_settings, bool disabled = false, string tooltip_text = "") {
         Button button = new Button();
 
         tabs_container.AddChild(button);
@@ -155,6 +155,7 @@ public partial class Settings : EditorWindow
             label.AddThemeColorOverride("font_color", Globals.disabled_text_highlight);
         }
         else {
+            button.TooltipText = tooltip_text;
             label.AddThemeColorOverride("font_color", Globals.text_unselected_color);
         }
 
