@@ -1052,11 +1052,12 @@ script = ExtResource("55_e3yke")
 _audio_source = NodePath("../../Player")
 _globals = NodePath("..")
 
-[node name="StatusIndicator" type="StatusIndicator" parent="Globals" unique_id=1556933644]
+[node name="StatusIndicator" type="StatusIndicator" parent="Globals" unique_id=1556933644 node_paths=PackedStringArray("streamer_button")]
 tooltip = "simplesound"
 icon = ExtResource("59_fg2ps")
 menu = NodePath("PopupMenu")
 script = ExtResource("57_fg2ps")
+streamer_button = NodePath("../../Interface/Top Bar/Right/Stream")
 
 [node name="PopupMenu" type="PopupMenu" parent="Globals/StatusIndicator" unique_id=251564623]
 prefer_native_menu = true

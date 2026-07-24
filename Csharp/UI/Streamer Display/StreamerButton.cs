@@ -3,7 +3,7 @@ using System;
 
 public partial class StreamerButton : Button
 {
-	bool enabled = false;
+	public bool enabled = false;
 	StreamDisplay display;
 	[Export] PackedScene stream_display;
 	[Export] TextureRect texture;
