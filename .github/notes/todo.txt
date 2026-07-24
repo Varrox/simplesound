@@ -4,15 +4,18 @@ TODO
 - Add song position rearange.
 - Sleep timer.
 - Add lyrics viewer.
-- Rework context menus
-- Make muting actually mute audio rather than making it extremely quiet
-- Implement Status indicator
-- Add optional compact form song displays without cover
+- Rework context menus.
+- Make muting actually mute audio rather than making it extremely quiet.
+- Add optional compact form song displays without cover.
+- Add back vsync settings.
+- Optimize blur by not rendering new frames unless window size is changed or song changes.
+- Set medium blur to be the default blur settings.
 
 FINISHED
 
-- Fix settings so it no longer uses stupid resource solution and uses procedural solution that is future proof
-- Add Audio settings
+- Implement Status indicator.
+- Fix settings so it no longer uses stupid resource solution and uses procedural solution that is future proof.
+- Add Audio settings.
 - Add song downloading - For youtube, soundcloud, and spotify.
 - Make playlist bar hiding.
 - Add settings menu.
