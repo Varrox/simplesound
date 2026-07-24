@@ -56,13 +56,13 @@ public partial class Settings : EditorWindow
             // Highlight
 
             _settings_tabs[tab].button.SelfModulate = Globals.highlight;
-            _settings_tabs[tab].label.AddThemeColorOverride("font_color", Globals.text_highlight);
+            _settings_tabs[tab].label.AddThemeColorOverride("font_color", Globals.text_selected_color);
             _settings_tabs[tab].underline.Visible = true;
 
             for(int i = 0; i < _settings_tabs.Count; i++) {
                 if (i != tab && !_settings_tabs[i].disabled) {
                     _settings_tabs[i].button.SelfModulate = Colors.White;
-                    _settings_tabs[i].label.AddThemeColorOverride("font_color", Colors.White);
+                    _settings_tabs[i].label.AddThemeColorOverride("font_color", Globals.text_unselected_color);
                     _settings_tabs[i].underline.Visible = false;
                 }
             }
@@ -149,6 +149,9 @@ public partial class Settings : EditorWindow
         if (disabled) {
             button.TooltipText = "Disabled";
             label.AddThemeColorOverride("font_color", Globals.disabled_text_highlight);
+        }
+        else {
+            label.AddThemeColorOverride("font_color", Globals.text_unselected_color);
         }
 
         int tab_index = _settings_tabs.Count;

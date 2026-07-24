@@ -59,8 +59,11 @@ public partial class Globals : Node
     [Export] private Color _highlight{set{ highlight = value; }get{ return highlight; }}
     public static Color highlight;
 
-    [Export] private Color _text_highlight{set{ text_highlight = value; }get{ return text_highlight; }}
-    public static Color text_highlight;
+    [Export] private Color _text_selected_color{set{ text_selected_color = value; }get{ return text_selected_color; }}
+    public static Color text_selected_color = Colors.White;
+
+    [Export] private Color _text_unselected_color{set{ text_unselected_color = value; }get{ return text_unselected_color; }}
+    public static Color text_unselected_color = Colors.Gray;
 
     [Export] private Color _normal_text_color{set{ normal_text_color = value; }get{ return normal_text_color; }}
     public static Color normal_text_color = Colors.White;
