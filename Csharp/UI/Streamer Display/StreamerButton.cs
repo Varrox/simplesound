@@ -8,27 +8,44 @@ public partial class StreamerButton : Button
 	[Export] PackedScene stream_display;
 	[Export] TextureRect texture;
 
-    public override void _Ready()
-	{
+    public override void _Ready() {
 		ButtonUp += Toggle;
+
+		SetFontColors();
 	}
 
-	public void Toggle()
-	{
+	public void Toggle() {
 		enabled = !enabled;
 
-		if (enabled)
-		{ 
+		if (enabled) { 
 			display = stream_display.Instantiate() as StreamDisplay;
 			GetTree().CurrentScene.AddChild(display);
 
 			Globals.main.OnLoadSong += SetStreamDisplayVariables;
 			SetStreamDisplayVariables();
         }
-		else
-		{
+		else {
 			display.QueueFree();
 			Globals.main.OnLoadSong -= SetStreamDisplayVariables;
+		}
+
+		SetFontColors();
+	}
+
+	private void SetFontColors() {
+		if (enabled) {
+			AddThemeColorOverride("font_color", Colors.Red);
+			AddThemeColorOverride("font_focus_color", Colors.Red);
+			AddThemeColorOverride("font_pressed_color", Colors.Red);
+			AddThemeColorOverride("font_hover_color", Colors.Red);
+			AddThemeColorOverride("font_pressed_color", Colors.Red);
+		}
+		else {
+			AddThemeColorOverride("font_color", Globals.normal_text_color);
+			AddThemeColorOverride("font_focus_color", Globals.normal_text_color);
+			AddThemeColorOverride("font_pressed_color", Globals.normal_text_color);
+			AddThemeColorOverride("font_hover_color", Globals.normal_text_color);
+			AddThemeColorOverride("font_pressed_color", Globals.normal_text_color);
 		}
 	}
 
