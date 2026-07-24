@@ -190,7 +190,7 @@ public partial class Player : Node
 
         if (Globals.main.IsSongAvailable()) {
             float max = 0.65f;
-            background_color_rect.Color = background_color_rect.Color.Lerp(background_color.Clamp(Colors.Transparent, new Color(max, max, max, max)), (float)delta * 2f);
+            background_color_rect.Color = background_color_rect.Color.Lerp(background_color.Clamp(new Color(0f, 0f, 0f, 0f), new Color(max, max, max, max)), (float)delta * 2f);
 
             if (!muted) {
                 Globals.main.audio_player.VolumeDb = (float)(volume_slider.Value != -50 ? volume_slider.Value : -80);
