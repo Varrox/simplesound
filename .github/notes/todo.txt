@@ -7,6 +7,7 @@ TODO
 - Rework context menus
 - Make muting actually mute audio rather than making it extremely quiet
 - Implement Status indicator
+- Add optional compact form song displays without cover
 
 FINISHED
 
