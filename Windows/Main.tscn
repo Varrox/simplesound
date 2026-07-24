@@ -1046,11 +1046,6 @@ visible = false
 [node name="DownloadWindow" parent="Globals" unique_id=1926010608 instance=ExtResource("23_e71vb")]
 visible = false
 
-[node name="GDScript Globals" type="Node" parent="Globals" unique_id=142593709 node_paths=PackedStringArray("_audio_source", "_globals")]
-script = ExtResource("55_e3yke")
-_audio_source = NodePath("../../Player")
-_globals = NodePath("..")
-
 [node name="StatusIndicator" type="StatusIndicator" parent="Globals" unique_id=1556933644 node_paths=PackedStringArray("streamer_button")]
 tooltip = "simplesound"
 icon = ExtResource("59_fg2ps")
@@ -1060,6 +1055,11 @@ streamer_button = NodePath("../../Interface/Top Bar/Right/Stream")
 
 [node name="PopupMenu" type="PopupMenu" parent="Globals/StatusIndicator" unique_id=251564623]
 prefer_native_menu = true
+
+[node name="GDScript Globals" type="Node" parent="." unique_id=142593709 node_paths=PackedStringArray("_audio_source", "_globals")]
+script = ExtResource("55_e3yke")
+_audio_source = NodePath("../Player")
+_globals = NodePath("../Globals")
 
 [node name="Discord" type="Node" parent="." unique_id=46493677]
 script = ExtResource("53_e71vb")
