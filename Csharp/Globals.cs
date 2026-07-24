@@ -61,6 +61,12 @@ public partial class Globals : Node
     [Export] private Color _text_highlight{set{ text_highlight = value; }get{ return text_highlight; }}
     public static Color text_highlight;
 
+    [Export] private Color _normal_text_color{set{ normal_text_color = value; }get{ return normal_text_color; }}
+    public static Color normal_text_color = Colors.White;
+
+    [Export] private Color _small_text_color{set{ small_text_color = value; }get{ return small_text_color; }}
+    public static Color small_text_color = Colors.DarkGray;
+
     [Export] private Color _disabled_text_highlight{set{ disabled_text_highlight = value; }get{ return disabled_text_highlight; }}
     public static Color disabled_text_highlight;
 

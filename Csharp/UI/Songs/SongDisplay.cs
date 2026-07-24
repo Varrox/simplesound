@@ -39,7 +39,7 @@ public partial class SongDisplay : Button
             Globals.main.OnPlay += SetTextures;
             playing = true;
             SelfModulate = Globals.highlight;
-            number.SelfModulate = new Color(1, 1, 1, 0);
+            number.AddThemeColorOverride("font_color", Colors.Transparent);
             song_name.AddThemeColorOverride("font_color", Globals.playing_text_highlight);
             if(!IsHovered()) sound_visualizer.Visible = true;
         }
@@ -47,9 +47,9 @@ public partial class SongDisplay : Button
             play_button.Texture = Disabled ? Globals.no_play_texture : Globals.play_texture;
             Globals.main.OnPlay -= SetTextures;
             playing = false;
-            number.SelfModulate = new Color(1, 1, 1, 1);
             SelfModulate = Colors.White;
-            song_name.AddThemeColorOverride("font_color", Colors.White);
+            number.AddThemeColorOverride("font_color", Globals.small_text_color);
+            song_name.AddThemeColorOverride("font_color", Globals.normal_text_color);
             sound_visualizer.Visible = false;
         }
 
@@ -68,7 +68,7 @@ public partial class SongDisplay : Button
         play_button.Show();
 
         if (playing) sound_visualizer.Visible = false;
-        number.SelfModulate = new Color(1, 1, 1, 0);
+        number.AddThemeColorOverride("font_color", Colors.Transparent);
     }
 
     public void OnExit() {
@@ -78,7 +78,7 @@ public partial class SongDisplay : Button
         play_button.Texture = null;
         
         if (playing) sound_visualizer.Visible = true;
-        else number.SelfModulate = new Color(1, 1, 1, 1);
+        else number.AddThemeColorOverride("font_color", Globals.small_text_color);
     }
 
     public void Init(in int song, in SongData data, in Playlist.PlaylistType type, in Texture2D cover) {
