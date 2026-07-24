@@ -38,7 +38,7 @@ public partial class ImportPlaylist : Button
 
 	public void Import(string ssl_file)
 	{
-		string new_path = Path.Combine(SaveSystem.USER_DATA, "Playlists", Path.GetFileName(ssl_file));
+		string new_path = Path.Combine(Constants.USER_DATA, "Playlists", Path.GetFileName(ssl_file));
 
 		File.Copy(ssl_file, new_path);
 

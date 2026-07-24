@@ -9,7 +9,7 @@ public class Playlist
     public List<string> songs;
 
     public string GetPath() {
-        return path ?? System.IO.Path.Combine(SaveSystem.USER_DATA, "Playlists", $"{name.Replace('\\', '-').Replace('/', '-').Replace(':', '-')}.json");
+        return path ?? System.IO.Path.Combine(Constants.USER_DATA, "Playlists", $"{name.Replace('\\', '-').Replace('/', '-').Replace(':', '-')}.json");
     }
 
     private string path;

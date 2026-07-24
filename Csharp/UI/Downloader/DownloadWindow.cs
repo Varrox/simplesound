@@ -141,7 +141,7 @@ public partial class DownloadWindow : EditorWindow
         
         var output = new Godot.Collections.Array();
 
-        string directory = folder == "" ? Path.Combine(SaveSystem.USER_DATA, "Music") : Path.Combine(SaveSystem.USER_DATA, "Music", folder);
+        string directory = folder == "" ? Path.Combine(Constants.USER_DATA, "Music") : Path.Combine(Constants.USER_DATA, "Music", folder);
 
         if(!Directory.Exists(directory))
             Directory.CreateDirectory(directory);
