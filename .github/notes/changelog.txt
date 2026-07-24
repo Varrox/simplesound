@@ -1,0 +1,10 @@
+- Song Downloading with yt-dlp.
+- EQ and Reverb audio settings.
+- Instant playlist loading (with the cost of no more separation between songs).
+- Settings menu tabs UI improved.
+- Settings are stored more organized now (so your blur quality and vsync settings will be reset, sorry).
+- The current playing song's name and the playlist it's from are now highlighted with green font to differentiate them from other songs and playlists.
+- The current playing song will have a small audio visualizer in place of its number.
+- System tray item added for simplesound.
+- Copy system info button added to settings menu.
+- Exports from now on will be using a custom export template of godot that strips away all unnecessary parts of the engine like 3D, or physics. This decreases the size of simplesound by 15mb - 25mb. 
