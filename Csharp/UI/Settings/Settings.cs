@@ -22,12 +22,14 @@ public partial class Settings : EditorWindow
         public Action add_settings;
         public Button button;
         public Label label;
+        public HSeparator underline;
         public bool disabled;
 
-        public SettingsTab(Action add_settings, Button button, Label label, bool disabled) {
+        public SettingsTab(Action add_settings, Button button, Label label, HSeparator underline, bool disabled) {
             this.add_settings = add_settings;
             this.button = button;
             this.label = label;
+            this.underline = underline;
             this.disabled = disabled;
         }
     }
@@ -55,11 +57,13 @@ public partial class Settings : EditorWindow
 
             _settings_tabs[tab].button.SelfModulate = Globals.highlight;
             _settings_tabs[tab].label.AddThemeColorOverride("font_color", Globals.text_highlight);
+            _settings_tabs[tab].underline.Visible = true;
 
             for(int i = 0; i < _settings_tabs.Count; i++) {
                 if (i != tab && !_settings_tabs[i].disabled) {
                     _settings_tabs[i].button.SelfModulate = Colors.White;
                     _settings_tabs[i].label.AddThemeColorOverride("font_color", Colors.White);
+                    _settings_tabs[i].underline.Visible = false;
                 }
             }
         }
@@ -106,8 +110,10 @@ public partial class Settings : EditorWindow
         Button button = new Button();
 
         tabs_container.AddChild(button);
+
+        Vector2 button_size = new Vector2(SETTINGS_TAB_SIZE_X + LABEL_PADDING, SETTINGS_TAB_SIZE_Y + LABEL_PADDING);
         
-        button.CustomMinimumSize = new Vector2(SETTINGS_TAB_SIZE_X + LABEL_PADDING, SETTINGS_TAB_SIZE_Y + LABEL_PADDING);
+        button.CustomMinimumSize = button_size;
 
         button.Disabled = disabled;
 
@@ -116,13 +122,29 @@ public partial class Settings : EditorWindow
 
         button.AddChild(label);
 
-        label.Size = button.CustomMinimumSize;
+        label.Size = button_size;
         label.Position = Vector2.Zero;
-        label.CustomMaximumSize = button.CustomMinimumSize;
+        label.CustomMaximumSize = button_size;
         label.SetAnchorsPreset(Control.LayoutPreset.FullRect);
 
         label.VerticalAlignment = VerticalAlignment.Center;
         label.HorizontalAlignment = HorizontalAlignment.Center;
+
+        HSeparator underline = new HSeparator();
+
+        label.AddChild(underline);
+
+        underline.Size = button_size;
+        underline.Position = Vector2.Zero;
+        underline.CustomMaximumSize = button_size;
+        underline.SetAnchorsPreset(Control.LayoutPreset.FullRect);
+
+        underline.Size = new Vector2(button_size.X * (3.75f/4f), button_size.Y);
+        underline.Position = new Vector2(button_size.X * (.25f/8f), button_size.Y * (.675f/2f));
+        
+        underline.SelfModulate = new Color(1f, 1f, 1f, 0.25f);
+
+        underline.Visible = false;
 
         if (disabled) {
             button.TooltipText = "Disabled";
@@ -133,7 +155,7 @@ public partial class Settings : EditorWindow
 
         button.ButtonUp += () => SelectSettingsTab(tab_index);
 
-        _settings_tabs.Add(new SettingsTab(add_settings, button, label, disabled));
+        _settings_tabs.Add(new SettingsTab(add_settings, button, label, underline, disabled));
     }
 
     void AddAudioSettings() {
