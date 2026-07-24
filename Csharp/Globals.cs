@@ -85,6 +85,7 @@ public partial class Globals : Node
 
     public override void _Ready() {
         GetTree().Root.MinSize = main_window_minimum_size;
+        GetTree().Root.CloseRequested += Quit;
     }
 
     public static void Quit() {
