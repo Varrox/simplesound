@@ -130,6 +130,8 @@ public partial class Settings : EditorWindow
         label.VerticalAlignment = VerticalAlignment.Center;
         label.HorizontalAlignment = HorizontalAlignment.Center;
 
+        label.MouseFilter = Control.MouseFilterEnum.Ignore;
+
         HSeparator underline = new HSeparator();
 
         label.AddChild(underline);
@@ -145,6 +147,8 @@ public partial class Settings : EditorWindow
         underline.SelfModulate = new Color(1f, 1f, 1f, 0.25f);
 
         underline.Visible = false;
+
+        underline.MouseFilter = Control.MouseFilterEnum.Ignore;
 
         if (disabled) {
             button.TooltipText = "Disabled";
