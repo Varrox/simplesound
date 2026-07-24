@@ -11,6 +11,7 @@ TODO
 - Optimize blur by not rendering new frames unless window size is changed or song changes.
 - Set medium blur to be the default blur settings.
 - Add built in enum support to settings (should be optional for both int and enum).
+- Save main window size on application close.
 
 FINISHED
 
