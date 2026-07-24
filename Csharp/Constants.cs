@@ -1,3 +1,6 @@
+using System.IO;
+using System;
+
 public struct Constants
 {
     public static readonly string[] DOWNLOAD_FORMATS = ["mp3", "wav"];
@@ -10,4 +13,6 @@ public struct Constants
     public const int SPECTRUM_ANALIZER_IDX = 0;
     public const int REVERB_IDX = 1;
     public const int EQ_IDX = 2;
+
+    public static readonly string USER_DATA = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "simplesound");
 }
