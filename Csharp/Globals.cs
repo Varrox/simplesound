@@ -1,4 +1,5 @@
 ﻿using Godot;
+using System;
 
 [GlobalClass]
 public partial class Globals : Node
@@ -84,7 +85,11 @@ public partial class Globals : Node
 
     public override void _Ready() {
         GetTree().Root.MinSize = main_window_minimum_size;
-        GetTree().Root.CloseRequested += OnClose;
+    }
+
+    public static void Quit() {
+        OnClose();
+        self.GetTree().Quit();
     }
 
     public static void OnClose() {
