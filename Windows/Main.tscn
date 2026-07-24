@@ -58,6 +58,8 @@
 [ext_resource type="StyleBox" uid="uid://d4mgs7v2tox0m" path="res://Styling/Color Picker/color_picker_panel.tres" id="53_61oms"]
 [ext_resource type="Script" uid="uid://dn1xjyy7q4ft5" path="res://Csharp/Discord.cs" id="53_e71vb"]
 [ext_resource type="Script" uid="uid://ca5d2qc1a4t64" path="res://GDScript/gd_script_globals.gd" id="55_e3yke"]
+[ext_resource type="Script" uid="uid://bmgcpmp5cfuwy" path="res://Csharp/Tray.cs" id="57_fg2ps"]
+[ext_resource type="Texture2D" uid="uid://bdbco8a0mnjn6" path="res://Icons/logotrans.png" id="59_fg2ps"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_abqjc"]
 shader = ExtResource("52_blkrb")
@@ -1049,6 +1051,15 @@ visible = false
 script = ExtResource("55_e3yke")
 _audio_source = NodePath("../../Player")
 _globals = NodePath("..")
+
+[node name="StatusIndicator" type="StatusIndicator" parent="Globals" unique_id=1556933644]
+tooltip = "simplesound"
+icon = ExtResource("59_fg2ps")
+menu = NodePath("PopupMenu")
+script = ExtResource("57_fg2ps")
+
+[node name="PopupMenu" type="PopupMenu" parent="Globals/StatusIndicator" unique_id=251564623]
+prefer_native_menu = true
 
 [node name="Discord" type="Node" parent="." unique_id=46493677]
 script = ExtResource("53_e71vb")
