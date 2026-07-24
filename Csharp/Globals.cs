@@ -59,29 +59,29 @@ public partial class Globals : Node
     [Export] private Color _highlight{set{ highlight = value; }get{ return highlight; }}
     public static Color highlight;
 
-    [Export] private Color _text_selected_color{set{ text_selected_color = value; }get{ return text_selected_color; }}
-    public static Color text_selected_color = Colors.White;
-
-    [Export] private Color _text_unselected_color{set{ text_unselected_color = value; }get{ return text_unselected_color; }}
-    public static Color text_unselected_color = Colors.Gray;
-
-    [Export] private Color _normal_text_color{set{ normal_text_color = value; }get{ return normal_text_color; }}
-    public static Color normal_text_color = Colors.White;
-
-    [Export] private Color _small_text_color{set{ small_text_color = value; }get{ return small_text_color; }}
-    public static Color small_text_color = Colors.DarkGray;
-
-    [Export] private Color _disabled_text_highlight{set{ disabled_text_highlight = value; }get{ return disabled_text_highlight; }}
-    public static Color disabled_text_highlight;
-
-    [Export] private Color _playing_text_highlight{set{ playing_text_highlight = value; }get{ return playing_text_highlight; }}
-    public static Color playing_text_highlight;
-
     [Export] private Color _lower_highlight{set{ lower_highlight = value; }get{ return lower_highlight; }}
     public static Color lower_highlight;
 
     [Export] private StyleBoxFlat _color_picker_panel_style{set{ color_picker_panel_style = value; }get{ return color_picker_panel_style; }}
     public static StyleBoxFlat color_picker_panel_style;
+
+    private Color _selected_font_color{set{}get{ return selected_font_color; }}
+    public static Color selected_font_color = Colors.White;
+
+    private Color _unselected_font_color{set{}get{ return unselected_font_color; }}
+    public static Color unselected_font_color = Colors.Gray;
+
+    private Color _normal_font_color{set{}get{ return normal_font_color; }}
+    public static Color normal_font_color = Colors.White;
+
+    private Color _small_font_color{set{}get{ return small_font_color; }}
+    public static Color small_font_color = Colors.DarkGray;
+
+    private Color _disabled_font_color{set{}get{ return disabled_font_color; }}
+    public static Color disabled_font_color = Colors.DimGray;
+
+    private Color _playing_font_color{set{}get{ return playing_font_color; }}
+    public static Color playing_font_color = Color.FromHtml("66ff5e");
 
     public static Vector2I main_window_minimum_size = new Vector2I(850, 350);
     public static SaveData save_data;

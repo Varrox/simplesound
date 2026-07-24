@@ -22,7 +22,7 @@ public partial class PlaylistDisplay : Button
     {
         bool highlight = Globals.main.playlist_index == playlist_index;
         if(highlight)
-            playlist_name.AddThemeColorOverride("font_color", Globals.playing_text_highlight);
+            playlist_name.AddThemeColorOverride("font_color", Globals.playing_font_color);
         else
             playlist_name.AddThemeColorOverride("font_color", Colors.White);
     }

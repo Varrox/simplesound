@@ -40,7 +40,7 @@ public partial class SongDisplay : Button
             playing = true;
             SelfModulate = Globals.highlight;
             number.AddThemeColorOverride("font_color", Colors.Transparent);
-            song_name.AddThemeColorOverride("font_color", Globals.playing_text_highlight);
+            song_name.AddThemeColorOverride("font_color", Globals.playing_font_color);
             if(!IsHovered()) sound_visualizer.Visible = true;
         }
         else if (Globals.main.playlist_index != Globals.main.looked_at_playlist || Globals.main.song_index != song) { // un-highlight
@@ -48,8 +48,8 @@ public partial class SongDisplay : Button
             Globals.main.OnPlay -= SetTextures;
             playing = false;
             SelfModulate = Colors.White;
-            number.AddThemeColorOverride("font_color", Globals.small_text_color);
-            song_name.AddThemeColorOverride("font_color", Globals.normal_text_color);
+            number.AddThemeColorOverride("font_color", Globals.small_font_color);
+            song_name.AddThemeColorOverride("font_color", Globals.normal_font_color);
             sound_visualizer.Visible = false;
         }
 
@@ -78,7 +78,7 @@ public partial class SongDisplay : Button
         play_button.Texture = null;
         
         if (playing) sound_visualizer.Visible = true;
-        else number.AddThemeColorOverride("font_color", Globals.small_text_color);
+        else number.AddThemeColorOverride("font_color", Globals.small_font_color);
     }
 
     public void Init(in int song, in SongData data, in Playlist.PlaylistType type, in Texture2D cover) {
