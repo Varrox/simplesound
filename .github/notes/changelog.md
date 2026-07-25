@@ -20,6 +20,7 @@
 - The font of the current playing song's name and the playlist it's from, are now green to differentiate them from non playing songs and playlists.
 - Streamer button font is red when the streamer window is open.
 - Settings menu tabs UI improved (tool tips, selected tab indicator, etc).
+- Folder Icon improved for better visibility, and consistency with other icons.
 
 ## Optimizations
 
