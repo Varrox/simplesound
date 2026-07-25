@@ -46,6 +46,7 @@
 [ext_resource type="Script" uid="uid://gwm4ru46vy21" path="res://Csharp/UI/Buttons/Update.cs" id="37_abqjc"]
 [ext_resource type="PackedScene" uid="uid://bw078i5dk5ff4" path="res://Windows/ConfirmationWindow.tscn" id="39_h8e4i"]
 [ext_resource type="Texture2D" uid="uid://brujrc442p3b5" path="res://Icons/mute.png" id="42_0cbny"]
+[ext_resource type="Script" uid="uid://cjqvpt0u23ikv" path="res://Csharp/ApplicationManager.cs" id="45_e3yke"]
 [ext_resource type="Texture2D" uid="uid://dlroow6dpj2wv" path="res://Icons/no_play.png" id="45_e71vb"]
 [ext_resource type="Script" uid="uid://cqf4nqygajv02" path="res://GDScript/zoomer.gd" id="46_qnost"]
 [ext_resource type="Texture2D" uid="uid://iufihc6y4dma" path="res://Icons/unmute.png" id="48_uit24"]
@@ -999,6 +1000,9 @@ offset_top = -75.0
 offset_bottom = 43.0
 
 [node name="Player" type="AudioStreamPlayer" parent="." unique_id=488316782]
+
+[node name="Application Manager" type="Node" parent="." unique_id=1383715024]
+script = ExtResource("45_e3yke")
 
 [node name="Globals" type="Node" parent="." unique_id=71517921 node_paths=PackedStringArray("_main", "_player", "_discord", "_self", "_attribute_editor", "_download_window", "_file_dialog", "_playlist_menu", "_song_menu")]
 script = ExtResource("32_htxhm")
