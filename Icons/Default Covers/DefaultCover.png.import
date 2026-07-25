@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dc6r4y4mtdok8"
-path="res://.godot/imported/logochrimis.png-5c40863c348a86b4fcf79ef972a57e58.ctex"
+uid="uid://cksbdmhr2s8yy"
+path="res://.godot/imported/DefaultCover.png-54ba798e32894782dfc71fe7bc384bfc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Icons/logochrimis.png"
-dest_files=["res://.godot/imported/logochrimis.png-5c40863c348a86b4fcf79ef972a57e58.ctex"]
+source_file="res://Icons/Default Covers/DefaultCover.png"
+dest_files=["res://.godot/imported/DefaultCover.png-54ba798e32894782dfc71fe7bc384bfc.ctex"]
 
 [params]
 

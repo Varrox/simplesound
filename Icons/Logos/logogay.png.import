@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ckxewn1nbact6"
-path="res://.godot/imported/logogay.png-f40c885539c52fbeb223781d02abb689.ctex"
+path="res://.godot/imported/logogay.png-fab1e57a4e367a5ce86b32ac5b5b808f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Icons/logogay.png"
-dest_files=["res://.godot/imported/logogay.png-f40c885539c52fbeb223781d02abb689.ctex"]
+source_file="res://Icons/Logos/logogay.png"
+dest_files=["res://.godot/imported/logogay.png-fab1e57a4e367a5ce86b32ac5b5b808f.ctex"]
 
 [params]
 

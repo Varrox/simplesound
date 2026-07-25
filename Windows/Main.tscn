@@ -9,10 +9,9 @@
 [ext_resource type="Texture2D" uid="uid://23nnkoswyxm8" path="res://Icons/play.png" id="5_8inno"]
 [ext_resource type="Texture2D" uid="uid://ccy68bhx3rrxu" path="res://Icons/forward.png" id="6_e5vtu"]
 [ext_resource type="Texture2D" uid="uid://b3phnmlkksrac" path="res://Icons/loop.png" id="7_uv8rp"]
-[ext_resource type="Texture2D" uid="uid://cksbdmhr2s8yy" path="res://Icons/DefaultCover.png" id="7_xn3w4"]
+[ext_resource type="Texture2D" uid="uid://cksbdmhr2s8yy" path="res://Icons/Default Covers/DefaultCover.png" id="7_xn3w4"]
 [ext_resource type="Shader" uid="uid://6mp1f8uww708" path="res://Styling/Shaders/blur.gdshader" id="8_0cp0l"]
 [ext_resource type="Texture2D" uid="uid://bfwa3yivib7hh" path="res://Icons/playlist.png" id="8_8i1ca"]
-[ext_resource type="Texture2D" uid="uid://dvwv6fmmc3033" path="res://Icons/icon.svg" id="8_b1qrp"]
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Styling/Fonts/DefaultFont.tres" id="9_3b7g8"]
 [ext_resource type="Texture2D" uid="uid://5hwvlu7uerj6" path="res://Icons/plus.png" id="10_7e43v"]
 [ext_resource type="Texture2D" uid="uid://c85envuiuo3ju" path="res://Icons/folder.png" id="11_1f20w"]
@@ -21,7 +20,6 @@
 [ext_resource type="Script" uid="uid://schxe0nc0yhj" path="res://GDScript/scroll_spacer.gd" id="12_f6a44"]
 [ext_resource type="Texture2D" uid="uid://0yw8m2y164lr" path="res://Icons/settings.png" id="12_s6aix"]
 [ext_resource type="PackedScene" uid="uid://bhjkk8guwyhku" path="res://Prefabs/playlistdisplay.scn" id="13_4w656"]
-[ext_resource type="Texture2D" uid="uid://d4mh3dd6oqgn4" path="res://Icons/DefaultCoverHighres.png" id="13_seu75"]
 [ext_resource type="PackedScene" uid="uid://deg7587tnlkhk" path="res://Prefabs/songdisplay.scn" id="14_blkrb"]
 [ext_resource type="Script" uid="uid://bgymt3f23woi7" path="res://Csharp/UI/Songs/SongsVisualizer.cs" id="14_htxhm"]
 [ext_resource type="PackedScene" uid="uid://dcre7b1cn3b6i" path="res://Prefabs/songcontext.tscn" id="17_3m5kb"]
@@ -57,7 +55,7 @@
 [ext_resource type="Script" uid="uid://dn1xjyy7q4ft5" path="res://Csharp/Discord.cs" id="53_e71vb"]
 [ext_resource type="Script" uid="uid://ca5d2qc1a4t64" path="res://GDScript/gd_script_globals.gd" id="55_e3yke"]
 [ext_resource type="Script" uid="uid://bmgcpmp5cfuwy" path="res://Csharp/Tray.cs" id="57_fg2ps"]
-[ext_resource type="Texture2D" uid="uid://bdbco8a0mnjn6" path="res://Icons/logotrans.png" id="59_fg2ps"]
+[ext_resource type="Texture2D" uid="uid://bdbco8a0mnjn6" path="res://Icons/Logos/logotrans.png" id="59_fg2ps"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_abqjc"]
 shader = ExtResource("52_blkrb")
@@ -256,7 +254,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("8_b1qrp")
+texture = ExtResource("7_xn3w4")
 stretch_mode = 6
 
 [node name="Color" type="ColorRect" parent="Interface/Background" unique_id=1246253791]
@@ -1012,7 +1010,7 @@ _shuffle_texture = ExtResource("20_fkbne")
 _mute_texture = ExtResource("42_0cbny")
 _unmute_texture = ExtResource("48_uit24")
 _default_cover = ExtResource("7_xn3w4")
-_default_cover_highres = ExtResource("13_seu75")
+_default_cover_highres = ExtResource("7_xn3w4")
 _main = NodePath("..")
 _player = NodePath("../Interface")
 _discord = NodePath("../Discord")
