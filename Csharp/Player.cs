@@ -187,7 +187,7 @@ public partial class Player : Node
     }
 
     public override void _Process(double delta) {
-        if(!interrupted) {
+        if(!interrupted && !ApplicationManager.is_user_typing) {
             if(Input.IsActionJustPressed("play")) Globals.main.Play();
             else if (Input.IsActionJustPressed("next")) Move(1);
             else if (Input.IsActionJustPressed("back")) Move(-1);

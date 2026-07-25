@@ -316,7 +316,7 @@ public partial class Settings : EditorWindow
 
         HBoxContainer container = CreateSettingsItem(full_name);
 
-        LineEdit line_edit = new LineEdit();
+        ThemeLineEdit line_edit = new ThemeLineEdit();
         line_edit.Text = GetSetting<string>(where, type, instance_name);
         line_edit.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
 
@@ -336,7 +336,7 @@ public partial class Settings : EditorWindow
 
         HBoxContainer container = CreateSettingsItem(full_name);
 
-        LineEdit line_edit = new LineEdit();
+        ThemeLineEdit line_edit = new ThemeLineEdit();
         line_edit.Text = GetSetting<string>(where, type, instance_name);
         line_edit.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
 
