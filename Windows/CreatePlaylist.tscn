@@ -3,7 +3,7 @@
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Styling/Fonts/DefaultFont.tres" id="1_8t6yf"]
 [ext_resource type="Script" uid="uid://bhqfe4m1n2gya" path="res://Csharp/UI/Playlist Creator/PlaylistCreator.cs" id="1_b0noq"]
 [ext_resource type="PackedScene" uid="uid://cjc5crjo31obe" path="res://Prefabs/pathdisplay.tscn" id="3_uox0n"]
-[ext_resource type="Script" uid="uid://cwqnuha5ybamg" path="res://Csharp/UI/ThemeColorPickerButton.cs" id="4_3os5s"]
+[ext_resource type="Script" uid="uid://b33tl5k5kwk30" path="res://Csharp/UI/Default Node Extentions/ThemeColorPickerButton.cs" id="4_3os5s"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_acdqb"]
 
