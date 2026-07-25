@@ -162,7 +162,7 @@ public partial class Player : Node
             progress.Editable = false;
 
             song_cover.Texture = Globals.default_cover;
-            background_subviewport.Set("target_texture", Globals.default_cover_highres);
+            background_subviewport.Set("target_texture", Globals.default_cover);
         }
 
         Globals.discord.UpdateSong();

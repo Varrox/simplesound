@@ -14,9 +14,8 @@ public partial class Globals : Node
     [Export] private Texture2D _mute_texture {set{ mute_texture = value; }get { return mute_texture; }}
     [Export] private Texture2D _unmute_texture {set{ unmute_texture = value; }get { return unmute_texture; }}
     [Export] private Texture2D _default_cover{set{ default_cover = value; }get { return default_cover; }}
-    [Export] private Texture2D _default_cover_highres{set{ default_cover_highres = value; }get { return default_cover_highres; }}
 
-    public static Texture2D play_texture, pause_texture, no_play_texture, loop_texture, shuffle_texture, mute_texture, unmute_texture, default_cover, default_cover_highres;
+    public static Texture2D play_texture, pause_texture, no_play_texture, loop_texture, shuffle_texture, mute_texture, unmute_texture, default_cover;
 
     [ExportGroup("Nodes")]
 
