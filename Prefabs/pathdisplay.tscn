@@ -1,65 +1,59 @@
-[gd_scene load_steps=5 format=3 uid="uid://cjc5crjo31obe"]
+[gd_scene format=3 uid="uid://cjc5crjo31obe"]
 
 [ext_resource type="Script" uid="uid://ddv8hmbckq2e" path="res://Csharp/UI/PathDisplay.cs" id="1_kuqad"]
 [ext_resource type="Texture2D" uid="uid://c85envuiuo3ju" path="res://Icons/folder.png" id="2_ba6a5"]
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Styling/Fonts/DefaultFont.tres" id="3_5jobu"]
+[ext_resource type="Texture2D" uid="uid://d1sv68pmhcdnj" path="res://Icons/x.png" id="4_ba6a5"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kuqad"]
 
-[node name="Selected File" type="Control" node_paths=PackedStringArray("path_display", "delete")]
-custom_minimum_size = Vector2(20, 26.93)
-layout_mode = 3
+[node name="Selected File" type="HBoxContainer" unique_id=273970297 node_paths=PackedStringArray("path_display", "delete")]
+custom_minimum_size = Vector2(20, 25)
 anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
+offset_top = -12.5
+offset_bottom = 12.5
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_kuqad")
 path_display = NodePath("Label")
 delete = NodePath("Button")
 
-[node name="TextureRect" type="TextureRect" parent="."]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = -2.67
-offset_top = -13.465
-offset_right = 37.33
-offset_bottom = 26.535
-grow_vertical = 2
-scale = Vector2(0.6, 0.6)
-texture = ExtResource("2_ba6a5")
+[node name="Control" type="Control" parent="." unique_id=201009636]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+mouse_filter = 1
 
-[node name="Label" type="Label" parent="."]
+[node name="TextureRect" type="TextureRect" parent="Control" unique_id=1834889054]
 layout_mode = 1
-anchors_preset = 14
+anchors_preset = 8
+anchor_left = 0.5
 anchor_top = 0.5
-anchor_right = 1.0
+anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 23.0
-offset_top = -9.465
-offset_right = -23.0
-offset_bottom = 5.535
+offset_left = -11.25
+offset_top = -11.25
+offset_right = 11.25
+offset_bottom = 11.25
 grow_horizontal = 2
 grow_vertical = 2
+texture = ExtResource("2_ba6a5")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="." unique_id=613599306]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
 theme_override_fonts/font = ExtResource("3_5jobu")
 theme_override_font_sizes/font_size = 11
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Button" type="Button" parent="."]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -30.795
-offset_top = -15.5
-offset_bottom = 15.5
-grow_horizontal = 0
-grow_vertical = 2
+[node name="Button" type="Button" parent="." unique_id=95725275]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
 theme_override_styles/focus = SubResource("StyleBoxEmpty_kuqad")
-text = "X"
+icon = ExtResource("4_ba6a5")
+expand_icon = true
