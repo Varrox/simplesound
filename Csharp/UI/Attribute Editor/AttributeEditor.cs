@@ -2,7 +2,7 @@ using Godot;
 
 public partial class AttributeEditor : EditorWindow
 {
-    [Export] public LineEdit name, artist, share_link;
+    [Export] public ThemeLineEdit name, artist, share_link;
     [Export] public Button cover_button;
     [Export] public PathDisplay cover_label;
     [Export] public CheckBox explicit_lyrics;

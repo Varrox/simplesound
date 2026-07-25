@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://eh8a3k652ogt" path="res://Csharp/UI/Attribute Editor/AttributeEditor.cs" id="1_cj5je"]
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Styling/Fonts/DefaultFont.tres" id="1_ot5f1"]
 [ext_resource type="PackedScene" uid="uid://cjc5crjo31obe" path="res://Prefabs/pathdisplay.tscn" id="3_6cib4"]
+[ext_resource type="Script" uid="uid://ckpanpt3fty8d" path="res://Csharp/UI/Default Node Extentions/ThemeLineEdit.cs" id="3_j2mdm"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3g08v"]
 
@@ -37,28 +38,34 @@ offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Name" type="LineEdit" parent="VBoxContainer" unique_id=1525246124]
+[node name="Name" type="LineEdit" parent="VBoxContainer" unique_id=1616236964]
 layout_mode = 2
 tooltip_text = "Name of the song."
 theme_override_fonts/font = ExtResource("1_ot5f1")
 placeholder_text = "Name"
 caret_blink = true
+script = ExtResource("3_j2mdm")
+metadata/_custom_type_script = "uid://ckpanpt3fty8d"
 
-[node name="Artist" type="LineEdit" parent="VBoxContainer" unique_id=2005550133]
+[node name="Artist" type="LineEdit" parent="VBoxContainer" unique_id=39460]
 layout_mode = 2
 tooltip_text = "The artist(s) who made the song."
 theme_override_fonts/font = ExtResource("1_ot5f1")
 placeholder_text = "Artist
 "
 caret_blink = true
+script = ExtResource("3_j2mdm")
+metadata/_custom_type_script = "uid://ckpanpt3fty8d"
 
-[node name="Share" type="LineEdit" parent="VBoxContainer" unique_id=810669860]
+[node name="Share" type="LineEdit" parent="VBoxContainer" unique_id=941129891]
 layout_mode = 2
 tooltip_text = "The link (URL) to share this song via external platforms (link is also used to extract cover art for discord rich presence)."
 theme_override_fonts/font = ExtResource("1_ot5f1")
 placeholder_text = "Share Link
 "
 caret_blink = true
+script = ExtResource("3_j2mdm")
+metadata/_custom_type_script = "uid://ckpanpt3fty8d"
 
 [node name="Explicit Lyrics" type="CheckBox" parent="VBoxContainer" unique_id=2003182571]
 layout_mode = 2

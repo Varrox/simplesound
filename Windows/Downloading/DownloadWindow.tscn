@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://ccu57wwy5vwng" path="res://Windows/Downloading/playlistdisplay.scn" id="4_o2q55"]
 [ext_resource type="StyleBox" uid="uid://d05hxmlaqj0qh" path="res://Styling/Selectables/pressed_hover_disabled.tres" id="5_gftam"]
 [ext_resource type="Script" uid="uid://schxe0nc0yhj" path="res://GDScript/scroll_spacer.gd" id="7_gftam"]
+[ext_resource type="Script" uid="uid://ckpanpt3fty8d" path="res://Csharp/UI/Default Node Extentions/ThemeLineEdit.cs" id="8_1qv4f"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5cf4u"]
 
@@ -108,13 +109,15 @@ size_flags_horizontal = 3
 [node name="Add Link" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/Downloading" unique_id=1815125910]
 layout_mode = 2
 
-[node name="Link" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer2/Downloading/Add Link" unique_id=1832352908]
+[node name="Link" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer2/Downloading/Add Link" unique_id=401597063]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("2_v3qo6")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_5cf4u")
 placeholder_text = "Link"
+script = ExtResource("8_1qv4f")
+metadata/_custom_type_script = "uid://ckpanpt3fty8d"
 
 [node name="Add" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2/Downloading/Add Link" unique_id=1677472499]
 layout_mode = 2

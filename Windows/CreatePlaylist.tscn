@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://bhqfe4m1n2gya" path="res://Csharp/UI/Playlist Creator/PlaylistCreator.cs" id="1_b0noq"]
 [ext_resource type="PackedScene" uid="uid://cjc5crjo31obe" path="res://Prefabs/pathdisplay.tscn" id="3_uox0n"]
 [ext_resource type="Script" uid="uid://b33tl5k5kwk30" path="res://Csharp/UI/Default Node Extentions/ThemeColorPickerButton.cs" id="4_3os5s"]
+[ext_resource type="Script" uid="uid://ckpanpt3fty8d" path="res://Csharp/UI/Default Node Extentions/ThemeLineEdit.cs" id="4_eb7ps"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_acdqb"]
 
@@ -50,13 +51,15 @@ grow_vertical = 2
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Name" type="LineEdit" parent="HBoxContainer2/VBoxContainer" unique_id=1236150103]
+[node name="Name" type="LineEdit" parent="HBoxContainer2/VBoxContainer" unique_id=416225668]
 layout_mode = 2
 size_flags_vertical = 4
 tooltip_text = "The name of the playlist."
 theme_override_fonts/font = ExtResource("1_8t6yf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_acdqb")
 placeholder_text = "Name"
+script = ExtResource("4_eb7ps")
+metadata/_custom_type_script = "uid://ckpanpt3fty8d"
 
 [node name="HSeparator" type="HSeparator" parent="HBoxContainer2/VBoxContainer" unique_id=261354492]
 custom_minimum_size = Vector2(0, 10)
@@ -121,13 +124,15 @@ theme_override_fonts/font = ExtResource("1_8t6yf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_r7omr")
 text = "Album"
 
-[node name="Artist" type="LineEdit" parent="HBoxContainer2/VBoxContainer2" unique_id=455932430]
+[node name="Artist" type="LineEdit" parent="HBoxContainer2/VBoxContainer2" unique_id=873509322]
 layout_mode = 2
 size_flags_vertical = 4
 tooltip_text = "The artist of this playlist / album."
 theme_override_fonts/font = ExtResource("1_8t6yf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_acdqb")
 placeholder_text = "Artist"
+script = ExtResource("4_eb7ps")
+metadata/_custom_type_script = "uid://ckpanpt3fty8d"
 
 [node name="HSeparator4" type="HSeparator" parent="HBoxContainer2/VBoxContainer2" unique_id=602701414]
 custom_minimum_size = Vector2(0, 10)

@@ -8,7 +8,7 @@ public partial class DownloadWindow : EditorWindow
     [Export] public Button no_playlist;
     [Export] public VBoxContainer playlist_container, link_container;
     [Export] public PackedScene playlist_display;
-    [Export] public LineEdit link;
+    [Export] public ThemeLineEdit link;
     [Export] public Button add_link, download, close;
 
     public Action<int> OnSelectPlaylist;
