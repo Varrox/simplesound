@@ -44,10 +44,18 @@ public partial class Player : Node
 
         SetMuteTexture();
 
-        CallDeferred("SetShuffleTexture");
+        CallDeferred("SetShuffleIndicator");
     }
 
-    public void SetShuffleTexture() => shuffle.Icon = Globals.main.shuffled ? Globals.shuffle_on_texture : Globals.shuffle_off_texture;
+    public void SetShuffleIndicator() {
+        Color color = Globals.main.shuffled ? Globals.enabled_font_color : Colors.White;
+        shuffle.AddThemeColorOverride("icon_normal_color", color);
+        shuffle.AddThemeColorOverride("icon_focus_color", color);
+        shuffle.AddThemeColorOverride("icon_pressed_color", color);
+        shuffle.AddThemeColorOverride("icon_hover_color", color);
+        shuffle.AddThemeColorOverride("icon_hover_pressed_color", color);
+    }
+
     public void SetMuteTexture() => mute_button.Icon = muted ? Globals.unmute_texture : Globals.mute_texture;
 
     public void MuteVolume() {
@@ -88,12 +96,18 @@ public partial class Player : Node
         Globals.main.offset = Globals.main.song_index;
         Globals.main.shuffle_index = Globals.main.song_index;
 
-        shuffle.Icon = Globals.main.shuffled ? Globals.shuffle_on_texture : Globals.shuffle_off_texture;
+        SetShuffleIndicator();
     }
 
     public void SetLoop() {
         Globals.main.loop = !Globals.main.loop;
-        loop.Icon = Globals.main.loop ? Globals.loop_on_texture : Globals.loop_off_texture;
+        
+        Color color = Globals.main.loop ? Globals.enabled_font_color : Colors.White;
+        loop.AddThemeColorOverride("icon_normal_color", color);
+        loop.AddThemeColorOverride("icon_focus_color", color);
+        loop.AddThemeColorOverride("icon_pressed_color", color);
+        loop.AddThemeColorOverride("icon_hover_color", color);
+        loop.AddThemeColorOverride("icon_hover_pressed_color", color);
     }
 
     public void SetPlayIcon(bool playing) => play.Icon = !playing || !Globals.main.IsSongAvailable() ? Globals.play_texture : Globals.pause_texture;

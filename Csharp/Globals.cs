@@ -9,16 +9,14 @@ public partial class Globals : Node
     [Export] private Texture2D _play_texture {set{ play_texture = value; }get { return play_texture; }}
     [Export] private Texture2D _pause_texture {set{ pause_texture = value; } get { return pause_texture; }}
     [Export] private Texture2D _no_play_texture {set{ no_play_texture = value; }get { return no_play_texture; }}
-    [Export] private Texture2D _loop_on_texture {set{ loop_on_texture = value; }get { return loop_on_texture; }}
-    [Export] private Texture2D _loop_off_texture {set{ loop_off_texture = value; }get { return loop_off_texture; }}
-    [Export] private Texture2D _shuffle_on_texture {set{ shuffle_on_texture = value; }get { return shuffle_on_texture; }}
-    [Export] private Texture2D _shuffle_off_texture {set{ shuffle_off_texture = value; }get { return shuffle_off_texture; }}
+    [Export] private Texture2D _loop_texture {set{ loop_texture = value; }get { return loop_texture; }}
+    [Export] private Texture2D _shuffle_texture {set{ shuffle_texture = value; }get { return shuffle_texture; }}
     [Export] private Texture2D _mute_texture {set{ mute_texture = value; }get { return mute_texture; }}
     [Export] private Texture2D _unmute_texture {set{ unmute_texture = value; }get { return unmute_texture; }}
     [Export] private Texture2D _default_cover{set{ default_cover = value; }get { return default_cover; }}
     [Export] private Texture2D _default_cover_highres{set{ default_cover_highres = value; }get { return default_cover_highres; }}
 
-    public static Texture2D play_texture, pause_texture, no_play_texture, loop_on_texture, loop_off_texture, shuffle_on_texture, shuffle_off_texture, mute_texture, unmute_texture, default_cover, default_cover_highres;
+    public static Texture2D play_texture, pause_texture, no_play_texture, loop_texture, shuffle_texture, mute_texture, unmute_texture, default_cover, default_cover_highres;
 
     [ExportGroup("Nodes")]
 
@@ -82,6 +80,9 @@ public partial class Globals : Node
 
     private Color _playing_font_color{set{}get{ return playing_font_color; }}
     public static Color playing_font_color = Color.FromHtml("66ff5e");
+
+    private Color _enabled_font_color{set{}get{ return enabled_font_color; }}
+    public static Color enabled_font_color = Colors.Lime;
 
     public static Vector2I main_window_minimum_size = new Vector2I(850, 350);
     public static SaveData save_data;
