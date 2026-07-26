@@ -12,6 +12,7 @@ TODO
 - Set medium blur to be the default blur settings.
 - Add built in enum support to settings (should be optional for both int and enum).
 - Save main window size on application close.
+- Create plugins for both flac and aiff audio format support.
 
 FINISHED
 
