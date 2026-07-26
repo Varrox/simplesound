@@ -25,7 +25,7 @@ public partial class Player : Node
     public override void _Ready() {
         loop.ButtonUp += SetLoop;
         shuffle.ButtonUp += SetShuffle;
-        play.ButtonUp += Globals.main.Play;
+        play.ButtonUp += Globals.main.FlipPlayingState;
 
         next.ButtonUp += () => Move(1);
         back.ButtonUp += () => Move(-1);
@@ -36,7 +36,7 @@ public partial class Player : Node
         progress.DragEnded += SetTime;
         progress.DragStarted += () => can_set_time = true;
 
-        Globals.main.OnPlay += SetPlayIcon;
+        Globals.main.OnPlayingChanged += SetPlayIcon;
         play.Icon = Globals.play_texture;
 
         mute_button.ButtonUp += MuteVolume;
@@ -82,12 +82,12 @@ public partial class Player : Node
     }
 
     public bool Interrupt() {
-        if(!interrupted) {
-            if (Globals.main.playing) Globals.main.Play();
-            interrupted = true;
-            return true;
-        }
-        return false;
+        if (interrupted)
+            return false;
+        
+        Globals.main.Pause();
+        interrupted = true;
+        return true;
     }
 
     public void SetShuffle() {
@@ -187,10 +187,10 @@ public partial class Player : Node
     }
 
     public override void _Process(double delta) {
-            if(Input.IsActionJustPressed("play")) Globals.main.Play();
-            else if (Input.IsActionJustPressed("next")) Move(1);
-            else if (Input.IsActionJustPressed("back")) Move(-1);
         if(!ApplicationManager.is_user_typing && ApplicationManager.currently_focused_window == GetTree().Root) {
+            if(Input.IsActionJustPressed("play")) Globals.main.FlipPlayingState();
+            else if (Input.IsActionJustPressed("next")) Globals.main.MoveSong(1);
+            else if (Input.IsActionJustPressed("back")) Globals.main.MoveSong(-1);
         }
 
         if (Globals.main.audio_player.Stream != null) current_time.Text = Tools.SecondsToTimestamp(Globals.main.time);

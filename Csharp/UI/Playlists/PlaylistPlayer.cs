@@ -12,7 +12,7 @@ public partial class PlaylistPlayer : Button
 	{ 
 		if(Globals.main.playlist_index == Globals.main.looked_at_playlist)
 		{
-			Globals.main.Play();
+			Globals.main.FlipPlayingState();
 		}
 		else
 		{

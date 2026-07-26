@@ -33,10 +33,10 @@ public partial class SongDisplay : Button
 
     public void SetHighlight() {
         playing = false;
-        Globals.main.OnPlay -= SetTextures;
+        Globals.main.OnPlayingChanged -= SetTextures;
 
         if (Globals.main.playlist_index == Globals.main.looked_at_playlist && Globals.main.song_index == song) { // highlight
-            Globals.main.OnPlay += SetTextures;
+            Globals.main.OnPlayingChanged += SetTextures;
             playing = true;
             SelfModulate = Globals.highlight;
             number.AddThemeColorOverride("font_color", Colors.Transparent);
@@ -45,7 +45,7 @@ public partial class SongDisplay : Button
         }
         else if (Globals.main.playlist_index != Globals.main.looked_at_playlist || Globals.main.song_index != song) { // un-highlight
             play_button.Texture = Disabled ? Globals.no_play_texture : Globals.play_texture;
-            Globals.main.OnPlay -= SetTextures;
+            Globals.main.OnPlayingChanged -= SetTextures;
             playing = false;
             SelfModulate = Colors.White;
             number.AddThemeColorOverride("font_color", Globals.small_font_color);
@@ -105,6 +105,6 @@ public partial class SongDisplay : Button
     public void SetSong() {
         if (Globals.main.playlist_index != Globals.main.looked_at_playlist) Globals.main.LoadPlaylist(Globals.main.looked_at_playlist);
         if (!playing) Globals.main.SetSong(song);
-        else Globals.main.Play();
+        else Globals.main.FlipPlayingState();
     }
 }

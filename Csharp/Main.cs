@@ -36,7 +36,7 @@ public partial class Main : Control
 
     public Action OnLoadSong;
     public Action OnLoadPlaylist;
-    public Action<bool> OnPlay;
+    public Action<bool> OnPlayingChanged;
 
 	public string song {
 		get {
@@ -104,7 +104,7 @@ public partial class Main : Control
 					video_player.Play();
 					video_player.StreamPosition = time;
 
-					OnPlay?.Invoke(playing);
+					OnPlayingChanged?.Invoke(playing);
 				}
 			}
 
@@ -143,24 +143,42 @@ public partial class Main : Control
         random_offset = (int)GD.Randi();
     }
 
-	public void Play() {
-		playing = !playing;
+	public void Pause() {
+		if (!playing)
+			return;
+		
+		playing = false;
 
+		if (video_player.Stream != null) video_player.Stop();
+		audio_player.Stop();
+
+		OnPlayingChanged?.Invoke(playing);
+	}
+
+	public void Play()
+	{
+		if (playing)
+			return;
+		
+		playing = true;
+
+		audio_player.Play(time);
+
+		if (video_player.Stream != null) {
+			video_player.Play();
+			video_player.StreamPosition = time;
+		}
+
+		OnPlayingChanged?.Invoke(playing);
+	}
+
+	public void FlipPlayingState() {
 		if (playing) {
-            audio_player.Play(time);
-
-			if (video_player.Stream != null) {
-                video_player.Play();
-                video_player.StreamPosition = time;
-            }
+            Pause();
         }
 		else {
-			if (video_player.Stream != null) video_player.Stop();
-
-            audio_player.Stop();
+			Play();
         }
-
-        OnPlay?.Invoke(playing);
     }
 
 	public void MoveSong(int amount, bool set = false) {
@@ -194,7 +212,7 @@ public partial class Main : Control
 		PlaySong(song);
 
 		playing = false;
-		Play();
+		FlipPlayingState();
 	}
 
 	public void SetSong(int index) {
@@ -208,7 +226,7 @@ public partial class Main : Control
 
 		playing = false;
 
-		Play();
+		FlipPlayingState();
     }
 
 	public void PlaySong(string path) {
