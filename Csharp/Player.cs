@@ -187,10 +187,10 @@ public partial class Player : Node
     }
 
     public override void _Process(double delta) {
-        if(!interrupted && !ApplicationManager.is_user_typing) {
             if(Input.IsActionJustPressed("play")) Globals.main.Play();
             else if (Input.IsActionJustPressed("next")) Move(1);
             else if (Input.IsActionJustPressed("back")) Move(-1);
+        if(!ApplicationManager.is_user_typing && ApplicationManager.currently_focused_window == GetTree().Root) {
         }
 
         if (Globals.main.audio_player.Stream != null) current_time.Text = Tools.SecondsToTimestamp(Globals.main.time);
