@@ -11,14 +11,14 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iyibu"]
 
-[node name="Attribute editor" type="Window" unique_id=397200673 node_paths=PackedStringArray("name", "artist", "share_link", "cover_button", "cover_label", "explicit_lyrics", "submit_button", "cancel_button")]
+[node name="Attribute editor" type="Window" unique_id=397200673 node_paths=PackedStringArray("artist", "share_link", "cover_button", "cover_label", "explicit_lyrics", "submit_button", "cancel_button")]
 auto_translate_mode = 1
 title = "Edit song attributes"
 initial_position = 2
 size = Vector2i(300, 250)
+exclusive = true
 min_size = Vector2i(250, 250)
 script = ExtResource("1_cj5je")
-name = NodePath("VBoxContainer/Name")
 artist = NodePath("VBoxContainer/Artist")
 share_link = NodePath("VBoxContainer/Share")
 cover_button = NodePath("VBoxContainer/Cover")
