@@ -20,16 +20,18 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qr8t8"]
 
 [node name="DownloadWindow" type="Window" unique_id=1926010608 node_paths=PackedStringArray("no_playlist", "playlist_container", "link_container", "link", "add_link", "download", "close")]
+oversampling_override = 1.0
 title = "Downloader"
 initial_position = 2
 size = Vector2i(550, 350)
+transient = true
 exclusive = true
 min_size = Vector2i(400, 250)
 script = ExtResource("1_v3qo6")
-playlist_display = ExtResource("4_o2q55")
 no_playlist = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer2/ScrollContainer/HBoxContainer/VBoxContainer/None")
 playlist_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer2/ScrollContainer/HBoxContainer/VBoxContainer")
 link_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/Downloading/Display links/ScrollContainer/Link Container")
+playlist_display = ExtResource("4_o2q55")
 link = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/Downloading/Add Link/Link")
 add_link = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/Downloading/Add Link/Add")
 download = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/Downloading/Download")
