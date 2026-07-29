@@ -14,6 +14,7 @@ TODO
 - Save main window size on application close.
 - Create plugins for both flac and aiff audio format support.
 - Add Tooltips to individual settings
+- Add CD read support (optional ripping too)
 
 FINISHED
 
