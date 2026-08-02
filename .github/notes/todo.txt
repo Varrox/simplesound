@@ -7,7 +7,6 @@ TODO
 - Rework context menus.
 - Make muting actually mute audio rather than making it extremely quiet.
 - Add optional compact form song displays without cover.
-- Add back vsync settings.
 - Optimize blur by not rendering new frames unless window size is changed or song changes.
 - Set medium blur to be the default blur settings.
 - Save main window size on application close.
@@ -17,6 +16,7 @@ TODO
 
 FINISHED
 
+- Add back vsync settings.
 - Add built in enum support to settings (should be optional for both int and enum).
 - Implement Status indicator.
 - Fix settings so it no longer uses stupid resource solution and uses procedural solution that is future proof.
