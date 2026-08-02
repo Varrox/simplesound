@@ -292,6 +292,33 @@ public partial class Settings : EditorWindow
             AddResetButton(container, ResetEnum, ApplyEnum);
     }
 
+    public void AddEnumSetting<T, E>(string full_name, T where, string instance_name, E default_value) where T : ISettings where E : struct, Enum {
+        Type type = typeof(T);
+        
+        HBoxContainer container = CreateSettingsItem(full_name);
+
+        OptionButton option_button = new OptionButton();
+
+        string[] enum_value_names = Enum.GetNames(typeof(E));
+
+        for (int i = 0; i < enum_value_names.Length; i++) {
+            option_button.GetPopup().AddItem(enum_value_names[i].ToSnakeCase().Capitalize());
+        }
+
+        E value = GetSetting<E>(where, type, instance_name);
+        option_button.Select(Convert.ToInt32(value));
+
+        void ApplyEnum() { ApplySetting((E)Enum.ToObject(typeof(E), option_button.Selected), where, type, instance_name); }
+        void ResetEnum() { option_button.Selected = Convert.ToInt32(default_value); }
+
+        option_button.ItemSelected += (long new_value) => ValueChanged(container, (int)new_value, Convert.ToInt32(default_value), ResetEnum, ApplyEnum);
+
+        container.AddChild(option_button);
+
+        if (!value.Equals(default_value)) 
+            AddResetButton(container, ResetEnum, ApplyEnum);
+    }
+
     public void AddBoolSetting<T>(string full_name, T where, string instance_name, bool default_value) where T : ISettings {
         Type type = typeof(T);
 
@@ -439,18 +466,18 @@ public partial class Settings : EditorWindow
         apply_setting();
     }
 
-    public void ApplySetting(Variant variant, ISettings where, Type type, string instance_name) {
-        SetSetting(ref where, type, instance_name, variant);
+    public void ApplySetting(object value, ISettings where, Type type, string instance_name) {
+        SetSetting(ref where, type, instance_name, value);
         where.ApplySettings();
     }
 
-    public void SetSetting<T>(ref T obj, Type type, string instance_name, Variant variant) where T : ISettings {
+    public void SetSetting<T>(ref T obj, Type type, string instance_name, object value) where T : ISettings {
         if (Globals.save_data == null) return;
 
         FieldInfo field = type.GetField(instance_name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
         
         if (field != null) {
-            field.SetValue(obj, Convert.ChangeType(variant.Obj, field.FieldType));
+            field.SetValue(obj, Convert.ChangeType(value, field.FieldType));
 
             Globals.save_data.Save();
         }
