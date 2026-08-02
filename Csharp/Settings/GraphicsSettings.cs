@@ -2,7 +2,7 @@ using Godot;
 
 public class GraphicSettings : ISettings
 {
-    public int blur_quality = 2;
+    public QualityLevel blur_quality = QualityLevel.MEDIUM;
 
     // Display Settings
 
@@ -13,7 +13,7 @@ public class GraphicSettings : ISettings
     public GraphicSettings() {}
 
     public void ApplySettings() {
-        RenderingServer.GlobalShaderParameterSet("blur_quality", blur_quality + 1);
+        RenderingServer.GlobalShaderParameterSet("blur_quality", (int)blur_quality + 1);
         DisplayServer.WindowSetVsyncMode(vsync ? DisplayServer.VSyncMode.Enabled : DisplayServer.VSyncMode.Disabled);
         Engine.MaxFps = max_fps;
     }

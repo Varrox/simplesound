@@ -8,7 +8,6 @@ TODO
 - Make muting actually mute audio rather than making it extremely quiet.
 - Add optional compact form song displays without cover.
 - Optimize blur by not rendering new frames unless window size is changed or song changes.
-- Set medium blur to be the default blur settings.
 - Save main window size on application close.
 - Create plugins for both flac and aiff audio format support.
 - Add Tooltips to individual settings
@@ -16,6 +15,7 @@ TODO
 
 FINISHED
 
+- Set medium blur to be the default blur settings.
 - Add back vsync settings.
 - Add built in enum support to settings (should be optional for both int and enum).
 - Implement Status indicator.

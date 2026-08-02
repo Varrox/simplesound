@@ -190,14 +190,14 @@ public partial class Settings : EditorWindow
 
     void AddDownloaderSettings() {
         AddFileLocationSetting("yt-dlp Location", Globals.save_data.application_settings, "ytdlp_location");
-        AddEnumSetting("Audio Format", Globals.save_data.application_settings, "download_format", 0, Constants.DOWNLOAD_FORMATS);
+        AddEnumSetting("Audio Format", Globals.save_data.application_settings, "download_format", DownloadFormat.MP3, false);
     }
 
     void AddAppDataSettings() {
     }
 
     void AddGraphicSettings() {
-        AddEnumSetting("Blur Quality", Globals.save_data.graphic_settings, "blur_quality", 2, Constants.QUALITY_LEVELS);
+        AddEnumSetting("Blur Quality", Globals.save_data.graphic_settings, "blur_quality", QualityLevel.MEDIUM);
         AddHeader("Display");
         AddBoolSetting("VSync", Globals.save_data.graphic_settings, "vsync", true);
         AddIntSetting("Max FPS", Globals.save_data.graphic_settings, "max_fps", 60, 0, 500);
@@ -296,7 +296,7 @@ public partial class Settings : EditorWindow
             AddResetButton(container, ResetEnum, ApplyEnum);
     }
 
-    public void AddEnumSetting<T, E>(string full_name, T where, string instance_name, E default_value) where T : ISettings where E : struct, Enum {
+    public void AddEnumSetting<T, E>(string full_name, T where, string instance_name, E default_value, bool capitalize_values = true) where T : ISettings where E : struct, Enum {
         Type type = typeof(T);
         
         HBoxContainer container = CreateSettingsItem(full_name);
@@ -306,7 +306,9 @@ public partial class Settings : EditorWindow
         string[] enum_value_names = Enum.GetNames(typeof(E));
 
         for (int i = 0; i < enum_value_names.Length; i++) {
-            option_button.GetPopup().AddItem(enum_value_names[i].ToSnakeCase().Capitalize());
+            string value_name = enum_value_names[i].ToLower();
+            if (capitalize_values) value_name = value_name.Capitalize();
+            option_button.GetPopup().AddItem(value_name);
         }
 
         E value = GetSetting<E>(where, type, instance_name);

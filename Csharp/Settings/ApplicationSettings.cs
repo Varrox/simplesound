@@ -7,7 +7,7 @@ public class ApplicationSettings : ISettings
 	// Downloader
 
     public string ytdlp_location = "";
-	public int download_format = 0;
+	public DownloadFormat download_format = 0;
 
     public ApplicationSettings() {}
 
