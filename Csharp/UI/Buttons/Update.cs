@@ -146,7 +146,7 @@ public partial class Update : Button
     {
         if(confirm == Confirm.Accepted) {
             OS.ShellOpen(OS.GetExecutablePath());
-            ApplicationManager.Quit();
+            ApplicationManager.QuitProgram();
         }
     }
 

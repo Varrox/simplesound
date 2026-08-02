@@ -48,8 +48,6 @@ public partial class Main : Control
     public override void _Ready() {
 		// Load Save data
 
-		Globals.save_data = SaveData.GetSaveData();
-
 		playlist_index = Globals.save_data.playlist_index;
 		song_index = Globals.save_data.song_index;
 		time = Globals.save_data.time;
@@ -90,7 +88,10 @@ public partial class Main : Control
     public override void _Process(double delta) {
 		// Input
 
-		if (Input.IsActionJustPressed("save")) Save();
+		if (Input.IsActionJustPressed("save")) { 
+			SetSaveData();
+			ApplicationManager.Save();
+		}
 
 		// Loop management
 
@@ -286,7 +287,7 @@ public partial class Main : Control
 		return true;
 	}
 
-	public void Save() {
+	public void SetSaveData() {
 		Globals.save_data.playlist_index = playlist_index;
 		Globals.save_data.song_index = song_index;
 		Globals.save_data.looked_at_playlist = looked_at_playlist;
@@ -294,9 +295,12 @@ public partial class Main : Control
 		Globals.save_data.volume = audio_player.VolumeDb;
 		Globals.save_data.shuffled = shuffled;
 		Globals.save_data.playlists = playlist_paths;
-
-        Globals.save_data.Save();
 	}
+
+    public override void _ExitTree()
+    {
+        SetSaveData();
+    }
 
     public void Refresh() {
         SaveData save_data = SaveData.GetSaveData();

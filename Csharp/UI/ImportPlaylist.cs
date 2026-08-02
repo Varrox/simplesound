@@ -51,7 +51,7 @@ public partial class ImportPlaylist : Button
         }
 
 		Globals.main.playlist_paths.Add(playlist.Save());
-		Globals.main.Save();
+		Globals.main.SetSaveData();
         Globals.main.Refresh();
     }
 

@@ -14,6 +14,7 @@ config/name="simplesound"
 config/description="a simple music player built to be like spotify but uses music on your local machine"
 config/version="v1.3-alpha"
 run/main_scene="res://Windows/Main.tscn"
+run/main_loop_type="ApplicationManager"
 config/features=PackedStringArray("4.7", "C#", "GL Compatibility")
 run/low_processor_mode=true
 boot_splash/show_image=false

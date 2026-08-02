@@ -35,7 +35,7 @@ public partial class Tray : StatusIndicator
 				popup_menu.SetItemText(0, $"{(streamer_button.enabled ? "Close" : "Open")} Streamer Window");
 				break;
 			case EXIT_ID:
-				ApplicationManager.Quit();
+				ApplicationManager.QuitProgram();
 				break;
 		}
 	}

@@ -78,7 +78,7 @@ public partial class DownloadWindow : EditorWindow
     public void Close()
     {
         if(Globals.self == null) {
-            ApplicationManager.Quit();
+            ApplicationManager.QuitProgram();
             return;
         }
 

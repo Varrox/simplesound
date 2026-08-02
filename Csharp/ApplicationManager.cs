@@ -2,7 +2,8 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class ApplicationManager : Node
+[GlobalClass]
+public partial class ApplicationManager : SceneTree
 {
 	public static readonly string SOFTWARE_NAME = (string)ProjectSettings.GetSetting("application/config/name");
 
@@ -19,33 +20,37 @@ public partial class ApplicationManager : Node
 
     private static ApplicationManager self;
 
-    public override void _Ready()
-    {
+    public ApplicationManager() {
+        Globals.save_data = SaveData.GetSaveData();
         self = this;
-        
-        GetTree().Root.CloseRequested += Quit;
-        GetTree().Root.MinSize = _main_window_minimum_size;
 
-        AddWindow(GetTree().Root);
-        currently_focused_window = GetTree().Root;
+        Root.MinSize = _main_window_minimum_size;
+
+        AddWindow(Root);
+        currently_focused_window = Root;
     }
 
-    public override void _Process(double delta)
+    public override bool _Process(double delta)
     {
         if (_last_windows_focused != _windows_focused) {
             _SetMaxFPS(_windows_focused != 0);
             _last_windows_focused = _windows_focused;
         }
+
+        return false;
     }
 
-    private static void OnClose() {
-        Globals.main.Save();
+    public static void Save() {
+        Globals.save_data.Save();
+    }
+
+    public override void _Finalize() {
         Discord.ShutDown();
+        Save();
     }
 
-    public static void Quit() {
-        OnClose();
-        self.GetTree().Quit();
+    public static void QuitProgram() {
+        self.Quit();
     }
 
     private static void _SetMaxFPS(bool focused) {
