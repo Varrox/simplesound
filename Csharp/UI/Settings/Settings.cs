@@ -198,7 +198,10 @@ public partial class Settings : EditorWindow
 
     void AddGraphicSettings() {
         AddEnumSetting("Blur Quality", Globals.save_data.graphic_settings, "blur_quality", 2, Constants.QUALITY_LEVELS);
+        AddHeader("Display");
         AddBoolSetting("VSync", Globals.save_data.graphic_settings, "vsync", true);
+        AddIntSetting("Max FPS", Globals.save_data.graphic_settings, "max_fps", 60, 0, 500);
+        AddBoolSetting("Reduce FPS on lose focus", Globals.save_data.graphic_settings, "reduce_fps_on_lose_focus", true);
     }
 
     public void AddHeader(string header_title) {
