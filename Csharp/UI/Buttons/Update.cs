@@ -144,10 +144,9 @@ public partial class Update : Button
 
     public void Restart(Confirm confirm)
     {
-        if(confirm == Confirm.Accepted)
-        {
+        if(confirm == Confirm.Accepted) {
             OS.ShellOpen(OS.GetExecutablePath());
-            GetTree().Quit();
+            ApplicationManager.Quit();
         }
     }
 

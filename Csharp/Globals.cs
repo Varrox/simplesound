@@ -83,22 +83,9 @@ public partial class Globals : Node
     private Color _enabled_font_color{set{}get{ return enabled_font_color; }}
     public static Color enabled_font_color = Colors.Lime;
 
-    public static Vector2I main_window_minimum_size = new Vector2I(850, 350);
     public static SaveData save_data;
 
     public override void _Ready() {
-        GetTree().Root.MinSize = main_window_minimum_size;
-        GetTree().Root.CloseRequested += Quit;
-    }
-
-    public static void Quit() {
-        OnClose();
-        self.GetTree().Quit();
-    }
-
-    public static void OnClose() {
-        main.Save();
-        Discord.ShutDown();
     }
 
     public static void ResetFileDialogParameters() {

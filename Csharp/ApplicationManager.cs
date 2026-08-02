@@ -4,7 +4,9 @@ using System.Collections.Generic;
 
 public partial class ApplicationManager : Node
 {
-	static readonly string SOFTWARE_NAME = (string)ProjectSettings.GetSetting("application/config/name");
+	public static readonly string SOFTWARE_NAME = (string)ProjectSettings.GetSetting("application/config/name");
+
+    private static readonly Vector2I _main_window_minimum_size = new Vector2I(850, 350);
 
     public static bool is_user_typing;
 
@@ -15,8 +17,15 @@ public partial class ApplicationManager : Node
     private static List<Action> _focus_entered_actions = new List<Action>();
     private static List<Action> _focus_exited_actions = new List<Action>();
 
+    private static ApplicationManager self;
+
     public override void _Ready()
     {
+        self = this;
+        
+        GetTree().Root.CloseRequested += Quit;
+        GetTree().Root.MinSize = _main_window_minimum_size;
+
         AddWindow(GetTree().Root);
         currently_focused_window = GetTree().Root;
     }
@@ -27,6 +36,16 @@ public partial class ApplicationManager : Node
             _SetMaxFPS(_windows_focused != 0);
             _last_windows_focused = _windows_focused;
         }
+    }
+
+    private static void OnClose() {
+        Globals.main.Save();
+        Discord.ShutDown();
+    }
+
+    public static void Quit() {
+        OnClose();
+        self.GetTree().Quit();
     }
 
     private static void _SetMaxFPS(bool focused) {

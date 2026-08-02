@@ -77,9 +77,8 @@ public partial class DownloadWindow : EditorWindow
 
     public void Close()
     {
-        if(Globals.self == null)
-        {
-            GetTree().Quit();
+        if(Globals.self == null) {
+            ApplicationManager.Quit();
             return;
         }
 
