@@ -198,6 +198,7 @@ public partial class Settings : EditorWindow
 
     void AddGraphicSettings() {
         AddEnumSetting("Blur Quality", Globals.save_data.graphic_settings, "blur_quality", 2, Constants.QUALITY_LEVELS);
+        AddBoolSetting("VSync", Globals.save_data.graphic_settings, "vsync", true);
     }
 
     public void AddHeader(string header_title) {
