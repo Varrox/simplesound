@@ -27,6 +27,7 @@ public partial class ApplicationManager : SceneTree
         self = this;
 
         Root.MinSize = _main_window_minimum_size;
+        Root.CloseRequested += QuitProgram;
 
         AddWindow(Root);
         currently_focused_window = Root;
