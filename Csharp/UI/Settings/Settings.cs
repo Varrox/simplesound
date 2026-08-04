@@ -46,6 +46,75 @@ public partial class Settings : EditorWindow
         close_menu.ButtonUp += Close;
     }
 
+    void AddAudioSettings() {
+        AddHeader("EQ", """
+        The "equalizer" (or EQ) gives you control over the gain of frequencies in the entire spectrum, by allowing their adjustment through bands. 
+        A band is a point in the frequency spectrum, and each band means a division of the spectrum that can be adjusted.
+        """);
+
+        AddFloatSetting("Hz 32", Globals.save_data.audio_settings, "hz_32", 0.0f, -60.0f, 24.0f, "The 32 Hz band.");
+        AddFloatSetting("Hz 100", Globals.save_data.audio_settings, "hz_100", 0.0f, -60.0f, 24.0f, "The 100 Hz band.");
+        AddFloatSetting("Hz 320", Globals.save_data.audio_settings, "hz_320", 0.0f, -60.0f, 24.0f, "The 320 Hz band.");
+        AddFloatSetting("Hz 1000", Globals.save_data.audio_settings, "hz_1000", 0.0f, -60.0f, 24.0f, "The 1900 Hz band.");
+        AddFloatSetting("Hz 3200", Globals.save_data.audio_settings, "hz_3200", 0.0f, -60.0f, 24.0f, "The 3200 Hz band.");
+        AddFloatSetting("Hz 10000", Globals.save_data.audio_settings, "hz_10000", 0.0f, -60.0f, 24.0f, "The 10000 Hz band.");
+
+        AddHeader("Reverb", """
+        The reverb effect plays the music audio back continuously, decaying over a period of time.
+        It simulates sounds in different kinds of spaces, ranging from small rooms, to big caverns.
+        """);
+
+        AddFloatSetting("Room Size", Globals.save_data.audio_settings, "room_size", 0.0f, 0.0f, 1.0f, 
+        "Dimensions of simulated room. Bigger means more echoes.");
+
+        AddFloatSetting("Damping", Globals.save_data.audio_settings, "damping", 0.5f, 0.0f, 1.0f, 
+        "Defines how reflective the imaginary room's walls are. The more reflective, the more high frequency content the reverb has.");
+
+        AddFloatSetting("Spread", Globals.save_data.audio_settings, "spread", 1.0f, 0.0f, 1.0f,
+        "Widens or narrows the stereo image of the reverb tail. At 1, it fully widens.");
+
+        AddFloatSetting("High-Pass", Globals.save_data.audio_settings, "high_pass", 0.0f, 0.0f, 1.0f,
+        "High-pass filter allows frequencies higher than a certain cutoff threshold and attenuates frequencies lower than the cutoff threshold.");
+
+        AddFloatSetting("Dry", Globals.save_data.audio_settings, "dry", 1.0f, 0.0f, 1.0f, 
+        "The volume ratio of the original audio. At 0, only the modified audio is outputted.");
+
+        AddFloatSetting("Wet", Globals.save_data.audio_settings, "wet", 0.0f, 0.0f, 1.0f,
+        "The volume ratio of the modified audio. At 0, only the original audio is outputted.");
+    }
+
+    void AddCloudSettings() {
+        AddBoolSetting("Sync Application Settings", Globals.save_data.cloud_settings, "sync_application_settings", true);
+    }
+
+    void AddDownloaderSettings() {
+        AddFileLocationSetting("yt-dlp Location", Globals.save_data.application_settings, "ytdlp_location", 
+        "The file location of an yt-dlp executable.");
+        AddEnumSetting("Audio Format", Globals.save_data.application_settings, "download_format", DownloadFormat.MP3, false, 
+        "The audio format that the music downloader will save music as.");
+    }
+
+    void AddAppDataSettings() {
+    }
+
+    void AddGraphicSettings() {
+        AddEnumSetting("Blur Quality", Globals.save_data.graphic_settings, "blur_quality", QualityLevel.MEDIUM, true, 
+        "The quality of the blur effect on the background (Higher qualities will lower performance).");
+
+        AddHeader("Display");
+
+        AddBoolSetting("VSync", Globals.save_data.graphic_settings, "vsync", true, 
+        "VSync changes your top FPS to be the same as your monitor refreshrate (regardless of Max FPS), saving power and CPU / GPU usage.");
+
+        AddIntSetting("Max FPS", Globals.save_data.graphic_settings, "max_fps", 60, 0, 500, 
+        $"The Maximum FPS that {ApplicationManager.SOFTWARE_NAME} can run at.");
+
+        AddBoolSetting("Reduce FPS on lose focus", Globals.save_data.graphic_settings, "reduce_fps_on_lose_focus", true, $"""
+        An option to reduce FPS to a maximum of {ApplicationManager.reduce_fps_on_lose_focus_fps} when the {ApplicationManager.SOFTWARE_NAME} window(s) is not focused to lower CPU / GPU usage.
+        Note: Having this enabled while streamer mode is on isn't suggested as it will lower the FPS of the streamer window too (it affects all windows apart of {ApplicationManager.SOFTWARE_NAME}).
+        """);
+    }
+
     public void SelectSettingsTab(int tab) {
         if (tab >= 0 && tab < _settings_tabs.Count) {
             if (settings_container.GetChildCount() > 0)
@@ -95,12 +164,16 @@ public partial class Settings : EditorWindow
         button.ButtonUp += () => { reset_value(); button.QueueFree(); apply_setting(); };
     }
 
-    public HBoxContainer CreateSettingsItem(string full_name) {
+    public HBoxContainer CreateSettingsItem(string full_name, string tooltip_text) {
         HBoxContainer container = new HBoxContainer();
         settings_container.AddChild(container);
 
+        container.TooltipText = tooltip_text;
+
         Label label = new Label();
         label.Text = full_name + ":";
+        label.MouseFilter = Control.MouseFilterEnum.Ignore;
+
         container.AddChild(label);
 
         return container;
@@ -166,68 +239,33 @@ public partial class Settings : EditorWindow
         _settings_tabs.Add(new SettingsTab(add_settings, button, label, underline, disabled));
     }
 
-    void AddAudioSettings() {
-        AddHeader("EQ");
-        AddFloatSetting("HZ 32", Globals.save_data.audio_settings, "hz_32", 0.0f, -60.0f, 24.0f);
-        AddFloatSetting("HZ 100", Globals.save_data.audio_settings, "hz_100", 0.0f, -60.0f, 24.0f);
-        AddFloatSetting("HZ 320", Globals.save_data.audio_settings, "hz_320", 0.0f, -60.0f, 24.0f);
-        AddFloatSetting("HZ 1000", Globals.save_data.audio_settings, "hz_1000", 0.0f, -60.0f, 24.0f);
-        AddFloatSetting("HZ 3200", Globals.save_data.audio_settings, "hz_3200", 0.0f, -60.0f, 24.0f);
-        AddFloatSetting("HZ 10000", Globals.save_data.audio_settings, "hz_10000", 0.0f, -60.0f, 24.0f);
-
-        AddHeader("Reverb");
-        AddFloatSetting("Room Size", Globals.save_data.audio_settings, "room_size", 0.0f, 0.0f, 1.0f);
-        AddFloatSetting("Damping", Globals.save_data.audio_settings, "damping", 0.5f, 0.0f, 1.0f);
-        AddFloatSetting("Spread", Globals.save_data.audio_settings, "spread", 1.0f, 0.0f, 1.0f);
-        AddFloatSetting("High-Pass", Globals.save_data.audio_settings, "high_pass", 0.0f, 0.0f, 1.0f);
-        AddFloatSetting("Dry", Globals.save_data.audio_settings, "dry", 1.0f, 0.0f, 1.0f);
-        AddFloatSetting("Wet", Globals.save_data.audio_settings, "wet", 0.0f, 0.0f, 1.0f);
-    }
-
-    void AddCloudSettings() {
-        AddBoolSetting("Sync Application Settings", Globals.save_data.cloud_settings, "sync_application_settings", true);
-    }
-
-    void AddDownloaderSettings() {
-        AddFileLocationSetting("yt-dlp Location", Globals.save_data.application_settings, "ytdlp_location");
-        AddEnumSetting("Audio Format", Globals.save_data.application_settings, "download_format", DownloadFormat.MP3, false);
-    }
-
-    void AddAppDataSettings() {
-    }
-
-    void AddGraphicSettings() {
-        AddEnumSetting("Blur Quality", Globals.save_data.graphic_settings, "blur_quality", QualityLevel.MEDIUM);
-        AddHeader("Display");
-        AddBoolSetting("VSync", Globals.save_data.graphic_settings, "vsync", true);
-        AddIntSetting("Max FPS", Globals.save_data.graphic_settings, "max_fps", 60, 0, 500);
-        AddBoolSetting("Reduce FPS on lose focus", Globals.save_data.graphic_settings, "reduce_fps_on_lose_focus", true);
-    }
-
-    public void AddHeader(string header_title) {
+    public void AddHeader(string header_title, string tooltip_text = "") {
         HBoxContainer container = new HBoxContainer();
         settings_container.AddChild(container);
 
         container.CustomMinimumSize = Vector2.Down * 25;
+        container.TooltipText = tooltip_text;
 
         HSeparator l_h_separator = new HSeparator();
         l_h_separator.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+        l_h_separator.MouseFilter = Control.MouseFilterEnum.Ignore;
 
         Label label = new Label();
         label.Text = header_title;
 
         HSeparator r_h_separator = new HSeparator();
         r_h_separator.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+        r_h_separator.MouseFilter = Control.MouseFilterEnum.Ignore;
 
         container.AddChild(l_h_separator);
         container.AddChild(label);
         container.AddChild(r_h_separator);
     }
 
-    public void AddIntSetting<T>(string full_name, T where, string instance_name, int default_value, int min_value = 0, int max_value = int.MaxValue) where T : ISettings {
+    public void AddIntSetting<T>(string full_name, T where, string instance_name, int default_value, int min_value = 0, int max_value = int.MaxValue, string tooltip_text = "") where T : ISettings {
         Type type = typeof(T);
 
-        HBoxContainer container = CreateSettingsItem(full_name);
+        HBoxContainer container = CreateSettingsItem(full_name, tooltip_text);
 
         SpinBox spin_box = new SpinBox();
         int value = GetSetting<int>(where, type, instance_name);
@@ -247,10 +285,10 @@ public partial class Settings : EditorWindow
             AddResetButton(container, ResetInt, ApplyInt);
     }
 
-    public void AddFloatSetting<T>(string full_name, T where, string instance_name, float default_value, float min_value = 0.0f, float max_value = float.PositiveInfinity) where T : ISettings {
+    public void AddFloatSetting<T>(string full_name, T where, string instance_name, float default_value, float min_value = 0.0f, float max_value = float.PositiveInfinity, string tooltip_text = "") where T : ISettings {
         Type type = typeof(T);
 
-        HBoxContainer container = CreateSettingsItem(full_name);
+        HBoxContainer container = CreateSettingsItem(full_name, $"{tooltip_text} Value can range from {min_value} to {max_value}.");
 
         SpinBox spin_box = new SpinBox();
         float value = GetSetting<float>(where, type, instance_name);
@@ -271,10 +309,10 @@ public partial class Settings : EditorWindow
             AddResetButton(container, ResetFloat, ApplyFloat);
     }
 
-    public void AddEnumSetting<T>(string full_name, T where, string instance_name, int default_value, string[] enum_values) where T : ISettings {
+    public void AddEnumSetting<T>(string full_name, T where, string instance_name, int default_value, string[] enum_values, string tooltip_text = "") where T : ISettings {
         Type type = typeof(T);
         
-        HBoxContainer container = CreateSettingsItem(full_name);
+        HBoxContainer container = CreateSettingsItem(full_name, tooltip_text);
 
         OptionButton option_button = new OptionButton();
 
@@ -296,10 +334,10 @@ public partial class Settings : EditorWindow
             AddResetButton(container, ResetEnum, ApplyEnum);
     }
 
-    public void AddEnumSetting<T, E>(string full_name, T where, string instance_name, E default_value, bool capitalize_values = true) where T : ISettings where E : struct, Enum {
+    public void AddEnumSetting<T, E>(string full_name, T where, string instance_name, E default_value, bool capitalize_values = true, string tooltip_text = "") where T : ISettings where E : struct, Enum {
         Type type = typeof(T);
         
-        HBoxContainer container = CreateSettingsItem(full_name);
+        HBoxContainer container = CreateSettingsItem(full_name, tooltip_text);
 
         OptionButton option_button = new OptionButton();
 
@@ -325,10 +363,10 @@ public partial class Settings : EditorWindow
             AddResetButton(container, ResetEnum, ApplyEnum);
     }
 
-    public void AddBoolSetting<T>(string full_name, T where, string instance_name, bool default_value) where T : ISettings {
+    public void AddBoolSetting<T>(string full_name, T where, string instance_name, bool default_value, string tooltip_text = "") where T : ISettings {
         Type type = typeof(T);
 
-        HBoxContainer container = CreateSettingsItem(full_name);
+        HBoxContainer container = CreateSettingsItem(full_name, tooltip_text);
 
         CheckButton check_button = new CheckButton();
         check_button.ButtonPressed = GetSetting<bool>(where, type, instance_name);
@@ -344,10 +382,10 @@ public partial class Settings : EditorWindow
             AddResetButton(container, ResetBool, ApplyBool);
     }
 
-    public void AddStringSetting<T>(string full_name, T where, string instance_name, string default_value) where T : ISettings {
+    public void AddStringSetting<T>(string full_name, T where, string instance_name, string default_value, string tooltip_text = "") where T : ISettings {
         Type type = typeof(T);
 
-        HBoxContainer container = CreateSettingsItem(full_name);
+        HBoxContainer container = CreateSettingsItem(full_name, tooltip_text);
 
         ThemeLineEdit line_edit = new ThemeLineEdit();
         line_edit.Text = GetSetting<string>(where, type, instance_name);
@@ -364,10 +402,10 @@ public partial class Settings : EditorWindow
             AddResetButton(container, ResetString, ApplyString);
     }
 
-    public void AddFileLocationSetting<T>(string full_name, T where, string instance_name) where T : ISettings {
+    public void AddFileLocationSetting<T>(string full_name, T where, string instance_name, string tooltip_text = "") where T : ISettings {
         Type type = typeof(T);
 
-        HBoxContainer container = CreateSettingsItem(full_name);
+        HBoxContainer container = CreateSettingsItem(full_name, tooltip_text);
 
         ThemeLineEdit line_edit = new ThemeLineEdit();
         line_edit.Text = GetSetting<string>(where, type, instance_name);
@@ -400,10 +438,10 @@ public partial class Settings : EditorWindow
             AddResetButton(container, ResetFileLocation, ApplyFileLocation);
     }
 
-    public void AddVector2Setting<T>(string full_name, T where, string instance_name, Vector2 default_value) where T : ISettings {
+    public void AddVector2Setting<T>(string full_name, T where, string instance_name, Vector2 default_value, string tooltip_text = "") where T : ISettings {
         Type type = typeof(T);
 
-        HBoxContainer container = CreateSettingsItem(full_name);
+        HBoxContainer container = CreateSettingsItem(full_name, tooltip_text);
 
         SpinBox spin_box_x = new SpinBox(), spin_box_y = new SpinBox();
         Vector2 value = GetSetting<Vector2>(where, type, instance_name);
@@ -427,10 +465,10 @@ public partial class Settings : EditorWindow
             AddResetButton(container, ResetVector2, ApplyVector2);
     }
 
-    public void AddColorSetting<T>(string full_name, T where, string instance_name, Color default_value) where T : ISettings {
+    public void AddColorSetting<T>(string full_name, T where, string instance_name, Color default_value, string tooltip_text = "") where T : ISettings {
         Type type = typeof(T);
 
-        HBoxContainer container = CreateSettingsItem(full_name);
+        HBoxContainer container = CreateSettingsItem(full_name, tooltip_text);
 
         ThemeColorPickerButton color_picker_button = new ThemeColorPickerButton();
         color_picker_button.Color = Color.FromString(GetSetting<string>(where, type, instance_name) ?? "", default_value);
