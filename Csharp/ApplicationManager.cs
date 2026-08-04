@@ -9,6 +9,8 @@ public partial class ApplicationManager : SceneTree
 
     private static readonly Vector2I _main_window_minimum_size = new Vector2I(850, 350);
 
+    public static readonly int reduce_fps_on_lose_focus_fps = 20;
+
     public static bool is_user_typing;
 
     private static int _last_windows_focused = 0;
@@ -50,11 +52,12 @@ public partial class ApplicationManager : SceneTree
     }
 
     public static void QuitProgram() {
+        Globals.save_data.graphic_settings.main_display_size = (SerialVector2I)self.Root.Size;
         self.Quit();
     }
 
     private static void _SetMaxFPS(bool focused) {
-        Engine.MaxFps = focused || !Globals.save_data.graphic_settings.reduce_fps_on_lose_focus ? Globals.save_data.graphic_settings.max_fps : 20;
+        Engine.MaxFps = focused || !Globals.save_data.graphic_settings.reduce_fps_on_lose_focus ? Globals.save_data.graphic_settings.max_fps : reduce_fps_on_lose_focus_fps;
     }
 
     public static void OnTextEditingToggled(bool toggled_on) {
