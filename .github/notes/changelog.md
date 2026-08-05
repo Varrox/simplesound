@@ -24,6 +24,7 @@
 
 ## Optimizations
 
+- Using ATL now over Taglib for faster metadata loading performance.
 - Instant playlist loading (with the cost of no more separation between songs).
 - Exports from now on will be using a custom export template of godot that strips away all unnecessary parts of the engine like 3D, or physics. This decreases the size of simplesound by 15mb - 25mb.
 - Max FPS setting and optional (on by default) setting that reduces max FPS on window focus lost
