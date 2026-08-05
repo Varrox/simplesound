@@ -1,10 +1,11 @@
 # simplesound alpha-v1.3 changelog
 
-#### **5 months, and 100 commits total!**
+#### **5 months, and 145 commits total!**
 
 ## General Improvements
 
 - Settings are stored more organized now (so your blur quality and vsync settings will be reset, sorry).
+- Main window size is saved on close and loaded back up on open
 
 ## Features
 

@@ -8,6 +8,7 @@ public partial class ApplicationManager : SceneTree
 	public static readonly string SOFTWARE_NAME = (string)ProjectSettings.GetSetting("application/config/name");
 
     private static readonly Vector2I _main_window_minimum_size = new Vector2I(850, 350);
+    private static readonly Vector2I _main_window_default_size = new Vector2I((int)ProjectSettings.GetSetting("display/window/size/viewport_width"), (int)ProjectSettings.GetSetting("display/window/size/viewport_height"));
 
     public static readonly int reduce_fps_on_lose_focus_fps = 20;
 
@@ -28,6 +29,14 @@ public partial class ApplicationManager : SceneTree
 
         Root.MinSize = _main_window_minimum_size;
         Root.CloseRequested += QuitProgram;
+
+        if (Globals.save_data.graphic_settings.main_display_size >= _main_window_minimum_size) { // If the size is not below minimum
+            DisplayServer.WindowSetSize(Globals.save_data.graphic_settings.main_display_size);
+        }
+        else { // Set setting to default size if so, and save.
+            Globals.save_data.graphic_settings.main_display_size = _main_window_default_size;
+            Save();
+        }
 
         AddWindow(Root);
         currently_focused_window = Root;
@@ -53,7 +62,7 @@ public partial class ApplicationManager : SceneTree
     }
 
     public static void QuitProgram() {
-        Globals.save_data.graphic_settings.main_display_size = (SerialVector2I)self.Root.Size;
+        Globals.save_data.graphic_settings.main_display_size = self.Root.Size;
         self.Quit();
     }
 
