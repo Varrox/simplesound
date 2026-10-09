@@ -47,8 +47,8 @@
 [ext_resource type="PackedScene" uid="uid://dcre7b1cn3b6i" path="res://Prefabs/Context Menus/track_context.tscn" id="45_rjtah"]
 [ext_resource type="Script" uid="uid://ba0kdfmjh8445" path="res://Csharp/Globals.cs" id="46_y0j44"]
 [ext_resource type="PackedScene" uid="uid://cjc5crjo31obe" path="res://Prefabs/path_display.tscn" id="49_mrmdv"]
-[ext_resource type="PackedScene" uid="uid://bw078i5dk5ff4" path="res://Windows/confirmation_window.tscn" id="50_c27js"]
-[ext_resource type="PackedScene" uid="uid://dle5y658wmx03" path="res://Windows/attribute_editor.tscn" id="52_vsj6c"]
+[ext_resource type="PackedScene" uid="uid://bw078i5dk5ff4" path="res://Prefabs/confirmation_window.tscn" id="50_c27js"]
+[ext_resource type="PackedScene" uid="uid://dle5y658wmx03" path="res://Windows/attribute_editor_window.tscn" id="52_vsj6c"]
 [ext_resource type="PackedScene" uid="uid://djve16b56k6h0" path="res://Windows/Downloading/download_window.tscn" id="53_7surn"]
 [ext_resource type="Texture2D" uid="uid://bdbco8a0mnjn6" path="res://Icons/Logos/logotrans.png" id="54_lfg21"]
 [ext_resource type="Script" uid="uid://bmgcpmp5cfuwy" path="res://Csharp/Tray.cs" id="55_y62dl"]
@@ -355,9 +355,9 @@ icon = ExtResource("10_yksdd")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("11_2o8nl")
+menu = NodePath("../../../../../../Playlistcreationcontext")
 teleportMenu = true
 teleportMenuOffset = Vector2(-135, 32)
-menu = NodePath("../../../../../../Playlistcreationcontext")
 
 [node name="HSeparator" type="HSeparator" parent="Interface/Content/Side Panel/Open/VBoxContainer" unique_id=166833490]
 layout_mode = 2
@@ -427,9 +427,9 @@ icon = ExtResource("10_yksdd")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("11_2o8nl")
+menu = NodePath("../../../../../Playlistcreationcontext")
 teleportMenu = true
 teleportMenuOffset = Vector2(0, 32)
-menu = NodePath("../../../../../Playlistcreationcontext")
 
 [node name="HSeparator" type="HSeparator" parent="Interface/Content/Side Panel/Collapsed/VBoxContainer" unique_id=765403374]
 layout_mode = 2
@@ -1003,8 +1003,6 @@ offset_bottom = 43.0
 
 [node name="Globals" type="Node" parent="." unique_id=71517921 node_paths=PackedStringArray("_main", "_player", "_discord", "_attribute_editor", "_download_window", "_file_dialog", "_playlist_menu", "_track_menu")]
 script = ExtResource("46_y0j44")
-_path_display = ExtResource("49_mrmdv")
-_confirmation_window = ExtResource("50_c27js")
 _main = NodePath("..")
 _player = NodePath("../Interface")
 _discord = NodePath("../Discord")
@@ -1013,6 +1011,8 @@ _download_window = NodePath("DownloadWindow")
 _file_dialog = NodePath("File Dialog")
 _playlist_menu = NodePath("../Interface/Playlistcontext")
 _track_menu = NodePath("../Interface/Trackcontext")
+_path_display = ExtResource("49_mrmdv")
+_confirmation_window = ExtResource("50_c27js")
 
 [node name="File Dialog" type="FileDialog" parent="Globals" unique_id=1989544037]
 title = "Open a File"
