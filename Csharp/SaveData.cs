@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 
-public class SaveData
+public struct SaveData
 {
 	public int playlist_index, song_index, looked_at_playlist;
 	public float time, volume;
@@ -16,10 +16,10 @@ public class SaveData
 	public AudioSettings audio_settings = new AudioSettings();
 	public GraphicSettings graphic_settings = new GraphicSettings();
 
-    static readonly string path = Path.Combine(Constants.USER_DATA, "savedata.json");
+    public SaveData() {}
 
     public void Save() {
-        File.WriteAllText(path, JsonConvert.SerializeObject(this, Formatting.Indented));
+        File.WriteAllText(Constants.USER_SAVEDATA, JsonConvert.SerializeObject(this, Formatting.Indented));
     }
 
     public static SaveData GetSaveData() {
@@ -29,12 +29,14 @@ public class SaveData
 
         SaveData save_data;
 
-        if (!File.Exists(path)) {
+        if (!File.Exists(Constants.USER_SAVEDATA)) {
             save_data = new();
             save_data.Save();
         }
-        else save_data = JsonConvert.DeserializeObject<SaveData>(File.ReadAllText(path));
+        else save_data = JsonConvert.DeserializeObject<SaveData>(File.ReadAllText(Constants.USER_SAVEDATA));
 
         return save_data;
     }
+
+
 }

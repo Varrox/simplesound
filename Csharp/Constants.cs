@@ -15,7 +15,13 @@ public struct Constants
 
     public static readonly string USER_DATA = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "simplesound");
 
+    // Folders
+
     public static readonly string USER_PLAYLISTS = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "simplesound", "playlists");
     public static readonly string USER_TRACKS = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "simplesound", "tracks");
     public static readonly string USER_PLAYLIST_COVERS = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "simplesound", "data", "playlist_covers");
+
+    // Files
+
+    public static readonly string USER_SAVEDATA = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "savedata.json");
 }
