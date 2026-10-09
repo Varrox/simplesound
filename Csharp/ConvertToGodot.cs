@@ -3,7 +3,7 @@ using System.IO;
 
 public class ConvertToGodot
 {
-    public static Texture2D GetSongCover(string path) {
+    public static Texture2D GetMediaCover(string path) {
         byte[] picture_data = Metadata.GetCover(path, out string type);
         
         if (picture_data == null) return Globals.default_cover;

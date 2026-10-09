@@ -2,7 +2,7 @@ using Godot;
 
 public class ApplicationSettings : ISettings
 {
-	public bool remove_song_warning = true;
+	public bool remove_track_warning = true;
 
 	// Downloader
 

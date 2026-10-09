@@ -1,13 +1,13 @@
 TODO
 
 - Add sorting.
-- Add song position rearange.
+- Add track position rearange.
 - Sleep timer.
 - Add lyrics viewer.
 - Rework context menus.
 - Make muting actually mute audio rather than making it extremely quiet.
-- Add optional compact form song displays without cover.
-- Optimize blur by not rendering new frames unless window size is changed or song changes.
+- Add optional compact form track displays without cover.
+- Optimize blur by not rendering new frames unless window size is changed or track changes.
 - Create plugins for both flac and aiff audio format support.
 - Add CD read support (optional ripping too)
 - Add audio visualizer to stream display
@@ -23,13 +23,13 @@ FINISHED
 - Implement Status indicator.
 - Fix settings so it no longer uses stupid resource solution and uses procedural solution that is future proof.
 - Add Audio settings.
-- Add song downloading - For youtube, soundcloud, and spotify.
+- Add track downloading - For youtube, soundcloud, and spotify.
 - Make playlist bar hiding.
 - Add settings menu.
 - Rename SSL to something else because SSL is already taken.
 - Make Github repo public, and make builds.
 - Add update button.
-- Add share button to songs (keep youtube link in song metadata).
+- Add share button to tracks (keep youtube link in track metadata).
 - Add shuffle option to save file.
 - Add music video playing.
 - Make top card playbutton functionality.
@@ -38,9 +38,9 @@ FINISHED
 - Fix context menu UIs.
 - Make player UI so it does stuff on button release instead of on press.
 - Add playlist sync options to be where sync is opposite of it rn.
-- Fix shuffling not counting current song.
+- Fix shuffling not counting current track.
 - Fix playlist names so they are ssl file independent.
-- Make shuffling not play songs twice.
+- Make shuffling not play tracks twice.
 - Ability to open appdata for app.
 - Remove scrollbar focus somehow.
 - Lerp background image to transition.
@@ -56,11 +56,11 @@ SHELF
 
 SCRAPPED
 
-- Add max song display load limit.
+- Add max track display load limit.
 - Add folder explorer.
 - Make covers all save as square aspect ratio.
 
 ULTIMATE GOAL:
 
-Create a music player like spotify, that allows for advanced song visualizers, shaders, 
+Create a music player like spotify, that allows for advanced track visualizers, shaders, 
 ui customization, and other features.

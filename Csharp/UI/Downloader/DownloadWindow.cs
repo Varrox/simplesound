@@ -114,21 +114,21 @@ public partial class DownloadWindow : EditorWindow
     {
         foreach(string url in links)
         {
-            string[] songs = RunDownloadCommand(url, selected_playlist != -1 ? Globals.main.playlists[selected_playlist].name : "");
+            string[] tracks = RunDownloadCommand(url, selected_playlist != -1 ? Globals.main.playlists[selected_playlist].name : "");
 
-            if(songs == null || songs.Length == 0)
+            if(tracks == null || tracks.Length == 0)
                 continue;
             
             if(selected_playlist != -1)
             {
-                GD.Print(songs);
-                Globals.main.playlists[selected_playlist].songs.AddRange(songs);
+                GD.Print(tracks);
+                Globals.main.playlists[selected_playlist].songs.AddRange(tracks);
                 Globals.main.playlists[selected_playlist].Save();
                 Globals.main.Refresh();
             }
             else // Open in file explorer
             {
-                OS.ShellShowInFileManager(songs[0], true);
+                OS.ShellShowInFileManager(tracks[0], true);
             }
         }
     }
@@ -140,7 +140,7 @@ public partial class DownloadWindow : EditorWindow
         
         var output = new Godot.Collections.Array();
 
-        string directory = folder == "" ? Path.Combine(Constants.USER_DATA, "Music") : Path.Combine(Constants.USER_DATA, "Music", folder);
+        string directory = folder == "" ? Constants.USER_TRACKS : Path.Combine(Constants.USER_TRACKS, folder);
 
         if(!Directory.Exists(directory))
             Directory.CreateDirectory(directory);
@@ -173,25 +173,25 @@ public partial class DownloadWindow : EditorWindow
 
         int result = OS.Execute(Globals.save_data.application_settings.ytdlp_location, arguments.ToArray(), output, true, false);
 
-        List<string> songs = new List<string>();
+        List<string> tracks = new List<string>();
 
-        foreach(string song in output)
+        foreach(string track in output)
         {
-            if (!string.IsNullOrEmpty(song))
+            if (!string.IsNullOrEmpty(track))
             {
-                if (song.StartsWith("Link"))
+                if (track.StartsWith("Link"))
                 {
-                    string[] split = song.Trim().Split("\n");
+                    string[] split = track.Trim().Split("\n");
                     for(int i = 0; i < split.Length; i += 2)
                     {
                         Metadata.WriteToComment(split[i + 1], split[i]);
-                        songs.Add(split[i + 1]);
+                        tracks.Add(split[i + 1]);
                     }
                 }
             }
                 
         }
 
-        return songs.ToArray();
+        return tracks.ToArray();
     }
 }

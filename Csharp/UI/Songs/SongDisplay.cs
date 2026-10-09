@@ -2,22 +2,28 @@
 
 public partial class SongDisplay : Button
 {
-    [Export] public Label number, song_name, artist, time;
-    [Export] public TextureRect cover, play_button;
-    [Export] public Control spacer, sound_visualizer;
-    [Export] public SongsMore more;
-    [Export] public Panel explicit_lyrics;
+    [Export] public Label track_number_label, track_name_label, track_artist_label, total_time_label;
+    
+    [Export] public TextureRect cover_texture_rect, play_texture_rect;
 
-    public int song;
+    [Export] public Control spacer, sound_visualizer;
+
+    [Export] public SongsMore more;
+
+    [Export] public Panel explicit_lyrics_indicator;
+
+    public int track_index;
     public bool playing;
 
     public override void _Ready() {
-        ButtonUp += SetSong;
+        ButtonUp += SetTrack;
         MouseEntered += OnEnter;
         MouseExited += OnExit;
+
         more.MouseEntered += OnEnter;
         more.OnClose += more.Hide;
-        Globals.main.OnLoadSong += SetHighlight;
+
+        Globals.main.OnLoadTrack += SetHighlight;
     }
 
     public override void _Input(InputEvent @event) {
@@ -35,21 +41,21 @@ public partial class SongDisplay : Button
         playing = false;
         Globals.main.OnPlayingChanged -= SetTextures;
 
-        if (Globals.main.playlist_index == Globals.main.looked_at_playlist && Globals.main.song_index == song) { // highlight
+        if (Globals.main.playlist_index == Globals.main.looked_at_playlist && Globals.main.track_index == track_index) { // highlight
             Globals.main.OnPlayingChanged += SetTextures;
             playing = true;
             SelfModulate = Globals.highlight;
-            number.AddThemeColorOverride("font_color", Colors.Transparent);
-            song_name.AddThemeColorOverride("font_color", Globals.playing_font_color);
+            track_number_label.AddThemeColorOverride("font_color", Colors.Transparent);
+            track_name_label.AddThemeColorOverride("font_color", Globals.playing_font_color);
             if(!IsHovered()) sound_visualizer.Visible = true;
         }
-        else if (Globals.main.playlist_index != Globals.main.looked_at_playlist || Globals.main.song_index != song) { // un-highlight
-            play_button.Texture = Disabled ? Globals.no_play_texture : Globals.play_texture;
+        else if (Globals.main.playlist_index != Globals.main.looked_at_playlist || Globals.main.track_index != track_index) { // un-highlight
+            play_texture_rect.Texture = Disabled ? Globals.no_play_texture : Globals.play_texture;
             Globals.main.OnPlayingChanged -= SetTextures;
             playing = false;
             SelfModulate = Colors.White;
-            number.AddThemeColorOverride("font_color", Globals.small_font_color);
-            song_name.AddThemeColorOverride("font_color", Globals.normal_font_color);
+            track_number_label.AddThemeColorOverride("font_color", Globals.small_font_color);
+            track_name_label.AddThemeColorOverride("font_color", Globals.normal_font_color);
             sound_visualizer.Visible = false;
         }
 
@@ -57,7 +63,7 @@ public partial class SongDisplay : Button
     }
 
     public void SetTextures(bool playing) {
-        play_button.Texture = Disabled ? Globals.no_play_texture : (playing ? Globals.pause_texture : Globals.play_texture);
+        play_texture_rect.Texture = Disabled ? Globals.no_play_texture : (playing ? Globals.pause_texture : Globals.play_texture);
     }
 
     public void OnEnter() {
@@ -65,46 +71,46 @@ public partial class SongDisplay : Button
 
         SetTextures(playing);
 
-        play_button.Show();
+        play_texture_rect.Show();
 
         if (playing) sound_visualizer.Visible = false;
-        number.AddThemeColorOverride("font_color", Colors.Transparent);
+        track_number_label.AddThemeColorOverride("font_color", Colors.Transparent);
     }
 
     public void OnExit() {
         if (!more.menu_open) more.Hide();
 
-        play_button.Hide();
-        play_button.Texture = null;
+        play_texture_rect.Hide();
+        play_texture_rect.Texture = null;
         
         if (playing) sound_visualizer.Visible = true;
-        else number.AddThemeColorOverride("font_color", Globals.small_font_color);
+        else track_number_label.AddThemeColorOverride("font_color", Globals.small_font_color);
     }
 
-    public void Init(in int song, in SongData data, in Playlist.PlaylistType type, in Texture2D cover) {
+    public void Init(in int track, in TrackData data, in Playlist.PlaylistType type, in Texture2D cover) {
         Disabled = data.corrupt;
 
-        number.Text = (song + 1).ToString();
+        track_number_label.Text = (track + 1).ToString();
 
-        this.song = song;
+        this.track_index = track;
 
-        this.song_name.Text = data.title;
-        this.artist.Text = data.artist;
-        this.time.Text = data.time;
+        this.track_name_label.Text = data.title;
+        this.track_artist_label.Text = data.artist;
+        this.total_time_label.Text = data.time;
 
         bool album = type == Playlist.PlaylistType.Album;
         
-        this.cover.Texture = cover;
-        (this.cover.GetParent() as Control).Visible = !album;
+        this.cover_texture_rect.Texture = cover;
+        (this.cover_texture_rect.GetParent() as Control).Visible = !album;
         spacer.Visible = !album;
-        this.explicit_lyrics.Visible = data.explicit_lyrics;
+        this.explicit_lyrics_indicator.Visible = data.explicit_lyrics;
 
         SetHighlight();
     }
 
-    public void SetSong() {
+    public void SetTrack() {
         if (Globals.main.playlist_index != Globals.main.looked_at_playlist) Globals.main.LoadPlaylist(Globals.main.looked_at_playlist);
-        if (!playing) Globals.main.SetSong(song);
+        if (!playing) Globals.main.SetTrack(track_index);
         else Globals.main.FlipPlayingState();
     }
 }

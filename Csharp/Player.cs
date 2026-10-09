@@ -3,13 +3,17 @@ using Godot;
 [GlobalClass]
 public partial class Player : Node
 {
-    [Export] public Button play, next, back, loop, shuffle;
-    [Export] public Slider progress;
-    [Export] public Label current_time, total_time, song_name, song_artist;
-    [Export] public TextureRect song_cover;
-    [Export] public SubViewport background_subviewport;
-    [Export] public Slider volume_slider;
+    [ExportGroup("Controls")]
+    [Export] public Button play_button, next_button, back_button, loop_button, shuffle_button;
+
+    [Export] public Slider progress_slider, volume_slider;
+
     [Export] public Button mute_button;
+
+    [ExportGroup("Visuals")]
+    [Export] public Label current_time_label, total_time_label, track_name_label, track_artist_label;
+    [Export] public TextureRect track_cover_texture_rect;
+    [Export] public SubViewport background_subviewport;
     [Export] public ColorRect background_color_rect;
 
     Color background_color;
@@ -23,21 +27,21 @@ public partial class Player : Node
     int playlist_icon_index = -1;
 
     public override void _Ready() {
-        loop.ButtonUp += SetLoop;
-        shuffle.ButtonUp += SetShuffle;
-        play.ButtonUp += Globals.main.FlipPlayingState;
+        loop_button.ButtonUp += SetLoop;
+        shuffle_button.ButtonUp += SetShuffle;
+        play_button.ButtonUp += Globals.main.FlipPlayingState;
 
-        next.ButtonUp += () => Move(1);
-        back.ButtonUp += () => Move(-1);
+        next_button.ButtonUp += () => Move(1);
+        back_button.ButtonUp += () => Move(-1);
 
-        Globals.main.OnLoadSong += OnLoadSong;
+        Globals.main.OnLoadTrack += OnLoadTrack;
         Globals.main.OnLoadPlaylist += ApplyPlaylistSettings;
 
-        progress.DragEnded += SetTime;
-        progress.DragStarted += () => can_set_time = true;
+        progress_slider.DragEnded += SetTime;
+        progress_slider.DragStarted += () => can_set_time = true;
 
         Globals.main.OnPlayingChanged += SetPlayIcon;
-        play.Icon = Globals.play_texture;
+        play_button.Icon = Globals.play_texture;
 
         mute_button.ButtonUp += MuteVolume;
         volume_slider.DragStarted += VolumeUnmute;
@@ -49,11 +53,11 @@ public partial class Player : Node
 
     public void SetShuffleIndicator() {
         Color color = Globals.main.shuffled ? Globals.enabled_font_color : Colors.White;
-        shuffle.AddThemeColorOverride("icon_normal_color", color);
-        shuffle.AddThemeColorOverride("icon_focus_color", color);
-        shuffle.AddThemeColorOverride("icon_pressed_color", color);
-        shuffle.AddThemeColorOverride("icon_hover_color", color);
-        shuffle.AddThemeColorOverride("icon_hover_pressed_color", color);
+        shuffle_button.AddThemeColorOverride("icon_normal_color", color);
+        shuffle_button.AddThemeColorOverride("icon_focus_color", color);
+        shuffle_button.AddThemeColorOverride("icon_pressed_color", color);
+        shuffle_button.AddThemeColorOverride("icon_hover_color", color);
+        shuffle_button.AddThemeColorOverride("icon_hover_pressed_color", color);
     }
 
     public void SetMuteTexture() => mute_button.Icon = muted ? Globals.unmute_texture : Globals.mute_texture;
@@ -93,8 +97,8 @@ public partial class Player : Node
     public void SetShuffle() {
         Globals.main.shuffled = !Globals.main.shuffled;
 
-        Globals.main.offset = Globals.main.song_index;
-        Globals.main.shuffle_index = Globals.main.song_index;
+        Globals.main.offset = Globals.main.track_index;
+        Globals.main.shuffle_index = Globals.main.track_index;
 
         SetShuffleIndicator();
     }
@@ -103,31 +107,31 @@ public partial class Player : Node
         Globals.main.loop = !Globals.main.loop;
         
         Color color = Globals.main.loop ? Globals.enabled_font_color : Colors.White;
-        loop.AddThemeColorOverride("icon_normal_color", color);
-        loop.AddThemeColorOverride("icon_focus_color", color);
-        loop.AddThemeColorOverride("icon_pressed_color", color);
-        loop.AddThemeColorOverride("icon_hover_color", color);
-        loop.AddThemeColorOverride("icon_hover_pressed_color", color);
+        loop_button.AddThemeColorOverride("icon_normal_color", color);
+        loop_button.AddThemeColorOverride("icon_focus_color", color);
+        loop_button.AddThemeColorOverride("icon_pressed_color", color);
+        loop_button.AddThemeColorOverride("icon_hover_color", color);
+        loop_button.AddThemeColorOverride("icon_hover_pressed_color", color);
     }
 
-    public void SetPlayIcon(bool playing) => play.Icon = !playing || !Globals.main.IsSongAvailable() ? Globals.play_texture : Globals.pause_texture;
+    public void SetPlayIcon(bool playing) => play_button.Icon = !playing || !Globals.main.IsTrackAvailable() ? Globals.play_texture : Globals.pause_texture;
 
     public void Move(int by) {
-        if (!interrupted) Globals.main.MoveSong(by);
+        if (!interrupted) Globals.main.MoveTrack(by);
     }
 
-    public void OnLoadSong() {
-        if (Globals.main.IsSongAvailable()) {
-            string name = Tools.GetMediaTitle(Globals.main.song);
-            song_name.Text = name;
-            song_name.TooltipText = name;
+    public void OnLoadTrack() {
+        if (Globals.main.IsTrackAvailable()) {
+            string name = Tools.GetMediaTitle(Globals.main.track);
+            track_name_label.Text = name;
+            track_name_label.TooltipText = name;
 
-            string artist = Metadata.GetArtist(Globals.main.song);
-            song_artist.Text = artist;
-            song_artist.TooltipText = artist;
+            string artist = Metadata.GetArtist(Globals.main.track);
+            track_artist_label.Text = artist;
+            track_artist_label.TooltipText = artist;
 
-            Texture2D cover = ConvertToGodot.GetSongCover(Globals.main.song);
-            song_cover.Texture = cover;
+            Texture2D cover = ConvertToGodot.GetMediaCover(Globals.main.track);
+            track_cover_texture_rect.Texture = cover;
 
             if (cover == Globals.default_cover && Globals.main.playlist.type == Playlist.PlaylistType.Album) {
                 if(playlist_icon == null || playlist_icon_index != Globals.main.playlist_index) {
@@ -135,41 +139,41 @@ public partial class Player : Node
                     playlist_icon_index = Globals.main.playlist_index;
                 }
                 
-                song_cover.Texture = playlist_icon;
+                track_cover_texture_rect.Texture = playlist_icon;
             }
             else {
-                song_cover.Texture = cover;
+                track_cover_texture_rect.Texture = cover;
             }
             
-            Texture2D background_texture = Globals.main.playlist.custom_info.background_path != null ? ConvertToGodot.LoadImageFromFile(Globals.main.playlist.custom_info.background_path) ?? cover : song_cover.Texture;
+            Texture2D background_texture = Globals.main.playlist.custom_info.background_path != null ? ConvertToGodot.LoadImageFromFile(Globals.main.playlist.custom_info.background_path) ?? cover : track_cover_texture_rect.Texture;
 
             background_subviewport.Set("target_texture", background_texture);
 
-            total_time.Text = Tools.SecondsToTimestamp(Metadata.GetTotalTime(Globals.main.song));
-            progress.MaxValue = Globals.main.audio_player.Stream.GetLength();
-            progress.Editable = true;
+            total_time_label.Text = Tools.SecondsToTimestamp(Metadata.GetTotalTime(Globals.main.track));
+            progress_slider.MaxValue = Globals.main.audio_player.Stream.GetLength();
+            progress_slider.Editable = true;
         }
         else {
-            song_name.Text = "No song playing";
-            song_name.TooltipText = "";
-            song_artist.Text = "No artist";
-            song_artist.TooltipText = "";
+            track_name_label.Text = "No track playing";
+            track_name_label.TooltipText = "";
+            track_artist_label.Text = "No artist";
+            track_artist_label.TooltipText = "";
             background_color = Colors.Transparent;
 
-            total_time.Text = "0:00";
-            progress.MaxValue = 1;
-            progress.Value = 0;
-            progress.Editable = false;
+            total_time_label.Text = "0:00";
+            progress_slider.MaxValue = 1;
+            progress_slider.Value = 0;
+            progress_slider.Editable = false;
 
-            song_cover.Texture = Globals.default_cover;
+            track_cover_texture_rect.Texture = Globals.default_cover;
             background_subviewport.Set("target_texture", Globals.default_cover);
         }
 
-        Globals.discord.UpdateSong();
+        Globals.discord.UpdateTrack();
     }
 
     public void SetTime(bool value) {
-        Globals.main.time = (float)progress.Value;
+        Globals.main.time = (float)progress_slider.Value;
         if (Globals.main.playing) {
             Globals.main.audio_player.Play(Globals.main.time);
 
@@ -189,20 +193,20 @@ public partial class Player : Node
     public override void _Process(double delta) {
         if(!ApplicationManager.is_user_typing && ApplicationManager.currently_focused_window == GetTree().Root) {
             if(Input.IsActionJustPressed("play")) Globals.main.FlipPlayingState();
-            else if (Input.IsActionJustPressed("next")) Globals.main.MoveSong(1);
-            else if (Input.IsActionJustPressed("back")) Globals.main.MoveSong(-1);
+            else if (Input.IsActionJustPressed("next")) Globals.main.MoveTrack(1);
+            else if (Input.IsActionJustPressed("back")) Globals.main.MoveTrack(-1);
         }
 
-        if (Globals.main.audio_player.Stream != null) current_time.Text = Tools.SecondsToTimestamp(Globals.main.time);
+        if (Globals.main.audio_player.Stream != null) current_time_label.Text = Tools.SecondsToTimestamp(Globals.main.time);
 
         if (!can_set_time) {
-            progress.Value = Globals.main.time;
+            progress_slider.Value = Globals.main.time;
         }
         else if (!Globals.main.playing) {
-            Globals.main.time = (float)progress.Value;
+            Globals.main.time = (float)progress_slider.Value;
         }
 
-        if (Globals.main.IsSongAvailable()) {
+        if (Globals.main.IsTrackAvailable()) {
             float max = 0.65f;
             background_color_rect.Color = background_color_rect.Color.Lerp(background_color.Clamp(new Color(0f, 0f, 0f, 0f), new Color(max, max, max, max)), (float)delta * 2f);
 

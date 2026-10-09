@@ -5,34 +5,32 @@ using Newtonsoft.Json;
 
 public class SaveSystem
 {
-	
-
     public static string ImportFolder(in string path) {
         // Create new folder
-		string new_path = Path.Combine(Constants.USER_DATA, "Music Folders", Path.GetDirectoryName(path));
+		string new_path = Path.Combine(Constants.USER_DATA, "Track Folders", Path.GetDirectoryName(path));
         Directory.CreateDirectory(new_path);
 
-		// Copy all music files to the folder
-		string[] songs = Directory.GetFiles(path);
+		// Copy all audio files to the folder
+		string[] tracks = Directory.GetFiles(path);
 
-		foreach (string song in songs) { 
-			if(Tools.ValidAudioFile(song)) File.Copy(song, Path.Combine(new_path, Path.GetFileName(song)));
+		foreach (string track in tracks) { 
+			if(Tools.ValidAudioFile(track)) File.Copy(track, Path.Combine(new_path, Path.GetFileName(track)));
 		}
 
 		return new_path;
     }
 
-	public static List<string> ImportSongs(in string[] songs, string playlist_name, bool check_valid = true) {
+	public static List<string> ImportTracks(in string[] tracks, string playlist_name, bool check_valid = true) {
 		List<string> list = new List<string>();
-		string new_path = Path.Combine(Constants.USER_DATA, "Music Folders", playlist_name);
+		string new_path = Path.Combine(Constants.USER_DATA, "Track Folders", playlist_name);
 		Directory.CreateDirectory(new_path);
 
-		foreach(string song in songs) {
-			if(check_valid) if (Tools.ValidAudioFile(song)) continue;
+		foreach(string track in tracks) {
+			if(check_valid) if (Tools.ValidAudioFile(track)) continue;
 
-			string destination_path = Path.Combine(new_path, Path.GetFileName(song));
+			string destination_path = Path.Combine(new_path, Path.GetFileName(track));
 
-			File.Copy(song, destination_path);
+			File.Copy(track, destination_path);
             list.Add(destination_path);
         }
 

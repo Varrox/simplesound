@@ -2,8 +2,8 @@ using Godot;
 
 public partial class PlaylistDisplay : Button
 {
-    [Export] public TextureRect cover;
-    [Export] public Label playlist_name, songs;
+    [Export] public TextureRect cover_texture_rect;
+    [Export] public Label playlist_name_label, track_count_label;
     [Export] public ContextMenuOpener more;
 
     int playlist_index;
@@ -15,16 +15,16 @@ public partial class PlaylistDisplay : Button
         MouseEntered += more.Show;
         MouseExited += OnExit;
 
-        Globals.main.OnLoadSong += SetTextHighlight;
+        Globals.main.OnLoadTrack += SetTextHighlight;
     }
 
     public void SetTextHighlight()
     {
         bool highlight = Globals.main.playlist_index == playlist_index;
         if(highlight)
-            playlist_name.AddThemeColorOverride("font_color", Globals.playing_font_color);
+            playlist_name_label.AddThemeColorOverride("font_color", Globals.playing_font_color);
         else
-            playlist_name.AddThemeColorOverride("font_color", Colors.White);
+            playlist_name_label.AddThemeColorOverride("font_color", Colors.White);
     }
 
     public override void _Input(InputEvent @event) {
@@ -45,7 +45,7 @@ public partial class PlaylistDisplay : Button
 
     public void Set()
     {
-        Globals.main.playlist_visualizer.OnSelectPlaylist?.Invoke(playlist_index, cover.Texture);
+        Globals.main.playlist_visualizer.OnSelectPlaylist?.Invoke(playlist_index, cover_texture_rect.Texture);
         Globals.main.looked_at_playlist = playlist_index;
         SelfModulate = Globals.lower_highlight;
     }
@@ -57,21 +57,21 @@ public partial class PlaylistDisplay : Button
 
     public void Init(Playlist playlist, int index)
     {
-        cover.Texture = ConvertToGodot.LoadImageFromFile(playlist.cover) ?? Globals.default_cover;
-        playlist_name.Text = playlist.name;
+        cover_texture_rect.Texture = ConvertToGodot.LoadImageFromFile(playlist.cover) ?? Globals.default_cover;
+        playlist_name_label.Text = playlist.name;
 
-        string amount = $"{playlist.songs.Count}{(playlist.songs.Count != 1 ? " songs" : " song")}";
+        string amount = $"{playlist.songs.Count}{(playlist.songs.Count != 1 ? " tracks" : " track")}";
 
         if (playlist.type != Playlist.PlaylistType.Album)
         {
             if (playlist.songs == null)
-                songs.Text = "0 songs";
+                track_count_label.Text = "0 tracks";
             else
-                songs.Text = $"{amount}{(playlist.artist != null ? $" {Constants.DOT} {playlist.artist}" : "")}";
+                track_count_label.Text = $"{amount}{(playlist.artist != null ? $" {Constants.DOT} {playlist.artist}" : "")}";
         }
         else
         {
-            songs.Text = $"Album  {Constants.DOT}  {playlist.artist ?? (playlist.songs.Count.ToString() + (playlist.songs.Count != 1 ? " songs" : " song"))}";
+            track_count_label.Text = $"Album  {Constants.DOT}  {playlist.artist ?? (playlist.songs.Count.ToString() + (playlist.songs.Count != 1 ? " tracks" : " track"))}";
         }
 
         playlist_index = index;

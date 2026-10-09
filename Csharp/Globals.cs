@@ -4,6 +4,8 @@ using System;
 [GlobalClass]
 public partial class Globals : Node
 {
+    public static Globals self;
+
     [ExportGroup("Textures")]
     // Textures
     [Export] private Texture2D _play_texture {set{ play_texture = value; }get { return play_texture; }}
@@ -28,9 +30,6 @@ public partial class Globals : Node
     [Export] private Discord _discord{set{ discord = value; }get{ return discord; }}
     public static Discord discord;
 
-    [Export] private Node _self{set{ self = value; }get { return self; }}
-    public static Node self;
-
     [ExportGroup("Windows")]
 
     [Export] private AttributeEditor _attribute_editor{set{ attribute_editor = value; }get{ return attribute_editor; }}
@@ -42,14 +41,19 @@ public partial class Globals : Node
     [Export] private FileDialog _file_dialog{set{ file_dialog = value; }get { return file_dialog; }}
     public static FileDialog file_dialog;
 
-    [Export] private PackedScene _confirmation_window{set{ confirmation_window = value; }get{ return confirmation_window; }}
-    public static PackedScene confirmation_window;
-
     [Export] private ContextMenu _playlist_menu{set{ playlist_menu = value; }get{ return playlist_menu; }}
     public static ContextMenu playlist_menu;
 
-    [Export] private ContextMenu _song_menu{set{ song_menu = value; }get{ return song_menu; }}
-    public static ContextMenu song_menu;
+    [Export] private ContextMenu _track_menu{set{ track_menu = value; }get{ return track_menu; }}
+    public static ContextMenu track_menu;
+
+    [ExportGroup("Packed Scenes")]
+
+    [Export] private PackedScene _path_display{set{ path_display = value; }get{ return path_display; }}
+    public static PackedScene path_display;
+
+    [Export] private PackedScene _confirmation_window{set{ confirmation_window = value; }get{ return confirmation_window; }}
+    public static PackedScene confirmation_window;
 
     [ExportGroup("Theming")]
 
@@ -85,7 +89,8 @@ public partial class Globals : Node
 
     public static SaveData save_data;
 
-    public override void _Ready() {
+    Globals() {
+        self = this;
     }
 
     public static void ResetFileDialogParameters() {
@@ -93,7 +98,7 @@ public partial class Globals : Node
         file_dialog.OkButtonText = "";
     }
 
-    public static void SetFileDialogSongs() {
+    public static void SetFileDialogTracks() {
         file_dialog.Filters = new[] { "*.mp3", "*.wav", "*.ogg" };
         file_dialog.FileMode = FileDialog.FileModeEnum.OpenFiles;
         file_dialog.OkButtonText = "Import audio files";

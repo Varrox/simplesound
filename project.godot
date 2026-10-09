@@ -11,9 +11,9 @@ config_version=5
 [application]
 
 config/name="simplesound"
-config/description="a simple music player built to be like spotify but uses music on your local machine"
+config/description="a simple FOSS audio player built to feel like spotify but running only with your local files."
 config/version="v1.3-alpha"
-run/main_scene="res://Windows/Main.tscn"
+run/main_scene="res://Windows/main_window.tscn"
 run/main_loop_type="ApplicationManager"
 config/features=PackedStringArray("4.8", "C#", "GL Compatibility")
 run/low_processor_mode=true

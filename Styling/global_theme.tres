@@ -4,7 +4,69 @@
 [ext_resource type="StyleBox" uid="uid://bcwdihevqnrfe" path="res://Styling/Color Picker/color_picker_normal.tres" id="1_jybvc"]
 [ext_resource type="StyleBox" uid="uid://cxytxx6a7h42y" path="res://Styling/Color Picker/color_picker_disabled.tres" id="1_m7e64"]
 
+[sub_resource type="DPITexture" id="DPITexture_m7e64"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><path fill=\"gray\" d=\"M0 0v8h8V0zm8 8v8h8V8z\"/><path fill=\"#fff\" d=\"M8 0v8h8V0zm0 8H0v8h8z\"/></svg>
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k2t6e"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 0.75)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_32k8g"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.225, 0.225, 0.225, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uvoye"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0, 0, 0, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
 [resource]
 default_font = ExtResource("1_787rk")
+ColorPickerButton/colors/font_color = Color(1, 1, 1, 1)
+ColorPickerButton/colors/font_disabled_color = Color(0.9, 0.9, 0.9, 0.3)
+ColorPickerButton/colors/font_focus_color = Color(1, 1, 1, 1)
+ColorPickerButton/colors/font_hover_color = Color(1, 1, 1, 1)
+ColorPickerButton/colors/font_outline_color = Color(0, 0, 0, 1)
+ColorPickerButton/colors/font_pressed_color = Color(0.8, 0.8, 0.8, 1)
+ColorPickerButton/constants/h_separation = 4
+ColorPickerButton/constants/outline_size = 0
+ColorPickerButton/font_sizes/font_size = 16
+ColorPickerButton/icons/bg = SubResource("DPITexture_m7e64")
 ColorPickerButton/styles/disabled = ExtResource("1_m7e64")
+ColorPickerButton/styles/focus = SubResource("StyleBoxFlat_k2t6e")
+ColorPickerButton/styles/hover = SubResource("StyleBoxFlat_32k8g")
 ColorPickerButton/styles/normal = ExtResource("1_jybvc")
+ColorPickerButton/styles/pressed = SubResource("StyleBoxFlat_uvoye")

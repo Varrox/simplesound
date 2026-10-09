@@ -39,44 +39,44 @@ public class Playlist
         Globals.save_data.Save();
     }
 
-    public Playlist(string name, string cover, List<string> songs) {
+    public Playlist(string name, string cover, List<string> tracks) {
         this.name = name;
         this.cover = cover;
-        this.songs = ProcessSongs(songs);
+        this.songs = ProcessTracks(tracks);
         custom_info = new CustomInfo();
     }
 
     public static Playlist LoadFromFile(string path) {
         Playlist playlist = JsonConvert.DeserializeObject<Playlist>(File.ReadAllText(path));
-        playlist.songs = ProcessSongs(playlist.songs);
+        playlist.songs = ProcessTracks(playlist.songs);
         return playlist;
     }
 
-    public static List<string> ProcessSongs(List<string> songs) {
-        for(int i = 0; i < songs.Count; i++) {
-            if(!File.Exists(songs[i])) {
-                string path = songs[i];
-                songs.RemoveAt(i);
+    public static List<string> ProcessTracks(List<string> tracks) {
+        for(int i = 0; i < tracks.Count; i++) {
+            if(!File.Exists(tracks[i])) {
+                string path = tracks[i];
+                tracks.RemoveAt(i);
                 
-                if (Directory.Exists(path)) songs.InsertRange(i, GetSongsFromDirectory(path));
+                if (Directory.Exists(path)) tracks.InsertRange(i, GetTracksFromDirectory(path));
             }
         }
 
-        return songs;
+        return tracks;
     }
 
-    public static List<string> GetSongsFromDirectory(string directory) {
-        List<string> songs = new List<string>();
+    public static List<string> GetTracksFromDirectory(string directory) {
+        List<string> tracks = new List<string>();
 
         foreach(string dir in Directory.GetDirectories(directory)) {
-            if (Directory.Exists(dir)) songs.AddRange(GetSongsFromDirectory(dir));
+            if (Directory.Exists(dir)) tracks.AddRange(GetTracksFromDirectory(dir));
         }
 
         foreach(string file in Directory.GetFiles(directory)) {
-            if(Tools.ValidAudioFile(file)) songs.Add(file);
+            if(Tools.ValidAudioFile(file)) tracks.Add(file);
         }
 
-        return songs;
+        return tracks;
     }
 
     [JsonConstructor] public Playlist() {

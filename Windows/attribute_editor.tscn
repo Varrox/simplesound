@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://eh8a3k652ogt" path="res://Csharp/UI/Attribute Editor/AttributeEditor.cs" id="1_cj5je"]
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Styling/Fonts/DefaultFont.tres" id="1_ot5f1"]
-[ext_resource type="PackedScene" uid="uid://cjc5crjo31obe" path="res://Prefabs/pathdisplay.tscn" id="3_6cib4"]
+[ext_resource type="PackedScene" uid="uid://cjc5crjo31obe" path="res://Prefabs/path_display.tscn" id="3_6cib4"]
 [ext_resource type="Script" uid="uid://ckpanpt3fty8d" path="res://Csharp/UI/Default Node Extentions/ThemeLineEdit.cs" id="3_j2mdm"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3g08v"]
@@ -11,22 +11,22 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iyibu"]
 
-[node name="Attribute editor" type="Window" unique_id=397200673 node_paths=PackedStringArray("name", "artist", "share_link", "cover_button", "cover_label", "explicit_lyrics", "submit_button", "cancel_button")]
+[node name="Attribute editor" type="Window" unique_id=397200673 node_paths=PackedStringArray("name_field", "artist_field", "share_link_field", "explicit_lyrics_field", "select_cover_button", "cover_label", "submit_button", "cancel_button")]
 auto_translate_mode = 1
 oversampling_override = 1.0
-title = "Edit song attributes"
+title = "Edit track attributes"
 initial_position = 2
 size = Vector2i(300, 250)
 transient = true
 exclusive = true
 min_size = Vector2i(250, 250)
 script = ExtResource("1_cj5je")
-name = NodePath("VBoxContainer/Name")
-artist = NodePath("VBoxContainer/Artist")
-share_link = NodePath("VBoxContainer/Share")
-cover_button = NodePath("VBoxContainer/Cover")
+name_field = NodePath("VBoxContainer/Name")
+artist_field = NodePath("VBoxContainer/Artist")
+share_link_field = NodePath("VBoxContainer/Share")
+explicit_lyrics_field = NodePath("VBoxContainer/Explicit Lyrics")
+select_cover_button = NodePath("VBoxContainer/Cover")
 cover_label = NodePath("VBoxContainer/Selected File")
-explicit_lyrics = NodePath("VBoxContainer/Explicit Lyrics")
 submit_button = NodePath("VBoxContainer/HBoxContainer/Submit")
 cancel_button = NodePath("VBoxContainer/HBoxContainer/Cancel")
 

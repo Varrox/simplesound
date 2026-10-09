@@ -13,11 +13,11 @@ public partial class RemoveSong : Button
 
     public void Remove()
 	{
-		if(Globals.save_data.application_settings.remove_song_warning)
+		if(Globals.save_data.application_settings.remove_track_warning)
 		{
 			confirmation_window = Globals.confirmation_window.Instantiate() as ConfirmationWindow;
 
-            confirmation_window.message = $"Are you sure you want to delete this song \'{Metadata.GetName(Globals.main.playlists[Globals.main.looked_at_playlist].songs[SongsMore.song])}\' from this playlist?";
+            confirmation_window.message = $"Are you sure you want to delete this track \'{Metadata.GetName(Globals.main.playlists[Globals.main.looked_at_playlist].songs[SongsMore.selected_track])}\' from this playlist?";
             confirmation_window.accept_text = "Yes";
             confirmation_window.decline_text = "No";
             confirmation_window.cancel_text = "";
@@ -39,7 +39,7 @@ public partial class RemoveSong : Button
         {
             if (confirmation_window.ignored)
             {
-                Globals.save_data.application_settings.remove_song_warning = false;
+                Globals.save_data.application_settings.remove_track_warning = false;
                 Globals.save_data.Save();
             }
 
@@ -49,18 +49,18 @@ public partial class RemoveSong : Button
 
         if (Globals.main.looked_at_playlist == Globals.main.playlist_index)
         {
-            if (Globals.main.song_index == SongsMore.song)
+            if (Globals.main.track_index == SongsMore.selected_track)
             {
-                Globals.main.song_index += (SongsMore.song == 0 ? -1 : 1);
-                Globals.main.PlaySong(Globals.main.song);
+                Globals.main.track_index += (SongsMore.selected_track == 0 ? -1 : 1);
+                Globals.main.PlayTrack(Globals.main.track);
             }
 
-            if (Globals.main.song_index > SongsMore.song)
-                Globals.main.song_index -= 1;
+            if (Globals.main.track_index > SongsMore.selected_track)
+                Globals.main.track_index -= 1;
         }
 
-        Globals.main.playlists[Globals.main.looked_at_playlist].songs.RemoveAt(SongsMore.song);
+        Globals.main.playlists[Globals.main.looked_at_playlist].songs.RemoveAt(SongsMore.selected_track);
         Globals.main.playlists[Globals.main.looked_at_playlist].Save();
-        Globals.main.songs_visualizer.Update();
+        Globals.main.tracks_visualizer.Update();
     }
 }

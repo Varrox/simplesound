@@ -25,24 +25,24 @@ public partial class PlaylistCreatorOpener : EditorWindowOpener
 
 		if (!creator.cancelled)
 		{
-			bool sync = creator.cloudSync.ButtonPressed;
+			bool sync = creator.cloud_sync_enabled_field.ButtonPressed;
 
-            string file_name = creator.playlist_name.Text.Replace('\\', '-').Replace('/', '-').Replace(':', '-');
+            string file_name = creator.playlist_name_field.Text.Replace('\\', '-').Replace('/', '-').Replace(':', '-');
 
             var cover_path = sync ? SaveSystem.ImportCover(creator.cover_path, file_name) : creator.cover_path;
 
-            List<string> songs = sync ? SaveSystem.ImportSongs(creator.songs.ToArray(), file_name, false) : new(creator.songs);
+            List<string> tracks = sync ? SaveSystem.ImportTracks(creator.tracks.ToArray(), file_name, false) : new(creator.tracks);
 
-			Playlist playlist = new Playlist(creator.playlist_name.Text, cover_path, songs);
+			Playlist playlist = new Playlist(creator.playlist_name_field.Text, cover_path, tracks);
 
-			if (creator.backgroundThemeEnabled.ButtonPressed)
-				playlist.custom_info.overlay_color = "#" + creator.backgroundTheme.Color.ToHtml();
+			if (creator.background_color_enabled_field.ButtonPressed)
+				playlist.custom_info.overlay_color = "#" + creator.background_color_field.Color.ToHtml();
 
-			if (creator.album.ButtonPressed)
+			if (creator.album_field.ButtonPressed)
 				playlist.type = Playlist.PlaylistType.Album;
 
-			if (creator.artist.Text.Trim() != "")
-				playlist.artist = creator.artist.Text;
+			if (creator.artist_field.Text.Trim() != "")
+				playlist.artist = creator.artist_field.Text;
 
             creator.Clear();
 

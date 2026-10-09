@@ -2,21 +2,24 @@ using Godot;
 
 public partial class AttributeEditor : EditorWindow
 {
-    [Export] public ThemeLineEdit name, artist, share_link;
-    [Export] public Button cover_button;
+    [Export] public ThemeLineEdit name_field, artist_field, share_link_field;
+    [Export] public CheckBox explicit_lyrics_field;
+
+    [Export] public Button select_cover_button;
     [Export] public PathDisplay cover_label;
-    [Export] public CheckBox explicit_lyrics;
+
     [Export] public Button submit_button, cancel_button;
 
-    public string song_name, _artist, cover_path, _share_link;
-    public bool _explicit_lyrics, cover_changed;
+    public string track_name, artist, cover_path, share_link;
+    public bool explicit_lyrics, cover_changed;
 
     public override void _Ready()
     {
         base._Ready();
 
+        select_cover_button.ButtonDown += Cover;
+
         submit_button.ButtonDown += Submit;
-        cover_button.ButtonDown += Cover;
         cancel_button.ButtonDown += Cancel;
     }
 
@@ -24,22 +27,22 @@ public partial class AttributeEditor : EditorWindow
     {
         if (Visible)
         { 
-            bool changed = (name.Text != song_name) || (artist.Text != _artist) || cover_changed || (_explicit_lyrics != explicit_lyrics.ButtonPressed) || (_share_link != share_link.Text);
+            bool changed = (name_field.Text != track_name) || (artist_field.Text != artist) || cover_changed || (explicit_lyrics != explicit_lyrics_field.ButtonPressed) || (share_link != share_link_field.Text);
             submit_button.Visible = changed;
         }
     }
 
-    public void Open(string currentSong, string current_artist, string current_share_link, bool explicit_lyrics)
+    public void Open(string current_track_name, string current_artist, string current_share_link, bool explicit_lyrics)
     {
-        name.Text = currentSong;
-        song_name = currentSong;
-        artist.Text = current_artist;
-        _artist = current_artist;
-        share_link.Text = current_share_link;
-        _share_link = current_share_link;
+        name_field.Text = current_track_name;
+        track_name = current_track_name;
+        artist_field.Text = current_artist;
+        artist = current_artist;
+        share_link_field.Text = current_share_link;
+        share_link = current_share_link;
 
-        this.explicit_lyrics.ButtonPressed = explicit_lyrics;
-        this._explicit_lyrics = explicit_lyrics;
+        this.explicit_lyrics_field.ButtonPressed = explicit_lyrics;
+        this.explicit_lyrics = explicit_lyrics;
 
         cover_label.SetPath();
         cover_path = "";

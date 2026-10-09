@@ -25,17 +25,17 @@ public partial class ImportFolderOpener : EditorWindowOpener
 
         if (!creator.cancelled)
         {
-            List<string> files = SaveSystem.ImportSongs(creator.songs.ToArray(), creator.playlist_name.Text, false);
-            Playlist playlist = new Playlist(creator.playlist_name.Text, SaveSystem.ImportCover(creator.cover_path, creator.playlist_name.Text), new List<string>(files));
+            List<string> files = SaveSystem.ImportTracks(creator.tracks.ToArray(), creator.playlist_name_field.Text, false);
+            Playlist playlist = new Playlist(creator.playlist_name_field.Text, SaveSystem.ImportCover(creator.cover_path, creator.playlist_name_field.Text), new List<string>(files));
 
-            if (creator.backgroundThemeEnabled.ButtonPressed)
-                playlist.custom_info.overlay_color = "#" + creator.backgroundTheme.Color.ToHtml();
+            if (creator.background_color_enabled_field.ButtonPressed)
+                playlist.custom_info.overlay_color = "#" + creator.background_color_field.Color.ToHtml();
 
-            if (creator.album.ButtonPressed)
+            if (creator.album_field.ButtonPressed)
                 playlist.type = Playlist.PlaylistType.Album;
 
-            if (creator.artist.Text.Trim() != "")
-                playlist.artist = creator.artist.Text;
+            if (creator.artist_field.Text.Trim() != "")
+                playlist.artist = creator.artist_field.Text;
 
             Globals.main.playlist_paths.Add(playlist.Save());
             Globals.main.SetSaveData();

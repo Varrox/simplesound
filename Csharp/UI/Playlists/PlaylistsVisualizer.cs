@@ -13,7 +13,7 @@ public partial class PlaylistsVisualizer : ScrollContainer
         for (int i = 0; i < container.GetChildCount(); i++) {
             if (container.GetChild(i) is PlaylistDisplay)  {
                 PlaylistDisplay display = (container.GetChild(i) as PlaylistDisplay);
-                display.cover.Visible = container.GetGlobalRect().Intersects(display.GetGlobalRect());
+                display.cover_texture_rect.Visible = container.GetGlobalRect().Intersects(display.GetGlobalRect());
             }
         }
     }

@@ -1,11 +1,11 @@
 using Godot;
 
-public struct SongData
+public struct TrackData
 {
     public string title, artist, time;
     public bool explicit_lyrics, corrupt;
 
-    public SongData(string file)
+    public TrackData(string file)
     {
         title = Tools.GetMediaTitle(file);
         artist = Metadata.GetArtist(file);

@@ -2,7 +2,7 @@
 
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Styling/Fonts/DefaultFont.tres" id="1_8t6yf"]
 [ext_resource type="Script" uid="uid://bhqfe4m1n2gya" path="res://Csharp/UI/Playlist Creator/PlaylistCreator.cs" id="1_b0noq"]
-[ext_resource type="PackedScene" uid="uid://cjc5crjo31obe" path="res://Prefabs/pathdisplay.tscn" id="3_uox0n"]
+[ext_resource type="PackedScene" uid="uid://cjc5crjo31obe" path="res://Prefabs/path_display.tscn" id="3_uox0n"]
 [ext_resource type="Script" uid="uid://b33tl5k5kwk30" path="res://Csharp/UI/Default Node Extentions/ThemeColorPickerButton.cs" id="4_3os5s"]
 [ext_resource type="Script" uid="uid://ckpanpt3fty8d" path="res://Csharp/UI/Default Node Extentions/ThemeLineEdit.cs" id="4_eb7ps"]
 
@@ -14,7 +14,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bhcbq"]
 
-[node name="Window" type="Window" unique_id=874625055 node_paths=PackedStringArray("playlist_name", "addCover", "addSongs", "coverDisplay", "songDisplayContainer", "panel", "cloudSync", "album", "backgroundThemeEnabled", "artist", "backgroundTheme", "SubmitButton", "CancelButton")]
+[node name="Window" type="Window" unique_id=874625055 node_paths=PackedStringArray("playlist_name_field", "add_track_button", "track_panel", "track_path_display_container", "add_cover_button", "cover_path_display", "album_field", "artist_field", "background_color_enabled_field", "background_color_field", "cloud_sync_enabled_field", "submit_button", "cancel_button")]
 oversampling_override = 1.0
 title = "Create Playlist"
 initial_position = 2
@@ -23,20 +23,19 @@ transient = true
 exclusive = true
 min_size = Vector2i(450, 300)
 script = ExtResource("1_b0noq")
-playlist_name = NodePath("HBoxContainer2/VBoxContainer/Name")
-addCover = NodePath("HBoxContainer2/VBoxContainer2/Cover")
-addSongs = NodePath("HBoxContainer2/VBoxContainer/Cover2")
-coverDisplay = NodePath("HBoxContainer2/VBoxContainer2/Selected File")
-songDisplay = ExtResource("3_uox0n")
-songDisplayContainer = NodePath("HBoxContainer2/VBoxContainer/Panel/ScrollContainer/VBoxContainer")
-panel = NodePath("HBoxContainer2/VBoxContainer/Panel")
-cloudSync = NodePath("HBoxContainer2/VBoxContainer2/Cloud")
-album = NodePath("HBoxContainer2/VBoxContainer2/Album")
-backgroundThemeEnabled = NodePath("HBoxContainer2/VBoxContainer2/Background Theme")
-artist = NodePath("HBoxContainer2/VBoxContainer2/Artist")
-backgroundTheme = NodePath("HBoxContainer2/VBoxContainer2/ColorPickerButton")
-SubmitButton = NodePath("HBoxContainer/Create")
-CancelButton = NodePath("HBoxContainer/Cancel")
+playlist_name_field = NodePath("HBoxContainer2/VBoxContainer/Name")
+add_track_button = NodePath("HBoxContainer2/VBoxContainer/AddTrack")
+track_panel = NodePath("HBoxContainer2/VBoxContainer/Panel")
+track_path_display_container = NodePath("HBoxContainer2/VBoxContainer/Panel/ScrollContainer/VBoxContainer")
+add_cover_button = NodePath("HBoxContainer2/VBoxContainer2/Cover")
+cover_path_display = NodePath("HBoxContainer2/VBoxContainer2/Selected File")
+album_field = NodePath("HBoxContainer2/VBoxContainer2/Album")
+artist_field = NodePath("HBoxContainer2/VBoxContainer2/Artist")
+background_color_enabled_field = NodePath("HBoxContainer2/VBoxContainer2/Background Theme")
+background_color_field = NodePath("HBoxContainer2/VBoxContainer2/ColorPickerButton")
+cloud_sync_enabled_field = NodePath("HBoxContainer2/VBoxContainer2/Cloud")
+submit_button = NodePath("HBoxContainer/Create")
+cancel_button = NodePath("HBoxContainer/Cancel")
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="." unique_id=1414908470]
 anchors_preset = 15
@@ -67,13 +66,13 @@ metadata/_custom_type_script = "uid://ckpanpt3fty8d"
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
-[node name="Cover2" type="Button" parent="HBoxContainer2/VBoxContainer" unique_id=1543300614]
+[node name="AddTrack" type="Button" parent="HBoxContainer2/VBoxContainer" unique_id=1543300614]
 layout_mode = 2
 size_flags_vertical = 4
 tooltip_text = "Opens a dialog to select audio files."
 theme_override_fonts/font = ExtResource("1_8t6yf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_yiuwm")
-text = "Add Song(s)"
+text = "Add Track(s)"
 
 [node name="Panel" type="Panel" parent="HBoxContainer2/VBoxContainer" unique_id=1120451052]
 custom_minimum_size = Vector2(0, 79.7)
@@ -161,8 +160,8 @@ layout_mode = 2
 [node name="Cloud" type="CheckBox" parent="HBoxContainer2/VBoxContainer2" unique_id=221899050]
 layout_mode = 2
 size_flags_vertical = 4
-tooltip_text = "If disabled, songs on this playlist will not be synced to other devices. 
-But of course if you add songs yourself in the ssl file, you can choose"
+tooltip_text = "If disabled, tracks on this playlist will not be synced to other devices. 
+But of course if you add tracks yourself in the ssl file, you can choose"
 theme_override_fonts/font = ExtResource("1_8t6yf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_r7omr")
 text = "Cloud Sync"

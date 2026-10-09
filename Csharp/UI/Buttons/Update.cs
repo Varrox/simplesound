@@ -6,10 +6,12 @@ using System.IO;
 public partial class Update : Button
 {
     readonly string download_folder = new FileInfo(OS.GetExecutablePath()).Directory.FullName;
-    readonly string download_file = $"{new FileInfo(OS.GetExecutablePath()).Directory.FullName}\\Download.zip";
+    readonly string download_file = Path.Combine(new FileInfo(OS.GetExecutablePath()).Directory.FullName, "Download.zip");
 
 	HttpRequest http_client;
+
     bool updating, can_be_updated;
+    
     CurrentRequest current_request;
 
     enum CurrentRequest
@@ -21,8 +23,10 @@ public partial class Update : Button
 
 	public override void _Ready()
 	{
-        if (OS.HasFeature("editor")) // If editor, do not allow for updating at all.
+        if (OS.HasFeature("editor")) {// If editor, do not allow for updating at all.
             QueueFree();
+            return;
+        }
 
         http_client = new HttpRequest();
         AddChild(http_client);
@@ -81,7 +85,7 @@ public partial class Update : Button
     public void Install(string file)
     {
         // Read new files.
-
+        
         ZipReader zip_reader = new ZipReader();
         Error error = zip_reader.Open(file);
 
@@ -129,7 +133,7 @@ public partial class Update : Button
 
         ConfirmationWindow confirmation = (ConfirmationWindow)Globals.confirmation_window.Instantiate();
 
-        confirmation.message = "Restart simplesound?";
+        confirmation.message = $"Restart {ApplicationManager.SOFTWARE_NAME}?";
         confirmation.accept_text = "Yes";
         confirmation.decline_text = "No";
         confirmation.cancel_text = "";

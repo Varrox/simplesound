@@ -31,7 +31,7 @@ public partial class ShareMenu : ContextMenuOpener
 
     public void GetSongData()
 	{
-        file = Globals.main.playlists[Globals.main.looked_at_playlist].songs[SongsMore.song];
+        file = Globals.main.playlists[Globals.main.looked_at_playlist].songs[SongsMore.selected_track];
 		link = Metadata.GetShareLink(file);
 
 		Icon = back;

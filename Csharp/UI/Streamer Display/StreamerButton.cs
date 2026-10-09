@@ -21,12 +21,12 @@ public partial class StreamerButton : Button
 			display = stream_display.Instantiate() as StreamDisplay;
 			GetTree().CurrentScene.AddChild(display);
 
-			Globals.main.OnLoadSong += SetStreamDisplayVariables;
+			Globals.main.OnLoadTrack += SetStreamDisplayVariables;
 			SetStreamDisplayVariables();
         }
 		else {
 			display.QueueFree();
-			Globals.main.OnLoadSong -= SetStreamDisplayVariables;
+			Globals.main.OnLoadTrack -= SetStreamDisplayVariables;
 		}
 
 		SetFontColors();
@@ -51,9 +51,9 @@ public partial class StreamerButton : Button
 
 	public void SetStreamDisplayVariables()
 	{
-		display.cover_art.Texture = Globals.player.song_cover.Texture;
-		display.song.Text = Globals.player.song_name.Text;
-		display.artist.Text = Globals.player.song_artist.Text;
-		display.background.Texture = texture.Texture;
+		display.cover_texture_rect.Texture = Globals.player.track_cover_texture_rect.Texture;
+		display.track_name_label.Text = Globals.player.track_name_label.Text;
+		display.artist_label.Text = Globals.player.track_artist_label.Text;
+		display.background_texture_rect.Texture = texture.Texture;
     }
 }

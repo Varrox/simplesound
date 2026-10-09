@@ -9,13 +9,13 @@ public partial class Main : Control
     [Export] public VideoStreamPlayer video_player;
     [Export] public Player player;
 	[Export] public PlaylistsVisualizer playlist_visualizer;
-	[Export] public SongsVisualizer songs_visualizer;
+	[Export] public SongsVisualizer tracks_visualizer;
 
 	public bool loop, playing, shuffled;
 
-	public int playlist_index, song_index;
+	public int playlist_index, track_index;
 
-	public string current_song_path, current_share_link;
+	public string current_track_path, current_share_link;
 
     public int looked_at_playlist;
 
@@ -34,13 +34,13 @@ public partial class Main : Control
 
 	public int offset, shuffle_index, random_offset;
 
-    public Action OnLoadSong;
+    public Action OnLoadTrack;
     public Action OnLoadPlaylist;
     public Action<bool> OnPlayingChanged;
 
-	public string song {
+	public string track {
 		get {
-			if(IsSongAvailable()) return playlists[playlist_index].songs[song_index];
+			if(IsTrackAvailable()) return playlists[playlist_index].songs[track_index];
 			else return null;
         }
 	}
@@ -49,15 +49,15 @@ public partial class Main : Control
 		// Load Save data
 
 		playlist_index = Globals.save_data.playlist_index;
-		song_index = Globals.save_data.song_index;
+		track_index = Globals.save_data.song_index;
 		time = Globals.save_data.time;
 		volume = Globals.save_data.volume;
 		shuffled = Globals.save_data.shuffled;
         looked_at_playlist = Globals.save_data.looked_at_playlist;
 
-		offset = song_index;
+		offset = track_index;
 
-		if (shuffled) shuffle_index = song_index;
+		if (shuffled) shuffle_index = track_index;
 
         // Set Volume
 
@@ -79,8 +79,8 @@ public partial class Main : Control
 
         playlist_visualizer.LoadAllPlaylistVisuals();
 
-        if (IsSongAvailable()) PlaySong(playlist.songs[song_index]);
-        else OnLoadSong?.Invoke(); // Emit anyways just so it can display no songs
+        if (IsTrackAvailable()) PlayTrack(playlist.songs[track_index]);
+        else OnLoadTrack?.Invoke(); // Emit anyways just so it can display no tracks
 
 		// Done Loading
     }
@@ -95,9 +95,9 @@ public partial class Main : Control
 
 		// Loop management
 
-		if (playing && IsSongAvailable()) {
+		if (playing && IsTrackAvailable()) {
 			if (!audio_player.Playing) {
-				if (!loop) MoveSong(1);
+				if (!loop) MoveTrack(1);
 				else {
 					time = 0;
 					audio_player.Play(time);
@@ -116,7 +116,7 @@ public partial class Main : Control
 	public void CheckIndex() {
 		if (playlist_paths[playlist_index] != playlist.GetPath()) playlist_index = playlist_paths.IndexOf(playlist.GetPath());
 
-		if (song != current_song_path) song_index = playlist.songs.IndexOf(current_song_path);
+		if (track != current_track_path) track_index = playlist.songs.IndexOf(current_track_path);
 	}
 
 	public void LoadPlaylist(int index) {
@@ -182,74 +182,74 @@ public partial class Main : Control
         }
     }
 
-	public void MoveSong(int amount, bool set = false) {
-		if (!IsSongAvailable()) return;
+	public void MoveTrack(int amount, bool set = false) {
+		if (!IsTrackAvailable()) return;
 
 		if (shuffled && !set) {
 			offset += amount;
 
-			if (offset == shuffle_index) song_index = shuffle_index;
+			if (offset == shuffle_index) track_index = shuffle_index;
 			else {
 				for(int i = 0; i < 6; i++) {
 					GD.Seed((ulong)(offset * 3 + random_offset + i));
 					int random_number = GD.RandRange(0, playlist.songs.Count);
-					if (random_number != song_index) {
-						song_index = random_number;
+					if (random_number != track_index) {
+						track_index = random_number;
 						offset += i / 3;
 						break;
 					}
 				}
 			}
 		}
-		else song_index += amount;
+		else track_index += amount;
 
-		song_index = Mathf.Wrap(song_index, 0, playlist.songs.Count);
+		track_index = Mathf.Wrap(track_index, 0, playlist.songs.Count);
 
-		if(Metadata.IsFileCorrupt(song)) { // Skip if corrupted
-			MoveSong(amount);
+		if(Metadata.IsFileCorrupt(track)) { // Skip if corrupted
+			MoveTrack(amount);
 			return;
 		}
 
-		PlaySong(song);
+		PlayTrack(track);
 
 		playing = false;
 		FlipPlayingState();
 	}
 
-	public void SetSong(int index) {
-		if (!IsSongAvailable()) return;
+	public void SetTrack(int index) {
+		if (!IsTrackAvailable()) return;
 		
 		offset = index;
 		shuffle_index = index;
-		song_index = index;
+		track_index = index;
 
-		PlaySong(song);
+		PlayTrack(track);
 
 		playing = false;
 
 		FlipPlayingState();
     }
 
-	public void PlaySong(string path) {
-		if (IsSongAvailable()) {
+	public void PlayTrack(string path) {
+		if (IsTrackAvailable()) {
 			if (audio_player.Stream != null) time = 0;
 
-            if (FileAccess.FileExists(path)) _LoadSong(path);
+            if (FileAccess.FileExists(path)) _LoadTrack(path);
             else { // if the file doesn't exist
                 GD.PrintErr($"{path} doesn't exist");
 
-				// TODO : Better missing song management needed.
+				// TODO : Better missing track management needed.
 
-				if (playlist.songs[song_index] == path) {
-                    playlist.songs.RemoveAt(song_index);
+				if (playlist.songs[track_index] == path) {
+                    playlist.songs.RemoveAt(track_index);
                     playlist.Save();
-					PlaySong(song);
+					PlayTrack(track);
                 }
             }
         }
 	}
 
-	private void _LoadSong(in string path) {
+	private void _LoadTrack(in string path) {
 		switch (path.GetExtension()) {
 			case "mp3":
 				audio_player.Stream = AudioStreamMP3.LoadFromFile(path);
@@ -275,10 +275,10 @@ public partial class Main : Control
 
 		current_share_link = Metadata.GetShareLink(path);
 
-		OnLoadSong?.Invoke();
+		OnLoadTrack?.Invoke();
 	}
 
-	public bool IsSongAvailable() {
+	public bool IsTrackAvailable() {
 		if (playlists == null) return false;
 		if (playlists.Count <= playlist_index) return false;
 		if (playlists[playlist_index] == null) return false;
@@ -289,7 +289,7 @@ public partial class Main : Control
 
 	public void SetSaveData() {
 		Globals.save_data.playlist_index = playlist_index;
-		Globals.save_data.song_index = song_index;
+		Globals.save_data.song_index = track_index;
 		Globals.save_data.looked_at_playlist = looked_at_playlist;
 		Globals.save_data.time = time;
 		Globals.save_data.volume = audio_player.VolumeDb;
@@ -315,8 +315,8 @@ public partial class Main : Control
 
         Metadata.ResetCache();
 
-        OnLoadSong?.Invoke();
-		songs_visualizer.Update();
+        OnLoadTrack?.Invoke();
+		tracks_visualizer.Update();
         playlist_visualizer.UpdatePlaylists();
     }
 }

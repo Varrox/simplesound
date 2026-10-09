@@ -17,7 +17,7 @@ public partial class PlaylistPlayer : Button
 		else
 		{
             Globals.main.LoadPlaylist(Globals.main.looked_at_playlist);
-            Globals.main.SetSong(0);
+            Globals.main.SetTrack(0);
         }
 	}
 

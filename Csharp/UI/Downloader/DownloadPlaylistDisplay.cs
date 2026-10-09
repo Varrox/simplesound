@@ -3,13 +3,12 @@ using System;
 
 public partial class DownloadPlaylistDisplay : Button
 {
-	[Export] public TextureRect cover;
-    [Export] public Label playlist_name, songs;
+	[Export] public TextureRect cover_texture_rect;
+    [Export] public Label playlist_name_label, track_count_label;
 
 	int playlist_index;
 
-	public override void _Ready()
-	{
+	public override void _Ready() {
 		ButtonUp += Set;
 	}
 
@@ -27,21 +26,21 @@ public partial class DownloadPlaylistDisplay : Button
 
 	public void Init(Playlist playlist, int index)
     {
-        cover.Texture = ConvertToGodot.LoadImageFromFile(playlist.cover) ?? Globals.default_cover;
-        playlist_name.Text = playlist.name;
+        cover_texture_rect.Texture = ConvertToGodot.LoadImageFromFile(playlist.cover) ?? Globals.default_cover;
+        playlist_name_label.Text = playlist.name;
 
-        string amount = $"{playlist.songs.Count}{(playlist.songs.Count != 1 ? " songs" : " song")}";
+        string amount = $"{playlist.songs.Count}{(playlist.songs.Count != 1 ? " tracks" : " track")}";
 
         if (playlist.type != Playlist.PlaylistType.Album)
         {
             if (playlist.songs == null)
-                songs.Text = "0 songs";
+                track_count_label.Text = "0 tracks";
             else
-                songs.Text = $"{amount}{(playlist.artist != null ? $" {Constants.DOT} {playlist.artist}" : "")}";
+                track_count_label.Text = $"{amount}{(playlist.artist != null ? $" {Constants.DOT} {playlist.artist}" : "")}";
         }
         else
         {
-            songs.Text = $"Album  {Constants.DOT}  {playlist.artist ?? (playlist.songs.Count.ToString() + (playlist.songs.Count != 1 ? " songs" : " song"))}";
+            track_count_label.Text = $"Album  {Constants.DOT}  {playlist.artist ?? (playlist.songs.Count.ToString() + (playlist.songs.Count != 1 ? " tracks" : " track"))}";
         }
 
         playlist_index = index;

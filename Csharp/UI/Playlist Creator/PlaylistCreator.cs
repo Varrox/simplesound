@@ -3,22 +3,26 @@ using System.Collections.Generic;
 
 public partial class PlaylistCreator : EditorWindow
 {
-	[Export] public ThemeLineEdit playlist_name;
+	[Export] public ThemeLineEdit playlist_name_field;
 
-	[Export] public Button addCover, addSongs;
-	[Export] public PathDisplay coverDisplay;
+	[Export] public Button add_track_button;
+	[Export] public Panel track_panel;
+	[Export] public Control track_path_display_container;
 
-	[Export] public PackedScene songDisplay;
-	[Export] public Control songDisplayContainer;
-	[Export] public Panel panel;
+	[Export] public Button add_cover_button;
+	[Export] public PathDisplay cover_path_display;
 
-	[Export] public CheckBox cloudSync, album, backgroundThemeEnabled;
-	[Export] public ThemeLineEdit artist;
-	[Export] public ThemeColorPickerButton backgroundTheme;
+	[Export] public CheckBox album_field;
+	[Export] public ThemeLineEdit artist_field;
 
-	[Export] public Button SubmitButton, CancelButton;
+	[Export] public CheckBox background_color_enabled_field;
+	[Export] public ThemeColorPickerButton background_color_field;
 
-	public List<string> songs = new List<string>();
+	[Export] public CheckBox cloud_sync_enabled_field;
+
+	[Export] public Button submit_button, cancel_button;
+
+	public List<string> tracks = new List<string>();
 	public string cover_path;
 
 	bool cleared = false;
@@ -27,33 +31,33 @@ public partial class PlaylistCreator : EditorWindow
 	{
 		base._Ready();
 
-		addCover.ButtonUp += OpenCover;
-		coverDisplay.delete.ButtonUp += ClearCover;
+		add_cover_button.ButtonUp += OpenCover;
+		cover_path_display.delete.ButtonUp += ClearCover;
 
-		addSongs.ButtonUp += OpenSongs;
+		add_track_button.ButtonUp += OpenTracks;
 
 		// Submit / Cancel
 
-		SubmitButton.ButtonUp += Submit;
-		CancelButton.ButtonUp += Cancel;
+		submit_button.ButtonUp += Submit;
+		cancel_button.ButtonUp += Cancel;
 	}
 
 	public void Clear()
 	{
-        playlist_name.Text = "";
-        coverDisplay.SetPath();
+        playlist_name_field.Text = "";
+        cover_path_display.SetPath();
 
-        foreach (Node child in songDisplayContainer.GetChildren())
+        foreach (Node child in track_path_display_container.GetChildren())
         {
             child.QueueFree();
         }
 
-        songs.Clear();
+        tracks.Clear();
 
-        album.ButtonPressed = false;
-        artist.Text = "";
-        backgroundThemeEnabled.ButtonPressed = false;
-        backgroundTheme.Color = Colors.White;
+        album_field.ButtonPressed = false;
+        artist_field.Text = "";
+        background_color_enabled_field.ButtonPressed = false;
+        background_color_field.Color = Colors.White;
 
 		cleared = true;
     }
@@ -64,14 +68,14 @@ public partial class PlaylistCreator : EditorWindow
 			Clear();
 
         Globals.file_dialog.Reparent(this);
-		FilesDropped += DropSongs;
+		FilesDropped += DropTracks;
 
         Show();
 	}
 
     public override void _Process(double delta)
     {
-		backgroundTheme.Disabled = !backgroundThemeEnabled.ButtonPressed;
+		background_color_field.Disabled = !background_color_enabled_field.ButtonPressed;
     }
 
     public void OpenCover()
@@ -86,51 +90,51 @@ public partial class PlaylistCreator : EditorWindow
 	public void SetCover(string path)
 	{
 		cover_path = path;
-		coverDisplay.SetPath(cover_path);
+		cover_path_display.SetPath(cover_path);
         CancelSetCover();
     }
 	
 	public void ClearCover()
 	{
 		cover_path = "";
-        coverDisplay.SetPath(cover_path);
+        cover_path_display.SetPath(cover_path);
     }
 
-	public void OpenSongs()
+	public void OpenTracks()
 	{
-		Globals.SetFileDialogSongs();
+		Globals.SetFileDialogTracks();
 		Globals.file_dialog.Popup();
 
-        Globals.file_dialog.FilesSelected += AddSongs;
-        Globals.file_dialog.Canceled += CancelAddSongs;
+        Globals.file_dialog.FilesSelected += AddTracks;
+        Globals.file_dialog.Canceled += CancelAddTracks;
     }
 
-	void CancelAddSongs() { Globals.file_dialog.FilesSelected -= AddSongs; Globals.file_dialog.Canceled -= CancelAddSongs; }
+	void CancelAddTracks() { Globals.file_dialog.FilesSelected -= AddTracks; Globals.file_dialog.Canceled -= CancelAddTracks; }
     void CancelSetCover() { Globals.file_dialog.FileSelected -= SetCover; Globals.file_dialog.Canceled -= CancelSetCover; }
 
-	public void DropSongs(string[] files)
+	public void DropTracks(string[] files)
 	{
-		if(panel.GetGlobalRect().HasPoint(GetMousePosition()))
+		if(track_panel.GetGlobalRect().HasPoint(GetMousePosition()))
 		{
-			AddSongs(files);
+			AddTracks(files);
 		}	
 	}
 
-    public void AddSongs(string[] paths)
+    public void AddTracks(string[] paths)
 	{
 		foreach(string path in paths)
 		{
 			if(Tools.ValidAudioFile(path))
 			{
-				if(!songs.Contains(path))
+				if(!tracks.Contains(path))
 				{
-					var disp = songDisplay.Instantiate() as PathDisplay;
+					var disp = Globals.path_display.Instantiate() as PathDisplay;
 					disp.SetPath(path);
 					
-					songDisplayContainer.AddChild(disp);
-					songs.Add(path);
+					track_path_display_container.AddChild(disp);
+					tracks.Add(path);
 
-					disp.delete.ButtonUp += () => songs.Remove(path);
+					disp.delete.ButtonUp += () => tracks.Remove(path);
 					disp.delete.ButtonUp += () => disp.QueueFree();
 				}
 				else
@@ -143,7 +147,7 @@ public partial class PlaylistCreator : EditorWindow
                 GD.PushError($"{path} is not a valid audio file, it cannot be added to this playlist.");
 			}
 		}
-        CancelAddSongs();
+        CancelAddTracks();
     }
 
 	public void Submit()
@@ -152,7 +156,7 @@ public partial class PlaylistCreator : EditorWindow
 		Hide();
 
         Globals.file_dialog.Reparent(Globals.self);
-		FilesDropped -= DropSongs;
+		FilesDropped -= DropTracks;
 
         OnClose?.Invoke();
     }

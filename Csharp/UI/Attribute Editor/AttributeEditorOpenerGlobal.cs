@@ -12,14 +12,14 @@ public partial class AttributeEditorOpenerGlobal : EditorWindowOpener
 
     public void EditAttributes()
     {
-        if (Globals.main.song != null)
+        if (Globals.main.track != null)
         {
             if (!Globals.player.Interrupt())
             {
                 return;
             }
 
-            file = Globals.main.playlists[Globals.main.looked_at_playlist].songs[SongsMore.song];
+            file = Globals.main.playlists[Globals.main.looked_at_playlist].songs[SongsMore.selected_track];
 
             (window as AttributeEditor).Open(Metadata.GetName(file), Metadata.GetArtist(file), Metadata.GetShareLink(file), Metadata.IsExplicit(file));
             window.OnClose += SubmitMeta;
@@ -33,20 +33,20 @@ public partial class AttributeEditorOpenerGlobal : EditorWindowOpener
         if (!editor.cancelled)
         {
             if (Globals.main.playlist != null)
-                Metadata.SetData(file, editor.name.Text, editor.artist.Text, editor.cover_path, editor.share_link.Text, editor.explicit_lyrics.ButtonPressed);
+                Metadata.SetData(file, editor.name_field.Text, editor.artist_field.Text, editor.cover_path, editor.share_link_field.Text, editor.explicit_lyrics_field.ButtonPressed);
 
-            Globals.player.OnLoadSong();
+            Globals.player.OnLoadTrack();
 
-            SongData song_data = new SongData
+            TrackData track_data = new TrackData
             {
-                title = editor.name.Text,
-                artist = editor.artist.Text,
+                title = editor.name_field.Text,
+                artist = editor.artist_field.Text,
                 time = Tools.SecondsToTimestamp(Metadata.GetTotalTime(file)),
-                explicit_lyrics = editor.explicit_lyrics.ButtonPressed,
+                explicit_lyrics = editor.explicit_lyrics_field.ButtonPressed,
                 corrupt = Metadata.IsFileCorrupt(file)
             };
 
-            Globals.main.songs_visualizer.UpdateSong(SongsMore.song, song_data, ConvertToGodot.GetSongCover(file));
+            Globals.main.tracks_visualizer.UpdateTrack(SongsMore.selected_track, track_data, ConvertToGodot.GetMediaCover(file));
         }
 
         Globals.player.interrupted = false;

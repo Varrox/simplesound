@@ -34,15 +34,15 @@ public partial class Discord : Node
 
     public void FinishSetUp(object sender, ReadyMessage msg) {
         set_up = true;
-        UpdateSong();
+        UpdateTrack();
     }
 
-    public void UpdateSong() {
+    public void UpdateTrack() {
         if (!set_up) return;
         Check();
     }
 
-    public void FinishUpdateSong() {
+    public void FinishUpdateTrack() {
         if (!set_up) return;
 
         string name = client.CurrentUser.Username;
@@ -50,8 +50,8 @@ public partial class Discord : Node
         bool cover = string.IsNullOrEmpty(cover_link) || cover_link.Length > 255;
 
         RichPresence presence = new RichPresence() {
-            Details = Globals.player.song_name.Text,
-            State = Globals.player.song_artist.Text,
+            Details = Globals.player.track_name_label.Text,
+            State = Globals.player.track_artist_label.Text,
             Assets = new Assets()
             {
                 LargeImageKey = cover ? GetLogo() : cover_link,
@@ -60,7 +60,7 @@ public partial class Discord : Node
                 LargeImageUrl = "https://github.com/Varrox/simplesound"
             },
             Type = ActivityType.Listening,
-            Buttons = new[]{ new DiscordRPC.Button() { Label = "Open song", Url = Globals.main.current_share_link } }
+            Buttons = new[]{ new DiscordRPC.Button() { Label = "Open track", Url = Globals.main.current_share_link } }
         };
 
         client.SetPresence(presence);
@@ -82,7 +82,7 @@ public partial class Discord : Node
 
         if (string.IsNullOrEmpty(input_link)) {
             cover_link = "";
-            FinishUpdateSong();
+            FinishUpdateTrack();
             return;
         }
 
@@ -90,7 +90,7 @@ public partial class Discord : Node
 
         if (_link != input_link) {
             cover_link = _link;
-            FinishUpdateSong();
+            FinishUpdateTrack();
             return;
         }
 
@@ -124,7 +124,7 @@ public partial class Discord : Node
         _link = text;
 
         cover_link = _link;
-        FinishUpdateSong();
+        FinishUpdateTrack();
     }
 
     string ParseURL(string url)

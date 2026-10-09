@@ -14,4 +14,5 @@ public struct Constants
     public const int EQ_IDX = 2;
 
     public static readonly string USER_DATA = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "simplesound");
+    public static readonly string USER_TRACKS = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "simplesound", "tracks");
 }

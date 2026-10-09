@@ -36,17 +36,17 @@ public partial class ImportPlaylist : Button
         }
     }
 
-	public void Import(string ssl_file)
+	public void Import(string playlist_file)
 	{
-		string new_path = Path.Combine(Constants.USER_DATA, "Playlists", Path.GetFileName(ssl_file));
+		string new_path = Path.Combine(Constants.USER_DATA, "Playlists", Path.GetFileName(playlist_file));
 
-		File.Copy(ssl_file, new_path);
+		File.Copy(playlist_file, new_path);
 
 		Playlist playlist = Playlist.LoadFromFile(new_path);
 
 		if (sync == Confirm.Accepted)
 		{
-			playlist.songs = SaveSystem.ImportSongs(playlist.songs.ToArray(), playlist.name);
+			playlist.songs = SaveSystem.ImportTracks(playlist.songs.ToArray(), playlist.name);
 			playlist.cover = SaveSystem.ImportCover(playlist.cover, playlist.name);
         }
 
