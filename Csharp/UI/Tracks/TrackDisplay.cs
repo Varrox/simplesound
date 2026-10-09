@@ -44,7 +44,7 @@ public partial class TrackDisplay : Button
         if (Globals.main.playlist_index == Globals.main.looked_at_playlist && Globals.main.track_index == track_index) { // highlight
             Globals.main.OnPlayingChanged += SetTextures;
             playing = true;
-            SelfModulate = ApplicationManager.theme.GetColor("highlight_color", Constants.THEME_TYPE);
+            ApplicationManager.SetRadioSelected(this, true);
             track_number_label.AddThemeColorOverride("font_color", Colors.Transparent);
             track_name_label.AddThemeColorOverride("font_color", ApplicationManager.theme.GetColor("playing_font_color", Constants.THEME_TYPE));
             if(!IsHovered()) sound_visualizer.Visible = true;
@@ -53,7 +53,7 @@ public partial class TrackDisplay : Button
             play_texture_rect.Texture = ApplicationManager.theme.GetIcon(Disabled ? "no_play_icon" : "play_icon", Constants.THEME_TYPE);
             Globals.main.OnPlayingChanged -= SetTextures;
             playing = false;
-            SelfModulate = Colors.White;
+            ApplicationManager.SetRadioSelected(this, false);
             track_number_label.AddThemeColorOverride("font_color", ApplicationManager.theme.GetColor("small_font_color", Constants.THEME_TYPE));
             track_name_label.AddThemeColorOverride("font_color", ApplicationManager.theme.GetColor("normal_font_color", Constants.THEME_TYPE));
             sound_visualizer.Visible = false;

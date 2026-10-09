@@ -129,6 +129,8 @@ public partial class ApplicationManager : SceneTree
 
         theme_resource.SetColor("playing_font_color", Constants.THEME_TYPE, Color.FromHtml("66ff5e"));
 
+        theme_resource.SetColor("highlight_color", Constants.THEME_TYPE, Color.FromHtml("47474796"));
+
         // Constant
 
         // Font
@@ -174,6 +176,23 @@ public partial class ApplicationManager : SceneTree
 
         theme_resource.SetStylebox("color_picker_panel_stylebox", Constants.THEME_TYPE, GD.Load<StyleBox>("res://Styling/Color Picker/color_picker_panel.tres"));
 
+        theme_resource.SetStylebox("radio_normal_stylebox", Constants.THEME_TYPE, GD.Load<StyleBox>("res://Styling/Selectables/radio_normal.tres"));
+        theme_resource.SetStylebox("radio_hover_stylebox", Constants.THEME_TYPE, GD.Load<StyleBox>("res://Styling/Selectables/radio_hover.tres"));
+        theme_resource.SetStylebox("radio_pressed_stylebox", Constants.THEME_TYPE, GD.Load<StyleBox>("res://Styling/Selectables/radio_pressed.tres"));
+        theme_resource.SetStylebox("radio_disabled_stylebox", Constants.THEME_TYPE, GD.Load<StyleBox>("res://Styling/Selectables/radio_disabled.tres"));
+
+        theme_resource.SetStylebox("radio_selected_normal_stylebox", Constants.THEME_TYPE, GD.Load<StyleBox>("res://Styling/Selectables/Selected/radio_selected_normal.tres"));
+        theme_resource.SetStylebox("radio_selected_hover_stylebox", Constants.THEME_TYPE, GD.Load<StyleBox>("res://Styling/Selectables/Selected/radio_selected_hover.tres"));
+        theme_resource.SetStylebox("radio_selected_pressed_stylebox", Constants.THEME_TYPE, GD.Load<StyleBox>("res://Styling/Selectables/Selected/radio_selected_pressed.tres"));
+        theme_resource.SetStylebox("radio_selected_disabled_stylebox", Constants.THEME_TYPE, GD.Load<StyleBox>("res://Styling/Selectables/Selected/radio_selected_disabled.tres"));
+
         return theme_resource;
+    }
+
+    public static void SetRadioSelected(Control control, bool selected) {
+        control.AddThemeStyleboxOverride("normal", theme.GetStylebox(selected ? "radio_selected_normal_stylebox" : "radio_normal_stylebox", Constants.THEME_TYPE));
+        control.AddThemeStyleboxOverride("hover", theme.GetStylebox(selected ? "radio_selected_hover_stylebox" : "radio_hover_stylebox", Constants.THEME_TYPE));
+        control.AddThemeStyleboxOverride("pressed", theme.GetStylebox(selected ? "radio_selected_pressed_stylebox" : "radio_pressed_stylebox", Constants.THEME_TYPE));
+        control.AddThemeStyleboxOverride("disabled", theme.GetStylebox(selected ? "radio_selected_disabled_stylebox" : "radio_disabled_stylebox", Constants.THEME_TYPE));
     }
 }

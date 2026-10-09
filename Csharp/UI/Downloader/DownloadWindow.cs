@@ -22,7 +22,7 @@ public partial class DownloadWindow : EditorWindow
         base._Ready();
         download.ButtonUp += Download;
         close.ButtonUp += Close;
-        no_playlist.ButtonUp += () => {OnSelectPlaylist?.Invoke(-1); no_playlist.SelfModulate = ApplicationManager.theme.GetColor("lower_highlight_color", Constants.THEME_TYPE);};
+        no_playlist.ButtonUp += () => {OnSelectPlaylist?.Invoke(-1); ApplicationManager.SetRadioSelected(no_playlist, true);};
         OnSelectPlaylist += ClearNoneSelected;
         add_link.ButtonUp += AddLink;
     }
@@ -57,14 +57,14 @@ public partial class DownloadWindow : EditorWindow
     public void ClearNoneSelected(int index)
     {
         selected_playlist = index;
-        if (index != -1) no_playlist.SelfModulate = Colors.White;
+        if (index != -1) ApplicationManager.SetRadioSelected(no_playlist, false);
     }
 
     public void Open()
     {
         Globals.file_dialog.Reparent(this);
 
-        no_playlist.SelfModulate = ApplicationManager.theme.GetColor("lower_highlight_color", Constants.THEME_TYPE);
+        ApplicationManager.SetRadioSelected(no_playlist, true);
         OnSelectPlaylist?.Invoke(-1);
 
         for(int i = 0; i < Globals.main.playlists.Count; i++)

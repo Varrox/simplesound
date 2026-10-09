@@ -17,12 +17,12 @@ public partial class DownloadPlaylistDisplay : Button
         Globals.download_window.OnSelectPlaylist?.Invoke(playlist_index);
         Globals.download_window.selected_playlist = playlist_index;
 
-        SelfModulate = ApplicationManager.theme.GetColor("lower_highlight_color", Constants.THEME_TYPE);
+        ApplicationManager.SetRadioSelected(this, true);
     }
 
 	public void ClearSelected(int index)
     {
-        if (index != playlist_index) SelfModulate = Colors.White;
+        if (index != playlist_index) ApplicationManager.SetRadioSelected(this, false);
     }
 
 	public void Init(Playlist playlist, int index)

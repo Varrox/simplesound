@@ -18,13 +18,9 @@ public partial class PlaylistDisplay : Button
         Globals.main.OnLoadTrack += SetTextHighlight;
     }
 
-    public void SetTextHighlight()
-    {
+    public void SetTextHighlight() {
         bool highlight = Globals.main.playlist_index == playlist_index;
-        if(highlight)
-            playlist_name_label.AddThemeColorOverride("font_color", ApplicationManager.theme.GetColor("playing_font_color", Constants.THEME_TYPE));
-        else
-            playlist_name_label.AddThemeColorOverride("font_color", ApplicationManager.theme.GetColor("normal_font_color", Constants.THEME_TYPE));
+        playlist_name_label.AddThemeColorOverride("font_color", ApplicationManager.theme.GetColor(highlight ? "playing_font_color" : "normal_font_color", Constants.THEME_TYPE));
     }
 
     public override void _Input(InputEvent @event) {
@@ -38,22 +34,19 @@ public partial class PlaylistDisplay : Button
         }
     }
 
-    public void OnExit()
-    {
+    public void OnExit() {
         if (!more.menu_open) more.Hide();
     }
 
-    public void Set()
-    {
+    public void Set() {
         Globals.main.playlist_visualizer.OnSelectPlaylist?.Invoke(playlist_index, cover_texture_rect.Texture);
         Globals.main.looked_at_playlist = playlist_index;
 
-        SelfModulate = ApplicationManager.theme.GetColor("lower_highlight_color", Constants.THEME_TYPE);
+        ApplicationManager.SetRadioSelected(this, true);
     }
 
-    public void ClearSelected(int index, Texture2D img)
-    {
-        if (index != playlist_index) SelfModulate = Colors.White;
+    public void ClearSelected(int index, Texture2D img) {
+        if (index != playlist_index) ApplicationManager.SetRadioSelected(this, false);
     }
 
     public void Init(Playlist playlist, int index)
