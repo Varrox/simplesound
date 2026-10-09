@@ -22,6 +22,7 @@
 - Streamer button font is red when the streamer window is open.
 - Settings menu tabs UI improved (tool tips, selected tab indicator, etc).
 - Folder Icon improved for better visibility, and consistency with other icons.
+- Improved selected song / playlist button highlight visibility.
 
 ## Optimizations
 
