@@ -17,11 +17,11 @@ public struct Constants
 
     // Folders
 
-    public static readonly string USER_PLAYLISTS = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "simplesound", "playlists");
-    public static readonly string USER_TRACKS = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "simplesound", "tracks");
-    public static readonly string USER_PLAYLIST_COVERS = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "simplesound", "data", "playlist_covers");
+    public static readonly string USER_PLAYLISTS = Path.Combine(USER_DATA, "playlists");
+    public static readonly string USER_TRACKS = Path.Combine(USER_DATA, "tracks");
+    public static readonly string USER_PLAYLIST_COVERS = Path.Combine(USER_DATA, "data", "playlist_covers");
 
     // Files
 
-    public static readonly string USER_SAVEDATA = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "savedata.json");
+    public static readonly string USER_SAVEDATA = Path.Combine(USER_DATA, "savedata.json");
 }
