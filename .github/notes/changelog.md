@@ -1,6 +1,6 @@
 # simplesound alpha-v1.3 changelog
 
-#### **5 months, and 145 commits total!**
+#### **8 months, and 160 commits total!**
 
 ## General Improvements
 
