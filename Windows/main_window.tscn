@@ -14,7 +14,7 @@
 [ext_resource type="Script" uid="uid://dcnfao6qa81tk" path="res://Csharp/UI/Playlists/PlaylistsVisualizer.cs" id="12_jnr5d"]
 [ext_resource type="PackedScene" uid="uid://bhjkk8guwyhku" path="res://Prefabs/playlist_display.scn" id="13_6ivc6"]
 [ext_resource type="Script" uid="uid://schxe0nc0yhj" path="res://GDScript/scroll_spacer.gd" id="14_ju7a0"]
-[ext_resource type="Script" uid="uid://bgymt3f23woi7" path="res://Csharp/UI/Songs/SongsVisualizer.cs" id="15_btqdu"]
+[ext_resource type="Script" uid="uid://bgymt3f23woi7" path="res://Csharp/UI/Tracks/TracksVisualizer.cs" id="15_btqdu"]
 [ext_resource type="PackedScene" uid="uid://deg7587tnlkhk" path="res://Prefabs/track_display.scn" id="16_n5ukt"]
 [ext_resource type="StyleBox" uid="uid://bhcyqvvim6l5e" path="res://Styling/Rounded Corners.tres" id="17_0xq2a"]
 [ext_resource type="Shader" uid="uid://cxrpix7bw201g" path="res://Styling/Shaders/anti_aliased.gdshader" id="18_fmyll"]

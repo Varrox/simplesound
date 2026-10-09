@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class RemoveSong : Button
+public partial class DeleteTrack : Button
 {
 	public override void _Ready()
 	{
@@ -17,7 +17,7 @@ public partial class RemoveSong : Button
 		{
 			confirmation_window = Globals.confirmation_window.Instantiate() as ConfirmationWindow;
 
-            confirmation_window.message = $"Are you sure you want to delete this track \'{Metadata.GetName(Globals.main.playlists[Globals.main.looked_at_playlist].songs[SongsMore.selected_track])}\' from this playlist?";
+            confirmation_window.message = $"Are you sure you want to delete this track \'{Metadata.GetName(Globals.main.playlists[Globals.main.looked_at_playlist].songs[TracksContextMenuOpener.selected_track])}\' from this playlist?";
             confirmation_window.accept_text = "Yes";
             confirmation_window.decline_text = "No";
             confirmation_window.cancel_text = "";
@@ -49,17 +49,17 @@ public partial class RemoveSong : Button
 
         if (Globals.main.looked_at_playlist == Globals.main.playlist_index)
         {
-            if (Globals.main.track_index == SongsMore.selected_track)
+            if (Globals.main.track_index == TracksContextMenuOpener.selected_track)
             {
-                Globals.main.track_index += (SongsMore.selected_track == 0 ? -1 : 1);
+                Globals.main.track_index += (TracksContextMenuOpener.selected_track == 0 ? -1 : 1);
                 Globals.main.PlayTrack(Globals.main.track);
             }
 
-            if (Globals.main.track_index > SongsMore.selected_track)
+            if (Globals.main.track_index > TracksContextMenuOpener.selected_track)
                 Globals.main.track_index -= 1;
         }
 
-        Globals.main.playlists[Globals.main.looked_at_playlist].songs.RemoveAt(SongsMore.selected_track);
+        Globals.main.playlists[Globals.main.looked_at_playlist].songs.RemoveAt(TracksContextMenuOpener.selected_track);
         Globals.main.playlists[Globals.main.looked_at_playlist].Save();
         Globals.main.tracks_visualizer.Update();
     }

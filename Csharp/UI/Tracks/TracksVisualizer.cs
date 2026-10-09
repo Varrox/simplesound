@@ -1,7 +1,7 @@
 using Godot;
 using System.Collections.Generic;
 
-public partial class SongsVisualizer : ScrollContainer
+public partial class TracksVisualizer : ScrollContainer
 {
     [Export] public PackedScene template;
     [Export] public Control top_card;
@@ -15,7 +15,7 @@ public partial class SongsVisualizer : ScrollContainer
     int last_scroll = -1, last_first_track = -1;
     Vector2 last_size = Vector2.Zero;
 
-    List<SongDisplay> track_displays;
+    List<TrackDisplay> track_displays;
     Dictionary<int, TrackData> track_datas;
 
     const int SINGLE_BUTTON_SIZE = 60;
@@ -35,7 +35,7 @@ public partial class SongsVisualizer : ScrollContainer
         Globals.main.playlist_visualizer.OnSelectPlaylist += LoadPlaylist;
 
         track_datas = new Dictionary<int, TrackData>();
-        track_displays = new List<SongDisplay>();
+        track_displays = new List<TrackDisplay>();
     }
 
     public override void _Process(double delta) {
@@ -83,7 +83,7 @@ public partial class SongsVisualizer : ScrollContainer
             {
                 for(int i = track_displays.Count; i < target_displays; i++)
                 {
-                    track_displays.Add(template.Instantiate() as SongDisplay);
+                    track_displays.Add(template.Instantiate() as TrackDisplay);
                     container.AddChild(track_displays[i]);
 
                     int track = first_visible_track + i;
@@ -113,7 +113,7 @@ public partial class SongsVisualizer : ScrollContainer
 
             for(int i = 0; i < a_shift; i++)
             {
-                SongDisplay display;
+                TrackDisplay display;
                 int index;
 
                 if(shift < 0)

@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class ShareMenu : ContextMenuOpener
+public partial class ShareContextMenuOpener : ContextMenuOpener
 {
 	[Export] public Button share_link, file_browse;
 
@@ -31,7 +31,7 @@ public partial class ShareMenu : ContextMenuOpener
 
     public void GetSongData()
 	{
-        file = Globals.main.playlists[Globals.main.looked_at_playlist].songs[SongsMore.selected_track];
+        file = Globals.main.playlists[Globals.main.looked_at_playlist].songs[TracksContextMenuOpener.selected_track];
 		link = Metadata.GetShareLink(file);
 
 		Icon = back;

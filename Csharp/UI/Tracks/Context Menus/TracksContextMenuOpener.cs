@@ -1,8 +1,9 @@
 ﻿using Godot;
 using Godot.Collections;
-public partial class SongsMore : ContextMenuOpener
+
+public partial class TracksContextMenuOpener : ContextMenuOpener
 {
-    [Export] public SongDisplay display;
+    [Export] public TrackDisplay display;
     public static int selected_track;
 
     public override void _Ready()

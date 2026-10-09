@@ -1,6 +1,6 @@
 ﻿using Godot;
 
-public partial class SongDisplay : Button
+public partial class TrackDisplay : Button
 {
     [Export] public Label track_number_label, track_name_label, track_artist_label, total_time_label;
     
@@ -8,7 +8,7 @@ public partial class SongDisplay : Button
 
     [Export] public Control spacer, sound_visualizer;
 
-    [Export] public SongsMore more;
+    [Export] public TracksContextMenuOpener more;
 
     [Export] public Panel explicit_lyrics_indicator;
 

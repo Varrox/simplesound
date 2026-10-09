@@ -7,9 +7,11 @@ public partial class Main : Control
 {
 	[Export] public AudioStreamPlayer audio_player;
     [Export] public VideoStreamPlayer video_player;
+	
     [Export] public Player player;
+
 	[Export] public PlaylistsVisualizer playlist_visualizer;
-	[Export] public SongsVisualizer tracks_visualizer;
+	[Export] public TracksVisualizer tracks_visualizer;
 
 	public bool loop, playing, shuffled;
 
