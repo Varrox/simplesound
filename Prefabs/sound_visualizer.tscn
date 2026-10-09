@@ -2,7 +2,16 @@
 
 [ext_resource type="Script" uid="uid://c5sckwqxlg2v4" path="res://GDScript/sound_visualizer.gd" id="1_66esn"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ibk32"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+corner_detail = 1
+
 [node name="Soundvisualizer" type="Control" unique_id=508323966 node_paths=PackedStringArray("bars")]
+custom_minimum_size = Vector2(3, 3)
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -15,46 +24,52 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_66esn")
-min_height = 3
+min_height = 3.5
 bars = [NodePath("ColorRect"), NodePath("ColorRect2"), NodePath("ColorRect3"), NodePath("ColorRect4"), NodePath("ColorRect5"), NodePath("ColorRect6")]
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=586422079]
-custom_minimum_size = Vector2(3, 3)
+[node name="ColorRect" type="Panel" parent="." unique_id=875936545]
+custom_minimum_size = Vector2(3.5, 3.5)
 layout_mode = 0
 offset_right = 3.0
 offset_bottom = 3.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ibk32")
 
-[node name="ColorRect2" type="ColorRect" parent="." unique_id=261469582]
-custom_minimum_size = Vector2(3, 3)
+[node name="ColorRect2" type="Panel" parent="." unique_id=716513793]
+custom_minimum_size = Vector2(3.5, 3.5)
 layout_mode = 0
 offset_left = 5.0
 offset_right = 8.0
 offset_bottom = 3.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ibk32")
 
-[node name="ColorRect3" type="ColorRect" parent="." unique_id=1813862639]
-custom_minimum_size = Vector2(3, 3)
+[node name="ColorRect3" type="Panel" parent="." unique_id=1133626305]
+custom_minimum_size = Vector2(3.5, 3.5)
 layout_mode = 0
 offset_left = 10.0
 offset_right = 13.0
 offset_bottom = 3.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ibk32")
 
-[node name="ColorRect4" type="ColorRect" parent="." unique_id=771835513]
-custom_minimum_size = Vector2(3, 3)
+[node name="ColorRect4" type="Panel" parent="." unique_id=1523603302]
+custom_minimum_size = Vector2(3.5, 3.5)
 layout_mode = 0
 offset_left = 15.0
 offset_right = 18.0
 offset_bottom = 3.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ibk32")
 
-[node name="ColorRect5" type="ColorRect" parent="." unique_id=1183437673]
-custom_minimum_size = Vector2(3, 3)
+[node name="ColorRect5" type="Panel" parent="." unique_id=435228364]
+custom_minimum_size = Vector2(3.5, 3.5)
 layout_mode = 0
 offset_left = 20.0
 offset_right = 23.0
 offset_bottom = 3.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ibk32")
 
-[node name="ColorRect6" type="ColorRect" parent="." unique_id=1277938157]
-custom_minimum_size = Vector2(3, 3)
+[node name="ColorRect6" type="Panel" parent="." unique_id=1173920865]
+custom_minimum_size = Vector2(3.5, 3.5)
 layout_mode = 0
 offset_left = 25.0
 offset_right = 28.0
 offset_bottom = 3.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ibk32")

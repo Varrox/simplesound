@@ -1,8 +1,8 @@
 extends Control
 
 @export var bar_count:int = 6
-@export var max_height = 4*7
-@export var min_height = 4
+@export var max_height:float = 4*7
+@export var min_height:float = 4
 
 @export var bars:Array[Control]
 
