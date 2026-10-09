@@ -22,7 +22,7 @@ public partial class DownloadWindow : EditorWindow
         base._Ready();
         download.ButtonUp += Download;
         close.ButtonUp += Close;
-        no_playlist.ButtonUp += () => {OnSelectPlaylist?.Invoke(-1); no_playlist.SelfModulate = Globals.lower_highlight;};
+        no_playlist.ButtonUp += () => {OnSelectPlaylist?.Invoke(-1); no_playlist.SelfModulate = ApplicationManager.theme.GetColor("lower_highlight_color", Constants.THEME_TYPE);};
         OnSelectPlaylist += ClearNoneSelected;
         add_link.ButtonUp += AddLink;
     }
@@ -43,7 +43,9 @@ public partial class DownloadWindow : EditorWindow
         label.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis;
 
         Button button = new Button();
-        button.Text = "X";
+        button.Icon = ApplicationManager.theme.GetIcon("x_icon", Constants.THEME_TYPE);
+        button.ExpandIcon = true;
+        button.CustomMinimumSize = new Vector2(label.Size.Y, label.Size.Y);
 
         container.AddChild(button);
 
@@ -62,7 +64,7 @@ public partial class DownloadWindow : EditorWindow
     {
         Globals.file_dialog.Reparent(this);
 
-        no_playlist.SelfModulate = Globals.lower_highlight;
+        no_playlist.SelfModulate = ApplicationManager.theme.GetColor("lower_highlight_color", Constants.THEME_TYPE);
         OnSelectPlaylist?.Invoke(-1);
 
         for(int i = 0; i < Globals.main.playlists.Count; i++)

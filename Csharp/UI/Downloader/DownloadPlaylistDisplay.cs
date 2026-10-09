@@ -16,7 +16,8 @@ public partial class DownloadPlaylistDisplay : Button
     {
         Globals.download_window.OnSelectPlaylist?.Invoke(playlist_index);
         Globals.download_window.selected_playlist = playlist_index;
-        SelfModulate = Globals.lower_highlight;
+
+        SelfModulate = ApplicationManager.theme.GetColor("lower_highlight_color", Constants.THEME_TYPE);
     }
 
 	public void ClearSelected(int index)
@@ -26,7 +27,7 @@ public partial class DownloadPlaylistDisplay : Button
 
 	public void Init(Playlist playlist, int index)
     {
-        cover_texture_rect.Texture = ConvertToGodot.LoadImageFromFile(playlist.cover) ?? Globals.default_cover;
+        cover_texture_rect.Texture = ConvertToGodot.LoadImageFromFile(playlist.cover) ?? ApplicationManager.theme.GetIcon("default_cover_icon", Constants.THEME_TYPE);
         playlist_name_label.Text = playlist.name;
 
         string amount = $"{playlist.songs.Count}{(playlist.songs.Count != 1 ? " tracks" : " track")}";

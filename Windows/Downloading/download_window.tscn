@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://ddqjqicca0ftd" path="res://Csharp/UI/Downloader/DownloadWindow.cs" id="1_v3qo6"]
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Styling/Fonts/DefaultFont.tres" id="2_v3qo6"]
-[ext_resource type="Theme" uid="uid://cg2x5h7ufrntn" path="res://Styling/global_theme.tres" id="4_1qv4f"]
 [ext_resource type="StyleBox" uid="uid://bw4kvok8cf77w" path="res://Styling/Selectables/normal.tres" id="4_ec5im"]
 [ext_resource type="PackedScene" uid="uid://ccu57wwy5vwng" path="res://Windows/Downloading/download_playlist_display.scn" id="4_o2q55"]
 [ext_resource type="StyleBox" uid="uid://d05hxmlaqj0qh" path="res://Styling/Selectables/pressed_hover_disabled.tres" id="5_gftam"]
@@ -43,7 +42,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("4_1qv4f")
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10

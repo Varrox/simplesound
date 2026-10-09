@@ -9,6 +9,8 @@ public partial class EditorWindow : Window
     public override void _Ready() {
         ApplicationManager.AddWindow(this);
 
+        Theme = ApplicationManager.theme;
+
         Hide();
     }
 

@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://lbhqgj6ahfub" path="res://Csharp/UI/Settings/Settings.cs" id="1_c0o00"]
 [ext_resource type="Texture2D" uid="uid://bwftf22dhh4du" path="res://Icons/refresh.png" id="2_4ebue"]
 [ext_resource type="Script" uid="uid://b85d04ls7d2ww" path="res://GDScript/version_display.gd" id="2_c0o00"]
-[ext_resource type="Theme" uid="uid://cg2x5h7ufrntn" path="res://Styling/global_theme.tres" id="2_u30gs"]
 [ext_resource type="Texture2D" uid="uid://c85envuiuo3ju" path="res://Icons/folder.png" id="7_3eler"]
 [ext_resource type="Script" uid="uid://lbv20vk1ksc2" path="res://GDScript/copy_system_info.gd" id="10_3eler"]
 [ext_resource type="Script" uid="uid://schxe0nc0yhj" path="res://GDScript/scroll_spacer.gd" id="10_v2aqj"]
@@ -13,6 +12,7 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7l07q"]
 
 [node name="Window" type="Window" unique_id=874625055 node_paths=PackedStringArray("settings_container", "tabs_container", "close_menu")]
+oversampling_override = 1.0
 title = "Settings"
 initial_position = 2
 size = Vector2i(720, 380)
@@ -31,7 +31,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme = ExtResource("2_u30gs")
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10

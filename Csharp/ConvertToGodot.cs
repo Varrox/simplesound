@@ -6,7 +6,7 @@ public class ConvertToGodot
     public static Texture2D GetMediaCover(string path) {
         byte[] picture_data = Metadata.GetCover(path, out string type);
         
-        if (picture_data == null) return Globals.default_cover;
+        if (picture_data == null) return ApplicationManager.theme.GetIcon("default_cover_icon", Constants.THEME_TYPE);
 
         Image image = new Image();
         Error error = Error.Failed;
@@ -30,7 +30,7 @@ public class ConvertToGodot
                 break;
         }
 
-        return error == Error.Ok ? ImageTexture.CreateFromImage(image) : Globals.default_cover;
+        return error == Error.Ok ? ImageTexture.CreateFromImage(image) : ApplicationManager.theme.GetIcon("default_cover_icon", Constants.THEME_TYPE);
     }
 
     /// <summary>

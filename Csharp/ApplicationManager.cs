@@ -21,6 +21,8 @@ public partial class ApplicationManager : SceneTree
     private static List<Action> _focus_entered_actions = new List<Action>();
     private static List<Action> _focus_exited_actions = new List<Action>();
 
+    public static Theme theme;
+
     private static ApplicationManager self;
 
     public ApplicationManager() {
@@ -38,8 +40,15 @@ public partial class ApplicationManager : SceneTree
             Save();
         }
 
+        theme = LoadTheme();
+
         AddWindow(Root);
         currently_focused_window = Root;
+    }
+
+    public override void _Initialize()
+    {
+        (CurrentScene as Control).Theme = theme;
     }
 
     public override bool _Process(double delta)
@@ -102,5 +111,69 @@ public partial class ApplicationManager : SceneTree
         _focus_exited_actions.RemoveAt(idx);
 
         windows.Remove(window);
+    }
+
+    private Theme LoadTheme() {
+        Theme theme_resource = ResourceLoader.Load<Theme>("res://Styling/global_theme.tres");
+
+        // Color
+
+        theme_resource.SetColor("selected_font_color", Constants.THEME_TYPE, Colors.White);
+        theme_resource.SetColor("unselected_font_color", Constants.THEME_TYPE, Colors.Gray);
+
+        theme_resource.SetColor("normal_font_color", Constants.THEME_TYPE, Colors.White);
+        theme_resource.SetColor("small_font_color", Constants.THEME_TYPE, Colors.DarkGray);
+
+        theme_resource.SetColor("disabled_font_color", Constants.THEME_TYPE, Colors.DimGray);
+        theme_resource.SetColor("enabled_font_color", Constants.THEME_TYPE, Colors.Lime);
+
+        theme_resource.SetColor("playing_font_color", Constants.THEME_TYPE, Color.FromHtml("66ff5e"));
+
+        // Constant
+
+        // Font
+
+        // Font size
+
+        // Icon
+
+        theme_resource.SetIcon("play_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/play.png"));
+        theme_resource.SetIcon("pause_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/pause.png"));
+
+        theme_resource.SetIcon("no_play_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/no_play.png"));
+
+        theme_resource.SetIcon("loop_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/loop.png"));
+        theme_resource.SetIcon("shuffle_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/shuffle.png"));
+
+        theme_resource.SetIcon("mute_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/mute.png"));
+        theme_resource.SetIcon("unmute_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/unmute.png"));
+
+        theme_resource.SetIcon("forward_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/forward.png"));
+        theme_resource.SetIcon("back_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/back.png"));
+
+        theme_resource.SetIcon("forward_arrow_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/forward arrow.png"));
+        theme_resource.SetIcon("back_arrow_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/back arrow.png"));
+
+        theme_resource.SetIcon("playlist_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/playlist.png"));
+
+        theme_resource.SetIcon("hamburger_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/list.png"));
+        theme_resource.SetIcon("meatballs_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/more.png"));
+
+        theme_resource.SetIcon("plus_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/plus.png"));
+        theme_resource.SetIcon("x_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/x.png"));
+
+        theme_resource.SetIcon("update_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/update.png"));
+        theme_resource.SetIcon("refresh_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/refresh.png"));
+        theme_resource.SetIcon("settings_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/settings.png"));
+
+        theme_resource.SetIcon("folder_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/folder.png"));
+
+        theme_resource.SetIcon("default_cover_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/Default Covers/DefaultCover.png"));
+
+        // Stylebox
+
+        theme_resource.SetStylebox("color_picker_panel_stylebox", Constants.THEME_TYPE, GD.Load<StyleBox>("res://Styling/Color Picker/color_picker_panel.tres"));
+
+        return theme_resource;
     }
 }

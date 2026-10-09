@@ -25,7 +25,7 @@ public partial class ThemeColorPickerButton : ColorPickerButton
 		if (popup_panel != null) {
 			Panel panel = (Panel)popup_panel.GetChild(0, true);
 
-			panel.AddThemeStyleboxOverride("panel", Globals.color_picker_panel_style);
+			panel.AddThemeStyleboxOverride("panel", ApplicationManager.theme.GetStylebox("color_picker_panel_stylebox", Constants.THEME_TYPE));
 		}
 	}
 }

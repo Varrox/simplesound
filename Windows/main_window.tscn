@@ -46,11 +46,8 @@
 [ext_resource type="PackedScene" uid="uid://dtfoexo3o7b3p" path="res://Prefabs/Context Menus/playlist_context.tscn" id="44_aaavu"]
 [ext_resource type="PackedScene" uid="uid://dcre7b1cn3b6i" path="res://Prefabs/Context Menus/track_context.tscn" id="45_rjtah"]
 [ext_resource type="Script" uid="uid://ba0kdfmjh8445" path="res://Csharp/Globals.cs" id="46_y0j44"]
-[ext_resource type="Texture2D" uid="uid://dlroow6dpj2wv" path="res://Icons/no_play.png" id="47_jsuu7"]
-[ext_resource type="Texture2D" uid="uid://iufihc6y4dma" path="res://Icons/unmute.png" id="48_g2r6q"]
 [ext_resource type="PackedScene" uid="uid://cjc5crjo31obe" path="res://Prefabs/path_display.tscn" id="49_mrmdv"]
 [ext_resource type="PackedScene" uid="uid://bw078i5dk5ff4" path="res://Windows/confirmation_window.tscn" id="50_c27js"]
-[ext_resource type="StyleBox" uid="uid://d4mgs7v2tox0m" path="res://Styling/Color Picker/color_picker_panel.tres" id="51_2qfeo"]
 [ext_resource type="PackedScene" uid="uid://dle5y658wmx03" path="res://Windows/attribute_editor.tscn" id="52_vsj6c"]
 [ext_resource type="PackedScene" uid="uid://djve16b56k6h0" path="res://Windows/Downloading/download_window.tscn" id="53_7surn"]
 [ext_resource type="Texture2D" uid="uid://bdbco8a0mnjn6" path="res://Icons/Logos/logotrans.png" id="54_lfg21"]
@@ -358,9 +355,9 @@ icon = ExtResource("10_yksdd")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("11_2o8nl")
-menu = NodePath("../../../../../../Playlistcreationcontext")
 teleportMenu = true
 teleportMenuOffset = Vector2(-135, 32)
+menu = NodePath("../../../../../../Playlistcreationcontext")
 
 [node name="HSeparator" type="HSeparator" parent="Interface/Content/Side Panel/Open/VBoxContainer" unique_id=166833490]
 layout_mode = 2
@@ -430,9 +427,9 @@ icon = ExtResource("10_yksdd")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("11_2o8nl")
-menu = NodePath("../../../../../Playlistcreationcontext")
 teleportMenu = true
 teleportMenuOffset = Vector2(0, 32)
+menu = NodePath("../../../../../Playlistcreationcontext")
 
 [node name="HSeparator" type="HSeparator" parent="Interface/Content/Side Panel/Collapsed/VBoxContainer" unique_id=765403374]
 layout_mode = 2
@@ -1006,14 +1003,8 @@ offset_bottom = 43.0
 
 [node name="Globals" type="Node" parent="." unique_id=71517921 node_paths=PackedStringArray("_main", "_player", "_discord", "_attribute_editor", "_download_window", "_file_dialog", "_playlist_menu", "_track_menu")]
 script = ExtResource("46_y0j44")
-_play_texture = ExtResource("19_eos35")
-_pause_texture = ExtResource("37_esfl4")
-_no_play_texture = ExtResource("47_jsuu7")
-_loop_texture = ExtResource("39_poedv")
-_shuffle_texture = ExtResource("35_b74h6")
-_mute_texture = ExtResource("40_8ugro")
-_unmute_texture = ExtResource("48_g2r6q")
-_default_cover = ExtResource("7_xvcl6")
+_path_display = ExtResource("49_mrmdv")
+_confirmation_window = ExtResource("50_c27js")
 _main = NodePath("..")
 _player = NodePath("../Interface")
 _discord = NodePath("../Discord")
@@ -1022,11 +1013,6 @@ _download_window = NodePath("DownloadWindow")
 _file_dialog = NodePath("File Dialog")
 _playlist_menu = NodePath("../Interface/Playlistcontext")
 _track_menu = NodePath("../Interface/Trackcontext")
-_path_display = ExtResource("49_mrmdv")
-_confirmation_window = ExtResource("50_c27js")
-_highlight = Color(0.2784314, 0.2784314, 0.2784314, 0.5882353)
-_lower_highlight = Color(50.00465, 50.00465, 50.00465, 0.3372549)
-_color_picker_panel_style = ExtResource("51_2qfeo")
 
 [node name="File Dialog" type="FileDialog" parent="Globals" unique_id=1989544037]
 title = "Open a File"

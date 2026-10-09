@@ -23,6 +23,6 @@ public partial class PlaylistPlayer : Button
 
     public override void _Process(double delta)
     {
-        Icon = (Globals.main.playlist_index == Globals.main.looked_at_playlist) && Globals.main.playing ? Globals.pause_texture : Globals.play_texture;
+        Icon = ApplicationManager.theme.GetIcon((Globals.main.playlist_index == Globals.main.looked_at_playlist) && Globals.main.playing ? "pause_icon" : "play_icon", Constants.THEME_TYPE);
     }
 }

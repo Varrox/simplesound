@@ -124,14 +124,14 @@ public partial class Settings : EditorWindow
 
             // Highlight
 
-            _settings_tabs[tab].button.SelfModulate = Globals.highlight;
-            _settings_tabs[tab].label.AddThemeColorOverride("font_color", Globals.selected_font_color);
+            _settings_tabs[tab].button.SelfModulate = ApplicationManager.theme.GetColor("highlight_color", Constants.THEME_TYPE);
+            _settings_tabs[tab].label.AddThemeColorOverride("font_color", ApplicationManager.theme.GetColor("selected_font_color", Constants.THEME_TYPE));
             _settings_tabs[tab].underline.Visible = true;
 
             for(int i = 0; i < _settings_tabs.Count; i++) {
                 if (i != tab && !_settings_tabs[i].disabled) {
                     _settings_tabs[i].button.SelfModulate = Colors.White;
-                    _settings_tabs[i].label.AddThemeColorOverride("font_color", Globals.unselected_font_color);
+                    _settings_tabs[i].label.AddThemeColorOverride("font_color", ApplicationManager.theme.GetColor("unselected_font_color", Constants.THEME_TYPE));
                     _settings_tabs[i].underline.Visible = false;
                 }
             }
@@ -225,11 +225,11 @@ public partial class Settings : EditorWindow
 
         if (disabled) {
             button.TooltipText = "Disabled";
-            label.AddThemeColorOverride("font_color", Globals.disabled_font_color);
+            label.AddThemeColorOverride("font_color", ApplicationManager.theme.GetColor("disabled_font_color", Constants.THEME_TYPE));
         }
         else {
             button.TooltipText = tooltip_text;
-            label.AddThemeColorOverride("font_color", Globals.unselected_font_color);
+            label.AddThemeColorOverride("font_color", ApplicationManager.theme.GetColor("unselected_font_color", Constants.THEME_TYPE));
         }
 
         int tab_index = _settings_tabs.Count;

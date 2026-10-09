@@ -6,19 +6,6 @@ public partial class Globals : Node
 {
     public static Globals self;
 
-    [ExportGroup("Textures")]
-    // Textures
-    [Export] private Texture2D _play_texture {set{ play_texture = value; }get { return play_texture; }}
-    [Export] private Texture2D _pause_texture {set{ pause_texture = value; } get { return pause_texture; }}
-    [Export] private Texture2D _no_play_texture {set{ no_play_texture = value; }get { return no_play_texture; }}
-    [Export] private Texture2D _loop_texture {set{ loop_texture = value; }get { return loop_texture; }}
-    [Export] private Texture2D _shuffle_texture {set{ shuffle_texture = value; }get { return shuffle_texture; }}
-    [Export] private Texture2D _mute_texture {set{ mute_texture = value; }get { return mute_texture; }}
-    [Export] private Texture2D _unmute_texture {set{ unmute_texture = value; }get { return unmute_texture; }}
-    [Export] private Texture2D _default_cover{set{ default_cover = value; }get { return default_cover; }}
-
-    public static Texture2D play_texture, pause_texture, no_play_texture, loop_texture, shuffle_texture, mute_texture, unmute_texture, default_cover;
-
     [ExportGroup("Nodes")]
 
     [Export] private Main _main{set{ main = value; }get{ return main; }}
@@ -54,38 +41,6 @@ public partial class Globals : Node
 
     [Export] private PackedScene _confirmation_window{set{ confirmation_window = value; }get{ return confirmation_window; }}
     public static PackedScene confirmation_window;
-
-    [ExportGroup("Theming")]
-
-    [Export] private Color _highlight{set{ highlight = value; }get{ return highlight; }}
-    public static Color highlight;
-
-    [Export] private Color _lower_highlight{set{ lower_highlight = value; }get{ return lower_highlight; }}
-    public static Color lower_highlight;
-
-    [Export] private StyleBoxFlat _color_picker_panel_style{set{ color_picker_panel_style = value; }get{ return color_picker_panel_style; }}
-    public static StyleBoxFlat color_picker_panel_style;
-
-    private Color _selected_font_color{set{}get{ return selected_font_color; }}
-    public static Color selected_font_color = Colors.White;
-
-    private Color _unselected_font_color{set{}get{ return unselected_font_color; }}
-    public static Color unselected_font_color = Colors.Gray;
-
-    private Color _normal_font_color{set{}get{ return normal_font_color; }}
-    public static Color normal_font_color = Colors.White;
-
-    private Color _small_font_color{set{}get{ return small_font_color; }}
-    public static Color small_font_color = Colors.DarkGray;
-
-    private Color _disabled_font_color{set{}get{ return disabled_font_color; }}
-    public static Color disabled_font_color = Colors.DimGray;
-
-    private Color _playing_font_color{set{}get{ return playing_font_color; }}
-    public static Color playing_font_color = Color.FromHtml("66ff5e");
-
-    private Color _enabled_font_color{set{}get{ return enabled_font_color; }}
-    public static Color enabled_font_color = Colors.Lime;
 
     public static SaveData save_data;
 

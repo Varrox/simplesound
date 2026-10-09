@@ -13,6 +13,8 @@ public struct Constants
     public const int REVERB_IDX = 1;
     public const int EQ_IDX = 2;
 
+    public const string THEME_TYPE = "GUI";
+
     public static readonly string USER_DATA = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "simplesound");
 
     // Folders

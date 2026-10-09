@@ -44,18 +44,18 @@ public partial class TrackDisplay : Button
         if (Globals.main.playlist_index == Globals.main.looked_at_playlist && Globals.main.track_index == track_index) { // highlight
             Globals.main.OnPlayingChanged += SetTextures;
             playing = true;
-            SelfModulate = Globals.highlight;
+            SelfModulate = ApplicationManager.theme.GetColor("highlight_color", Constants.THEME_TYPE);
             track_number_label.AddThemeColorOverride("font_color", Colors.Transparent);
-            track_name_label.AddThemeColorOverride("font_color", Globals.playing_font_color);
+            track_name_label.AddThemeColorOverride("font_color", ApplicationManager.theme.GetColor("playing_font_color", Constants.THEME_TYPE));
             if(!IsHovered()) sound_visualizer.Visible = true;
         }
         else if (Globals.main.playlist_index != Globals.main.looked_at_playlist || Globals.main.track_index != track_index) { // un-highlight
-            play_texture_rect.Texture = Disabled ? Globals.no_play_texture : Globals.play_texture;
+            play_texture_rect.Texture = ApplicationManager.theme.GetIcon(Disabled ? "no_play_icon" : "play_icon", Constants.THEME_TYPE);
             Globals.main.OnPlayingChanged -= SetTextures;
             playing = false;
             SelfModulate = Colors.White;
-            track_number_label.AddThemeColorOverride("font_color", Globals.small_font_color);
-            track_name_label.AddThemeColorOverride("font_color", Globals.normal_font_color);
+            track_number_label.AddThemeColorOverride("font_color", ApplicationManager.theme.GetColor("small_font_color", Constants.THEME_TYPE));
+            track_name_label.AddThemeColorOverride("font_color", ApplicationManager.theme.GetColor("normal_font_color", Constants.THEME_TYPE));
             sound_visualizer.Visible = false;
         }
 
@@ -63,7 +63,7 @@ public partial class TrackDisplay : Button
     }
 
     public void SetTextures(bool playing) {
-        play_texture_rect.Texture = Disabled ? Globals.no_play_texture : (playing ? Globals.pause_texture : Globals.play_texture);
+        play_texture_rect.Texture = ApplicationManager.theme.GetIcon(Disabled ? "no_play_icon" : (playing ? "pause_icon" : "play_icon"), Constants.THEME_TYPE);
     }
 
     public void OnEnter() {
@@ -84,7 +84,7 @@ public partial class TrackDisplay : Button
         play_texture_rect.Texture = null;
         
         if (playing) sound_visualizer.Visible = true;
-        else track_number_label.AddThemeColorOverride("font_color", Globals.small_font_color);
+        else track_number_label.AddThemeColorOverride("font_color", ApplicationManager.theme.GetColor("small_font_color", Constants.THEME_TYPE));
     }
 
     public void Init(in int track, in TrackData data, in Playlist.PlaylistType type, in Texture2D cover) {

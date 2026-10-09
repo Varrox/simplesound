@@ -41,11 +41,13 @@ public partial class StreamerButton : Button
 			AddThemeColorOverride("font_pressed_color", Colors.Red);
 		}
 		else {
-			AddThemeColorOverride("font_color", Globals.normal_font_color);
-			AddThemeColorOverride("font_focus_color", Globals.normal_font_color);
-			AddThemeColorOverride("font_pressed_color", Globals.normal_font_color);
-			AddThemeColorOverride("font_hover_color", Globals.normal_font_color);
-			AddThemeColorOverride("font_pressed_color", Globals.normal_font_color);
+			Color color = ApplicationManager.theme.GetColor("normal_font_color", Constants.THEME_TYPE);
+
+			AddThemeColorOverride("font_color", color);
+			AddThemeColorOverride("font_focus_color", color);
+			AddThemeColorOverride("font_pressed_color", color);
+			AddThemeColorOverride("font_hover_color", color);
+			AddThemeColorOverride("font_pressed_color", color);
 		}
 	}
 

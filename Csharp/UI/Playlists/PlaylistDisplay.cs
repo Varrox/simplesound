@@ -22,9 +22,9 @@ public partial class PlaylistDisplay : Button
     {
         bool highlight = Globals.main.playlist_index == playlist_index;
         if(highlight)
-            playlist_name_label.AddThemeColorOverride("font_color", Globals.playing_font_color);
+            playlist_name_label.AddThemeColorOverride("font_color", ApplicationManager.theme.GetColor("playing_font_color", Constants.THEME_TYPE));
         else
-            playlist_name_label.AddThemeColorOverride("font_color", Colors.White);
+            playlist_name_label.AddThemeColorOverride("font_color", ApplicationManager.theme.GetColor("normal_font_color", Constants.THEME_TYPE));
     }
 
     public override void _Input(InputEvent @event) {
@@ -47,7 +47,8 @@ public partial class PlaylistDisplay : Button
     {
         Globals.main.playlist_visualizer.OnSelectPlaylist?.Invoke(playlist_index, cover_texture_rect.Texture);
         Globals.main.looked_at_playlist = playlist_index;
-        SelfModulate = Globals.lower_highlight;
+
+        SelfModulate = ApplicationManager.theme.GetColor("lower_highlight_color", Constants.THEME_TYPE);
     }
 
     public void ClearSelected(int index, Texture2D img)
@@ -57,7 +58,7 @@ public partial class PlaylistDisplay : Button
 
     public void Init(Playlist playlist, int index)
     {
-        cover_texture_rect.Texture = ConvertToGodot.LoadImageFromFile(playlist.cover) ?? Globals.default_cover;
+        cover_texture_rect.Texture = ConvertToGodot.LoadImageFromFile(playlist.cover) ?? ApplicationManager.theme.GetIcon("default_cover_icon", Constants.THEME_TYPE);
         playlist_name_label.Text = playlist.name;
 
         string amount = $"{playlist.songs.Count}{(playlist.songs.Count != 1 ? " tracks" : " track")}";
