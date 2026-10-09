@@ -7,7 +7,7 @@ public class SaveSystem
 {
     public static string ImportFolder(in string path) {
         // Create new folder
-		string new_path = Path.Combine(Constants.USER_DATA, "Track Folders", Path.GetDirectoryName(path));
+		string new_path = Path.Combine(Constants.USER_TRACKS, Path.GetDirectoryName(path));
         Directory.CreateDirectory(new_path);
 
 		// Copy all audio files to the folder
@@ -22,7 +22,7 @@ public class SaveSystem
 
 	public static List<string> ImportTracks(in string[] tracks, string playlist_name, bool check_valid = true) {
 		List<string> list = new List<string>();
-		string new_path = Path.Combine(Constants.USER_DATA, "Track Folders", playlist_name);
+		string new_path = Path.Combine(Constants.USER_TRACKS, playlist_name);
 		Directory.CreateDirectory(new_path);
 
 		foreach(string track in tracks) {
@@ -40,7 +40,7 @@ public class SaveSystem
 	public static string ImportCover(string path, string playlist_name, bool check_valid = true) {
 		if (check_valid) if (!File.Exists(path)) return "";
 
-        string new_path = Path.Combine(Constants.USER_DATA, "Playlist Covers", playlist_name + Path.GetExtension(path));
+        string new_path = Path.Combine(Constants.USER_PLAYLIST_COVERS, playlist_name + Path.GetExtension(path));
         File.Copy(path, new_path);
 
 		return new_path;
@@ -51,8 +51,11 @@ public class SaveData
 {
 	public int playlist_index, song_index, looked_at_playlist;
 	public float time, volume;
+
 	public bool shuffled;
+
 	public List<string> playlists;
+	
 	public ApplicationSettings application_settings = new ApplicationSettings();
 	public CloudSettings cloud_settings = new CloudSettings();
 	public AudioSettings audio_settings = new AudioSettings();
@@ -65,8 +68,7 @@ public class SaveData
     }
 
     public static SaveData GetSaveData() {
-        foreach (string folder_name in new[] { "Playlists", "Music", "Playlist Covers" }) { // Add folders
-            string folder_path = Path.Combine(Constants.USER_DATA, folder_name);
+        foreach (string folder_path in new[] { Constants.USER_PLAYLISTS, Constants.USER_TRACKS, Constants.USER_PLAYLIST_COVERS }) { // Add folders
             if (!Directory.Exists(folder_path)) Directory.CreateDirectory(folder_path);
         }
 
