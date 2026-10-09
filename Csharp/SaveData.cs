@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 
-public struct SaveData
+public record SaveData
 {
 	public int playlist_index, song_index, looked_at_playlist;
 	public float time, volume;
