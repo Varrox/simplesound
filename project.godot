@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="simplesound"
-config/description="a simple FOSS audio player built to feel like spotify but running only with your local files."
+config/description="A simple FOSS audio player made to feel like spotify but running only with your local files. Built using the Godot Game engine with C#."
 config/version="v1.3-alpha"
 run/main_scene="res://Windows/main_window.tscn"
 run/main_loop_type="ApplicationManager"
