@@ -29,7 +29,7 @@ min_size = Vector2i(400, 250)
 script = ExtResource("1_v3qo6")
 no_playlist = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer2/ScrollContainer/HBoxContainer/VBoxContainer/None")
 playlist_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer2/ScrollContainer/HBoxContainer/VBoxContainer")
-link_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/Downloading/Display links/ScrollContainer/Link Container")
+link_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/Downloading/Display links/MarginContainer/ScrollContainer/Link Container")
 playlist_display = ExtResource("4_o2q55")
 link = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/Downloading/Add Link/Link")
 add_link = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/Downloading/Add Link/Add")
@@ -135,20 +135,23 @@ custom_minimum_size = Vector2(0, 79.7)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/Downloading/Display links" unique_id=1090438918]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/Downloading/Display links" unique_id=928072321]
 layout_mode = 1
-anchors_preset = -1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 2.5
-offset_top = 2.5
-offset_right = -2.5
-offset_bottom = -2.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/Downloading/Display links/MarginContainer" unique_id=1090438918]
+layout_mode = 2
 horizontal_scroll_mode = 0
 
-[node name="Link Container" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/Downloading/Display links/ScrollContainer" unique_id=562437187]
+[node name="Link Container" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/Downloading/Display links/MarginContainer/ScrollContainer" unique_id=562437187]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3

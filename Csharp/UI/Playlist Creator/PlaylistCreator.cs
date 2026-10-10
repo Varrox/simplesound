@@ -6,7 +6,7 @@ public partial class PlaylistCreator : EditorWindow
 	[Export] public ThemeLineEdit playlist_name_field;
 
 	[Export] public Button add_track_button;
-	[Export] public Panel track_panel;
+	[Export] public FileDropPanel track_drop_panel;
 	[Export] public Control track_path_display_container;
 
 	[Export] public Button add_cover_button;
@@ -35,6 +35,8 @@ public partial class PlaylistCreator : EditorWindow
 		cover_path_display.delete.ButtonUp += ClearCover;
 
 		add_track_button.ButtonUp += OpenTracks;
+
+		track_drop_panel.FilesDropped += AddTracks;
 
 		// Submit / Cancel
 
@@ -68,7 +70,6 @@ public partial class PlaylistCreator : EditorWindow
 			Clear();
 
         Globals.file_dialog.Reparent(this);
-		FilesDropped += DropTracks;
 
         Show();
 	}
@@ -105,20 +106,12 @@ public partial class PlaylistCreator : EditorWindow
 		Globals.SetFileDialogTracks();
 		Globals.file_dialog.Popup();
 
-        Globals.file_dialog.FilesSelected += AddTracks;
+        Globals.file_dialog.FilesSelected += FileDialogAddTracks;
         Globals.file_dialog.Canceled += CancelAddTracks;
     }
 
-	void CancelAddTracks() { Globals.file_dialog.FilesSelected -= AddTracks; Globals.file_dialog.Canceled -= CancelAddTracks; }
+	void CancelAddTracks() { Globals.file_dialog.FilesSelected -= FileDialogAddTracks; Globals.file_dialog.Canceled -= CancelAddTracks; }
     void CancelSetCover() { Globals.file_dialog.FileSelected -= SetCover; Globals.file_dialog.Canceled -= CancelSetCover; }
-
-	public void DropTracks(string[] files)
-	{
-		if(track_panel.GetGlobalRect().HasPoint(GetMousePosition()))
-		{
-			AddTracks(files);
-		}	
-	}
 
     public void AddTracks(string[] paths)
 	{
@@ -129,13 +122,15 @@ public partial class PlaylistCreator : EditorWindow
 				if(!tracks.Contains(path))
 				{
 					var disp = Globals.path_display.Instantiate() as PathDisplay;
-					disp.SetPath(path);
-					
+					disp.is_file = true;
+
 					track_path_display_container.AddChild(disp);
+
+					disp.SetPath(path);
+
 					tracks.Add(path);
 
-					disp.delete.ButtonUp += () => tracks.Remove(path);
-					disp.delete.ButtonUp += () => disp.QueueFree();
+					disp.delete.ButtonUp += () => {tracks.Remove(path); disp.QueueFree();};
 				}
 				else
 				{
@@ -147,8 +142,12 @@ public partial class PlaylistCreator : EditorWindow
                 GD.PushError($"{path} is not a valid audio file, it cannot be added to this playlist.");
 			}
 		}
-        CancelAddTracks();
     }
+
+	public void FileDialogAddTracks(string[] paths) {
+		AddTracks(paths);
+		CancelAddTracks();
+	}
 
 	public void Submit()
 	{
@@ -156,7 +155,6 @@ public partial class PlaylistCreator : EditorWindow
 		Hide();
 
         Globals.file_dialog.Reparent(Globals.self);
-		FilesDropped -= DropTracks;
 
         OnClose?.Invoke();
     }

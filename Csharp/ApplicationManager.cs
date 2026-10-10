@@ -113,6 +113,16 @@ public partial class ApplicationManager : SceneTree
         windows.Remove(window);
     }
 
+    public static bool IsAnyWindowFocused() {
+        for (int i = 0; i < windows.Count; i++) {
+            if(windows[i].HasFocus()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private Theme LoadTheme() {
         Theme theme_resource = ResourceLoader.Load<Theme>("res://Styling/global_theme.tres");
 
@@ -130,6 +140,9 @@ public partial class ApplicationManager : SceneTree
         theme_resource.SetColor("playing_font_color", Constants.THEME_TYPE, Color.FromHtml("66ff5e"));
 
         theme_resource.SetColor("highlight_color", Constants.THEME_TYPE, Color.FromHtml("47474796"));
+
+        theme_resource.SetColor("icon_pressed_color", Constants.THEME_TYPE, Colors.DimGray);
+        theme_resource.SetColor("icon_hover_color", Constants.THEME_TYPE, Colors.LightGray);
 
         // Constant
 
@@ -169,6 +182,7 @@ public partial class ApplicationManager : SceneTree
         theme_resource.SetIcon("settings_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/settings.png"));
 
         theme_resource.SetIcon("folder_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/folder.png"));
+        theme_resource.SetIcon("file_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/file.png"));
 
         theme_resource.SetIcon("default_cover_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/Default Covers/DefaultCover.png"));
 
@@ -185,6 +199,8 @@ public partial class ApplicationManager : SceneTree
         theme_resource.SetStylebox("radio_selected_hover_stylebox", Constants.THEME_TYPE, GD.Load<StyleBox>("res://Styling/Selectables/Selected/radio_selected_hover.tres"));
         theme_resource.SetStylebox("radio_selected_pressed_stylebox", Constants.THEME_TYPE, GD.Load<StyleBox>("res://Styling/Selectables/Selected/radio_selected_pressed.tres"));
         theme_resource.SetStylebox("radio_selected_disabled_stylebox", Constants.THEME_TYPE, GD.Load<StyleBox>("res://Styling/Selectables/Selected/radio_selected_disabled.tres"));
+
+        theme_resource.SetStylebox("file_drop_normal_stylebox", Constants.THEME_TYPE, GD.Load<StyleBox>("res://Styling/Filedrop/file_drop_normal.tres"));
 
         return theme_resource;
     }
