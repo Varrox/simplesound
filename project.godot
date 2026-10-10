@@ -36,7 +36,7 @@ window/vsync/vsync_mode=0
 
 [dotnet]
 
-project/assembly_name="Simplesound"
+project/assembly_name="simplesound"
 
 [input]
 

@@ -11,7 +11,7 @@ export_credentials.cfg
 *.tmp
 *.depren
 
-Simplesound - Backup.csproj
+simplesound - Backup.csproj
 .csproj.old
 
 # Imported translations (automatically generated from CSV files)
