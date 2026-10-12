@@ -38,6 +38,8 @@ public partial class Main : Control
 
     public Action OnLoadTrack;
     public Action OnLoadPlaylist;
+
+	/// Emitted when played or paused.
     public Action<bool> OnPlayingChanged;
 
 	public string track {

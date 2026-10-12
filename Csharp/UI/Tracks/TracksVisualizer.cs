@@ -26,7 +26,10 @@ public partial class TracksVisualizer : ScrollContainer
     }
 
     private Playlist GetPlaylist() {
-        return Globals.main.playlists[Globals.main.looked_at_playlist];
+        if (Globals.main.playlists != null)
+            if (Globals.main.looked_at_playlist < Globals.main.playlists.Count)
+                return Globals.main.playlists[Globals.main.looked_at_playlist];
+        return null;
     }
 
     public override void _Ready() {
