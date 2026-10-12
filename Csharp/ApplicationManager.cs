@@ -26,8 +26,11 @@ public partial class ApplicationManager : SceneTree
     private static ApplicationManager self;
 
     public ApplicationManager() {
-        Globals.save_data = SaveData.GetSaveData();
         self = this;
+
+        Globals.save_data = SaveData.GetSaveData();
+
+        theme = LoadTheme();
 
         Root.MinSize = _main_window_minimum_size;
         Root.CloseRequested += QuitProgram;
@@ -39,8 +42,6 @@ public partial class ApplicationManager : SceneTree
             Globals.save_data.graphic_settings.main_display_size = _main_window_default_size;
             Save();
         }
-
-        theme = LoadTheme();
 
         AddWindow(Root);
         currently_focused_window = Root;
