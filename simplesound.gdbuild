@@ -11,11 +11,21 @@
 		"module_godot_physics_2d_enabled": false,
 		"module_godot_physics_3d_enabled": false,
 		"module_jolt_physics_enabled": false,
-		"module_openxr_enabled": false
+		"module_openxr_enabled": false,
+		"sdl": false
 	},
 	"disabled_classes": [
+		"AnimationNode",
+		"AnimationNodeObserver",
+		"AnimationNodeStateMachinePlayback",
+		"AnimationNodeStateMachineTransition",
+		"AnimationTree",
 		"BaseMaterial3D",
+		"BoneMap",
 		"CameraAttributes",
+		"CompositorEffect",
+		"Curve3D",
+		"Environment",
 		"FogMaterial",
 		"GLTFAccessor",
 		"GLTFAnimation",
@@ -56,10 +66,12 @@
 		"OpenXRActionMap",
 		"OpenXRActionSet",
 		"OpenXRBindingModifier",
+		"OpenXRFoveatedInsetViewport",
 		"OpenXRHapticBase",
 		"OpenXRIPBinding",
 		"OpenXRInteractionProfile",
 		"PanoramaSkyMaterial",
+		"ParallaxBackground",
 		"ParticleProcessMaterial",
 		"PhysicalSkyMaterial",
 		"PlaceholderMaterial",
@@ -73,8 +85,12 @@
 		"Sky",
 		"Texture3D",
 		"TextureLayered",
+		"VisualShader",
+		"VisualShaderGroup",
+		"VisualShaderNode",
 		"VoxelGIData",
-		"World3D"
+		"World3D",
+		"WorldEnvironment"
 	],
 	"type": "build_profile"
 }
