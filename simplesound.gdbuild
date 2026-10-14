@@ -1,5 +1,7 @@
 {
 	"disabled_build_options": {
+		"d3d12": false,
+		"disable_2d": true,
 		"disable_3d": true,
 		"disable_navigation_2d": true,
 		"disable_navigation_3d": true,
@@ -8,11 +10,14 @@
 		"disable_xr": true,
 		"forward_mobile_renderer": false,
 		"forward_plus_renderer": false,
+		"metal": false,
 		"module_godot_physics_2d_enabled": false,
 		"module_godot_physics_3d_enabled": false,
 		"module_jolt_physics_enabled": false,
 		"module_openxr_enabled": false,
-		"sdl": false
+		"rendering_device": false,
+		"sdl": false,
+		"vulkan": false
 	},
 	"disabled_classes": [
 		"AnimationNode",
@@ -74,8 +79,12 @@
 		"ParallaxBackground",
 		"ParticleProcessMaterial",
 		"PhysicalSkyMaterial",
+		"PhysicsMaterial",
 		"PlaceholderMaterial",
+		"PolygonPathFinder",
 		"ProceduralSkyMaterial",
+		"RDShaderFile",
+		"RDShaderSPIRV",
 		"Shape2D",
 		"Shape3D",
 		"SkeletonModification2D",
