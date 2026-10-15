@@ -153,23 +153,19 @@ public class Playlist
         Globals.save_data.Save();
     }
 
-    public static List<string> GetTracksFromDirectory(string directory) {
-        List<string> tracks = new List<string>();
-
+    public static void GetTracksFromDirectory(ref List<string> tracks, string directory) {
         foreach(string file in Directory.GetFiles(directory)) {
             if(Tools.ValidAudioFile(file)) tracks.Add(file);
         }
 
         foreach(string sub_directory in Directory.GetDirectories(directory)) {
-            tracks.AddRange(GetTracksFromDirectory(sub_directory));
+            GetTracksFromDirectory(ref tracks, sub_directory);
         }
-
-        return tracks;
     }
 
     public static List<string> RemoveInvaidTracks(List<string> tracks) {
         for(int i = tracks.Count - 1; i >= 0; i--) {
-            if(!Tools.ValidAudioFile(tracks[i])) {
+            if(!Tools.ValidAudioFile(tracks[i]) && !Directory.Exists(tracks[i])) {
                 tracks.RemoveAt(i);
             }
         }
@@ -180,9 +176,12 @@ public class Playlist
     public static List<string> IncludeDirectoryTracks(List<string> tracks) {
         for(int i = tracks.Count - 1; i >= 0; i--) {
             if (Directory.Exists(tracks[i])) {
-                string path = tracks[i];
+                string dir_path = tracks[i];
                 tracks.RemoveAt(i);
-                tracks.InsertRange(i, GetTracksFromDirectory(path));
+
+                List<string> dir_tracks = new List<string>();
+                GetTracksFromDirectory(ref dir_tracks, dir_path);
+                tracks.InsertRange(i, dir_tracks);
             }
         }
         
