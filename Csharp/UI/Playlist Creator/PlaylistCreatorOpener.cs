@@ -33,7 +33,11 @@ public partial class PlaylistCreatorOpener : EditorWindowOpener
 
             List<string> tracks = sync ? SaveSystem.ImportTracks(creator.tracks.ToArray(), file_name, false) : new(creator.tracks);
 
-			Playlist playlist = new Playlist(creator.playlist_name_field.Text, cover_path, tracks);
+			Playlist playlist = new Playlist();
+
+            playlist.name = creator.playlist_name_field.Text;
+            playlist.cover = cover_path;
+            playlist.songs = tracks;
 
 			if (creator.background_color_enabled_field.ButtonPressed)
 				playlist.custom_info.overlay_color = "#" + creator.background_color_field.Color.ToHtml();

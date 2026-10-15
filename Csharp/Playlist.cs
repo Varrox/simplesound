@@ -1,90 +1,205 @@
-using Godot;
-using Newtonsoft.Json;
+using System.Text.Json;
 using System.Collections.Generic;
 using System.IO;
+using System;
+using System.Text;
 
 public class Playlist
 {
-    public string name, cover;
-    public List<string> songs;
+    public string name, artist, cover;
 
-    public string GetPath() {
-        return path ?? System.IO.Path.Combine(Constants.USER_PLAYLISTS, $"{name.Replace('\\', '-').Replace('/', '-').Replace(':', '-')}.json");
+    public PlaylistType type;
+
+    public List<string> songs { get { return _tracks; } set {
+            _tracks_raw = RemoveInvaidTracks(value);
+            _tracks = IncludeDirectoryTracks(_tracks_raw);
+        } 
     }
 
-    private string path;
-
-    public string artist;
     public CustomInfo custom_info;
 
-    public PlaylistType type = PlaylistType.Default;
+    public string path {
+        get {
+            if(_path == null) { _path = Path.Combine(Constants.USER_PLAYLISTS, $"{name.Replace('\\', '-').Replace('/', '-').Replace(':', '-')}.json"); }
+            return _path;
+        }
+    }
+
+    public List<string> GetTracksRaw() {
+        return _tracks_raw;
+    }
+
+    private List<string> _tracks;
+    private List<string> _tracks_raw; // For saving
+
+    private string _path;
+
+    // SORT THESE BY AGE. DO NOT REMOVE OLD NAMES UNTIL ALPHA IS OVER, OR ALPHA v1.4.
+
+    public static readonly string[] PROPERTY_NAME = ["name"];
+    public static readonly string[] PROPERTY_ARTIST = ["artist"];
+
+    public static readonly string[] PROPERTY_COVER_ART = ["cover_art", "cover"];
+
+    public static readonly string[] PROPERTY_PLAYLIST_TYPE = ["playlist_type", "type"];
+
+    public static readonly string[] PROPERTY_TRACKS = ["tracks", "songs"];
 
     public enum PlaylistType {
         Default,
         Album
     }
 
-    /// <summary>
-    /// Saves to path
-    /// </summary>
-    /// <returns></returns>
-    public string Save() {
-        File.WriteAllText(GetPath(), JsonConvert.SerializeObject(this, Formatting.Indented));
-        return GetPath();
-    }
+    public Playlist() {
+        name = "";
+        artist = "";
+        cover = "";
 
-    public void DeleteFile() {
-        File.Delete(GetPath());
-        Globals.save_data.playlists.Remove(GetPath());
-        Globals.save_data.Save();
-    }
+        type = PlaylistType.Default;
 
-    public Playlist(string name, string cover, List<string> tracks) {
-        this.name = name;
-        this.cover = cover;
-        this.songs = ProcessTracks(tracks);
         custom_info = new CustomInfo();
     }
 
-    public static Playlist LoadFromFile(string path) {
-        Playlist playlist = JsonConvert.DeserializeObject<Playlist>(File.ReadAllText(path));
-        playlist.songs = ProcessTracks(playlist.songs);
+    public byte[] CreateJson() {
+        var writer_options = JsonHelper.CreateJsonWriterOptions();
+
+        using var stream = new MemoryStream();
+        using var writer = new Utf8JsonWriter(stream, writer_options);
+
+        writer.WriteStartObject();
+
+        writer.WriteString(PROPERTY_NAME[0], name);
+        writer.WriteString(PROPERTY_ARTIST[0], artist);
+
+        writer.WriteString(PROPERTY_COVER_ART[0], cover);
+
+        writer.WriteNumber(PROPERTY_PLAYLIST_TYPE[0], (int)type);
+        
+        writer.WriteStartArray(PROPERTY_TRACKS[0]);
+
+        if (_tracks_raw != null) {
+            foreach(string track_path in _tracks_raw) {
+                writer.WriteStringValue(track_path);
+            }
+        }
+
+        writer.WriteEndArray();
+
+        writer.WriteEndObject();
+        writer.Flush();
+
+        return stream.ToArray();
+    }
+
+    /// Saves to path
+    public string Save() {
+        File.WriteAllBytes(path, CreateJson());
+
+        return path;
+    }
+
+    public static Playlist LoadFromJson(in ReadOnlySpan<byte> json_bytes) {
+        Playlist playlist = new Playlist();
+
+        Utf8JsonReader reader = new Utf8JsonReader(json_bytes, JsonHelper.CreateJsonReaderOptions());
+
+        reader.Read();
+
+        if (reader.TokenType != JsonTokenType.StartObject)
+            throw new JsonException("Expected StartObject token");
+
+        while(reader.Read()) {
+            if (reader.TokenType == JsonTokenType.EndObject) break;
+
+            if (reader.TokenType == JsonTokenType.PropertyName) {
+                string property_name = reader.GetString();
+
+                reader.Read();
+
+                if (PROPERTY_NAME.Contains(property_name)) {
+                    if (reader.TokenType == JsonTokenType.String) playlist.name = reader.GetString() ?? "";
+                }
+                else if (PROPERTY_ARTIST.Contains(property_name)) {
+                    if (reader.TokenType == JsonTokenType.String) playlist.artist = reader.GetString() ?? "";
+                }
+                else if (PROPERTY_COVER_ART.Contains(property_name)) {
+                    if (reader.TokenType == JsonTokenType.String) playlist.cover = reader.GetString() ?? "";
+                }
+                else if (PROPERTY_PLAYLIST_TYPE.Contains(property_name)) {
+                    if (reader.TokenType == JsonTokenType.Number) playlist.type = (PlaylistType)reader.GetInt32();
+                }
+                else if (PROPERTY_TRACKS.Contains(property_name)) {
+                    if (reader.TokenType == JsonTokenType.StartArray) playlist.songs = JsonHelper.GetStringList(ref reader);
+                }
+                else {
+                    reader.Skip();
+                }
+            }
+        }
+
         return playlist;
     }
 
-    public static List<string> ProcessTracks(List<string> tracks) {
-        for(int i = 0; i < tracks.Count; i++) {
-            if(!File.Exists(tracks[i])) {
-                string path = tracks[i];
+    public static Playlist LoadFromFile(string path) {
+        string json_text = File.ReadAllText(path);
+        ReadOnlySpan<byte> bytes = Encoding.UTF8.GetBytes(json_text);
+
+        Playlist playlist = LoadFromJson(bytes);
+
+        return playlist;
+    }
+
+    public void DeleteFile() {
+        File.Delete(path);
+
+        Globals.save_data.playlists.Remove(path);
+
+        Globals.save_data.Save();
+    }
+
+    public static List<string> GetTracksFromDirectory(string directory) {
+        List<string> tracks = new List<string>();
+
+        foreach(string file in Directory.GetFiles(directory)) {
+            if(Tools.ValidAudioFile(file)) tracks.Add(file);
+        }
+
+        foreach(string sub_directory in Directory.GetDirectories(directory)) {
+            tracks.AddRange(GetTracksFromDirectory(sub_directory));
+        }
+
+        return tracks;
+    }
+
+    public static List<string> RemoveInvaidTracks(List<string> tracks) {
+        for(int i = tracks.Count - 1; i >= 0; i--) {
+            if(!Tools.ValidAudioFile(tracks[i])) {
                 tracks.RemoveAt(i);
-                
-                if (Directory.Exists(path)) tracks.InsertRange(i, GetTracksFromDirectory(path));
             }
         }
 
         return tracks;
     }
 
-    public static List<string> GetTracksFromDirectory(string directory) {
-        List<string> tracks = new List<string>();
-
-        foreach(string dir in Directory.GetDirectories(directory)) {
-            if (Directory.Exists(dir)) tracks.AddRange(GetTracksFromDirectory(dir));
+    public static List<string> IncludeDirectoryTracks(List<string> tracks) {
+        for(int i = tracks.Count - 1; i >= 0; i--) {
+            if (Directory.Exists(tracks[i])) {
+                string path = tracks[i];
+                tracks.RemoveAt(i);
+                tracks.InsertRange(i, GetTracksFromDirectory(path));
+            }
         }
-
-        foreach(string file in Directory.GetFiles(directory)) {
-            if(Tools.ValidAudioFile(file)) tracks.Add(file);
-        }
-
-        return tracks;
-    }
-
-    [JsonConstructor] public Playlist() {
         
+        return tracks;
     }
 }
 
 public struct CustomInfo
 {
     public string overlay_color, background_path;
+
+    public CustomInfo() {
+        overlay_color = "";
+        background_path = "";
+    }
 }

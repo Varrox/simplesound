@@ -118,7 +118,7 @@ public partial class Main : Control
 	}
 
 	public void CheckIndex() {
-		if (playlist_paths[playlist_index] != playlist.GetPath()) playlist_index = playlist_paths.IndexOf(playlist.GetPath());
+		if (playlist_paths[playlist_index] != playlist.path) playlist_index = playlist_paths.IndexOf(playlist.path);
 
 		if (track != current_track_path) track_index = playlist.songs.IndexOf(current_track_path);
 	}

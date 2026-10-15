@@ -7,6 +7,7 @@
 - Settings are stored more organized now (so your blur quality and vsync settings will be reset, sorry).
 - Main window size is saved on close and loaded back up on open
 - All instances of audio files being referred to as music or songs have been removed and now the more general (and less in the legal gray zone for the downloader) term 'track' is used instead.
+- Backwards compatibility for settings / playlist variable names that are renamed after this version and forward.
 
 ## Features
 
@@ -30,6 +31,7 @@
 - Instant playlist loading (with the cost of no more separation between tracks).
 - Exports from now on will be using a custom export template of godot that strips away all unnecessary parts of the engine like 3D, or physics. This decreases the size of simplesound by 15mb - 25mb.
 - Max FPS setting and optional (on by default) setting that reduces max FPS on window focus lost
+- Faster playlist / savedata json file loading.
 
 # Breaks Compatibility
 

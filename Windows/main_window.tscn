@@ -257,6 +257,7 @@ texture = ExtResource("7_xvcl6")
 stretch_mode = 6
 
 [node name="Color" type="ColorRect" parent="Interface/Background" unique_id=1246253791]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -976,15 +977,16 @@ text = "Artist"
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Playlistcreationcontext" parent="Interface" unique_id=1315656001 instance=ExtResource("43_yqlxv")]
+[node name="Playlistcreationcontext" parent="Interface" unique_id=1315656001 node_paths=PackedStringArray("sub_menus") instance=ExtResource("43_yqlxv")]
 visible = false
 layout_mode = 1
 offset_left = -1050.0
 offset_top = 99.0
 offset_right = -884.0
 offset_bottom = 177.0
+sub_menus = []
 
-[node name="Playlistcontext" parent="Interface" unique_id=957626048 instance=ExtResource("44_aaavu")]
+[node name="Playlistcontext" parent="Interface" unique_id=957626048 node_paths=PackedStringArray("sub_menus") instance=ExtResource("44_aaavu")]
 visible = false
 layout_mode = 1
 anchors_preset = -1
@@ -992,12 +994,14 @@ offset_left = -1006.0
 offset_top = -223.0
 offset_right = -864.0
 offset_bottom = -74.0
+sub_menus = []
 
-[node name="Trackcontext" parent="Interface" unique_id=196847728 instance=ExtResource("45_rjtah")]
+[node name="Trackcontext" parent="Interface" unique_id=196847728 node_paths=PackedStringArray("sub_menus") instance=ExtResource("45_rjtah")]
 visible = false
 layout_mode = 1
 offset_top = -75.0
 offset_bottom = 43.0
+sub_menus = []
 
 [node name="Player" type="AudioStreamPlayer" parent="." unique_id=488316782]
 
