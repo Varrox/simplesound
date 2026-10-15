@@ -2,10 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
-using System.Text;
 
 public class SaveData : ISettings {
-	public int playlist_index, song_index, looked_at_playlist;
+	public int playlist_index, track_index, looked_at_playlist;
 	public float time, volume;
 
 	public bool shuffled;
@@ -37,7 +36,7 @@ public class SaveData : ISettings {
 
     public SaveData() {
         playlist_index = 0;
-        song_index = 0;
+        track_index = 0;
         looked_at_playlist = 0;
 
         time = 0.0f;
@@ -62,7 +61,7 @@ public class SaveData : ISettings {
         // Playback info
 
         writer.WriteNumber(PROPERTY_PLAYIST_INDEX[0], playlist_index);
-        writer.WriteNumber(PROPERTY_TRACK_INDEX[0], song_index);
+        writer.WriteNumber(PROPERTY_TRACK_INDEX[0], track_index);
         writer.WriteNumber(PROPERTY_LOOKED_AT_PLAYLIST[0], looked_at_playlist);
 
         writer.WriteNumber(PROPERTY_TIME[0], time);
@@ -127,7 +126,7 @@ public class SaveData : ISettings {
             else {return;}
         }
         else if (PROPERTY_TRACK_INDEX.Contains(property_name)) {
-            if (reader.TokenType == JsonTokenType.Number) song_index = reader.GetInt32();
+            if (reader.TokenType == JsonTokenType.Number) track_index = reader.GetInt32();
             else {return;}
         }
         else if (PROPERTY_LOOKED_AT_PLAYLIST.Contains(property_name)) {
@@ -170,7 +169,7 @@ public class SaveData : ISettings {
         Utf8JsonReader reader = new Utf8JsonReader(json_bytes, JsonHelper.CreateJsonReaderOptions());
 
         reader.Read();
-        
+
         SaveData save_data = JsonHelper.LoadSettingsFromJson<SaveData>(ref reader);
 
         return save_data;

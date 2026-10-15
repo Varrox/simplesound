@@ -22,7 +22,7 @@ public partial class TracksVisualizer : ScrollContainer
     int top_card_size_y;
     
     int GetTotalHeight() {
-        return SINGLE_BUTTON_SIZE * GetPlaylist().songs.Count;
+        return SINGLE_BUTTON_SIZE * GetPlaylist().tracks.Count;
     }
 
     private Playlist GetPlaylist() {
@@ -53,12 +53,12 @@ public partial class TracksVisualizer : ScrollContainer
     }
 
     private Texture2D GetCover(in Playlist playlist, in int track) {
-        return (playlist.type == Playlist.PlaylistType.Album) ? null : ConvertToGodot.GetMediaCover(playlist.songs[track]);
+        return (playlist.type == Playlist.PlaylistType.Album) ? null : ConvertToGodot.GetMediaCover(playlist.tracks[track]);
     }
 
     private void UpdateTracks(in Playlist playlist) {
         int max_displays = (int)Mathf.Ceil(Size.Y / SINGLE_BUTTON_SIZE) + 3;
-        int target_displays = Mathf.Min(max_displays, playlist.songs.Count);
+        int target_displays = Mathf.Min(max_displays, playlist.tracks.Count);
 
         (int top, int bottom) = CalculateSize();
 
@@ -155,8 +155,8 @@ public partial class TracksVisualizer : ScrollContainer
     private TrackData GetTrackData(int track, in Playlist playlist)
     {
         if (!track_datas.ContainsKey(track)) {
-            if(track < playlist.songs.Count) {
-                TrackData data = new TrackData(playlist.songs[track]);
+            if(track < playlist.tracks.Count) {
+                TrackData data = new TrackData(playlist.tracks[track]);
                 track_datas[track] = data;
             }
             else track_datas[track] = new TrackData{};
@@ -170,7 +170,7 @@ public partial class TracksVisualizer : ScrollContainer
         cover.Texture = playlist_cover;
         playlist_name_label.Text = playlist.name;
 
-        if (playlist.songs != null) track_count_label.Text = $"{playlist.songs.Count} track" + (playlist.songs.Count != 1 ? "s" : "");
+        if (playlist.tracks != null) track_count_label.Text = $"{playlist.tracks.Count} track" + (playlist.tracks.Count != 1 ? "s" : "");
         else track_count_label.Text = "0 tracks";
 
         Update();

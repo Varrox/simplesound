@@ -19,7 +19,7 @@ public partial class AttributeEditorOpenerGlobal : EditorWindowOpener
                 return;
             }
 
-            file = Globals.main.playlists[Globals.main.looked_at_playlist].songs[TracksContextMenuOpener.selected_track];
+            file = Globals.main.playlists[Globals.main.looked_at_playlist].tracks[TracksContextMenuOpener.selected_track];
 
             (window as AttributeEditor).Open(Metadata.GetName(file), Metadata.GetArtist(file), Metadata.GetShareLink(file), Metadata.IsExplicit(file));
             window.OnClose += SubmitMeta;

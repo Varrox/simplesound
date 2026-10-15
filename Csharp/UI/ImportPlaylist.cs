@@ -46,7 +46,7 @@ public partial class ImportPlaylist : Button
 
 		if (sync == Confirm.Accepted)
 		{
-			playlist.songs = SaveSystem.ImportTracks(playlist.songs.ToArray(), playlist.name);
+			playlist.tracks = SaveSystem.ImportTracks(playlist.tracks.ToArray(), playlist.name);
 			playlist.cover = SaveSystem.ImportCover(playlist.cover, playlist.name);
         }
 

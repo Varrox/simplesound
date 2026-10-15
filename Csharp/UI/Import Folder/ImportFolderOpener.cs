@@ -30,7 +30,7 @@ public partial class ImportFolderOpener : EditorWindowOpener
 
             playlist.name = creator.playlist_name_field.Text;
             playlist.cover = SaveSystem.ImportCover(creator.cover_path, creator.playlist_name_field.Text);
-            playlist.songs = new List<string>(files);
+            playlist.tracks = new List<string>(files);
 
             if (creator.background_color_enabled_field.ButtonPressed)
                 playlist.custom_info.overlay_color = "#" + creator.background_color_field.Color.ToHtml();

@@ -52,7 +52,7 @@ script = ExtResource("3_ufnc8")
 [node name="Remove" type="Button" parent="MarginContainer/VBoxContainer" unique_id=640502061]
 layout_mode = 2
 size_flags_vertical = 3
-tooltip_text = "Will remove song from its playlist, but not delete its file."
+tooltip_text = "Will remove track from its playlist, but not delete its file."
 focus_mode = 0
 disabled = true
 text = "Remove"

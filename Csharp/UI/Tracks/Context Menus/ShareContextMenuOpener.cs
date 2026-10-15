@@ -12,11 +12,11 @@ public partial class ShareContextMenuOpener : ContextMenuOpener
 	public override void _Ready()
 	{
 		base._Ready();
-		OnOpen += GetSongData;
+		OnOpen += GetTrackData;
 		OnClose += () => Icon = share;
 
 		share_link.ButtonUp += CopyShareLinkToClipboard;
-		file_browse.ButtonUp += FileBrowseSong;
+		file_browse.ButtonUp += FileBrowseTrack;
     }
 
     public void CopyShareLinkToClipboard()
@@ -24,14 +24,14 @@ public partial class ShareContextMenuOpener : ContextMenuOpener
         DisplayServer.ClipboardSet(link);
     }
 
-	public void FileBrowseSong()
+	public void FileBrowseTrack()
 	{
         OS.ShellShowInFileManager(file);
 	}
 
-    public void GetSongData()
+    public void GetTrackData()
 	{
-        file = Globals.main.playlists[Globals.main.looked_at_playlist].songs[TracksContextMenuOpener.selected_track];
+        file = Globals.main.playlists[Globals.main.looked_at_playlist].tracks[TracksContextMenuOpener.selected_track];
 		link = Metadata.GetShareLink(file);
 
 		Icon = back;

@@ -30,18 +30,18 @@ public partial class DownloadPlaylistDisplay : Button
         cover_texture_rect.Texture = ConvertToGodot.LoadImageFromFile(playlist.cover) ?? ApplicationManager.theme.GetIcon("default_cover_icon", Constants.THEME_TYPE);
         playlist_name_label.Text = playlist.name;
 
-        string amount = $"{playlist.songs.Count}{(playlist.songs.Count != 1 ? " tracks" : " track")}";
+        string amount = $"{playlist.tracks.Count}{(playlist.tracks.Count != 1 ? " tracks" : " track")}";
 
         if (playlist.type != Playlist.PlaylistType.Album)
         {
-            if (playlist.songs == null)
+            if (playlist.tracks == null)
                 track_count_label.Text = "0 tracks";
             else
                 track_count_label.Text = $"{amount}{(playlist.artist != null ? $" {Constants.DOT} {playlist.artist}" : "")}";
         }
         else
         {
-            track_count_label.Text = $"Album  {Constants.DOT}  {playlist.artist ?? (playlist.songs.Count.ToString() + (playlist.songs.Count != 1 ? " tracks" : " track"))}";
+            track_count_label.Text = $"Album  {Constants.DOT}  {playlist.artist ?? (playlist.tracks.Count.ToString() + (playlist.tracks.Count != 1 ? " tracks" : " track"))}";
         }
 
         playlist_index = index;

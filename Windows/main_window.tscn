@@ -583,7 +583,7 @@ offset_top = -18.0
 offset_right = 605.0
 offset_bottom = 18.0
 grow_vertical = 2
-tooltip_text = "Type in the name of an artist or song, or playlist"
+tooltip_text = "Type in the name of an artist or track, or playlist"
 focus_mode = 1
 theme_override_styles/focus = SubResource("StyleBoxEmpty_come4")
 placeholder_text = " Search playlists..."
@@ -650,7 +650,7 @@ horizontal_alignment = 2
 
 [node name="Stream" type="Button" parent="Interface/Top Bar/Right" unique_id=1363850799 node_paths=PackedStringArray("texture")]
 layout_mode = 2
-tooltip_text = "Toggles a little window you can use in a streaming software to show what song is currently playing."
+tooltip_text = "Toggles a little window you can use in a streaming software to show what track is currently playing."
 focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_wx3lt")
 text = "Streamer Mode"
@@ -752,7 +752,7 @@ grow_vertical = 2
 [node name="Shuffle" type="Button" parent="Interface/Player/Controls/HBoxContainer" unique_id=872846605]
 layout_mode = 2
 size_flags_horizontal = 3
-tooltip_text = "Toggle song shuffling."
+tooltip_text = "Toggle track shuffling."
 focus_mode = 0
 theme_override_fonts/font = ExtResource("34_4jfok")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_l3qov")
@@ -765,7 +765,7 @@ expand_icon = true
 [node name="Back" type="Button" parent="Interface/Player/Controls/HBoxContainer" unique_id=202036208]
 layout_mode = 2
 size_flags_horizontal = 3
-tooltip_text = "Previous song."
+tooltip_text = "Previous track."
 focus_mode = 0
 theme_override_fonts/font = ExtResource("34_4jfok")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_l3qov")
@@ -789,7 +789,7 @@ expand_icon = true
 [node name="Next" type="Button" parent="Interface/Player/Controls/HBoxContainer" unique_id=1880351366]
 layout_mode = 2
 size_flags_horizontal = 3
-tooltip_text = "Next song."
+tooltip_text = "Next track."
 focus_mode = 0
 theme_override_fonts/font = ExtResource("34_4jfok")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_l3qov")
@@ -802,7 +802,7 @@ expand_icon = true
 [node name="Loop" type="Button" parent="Interface/Player/Controls/HBoxContainer" unique_id=1580156266]
 layout_mode = 2
 size_flags_horizontal = 3
-tooltip_text = "Toggle song looping."
+tooltip_text = "Toggle track looping."
 focus_mode = 0
 theme_override_fonts/font = ExtResource("34_4jfok")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_l3qov")

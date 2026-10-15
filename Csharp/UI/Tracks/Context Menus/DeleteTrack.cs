@@ -17,7 +17,7 @@ public partial class DeleteTrack : Button
 		{
 			confirmation_window = Globals.confirmation_window.Instantiate() as ConfirmationWindow;
 
-            confirmation_window.message = $"Are you sure you want to delete this track \'{Metadata.GetName(Globals.main.playlists[Globals.main.looked_at_playlist].songs[TracksContextMenuOpener.selected_track])}\' from this playlist?";
+            confirmation_window.message = $"Are you sure you want to delete this track \'{Metadata.GetName(Globals.main.playlists[Globals.main.looked_at_playlist].tracks[TracksContextMenuOpener.selected_track])}\' from this playlist?";
             confirmation_window.accept_text = "Yes";
             confirmation_window.decline_text = "No";
             confirmation_window.cancel_text = "";
@@ -59,7 +59,7 @@ public partial class DeleteTrack : Button
                 Globals.main.track_index -= 1;
         }
 
-        Globals.main.playlists[Globals.main.looked_at_playlist].songs.RemoveAt(TracksContextMenuOpener.selected_track);
+        Globals.main.playlists[Globals.main.looked_at_playlist].tracks.RemoveAt(TracksContextMenuOpener.selected_track);
         Globals.main.playlists[Globals.main.looked_at_playlist].Save();
         Globals.main.tracks_visualizer.Update();
     }

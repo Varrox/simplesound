@@ -10,7 +10,7 @@ public class Playlist
 
     public PlaylistType type;
 
-    public List<string> songs { get { return _tracks; } set {
+    public List<string> tracks { get { return _tracks; } set {
             _tracks_raw = RemoveInvaidTracks(value);
             _tracks = IncludeDirectoryTracks(_tracks_raw);
         } 
@@ -129,7 +129,7 @@ public class Playlist
                     if (reader.TokenType == JsonTokenType.Number) playlist.type = (PlaylistType)reader.GetInt32();
                 }
                 else if (PROPERTY_TRACKS.Contains(property_name)) {
-                    if (reader.TokenType == JsonTokenType.StartArray) playlist.songs = JsonHelper.GetStringList(ref reader);
+                    if (reader.TokenType == JsonTokenType.StartArray) playlist.tracks = JsonHelper.GetStringList(ref reader);
                 }
                 else {
                     reader.Skip();

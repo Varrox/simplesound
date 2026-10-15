@@ -44,7 +44,7 @@ public partial class Main : Control
 
 	public string track {
 		get {
-			if(IsTrackAvailable()) return playlists[playlist_index].songs[track_index];
+			if(IsTrackAvailable()) return playlists[playlist_index].tracks[track_index];
 			else return null;
         }
 	}
@@ -53,7 +53,7 @@ public partial class Main : Control
 		// Load Save data
 
 		playlist_index = Globals.save_data.playlist_index;
-		track_index = Globals.save_data.song_index;
+		track_index = Globals.save_data.track_index;
 		time = Globals.save_data.time;
 		volume = Globals.save_data.volume;
 		shuffled = Globals.save_data.shuffled;
@@ -83,7 +83,7 @@ public partial class Main : Control
 
         playlist_visualizer.LoadAllPlaylistVisuals();
 
-        if (IsTrackAvailable()) PlayTrack(playlist.songs[track_index]);
+        if (IsTrackAvailable()) PlayTrack(playlist.tracks[track_index]);
         else OnLoadTrack?.Invoke(); // Emit anyways just so it can display no tracks
 
 		// Done Loading
@@ -120,7 +120,7 @@ public partial class Main : Control
 	public void CheckIndex() {
 		if (playlist_paths[playlist_index] != playlist.path) playlist_index = playlist_paths.IndexOf(playlist.path);
 
-		if (track != current_track_path) track_index = playlist.songs.IndexOf(current_track_path);
+		if (track != current_track_path) track_index = playlist.tracks.IndexOf(current_track_path);
 	}
 
 	public void LoadPlaylist(int index) {
@@ -196,7 +196,7 @@ public partial class Main : Control
 			else {
 				for(int i = 0; i < 6; i++) {
 					GD.Seed((ulong)(offset * 3 + random_offset + i));
-					int random_number = GD.RandRange(0, playlist.songs.Count);
+					int random_number = GD.RandRange(0, playlist.tracks.Count);
 					if (random_number != track_index) {
 						track_index = random_number;
 						offset += i / 3;
@@ -207,7 +207,7 @@ public partial class Main : Control
 		}
 		else track_index += amount;
 
-		track_index = Mathf.Wrap(track_index, 0, playlist.songs.Count);
+		track_index = Mathf.Wrap(track_index, 0, playlist.tracks.Count);
 
 		if(Metadata.IsFileCorrupt(track)) { // Skip if corrupted
 			MoveTrack(amount);
@@ -244,8 +244,8 @@ public partial class Main : Control
 
 				// TODO : Better missing track management needed.
 
-				if (playlist.songs[track_index] == path) {
-                    playlist.songs.RemoveAt(track_index);
+				if (playlist.tracks[track_index] == path) {
+                    playlist.tracks.RemoveAt(track_index);
                     playlist.Save();
 					PlayTrack(track);
                 }
@@ -286,14 +286,14 @@ public partial class Main : Control
 		if (playlists == null) return false;
 		if (playlists.Count <= playlist_index) return false;
 		if (playlists[playlist_index] == null) return false;
-		if (playlists[playlist_index].songs == null) return false;
-		if (playlists[playlist_index].songs.Count == 0) return false;
+		if (playlists[playlist_index].tracks == null) return false;
+		if (playlists[playlist_index].tracks.Count == 0) return false;
 		return true;
 	}
 
 	public void SetSaveData() {
 		Globals.save_data.playlist_index = playlist_index;
-		Globals.save_data.song_index = track_index;
+		Globals.save_data.track_index = track_index;
 		Globals.save_data.looked_at_playlist = looked_at_playlist;
 		Globals.save_data.time = time;
 		Globals.save_data.volume = audio_player.VolumeDb;

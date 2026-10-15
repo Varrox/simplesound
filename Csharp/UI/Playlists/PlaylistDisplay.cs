@@ -54,9 +54,9 @@ public partial class PlaylistDisplay : Button
         cover_texture_rect.Texture = ConvertToGodot.LoadImageFromFile(playlist.cover) ?? ApplicationManager.theme.GetIcon("default_cover_icon", Constants.THEME_TYPE);
         playlist_name_label.Text = playlist.name;
 
-        int song_count = playlist.songs == null ? 0 : playlist.songs.Count;
+        int track_count = playlist.tracks == null ? 0 : playlist.tracks.Count;
 
-        string amount = $"{song_count}{(song_count != 1 ? " tracks" : " track")}";
+        string amount = $"{track_count}{(track_count != 1 ? " tracks" : " track")}";
 
         if (playlist.type != Playlist.PlaylistType.Album)
         {

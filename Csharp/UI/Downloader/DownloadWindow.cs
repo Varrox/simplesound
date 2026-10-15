@@ -124,7 +124,7 @@ public partial class DownloadWindow : EditorWindow
             if(selected_playlist != -1)
             {
                 GD.Print(tracks);
-                Globals.main.playlists[selected_playlist].songs.AddRange(tracks);
+                Globals.main.playlists[selected_playlist].tracks.AddRange(tracks);
                 Globals.main.playlists[selected_playlist].Save();
                 Globals.main.Refresh();
             }

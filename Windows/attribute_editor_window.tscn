@@ -43,7 +43,7 @@ grow_vertical = 2
 
 [node name="Name" type="LineEdit" parent="VBoxContainer" unique_id=1616236964]
 layout_mode = 2
-tooltip_text = "Name of the song."
+tooltip_text = "Name of the track."
 theme_override_fonts/font = ExtResource("1_ot5f1")
 placeholder_text = "Name"
 caret_blink = true
@@ -52,7 +52,7 @@ metadata/_custom_type_script = "uid://ckpanpt3fty8d"
 
 [node name="Artist" type="LineEdit" parent="VBoxContainer" unique_id=39460]
 layout_mode = 2
-tooltip_text = "The artist(s) who made the song."
+tooltip_text = "The artist(s) who made the track."
 theme_override_fonts/font = ExtResource("1_ot5f1")
 placeholder_text = "Artist
 "
@@ -62,7 +62,7 @@ metadata/_custom_type_script = "uid://ckpanpt3fty8d"
 
 [node name="Share" type="LineEdit" parent="VBoxContainer" unique_id=941129891]
 layout_mode = 2
-tooltip_text = "The link (URL) to share this song via external platforms (link is also used to extract cover art for discord rich presence)."
+tooltip_text = "The link (URL) to share this track via external platforms (link is also used to extract cover art for discord rich presence)."
 theme_override_fonts/font = ExtResource("1_ot5f1")
 placeholder_text = "Share Link
 "
@@ -74,7 +74,7 @@ metadata/_custom_type_script = "uid://ckpanpt3fty8d"
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
-tooltip_text = "Toggles whether or not this song has explicit lyrics."
+tooltip_text = "Toggles whether or not this track has explicit lyrics."
 theme_override_fonts/font = ExtResource("1_ot5f1")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_3g08v")
 text = "Explicit Lyrics"
@@ -85,7 +85,7 @@ layout_mode = 2
 
 [node name="Cover" type="Button" parent="VBoxContainer" unique_id=1017338183]
 layout_mode = 2
-tooltip_text = "Opens a file dialog to select an image as the cover art for this song."
+tooltip_text = "Opens a file dialog to select an image as the cover art for this track."
 theme_override_fonts/font = ExtResource("1_ot5f1")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_mixmj")
 text = "Select cover image"
@@ -100,14 +100,14 @@ alignment = 1
 
 [node name="Submit" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=1208880014]
 layout_mode = 2
-tooltip_text = "Applies all changes done to the metadata of this song."
+tooltip_text = "Applies all changes done to the metadata of this track."
 theme_override_fonts/font = ExtResource("1_ot5f1")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_iyibu")
 text = "Apply Changes"
 
 [node name="Cancel" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=1813568189]
 layout_mode = 2
-tooltip_text = "Cancels all changes done to the metadata of this song."
+tooltip_text = "Cancels all changes done to the metadata of this track."
 theme_override_fonts/font = ExtResource("1_ot5f1")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_iyibu")
 text = "Cancel"

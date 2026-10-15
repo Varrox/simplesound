@@ -10,4 +10,4 @@ Goals:
 * Add cloud syncing
 * Fix up all bugs and random code inconsistencies
 * Implement Searching
-* Add playlist and song re-ordering.
+* Add playlist and track re-ordering.
