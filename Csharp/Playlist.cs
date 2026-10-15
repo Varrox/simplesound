@@ -26,8 +26,6 @@ public class Playlist
         } 
     }
 
-    public CustomInfo custom_info;
-
     public string path {
         get {
             if(_path == null) { _path = Path.Combine(Constants.USER_PLAYLISTS, $"{name.Replace('\\', '-').Replace('/', '-').Replace(':', '-')}.json"); }
@@ -66,8 +64,6 @@ public class Playlist
         cover = "";
 
         type = PlaylistType.Default;
-
-        custom_info = new CustomInfo();
     }
 
     public byte[] CreateJson() {
@@ -200,15 +196,5 @@ public class Playlist
         }
         
         return tracks;
-    }
-}
-
-public struct CustomInfo
-{
-    public string overlay_color, background_path;
-
-    public CustomInfo() {
-        overlay_color = "";
-        background_path = "";
     }
 }

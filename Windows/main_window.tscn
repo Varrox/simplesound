@@ -199,7 +199,7 @@ player = NodePath("Interface")
 playlist_visualizer = NodePath("Interface/Content/Side Panel/Open/VBoxContainer/Playlists")
 tracks_visualizer = NodePath("Interface/Content/Tracks/MarginContainer/Track Display")
 
-[node name="Interface" type="Control" parent="." unique_id=164668924 node_paths=PackedStringArray("play_button", "next_button", "back_button", "loop_button", "shuffle_button", "progress_slider", "volume_slider", "mute_button", "current_time_label", "total_time_label", "track_name_label", "track_artist_label", "track_cover_texture_rect", "background_subviewport", "background_color_rect")]
+[node name="Interface" type="Control" parent="." unique_id=164668924 node_paths=PackedStringArray("play_button", "next_button", "back_button", "loop_button", "shuffle_button", "progress_slider", "volume_slider", "mute_button", "current_time_label", "total_time_label", "track_name_label", "track_artist_label", "track_cover_texture_rect", "background_subviewport")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -221,7 +221,6 @@ track_name_label = NodePath("Player/Track Attributes/Name")
 track_artist_label = NodePath("Player/Track Attributes/Artist")
 track_cover_texture_rect = NodePath("Player/Track Attributes/PanelContainer/Cover")
 background_subviewport = NodePath("Background/SubViewport")
-background_color_rect = NodePath("Background/Color")
 
 [node name="Background" type="Control" parent="Interface" unique_id=291196361]
 layout_mode = 1
@@ -255,16 +254,6 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("7_xvcl6")
 stretch_mode = 6
-
-[node name="Color" type="ColorRect" parent="Interface/Background" unique_id=1246253791]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(1, 1, 1, 0)
 
 [node name="Video" type="VideoStreamPlayer" parent="Interface/Background" unique_id=797067042]
 layout_mode = 1
@@ -977,16 +966,15 @@ text = "Artist"
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Playlistcreationcontext" parent="Interface" unique_id=1315656001 node_paths=PackedStringArray("sub_menus") instance=ExtResource("43_yqlxv")]
+[node name="Playlistcreationcontext" parent="Interface" unique_id=1315656001 instance=ExtResource("43_yqlxv")]
 visible = false
 layout_mode = 1
 offset_left = -1050.0
 offset_top = 99.0
 offset_right = -884.0
 offset_bottom = 177.0
-sub_menus = []
 
-[node name="Playlistcontext" parent="Interface" unique_id=957626048 node_paths=PackedStringArray("sub_menus") instance=ExtResource("44_aaavu")]
+[node name="Playlistcontext" parent="Interface" unique_id=957626048 instance=ExtResource("44_aaavu")]
 visible = false
 layout_mode = 1
 anchors_preset = -1
@@ -994,7 +982,6 @@ offset_left = -1006.0
 offset_top = -223.0
 offset_right = -864.0
 offset_bottom = -74.0
-sub_menus = []
 
 [node name="Trackcontext" parent="Interface" unique_id=196847728 node_paths=PackedStringArray("sub_menus") instance=ExtResource("45_rjtah")]
 visible = false

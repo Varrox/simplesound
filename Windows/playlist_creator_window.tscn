@@ -3,7 +3,6 @@
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Styling/Fonts/DefaultFont.tres" id="1_8t6yf"]
 [ext_resource type="Script" uid="uid://bhqfe4m1n2gya" path="res://Csharp/UI/Playlist Creator/PlaylistCreator.cs" id="1_b0noq"]
 [ext_resource type="PackedScene" uid="uid://cjc5crjo31obe" path="res://Prefabs/path_display.tscn" id="3_uox0n"]
-[ext_resource type="Script" uid="uid://b33tl5k5kwk30" path="res://Csharp/UI/Default Node Extentions/ThemeColorPickerButton.cs" id="4_3os5s"]
 [ext_resource type="Script" uid="uid://ckpanpt3fty8d" path="res://Csharp/UI/Default Node Extentions/ThemeLineEdit.cs" id="4_eb7ps"]
 [ext_resource type="StyleBox" uid="uid://dhhahexcqr5gf" path="res://Styling/Filedrop/file_drop_normal.tres" id="4_pc04o"]
 [ext_resource type="Script" uid="uid://bf0uwbvnc27wl" path="res://Csharp/UI/FileDropPanel.cs" id="5_etdoe"]
@@ -13,8 +12,6 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yiuwm"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r7omr"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bhcbq"]
 
 [node name="Window" type="Window" unique_id=874625055 node_paths=PackedStringArray("playlist_name_field", "add_track_button", "track_drop_panel", "track_path_display_container", "add_cover_button", "cover_path_display", "album_field", "artist_field", "background_color_enabled_field", "background_color_field", "cloud_sync_enabled_field", "submit_button", "cancel_button")]
 oversampling_override = 1.0
@@ -33,8 +30,8 @@ add_cover_button = NodePath("HBoxContainer2/VBoxContainer2/Cover")
 cover_path_display = NodePath("HBoxContainer2/VBoxContainer2/Selected File")
 album_field = NodePath("HBoxContainer2/VBoxContainer2/Album")
 artist_field = NodePath("HBoxContainer2/VBoxContainer2/Artist")
-background_color_enabled_field = NodePath("HBoxContainer2/VBoxContainer2/Background Theme")
-background_color_field = NodePath("HBoxContainer2/VBoxContainer2/ColorPickerButton")
+background_color_enabled_field = NodePath("")
+background_color_field = NodePath("")
 cloud_sync_enabled_field = NodePath("HBoxContainer2/VBoxContainer2/Cloud")
 submit_button = NodePath("HBoxContainer/Create")
 cancel_button = NodePath("HBoxContainer/Cancel")
@@ -142,24 +139,6 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_acdqb")
 placeholder_text = "Artist"
 script = ExtResource("4_eb7ps")
 metadata/_custom_type_script = "uid://ckpanpt3fty8d"
-
-[node name="HSeparator4" type="HSeparator" parent="HBoxContainer2/VBoxContainer2" unique_id=602701414]
-custom_minimum_size = Vector2(0, 10)
-layout_mode = 2
-
-[node name="Background Theme" type="CheckBox" parent="HBoxContainer2/VBoxContainer2" unique_id=739392275]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("1_8t6yf")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_r7omr")
-text = "Background Theme"
-
-[node name="ColorPickerButton" type="ColorPickerButton" parent="HBoxContainer2/VBoxContainer2" unique_id=676398692]
-layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxEmpty_bhcbq")
-text = "
-"
-color = Color(0.5449743, 0.54497427, 0.54497427, 1)
-script = ExtResource("4_3os5s")
 
 [node name="HSeparator3" type="HSeparator" parent="HBoxContainer2/VBoxContainer2" unique_id=320939632]
 custom_minimum_size = Vector2(0, 10)

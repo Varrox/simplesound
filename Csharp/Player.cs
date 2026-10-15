@@ -14,9 +14,6 @@ public partial class Player : Node
     [Export] public Label current_time_label, total_time_label, track_name_label, track_artist_label;
     [Export] public TextureRect track_cover_texture_rect;
     [Export] public SubViewport background_subviewport;
-    [Export] public ColorRect background_color_rect;
-
-    Color background_color;
 
     bool can_set_time;
 
@@ -131,18 +128,15 @@ public partial class Player : Node
             track_artist_label.Text = artist;
             track_artist_label.TooltipText = artist;
 
-            Texture2D cover = ConvertToGodot.GetMediaCover(Globals.main.track);
-
-            if (cover == null || Globals.main.playlist.type == Playlist.PlaylistType.Album) {                
+            if (Globals.main.playlist.type == Playlist.PlaylistType.Album) {                
                 track_cover_texture_rect.Texture = Globals.main.playlist.cover_texture;
             }
             else {
-                track_cover_texture_rect.Texture = cover;
+                Texture2D cover = ConvertToGodot.GetMediaCover(Globals.main.track);
+                track_cover_texture_rect.Texture = cover ?? default_cover_icon;
             }
-            
-            Texture2D background_texture = Globals.main.playlist.custom_info.background_path != null ? ConvertToGodot.LoadImageFromFile(Globals.main.playlist.custom_info.background_path) ?? cover : track_cover_texture_rect.Texture;
 
-            background_subviewport.Set("target_texture", background_texture);
+            background_subviewport.Set("target_texture", track_cover_texture_rect.Texture);
 
             total_time_label.Text = Tools.SecondsToTimestamp(Metadata.GetTotalTime(Globals.main.track));
             progress_slider.MaxValue = Globals.main.audio_player.Stream.GetLength();
@@ -153,7 +147,6 @@ public partial class Player : Node
             track_name_label.TooltipText = "";
             track_artist_label.Text = "No artist";
             track_artist_label.TooltipText = "";
-            background_color = Colors.Transparent;
 
             total_time_label.Text = "0:00";
             progress_slider.MaxValue = 1;
@@ -181,8 +174,6 @@ public partial class Player : Node
     }
     public void ApplyPlaylistSettings() {
         if(Globals.main.playlist == null) return;
-
-        background_color = Globals.main.playlist.custom_info.overlay_color != null ? Color.FromHtml(Globals.main.playlist.custom_info.overlay_color) : Colors.Transparent;
     }
 
     public override void _Process(double delta) {
@@ -201,14 +192,9 @@ public partial class Player : Node
             Globals.main.time = (float)progress_slider.Value;
         }
 
-        if (Globals.main.IsTrackAvailable()) {
-            float max = 0.65f;
-            background_color_rect.Color = background_color_rect.Color.Lerp(background_color.Clamp(new Color(0f, 0f, 0f, 0f), new Color(max, max, max, max)), (float)delta * 2f);
-
-            if (!muted) {
-                Globals.main.audio_player.VolumeDb = (float)(volume_slider.Value != -50 ? volume_slider.Value : -80);
-                mute_button.Icon = ApplicationManager.theme.GetIcon(Globals.main.audio_player.VolumeDb == -80 ? "unmute_icon" : "mute_icon", Constants.THEME_TYPE);
-            }
+        if (!muted) {
+            Globals.main.audio_player.VolumeDb = (float)(volume_slider.Value != -50 ? volume_slider.Value : -80);
+            mute_button.Icon = ApplicationManager.theme.GetIcon(Globals.main.audio_player.VolumeDb == -80 ? "unmute_icon" : "mute_icon", Constants.THEME_TYPE);
         }
     }
 }

@@ -39,9 +39,6 @@ public partial class PlaylistCreatorOpener : EditorWindowOpener
             playlist.cover = cover_path;
             playlist.tracks = tracks;
 
-			if (creator.background_color_enabled_field.ButtonPressed)
-				playlist.custom_info.overlay_color = "#" + creator.background_color_field.Color.ToHtml();
-
 			if (creator.album_field.ButtonPressed)
 				playlist.type = Playlist.PlaylistType.Album;
 

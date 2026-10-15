@@ -15,9 +15,6 @@ public partial class PlaylistCreator : EditorWindow
 	[Export] public CheckBox album_field;
 	[Export] public ThemeLineEdit artist_field;
 
-	[Export] public CheckBox background_color_enabled_field;
-	[Export] public ThemeColorPickerButton background_color_field;
-
 	[Export] public CheckBox cloud_sync_enabled_field;
 
 	[Export] public Button submit_button, cancel_button;
@@ -58,8 +55,6 @@ public partial class PlaylistCreator : EditorWindow
 
         album_field.ButtonPressed = false;
         artist_field.Text = "";
-        background_color_enabled_field.ButtonPressed = false;
-        background_color_field.Color = Colors.White;
 
 		cleared = true;
     }
@@ -76,7 +71,7 @@ public partial class PlaylistCreator : EditorWindow
 
     public override void _Process(double delta)
     {
-		background_color_field.Disabled = !background_color_enabled_field.ButtonPressed;
+		
     }
 
     public void OpenCover()
