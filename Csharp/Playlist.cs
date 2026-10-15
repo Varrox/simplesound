@@ -3,10 +3,20 @@ using System.Collections.Generic;
 using System.IO;
 using System;
 using System.Text;
+using Godot;
 
 public class Playlist
 {
-    public string name, artist, cover;
+    public string name;
+    public string artist;
+
+    public string cover {
+        set {
+            field = value;
+            _cover_texture = ConvertToGodot.LoadImageFromFile(value);
+        }
+        get;
+    }
 
     public PlaylistType type;
 
@@ -25,8 +35,12 @@ public class Playlist
         }
     }
 
+    public Texture2D cover_texture { get { return _cover_texture; } }
+
     private List<string> _tracks;
     private List<string> _tracks_raw; // For saving folders correctly without expanding them.
+
+    private Texture2D _cover_texture;
 
     private string _path;
 

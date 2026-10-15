@@ -11,15 +11,6 @@ public partial class PlaylistsVisualizer : ScrollContainer
     [Signal]
     public delegate void OnSelectPlaylistEventHandler(int playlist_index);
 
-    public override void _Process(double delta) {
-        for (int i = 0; i < container.GetChildCount(); i++) {
-            if (container.GetChild(i) is PlaylistDisplay)  {
-                PlaylistDisplay display = (container.GetChild(i) as PlaylistDisplay);
-                display.cover_texture_rect.Visible = container.GetGlobalRect().Intersects(display.GetGlobalRect());
-            }
-        }
-    }
-
     public void LoadAllPlaylistVisuals() { // only done once for init
         for (int i = 0; i < Globals.main.playlist_paths.Count; i++) LoadPlaylist(i);
     }

@@ -53,7 +53,8 @@ public partial class TracksVisualizer : ScrollContainer
     }
 
     private Texture2D GetCover(in Playlist playlist, in int track) {
-        return (playlist.type == Playlist.PlaylistType.Album) ? null : ConvertToGodot.GetMediaCover(playlist.tracks[track]);
+        Texture2D default_cover_icon = ApplicationManager.theme.GetIcon("default_cover_icon", Constants.THEME_TYPE);
+        return (playlist.type == Playlist.PlaylistType.Album) ? null : (ConvertToGodot.GetMediaCover(playlist.tracks[track]) ?? default_cover_icon);
     }
 
     private void UpdateTracks(in Playlist playlist) {

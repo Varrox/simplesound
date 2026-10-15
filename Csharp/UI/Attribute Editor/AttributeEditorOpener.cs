@@ -1,4 +1,6 @@
-﻿public partial class AttributeEditorOpener : EditorWindowOpener
+﻿using Godot;
+
+public partial class AttributeEditorOpener : EditorWindowOpener
 {
     public override void _Ready()
     {
@@ -40,7 +42,8 @@
                 corrupt = Metadata.IsFileCorrupt(Globals.main.track)
             };
 
-            Globals.main.tracks_visualizer.UpdateTrack(Globals.main.track_index, track_data, ConvertToGodot.GetMediaCover(Globals.main.track));
+            Texture2D default_cover_icon = ApplicationManager.theme.GetIcon("default_cover_icon", Constants.THEME_TYPE);
+            Globals.main.tracks_visualizer.UpdateTrack(Globals.main.track_index, track_data, ConvertToGodot.GetMediaCover(Globals.main.track) ?? default_cover_icon);
         }
 
         Globals.player.interrupted = false;

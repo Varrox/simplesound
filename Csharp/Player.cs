@@ -23,9 +23,6 @@ public partial class Player : Node
     public bool interrupted, muted;
     public double muted_volume;
 
-    Texture2D playlist_icon;
-    int playlist_icon_index = -1;
-
     public override void _Ready() {
         loop_button.ButtonUp += SetLoop;
         shuffle_button.ButtonUp += SetShuffle;
@@ -123,6 +120,8 @@ public partial class Player : Node
     }
 
     public void OnLoadTrack() {
+        Texture2D default_cover_icon = ApplicationManager.theme.GetIcon("default_cover_icon", Constants.THEME_TYPE);
+
         if (Globals.main.IsTrackAvailable()) {
             string name = Tools.GetMediaTitle(Globals.main.track);
             track_name_label.Text = name;
@@ -133,17 +132,9 @@ public partial class Player : Node
             track_artist_label.TooltipText = artist;
 
             Texture2D cover = ConvertToGodot.GetMediaCover(Globals.main.track);
-            track_cover_texture_rect.Texture = cover;
 
-            Texture2D default_cover_icon = ApplicationManager.theme.GetIcon("default_cover_icon", Constants.THEME_TYPE);
-
-            if (cover == default_cover_icon && Globals.main.playlist.type == Playlist.PlaylistType.Album) {
-                if(playlist_icon == null || playlist_icon_index != Globals.main.playlist_index) {
-                    playlist_icon = ConvertToGodot.LoadImageFromFile(Globals.main.playlist.cover) ?? default_cover_icon;
-                    playlist_icon_index = Globals.main.playlist_index;
-                }
-                
-                track_cover_texture_rect.Texture = playlist_icon;
+            if (cover == null || Globals.main.playlist.type == Playlist.PlaylistType.Album) {                
+                track_cover_texture_rect.Texture = Globals.main.playlist.cover_texture;
             }
             else {
                 track_cover_texture_rect.Texture = cover;
@@ -168,8 +159,6 @@ public partial class Player : Node
             progress_slider.MaxValue = 1;
             progress_slider.Value = 0;
             progress_slider.Editable = false;
-
-            Texture2D default_cover_icon = ApplicationManager.theme.GetIcon("default_cover_icon", Constants.THEME_TYPE);
 
             track_cover_texture_rect.Texture = default_cover_icon;
             background_subviewport.Set("target_texture", default_cover_icon);
