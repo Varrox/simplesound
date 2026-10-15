@@ -25,12 +25,8 @@ public class Playlist
         }
     }
 
-    public List<string> GetTracksRaw() {
-        return _tracks_raw;
-    }
-
     private List<string> _tracks;
-    private List<string> _tracks_raw; // For saving
+    private List<string> _tracks_raw; // For saving folders correctly without expanding them.
 
     private string _path;
 
