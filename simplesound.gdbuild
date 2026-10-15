@@ -92,6 +92,7 @@
 		"SkeletonProfile",
 		"Skin",
 		"Sky",
+		"SpriteFrames",
 		"Texture3D",
 		"TextureLayered",
 		"VisualShader",
