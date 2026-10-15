@@ -1,13 +1,15 @@
 using Godot;
 using Godot.Collections;
-using System;
 
 public partial class PlaylistsVisualizer : ScrollContainer
 {
 	[Export] public PackedScene template;
     [Export] public VBoxContainer container;
 
-    public Action<int, Texture2D> OnSelectPlaylist;
+    public Array<PlaylistDisplay> playlist_displays = new Array<PlaylistDisplay>();
+
+    [Signal]
+    public delegate void OnSelectPlaylistEventHandler(int playlist_index);
 
     public override void _Process(double delta) {
         for (int i = 0; i < container.GetChildCount(); i++) {
@@ -23,33 +25,30 @@ public partial class PlaylistsVisualizer : ScrollContainer
     }
 
     public void LoadPlaylist(int i) {
-        PlaylistDisplay playlist = template.Instantiate() as PlaylistDisplay;
-        container.AddChild(playlist);
-        LoadDataIntoPlaylist(i, playlist);
-    }
+        PlaylistDisplay playlist_display = template.Instantiate() as PlaylistDisplay;
+        container.AddChild(playlist_display);
+        playlist_displays.Add(playlist_display);
 
-    public void LoadDataIntoPlaylist(int i, in PlaylistDisplay playlist) {
-        playlist.Init(Globals.main.playlists[i], i);
+        playlist_display.Init(Globals.main.playlists[i], i);
     }
 
     public void UpdatePlaylists() {
-        Array<Node> playlist_buttons = container.GetChildren();
-        int end = playlist_buttons.Count;
+        int end = playlist_displays.Count;
 
-        if (playlist_buttons.Count < Globals.main.playlists.Count) { // less
-            for(int i = playlist_buttons.Count; i < Globals.main.playlists.Count; i++) LoadPlaylist(i);
+        if (playlist_displays.Count < Globals.main.playlists.Count) { // less
+            for(int i = playlist_displays.Count; i < Globals.main.playlists.Count; i++) LoadPlaylist(i);
         }
-        else if (playlist_buttons.Count > Globals.main.playlists.Count) { // more
-            for (int i = playlist_buttons.Count; i < Globals.main.playlists.Count; i++) { // delete the extra
-                playlist_buttons[i].QueueFree();
-                playlist_buttons.RemoveAt(i);
+        else if (playlist_displays.Count > Globals.main.playlists.Count) { // more
+            for (int i = playlist_displays.Count; i < Globals.main.playlists.Count; i++) { // delete the extra
+                playlist_displays[i].QueueFree();
+                playlist_displays.RemoveAt(i);
             }
 
             end = Globals.main.playlists.Count;
         }
 
         for(int i = 0; i < end; i++) {
-            LoadDataIntoPlaylist(i, playlist_buttons[i] as PlaylistDisplay);
+            playlist_displays[i].Init(Globals.main.playlists[i], i);
         }
     }
 }

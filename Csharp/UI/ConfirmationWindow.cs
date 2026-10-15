@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public partial class ConfirmationWindow : Window
 {
@@ -9,10 +8,17 @@ public partial class ConfirmationWindow : Window
 
 	[Export] public string message = "Confirmation Window", accept_text = "Ok", decline_text, cancel_text = "Cancel";
 
-    public Action OnAccept;
-    public Action OnDecline;
-    public Action OnCancel;
-    public Action<Confirm> OnClose;
+    [Signal]
+    public delegate void OnAcceptEventHandler();
+
+    [Signal]
+    public delegate void OnDeclineEventHandler();
+
+    [Signal]
+    public delegate void OnCancelEventHandler();
+
+    [Signal]
+    public delegate void OnCloseEventHandler(Confirm confirm);
 
     public bool free_on_close = false, front = true, ignored = false, show_ignore = false;
 
@@ -41,26 +47,26 @@ public partial class ConfirmationWindow : Window
     {
         ignored = ignore.ButtonPressed;
         Visible = false;
-        OnClose?.Invoke(confirm);
+        EmitSignal(SignalName.OnClose, (int)confirm);
         if (free_on_close) QueueFree();
     }
 
     public void Accept()
     {
         Close(Confirm.Accepted);
-        OnAccept?.Invoke();
+        EmitSignal(SignalName.OnAccept);
     }
 
     public void Decline()
     {
         Close(Confirm.Declined);
-        OnDecline?.Invoke();
+        EmitSignal(SignalName.OnDecline);
     }
 
     public void Cancel()
     {
         Close(Confirm.Cancelled);
-        OnCancel?.Invoke();
+        EmitSignal(SignalName.OnCancel);
     }
 }
 

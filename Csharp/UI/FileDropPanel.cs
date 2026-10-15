@@ -1,10 +1,10 @@
 using Godot;
-using System;
 
 public partial class FileDropPanel : Panel {
 	[Export] public string file_filter;
 
-	public Action<string[]> FilesDropped;
+	[Signal]
+	public delegate void FilesDroppedEventHandler(string[] files);
 
 	public override void _Ready() {
 		GetWindow().FilesDropped += CheckFiles;
@@ -19,7 +19,7 @@ public partial class FileDropPanel : Panel {
 
 	private void CheckFiles(string[] files) {
 		if(IsMouseInRect()) {
-			FilesDropped?.Invoke(files);
+			EmitSignal(SignalName.FilesDropped, files);
 		}
 	}
 }

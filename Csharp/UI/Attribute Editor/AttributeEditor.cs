@@ -56,7 +56,7 @@ public partial class AttributeEditor : EditorWindow
 
         cover_changed = false;
 
-        OnClose?.Invoke();
+        EmitSignal(SignalName.OnClose);
         cancelled = false;
     }
 

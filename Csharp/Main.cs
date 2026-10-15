@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using System.Collections.Generic;
 
 [GlobalClass]
@@ -36,11 +35,15 @@ public partial class Main : Control
 
 	public int offset, shuffle_index, random_offset;
 
-    public Action OnLoadTrack;
-    public Action OnLoadPlaylist;
+	[Signal]
+    public delegate void OnLoadTrackEventHandler();
+
+	[Signal]
+    public delegate void OnLoadPlaylistEventHandler();
 
 	/// Emitted when played or paused.
-    public Action<bool> OnPlayingChanged;
+	[Signal]
+    public delegate void OnPlayingChangedEventHandler(bool playing);
 
 	public string track {
 		get {
@@ -84,7 +87,7 @@ public partial class Main : Control
         playlist_visualizer.LoadAllPlaylistVisuals();
 
         if (IsTrackAvailable()) PlayTrack(playlist.tracks[track_index]);
-        else OnLoadTrack?.Invoke(); // Emit anyways just so it can display no tracks
+        else EmitSignal(SignalName.OnLoadTrack); // Emit anyways just so it can display no tracks
 
 		// Done Loading
     }
@@ -109,7 +112,7 @@ public partial class Main : Control
 					video_player.Play();
 					video_player.StreamPosition = time;
 
-					OnPlayingChanged?.Invoke(playing);
+					EmitSignal(SignalName.OnPlayingChanged, playing);
 				}
 			}
 
@@ -136,7 +139,7 @@ public partial class Main : Control
 
         playlist_index = index;
 
-        OnLoadPlaylist?.Invoke();
+        EmitSignal(SignalName.OnLoadPlaylist);
 
 		// Set shuffle to be different
 
@@ -157,7 +160,7 @@ public partial class Main : Control
 		if (video_player.Stream != null) video_player.Stop();
 		audio_player.Stop();
 
-		OnPlayingChanged?.Invoke(playing);
+		EmitSignal(SignalName.OnPlayingChanged, playing);
 	}
 
 	public void Play()
@@ -174,7 +177,7 @@ public partial class Main : Control
 			video_player.StreamPosition = time;
 		}
 
-		OnPlayingChanged?.Invoke(playing);
+		EmitSignal(SignalName.OnPlayingChanged, playing);
 	}
 
 	public void FlipPlayingState() {
@@ -279,7 +282,7 @@ public partial class Main : Control
 
 		current_share_link = Metadata.GetShareLink(path);
 
-		OnLoadTrack?.Invoke();
+		EmitSignal(SignalName.OnLoadTrack);
 	}
 
 	public bool IsTrackAvailable() {
@@ -319,7 +322,7 @@ public partial class Main : Control
 
         Metadata.ResetCache();
 
-        OnLoadTrack?.Invoke();
+        EmitSignal(SignalName.OnLoadTrack);
 		tracks_visualizer.Update();
         playlist_visualizer.UpdatePlaylists();
     }

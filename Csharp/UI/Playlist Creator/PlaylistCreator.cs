@@ -156,7 +156,7 @@ public partial class PlaylistCreator : EditorWindow
 
         Globals.file_dialog.Reparent(Globals.self);
 
-        OnClose?.Invoke();
+        EmitSignal(SignalName.OnClose);
     }
 	public void Cancel()
 	{

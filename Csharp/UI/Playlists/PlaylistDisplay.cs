@@ -39,13 +39,13 @@ public partial class PlaylistDisplay : Button
     }
 
     public void Set() {
-        Globals.main.playlist_visualizer.OnSelectPlaylist?.Invoke(playlist_index, cover_texture_rect.Texture);
+        Globals.main.playlist_visualizer.EmitSignal("OnSelectPlaylist", playlist_index);
         Globals.main.looked_at_playlist = playlist_index;
 
         ApplicationManager.SetRadioSelected(this, true);
     }
 
-    public void ClearSelected(int index, Texture2D img) {
+    public void ClearSelected(int index) {
         if (index != playlist_index) ApplicationManager.SetRadioSelected(this, false);
     }
 

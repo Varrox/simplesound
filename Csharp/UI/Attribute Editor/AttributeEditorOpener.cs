@@ -1,6 +1,4 @@
-﻿using Godot;
-
-public partial class AttributeEditorOpener : EditorWindowOpener
+﻿public partial class AttributeEditorOpener : EditorWindowOpener
 {
     public override void _Ready()
     {

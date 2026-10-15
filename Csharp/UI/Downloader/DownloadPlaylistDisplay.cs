@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public partial class DownloadPlaylistDisplay : Button
 {
@@ -14,7 +13,7 @@ public partial class DownloadPlaylistDisplay : Button
 
 	public void Set()
     {
-        Globals.download_window.OnSelectPlaylist?.Invoke(playlist_index);
+        Globals.download_window.EmitSignal("OnSelectPlaylist", playlist_index);
         Globals.download_window.selected_playlist = playlist_index;
 
         ApplicationManager.SetRadioSelected(this, true);

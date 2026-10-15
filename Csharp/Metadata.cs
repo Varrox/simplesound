@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using ATL;
 
 public class Metadata
@@ -162,7 +161,7 @@ public class Metadata
     }
 
     public static bool IsTagDefined(in string path, in string tag) {
-        if(InitializeTagListKey(path)) return Array.IndexOf(tag_list[path] ?? [] , tag) != -1;
+        if(InitializeTagListKey(path)) return tag_list[path] == null ? false : Array.IndexOf(tag_list[path], tag) != -1;
         return false;
     }
 }

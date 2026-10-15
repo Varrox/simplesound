@@ -1,7 +1,5 @@
 using Godot;
 using Godot.Collections;
-using System;
-using System.Collections.Generic;
 
 public partial class ContextMenuOpener : Button
 {
@@ -10,8 +8,11 @@ public partial class ContextMenuOpener : Button
     [Export] public Vector2 teleportMenuOffset;
     public bool menu_open;
 
-    public Action OnClose;
-    public Action OnOpen;
+    [Signal]
+    public delegate void OnCloseEventHandler();
+
+    [Signal]
+    public delegate void OnOpenEventHandler();
 
     public override void _Ready()
     {
@@ -65,7 +66,7 @@ public partial class ContextMenuOpener : Button
         menu_open = !menu_open;
         if (menu_open && teleportMenu) TeleportMenu();
         menu.Visible = menu_open;
-        (menu_open ? OnOpen : OnClose)?.Invoke();
+        EmitSignal(menu_open ? SignalName.OnOpen : SignalName.OnClose);
 
 
         if (!menu_open)
@@ -85,7 +86,7 @@ public partial class ContextMenuOpener : Button
         menu.Visible = false;
 
 
-        OnClose?.Invoke();
+        EmitSignal(SignalName.OnClose);
 
         for (int i = 0; i < menu.sub_menus.Count; i++)
         {
@@ -102,7 +103,7 @@ public partial class ContextMenuOpener : Button
         menu.Visible = true;
 
 
-        OnOpen?.Invoke();
+        EmitSignal(SignalName.OnOpen);
     }
 
     public bool CheckSubMenusIntersection()

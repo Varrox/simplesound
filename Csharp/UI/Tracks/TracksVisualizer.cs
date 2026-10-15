@@ -164,10 +164,10 @@ public partial class TracksVisualizer : ScrollContainer
         return track_datas[track];
     }
 
-    private void LoadPlaylist(int playlist_index, Texture2D playlist_cover)
+    private void LoadPlaylist(int playlist_index)
     {
         Playlist playlist = Globals.main.playlists[playlist_index];
-        cover.Texture = playlist_cover;
+        cover.Texture = Globals.main.playlist_visualizer.playlist_displays[playlist_index].cover_texture_rect.Texture;
         playlist_name_label.Text = playlist.name;
 
         if (playlist.tracks != null) track_count_label.Text = $"{playlist.tracks.Count} track" + (playlist.tracks.Count != 1 ? "s" : "");

@@ -1,7 +1,3 @@
-using Godot;
-using System;
-using System.IO;
-
 public partial class DownloadWindowOpener : EditorWindowOpener
 {
     public override void _Ready()

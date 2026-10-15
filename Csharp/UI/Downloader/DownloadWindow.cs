@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -11,7 +10,8 @@ public partial class DownloadWindow : EditorWindow
     [Export] public ThemeLineEdit link;
     [Export] public Button add_link, download, close;
 
-    public Action<int> OnSelectPlaylist;
+    [Signal]
+    public delegate void OnSelectPlaylistEventHandler(int playlist_index);
 
     public int selected_playlist = -1;
 
@@ -22,7 +22,7 @@ public partial class DownloadWindow : EditorWindow
         base._Ready();
         download.ButtonUp += Download;
         close.ButtonUp += Close;
-        no_playlist.ButtonUp += () => {OnSelectPlaylist?.Invoke(-1); ApplicationManager.SetRadioSelected(no_playlist, true);};
+        no_playlist.ButtonUp += () => {EmitSignal(SignalName.OnSelectPlaylist, -1); ApplicationManager.SetRadioSelected(no_playlist, true);};
         OnSelectPlaylist += ClearNoneSelected;
         add_link.ButtonUp += AddLink;
     }
@@ -65,7 +65,7 @@ public partial class DownloadWindow : EditorWindow
         Globals.file_dialog.Reparent(this);
 
         ApplicationManager.SetRadioSelected(no_playlist, true);
-        OnSelectPlaylist?.Invoke(-1);
+        EmitSignal(SignalName.OnSelectPlaylist, -1);
 
         for(int i = 0; i < Globals.main.playlists.Count; i++)
         {

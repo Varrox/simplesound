@@ -1,9 +1,9 @@
 ﻿using Godot;
-using System;
 
 public partial class EditorWindow : Window
 {
-    public Action OnClose;
+    [Signal]
+    public delegate void OnCloseEventHandler();
     public bool interrupted, cancelled;
 
     public override void _Ready() {
