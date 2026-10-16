@@ -1,9 +1,7 @@
 [gd_scene format=3 uid="uid://cn1tw3g51dn0c"]
 
 [ext_resource type="Script" uid="uid://lbhqgj6ahfub" path="res://Csharp/UI/Settings/Settings.cs" id="1_c0o00"]
-[ext_resource type="Texture2D" uid="uid://bwftf22dhh4du" path="res://Icons/refresh.png" id="2_4ebue"]
 [ext_resource type="Script" uid="uid://b85d04ls7d2ww" path="res://GDScript/version_display.gd" id="2_c0o00"]
-[ext_resource type="Texture2D" uid="uid://c85envuiuo3ju" path="res://Icons/folder.png" id="7_3eler"]
 [ext_resource type="Script" uid="uid://lbv20vk1ksc2" path="res://GDScript/copy_system_info.gd" id="10_3eler"]
 [ext_resource type="Script" uid="uid://schxe0nc0yhj" path="res://GDScript/scroll_spacer.gd" id="10_v2aqj"]
 
@@ -20,8 +18,6 @@ min_size = Vector2i(450, 300)
 script = ExtResource("1_c0o00")
 settings_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer2/ScrollContainer/HBoxContainer/VBoxContainer2")
 tabs_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer/VBoxContainer")
-reset_texture = ExtResource("2_4ebue")
-file_texture = ExtResource("7_3eler")
 close_menu = NodePath("MarginContainer/VBoxContainer/HBoxContainer/Close")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1173840034]

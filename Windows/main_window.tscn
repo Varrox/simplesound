@@ -26,7 +26,7 @@
 [ext_resource type="Script" uid="uid://d0tve0wh2kxhq" path="res://Csharp/UI/Downloader/DownloadWindowOpener.cs" id="24_o03o1"]
 [ext_resource type="Script" uid="uid://kvvf8qxb33ti" path="res://Csharp/UI/Streamer Display/StreamerButton.cs" id="25_jrhkw"]
 [ext_resource type="PackedScene" uid="uid://da3r1vmve1qwd" path="res://Windows/stream_display_window.tscn" id="26_3edd3"]
-[ext_resource type="Texture2D" uid="uid://ikqgrxysxg3y" path="res://Icons/update.png" id="27_k2qli"]
+[ext_resource type="Texture2D" uid="uid://cb0yjhel4cdr5" path="res://Icons/SVG/download.svg" id="27_ns1th"]
 [ext_resource type="Script" uid="uid://gwm4ru46vy21" path="res://Csharp/UI/Buttons/Update.cs" id="28_3ax07"]
 [ext_resource type="Script" uid="uid://cheuagrd5va2f" path="res://Csharp/UI/Buttons/Refresh.cs" id="29_nr08j"]
 [ext_resource type="Texture2D" uid="uid://dcr4yu0bt8s2o" path="res://Icons/SVG/reload.svg" id="32_7kpk1"]
@@ -655,7 +655,7 @@ custom_minimum_size = Vector2(28, 0)
 layout_mode = 2
 focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_wx3lt")
-icon = ExtResource("27_k2qli")
+icon = ExtResource("27_ns1th")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("28_3ax07")
