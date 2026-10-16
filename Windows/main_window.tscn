@@ -8,8 +8,8 @@
 [ext_resource type="Shader" uid="uid://6mp1f8uww708" path="res://Styling/Shaders/blur.gdshader" id="6_r776v"]
 [ext_resource type="Texture2D" uid="uid://cksbdmhr2s8yy" path="res://Icons/Default Covers/DefaultCover.png" id="7_xvcl6"]
 [ext_resource type="Script" uid="uid://bemg4hrkjfrtx" path="res://GDScript/side_panel.gd" id="8_j6ftg"]
-[ext_resource type="Texture2D" uid="uid://bfwa3yivib7hh" path="res://Icons/playlist.png" id="9_mskga"]
-[ext_resource type="Texture2D" uid="uid://5hwvlu7uerj6" path="res://Icons/plus.png" id="10_yksdd"]
+[ext_resource type="Texture2D" uid="uid://pldqtuicj4ri" path="res://Icons/SVG/playlist.svg" id="9_xrbbi"]
+[ext_resource type="Texture2D" uid="uid://dgqxvsk1bwyga" path="res://Icons/SVG/plus.svg" id="10_gjyis"]
 [ext_resource type="Script" uid="uid://bcxwpol710ysq" path="res://Csharp/UI/ContextMenuOpener.cs" id="11_2o8nl"]
 [ext_resource type="Script" uid="uid://dcnfao6qa81tk" path="res://Csharp/UI/Playlists/PlaylistsVisualizer.cs" id="12_jnr5d"]
 [ext_resource type="PackedScene" uid="uid://bhjkk8guwyhku" path="res://Prefabs/playlist_display.scn" id="13_6ivc6"]
@@ -18,31 +18,31 @@
 [ext_resource type="PackedScene" uid="uid://deg7587tnlkhk" path="res://Prefabs/track_display.scn" id="16_n5ukt"]
 [ext_resource type="StyleBox" uid="uid://bhcyqvvim6l5e" path="res://Styling/Rounded Corners.tres" id="17_0xq2a"]
 [ext_resource type="Shader" uid="uid://cxrpix7bw201g" path="res://Styling/Shaders/anti_aliased.gdshader" id="18_fmyll"]
-[ext_resource type="Texture2D" uid="uid://23nnkoswyxm8" path="res://Icons/play.png" id="19_eos35"]
 [ext_resource type="Script" uid="uid://qupwebtnhh44" path="res://Csharp/UI/Playlists/PlaylistPlayer.cs" id="20_drm60"]
+[ext_resource type="Texture2D" uid="uid://bm7judayjojov" path="res://Icons/SVG/play.svg" id="21_kb0xi"]
 [ext_resource type="Script" uid="uid://ckpanpt3fty8d" path="res://Csharp/UI/Default Node Extentions/ThemeLineEdit.cs" id="21_w782g"]
-[ext_resource type="Texture2D" uid="uid://c85envuiuo3ju" path="res://Icons/folder.png" id="22_8go2r"]
 [ext_resource type="Script" uid="uid://bag5mx17s8q1c" path="res://Csharp/UI/Buttons/Appdata.cs" id="23_f8opk"]
+[ext_resource type="Texture2D" uid="uid://ynqg27jlotl6" path="res://Icons/SVG/folder.svg" id="24_cq8g2"]
 [ext_resource type="Script" uid="uid://d0tve0wh2kxhq" path="res://Csharp/UI/Downloader/DownloadWindowOpener.cs" id="24_o03o1"]
 [ext_resource type="Script" uid="uid://kvvf8qxb33ti" path="res://Csharp/UI/Streamer Display/StreamerButton.cs" id="25_jrhkw"]
 [ext_resource type="PackedScene" uid="uid://da3r1vmve1qwd" path="res://Windows/stream_display_window.tscn" id="26_3edd3"]
 [ext_resource type="Texture2D" uid="uid://ikqgrxysxg3y" path="res://Icons/update.png" id="27_k2qli"]
 [ext_resource type="Script" uid="uid://gwm4ru46vy21" path="res://Csharp/UI/Buttons/Update.cs" id="28_3ax07"]
 [ext_resource type="Script" uid="uid://cheuagrd5va2f" path="res://Csharp/UI/Buttons/Refresh.cs" id="29_nr08j"]
-[ext_resource type="Texture2D" uid="uid://bwftf22dhh4du" path="res://Icons/refresh.png" id="30_bpl3b"]
-[ext_resource type="Texture2D" uid="uid://0yw8m2y164lr" path="res://Icons/settings.png" id="31_jkqq5"]
+[ext_resource type="Texture2D" uid="uid://dcr4yu0bt8s2o" path="res://Icons/SVG/reload.svg" id="32_7kpk1"]
 [ext_resource type="Script" uid="uid://cm1lylxwcslla" path="res://Csharp/UI/Settings/SettingsOpener.cs" id="32_mmy12"]
 [ext_resource type="PackedScene" uid="uid://cn1tw3g51dn0c" path="res://Windows/settings_window.tscn" id="33_25o3l"]
+[ext_resource type="Texture2D" uid="uid://bufeg5uvpnkav" path="res://Icons/SVG/cog.svg" id="33_xqlq7"]
 [ext_resource type="FontFile" uid="uid://ckdni7vy5bpft" path="res://Styling/Fonts/VarelaRound-Regular.ttf" id="34_4jfok"]
-[ext_resource type="Texture2D" uid="uid://b8ldjgpmsaxgu" path="res://Icons/shuffle.png" id="35_b74h6"]
-[ext_resource type="Texture2D" uid="uid://umqcsl8yhoem" path="res://Icons/back.png" id="36_c3hg2"]
-[ext_resource type="Texture2D" uid="uid://b3au8pb3kdvei" path="res://Icons/pause.png" id="37_esfl4"]
-[ext_resource type="Texture2D" uid="uid://ccy68bhx3rrxu" path="res://Icons/forward.png" id="38_53u0m"]
-[ext_resource type="Texture2D" uid="uid://b3phnmlkksrac" path="res://Icons/loop.png" id="39_poedv"]
-[ext_resource type="Texture2D" uid="uid://brujrc442p3b5" path="res://Icons/mute.png" id="40_8ugro"]
+[ext_resource type="Texture2D" uid="uid://bgapcupegbmmt" path="res://Icons/SVG/shuffle.svg" id="37_r776v"]
+[ext_resource type="Texture2D" uid="uid://dty4oht1ilwm0" path="res://Icons/SVG/back.svg" id="38_xvcl6"]
+[ext_resource type="Texture2D" uid="uid://dp8jtoyfjnbgc" path="res://Icons/SVG/pause.svg" id="39_j6ftg"]
+[ext_resource type="Texture2D" uid="uid://okymw0ns835q" path="res://Icons/SVG/forward.svg" id="40_mskga"]
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Styling/Fonts/DefaultFont.tres" id="41_qf528"]
+[ext_resource type="Texture2D" uid="uid://csvmj6w2b5le6" path="res://Icons/SVG/loop.svg" id="41_yksdd"]
+[ext_resource type="Texture2D" uid="uid://jqnfgusrehqq" path="res://Icons/SVG/un_muted.svg" id="42_2o8nl"]
 [ext_resource type="Script" uid="uid://c5ep0n80r2l8p" path="res://Csharp/UI/Attribute Editor/AttributeEditorOpener.cs" id="42_3aot7"]
-[ext_resource type="PackedScene" uid="uid://dbwsclu2nt3nu" path="res://Prefabs/Context Menus/playlist_create_context.scn" id="43_yqlxv"]
+[ext_resource type="PackedScene" uid="uid://by1llelggmuq0" path="res://Prefabs/Context Menus/playlist_create_context.tscn" id="43_ns1th"]
 [ext_resource type="PackedScene" uid="uid://dtfoexo3o7b3p" path="res://Prefabs/Context Menus/playlist_context.tscn" id="44_aaavu"]
 [ext_resource type="PackedScene" uid="uid://dcre7b1cn3b6i" path="res://Prefabs/Context Menus/track_context.tscn" id="45_rjtah"]
 [ext_resource type="Script" uid="uid://ba0kdfmjh8445" path="res://Csharp/Globals.cs" id="46_y0j44"]
@@ -312,7 +312,7 @@ layout_mode = 2
 size_flags_horizontal = 2
 focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_r3k7g")
-icon = ExtResource("9_mskga")
+icon = ExtResource("9_xrbbi")
 expand_icon = true
 
 [node name="Label" type="Label" parent="Interface/Content/Side Panel/Open/VBoxContainer/HBoxContainer/Playlist" unique_id=1895627161]
@@ -341,11 +341,11 @@ focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_7vj4a")
 text = "
 "
-icon = ExtResource("10_yksdd")
+icon = ExtResource("10_gjyis")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("11_2o8nl")
-menu = NodePath("../../../../../../Playlistcreationcontext")
+menu = NodePath("../../../../../../PlaylistCreateContext")
 teleportMenu = true
 teleportMenuOffset = Vector2(-135, 32)
 
@@ -401,7 +401,7 @@ theme_override_constants/separation = 6
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
 size_flags_horizontal = 0
-icon = ExtResource("9_mskga")
+icon = ExtResource("9_xrbbi")
 expand_icon = true
 
 [node name="Add" type="Button" parent="Interface/Content/Side Panel/Collapsed/VBoxContainer" unique_id=1547991320 node_paths=PackedStringArray("menu")]
@@ -413,11 +413,11 @@ focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_7vj4a")
 text = "
 "
-icon = ExtResource("10_yksdd")
+icon = ExtResource("10_gjyis")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("11_2o8nl")
-menu = NodePath("../../../../../Playlistcreationcontext")
+menu = NodePath("../../../../../PlaylistCreateContext")
 teleportMenu = true
 teleportMenuOffset = Vector2(0, 32)
 
@@ -534,7 +534,7 @@ grow_vertical = 2
 tooltip_text = "Play / Pause playlist."
 focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_i82gy")
-icon = ExtResource("19_eos35")
+icon = ExtResource("21_kb0xi")
 script = ExtResource("20_drm60")
 
 [node name="Top" type="Panel" parent="Interface/Content/Tracks/MarginContainer/Track Display/Full Container/Container" unique_id=1668146414]
@@ -597,7 +597,7 @@ layout_mode = 2
 tooltip_text = "App data"
 focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_i5cru")
-icon = ExtResource("22_8go2r")
+icon = ExtResource("24_cq8g2")
 expand_icon = true
 script = ExtResource("23_f8opk")
 
@@ -683,7 +683,7 @@ offset_bottom = -2.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(12.5, 12)
-texture = ExtResource("30_bpl3b")
+texture = ExtResource("32_7kpk1")
 expand_mode = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Interface/Top Bar/Right/Refresh" unique_id=549007236]
@@ -695,7 +695,7 @@ layout_mode = 2
 tooltip_text = "Opens settings menu."
 focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_wx3lt")
-icon = ExtResource("31_jkqq5")
+icon = ExtResource("33_xqlq7")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("32_mmy12")
@@ -747,7 +747,7 @@ theme_override_fonts/font = ExtResource("34_4jfok")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_l3qov")
 text = "
 "
-icon = ExtResource("35_b74h6")
+icon = ExtResource("37_r776v")
 icon_alignment = 1
 expand_icon = true
 
@@ -760,7 +760,7 @@ theme_override_fonts/font = ExtResource("34_4jfok")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_l3qov")
 text = "
 "
-icon = ExtResource("36_c3hg2")
+icon = ExtResource("38_xvcl6")
 icon_alignment = 1
 expand_icon = true
 
@@ -771,7 +771,7 @@ tooltip_text = "Play / Pause."
 focus_mode = 0
 theme_override_fonts/font = ExtResource("34_4jfok")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_l3qov")
-icon = ExtResource("37_esfl4")
+icon = ExtResource("39_j6ftg")
 icon_alignment = 1
 expand_icon = true
 
@@ -784,7 +784,7 @@ theme_override_fonts/font = ExtResource("34_4jfok")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_l3qov")
 text = "
 "
-icon = ExtResource("38_53u0m")
+icon = ExtResource("40_mskga")
 icon_alignment = 1
 expand_icon = true
 
@@ -795,7 +795,7 @@ tooltip_text = "Toggle track looping."
 focus_mode = 0
 theme_override_fonts/font = ExtResource("34_4jfok")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_l3qov")
-icon = ExtResource("39_poedv")
+icon = ExtResource("41_yksdd")
 icon_alignment = 1
 expand_icon = true
 
@@ -878,7 +878,7 @@ grow_vertical = 2
 scale = Vector2(0.75, 0.75)
 tooltip_text = "Mute audio."
 theme_override_styles/focus = SubResource("StyleBoxEmpty_6x3o4")
-icon = ExtResource("40_8ugro")
+icon = ExtResource("42_2o8nl")
 flat = true
 expand_icon = true
 
@@ -966,13 +966,18 @@ text = "Artist"
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Playlistcreationcontext" parent="Interface" unique_id=1315656001 instance=ExtResource("43_yqlxv")]
+[node name="PlaylistCreateContext" parent="Interface" unique_id=1315656001 node_paths=PackedStringArray("sub_menus") instance=ExtResource("43_ns1th")]
 visible = false
-layout_mode = 1
-offset_left = -1050.0
-offset_top = 99.0
-offset_right = -884.0
-offset_bottom = 177.0
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_right = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 166.0
+offset_bottom = 78.0
+grow_horizontal = 1
+sub_menus = []
 
 [node name="Playlistcontext" parent="Interface" unique_id=957626048 instance=ExtResource("44_aaavu")]
 visible = false

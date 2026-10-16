@@ -7,7 +7,6 @@ public partial class Settings : EditorWindow
 {
     [Export] public VBoxContainer settings_container;
     [Export] public VBoxContainer tabs_container;
-    [Export] public Texture2D reset_texture, file_texture;
 
     [Export] public Button close_menu;
 
@@ -155,7 +154,7 @@ public partial class Settings : EditorWindow
 
     public void AddResetButton(HBoxContainer container, Action reset_value, Action apply_setting) {
         Button button = new Button();
-        button.Icon = reset_texture;
+        button.Icon = ApplicationManager.theme.GetIcon("refresh_icon", Constants.THEME_TYPE);
         button.ExpandIcon = true;
 
         container.AddChild(button);
@@ -412,7 +411,7 @@ public partial class Settings : EditorWindow
         line_edit.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
 
         Button file_select_button = new Button();
-        file_select_button.Icon = file_texture;
+        file_select_button.Icon = ApplicationManager.theme.GetIcon("folder_icon", Constants.THEME_TYPE);
         file_select_button.ExpandIcon = true;
         file_select_button.TooltipText = "Open file manager to select location.";
         file_select_button.CustomMinimumSize = Vector2.One * 28;

@@ -5,12 +5,13 @@
 [ext_resource type="Script" uid="uid://o0n8r7mxyki" path="res://Csharp/UI/Attribute Editor/AttributeEditorOpenerGlobal.cs" id="3_ufnc8"]
 [ext_resource type="Script" uid="uid://d3t03ub8m8udd" path="res://Csharp/UI/Tracks/Context Menus/RemoveTrack.cs" id="4_71y3n"]
 [ext_resource type="Texture2D" uid="uid://bfdwehd6cajgg" path="res://Icons/more.png" id="5_arfh1"]
+[ext_resource type="Texture2D" uid="uid://bkloprdhxat0i" path="res://Icons/SVG/meatballs.svg" id="5_qwsd7"]
 [ext_resource type="Script" uid="uid://crcrxiepo802r" path="res://Csharp/UI/Tracks/Context Menus/ShareContextMenuOpener.cs" id="6_ixov6"]
 [ext_resource type="Texture2D" uid="uid://ca2kw05t4eecf" path="res://Icons/back arrow.png" id="7_d3v1j"]
-[ext_resource type="Texture2D" uid="uid://b3phnmlkksrac" path="res://Icons/loop.png" id="8_t1ww5"]
-[ext_resource type="Texture2D" uid="uid://c85envuiuo3ju" path="res://Icons/folder.png" id="9_fnnh2"]
+[ext_resource type="Texture2D" uid="uid://csvmj6w2b5le6" path="res://Icons/SVG/loop.svg" id="9_r6scd"]
+[ext_resource type="Texture2D" uid="uid://ynqg27jlotl6" path="res://Icons/SVG/folder.svg" id="10_6solv"]
 
-[node name="Trackcontext" type="Panel" unique_id=1810165372 node_paths=PackedStringArray("sub_menus")]
+[node name="Trackcontext" type="Panel" unique_id=1810165372]
 anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
@@ -24,7 +25,6 @@ grow_vertical = 2
 pivot_offset = Vector2(142, 0)
 theme_override_styles/panel = ExtResource("1_s8x3r")
 script = ExtResource("2_a7rup")
-sub_menus = [NodePath("MarginContainer/VBoxContainer/Share")]
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1326792036]
 layout_mode = 1
@@ -64,17 +64,17 @@ layout_mode = 2
 size_flags_vertical = 3
 focus_mode = 0
 text = "Share"
-icon = ExtResource("5_arfh1")
+icon = ExtResource("5_qwsd7")
 alignment = 0
 expand_icon = true
 script = ExtResource("6_ixov6")
-share_link = NodePath("../../../Control/MarginContainer/VBoxContainer/Share link")
-file_browse = NodePath("../../../Control/MarginContainer/VBoxContainer/File browse")
 share = ExtResource("5_arfh1")
 back = ExtResource("7_d3v1j")
+share_link = NodePath("../../../Control/MarginContainer/VBoxContainer/Share link")
+file_browse = NodePath("../../../Control/MarginContainer/VBoxContainer/File browse")
 menu = NodePath("../../../Control")
 
-[node name="Control" type="Panel" parent="." unique_id=1602453918 node_paths=PackedStringArray("sub_menus")]
+[node name="Control" type="Panel" parent="." unique_id=1602453918]
 layout_mode = 0
 offset_left = -207.0
 offset_top = 74.0
@@ -82,7 +82,6 @@ offset_right = -3.0
 offset_bottom = 152.0
 theme_override_styles/panel = ExtResource("1_s8x3r")
 script = ExtResource("2_a7rup")
-sub_menus = []
 
 [node name="MarginContainer" type="MarginContainer" parent="Control" unique_id=659511728]
 layout_mode = 1
@@ -104,7 +103,7 @@ layout_mode = 2
 size_flags_vertical = 3
 focus_mode = 0
 text = "Copy Share Link"
-icon = ExtResource("8_t1ww5")
+icon = ExtResource("9_r6scd")
 alignment = 0
 expand_icon = true
 
@@ -113,6 +112,6 @@ layout_mode = 2
 size_flags_vertical = 3
 focus_mode = 0
 text = "Open in file browser"
-icon = ExtResource("9_fnnh2")
+icon = ExtResource("10_6solv")
 alignment = 0
 expand_icon = true

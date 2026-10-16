@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://by1llelggmuq0"]
+
+[ext_resource type="StyleBox" uid="uid://b82lq1vafwrvb" path="res://Styling/context_panel.tres" id="1_jxfm8"]
+[ext_resource type="Script" uid="uid://chi37xfryervn" path="res://Csharp/UI/ContextMenu.cs" id="2_f86u0"]
+[ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Styling/Fonts/DefaultFont.tres" id="3_ww8dg"]
+[ext_resource type="Texture2D" uid="uid://dgqxvsk1bwyga" path="res://Icons/SVG/plus.svg" id="4_otdmd"]
+[ext_resource type="Script" uid="uid://dk55q6mnaxkso" path="res://Csharp/UI/Playlist Creator/PlaylistCreatorOpener.cs" id="5_1is4f"]
+[ext_resource type="PackedScene" uid="uid://5kfxiu06xug0" path="res://Windows/playlist_creator_window.tscn" id="6_ya4of"]
+[ext_resource type="Texture2D" uid="uid://bjmad3r6dc4kf" path="res://Icons/SVG/file.svg" id="7_hgscd"]
+[ext_resource type="Script" uid="uid://bw50lxnpt2ymm" path="res://Csharp/UI/ImportPlaylist.cs" id="8_fw5tf"]
+[ext_resource type="Texture2D" uid="uid://ynqg27jlotl6" path="res://Icons/SVG/folder.svg" id="9_mw8w7"]
+[ext_resource type="Script" uid="uid://b7fgu3kjwheaf" path="res://Csharp/UI/Import Folder/ImportFolderOpener.cs" id="10_7cyca"]
+[ext_resource type="PackedScene" uid="uid://b5ap2spi7sbp8" path="res://Windows/folder_import_window.tscn" id="11_rtj80"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kuk8b"]
+
+[node name="Panel" type="Panel" unique_id=1315656001]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -166.0
+offset_top = 34.0
+offset_bottom = 112.0
+grow_horizontal = 0
+theme_override_styles/panel = ExtResource("1_jxfm8")
+script = ExtResource("2_f86u0")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=926665459]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=576084266]
+layout_mode = 2
+
+[node name="Create" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1163405046 node_paths=PackedStringArray("menu", "window")]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("3_ww8dg")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_kuk8b")
+text = "Create new"
+icon = ExtResource("4_otdmd")
+alignment = 0
+icon_alignment = 2
+expand_icon = true
+script = ExtResource("5_1is4f")
+menu = NodePath("../../..")
+window = NodePath("Window")
+
+[node name="Window" parent="MarginContainer/VBoxContainer/Create" unique_id=874625055 instance=ExtResource("6_ya4of")]
+visible = false
+
+[node name="File" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1582944922]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("3_ww8dg")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_kuk8b")
+text = "Import Playlist"
+icon = ExtResource("7_hgscd")
+alignment = 0
+icon_alignment = 2
+expand_icon = true
+script = ExtResource("8_fw5tf")
+
+[node name="Folder" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1413518494 node_paths=PackedStringArray("menu", "window")]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("3_ww8dg")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_kuk8b")
+text = "Import folder"
+icon = ExtResource("9_mw8w7")
+alignment = 0
+icon_alignment = 2
+expand_icon = true
+script = ExtResource("10_7cyca")
+menu = NodePath("../../..")
+window = NodePath("ImportFolder")
+
+[node name="ImportFolder" parent="MarginContainer/VBoxContainer/Folder" unique_id=1866012901 instance=ExtResource("11_rtj80")]
+visible = false

@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://cjc5crjo31obe"]
 
 [ext_resource type="Script" uid="uid://ddv8hmbckq2e" path="res://Csharp/UI/PathDisplay.cs" id="1_kuqad"]
-[ext_resource type="Texture2D" uid="uid://c85envuiuo3ju" path="res://Icons/folder.png" id="2_ba6a5"]
-[ext_resource type="Texture2D" uid="uid://d1sv68pmhcdnj" path="res://Icons/x.png" id="4_ba6a5"]
+[ext_resource type="Texture2D" uid="uid://ynqg27jlotl6" path="res://Icons/SVG/folder.svg" id="2_8hsje"]
+[ext_resource type="Texture2D" uid="uid://dhe7r445ktamo" path="res://Icons/SVG/x.svg" id="3_nedq5"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kuqad"]
 
@@ -39,7 +39,7 @@ theme_override_constants/margin_bottom = 3
 
 [node name="TextureRect" type="TextureRect" parent="Selected File/Control" unique_id=1834889054]
 layout_mode = 2
-texture = ExtResource("2_ba6a5")
+texture = ExtResource("2_8hsje")
 expand_mode = 1
 
 [node name="Label" type="Label" parent="Selected File" unique_id=613599306]
@@ -54,6 +54,6 @@ text_overrun_behavior = 3
 custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
 theme_override_styles/focus = SubResource("StyleBoxEmpty_kuqad")
-icon = ExtResource("4_ba6a5")
+icon = ExtResource("3_nedq5")
 flat = true
 expand_icon = true
