@@ -61,12 +61,13 @@ public partial class TracksVisualizer : ScrollContainer
         int max_displays = (int)Mathf.Ceil(Size.Y / SINGLE_BUTTON_SIZE) + 3;
         int target_displays = Mathf.Min(max_displays, playlist.tracks.Count);
 
-        (int top, int bottom) = CalculateSize();
+        int top_space = GetTopSpace();
+        int bottom_space = GetBottomSpace();
 
         int first_visible_track = GetFirstVisibleTrack();
 
-        top_spacer.CustomMinimumSize = Vector2.Down * top;
-        bottom_spacer.CustomMinimumSize = Vector2.Down * bottom;
+        top_spacer.CustomMinimumSize = Vector2.Down * top_space;
+        bottom_spacer.CustomMinimumSize = Vector2.Down * bottom_space;
         
         bottom_spacer.Visible = target_displays == max_displays;
         top_spacer.Visible = target_displays == max_displays;
@@ -177,22 +178,25 @@ public partial class TracksVisualizer : ScrollContainer
         Update();
     }
 
-    public (int, int) CalculateSize()
+    public int GetTopSpace()
     {
         int top = Mathf.Min(Mathf.Max(ScrollVertical - top_card_size_y, 0), GetTotalHeight() - (int)Size.Y - top_card_size_y);
         top -= top % SINGLE_BUTTON_SIZE;
 
-        int bottom = Mathf.Max(GetTotalHeight() - (top + (int)Size.Y) - top_card_size_y, 0);
+        return top;
+    }
+    
+    public int GetBottomSpace()
+    {
+        int bottom = Mathf.Max(GetTotalHeight() - (GetTopSpace() + (int)Size.Y) - top_card_size_y, 0);
         bottom -= bottom % SINGLE_BUTTON_SIZE;
 
-        return (top, bottom);
+        return bottom;
     }
 
     public int GetFirstVisibleTrack()
     {
-        int top = Mathf.Min(Mathf.Max(ScrollVertical - top_card_size_y, 0), GetTotalHeight() - (int)Size.Y - top_card_size_y);
-        top -= top % SINGLE_BUTTON_SIZE;
-        return Mathf.Max((top) / SINGLE_BUTTON_SIZE, 0);
+        return Mathf.Max(GetTopSpace() / SINGLE_BUTTON_SIZE, 0);
     }
 
     public void UpdateTrack(int index, in TrackData track_data, in Texture2D cover)
