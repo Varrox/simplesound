@@ -37,6 +37,11 @@ window/vsync/vsync_mode=0
 [dotnet]
 
 project/assembly_name="simplesound"
+project/assembly_reload_attempts=5
+
+[gui]
+
+common/auto_focus_strategy=1
 
 [input]
 
