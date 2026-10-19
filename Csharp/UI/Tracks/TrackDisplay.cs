@@ -61,7 +61,7 @@ public partial class TrackDisplay : Button
     public void SetPlaying(bool playing) {
         sound_visualizer.Visible = playing && !IsHovered();
 
-        track_number_label.AddThemeColorOverride("font_color", playing ? Colors.Transparent : ApplicationManager.theme.GetColor("small_font_color", Constants.THEME_TYPE));
+        track_number_label.AddThemeColorOverride("font_color", playing || IsHovered() ? Colors.Transparent : ApplicationManager.theme.GetColor("small_font_color", Constants.THEME_TYPE));
         play_texture_rect.Texture = ApplicationManager.theme.GetIcon(Disabled ? "no_play_icon" : (playing ? "pause_icon" : "play_icon"), Constants.THEME_TYPE);
     }
 
