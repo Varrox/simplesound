@@ -15,7 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://bhjkk8guwyhku" path="res://Prefabs/playlist_display.scn" id="13_6ivc6"]
 [ext_resource type="Script" uid="uid://schxe0nc0yhj" path="res://GDScript/scroll_spacer.gd" id="14_ju7a0"]
 [ext_resource type="Script" uid="uid://bgymt3f23woi7" path="res://Csharp/UI/Tracks/TracksVisualizer.cs" id="15_btqdu"]
-[ext_resource type="PackedScene" uid="uid://deg7587tnlkhk" path="res://Prefabs/track_display.scn" id="16_n5ukt"]
+[ext_resource type="PackedScene" uid="uid://kjaecy3cmwvl" path="res://Prefabs/track_display.tscn" id="16_ns1th"]
 [ext_resource type="StyleBox" uid="uid://bhcyqvvim6l5e" path="res://Styling/Rounded Corners.tres" id="17_0xq2a"]
 [ext_resource type="Shader" uid="uid://cxrpix7bw201g" path="res://Styling/Shaders/anti_aliased.gdshader" id="18_fmyll"]
 [ext_resource type="Script" uid="uid://qupwebtnhh44" path="res://Csharp/UI/Playlists/PlaylistPlayer.cs" id="20_drm60"]
@@ -444,7 +444,7 @@ script = ExtResource("15_btqdu")
 cover = NodePath("Full Container/Container/Top card/Icon/TextureRect")
 playlist_name_label = NodePath("Full Container/Container/Top card/Playlist name")
 track_count_label = NodePath("Full Container/Container/Top card/Track count")
-item_template = ExtResource("16_n5ukt")
+item_template = ExtResource("16_ns1th")
 parent_container = NodePath("Full Container/Container")
 item_container = NodePath("Full Container/Container/VBoxContainer")
 
