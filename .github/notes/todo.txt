@@ -8,7 +8,6 @@ TODO
 - Optimize blur by not rendering new frames unless window size is changed or track changes.
 - Create plugins for both flac and aiff audio format support.
 - Add CD read support (optional ripping too)
-- Add audio visualizer to stream display
 - Add list dropdown and put streamer mode and sleep timer buttons in there.
 - Make context menus so they instantiate instead of keep reference & make them children of popup windows.
 - Add song context menu to playing icon / name in bottom left corner
@@ -36,6 +35,7 @@ TODO
 
 FINISHED
 
+- Add audio visualizer to stream display
 - Save main window size on application close.
 - Add Tooltips to individual settings
 - Set medium blur to be the default blur settings.

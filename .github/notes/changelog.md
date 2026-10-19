@@ -18,7 +18,7 @@
 
 ## UI Improvements
 
-- The current playing track will have a small audio visualizer in place of its number.
+- The current playing track will have a small audio visualizer in place of its number, and the streamer display also has the same audio visualizer too.
 - The font of the current playing track's name and the playlist it's from, are now green to differentiate them from non playing tracks and playlists.
 - Streamer button font is red when the streamer window is open.
 - Settings menu tabs UI improved (tool tips, selected tab indicator, etc).

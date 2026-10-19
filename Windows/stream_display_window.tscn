@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bso3qe68ptmm4" path="res://Csharp/UI/Streamer Display/StreamDisplay.cs" id="1_gaihk"]
 [ext_resource type="Texture2D" uid="uid://cksbdmhr2s8yy" path="res://Icons/Default Covers/DefaultCover.png" id="1_lpmxw"]
 [ext_resource type="Shader" uid="uid://6mp1f8uww708" path="res://Styling/Shaders/blur.gdshader" id="2_lpmxw"]
+[ext_resource type="PackedScene" uid="uid://cqa0miuyddnkx" path="res://Prefabs/sound_visualizer.tscn" id="5_mdwd8"]
 [ext_resource type="FontFile" uid="uid://ckdni7vy5bpft" path="res://Styling/Fonts/VarelaRound-Regular.ttf" id="5_tsl3i"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gaihk"]
@@ -96,9 +97,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -103.0
+offset_left = -115.0
 offset_top = -22.0
-offset_right = 187.0
+offset_right = 102.13159
 offset_bottom = 21.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -114,9 +115,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -103.0
+offset_left = -115.0
 offset_top = 4.0
-offset_right = 243.66669
+offset_right = 162.5614
 offset_bottom = 24.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -125,4 +126,17 @@ theme_override_colors/font_color = Color(0.662452, 0.662452, 0.662452, 1)
 theme_override_fonts/font = ExtResource("5_tsl3i")
 text = "Artist"
 clip_text = true
-text_overrun_behavior = 3
+text_overrun_behavior = 6
+
+[node name="Soundvisualizer" parent="." unique_id=508323966 instance=ExtResource("5_mdwd8")]
+custom_minimum_size = Vector2(28, 3)
+anchors_preset = 6
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -114.315
+offset_top = -1.5
+offset_right = -86.315
+offset_bottom = 1.5
+grow_horizontal = 0
+size_flags_horizontal = 24
+size_flags_vertical = 4
