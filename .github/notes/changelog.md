@@ -1,6 +1,6 @@
 # simplesound alpha-v1.3 changelog
 
-#### **8 months, and 160 commits total!**
+#### **8 months, and 200 commits total!**
 
 ## General Improvements
 
@@ -11,7 +11,7 @@
 
 ## Features
 
-- Track Downloading with yt-dlp.
+- Track Downloading with yt-dlp for fast migration to simplesound from other platforms.
 - EQ and Reverb audio settings.
 - System tray item added for simplesound.
 - Copy system info button added to settings menu.
@@ -22,14 +22,15 @@
 - The font of the current playing track's name and the playlist it's from, are now green to differentiate them from non playing tracks and playlists.
 - Streamer button font is red when the streamer window is open.
 - Settings menu tabs UI improved (tool tips, selected tab indicator, etc).
-- Folder Icon improved for better visibility, and consistency with other icons.
+- All icons are now SVGs for better visibility.
 - Improved selected song / playlist button highlight visibility.
+- Playlist scroll positions are saved (only runtime), so no more scrolling back to the position you were at before.
 
 ## Optimizations
 
 - Using ATL now over Taglib for faster metadata loading performance.
 - Instant playlist loading (with the cost of no more separation between tracks).
-- Exports from now on will be using a custom export template of godot that strips away all unnecessary parts of the engine like 3D, or physics. This decreases the size of simplesound by 15mb - 25mb.
+- Exports from now on will be using a custom export template of godot that strips away all unnecessary parts of the engine like 3D, 2D, and physics. This decreases the size of simplesound by 15mb - 25mb.
 - Max FPS setting and optional (on by default) setting that reduces max FPS on window focus lost
 - Faster playlist / savedata json file loading.
 

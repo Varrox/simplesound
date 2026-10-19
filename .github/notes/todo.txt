@@ -3,15 +3,36 @@ TODO
 - Add sorting.
 - Add track position rearange.
 - Sleep timer.
-- Add lyrics viewer.
-- Rework context menus.
 - Make muting actually mute audio rather than making it extremely quiet.
 - Add optional compact form track displays without cover.
 - Optimize blur by not rendering new frames unless window size is changed or track changes.
 - Create plugins for both flac and aiff audio format support.
 - Add CD read support (optional ripping too)
 - Add audio visualizer to stream display
-- Add ... dropdown and put streamer mode and sleep timer buttons in there.
+- Add list dropdown and put streamer mode and sleep timer buttons in there.
+- Make context menus so they instantiate instead of keep reference & make them children of popup windows.
+- Add song context menu to playing icon / name in bottom left corner
+- Add warnings to downloader
+- Put streamer mode under a button with list icon (so sleep timer can be put under there too)
+- Standardize all input fields to be like settings
+- Redo playlist creator UI
+- Rework how importing is done (two types, playlist file being added to list, zip file with playlist file being unzipped into appdata)
+- Convert playlist visualizer to carousel scroll container
+- Fix track display to cut off long titles
+- Rework track display to be procedurally created for better efficiency
+- Make the default playlist icon be the first track or 4 track covers of the playlist if there is no icon set.
+- Add add playlist tracks to another playlist
+- Make sound visualizer so it selects frequencies where there are more likely to be notes (take notes from apples camera island sound visualizer)
+- Remove ‘Cloud’ options for now as there is no good solution for cloud without requiring the user to set up a server.
+- Add track searching
+- Add playlist searching
+- Add optional track / playlist queue
+- Add FLAC implementation / Opus implementation
+- Add lyrics viewer / editor
+- Make all theme dependencies update on command
+- Add theme override class that can serialize and deserialize and change settings
+- Add default themes to settings
+- Add theme editor 
 
 FINISHED
 
