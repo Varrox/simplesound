@@ -21,6 +21,8 @@ public partial class TracksVisualizer : CarouselScrollContainer {
     public override void _Ready() {
         base._Ready();
 
+        item_height = 60;
+
         Globals.main.playlist_visualizer.OnSelectPlaylist += LoadPlaylist;
     }
 
