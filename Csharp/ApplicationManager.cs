@@ -172,6 +172,8 @@ public partial class ApplicationManager : SceneTree {
         theme_resource.SetIcon("hamburger_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/SVG/hamburger.svg"));
         theme_resource.SetIcon("meatballs_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/SVG/meatballs.svg"));
 
+        theme_resource.SetIcon("search_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/SVG/search.svg"));
+
         theme_resource.SetIcon("plus_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/SVG/plus.svg"));
         theme_resource.SetIcon("x_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/SVG/x.svg"));
 
