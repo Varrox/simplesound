@@ -6,7 +6,7 @@ extends Control
 
 @export var bars:Array[Control]
 
-const MAX_FREQ:int = 500
+const MAX_FREQ:int = 700
 
 static var spectrum_instance:AudioEffectSpectrumAnalyzerInstance
 
@@ -22,7 +22,7 @@ func _process(delta: float) -> void:
 		var freq_start = (i * MAX_FREQ) / bar_count
 		var freq_end = ((i + 1) * MAX_FREQ) / bar_count
 		var magnitude_stereo = spectrum_instance.get_magnitude_for_frequency_range(freq_start, freq_end)
-		var magnitude = lerp(magnitude_stereo.x, magnitude_stereo.y, 0.5)
+		var magnitude = lerp(magnitude_stereo.x, magnitude_stereo.y, 0.5) * ((i + 1) * 0.5)
 		var height = (magnitude * 75) / db_to_linear(GDScriptGlobals.audio_source.volume_db)
 		
 		bars[i].size.y = Helper.smooth(bars[i].size.y, minf(min_height + height, max_height), 40)
