@@ -7,12 +7,14 @@ public partial class TracksVisualizer : CarouselScrollContainer {
     [Export] public Label playlist_name_label;
     [Export] public Label track_count_label;
 
-    private int current_playlist;
+    private int _current_playlist;
+
+    private Dictionary<int, int> _scroll_positions;
 
     private Playlist GetPlaylist() {
         if (Globals.main.playlists != null)
-            if (current_playlist < Globals.main.playlists.Count)
-                return Globals.main.playlists[current_playlist];
+            if (_current_playlist < Globals.main.playlists.Count)
+                return Globals.main.playlists[_current_playlist];
         return null;
     }
 
@@ -31,7 +33,7 @@ public partial class TracksVisualizer : CarouselScrollContainer {
         Playlist playlist = GetPlaylist();
 
         TrackData data = GetTrackData(item_index, playlist);
-        (item as TrackDisplay).Init(item_index, current_playlist, data, playlist.type, GetCover(playlist, item_index));
+        (item as TrackDisplay).Init(item_index, _current_playlist, data, playlist.type, GetCover(playlist, item_index));
     }
 
     private TrackData GetTrackData(int track, in Playlist playlist) {
@@ -39,9 +41,16 @@ public partial class TracksVisualizer : CarouselScrollContainer {
     }
 
     private void LoadPlaylist(int playlist_index) {
-        current_playlist = playlist_index;
+        _scroll_positions[_current_playlist] = ScrollVertical;
 
-        ScrollVertical = 0;
+        _current_playlist = playlist_index;
+
+        if (_scroll_positions.ContainsKey(_current_playlist)) {
+            ScrollVertical = _scroll_positions[_current_playlist];
+        }
+        else {
+            ScrollVertical = 0;
+        }
 
         Update();
     }
@@ -52,7 +61,7 @@ public partial class TracksVisualizer : CarouselScrollContainer {
         if (Globals.main.looked_at_playlist != Globals.main.playlist_index || index < first_visible_track || index >= (items.Count + first_visible_track))
             return;
         
-        (items[index - first_visible_track] as TrackDisplay).Init(index, current_playlist, track_data, GetPlaylist().type, cover);
+        (items[index - first_visible_track] as TrackDisplay).Init(index, _current_playlist, track_data, GetPlaylist().type, cover);
     }
 
     public void Update() {
