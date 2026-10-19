@@ -323,7 +323,6 @@ public partial class Main : Control
         Metadata.ResetCache();
 
         EmitSignal(SignalName.OnLoadTrack);
-		tracks_visualizer.Update();
         playlist_visualizer.UpdatePlaylists();
     }
 }

@@ -197,7 +197,7 @@ audio_player = NodePath("Player")
 video_player = NodePath("Interface/Background/Video")
 player = NodePath("Interface")
 playlist_visualizer = NodePath("Interface/Content/Side Panel/Open/VBoxContainer/Playlists")
-tracks_visualizer = NodePath("Interface/Content/Tracks/MarginContainer/Track Display")
+tracks_visualizer = NodePath("Interface/Content/Tracks/Track Display")
 
 [node name="Interface" type="Control" parent="." unique_id=164668924 node_paths=PackedStringArray("play_button", "next_button", "back_button", "loop_button", "shuffle_button", "progress_slider", "volume_slider", "mute_button", "current_time_label", "total_time_label", "track_name_label", "track_artist_label", "track_cover_texture_rect", "background_subviewport")]
 layout_mode = 1
@@ -273,6 +273,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 0
+split_offsets = PackedInt32Array(303)
+split_offset = 303
 
 [node name="Side Panel" type="Panel" parent="Interface/Content" unique_id=638521110 node_paths=PackedStringArray("split", "open_button", "closed_button", "open_element", "closed_element")]
 custom_minimum_size = Vector2(303, 0)
@@ -424,55 +426,45 @@ teleportMenuOffset = Vector2(0, 32)
 [node name="HSeparator" type="HSeparator" parent="Interface/Content/Side Panel/Collapsed/VBoxContainer" unique_id=765403374]
 layout_mode = 2
 
-[node name="Tracks" type="Control" parent="Interface/Content" unique_id=609902287]
+[node name="Tracks" type="MarginContainer" parent="Interface/Content" unique_id=594462082]
 custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-
-[node name="MarginContainer" type="MarginContainer" parent="Interface/Content/Tracks" unique_id=594462082]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 60
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 115
 
-[node name="Track Display" type="ScrollContainer" parent="Interface/Content/Tracks/MarginContainer" unique_id=1804847451 node_paths=PackedStringArray("top_card", "container", "top_spacer", "bottom_spacer", "cover", "playlist_name_label", "track_count_label")]
+[node name="Track Display" type="ScrollContainer" parent="Interface/Content/Tracks" unique_id=1804847451 node_paths=PackedStringArray("cover", "playlist_name_label", "track_count_label", "parent_container", "item_container")]
 layout_mode = 2
 theme_override_styles/focus = SubResource("StyleBoxEmpty_b1qrp")
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 2
 script = ExtResource("15_btqdu")
-template = ExtResource("16_n5ukt")
-top_card = NodePath("Full Container/Container/Top card")
-container = NodePath("Full Container/Container/VBoxContainer")
-top_spacer = NodePath("Full Container/Container/Top")
-bottom_spacer = NodePath("Full Container/Container/Bottom")
 cover = NodePath("Full Container/Container/Top card/Icon/TextureRect")
 playlist_name_label = NodePath("Full Container/Container/Top card/Playlist name")
 track_count_label = NodePath("Full Container/Container/Top card/Track count")
+item_template = ExtResource("16_n5ukt")
+parent_container = NodePath("Full Container/Container")
+item_container = NodePath("Full Container/Container/VBoxContainer")
 
-[node name="Full Container" type="HBoxContainer" parent="Interface/Content/Tracks/MarginContainer/Track Display" unique_id=78974350]
+[node name="Full Container" type="HBoxContainer" parent="Interface/Content/Tracks/Track Display" unique_id=78974350]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Container" type="VBoxContainer" parent="Interface/Content/Tracks/MarginContainer/Track Display/Full Container" unique_id=933878103]
+[node name="Container" type="VBoxContainer" parent="Interface/Content/Tracks/Track Display/Full Container" unique_id=933878103]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 0
 
-[node name="Top card" type="Panel" parent="Interface/Content/Tracks/MarginContainer/Track Display/Full Container/Container" unique_id=1802359906]
+[node name="Top card" type="Panel" parent="Interface/Content/Tracks/Track Display/Full Container/Container" unique_id=1802359906]
 custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_4b8h4")
 
-[node name="Icon" type="PanelContainer" parent="Interface/Content/Tracks/MarginContainer/Track Display/Full Container/Container/Top card" unique_id=1147541334]
+[node name="Icon" type="PanelContainer" parent="Interface/Content/Tracks/Track Display/Full Container/Container/Top card" unique_id=1147541334]
 clip_children = 1
 layout_mode = 1
 anchors_preset = -1
@@ -485,14 +477,14 @@ offset_bottom = 50.0
 grow_vertical = 2
 theme_override_styles/panel = ExtResource("17_0xq2a")
 
-[node name="TextureRect" type="TextureRect" parent="Interface/Content/Tracks/MarginContainer/Track Display/Full Container/Container/Top card/Icon" unique_id=803486648]
+[node name="TextureRect" type="TextureRect" parent="Interface/Content/Tracks/Track Display/Full Container/Container/Top card/Icon" unique_id=803486648]
 material = SubResource("ShaderMaterial_4w656")
 layout_mode = 2
 texture = ExtResource("7_xvcl6")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="Playlist name" type="Label" parent="Interface/Content/Tracks/MarginContainer/Track Display/Full Container/Container/Top card" unique_id=1152091530]
+[node name="Playlist name" type="Label" parent="Interface/Content/Tracks/Track Display/Full Container/Container/Top card" unique_id=1152091530]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.5
@@ -505,7 +497,7 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 29
 text = "Name"
 
-[node name="Track count" type="Label" parent="Interface/Content/Tracks/MarginContainer/Track Display/Full Container/Container/Top card" unique_id=684426772]
+[node name="Track count" type="Label" parent="Interface/Content/Tracks/Track Display/Full Container/Container/Top card" unique_id=684426772]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.5
@@ -518,7 +510,7 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 16
 text = "0 tracks"
 
-[node name="Play" type="Button" parent="Interface/Content/Tracks/MarginContainer/Track Display/Full Container/Container/Top card" unique_id=1739860587]
+[node name="Play" type="Button" parent="Interface/Content/Tracks/Track Display/Full Container/Container/Top card" unique_id=1739860587]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 1.0
@@ -537,17 +529,11 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_i82gy")
 icon = ExtResource("21_kb0xi")
 script = ExtResource("20_drm60")
 
-[node name="Top" type="Panel" parent="Interface/Content/Tracks/MarginContainer/Track Display/Full Container/Container" unique_id=1668146414]
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Interface/Content/Tracks/MarginContainer/Track Display/Full Container/Container" unique_id=366499595]
+[node name="VBoxContainer" type="VBoxContainer" parent="Interface/Content/Tracks/Track Display/Full Container/Container" unique_id=366499595]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="Bottom" type="Panel" parent="Interface/Content/Tracks/MarginContainer/Track Display/Full Container/Container" unique_id=169923512]
-layout_mode = 2
-
-[node name="VSeparator" type="VSeparator" parent="Interface/Content/Tracks/MarginContainer/Track Display/Full Container" unique_id=1962172910 node_paths=PackedStringArray("scroll_container")]
+[node name="VSeparator" type="VSeparator" parent="Interface/Content/Tracks/Track Display/Full Container" unique_id=1962172910 node_paths=PackedStringArray("scroll_container")]
 layout_mode = 2
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxEmpty_wnkbs")
@@ -988,12 +974,11 @@ offset_top = -223.0
 offset_right = -864.0
 offset_bottom = -74.0
 
-[node name="Trackcontext" parent="Interface" unique_id=196847728 node_paths=PackedStringArray("sub_menus") instance=ExtResource("45_rjtah")]
+[node name="Trackcontext" parent="Interface" unique_id=196847728 instance=ExtResource("45_rjtah")]
 visible = false
 layout_mode = 1
 offset_top = -75.0
 offset_bottom = 43.0
-sub_menus = []
 
 [node name="Player" type="AudioStreamPlayer" parent="." unique_id=488316782]
 

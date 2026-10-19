@@ -13,6 +13,7 @@ public partial class TrackDisplay : Button
     [Export] public Panel explicit_lyrics_indicator;
 
     public int track_index;
+
     public bool playing;
 
     public override void _Ready() {
