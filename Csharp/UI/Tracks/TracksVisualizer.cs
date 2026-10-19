@@ -9,7 +9,7 @@ public partial class TracksVisualizer : CarouselScrollContainer {
 
     private int _current_playlist;
 
-    private Dictionary<int, int> _scroll_positions;
+    private Dictionary<int, int> _scroll_positions = new Dictionary<int, int>();
 
     private Playlist GetPlaylist() {
         if (Globals.main.playlists != null)

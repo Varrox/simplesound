@@ -70,3 +70,5 @@ ColorPickerButton/styles/focus = SubResource("StyleBoxFlat_k2t6e")
 ColorPickerButton/styles/hover = SubResource("StyleBoxFlat_32k8g")
 ColorPickerButton/styles/normal = ExtResource("1_jybvc")
 ColorPickerButton/styles/pressed = SubResource("StyleBoxFlat_uvoye")
+ScrollContainer/constants/scrollbar_h_separation = 4
+ScrollContainer/constants/scrollbar_v_separation = 4

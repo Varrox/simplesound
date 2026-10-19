@@ -1,53 +1,40 @@
 using Godot;
 using System.Collections.Generic;
+using System.Linq;
 
 struct SearchHelper {
-    static public List<string> track_names, track_artists;
-
-    struct PlayIndex
-    {
-        int playlist_index, track_index;
+    public struct PlayIndex {
+        public int playlist_index, track_index;
     }
 
-    public static PlayIndex[] SearchSongs(string search_query, int max_results) {
-        if (track_names == null || track_artists == null) {
-            SetupTrackDatas();
-        }
-
-        // Track name
-        // Track artist
-
+    public static PlayIndex[] SearchSongs(string search_query) {
         // TODO : Track lyrics
 
-        FuzzySearch fuzzy = new();
+        FuzzySearch fuzzy = new FuzzySearch();
 
-        FuzzySearchMatch[] results = new FuzzySearchMatch[track_names.Count];
-        Dictionary<int, PlayIndex> = new Dictionary<
-
-        for(int i = 0; i < track_names.Count; i++)
-        {
-            FuzzySearchMatch result_name = fuzzy.Search(search_query, track_names[i]);
-            FuzzySearchMatch result_artist = fuzzy.Search(search_query, track_artists[i]);
-            
-        }
-
-        // fuzzy.SearchAll("health potion", items)
-    }
-
-    public static PlayIndex GetPlayIndex(int list_index)
-    {
-        
-    }
-
-    public static void SetupTrackDatas() {
-        track_names = new List<String>();
-        track_artists = new List<String>();
+        Dictionary<int, PlayIndex> results = new Dictionary<int, PlayIndex>();
 
         for(int i = 0; i < Globals.main.playlists.Count; i++) {
             for(int j = 0; j < Globals.main.playlists[i].tracks.Count; j++) {
-                track_names.Add(Tools.GetMediaTitle(Globals.main.playlists[i].tracks[i]));
-                track_artists.Add(Metadata.GetArtist(Globals.main.playlists[i].tracks[i]));
+                string track = Globals.main.playlists[i].tracks[j];
+
+                FuzzySearchMatch result_name = fuzzy.Search(search_query, Tools.GetMediaTitle(track));
+                FuzzySearchMatch result_artist = fuzzy.Search(search_query, Metadata.GetArtist(track));
+
+                if (result_name == null && result_artist == null) continue;
+                
+                int score = (result_name != null ? result_name.Score : -10) + (result_artist != null ? result_artist.Score : -10);
+
+                if (score <= 0) continue;
+                
+                while (results.ContainsKey(score)) score--;
+
+                results.Add(score, new PlayIndex {playlist_index = i, track_index = j});
             }
         }
+
+        fuzzy.Dispose();
+
+        return results.OrderBy(k => k.Key).Select(v => v.Value).ToArray();
     }
 }

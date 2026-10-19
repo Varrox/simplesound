@@ -5,14 +5,11 @@
 [ext_resource type="StyleBox" uid="uid://bw4kvok8cf77w" path="res://Styling/Selectables/radio_normal.tres" id="4_ec5im"]
 [ext_resource type="PackedScene" uid="uid://ccu57wwy5vwng" path="res://Windows/Downloading/download_playlist_display.scn" id="4_o2q55"]
 [ext_resource type="StyleBox" uid="uid://d05hxmlaqj0qh" path="res://Styling/Selectables/radio_hover.tres" id="5_gftam"]
-[ext_resource type="Script" uid="uid://schxe0nc0yhj" path="res://GDScript/scroll_spacer.gd" id="7_gftam"]
 [ext_resource type="Script" uid="uid://ckpanpt3fty8d" path="res://Csharp/UI/Default Node Extentions/ThemeLineEdit.cs" id="8_1qv4f"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5cf4u"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1qv4f"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wnkbs"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wg6k2"]
 
@@ -27,8 +24,8 @@ transient = true
 exclusive = true
 min_size = Vector2i(400, 250)
 script = ExtResource("1_v3qo6")
-no_playlist = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer2/ScrollContainer/HBoxContainer/VBoxContainer/None")
-playlist_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer2/ScrollContainer/HBoxContainer/VBoxContainer")
+no_playlist = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer2/ScrollContainer/VBoxContainer/None")
+playlist_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer2/ScrollContainer/VBoxContainer")
 link_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/Downloading/Display links/MarginContainer/ScrollContainer/Link Container")
 playlist_display = ExtResource("4_o2q55")
 link = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/Downloading/Add Link/Link")
@@ -72,18 +69,15 @@ layout_mode = 2
 [node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer2" unique_id=1084725535]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_constants/scrollbar_h_separation = 4
+theme_override_constants/scrollbar_v_separation = 4
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer2/ScrollContainer" unique_id=1735455352]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer2/ScrollContainer" unique_id=2021626115]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer2/ScrollContainer/HBoxContainer" unique_id=2021626115]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="None" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer2/ScrollContainer/HBoxContainer/VBoxContainer" unique_id=1091968230]
+[node name="None" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer2/ScrollContainer/VBoxContainer" unique_id=1091968230]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 theme_override_styles/normal = ExtResource("4_ec5im")
@@ -92,13 +86,6 @@ theme_override_styles/hover = ExtResource("5_gftam")
 theme_override_styles/disabled = ExtResource("5_gftam")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_1qv4f")
 text = "None"
-
-[node name="VSeparator" type="VSeparator" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer2/ScrollContainer/HBoxContainer" unique_id=1706826896 node_paths=PackedStringArray("scroll_container")]
-layout_mode = 2
-theme_override_constants/separation = 0
-theme_override_styles/separator = SubResource("StyleBoxEmpty_wnkbs")
-script = ExtResource("7_gftam")
-scroll_container = NodePath("../..")
 
 [node name="VSeparator" type="VSeparator" parent="MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1398130750]
 custom_minimum_size = Vector2(7.06, 0)
