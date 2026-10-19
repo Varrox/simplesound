@@ -1,7 +1,6 @@
 using Godot;
 
-public partial class PlaylistPlayer : Button
-{
+public partial class PlaylistPlayer : Button {
 	public override void _Ready() {
 		ButtonUp += Play;
 		Globals.main.OnPlayingChanged += UpdateTexture;

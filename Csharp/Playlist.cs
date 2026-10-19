@@ -5,8 +5,7 @@ using System;
 using System.Text;
 using Godot;
 
-public class Playlist
-{
+public class Playlist {
     public string name;
     public string artist;
 

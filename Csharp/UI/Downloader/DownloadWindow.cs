@@ -2,8 +2,7 @@ using Godot;
 using System.Collections.Generic;
 using System.IO;
 
-public partial class DownloadWindow : EditorWindow
-{
+public partial class DownloadWindow : EditorWindow {
     [Export] public Button no_playlist;
     [Export] public VBoxContainer playlist_container, link_container;
     [Export] public PackedScene playlist_display;
@@ -17,8 +16,7 @@ public partial class DownloadWindow : EditorWindow
 
     public List<string> links = new List<string>();
 
-    public override void _Ready()
-    {
+    public override void _Ready() {
         base._Ready();
         download.ButtonUp += Download;
         close.ButtonUp += Close;
@@ -27,8 +25,7 @@ public partial class DownloadWindow : EditorWindow
         add_link.ButtonUp += AddLink;
     }
 
-    public void AddLink()
-    {
+    public void AddLink() {
         links.Add(link.Text);
         HBoxContainer container = new HBoxContainer();
         link_container.AddChild(container);
@@ -54,14 +51,12 @@ public partial class DownloadWindow : EditorWindow
         link.Text = "";
     }
 
-    public void ClearNoneSelected(int index)
-    {
+    public void ClearNoneSelected(int index) {
         selected_playlist = index;
         if (index != -1) ApplicationManager.SetRadioSelected(no_playlist, false);
     }
 
-    public void Open()
-    {
+    public void Open() {
         Globals.file_dialog.Reparent(this);
 
         ApplicationManager.SetRadioSelected(no_playlist, true);
@@ -77,8 +72,7 @@ public partial class DownloadWindow : EditorWindow
         Show();
     }
 
-    public void Close()
-    {
+    public void Close() {
         if(Globals.self == null) {
             ApplicationManager.QuitProgram();
             return;
@@ -90,21 +84,17 @@ public partial class DownloadWindow : EditorWindow
         Globals.player.interrupted = false; 
     }
 
-    public void Clear()
-    {
+    public void Clear() {
         link.Text = "";
 
-        foreach(Node node in link_container.GetChildren())
-        {
+        foreach(Node node in link_container.GetChildren()) {
             node.QueueFree();
         }
 
         links.Clear();
 
-        foreach(Node node in playlist_container.GetChildren())
-        {
-            if(node != no_playlist)
-            {
+        foreach(Node node in playlist_container.GetChildren()) {
+            if(node != no_playlist) {
                 if(node is DownloadPlaylistDisplay)
                     OnSelectPlaylist -= (node as DownloadPlaylistDisplay).ClearSelected;
                 node.QueueFree();
@@ -112,31 +102,26 @@ public partial class DownloadWindow : EditorWindow
         }
     }
 
-    public void Download()
-    {
-        foreach(string url in links)
-        {
+    public void Download() {
+        foreach(string url in links) {
             string[] tracks = RunDownloadCommand(url, selected_playlist != -1 ? Globals.main.playlists[selected_playlist].name : "");
 
             if(tracks == null || tracks.Length == 0)
                 continue;
             
-            if(selected_playlist != -1)
-            {
+            if(selected_playlist != -1) {
                 GD.Print(tracks);
                 Globals.main.playlists[selected_playlist].tracks.AddRange(tracks);
                 Globals.main.playlists[selected_playlist].Save();
                 Globals.main.Refresh();
             }
-            else // Open in file explorer
-            {
+            else { // Open in file explorer
                 OS.ShellShowInFileManager(tracks[0], true);
             }
         }
     }
 
-    public string[] RunDownloadCommand(string url, string folder)
-    {
+    public string[] RunDownloadCommand(string url, string folder) {
         if(Globals.self == null) // If globals doesn't exist
             return null;
         
@@ -177,15 +162,11 @@ public partial class DownloadWindow : EditorWindow
 
         List<string> tracks = new List<string>();
 
-        foreach(string track in output)
-        {
-            if (!string.IsNullOrEmpty(track))
-            {
-                if (track.StartsWith("Link"))
-                {
+        foreach(string track in output) {
+            if (!string.IsNullOrEmpty(track)) {
+                if (track.StartsWith("Link")) {
                     string[] split = track.Trim().Split("\n");
-                    for(int i = 0; i < split.Length; i += 2)
-                    {
+                    for(int i = 0; i < split.Length; i += 2) {
                         Metadata.WriteToComment(split[i + 1], split[i]);
                         tracks.Add(split[i + 1]);
                     }

@@ -2,8 +2,7 @@ using Godot;
 using DiscordRPC;
 using DiscordRPC.Message;
 
-public partial class Discord : Node
-{
+public partial class Discord : Node {
     public const string DISCORD_APP_ID = "1313226375007703160";
     public static DiscordRpcClient client;
     public static bool set_up;
@@ -52,8 +51,7 @@ public partial class Discord : Node
         RichPresence presence = new RichPresence() {
             Details = Globals.player.track_name_label.Text,
             State = Globals.player.track_artist_label.Text,
-            Assets = new Assets()
-            {
+            Assets = new Assets() {
                 LargeImageKey = cover ? GetLogo() : cover_link,
                 SmallImageKey = cover ? "" : GetLogo(),
                 LargeImageText = name == "varrox" ? $"btw I ({client.CurrentUser.DisplayName}) made this software" : "simplesound is an open source music player",
@@ -127,8 +125,7 @@ public partial class Discord : Node
         FinishUpdateTrack();
     }
 
-    string ParseURL(string url)
-    {
+    string ParseURL(string url) {
         string converted_url = url;
         if (url.Contains("www.youtube") || url.Contains("https://youtu.be/")) {
             converted_url = "https://i.ytimg.com/vi/";

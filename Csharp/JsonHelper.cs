@@ -55,11 +55,7 @@ public struct JsonHelper {
         ReadOnlySpan<byte> utf8_bom = [ 0xEF, 0xBB, 0xBF ];
         ReadOnlySpan<byte> bytes = Encoding.UTF8.GetBytes(File.ReadAllText(path, Encoding.UTF8));
 
-        if (bytes.Length >= 3 &&
-            bytes[0] == utf8_bom[0] &&
-            bytes[1] == utf8_bom[1] &&
-            bytes[2] == utf8_bom[2])
-        {
+        if (bytes.Length >= 3 && bytes[0] == utf8_bom[0] && bytes[1] == utf8_bom[1] && bytes[2] == utf8_bom[2]) {
             bytes = bytes[3..]; // Skip the first 3 bytes
         }
 

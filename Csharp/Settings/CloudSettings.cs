@@ -1,8 +1,7 @@
 using System.Linq;
 using System.Text.Json;
 
-public class CloudSettings : ISettings
-{
+public class CloudSettings : ISettings {
     public bool sync_application_settings;
 
     // SORT THESE BY AGE. DO NOT REMOVE OLD NAMES UNTIL ALPHA IS OVER, OR ALPHA v1.4.

@@ -2,8 +2,7 @@ using Godot;
 using System.Collections.Generic;
 
 [GlobalClass]
-public partial class Main : Control
-{
+public partial class Main : Control {
 	[Export] public AudioStreamPlayer audio_player;
     [Export] public VideoStreamPlayer video_player;
 	

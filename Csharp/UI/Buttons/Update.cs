@@ -2,8 +2,7 @@ using Godot;
 using Godot.Collections;
 using System.IO;
 
-public partial class Update : Button
-{
+public partial class Update : Button {
     readonly string download_folder = new FileInfo(OS.GetExecutablePath()).Directory.FullName;
     readonly string download_file = Path.Combine(new FileInfo(OS.GetExecutablePath()).Directory.FullName, "Download.zip");
 
@@ -13,15 +12,13 @@ public partial class Update : Button
     
     CurrentRequest current_request;
 
-    enum CurrentRequest
-    {
+    enum CurrentRequest {
         Version,
         Download,
         Install
     }
 
-	public override void _Ready()
-	{
+	public override void _Ready() {
         if (OS.HasFeature("editor")) {// If editor, do not allow for updating at all.
             QueueFree();
             return;
@@ -37,32 +34,27 @@ public partial class Update : Button
         CheckUpdate();
 	}
 
-	public void StartUpdate()
-	{
+	public void StartUpdate() {
         if (!can_be_updated || updating) return;
 
         current_request = CurrentRequest.Download;
         http_client.Request(Constants.LATEST_RELEASE);
     }
 
-    public void CheckUpdate()
-    {
+    public void CheckUpdate() {
         current_request = CurrentRequest.Version;
         http_client.Request(Constants.LATEST_RELEASE);
     }
 
-    private void RequestCompleted(long result, long responseCode, string[] headers, byte[] body)
-    {
-        if (result != (long)HttpRequest.Result.Success)
-        {
+    private void RequestCompleted(long result, long responseCode, string[] headers, byte[] body) {
+        if (result != (long)HttpRequest.Result.Success) {
             GD.PushError($"Https request failed. Something went wrong server side: {result}");
             return;
         }
 
         Dictionary json = (Dictionary)Json.ParseString(body.GetStringFromUtf8());
 
-        switch(current_request)
-        {
+        switch(current_request) {
             case CurrentRequest.Version: // DONE ONCE: To check if there is update available.
                 can_be_updated = (string)json["name"] != (string)ProjectSettings.GetSetting("application/config/version");
                 TooltipText = $"Update Available! {json["name"]}";
@@ -81,15 +73,13 @@ public partial class Update : Button
         }
     }
 
-    public void Install(string file)
-    {
+    public void Install(string file) {
         // Read new files.
         
         ZipReader zip_reader = new ZipReader();
         Error error = zip_reader.Open(file);
 
-        if (error != Error.Ok) // Cancel if ZIP is corrupted.
-        {
+        if (error != Error.Ok) { // Cancel if ZIP is corrupted.
             GD.PushError("Install Failed. Zip is corrupted");
             return;
         }
@@ -98,8 +88,7 @@ public partial class Update : Button
 
         string[] download_folder_files = Directory.GetFiles(download_folder);
 
-        for(int i = 0; i < download_folder_files.Length; i++)
-        {
+        for(int i = 0; i < download_folder_files.Length; i++) {
             if (download_folder_files[i] == file) // Skip new version.
                 continue;
             
@@ -113,8 +102,7 @@ public partial class Update : Button
 
         string[] files = zip_reader.GetFiles();
 
-        for (int i = 0; i < files.Length; i++)
-        {
+        for (int i = 0; i < files.Length; i++) {
             string path = Path.Combine(download_folder, files[i].Substring(files[i].IndexOf("/") + 1));
             if (!files[i].EndsWith('/')) {
                 File.WriteAllBytes(path, zip_reader.ReadFile(files[i]));
@@ -145,34 +133,30 @@ public partial class Update : Button
         confirmation.OnClose += Restart;
     }
 
-    public void Restart(Confirm confirm)
-    {
+    public void Restart(Confirm confirm) {
         if(confirm == Confirm.Accepted) {
             OS.ShellOpen(OS.GetExecutablePath());
             ApplicationManager.QuitProgram();
         }
     }
 
-    public void StartDownload(Dictionary json)
-    {
+    public void StartDownload(Dictionary json) {
         GD.Print("Downloading");
 
         Array<Dictionary> assets = (Array<Dictionary>)json["assets"];
 
         int download_index = -1;
 
-        for(int i = 0; i < assets.Count; i++) // Find download link index.
-        {
+        for(int i = 0; i < assets.Count; i++) { // Find download link index.
             string name = ((string)assets[i]["name"]).ToLower();
 
-            if (name.Contains(OS.GetName().ToLower()))
-            {
+            if (name.Contains(OS.GetName().ToLower())) {
                 download_index = i;
+                break;
             }
         }
 
-        if (download_index == -1) // If download link not found, quit.
-        {
+        if (download_index == -1) { // If download link not found, quit.
             GD.PushError("Current platform not found in available downloads");
             return;
         }

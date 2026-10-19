@@ -1,4 +1,3 @@
-﻿public partial class ImportFolder : EditorWindow
-{
+﻿public partial class ImportFolder : EditorWindow {
 
 }

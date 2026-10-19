@@ -1,8 +1,7 @@
 using Godot;
 using System.Collections.Generic;
 
-public partial class TracksVisualizer : CarouselScrollContainer
-{
+public partial class TracksVisualizer : CarouselScrollContainer {
     [Export] public TextureRect cover;
     
     [Export] public Label playlist_name_label;

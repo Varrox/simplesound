@@ -1,7 +1,6 @@
 ﻿using Godot;
 
-public partial class PathDisplay : Control
-{
+public partial class PathDisplay : Control {
     [Export] Label path_display;
     [Export] public Button delete;
     [Export] public TextureRect path_type_texture_rect;

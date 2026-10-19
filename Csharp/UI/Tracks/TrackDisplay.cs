@@ -1,7 +1,6 @@
 ﻿using Godot;
 
-public partial class TrackDisplay : Button
-{
+public partial class TrackDisplay : Button {
     [Export] public Label track_number_label, track_name_label, track_artist_label, total_time_label;
     
     [Export] public TextureRect cover_texture_rect, play_texture_rect;

@@ -1,30 +1,24 @@
 using Godot;
 using System.Collections.Generic;
 
-public partial class PlaylistCreatorOpener : EditorWindowOpener
-{
+public partial class PlaylistCreatorOpener : EditorWindowOpener {
 	[Export] public ContextMenu menu;
-	public override void _Ready()
-	{
+	public override void _Ready() {
 		ButtonUp += OpenCreator;
 		window.OnClose += CreatePlaylist;
 	}
 
-	public void OpenCreator()
-	{
-		if (Globals.player.Interrupt())
-		{
+	public void OpenCreator() {
+		if (Globals.player.Interrupt()) {
 			menu.opener.CloseMenu();
 			(window as PlaylistCreator).Open();
 		}
 	}
 
-	public void CreatePlaylist()
-	{
+	public void CreatePlaylist() {
 		PlaylistCreator creator = window as PlaylistCreator;
 
-		if (!creator.cancelled)
-		{
+		if (!creator.cancelled) {
 			bool sync = creator.cloud_sync_enabled_field.ButtonPressed;
 
             string file_name = creator.playlist_name_field.Text.Replace('\\', '-').Replace('/', '-').Replace(':', '-');

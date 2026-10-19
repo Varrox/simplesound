@@ -1,19 +1,15 @@
 using Godot;
 
-public partial class DeleteTrack : Button
-{
-	public override void _Ready()
-	{
+public partial class DeleteTrack : Button {
+	public override void _Ready() {
 		ButtonDown += Remove;
     }
 
     ConfirmationWindow confirmation_window;
 
 
-    public void Remove()
-	{
-		if(Globals.save_data.application_settings.remove_track_warning)
-		{
+    public void Remove() {
+		if(Globals.save_data.application_settings.remove_track_warning) {
 			confirmation_window = Globals.confirmation_window.Instantiate() as ConfirmationWindow;
 
             confirmation_window.message = $"Are you sure you want to delete this track \'{Metadata.GetName(Globals.main.playlists[Globals.main.looked_at_playlist].tracks[TracksContextMenuOpener.selected_track])}\' from this playlist?";
@@ -32,12 +28,9 @@ public partial class DeleteTrack : Button
         FinishRemoval(Confirm.Accepted);
 	}
 
-	public void FinishRemoval(Confirm confirm)
-	{
-        if (confirmation_window != null) 
-        {
-            if (confirmation_window.ignored)
-            {
+	public void FinishRemoval(Confirm confirm) {
+        if (confirmation_window != null) {
+            if (confirmation_window.ignored) {
                 Globals.save_data.application_settings.remove_track_warning = false;
                 Globals.save_data.Save();
             }
@@ -46,10 +39,8 @@ public partial class DeleteTrack : Button
                 return;
         }
 
-        if (Globals.main.looked_at_playlist == Globals.main.playlist_index)
-        {
-            if (Globals.main.track_index == TracksContextMenuOpener.selected_track)
-            {
+        if (Globals.main.looked_at_playlist == Globals.main.playlist_index) {
+            if (Globals.main.track_index == TracksContextMenuOpener.selected_track) {
                 Globals.main.track_index += (TracksContextMenuOpener.selected_track == 0 ? -1 : 1);
                 Globals.main.PlayTrack(Globals.main.track);
             }

@@ -1,30 +1,24 @@
 ﻿using Godot;
 using System.Collections.Generic;
 
-public partial class ImportFolderOpener : EditorWindowOpener
-{
+public partial class ImportFolderOpener : EditorWindowOpener {
     [Export] public ContextMenu menu;
-    public override void _Ready()
-    {
+    public override void _Ready() {
         ButtonUp += OpenImporter;
         window.OnClose += CreatePlaylist;
     }
 
-    public void OpenImporter()
-    {
-        if (Globals.player.Interrupt())
-        {
+    public void OpenImporter() {
+        if (Globals.player.Interrupt()) {
             menu.opener.CloseMenu();
             (window as PlaylistCreator).Open();
         }
     }
 
-    public void CreatePlaylist()
-    {
+    public void CreatePlaylist() {
         PlaylistCreator creator = window as PlaylistCreator;
 
-        if (!creator.cancelled)
-        {
+        if (!creator.cancelled) {
             List<string> files = SaveSystem.ImportTracks(creator.tracks.ToArray(), creator.playlist_name_field.Text, false);
             Playlist playlist = new Playlist();
 
