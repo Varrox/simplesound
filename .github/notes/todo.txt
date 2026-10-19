@@ -1,12 +1,11 @@
 TODO
 
 - Add sorting.
-- Add track position rearange.
+- Add track / playlist position rearange.
 - Sleep timer.
 - Make muting actually mute audio rather than making it extremely quiet.
 - Add optional compact form track displays without cover.
 - Optimize blur by not rendering new frames unless window size is changed or track changes.
-- Create plugins for both flac and aiff audio format support.
 - Add CD read support (optional ripping too)
 - Add list dropdown and put streamer mode and sleep timer buttons in there.
 - Make context menus so they instantiate instead of keep reference & make them children of popup windows.
@@ -23,10 +22,9 @@ TODO
 - Add add playlist tracks to another playlist
 - Make sound visualizer so it selects frequencies where there are more likely to be notes (take notes from apples camera island sound visualizer)
 - Remove ‘Cloud’ options for now as there is no good solution for cloud without requiring the user to set up a server.
-- Add track searching
-- Add playlist searching
+- Add track and playlist searching
 - Add optional track / playlist queue
-- Add FLAC implementation / Opus implementation
+- Add FLAC implementation / Opus implementation / AIFF implementation
 - Add lyrics viewer / editor
 - Make all theme dependencies update on command
 - Add theme override class that can serialize and deserialize and change settings
