@@ -14,7 +14,7 @@ public partial class TrackDisplay : Button
 
     public int track_index, playlist_index;
 
-    public bool playing;
+    public bool highlighted;
 
     public override void _Ready() {
         ButtonUp += SetTrack;
@@ -45,30 +45,28 @@ public partial class TrackDisplay : Button
     public void SetHighlight() {
         Globals.main.OnPlayingChanged -= SetPlaying;
 
-        bool highlight = Globals.main.playlist_index == playlist_index && Globals.main.track_index == track_index;
+        highlighted = Globals.main.playlist_index == playlist_index && Globals.main.track_index == track_index;
 
-        playing = highlight;
+        ApplicationManager.SetRadioSelected(this, highlighted);
 
-        ApplicationManager.SetRadioSelected(this, highlight);
+        track_name_label.AddThemeColorOverride("font_color", ApplicationManager.theme.GetColor(highlighted ? "playing_font_color" : "normal_font_color", Constants.THEME_TYPE));
 
-        track_name_label.AddThemeColorOverride("font_color", ApplicationManager.theme.GetColor(highlight ? "playing_font_color" : "normal_font_color", Constants.THEME_TYPE));
+        if (highlighted) Globals.main.OnPlayingChanged += SetPlaying;
 
-        if (highlight) Globals.main.OnPlayingChanged += SetPlaying;
-
-        SetPlaying(playing && Globals.main.playing);
+        SetPlaying(highlighted && Globals.main.playing);
     }
 
-    public void SetPlaying(bool playing) {
-        sound_visualizer.Visible = playing && !IsHovered();
+    public void SetPlaying(bool is_playing) {
+        sound_visualizer.Visible = highlighted && !IsHovered();
 
-        track_number_label.AddThemeColorOverride("font_color", playing || IsHovered() ? Colors.Transparent : ApplicationManager.theme.GetColor("small_font_color", Constants.THEME_TYPE));
-        play_texture_rect.Texture = ApplicationManager.theme.GetIcon(Disabled ? "no_play_icon" : (playing ? "pause_icon" : "play_icon"), Constants.THEME_TYPE);
+        track_number_label.AddThemeColorOverride("font_color", highlighted || IsHovered() ? Colors.Transparent : ApplicationManager.theme.GetColor("small_font_color", Constants.THEME_TYPE));
+        play_texture_rect.Texture = ApplicationManager.theme.GetIcon(Disabled ? "no_play_icon" : (is_playing ? "pause_icon" : "play_icon"), Constants.THEME_TYPE);
     }
 
     public void OnEnter() {
         more.Show();
 
-        SetPlaying(playing);
+        SetPlaying(highlighted);
 
         play_texture_rect.Show();
     }
@@ -76,7 +74,7 @@ public partial class TrackDisplay : Button
     public void OnExit() {
         if (!more.menu_open) more.Hide();
 
-        SetPlaying(playing);
+        SetPlaying(highlighted);
 
         play_texture_rect.Hide();
         play_texture_rect.Texture = null;
@@ -108,7 +106,7 @@ public partial class TrackDisplay : Button
 
     public void SetTrack() {
         if (Globals.main.playlist_index != playlist_index) Globals.main.LoadPlaylist(playlist_index);
-        if (!playing) Globals.main.SetTrack(track_index);
+        if (!highlighted) Globals.main.SetTrack(track_index);
         else Globals.main.FlipPlayingState();
     }
 }
