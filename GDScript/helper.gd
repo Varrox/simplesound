@@ -12,7 +12,7 @@ static func enable_node(node:Node):
 		node.visible = true
 
 static func get_smooth_value(s:float, delta:float) -> float:
-	return clamp(1 - pow(0.5, s * delta), 0, 1)
+	return clamp(1.0 - exp(-delta * s), 0, 1)
 	
 static func smooth(a, b, s): ## lerp smoothing, but not fps dependent
 	return lerp(a, b, get_smooth_value(s, get_process_delta_time()))
