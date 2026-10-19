@@ -12,7 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://dgqxvsk1bwyga" path="res://Icons/SVG/plus.svg" id="10_gjyis"]
 [ext_resource type="Script" uid="uid://bcxwpol710ysq" path="res://Csharp/UI/ContextMenuOpener.cs" id="11_2o8nl"]
 [ext_resource type="Script" uid="uid://dcnfao6qa81tk" path="res://Csharp/UI/Playlists/PlaylistsVisualizer.cs" id="12_jnr5d"]
-[ext_resource type="PackedScene" uid="uid://bhjkk8guwyhku" path="res://Prefabs/playlist_display.scn" id="13_6ivc6"]
+[ext_resource type="PackedScene" uid="uid://qe17cpkc3gqr" path="res://Prefabs/playlist_display.tscn" id="13_ns1th"]
 [ext_resource type="Script" uid="uid://schxe0nc0yhj" path="res://GDScript/scroll_spacer.gd" id="14_ju7a0"]
 [ext_resource type="Script" uid="uid://bgymt3f23woi7" path="res://Csharp/UI/Tracks/TracksVisualizer.cs" id="15_btqdu"]
 [ext_resource type="PackedScene" uid="uid://kjaecy3cmwvl" path="res://Prefabs/track_display.tscn" id="16_ns1th"]
@@ -361,7 +361,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/focus = SubResource("StyleBoxEmpty_facbu")
 script = ExtResource("12_jnr5d")
-template = ExtResource("13_6ivc6")
+template = ExtResource("13_ns1th")
 container = NodePath("HBoxContainer/VBoxContainer")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Interface/Content/Side Panel/Open/VBoxContainer/Playlists" unique_id=654042858]
