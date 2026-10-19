@@ -7,8 +7,6 @@ public partial class TracksVisualizer : CarouselScrollContainer {
     [Export] public Label playlist_name_label;
     [Export] public Label track_count_label;
 
-    Dictionary<int, TrackData> track_datas;
-
     private int current_playlist;
 
     private Playlist GetPlaylist() {
@@ -20,8 +18,6 @@ public partial class TracksVisualizer : CarouselScrollContainer {
 
     public override void _Ready() {
         base._Ready();
-
-        track_datas = new Dictionary<int, TrackData>();
 
         Globals.main.playlist_visualizer.OnSelectPlaylist += LoadPlaylist;
     }
@@ -39,14 +35,7 @@ public partial class TracksVisualizer : CarouselScrollContainer {
     }
 
     private TrackData GetTrackData(int track, in Playlist playlist) {
-        if (!track_datas.ContainsKey(track)) {
-            if(track < playlist.tracks.Count) {
-                TrackData data = new TrackData(playlist.tracks[track]);
-                track_datas[track] = data;
-            }
-            else track_datas[track] = new TrackData{};
-        }
-        return track_datas[track];
+        return new TrackData(playlist.tracks[track]);
     }
 
     private void LoadPlaylist(int playlist_index) {
@@ -67,8 +56,6 @@ public partial class TracksVisualizer : CarouselScrollContainer {
     }
 
     public void Update() {
-        track_datas.Clear();
-
         Playlist playlist = GetPlaylist();
         
         cover.Texture = playlist.cover_texture ?? ApplicationManager.theme.GetIcon("default_cover_icon", Constants.THEME_TYPE);
@@ -78,8 +65,6 @@ public partial class TracksVisualizer : CarouselScrollContainer {
         else track_count_label.Text = "0 tracks";
 
         total_items = playlist.tracks.Count;
-
-        track_datas.Clear();
 
         Refresh();
     }
