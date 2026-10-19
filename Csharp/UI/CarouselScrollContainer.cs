@@ -151,24 +151,21 @@ public partial class CarouselScrollContainer : ScrollContainer {
         return item_height * total_items;
     }
 
-    private int _GetTopSpace()
-    {
+    private int _GetTopSpace() {
         int top = Mathf.Min(Mathf.Max(ScrollVertical - (int)_top_spacer.Position.Y, 0), _GetTotalHeight() - (int)Size.Y - (int)_top_spacer.Position.Y);
         top -= top % item_height;
 
         return top;
     }
     
-    private int _GetBottomSpace()
-    {
+    private int _GetBottomSpace() {
         int bottom = Mathf.Max(_GetTotalHeight() - (_GetTopSpace() + (int)Size.Y) - (int)_top_spacer.Position.Y, 0);
         bottom -= bottom % item_height;
 
         return bottom;
     }
 
-    public int GetFirstVisibleItemIndex()
-    {
+    public int GetFirstVisibleItemIndex() {
         return Mathf.Clamp(_GetTopSpace() / item_height, 0, Mathf.Max(total_items - 1, 0));
     }
 }

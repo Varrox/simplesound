@@ -1,8 +1,7 @@
 ﻿using Godot;
 using System.IO;
 
-public class ConvertToGodot
-{
+public class ConvertToGodot {
     public static Texture2D GetMediaCover(string path) {
         byte[] picture_data = Metadata.GetCover(path, out string type);
         

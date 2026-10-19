@@ -1,8 +1,7 @@
 using Godot;
 
 [GlobalClass]
-public partial class Player : Node
-{
+public partial class Player : Node {
     [ExportGroup("Controls")]
     [Export] public Button play_button, next_button, back_button, loop_button, shuffle_button;
 

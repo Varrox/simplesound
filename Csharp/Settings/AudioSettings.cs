@@ -2,8 +2,7 @@ using Godot;
 using System.Linq;
 using System.Text.Json;
 
-public class AudioSettings : ISettings
-{
+public class AudioSettings : ISettings {
     // Reverb
 
 	public float room_size;

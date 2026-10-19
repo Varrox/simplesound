@@ -1,7 +1,6 @@
 using Godot;
 
-public partial class ConfirmationWindow : Window
-{
+public partial class ConfirmationWindow : Window {
 	[Export] Button accept_button, decline_button, cancel_button;
     [Export] CheckBox ignore;
     [Export] Label message_label;
@@ -22,8 +21,7 @@ public partial class ConfirmationWindow : Window
 
     public bool free_on_close = false, front = true, ignored = false, show_ignore = false;
 
-    public override void _Ready()
-    {
+    public override void _Ready() {
         accept_button.Text = accept_text;
         accept_button.Visible = accept_text != string.Empty;
 
@@ -43,35 +41,30 @@ public partial class ConfirmationWindow : Window
         ignore.Visible = show_ignore;
     }
 
-    public void Close(Confirm confirm)
-    {
+    public void Close(Confirm confirm) {
         ignored = ignore.ButtonPressed;
         Visible = false;
         EmitSignal(SignalName.OnClose, (int)confirm);
         if (free_on_close) QueueFree();
     }
 
-    public void Accept()
-    {
+    public void Accept() {
         Close(Confirm.Accepted);
         EmitSignal(SignalName.OnAccept);
     }
 
-    public void Decline()
-    {
+    public void Decline() {
         Close(Confirm.Declined);
         EmitSignal(SignalName.OnDecline);
     }
 
-    public void Cancel()
-    {
+    public void Cancel() {
         Close(Confirm.Cancelled);
         EmitSignal(SignalName.OnCancel);
     }
 }
 
-public enum Confirm
-{
+public enum Confirm {
     Accepted,
     Declined,
     Cancelled

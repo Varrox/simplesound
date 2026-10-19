@@ -1,8 +1,7 @@
 using System.IO;
 using System;
 
-public struct Constants
-{
+public struct Constants {
     public static readonly string[] DOWNLOAD_FORMATS = ["mp3", "wav"];
     public static readonly string[] PLAYABLE_FORMATS = ["mp3", "wav", "ogg"];
     

@@ -1,8 +1,7 @@
 using Godot;
 using System.IO;
 
-public class Tools
-{
+public class Tools {
     /// <summary>
     /// Converts a value in seconds to a time step. (example : 60 seconds -> 1:00)
     /// </summary>

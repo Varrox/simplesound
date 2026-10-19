@@ -2,8 +2,7 @@ using System.Linq;
 using System.Text.Json;
 using Godot;
 
-public class GraphicSettings : ISettings
-{
+public class GraphicSettings : ISettings {
     public QualityLevel blur_quality;
 
     // Display Settings

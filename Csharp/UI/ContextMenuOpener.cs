@@ -1,8 +1,7 @@
 using Godot;
 using Godot.Collections;
 
-public partial class ContextMenuOpener : Button
-{
+public partial class ContextMenuOpener : Button {
     [Export] public ContextMenu menu;
     [Export] public bool teleportMenu;
     [Export] public Vector2 teleportMenuOffset;
@@ -14,8 +13,7 @@ public partial class ContextMenuOpener : Button
     [Signal]
     public delegate void OnOpenEventHandler();
 
-    public override void _Ready()
-    {
+    public override void _Ready() {
         ButtonDown += ToggleMenu;
 
         if(menu == null)
@@ -24,24 +22,19 @@ public partial class ContextMenuOpener : Button
         if (menu.sub_menus == null)
             menu.sub_menus = new Array<ContextMenuOpener> ();
 
-        if(menu != null)
-        {
+        if(menu != null) {
             menu_open = false;
             menu.Visible = false;
         }
     }
 
-    public override void _Process(double delta)
-    {
-        if (menu_open && !Globals.player.interrupted && menu != null)
-        {
-            if (!DisplayServer.WindowIsFocused())
-            {
+    public override void _Process(double delta) {
+        if (menu_open && !Globals.player.interrupted && menu != null) {
+            if (!DisplayServer.WindowIsFocused()) {
                 CloseMenu();
             }
 
-            if(Input.IsMouseButtonPressed(MouseButton.Left) || Input.IsMouseButtonPressed(MouseButton.Right) || Input.IsMouseButtonPressed(MouseButton.Middle))
-            {
+            if(Input.IsMouseButtonPressed(MouseButton.Left) || Input.IsMouseButtonPressed(MouseButton.Right) || Input.IsMouseButtonPressed(MouseButton.Middle)) {
                 bool self = IsMouseInRect(menu) || IsHovered();
 
                 bool sub_menus_intersected = CheckSubMenusIntersection();
@@ -54,13 +47,11 @@ public partial class ContextMenuOpener : Button
         }
     }
 
-    public static bool IsMouseInRect(Control control)
-    {
+    public static bool IsMouseInRect(Control control) {
         return control.GetGlobalRect().HasPoint(control.GetGlobalMousePosition());
     }
 
-    public void ToggleMenu()
-    {
+    public void ToggleMenu() {
         menu.opener = this;
 
         menu_open = !menu_open;
@@ -69,17 +60,14 @@ public partial class ContextMenuOpener : Button
         EmitSignal(menu_open ? SignalName.OnOpen : SignalName.OnClose);
 
 
-        if (!menu_open)
-        {
-            for (int i = 0; i < menu.sub_menus.Count; i++)
-            {
+        if (!menu_open) {
+            for (int i = 0; i < menu.sub_menus.Count; i++) {
                 menu.sub_menus[i].CloseMenu();
             }
         }
     }
 
-    public void CloseMenu()
-    {
+    public void CloseMenu() {
         menu_open = false;
 
         menu.opener = this;
@@ -88,14 +76,12 @@ public partial class ContextMenuOpener : Button
 
         EmitSignal(SignalName.OnClose);
 
-        for (int i = 0; i < menu.sub_menus.Count; i++)
-        {
+        for (int i = 0; i < menu.sub_menus.Count; i++) {
             menu.sub_menus[i].CloseMenu();
         }
     }
 
-    public void OpenMenu()
-    {
+    public void OpenMenu() {
         menu.opener = this;
         menu_open = true;
         
@@ -106,14 +92,10 @@ public partial class ContextMenuOpener : Button
         EmitSignal(SignalName.OnOpen);
     }
 
-    public bool CheckSubMenusIntersection()
-    {
-        foreach (ContextMenuOpener submenu in menu.sub_menus)
-        {
-            if (submenu.menu_open)
-            {
-                if (submenu.CheckSubMenusIntersection() || (IsMouseInRect(submenu.menu) || submenu.IsHovered()))
-                {
+    public bool CheckSubMenusIntersection() {
+        foreach (ContextMenuOpener submenu in menu.sub_menus) {
+            if (submenu.menu_open) {
+                if (submenu.CheckSubMenusIntersection() || (IsMouseInRect(submenu.menu) || submenu.IsHovered())) {
                     return true;
                 }
             }
@@ -122,13 +104,11 @@ public partial class ContextMenuOpener : Button
         return false;
     }
 
-    public void TeleportMenu()
-    {
+    public void TeleportMenu() {
         menu.GlobalPosition = GlobalPosition + teleportMenuOffset - menu.PivotOffset;
     }
 
-    public override void _ExitTree()
-    {
+    public override void _ExitTree() {
         CloseMenu();
     }
 }

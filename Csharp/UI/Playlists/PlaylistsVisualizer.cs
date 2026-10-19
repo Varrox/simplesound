@@ -1,8 +1,7 @@
 using Godot;
 using Godot.Collections;
 
-public partial class PlaylistsVisualizer : ScrollContainer
-{
+public partial class PlaylistsVisualizer : ScrollContainer {
 	[Export] public PackedScene template;
     [Export] public VBoxContainer container;
 

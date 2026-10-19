@@ -2,8 +2,7 @@ using Godot;
 using System.Linq;
 using System.Text.Json;
 
-public class ApplicationSettings : ISettings
-{
+public class ApplicationSettings : ISettings {
 	// Downloader
 
     public string ytdlp_location;

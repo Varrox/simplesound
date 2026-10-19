@@ -1,15 +1,12 @@
 using Godot;
 
 [GlobalClass]
-public partial class ThemeColorPickerButton : ColorPickerButton
-{
-	public override void _Ready()
-	{
+public partial class ThemeColorPickerButton : ColorPickerButton {
+	public override void _Ready() {
 		PickerCreated += CustomizeColorPicker;
 	}
 
-	void CustomizeColorPicker()
-	{
+	void CustomizeColorPicker() {
 		ColorPicker color_picker = GetPicker();
 
 		if (color_picker != null) {

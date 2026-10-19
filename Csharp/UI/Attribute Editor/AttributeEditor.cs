@@ -1,7 +1,6 @@
 using Godot;
 
-public partial class AttributeEditor : EditorWindow
-{
+public partial class AttributeEditor : EditorWindow {
     [Export] public ThemeLineEdit name_field, artist_field, share_link_field;
     [Export] public CheckBox explicit_lyrics_field;
 
@@ -23,17 +22,14 @@ public partial class AttributeEditor : EditorWindow
         cancel_button.ButtonDown += Cancel;
     }
 
-    public override void _Process(double delta)
-    {
-        if (Visible)
-        { 
+    public override void _Process(double delta) {
+        if (Visible) { 
             bool changed = (name_field.Text != track_name) || (artist_field.Text != artist) || cover_changed || (explicit_lyrics != explicit_lyrics_field.ButtonPressed) || (share_link != share_link_field.Text);
             submit_button.Visible = changed;
         }
     }
 
-    public void Open(string current_track_name, string current_artist, string current_share_link, bool explicit_lyrics)
-    {
+    public void Open(string current_track_name, string current_artist, string current_share_link, bool explicit_lyrics) {
         name_field.Text = current_track_name;
         track_name = current_track_name;
         artist_field.Text = current_artist;
@@ -50,8 +46,7 @@ public partial class AttributeEditor : EditorWindow
         Show();
     }
 
-    public void Submit()
-    {
+    public void Submit() {
         Hide();
 
         cover_changed = false;
@@ -60,14 +55,12 @@ public partial class AttributeEditor : EditorWindow
         cancelled = false;
     }
 
-    public void Cancel()
-    {
+    public void Cancel() {
         cancelled = true;
         Submit();
     }
 
-    public void Cover()
-    {
+    public void Cover() {
         Globals.file_dialog.Reparent(this);
         Globals.file_dialog.FileSelected += SubmitCover;
 
@@ -77,8 +70,7 @@ public partial class AttributeEditor : EditorWindow
         cover_changed = true;
     }
 
-    public void SubmitCover(string path)
-    {
+    public void SubmitCover(string path) {
         cover_path = path;
         cover_label.SetPath(path);
 

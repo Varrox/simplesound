@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using ATL;
 
-public class Metadata
-{
+public class Metadata {
     public static Dictionary<string, string[]> tag_list = new Dictionary<string, string[]>(); // File to tag
     public static Dictionary<string, Track> file_list = new Dictionary<string, Track>(); // File to taglib file
 

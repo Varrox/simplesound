@@ -1,8 +1,7 @@
 using Godot;
 using System.Collections.Generic;
 
-public partial class PlaylistCreator : EditorWindow
-{
+public partial class PlaylistCreator : EditorWindow {
 	[Export] public ThemeLineEdit playlist_name_field;
 
 	[Export] public Button add_track_button;
@@ -24,8 +23,7 @@ public partial class PlaylistCreator : EditorWindow
 
 	bool cleared = false;
 
-	public override void _Ready()
-	{
+	public override void _Ready() {
 		base._Ready();
 
 		add_cover_button.ButtonUp += OpenCover;
@@ -41,13 +39,11 @@ public partial class PlaylistCreator : EditorWindow
 		cancel_button.ButtonUp += Cancel;
 	}
 
-	public void Clear()
-	{
+	public void Clear() {
         playlist_name_field.Text = "";
         cover_path_display.SetPath();
 
-        foreach (Node child in track_path_display_container.GetChildren())
-        {
+        foreach (Node child in track_path_display_container.GetChildren()) {
             child.QueueFree();
         }
 
@@ -59,8 +55,7 @@ public partial class PlaylistCreator : EditorWindow
 		cleared = true;
     }
 
-	public void Open()
-	{
+	public void Open() {
 		if (!cleared)
 			Clear();
 
@@ -69,13 +64,7 @@ public partial class PlaylistCreator : EditorWindow
         Show();
 	}
 
-    public override void _Process(double delta)
-    {
-		
-    }
-
-    public void OpenCover()
-	{
+    public void OpenCover() {
         Globals.SetFileDialogCover();
         Globals.file_dialog.Popup();
 
@@ -83,21 +72,18 @@ public partial class PlaylistCreator : EditorWindow
         Globals.file_dialog.Canceled += CancelSetCover;
     }
 
-	public void SetCover(string path)
-	{
+	public void SetCover(string path) {
 		cover_path = path;
 		cover_path_display.SetPath(cover_path);
         CancelSetCover();
     }
 	
-	public void ClearCover()
-	{
+	public void ClearCover() {
 		cover_path = "";
         cover_path_display.SetPath(cover_path);
     }
 
-	public void OpenTracks()
-	{
+	public void OpenTracks() {
 		Globals.SetFileDialogTracks();
 		Globals.file_dialog.Popup();
 
@@ -108,14 +94,10 @@ public partial class PlaylistCreator : EditorWindow
 	void CancelAddTracks() { Globals.file_dialog.FilesSelected -= FileDialogAddTracks; Globals.file_dialog.Canceled -= CancelAddTracks; }
     void CancelSetCover() { Globals.file_dialog.FileSelected -= SetCover; Globals.file_dialog.Canceled -= CancelSetCover; }
 
-    public void AddTracks(string[] paths)
-	{
-		foreach(string path in paths)
-		{
-			if(Tools.ValidAudioFile(path))
-			{
-				if(!tracks.Contains(path))
-				{
+    public void AddTracks(string[] paths) {
+		foreach(string path in paths) {
+			if(Tools.ValidAudioFile(path)) {
+				if(!tracks.Contains(path)) {
 					var disp = Globals.path_display.Instantiate() as PathDisplay;
 					disp.is_file = true;
 
@@ -127,13 +109,11 @@ public partial class PlaylistCreator : EditorWindow
 
 					disp.delete.ButtonUp += () => {tracks.Remove(path); disp.QueueFree();};
 				}
-				else
-				{
+				else {
 					GD.PushError($"{path} is already in this playlist.");
 				}
 			}
-			else
-			{
+			else {
                 GD.PushError($"{path} is not a valid audio file, it cannot be added to this playlist.");
 			}
 		}
@@ -144,8 +124,7 @@ public partial class PlaylistCreator : EditorWindow
 		CancelAddTracks();
 	}
 
-	public void Submit()
-	{
+	public void Submit() {
 		Visible = false;
 		Hide();
 
@@ -153,8 +132,7 @@ public partial class PlaylistCreator : EditorWindow
 
         EmitSignal(SignalName.OnClose);
     }
-	public void Cancel()
-	{
+	public void Cancel() {
 		cancelled = true;
 		Submit();
 	}

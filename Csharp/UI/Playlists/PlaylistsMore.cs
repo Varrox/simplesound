@@ -1,7 +1,5 @@
-public partial class PlaylistsMore : ContextMenuOpener
-{
-    public override void _Ready()
-    {
+public partial class PlaylistsMore : ContextMenuOpener {
+    public override void _Ready() {
         Hide();
         
         MouseEntered += Show;

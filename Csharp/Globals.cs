@@ -1,8 +1,7 @@
 ﻿using Godot;
 
 [GlobalClass]
-public partial class Globals : Node
-{
+public partial class Globals : Node {
     public static Globals self;
 
     [ExportGroup("Nodes")]

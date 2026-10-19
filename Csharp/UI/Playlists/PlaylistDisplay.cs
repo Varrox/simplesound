@@ -1,15 +1,13 @@
 using Godot;
 
-public partial class PlaylistDisplay : Button
-{
+public partial class PlaylistDisplay : Button {
     [Export] public TextureRect cover_texture_rect;
     [Export] public Label playlist_name_label, track_count_label;
     [Export] public ContextMenuOpener more;
 
     int playlist_index;
 
-    public override void _Ready()
-    {
+    public override void _Ready() {
         ButtonUp += Set;
 
         MouseEntered += more.Show;
@@ -49,8 +47,7 @@ public partial class PlaylistDisplay : Button
         if (index != playlist_index) ApplicationManager.SetRadioSelected(this, false);
     }
 
-    public void Init(Playlist playlist, int index)
-    {
+    public void Init(Playlist playlist, int index) {
         cover_texture_rect.Texture = playlist.cover_texture ?? ApplicationManager.theme.GetIcon("default_cover_icon", Constants.THEME_TYPE);
         playlist_name_label.Text = playlist.name;
 
@@ -58,15 +55,13 @@ public partial class PlaylistDisplay : Button
 
         string amount = $"{track_count}{(track_count != 1 ? " tracks" : " track")}";
 
-        if (playlist.type != Playlist.PlaylistType.Album)
-        {
+        if (playlist.type != Playlist.PlaylistType.Album) {
             if (playlist.artist == "")
                 track_count_label.Text = amount;
             else
                 track_count_label.Text = $"{amount} {Constants.DOT} {playlist.artist}";
         }
-        else
-        {
+        else {
             track_count_label.Text = $"Album  {Constants.DOT}  {playlist.artist ?? amount}";
         }
 

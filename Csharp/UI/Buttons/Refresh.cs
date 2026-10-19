@@ -1,18 +1,14 @@
 using Godot;
 
-public partial class Refresh : Button
-{
+public partial class Refresh : Button {
 	[Export] public AnimationPlayer refesh_texture_animation;
-	public override void _Ready()
-	{
+	public override void _Ready() {
         ButtonUp += () => refesh_texture_animation.Play("refresh");
         ButtonUp += Globals.main.Refresh;
     }
 
-    public override void _Process(double delta)
-    {
-        if (Input.IsActionJustPressed("refresh"))
-        {
+    public override void _Process(double delta) {
+        if (Input.IsActionJustPressed("refresh")) {
             refesh_texture_animation.Play("refresh");
             Globals.main.Refresh();
         }

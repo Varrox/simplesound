@@ -1,22 +1,15 @@
 using Godot;
 
-public partial class AttributeEditorOpenerGlobal : EditorWindowOpener
-{
+public partial class AttributeEditorOpenerGlobal : EditorWindowOpener {
     string file;
-    public override void _Ready()
-    {
+    public override void _Ready() {
         ButtonUp += EditAttributes;
         window = Globals.attribute_editor;
     }
 
-    public void EditAttributes()
-    {
-        if (Globals.main.track != null)
-        {
-            if (!Globals.player.Interrupt())
-            {
-                return;
-            }
+    public void EditAttributes() {
+        if (Globals.main.track != null) {
+            if (!Globals.player.Interrupt()) return;
 
             file = Globals.main.playlists[Globals.main.looked_at_playlist].tracks[TracksContextMenuOpener.selected_track];
 
@@ -25,19 +18,16 @@ public partial class AttributeEditorOpenerGlobal : EditorWindowOpener
         }
     }
 
-    public void SubmitMeta()
-    {
+    public void SubmitMeta() {
         AttributeEditor editor = window as AttributeEditor;
 
-        if (!editor.cancelled)
-        {
+        if (!editor.cancelled) {
             if (Globals.main.playlist != null)
                 Metadata.SetData(file, editor.name_field.Text, editor.artist_field.Text, editor.cover_path, editor.share_link_field.Text, editor.explicit_lyrics_field.ButtonPressed);
 
             Globals.player.OnLoadTrack();
 
-            TrackData track_data = new TrackData
-            {
+            TrackData track_data = new TrackData {
                 title = editor.name_field.Text,
                 artist = editor.artist_field.Text,
                 time = Tools.SecondsToTimestamp(Metadata.GetTotalTime(file)),

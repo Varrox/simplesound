@@ -1,8 +1,7 @@
 using Godot;
 using System.IO;
 
-public partial class ImportPlaylist : Button
-{
+public partial class ImportPlaylist : Button {
 	Confirm sync;
 
 	// Called when the node enters the scene tree for the first time.
@@ -23,11 +22,9 @@ public partial class ImportPlaylist : Button
 		confirmation_window.OnClose += ImportFile;
     }
 
-	public void ImportFile(Confirm sync)
-	{
+	public void ImportFile(Confirm sync) {
 		this.sync = sync;
-		if (sync != Confirm.Cancelled)
-		{
+		if (sync != Confirm.Cancelled) {
             Globals.SetFileDialogPlaylist();
             Globals.file_dialog.Popup();
 
@@ -36,16 +33,14 @@ public partial class ImportPlaylist : Button
         }
     }
 
-	public void Import(string playlist_file)
-	{
+	public void Import(string playlist_file) {
 		string new_path = Path.Combine(Constants.USER_DATA, "Playlists", Path.GetFileName(playlist_file));
 
 		File.Copy(playlist_file, new_path);
 
 		Playlist playlist = Playlist.LoadFromFile(new_path);
 
-		if (sync == Confirm.Accepted)
-		{
+		if (sync == Confirm.Accepted) {
 			playlist.tracks = SaveSystem.ImportTracks(playlist.tracks.ToArray(), playlist.name);
 			playlist.cover = SaveSystem.ImportCover(playlist.cover, playlist.name);
         }
@@ -55,8 +50,7 @@ public partial class ImportPlaylist : Button
         Globals.main.Refresh();
     }
 
-	public void Cancel()
-	{
+	public void Cancel() {
         Globals.file_dialog.FileSelected -= Import; 
 		Globals.file_dialog.Canceled -= Cancel;
     }

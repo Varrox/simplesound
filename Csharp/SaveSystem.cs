@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-public class SaveSystem
-{
+public class SaveSystem {
     public static string ImportFolder(in string path) {
         // Create new folder
 		string new_path = Path.Combine(Constants.USER_TRACKS, Path.GetDirectoryName(path));

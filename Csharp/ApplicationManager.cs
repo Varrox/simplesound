@@ -3,8 +3,7 @@ using System;
 using System.Collections.Generic;
 
 [GlobalClass]
-public partial class ApplicationManager : SceneTree
-{
+public partial class ApplicationManager : SceneTree {
 	public static readonly string SOFTWARE_NAME = (string)ProjectSettings.GetSetting("application/config/name");
 
     private static readonly Vector2I _main_window_minimum_size = new Vector2I(850, 350);
@@ -47,13 +46,11 @@ public partial class ApplicationManager : SceneTree
         currently_focused_window = Root;
     }
 
-    public override void _Initialize()
-    {
+    public override void _Initialize() {
         (CurrentScene as Control).Theme = theme;
     }
 
-    public override bool _Process(double delta)
-    {
+    public override bool _Process(double delta) {
         if (_last_windows_focused != _windows_focused) {
             _SetMaxFPS(_windows_focused != 0);
             _last_windows_focused = _windows_focused;

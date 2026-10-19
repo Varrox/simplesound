@@ -1,7 +1,6 @@
 using Godot;
 
-public partial class Tray : StatusIndicator
-{
+public partial class Tray : StatusIndicator {
 	[Export] public StreamerButton streamer_button;
 
 	const int EXIT_ID = 0, STREAMER_MODE_ID = 1;

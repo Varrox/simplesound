@@ -1,12 +1,10 @@
 ﻿using Godot;
 
-public partial class TracksContextMenuOpener : ContextMenuOpener
-{
+public partial class TracksContextMenuOpener : ContextMenuOpener {
     [Export] public TrackDisplay display;
     public static int selected_track;
 
-    public override void _Ready()
-    {
+    public override void _Ready() {
         menu = Globals.track_menu;
         teleportMenu = true;
 

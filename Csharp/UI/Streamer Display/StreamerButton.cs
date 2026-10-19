@@ -1,7 +1,6 @@
 using Godot;
 
-public partial class StreamerButton : Button
-{
+public partial class StreamerButton : Button {
 	public bool enabled = false;
 	StreamDisplay display;
 	[Export] PackedScene stream_display;
@@ -50,8 +49,7 @@ public partial class StreamerButton : Button
 		}
 	}
 
-	public void SetStreamDisplayVariables()
-	{
+	public void SetStreamDisplayVariables() {
 		display.cover_texture_rect.Texture = Globals.player.track_cover_texture_rect.Texture;
 		display.track_name_label.Text = Globals.player.track_name_label.Text;
 		display.artist_label.Text = Globals.player.track_artist_label.Text;
