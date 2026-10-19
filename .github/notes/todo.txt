@@ -3,7 +3,6 @@ TODO
 - Add sorting.
 - Add track / playlist position rearange.
 - Sleep timer.
-- Make muting actually mute audio rather than making it extremely quiet.
 - Add optional compact form track displays without cover.
 - Optimize blur by not rendering new frames unless window size is changed or track changes.
 - Add CD read support (optional ripping too)
@@ -33,6 +32,7 @@ TODO
 
 FINISHED
 
+- Make muting actually mute audio rather than making it extremely quiet.
 - Add audio visualizer to stream display
 - Save main window size on application close.
 - Add Tooltips to individual settings

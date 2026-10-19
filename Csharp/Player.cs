@@ -195,5 +195,7 @@ public partial class Player : Node {
             Globals.main.audio_player.VolumeDb = (float)(volume_slider.Value != -50 ? volume_slider.Value : -80);
             mute_button.Icon = ApplicationManager.theme.GetIcon(Globals.main.audio_player.VolumeDb == -80 ? "unmute_icon" : "mute_icon", Constants.THEME_TYPE);
         }
+
+        AudioServer.SetBusMute(0, Globals.main.audio_player.VolumeDb == -80);
     }
 }
