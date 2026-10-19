@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://cksbdmhr2s8yy" path="res://Icons/Default Covers/DefaultCover.png" id="7_xvcl6"]
 [ext_resource type="Script" uid="uid://bemg4hrkjfrtx" path="res://GDScript/side_panel.gd" id="8_j6ftg"]
 [ext_resource type="Texture2D" uid="uid://pldqtuicj4ri" path="res://Icons/SVG/playlist.svg" id="9_xrbbi"]
+[ext_resource type="Texture2D" uid="uid://b07jjvko6y6v5" path="res://Icons/search.png" id="10_2wbij"]
 [ext_resource type="Texture2D" uid="uid://dgqxvsk1bwyga" path="res://Icons/SVG/plus.svg" id="10_gjyis"]
 [ext_resource type="Script" uid="uid://bcxwpol710ysq" path="res://Csharp/UI/ContextMenuOpener.cs" id="11_2o8nl"]
 [ext_resource type="Script" uid="uid://dcnfao6qa81tk" path="res://Csharp/UI/Playlists/PlaylistsVisualizer.cs" id="12_jnr5d"]
@@ -334,10 +335,17 @@ theme_override_font_sizes/font_size = 15
 text = "My Playlists"
 vertical_alignment = 1
 
-[node name="Add" type="Button" parent="Interface/Content/Side Panel/Open/VBoxContainer/HBoxContainer" unique_id=977385184 node_paths=PackedStringArray("menu")]
+[node name="Button" type="Button" parent="Interface/Content/Side Panel/Open/VBoxContainer/HBoxContainer" unique_id=2003765296]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_horizontal = 10
+icon = ExtResource("10_2wbij")
+expand_icon = true
+
+[node name="Add" type="Button" parent="Interface/Content/Side Panel/Open/VBoxContainer/HBoxContainer" unique_id=977385184 node_paths=PackedStringArray("menu")]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_horizontal = 8
 tooltip_text = "Add a playlist."
 focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_7vj4a")
@@ -347,9 +355,9 @@ icon = ExtResource("10_gjyis")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("11_2o8nl")
-menu = NodePath("../../../../../../PlaylistCreateContext")
 teleportMenu = true
 teleportMenuOffset = Vector2(-135, 32)
+menu = NodePath("../../../../../../PlaylistCreateContext")
 
 [node name="HSeparator" type="HSeparator" parent="Interface/Content/Side Panel/Open/VBoxContainer" unique_id=166833490]
 layout_mode = 2
@@ -419,9 +427,9 @@ icon = ExtResource("10_gjyis")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("11_2o8nl")
-menu = NodePath("../../../../../PlaylistCreateContext")
 teleportMenu = true
 teleportMenuOffset = Vector2(0, 32)
+menu = NodePath("../../../../../PlaylistCreateContext")
 
 [node name="HSeparator" type="HSeparator" parent="Interface/Content/Side Panel/Collapsed/VBoxContainer" unique_id=765403374]
 layout_mode = 2
@@ -441,10 +449,10 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_b1qrp")
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 2
 script = ExtResource("15_btqdu")
+item_template = ExtResource("16_ns1th")
 cover = NodePath("Full Container/Container/Top card/Icon/TextureRect")
 playlist_name_label = NodePath("Full Container/Container/Top card/Playlist name")
 track_count_label = NodePath("Full Container/Container/Top card/Track count")
-item_template = ExtResource("16_ns1th")
 parent_container = NodePath("Full Container/Container")
 item_container = NodePath("Full Container/Container/VBoxContainer")
 
@@ -952,7 +960,7 @@ text = "Artist"
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="PlaylistCreateContext" parent="Interface" unique_id=1315656001 node_paths=PackedStringArray("sub_menus") instance=ExtResource("43_ns1th")]
+[node name="PlaylistCreateContext" parent="Interface" unique_id=1315656001 instance=ExtResource("43_ns1th")]
 visible = false
 layout_mode = 0
 anchors_preset = 0
@@ -963,7 +971,6 @@ offset_top = 0.0
 offset_right = 166.0
 offset_bottom = 78.0
 grow_horizontal = 1
-sub_menus = []
 
 [node name="Playlistcontext" parent="Interface" unique_id=957626048 instance=ExtResource("44_aaavu")]
 visible = false
@@ -984,6 +991,8 @@ offset_bottom = 43.0
 
 [node name="Globals" type="Node" parent="." unique_id=71517921 node_paths=PackedStringArray("_main", "_player", "_discord", "_attribute_editor", "_download_window", "_file_dialog", "_playlist_menu", "_track_menu")]
 script = ExtResource("46_y0j44")
+_path_display = ExtResource("49_mrmdv")
+_confirmation_window = ExtResource("50_c27js")
 _main = NodePath("..")
 _player = NodePath("../Interface")
 _discord = NodePath("../Discord")
@@ -992,8 +1001,6 @@ _download_window = NodePath("DownloadWindow")
 _file_dialog = NodePath("File Dialog")
 _playlist_menu = NodePath("../Interface/Playlistcontext")
 _track_menu = NodePath("../Interface/Trackcontext")
-_path_display = ExtResource("49_mrmdv")
-_confirmation_window = ExtResource("50_c27js")
 
 [node name="File Dialog" type="FileDialog" parent="Globals" unique_id=1989544037]
 title = "Open a File"
