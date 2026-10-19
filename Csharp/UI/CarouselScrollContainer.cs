@@ -24,7 +24,7 @@ public partial class CarouselScrollContainer : ScrollContainer {
 
     private Control _top_spacer, _bottom_spacer;
 
-    private int _last_scroll = -1, _last_total_items = -1, _last_first_item = -1;
+    private int _last_scroll = -1, _last_total_items = -1, _last_first_item = 0;
     private Vector2 _last_size = Vector2.Zero;
 
     public override void _Ready()

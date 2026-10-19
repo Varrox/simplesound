@@ -22,9 +22,9 @@ public partial class TracksVisualizer : CarouselScrollContainer
     public override void _Ready() {
         base._Ready();
 
-        Globals.main.playlist_visualizer.OnSelectPlaylist += LoadPlaylist;
-
         track_datas = new Dictionary<int, TrackData>();
+
+        Globals.main.playlist_visualizer.OnSelectPlaylist += LoadPlaylist;
     }
 
     private Texture2D GetCover(in Playlist playlist, in int track) {
@@ -32,16 +32,14 @@ public partial class TracksVisualizer : CarouselScrollContainer
         return (playlist.type == Playlist.PlaylistType.Album) ? null : (ConvertToGodot.GetMediaCover(playlist.tracks[track]) ?? default_cover_icon);
     }
 
-    protected override void _UpdateItem(int item_index, Control item)
-    {
+    protected override void _UpdateItem(int item_index, Control item) {
         Playlist playlist = GetPlaylist();
 
         TrackData data = GetTrackData(item_index, playlist);
-        (item as TrackDisplay).Init(item_index, data, playlist.type, GetCover(playlist, item_index));
+        (item as TrackDisplay).Init(item_index, current_playlist, data, playlist.type, GetCover(playlist, item_index));
     }
 
-    private TrackData GetTrackData(int track, in Playlist playlist)
-    {
+    private TrackData GetTrackData(int track, in Playlist playlist) {
         if (!track_datas.ContainsKey(track)) {
             if(track < playlist.tracks.Count) {
                 TrackData data = new TrackData(playlist.tracks[track]);
@@ -52,8 +50,7 @@ public partial class TracksVisualizer : CarouselScrollContainer
         return track_datas[track];
     }
 
-    private void LoadPlaylist(int playlist_index)
-    {
+    private void LoadPlaylist(int playlist_index) {
         current_playlist = playlist_index;
 
         ScrollVertical = 0;
@@ -61,18 +58,16 @@ public partial class TracksVisualizer : CarouselScrollContainer
         Update();
     }
 
-    public void UpdateTrack(int index, in TrackData track_data, in Texture2D cover)
-    {
+    public void UpdateTrack(int index, in TrackData track_data, in Texture2D cover) {
         int first_visible_track = GetFirstVisibleItemIndex();
 
         if (Globals.main.looked_at_playlist != Globals.main.playlist_index || index < first_visible_track || index >= (items.Count + first_visible_track))
             return;
         
-        (items[index - first_visible_track] as TrackDisplay).Init(index, track_data, GetPlaylist().type, cover);
+        (items[index - first_visible_track] as TrackDisplay).Init(index, current_playlist, track_data, GetPlaylist().type, cover);
     }
 
-    public void Update()
-    {
+    public void Update() {
         track_datas.Clear();
 
         Playlist playlist = GetPlaylist();
