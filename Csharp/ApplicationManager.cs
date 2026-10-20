@@ -144,6 +144,8 @@ public partial class ApplicationManager : SceneTree {
 
         // Constant
 
+        theme_resource.SetConstant("context_menu_margin_constant", Constants.THEME_TYPE, 5);
+
         // Font
 
         // Font size
@@ -201,6 +203,8 @@ public partial class ApplicationManager : SceneTree {
         theme_resource.SetStylebox("radio_selected_disabled_stylebox", Constants.THEME_TYPE, GD.Load<StyleBox>("res://Styling/Selectables/Selected/radio_selected_disabled.tres"));
 
         theme_resource.SetStylebox("file_drop_normal_stylebox", Constants.THEME_TYPE, GD.Load<StyleBox>("res://Styling/Filedrop/file_drop_normal.tres"));
+
+        theme_resource.SetStylebox("context_menu_panel_stylebox", Constants.THEME_TYPE, GD.Load<StyleBox>("res://Styling/context_panel.tres"));
 
         return theme_resource;
     }
