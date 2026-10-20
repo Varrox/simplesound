@@ -28,7 +28,9 @@
 [ext_resource type="PackedScene" uid="uid://da3r1vmve1qwd" path="res://Windows/stream_display_window.tscn" id="26_3edd3"]
 [ext_resource type="Texture2D" uid="uid://cb0yjhel4cdr5" path="res://Icons/SVG/download.svg" id="27_ns1th"]
 [ext_resource type="Script" uid="uid://gwm4ru46vy21" path="res://Csharp/UI/Buttons/Update.cs" id="28_3ax07"]
+[ext_resource type="Texture2D" uid="uid://cr6152637qeey" path="res://Icons/SVG/hamburger.svg" id="29_2wbij"]
 [ext_resource type="Script" uid="uid://cheuagrd5va2f" path="res://Csharp/UI/Buttons/Refresh.cs" id="29_nr08j"]
+[ext_resource type="Script" uid="uid://gln3mhngvyx5" path="res://Csharp/UI/Buttons/ToolList.cs" id="30_xrbbi"]
 [ext_resource type="Texture2D" uid="uid://dcr4yu0bt8s2o" path="res://Icons/SVG/reload.svg" id="32_7kpk1"]
 [ext_resource type="Script" uid="uid://cm1lylxwcslla" path="res://Csharp/UI/Settings/SettingsOpener.cs" id="32_mmy12"]
 [ext_resource type="PackedScene" uid="uid://cn1tw3g51dn0c" path="res://Windows/settings_window.tscn" id="33_25o3l"]
@@ -352,9 +354,9 @@ icon = ExtResource("10_gjyis")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("11_2o8nl")
+menu = NodePath("../../../../../../PlaylistCreateContext")
 teleportMenu = true
 teleportMenuOffset = Vector2(-135, 32)
-menu = NodePath("../../../../../../PlaylistCreateContext")
 
 [node name="HSeparator" type="HSeparator" parent="Interface/Content/Side Panel/Open/VBoxContainer" unique_id=166833490]
 layout_mode = 2
@@ -412,9 +414,9 @@ icon = ExtResource("10_gjyis")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("11_2o8nl")
+menu = NodePath("../../../../../PlaylistCreateContext")
 teleportMenu = true
 teleportMenuOffset = Vector2(0, 32)
-menu = NodePath("../../../../../PlaylistCreateContext")
 
 [node name="HSeparator" type="HSeparator" parent="Interface/Content/Side Panel/Collapsed/VBoxContainer" unique_id=765403374]
 layout_mode = 2
@@ -434,10 +436,10 @@ theme_override_constants/scrollbar_h_separation = 4
 theme_override_styles/focus = SubResource("StyleBoxEmpty_b1qrp")
 horizontal_scroll_mode = 0
 script = ExtResource("15_btqdu")
-item_template = ExtResource("16_ns1th")
 cover = NodePath("Container/Top card/Icon/TextureRect")
 playlist_name_label = NodePath("Container/Top card/Playlist name")
 track_count_label = NodePath("Container/Top card/Track count")
+item_template = ExtResource("16_ns1th")
 parent_container = NodePath("Container")
 item_container = NodePath("Container/VBoxContainer")
 
@@ -568,6 +570,35 @@ icon = ExtResource("24_cq8g2")
 expand_icon = true
 script = ExtResource("23_f8opk")
 
+[node name="Refresh" type="Button" parent="Interface/Top Bar/Left" unique_id=953963470 node_paths=PackedStringArray("refesh_texture_animation")]
+custom_minimum_size = Vector2(28, 0)
+layout_mode = 2
+tooltip_text = "Refreshes all of the music player."
+focus_mode = 0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wx3lt")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("29_nr08j")
+refesh_texture_animation = NodePath("AnimationPlayer")
+
+[node name="TextureRect" type="TextureRect" parent="Interface/Top Bar/Left/Refresh" unique_id=727025634]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.5
+offset_top = 2.0
+offset_right = -1.5
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(12.5, 12)
+texture = ExtResource("32_7kpk1")
+expand_mode = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Interface/Top Bar/Left/Refresh" unique_id=549007236]
+libraries/ = SubResource("AnimationLibrary_4w656")
+
 [node name="Cloud" type="Button" parent="Interface/Top Bar/Left" unique_id=1490561989]
 layout_mode = 2
 tooltip_text = "Cloud Settings"
@@ -616,6 +647,15 @@ script = ExtResource("25_jrhkw")
 stream_display = ExtResource("26_3edd3")
 texture = NodePath("../../../Background/Image")
 
+[node name="List" type="MenuButton" parent="Interface/Top Bar/Right" unique_id=1295130311 node_paths=PackedStringArray("background_texture_rect")]
+custom_minimum_size = Vector2(28, 0)
+layout_mode = 2
+icon = ExtResource("29_2wbij")
+expand_icon = true
+script = ExtResource("30_xrbbi")
+streamer_display_template = ExtResource("26_3edd3")
+background_texture_rect = NodePath("../../../Background/Image")
+
 [node name="Update" type="Button" parent="Interface/Top Bar/Right" unique_id=925467314]
 visible = false
 custom_minimum_size = Vector2(28, 0)
@@ -626,35 +666,6 @@ icon = ExtResource("27_ns1th")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("28_3ax07")
-
-[node name="Refresh" type="Button" parent="Interface/Top Bar/Right" unique_id=953963470 node_paths=PackedStringArray("refesh_texture_animation")]
-custom_minimum_size = Vector2(28, 0)
-layout_mode = 2
-tooltip_text = "Refreshes all of the music player."
-focus_mode = 0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_wx3lt")
-icon_alignment = 1
-expand_icon = true
-script = ExtResource("29_nr08j")
-refesh_texture_animation = NodePath("AnimationPlayer")
-
-[node name="TextureRect" type="TextureRect" parent="Interface/Top Bar/Right/Refresh" unique_id=727025634]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 1.5
-offset_top = 2.0
-offset_right = -1.5
-offset_bottom = -2.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(12.5, 12)
-texture = ExtResource("32_7kpk1")
-expand_mode = 1
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Interface/Top Bar/Right/Refresh" unique_id=549007236]
-libraries/ = SubResource("AnimationLibrary_4w656")
 
 [node name="Settings" type="Button" parent="Interface/Top Bar/Right" unique_id=501507118 node_paths=PackedStringArray("window")]
 custom_minimum_size = Vector2(28, 0)
@@ -933,7 +944,7 @@ text = "Artist"
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="PlaylistCreateContext" parent="Interface" unique_id=1315656001 instance=ExtResource("43_ns1th")]
+[node name="PlaylistCreateContext" parent="Interface" unique_id=1315656001 node_paths=PackedStringArray("sub_menus") instance=ExtResource("43_ns1th")]
 visible = false
 layout_mode = 0
 anchors_preset = 0
@@ -944,6 +955,7 @@ offset_top = 0.0
 offset_right = 166.0
 offset_bottom = 78.0
 grow_horizontal = 1
+sub_menus = []
 
 [node name="Playlistcontext" parent="Interface" unique_id=957626048 instance=ExtResource("44_aaavu")]
 visible = false
@@ -964,8 +976,6 @@ offset_bottom = 43.0
 
 [node name="Globals" type="Node" parent="." unique_id=71517921 node_paths=PackedStringArray("_main", "_player", "_discord", "_attribute_editor", "_download_window", "_file_dialog", "_playlist_menu", "_track_menu")]
 script = ExtResource("46_y0j44")
-_path_display = ExtResource("49_mrmdv")
-_confirmation_window = ExtResource("50_c27js")
 _main = NodePath("..")
 _player = NodePath("../Interface")
 _discord = NodePath("../Discord")
@@ -974,6 +984,8 @@ _download_window = NodePath("DownloadWindow")
 _file_dialog = NodePath("File Dialog")
 _playlist_menu = NodePath("../Interface/Playlistcontext")
 _track_menu = NodePath("../Interface/Trackcontext")
+_path_display = ExtResource("49_mrmdv")
+_confirmation_window = ExtResource("50_c27js")
 
 [node name="File Dialog" type="FileDialog" parent="Globals" unique_id=1989544037]
 title = "Open a File"

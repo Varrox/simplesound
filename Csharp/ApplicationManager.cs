@@ -215,4 +215,14 @@ public partial class ApplicationManager : SceneTree {
         control.AddThemeStyleboxOverride("pressed", theme.GetStylebox(selected ? "radio_selected_pressed_stylebox" : "radio_pressed_stylebox", Constants.THEME_TYPE));
         control.AddThemeStyleboxOverride("disabled", theme.GetStylebox(selected ? "radio_selected_disabled_stylebox" : "radio_disabled_stylebox", Constants.THEME_TYPE));
     }
+
+    public static void ApplyPopupMenuStyle(PopupMenu menu)
+    {
+        menu.AddThemeStyleboxOverride("panel", theme.GetStylebox("context_menu_panel_stylebox", Constants.THEME_TYPE));
+        
+        int margin = theme.GetConstant("context_menu_margin_constant", Constants.THEME_TYPE);
+
+        menu.AddThemeConstantOverride("v_separation", margin);
+        menu.AddThemeConstantOverride("h_separation", margin);
+    }
 }
