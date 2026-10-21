@@ -224,5 +224,8 @@ public partial class ApplicationManager : SceneTree {
 
         menu.AddThemeConstantOverride("v_separation", margin);
         menu.AddThemeConstantOverride("h_separation", margin);
+        menu.AddThemeConstantOverride("item_start_padding", margin);
+
+        menu.AddThemeConstantOverride("icon_max_width", 20);
     }
 }
