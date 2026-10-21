@@ -46,6 +46,10 @@ public partial class Globals : Node {
         self = this;
     }
 
+    public override void _Ready() {
+        file_dialog.CurrentDir = Constants.USER_DATA;
+    }
+
     public static void ResetFileDialogParameters() {
         file_dialog.Filters = null;
         file_dialog.OkButtonText = "";
