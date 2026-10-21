@@ -131,8 +131,11 @@ public partial class Player : Node {
                 track_cover_texture_rect.Texture = Globals.main.playlist.cover_texture;
             }
             else {
-                Texture2D cover = ConvertToGodot.GetMediaCover(Globals.main.track);
-                track_cover_texture_rect.Texture = cover ?? default_cover_icon;
+                track_cover_texture_rect.Texture = ConvertToGodot.GetMediaCover(Globals.main.track);
+            }
+
+            if (track_cover_texture_rect.Texture == null) {
+                track_cover_texture_rect.Texture = default_cover_icon;
             }
 
             background_subviewport.Set("target_texture", track_cover_texture_rect.Texture);
