@@ -13,7 +13,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r7omr"]
 
-[node name="Window" type="Window" unique_id=874625055 node_paths=PackedStringArray("playlist_name_field", "add_track_button", "track_drop_panel", "track_path_display_container", "add_cover_button", "cover_path_display", "album_field", "artist_field", "background_color_enabled_field", "background_color_field", "cloud_sync_enabled_field", "submit_button", "cancel_button")]
+[node name="Window" type="Window" unique_id=874625055 node_paths=PackedStringArray("playlist_name_field", "add_track_button", "track_drop_panel", "track_path_display_container", "add_cover_button", "cover_path_display", "album_field", "artist_field", "cloud_sync_enabled_field", "submit_button", "cancel_button")]
 oversampling_override = 1.0
 title = "Create Playlist"
 initial_position = 2
@@ -30,9 +30,9 @@ add_cover_button = NodePath("HBoxContainer2/VBoxContainer2/Cover")
 cover_path_display = NodePath("HBoxContainer2/VBoxContainer2/Selected File")
 album_field = NodePath("HBoxContainer2/VBoxContainer2/Album")
 artist_field = NodePath("HBoxContainer2/VBoxContainer2/Artist")
-background_color_enabled_field = NodePath("")
-background_color_field = NodePath("")
-cloud_sync_enabled_field = NodePath("HBoxContainer2/VBoxContainer2/Cloud")
+background_color_enabled_field = null
+background_color_field = null
+cloud_sync_enabled_field = NodePath("")
 submit_button = NodePath("HBoxContainer/Create")
 cancel_button = NodePath("HBoxContainer/Cancel")
 
@@ -139,19 +139,6 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_acdqb")
 placeholder_text = "Artist"
 script = ExtResource("4_eb7ps")
 metadata/_custom_type_script = "uid://ckpanpt3fty8d"
-
-[node name="HSeparator3" type="HSeparator" parent="HBoxContainer2/VBoxContainer2" unique_id=320939632]
-custom_minimum_size = Vector2(0, 10)
-layout_mode = 2
-
-[node name="Cloud" type="CheckBox" parent="HBoxContainer2/VBoxContainer2" unique_id=221899050]
-layout_mode = 2
-size_flags_vertical = 4
-tooltip_text = "If disabled, tracks on this playlist will not be synced to other devices. 
-But of course if you add tracks yourself in the ssl file, you can choose"
-theme_override_fonts/font = ExtResource("1_8t6yf")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_r7omr")
-text = "Cloud Sync"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=463861364]
 anchors_preset = 7

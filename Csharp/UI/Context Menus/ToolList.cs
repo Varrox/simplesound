@@ -1,8 +1,6 @@
 using Godot;
-using System;
 
-public partial class ToolList : MenuButton
-{
+public partial class ToolList : ContextMenuButton {
     [Export] public PackedScene streamer_display_template;
     [Export] public TextureRect background_texture_rect;
 
@@ -10,25 +8,16 @@ public partial class ToolList : MenuButton
 
     public const int STREAMER_DISPLAY = 0;
 
-    public override void _Ready()
-    {
-        ApplicationManager.ApplyPopupMenuStyle(GetPopup());
-        GetPopup().HideOnCheckableItemSelection = false;
+    public override void _Ready() {
+        base._Ready();
 
         // Add streamer button
 
         GetPopup().AddCheckItem("Streamer Mode", STREAMER_DISPLAY);
-
-        // Connections
-
-        GetPopup().IdPressed += ItemPressed;
     }
 
-    public void ItemPressed(long id)
-    {
-        if (GetPopup().IsItemCheckable((int)id)) {
-            GetPopup().SetItemChecked((int)id, !GetPopup().IsItemChecked((int)id));
-        }
+    protected override void _ItemPressed(long id) {
+        base._ItemPressed(id);
 
         switch(id) {
             case STREAMER_DISPLAY:
@@ -50,7 +39,7 @@ public partial class ToolList : MenuButton
     }
 
     public void ToggleStreamDisplay() {
-        ItemPressed(STREAMER_DISPLAY);
+        _ItemPressed(STREAMER_DISPLAY);
     }
 
     public bool IsStreamDisplayOpen() {

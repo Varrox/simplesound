@@ -14,8 +14,6 @@ public partial class PlaylistCreator : EditorWindow {
 	[Export] public CheckBox album_field;
 	[Export] public ThemeLineEdit artist_field;
 
-	[Export] public CheckBox cloud_sync_enabled_field;
-
 	[Export] public Button submit_button, cancel_button;
 
 	public List<string> tracks = new List<string>();
@@ -125,10 +123,31 @@ public partial class PlaylistCreator : EditorWindow {
 	}
 
 	public void Submit() {
-		Visible = false;
 		Hide();
 
         Globals.file_dialog.Reparent(Globals.self);
+
+		if(!cancelled) {
+            string file_name = playlist_name_field.Text.Replace('\\', '-').Replace('/', '-').Replace(':', '-');
+
+			Playlist playlist = new Playlist();
+
+            playlist.name = playlist_name_field.Text;
+            playlist.cover = cover_path;
+            playlist.tracks = tracks;
+
+			if (album_field.ButtonPressed) playlist.type = Playlist.PlaylistType.Album;
+
+			if (artist_field.Text.Trim() != "") playlist.artist = artist_field.Text;
+
+            Clear();
+
+			Globals.main.playlist_paths.Add(playlist.Save());
+			Globals.main.SetSaveData();
+            Globals.main.Refresh();
+		}
+
+		Globals.player.interrupted = false;
 
         EmitSignal(SignalName.OnClose);
     }

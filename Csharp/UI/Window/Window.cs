@@ -3,7 +3,7 @@
 public partial class EditorWindow : Window {
     [Signal]
     public delegate void OnCloseEventHandler();
-    public bool interrupted, cancelled;
+    public bool cancelled;
 
     public override void _Ready() {
         ApplicationManager.AddWindow(this);

@@ -12,6 +12,8 @@
 [ext_resource type="Texture2D" uid="uid://dgqxvsk1bwyga" path="res://Icons/SVG/plus.svg" id="10_gjyis"]
 [ext_resource type="Texture2D" uid="uid://cnygllcx1qoyc" path="res://Icons/SVG/search.svg" id="10_ns1th"]
 [ext_resource type="Script" uid="uid://bcxwpol710ysq" path="res://Csharp/UI/ContextMenuOpener.cs" id="11_2o8nl"]
+[ext_resource type="Script" uid="uid://ddkuen8ursg0q" path="res://Csharp/UI/Context Menus/AddPlaylist.cs" id="11_xrbbi"]
+[ext_resource type="PackedScene" uid="uid://5kfxiu06xug0" path="res://Windows/playlist_creator_window.tscn" id="12_gjyis"]
 [ext_resource type="Script" uid="uid://dcnfao6qa81tk" path="res://Csharp/UI/Playlists/PlaylistsVisualizer.cs" id="12_jnr5d"]
 [ext_resource type="PackedScene" uid="uid://qe17cpkc3gqr" path="res://Prefabs/playlist_display.tscn" id="13_ns1th"]
 [ext_resource type="Script" uid="uid://bgymt3f23woi7" path="res://Csharp/UI/Tracks/TracksVisualizer.cs" id="15_btqdu"]
@@ -29,7 +31,7 @@
 [ext_resource type="Script" uid="uid://gwm4ru46vy21" path="res://Csharp/UI/Buttons/Update.cs" id="28_3ax07"]
 [ext_resource type="Texture2D" uid="uid://cr6152637qeey" path="res://Icons/SVG/hamburger.svg" id="29_2wbij"]
 [ext_resource type="Script" uid="uid://cheuagrd5va2f" path="res://Csharp/UI/Buttons/Refresh.cs" id="29_nr08j"]
-[ext_resource type="Script" uid="uid://gln3mhngvyx5" path="res://Csharp/UI/Buttons/ToolList.cs" id="30_xrbbi"]
+[ext_resource type="Script" uid="uid://gln3mhngvyx5" path="res://Csharp/UI/Context Menus/ToolList.cs" id="30_xrbbi"]
 [ext_resource type="Texture2D" uid="uid://dcr4yu0bt8s2o" path="res://Icons/SVG/reload.svg" id="32_7kpk1"]
 [ext_resource type="Script" uid="uid://cm1lylxwcslla" path="res://Csharp/UI/Settings/SettingsOpener.cs" id="32_mmy12"]
 [ext_resource type="PackedScene" uid="uid://cn1tw3g51dn0c" path="res://Windows/settings_window.tscn" id="33_25o3l"]
@@ -43,7 +45,6 @@
 [ext_resource type="Texture2D" uid="uid://csvmj6w2b5le6" path="res://Icons/SVG/loop.svg" id="41_yksdd"]
 [ext_resource type="Texture2D" uid="uid://jqnfgusrehqq" path="res://Icons/SVG/un_muted.svg" id="42_2o8nl"]
 [ext_resource type="Script" uid="uid://c5ep0n80r2l8p" path="res://Csharp/UI/Attribute Editor/AttributeEditorOpener.cs" id="42_3aot7"]
-[ext_resource type="PackedScene" uid="uid://by1llelggmuq0" path="res://Prefabs/Context Menus/playlist_create_context.tscn" id="43_ns1th"]
 [ext_resource type="PackedScene" uid="uid://dtfoexo3o7b3p" path="res://Prefabs/Context Menus/playlist_context.tscn" id="44_aaavu"]
 [ext_resource type="PackedScene" uid="uid://dcre7b1cn3b6i" path="res://Prefabs/Context Menus/track_context.tscn" id="45_rjtah"]
 [ext_resource type="Script" uid="uid://ba0kdfmjh8445" path="res://Csharp/Globals.cs" id="46_y0j44"]
@@ -333,14 +334,7 @@ theme_override_font_sizes/font_size = 15
 text = "My Playlists"
 vertical_alignment = 1
 
-[node name="Button" type="Button" parent="Interface/Content/Side Panel/Open/VBoxContainer/HBoxContainer" unique_id=2003765296]
-custom_minimum_size = Vector2(30, 0)
-layout_mode = 2
-size_flags_horizontal = 10
-icon = ExtResource("10_ns1th")
-expand_icon = true
-
-[node name="Add" type="Button" parent="Interface/Content/Side Panel/Open/VBoxContainer/HBoxContainer" unique_id=977385184]
+[node name="Add" type="MenuButton" parent="Interface/Content/Side Panel/Open/VBoxContainer/HBoxContainer" unique_id=140223253]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_horizontal = 8
@@ -350,11 +344,33 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_7vj4a")
 text = "
 "
 icon = ExtResource("10_gjyis")
+flat = false
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("11_2o8nl")
-teleportMenu = null
-teleportMenuOffset = Vector2(-135, 32)
+script = ExtResource("11_xrbbi")
+create_new_playlist_template = ExtResource("12_gjyis")
+
+[node name="HSeparator2" type="HSeparator" parent="Interface/Content/Side Panel/Open/VBoxContainer" unique_id=659545680]
+layout_mode = 2
+theme_override_constants/separation = 0
+theme_override_styles/separator = SubResource("StyleBoxLine_blkrb")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Interface/Content/Side Panel/Open/VBoxContainer" unique_id=1214158589]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="LineEdit" type="LineEdit" parent="Interface/Content/Side Panel/Open/VBoxContainer/HBoxContainer2" unique_id=1372254212]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Search for playlist..."
+right_icon = ExtResource("10_ns1th")
+icon_expand_mode = 1
+script = ExtResource("21_w782g")
+metadata/_custom_type_script = "uid://ckpanpt3fty8d"
+
+[node name="OptionButton" type="MenuButton" parent="Interface/Content/Side Panel/Open/VBoxContainer/HBoxContainer2" unique_id=65240122]
+visible = false
+layout_mode = 2
 
 [node name="HSeparator" type="HSeparator" parent="Interface/Content/Side Panel/Open/VBoxContainer" unique_id=166833490]
 layout_mode = 2
@@ -543,8 +559,10 @@ grow_vertical = 2
 tooltip_text = "Type in the name of an artist or track, or playlist"
 focus_mode = 1
 theme_override_styles/focus = SubResource("StyleBoxEmpty_come4")
-placeholder_text = " Search playlists..."
+placeholder_text = " Search in playlists..."
 editable = false
+right_icon = ExtResource("10_ns1th")
+icon_expand_mode = 1
 script = ExtResource("21_w782g")
 metadata/_custom_type_script = "uid://ckpanpt3fty8d"
 
@@ -932,19 +950,6 @@ text = "Artist"
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="PlaylistCreateContext" parent="Interface" unique_id=1315656001 node_paths=PackedStringArray("sub_menus") instance=ExtResource("43_ns1th")]
-visible = false
-layout_mode = 0
-anchors_preset = 0
-anchor_left = 0.0
-anchor_right = 0.0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 166.0
-offset_bottom = 78.0
-grow_horizontal = 1
-sub_menus = []
-
 [node name="Playlistcontext" parent="Interface" unique_id=957626048 instance=ExtResource("44_aaavu")]
 visible = false
 layout_mode = 1
@@ -962,7 +967,7 @@ offset_bottom = 43.0
 
 [node name="Player" type="AudioStreamPlayer" parent="." unique_id=488316782]
 
-[node name="Globals" type="Node" parent="." unique_id=71517921 node_paths=PackedStringArray("_main", "_player", "_discord", "_attribute_editor", "_download_window", "_file_dialog")]
+[node name="Globals" type="Node" parent="." unique_id=71517921 node_paths=PackedStringArray("_main", "_player", "_discord", "_attribute_editor", "_download_window", "_file_dialog", "_playlist_menu", "_track_menu")]
 script = ExtResource("46_y0j44")
 _main = NodePath("..")
 _player = NodePath("../Interface")
@@ -970,6 +975,8 @@ _discord = NodePath("../Discord")
 _attribute_editor = NodePath("AttributeEditor")
 _download_window = NodePath("DownloadWindow")
 _file_dialog = NodePath("File Dialog")
+_playlist_menu = NodePath("../Interface/Playlistcontext")
+_track_menu = NodePath("../Interface/Trackcontext")
 _path_display = ExtResource("49_mrmdv")
 _confirmation_window = ExtResource("50_c27js")
 
@@ -978,6 +985,7 @@ title = "Open a File"
 initial_position = 1
 file_mode = 0
 access = 2
+show_hidden_files = true
 use_native_dialog = true
 
 [node name="AttributeEditor" parent="Globals" unique_id=1605960294 instance=ExtResource("52_vsj6c")]
