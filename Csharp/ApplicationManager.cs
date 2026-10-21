@@ -152,39 +152,40 @@ public partial class ApplicationManager : SceneTree {
 
         // Icon
 
-        theme_resource.SetIcon("play_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/SVG/play.svg"));
-        theme_resource.SetIcon("pause_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/SVG/pause.svg"));
+        theme_resource.SetIcon("play_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/play.svg"));
+        theme_resource.SetIcon("pause_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/pause.svg"));
 
-        theme_resource.SetIcon("no_play_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/SVG/no_play.svg"));
+        theme_resource.SetIcon("no_play_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/no_play.svg"));
 
-        theme_resource.SetIcon("loop_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/SVG/loop.svg"));
-        theme_resource.SetIcon("shuffle_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/SVG/shuffle.svg"));
+        theme_resource.SetIcon("loop_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/loop.svg"));
+        theme_resource.SetIcon("shuffle_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/shuffle.svg"));
 
-        theme_resource.SetIcon("mute_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/SVG/un_muted.svg"));
-        theme_resource.SetIcon("unmute_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/SVG/muted.svg"));
+        theme_resource.SetIcon("mute_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/un_muted.svg"));
+        theme_resource.SetIcon("unmute_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/muted.svg"));
 
-        theme_resource.SetIcon("forward_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/SVG/forward.svg"));
-        theme_resource.SetIcon("back_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/SVG/back.svg"));
+        theme_resource.SetIcon("forward_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/forward.svg"));
+        theme_resource.SetIcon("back_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/back.svg"));
 
-        theme_resource.SetIcon("forward_arrow_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/SVG/forward_arrow.svg"));
-        theme_resource.SetIcon("back_arrow_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/SVG/back_arrow.svg"));
+        theme_resource.SetIcon("forward_arrow_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/forward_arrow.svg"));
+        theme_resource.SetIcon("back_arrow_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/back_arrow.svg"));
 
-        theme_resource.SetIcon("playlist_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/SVG/playlist.svg"));
+        theme_resource.SetIcon("playlist_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/playlist.svg"));
 
-        theme_resource.SetIcon("hamburger_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/SVG/hamburger.svg"));
-        theme_resource.SetIcon("meatballs_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/SVG/meatballs.svg"));
+        theme_resource.SetIcon("hamburger_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/hamburger.svg"));
+        theme_resource.SetIcon("meatballs_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/meatballs.svg"));
 
-        theme_resource.SetIcon("search_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/SVG/search.svg"));
+        theme_resource.SetIcon("search_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/search.svg"));
 
-        theme_resource.SetIcon("plus_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/SVG/plus.svg"));
-        theme_resource.SetIcon("x_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/SVG/x.svg"));
+        theme_resource.SetIcon("plus_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/plus.svg"));
+        theme_resource.SetIcon("x_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/x.svg"));
 
-        theme_resource.SetIcon("update_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/SVG/download.svg"));
-        theme_resource.SetIcon("refresh_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/SVG/reload.svg"));
-        theme_resource.SetIcon("settings_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/SVG/cog.svg"));
+        theme_resource.SetIcon("update_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/download.svg"));
+        theme_resource.SetIcon("refresh_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/reload.svg"));
+        theme_resource.SetIcon("settings_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/cog.svg"));
 
-        theme_resource.SetIcon("folder_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/SVG/folder.svg"));
-        theme_resource.SetIcon("file_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/SVG/file.svg"));
+        theme_resource.SetIcon("folder_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/folder.svg"));
+        theme_resource.SetIcon("file_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/file.svg"));
+        theme_resource.SetIcon("zip_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/zip.svg"));
 
         theme_resource.SetIcon("default_cover_icon", Constants.THEME_TYPE, GD.Load<Texture2D>("res://Icons/Default Covers/DefaultCover.png"));
 

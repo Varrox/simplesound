@@ -20,14 +20,16 @@ public class Playlist {
     public PlaylistType type;
 
     public List<string> tracks { get { return _tracks; } set {
-            _tracks_raw = RemoveInvaidTracks(value);
-            _tracks = IncludeDirectoryTracks(_tracks_raw);
+            _tracks_raw = value;
+            _tracks = IncludeDirectoryTracks(RemoveInvaidTracks(_tracks_raw));
         } 
     }
 
+    public List<string> tracks_raw { get { return _tracks_raw; } }
+
     public string path {
         get {
-            if(_path == null) { _path = Path.Combine(Constants.USER_PLAYLISTS, $"{name.Replace('\\', '-').Replace('/', '-').Replace(':', '-')}.json"); }
+            if(_path == null) { _path = Path.Combine(Constants.USER_PLAYLISTS, $"{Tools.GetProperFileName(name)}.json"); }
             return _path;
         }
     }
@@ -97,8 +99,8 @@ public class Playlist {
     }
 
     /// Saves to path
-    public string Save() {
-        File.WriteAllBytes(path, CreateJson());
+    public string Save(string save_path = null) {
+        File.WriteAllBytes(save_path ?? path, CreateJson());
 
         return path;
     }

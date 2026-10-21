@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using Godot;
 
 public class SaveSystem {
     public static string ImportFolder(in string path) {
@@ -19,7 +20,7 @@ public class SaveSystem {
 
 	public static List<string> ImportTracks(in string[] tracks, string playlist_name, bool check_valid = true) {
 		List<string> list = new List<string>();
-		string new_path = Path.Combine(Constants.USER_TRACKS, playlist_name);
+		string new_path = Path.Combine(Constants.USER_TRACKS, Tools.GetProperFileName(playlist_name));
 		Directory.CreateDirectory(new_path);
 
 		foreach(string track in tracks) {
@@ -30,6 +31,22 @@ public class SaveSystem {
 			File.Copy(track, destination_path);
             list.Add(destination_path);
         }
+
+		return list;
+	}
+
+	public static List<string> ImportTracksData(in string[] track_file_names, in byte[][] tracks, string playlist_name) {
+		List<string> list = new List<string>();
+
+		string new_path = Path.Combine(Constants.USER_TRACKS, Tools.GetProperFileName(playlist_name));
+		Directory.CreateDirectory(new_path);
+
+		for(int i = 0; i < tracks.Length; i++) {
+			string destination_path = Path.Combine(new_path, track_file_names[i].GetFile());
+
+			File.WriteAllBytes(destination_path, tracks[i]);
+            list.Add(destination_path);
+		}
 
 		return list;
 	}

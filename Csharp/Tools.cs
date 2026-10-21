@@ -32,10 +32,18 @@ public class Tools {
     public static bool ValidAudioFile(string path) {
         if(!File.Exists(path)) return false;
 
+        return IsValidAudioFormat(path);
+    }
+
+    public static bool IsValidAudioFormat(string path) {
         for(int i = 0; i < Constants.PLAYABLE_FORMATS.Length; i++) {
             if(path.GetExtension() == Constants.PLAYABLE_FORMATS[i]) return true;
         }
 
         return false;
+    }
+
+    public static string GetProperFileName(string text) {
+        return text.Replace('\\', '-').Replace('/', '-').Replace(':', '-');
     }
 }

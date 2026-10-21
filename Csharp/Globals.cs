@@ -82,4 +82,11 @@ public partial class Globals : Node {
         file_dialog.OkButtonText = "Import Playlist";
         file_dialog.Title = "Select Playlist";
     }
+    
+    public static void SetFileDialogZIP() {
+        file_dialog.Filters = new[] { "*.zip"};
+        file_dialog.FileMode = FileDialog.FileModeEnum.OpenFile;
+        file_dialog.OkButtonText = "Import Zip Archive";
+        file_dialog.Title = "Select Zip Archive";
+    }
 }

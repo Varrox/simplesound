@@ -128,7 +128,7 @@ public partial class PlaylistCreator : EditorWindow {
         Globals.file_dialog.Reparent(Globals.self);
 
 		if(!cancelled) {
-            string file_name = playlist_name_field.Text.Replace('\\', '-').Replace('/', '-').Replace(':', '-');
+            string file_name = Tools.GetProperFileName(playlist_name_field.Text);
 
 			Playlist playlist = new Playlist();
 
