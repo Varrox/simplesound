@@ -616,20 +616,15 @@ expand_mode = 1
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Interface/Top Bar/Left/Refresh" unique_id=549007236]
 libraries/ = SubResource("AnimationLibrary_4w656")
 
-[node name="Cloud" type="Button" parent="Interface/Top Bar/Left" unique_id=1490561989]
-layout_mode = 2
-tooltip_text = "Cloud Settings"
-focus_mode = 0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_i5cru")
-disabled = true
-text = "Cloud"
-
 [node name="Downloader" type="Button" parent="Interface/Top Bar/Left" unique_id=1673368361]
+custom_minimum_size = Vector2(125, 0)
 layout_mode = 2
 tooltip_text = "Menu for downloading music from streaming services."
 focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_i5cru")
 text = "Downloader"
+icon = ExtResource("27_ns1th")
+expand_icon = true
 script = ExtResource("24_o03o1")
 
 [node name="Right" type="HBoxContainer" parent="Interface/Top Bar" unique_id=1972233890]
