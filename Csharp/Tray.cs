@@ -1,7 +1,7 @@
 using Godot;
 
 public partial class Tray : StatusIndicator {
-	[Export] public StreamerButton streamer_button;
+	[Export] public ToolList tool_list;
 
 	const int EXIT_ID = 0, STREAMER_MODE_ID = 1;
 
@@ -22,7 +22,7 @@ public partial class Tray : StatusIndicator {
 	}
 
     public void AddPopupItems() {
-		popup_menu.AddItem($"{(streamer_button.enabled ? "Close" : "Open")} Streamer Window", STREAMER_MODE_ID);
+		popup_menu.AddItem($"{(tool_list.IsStreamDisplayOpen() ? "Close" : "Open")} Streamer Window", STREAMER_MODE_ID);
 		popup_menu.AddSeparator();
 		popup_menu.AddItem("Exit", EXIT_ID);
 	}
@@ -30,8 +30,8 @@ public partial class Tray : StatusIndicator {
 	private void IdPressed(long id) {
 		switch (id) {
 			case STREAMER_MODE_ID:
-				streamer_button.Toggle();
-				popup_menu.SetItemText(0, $"{(streamer_button.enabled ? "Close" : "Open")} Streamer Window");
+				tool_list.ToggleStreamDisplay();
+				popup_menu.SetItemText(0, $"{(tool_list.IsStreamDisplayOpen() ? "Close" : "Open")} Streamer Window");
 				break;
 			case EXIT_ID:
 				ApplicationManager.QuitProgram();

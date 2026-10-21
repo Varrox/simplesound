@@ -39,8 +39,8 @@ transparent = true
 unfocusable = true
 mouse_passthrough = true
 script = ExtResource("1_gaihk")
-cover_texture_rect = NodePath("Panel/ColorRect")
-background_texture_rect = NodePath("PanelContainer/Cover")
+cover_texture_rect = NodePath("PanelContainer/Cover")
+background_texture_rect = NodePath("Panel/ColorRect")
 track_name_label = NodePath("Name")
 artist_label = NodePath("Artist")
 

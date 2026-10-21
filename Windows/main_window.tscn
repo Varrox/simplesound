@@ -24,7 +24,6 @@
 [ext_resource type="Script" uid="uid://bag5mx17s8q1c" path="res://Csharp/UI/Buttons/Appdata.cs" id="23_f8opk"]
 [ext_resource type="Texture2D" uid="uid://ynqg27jlotl6" path="res://Icons/SVG/folder.svg" id="24_cq8g2"]
 [ext_resource type="Script" uid="uid://d0tve0wh2kxhq" path="res://Csharp/UI/Downloader/DownloadWindowOpener.cs" id="24_o03o1"]
-[ext_resource type="Script" uid="uid://kvvf8qxb33ti" path="res://Csharp/UI/Streamer Display/StreamerButton.cs" id="25_jrhkw"]
 [ext_resource type="PackedScene" uid="uid://da3r1vmve1qwd" path="res://Windows/stream_display_window.tscn" id="26_3edd3"]
 [ext_resource type="Texture2D" uid="uid://cb0yjhel4cdr5" path="res://Icons/SVG/download.svg" id="27_ns1th"]
 [ext_resource type="Script" uid="uid://gwm4ru46vy21" path="res://Csharp/UI/Buttons/Update.cs" id="28_3ax07"]
@@ -341,7 +340,7 @@ size_flags_horizontal = 10
 icon = ExtResource("10_ns1th")
 expand_icon = true
 
-[node name="Add" type="Button" parent="Interface/Content/Side Panel/Open/VBoxContainer/HBoxContainer" unique_id=977385184 node_paths=PackedStringArray("menu")]
+[node name="Add" type="Button" parent="Interface/Content/Side Panel/Open/VBoxContainer/HBoxContainer" unique_id=977385184]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_horizontal = 8
@@ -354,8 +353,7 @@ icon = ExtResource("10_gjyis")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("11_2o8nl")
-menu = NodePath("../../../../../../PlaylistCreateContext")
-teleportMenu = true
+teleportMenu = null
 teleportMenuOffset = Vector2(-135, 32)
 
 [node name="HSeparator" type="HSeparator" parent="Interface/Content/Side Panel/Open/VBoxContainer" unique_id=166833490]
@@ -401,7 +399,7 @@ size_flags_horizontal = 0
 icon = ExtResource("9_xrbbi")
 expand_icon = true
 
-[node name="Add" type="Button" parent="Interface/Content/Side Panel/Collapsed/VBoxContainer" unique_id=1547991320 node_paths=PackedStringArray("menu")]
+[node name="Add" type="Button" parent="Interface/Content/Side Panel/Collapsed/VBoxContainer" unique_id=1547991320]
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
 size_flags_horizontal = 2
@@ -414,8 +412,7 @@ icon = ExtResource("10_gjyis")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("11_2o8nl")
-menu = NodePath("../../../../../PlaylistCreateContext")
-teleportMenu = true
+teleportMenu = null
 teleportMenuOffset = Vector2(0, 32)
 
 [node name="HSeparator" type="HSeparator" parent="Interface/Content/Side Panel/Collapsed/VBoxContainer" unique_id=765403374]
@@ -442,6 +439,8 @@ track_count_label = NodePath("Container/Top card/Track count")
 item_template = ExtResource("16_ns1th")
 parent_container = NodePath("Container")
 item_container = NodePath("Container/VBoxContainer")
+total_items = null
+item_height = null
 
 [node name="Container" type="VBoxContainer" parent="Interface/Content/Tracks/Track Display" unique_id=933878103]
 layout_mode = 2
@@ -635,22 +634,11 @@ layout_mode = 2
 text = "100%"
 horizontal_alignment = 2
 
-[node name="Stream" type="Button" parent="Interface/Top Bar/Right" unique_id=1363850799 node_paths=PackedStringArray("texture")]
-layout_mode = 2
-tooltip_text = "Toggles a little window you can use in a streaming software to show what track is currently playing."
-focus_mode = 0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_wx3lt")
-text = "Streamer Mode"
-icon_alignment = 1
-expand_icon = true
-script = ExtResource("25_jrhkw")
-stream_display = ExtResource("26_3edd3")
-texture = NodePath("../../../Background/Image")
-
 [node name="List" type="MenuButton" parent="Interface/Top Bar/Right" unique_id=1295130311 node_paths=PackedStringArray("background_texture_rect")]
 custom_minimum_size = Vector2(28, 0)
 layout_mode = 2
 icon = ExtResource("29_2wbij")
+flat = false
 expand_icon = true
 script = ExtResource("30_xrbbi")
 streamer_display_template = ExtResource("26_3edd3")
@@ -974,7 +962,7 @@ offset_bottom = 43.0
 
 [node name="Player" type="AudioStreamPlayer" parent="." unique_id=488316782]
 
-[node name="Globals" type="Node" parent="." unique_id=71517921 node_paths=PackedStringArray("_main", "_player", "_discord", "_attribute_editor", "_download_window", "_file_dialog", "_playlist_menu", "_track_menu")]
+[node name="Globals" type="Node" parent="." unique_id=71517921 node_paths=PackedStringArray("_main", "_player", "_discord", "_attribute_editor", "_download_window", "_file_dialog")]
 script = ExtResource("46_y0j44")
 _main = NodePath("..")
 _player = NodePath("../Interface")
@@ -982,8 +970,6 @@ _discord = NodePath("../Discord")
 _attribute_editor = NodePath("AttributeEditor")
 _download_window = NodePath("DownloadWindow")
 _file_dialog = NodePath("File Dialog")
-_playlist_menu = NodePath("../Interface/Playlistcontext")
-_track_menu = NodePath("../Interface/Trackcontext")
 _path_display = ExtResource("49_mrmdv")
 _confirmation_window = ExtResource("50_c27js")
 
@@ -1000,12 +986,12 @@ visible = false
 [node name="DownloadWindow" parent="Globals" unique_id=1926010608 instance=ExtResource("53_7surn")]
 visible = false
 
-[node name="StatusIndicator" type="StatusIndicator" parent="Globals" unique_id=1556933644 node_paths=PackedStringArray("streamer_button")]
+[node name="StatusIndicator" type="StatusIndicator" parent="Globals" unique_id=1556933644 node_paths=PackedStringArray("tool_list")]
 tooltip = "simplesound"
 icon = ExtResource("54_lfg21")
 menu = NodePath("PopupMenu")
 script = ExtResource("55_y62dl")
-streamer_button = NodePath("../../Interface/Top Bar/Right/Stream")
+tool_list = NodePath("../../Interface/Top Bar/Right/List")
 
 [node name="PopupMenu" type="PopupMenu" parent="Globals/StatusIndicator" unique_id=251564623]
 prefer_native_menu = true
