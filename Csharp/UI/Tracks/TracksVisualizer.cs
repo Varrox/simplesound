@@ -27,7 +27,7 @@ public partial class TracksVisualizer : CarouselScrollContainer {
     }
 
     private Texture2D GetCover(in Playlist playlist, in int track) {
-        Texture2D default_cover_icon = ApplicationManager.theme.GetIcon("default_cover_icon", Constants.THEME_TYPE);
+        Texture2D default_cover_icon = ApplicationManager.GetThemeIcon("default_cover_icon");
         return (playlist.type == Playlist.PlaylistType.Album) ? null : (Tools.GetMediaCover(playlist.tracks[track]) ?? default_cover_icon);
     }
 
@@ -65,7 +65,7 @@ public partial class TracksVisualizer : CarouselScrollContainer {
     public void Update() {
         Playlist playlist = GetPlaylist();
         
-        cover.Texture = playlist.cover_texture ?? ApplicationManager.theme.GetIcon("default_cover_icon", Constants.THEME_TYPE);
+        cover.Texture = playlist.cover_texture ?? ApplicationManager.GetThemeIcon("default_cover_icon");
         playlist_name_label.Text = playlist.name;
 
         if (playlist.tracks != null) track_count_label.Text = $"{playlist.tracks.Count} track" + (playlist.tracks.Count != 1 ? "s" : "");

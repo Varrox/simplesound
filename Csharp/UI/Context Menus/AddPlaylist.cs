@@ -11,9 +11,9 @@ public partial class AddPlaylist : ContextMenuButton {
 	public override void _Ready() {
 		base._Ready();
 
-		Texture2D plus_icon = ApplicationManager.theme.GetIcon("plus_icon", Constants.THEME_TYPE);
-		Texture2D file_icon = ApplicationManager.theme.GetIcon("file_icon", Constants.THEME_TYPE);
-		Texture2D zip_icon = ApplicationManager.theme.GetIcon("zip_icon", Constants.THEME_TYPE);
+		Texture2D plus_icon = ApplicationManager.GetThemeIcon("plus_icon");
+		Texture2D file_icon = ApplicationManager.GetThemeIcon("file_icon");
+		Texture2D zip_icon = ApplicationManager.GetThemeIcon("zip_icon");
 
 		GetPopup().AddIconItem(plus_icon, "Create new playlist", CREATE_NEW_PLAYLIST);
 		GetPopup().AddIconItem(file_icon, "Import playlist file", IMPORT_PLAYLIST_FILE);

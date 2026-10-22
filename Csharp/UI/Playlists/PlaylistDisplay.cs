@@ -18,7 +18,7 @@ public partial class PlaylistDisplay : Button {
 
     public void SetTextHighlight() {
         bool highlight = Globals.main.playlist_index == playlist_index;
-        playlist_name_label.AddThemeColorOverride("font_color", ApplicationManager.theme.GetColor(highlight ? "playing_font_color" : "normal_font_color", Constants.THEME_TYPE));
+        playlist_name_label.AddThemeColorOverride("font_color", ApplicationManager.GetThemeColor(highlight ? "playing_font_color" : "normal_font_color"));
     }
 
     public override void _GuiInput(InputEvent @event) {
@@ -45,7 +45,7 @@ public partial class PlaylistDisplay : Button {
     }
 
     public void Init(Playlist playlist, int index) {
-        cover_texture_rect.Texture = playlist.cover_texture ?? ApplicationManager.theme.GetIcon("default_cover_icon", Constants.THEME_TYPE);
+        cover_texture_rect.Texture = playlist.cover_texture ?? ApplicationManager.GetThemeIcon("default_cover_icon");
         playlist_name_label.Text = playlist.name;
 
         int track_count = playlist.tracks == null ? 0 : playlist.tracks.Count;

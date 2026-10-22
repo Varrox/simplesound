@@ -40,7 +40,7 @@ public partial class DownloadWindow : EditorWindow {
         label.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis;
 
         Button button = new Button();
-        button.Icon = ApplicationManager.theme.GetIcon("x_icon", Constants.THEME_TYPE);
+        button.Icon = ApplicationManager.GetThemeIcon("x_icon");
         button.ExpandIcon = true;
         button.CustomMinimumSize = new Vector2(label.Size.Y, label.Size.Y);
 

@@ -34,7 +34,7 @@ public partial class Player : Node {
         progress_slider.DragStarted += () => can_set_time = true;
 
         Globals.main.OnPlayingChanged += SetPlayIcon;
-        play_button.Icon = ApplicationManager.theme.GetIcon("play_icon", Constants.THEME_TYPE);
+        play_button.Icon = ApplicationManager.GetThemeIcon("play_icon");
 
         mute_button.ButtonUp += MuteVolume;
         volume_slider.DragStarted += VolumeUnmute;
@@ -45,7 +45,7 @@ public partial class Player : Node {
     }
 
     public void SetShuffleIndicator() {
-        Color color = Globals.main.shuffled ? ApplicationManager.theme.GetColor("enabled_font_color", Constants.THEME_TYPE) : Colors.White;
+        Color color = Globals.main.shuffled ? ApplicationManager.GetThemeColor("enabled_font_color") : Colors.White;
         shuffle_button.AddThemeColorOverride("icon_normal_color", color);
         shuffle_button.AddThemeColorOverride("icon_focus_color", color);
         shuffle_button.AddThemeColorOverride("icon_pressed_color", color);
@@ -53,7 +53,7 @@ public partial class Player : Node {
         shuffle_button.AddThemeColorOverride("icon_hover_pressed_color", color);
     }
 
-    public void SetMuteTexture() => mute_button.Icon = ApplicationManager.theme.GetIcon(muted ? "unmute_icon" : "mute_icon", Constants.THEME_TYPE);
+    public void SetMuteTexture() => mute_button.Icon = ApplicationManager.GetThemeIcon(muted ? "unmute_icon" : "mute_icon");
 
     public void MuteVolume() {
         muted = !muted;
@@ -99,7 +99,7 @@ public partial class Player : Node {
     public void SetLoop() {
         Globals.main.loop = !Globals.main.loop;
         
-        Color color = Globals.main.loop ? ApplicationManager.theme.GetColor("enabled_font_color", Constants.THEME_TYPE) : Colors.White;
+        Color color = Globals.main.loop ? ApplicationManager.GetThemeColor("enabled_font_color") : Colors.White;
         loop_button.AddThemeColorOverride("icon_normal_color", color);
         loop_button.AddThemeColorOverride("icon_focus_color", color);
         loop_button.AddThemeColorOverride("icon_pressed_color", color);
@@ -108,7 +108,7 @@ public partial class Player : Node {
     }
 
     public void SetPlayIcon(bool playing) { 
-        play_button.Icon = ApplicationManager.theme.GetIcon(!playing || !Globals.main.IsTrackAvailable() ? "play_icon" : "pause_icon", Constants.THEME_TYPE); 
+        play_button.Icon = ApplicationManager.GetThemeIcon(!playing || !Globals.main.IsTrackAvailable() ? "play_icon" : "pause_icon"); 
     }
 
     public void Move(int by) {
@@ -116,7 +116,7 @@ public partial class Player : Node {
     }
 
     public void OnLoadTrack() {
-        Texture2D default_cover_icon = ApplicationManager.theme.GetIcon("default_cover_icon", Constants.THEME_TYPE);
+        Texture2D default_cover_icon = ApplicationManager.GetThemeIcon("default_cover_icon");
 
         if (Globals.main.IsTrackAvailable()) {
             string name = Tools.GetMediaTitle(Globals.main.track);
@@ -196,7 +196,7 @@ public partial class Player : Node {
 
         if (!muted) {
             Globals.main.audio_player.VolumeDb = (float)(volume_slider.Value != -50 ? volume_slider.Value : -80);
-            mute_button.Icon = ApplicationManager.theme.GetIcon(Globals.main.audio_player.VolumeDb == -80 ? "unmute_icon" : "mute_icon", Constants.THEME_TYPE);
+            mute_button.Icon = ApplicationManager.GetThemeIcon(Globals.main.audio_player.VolumeDb == -80 ? "unmute_icon" : "mute_icon");
         }
 
         AudioServer.SetBusMute(0, Globals.main.audio_player.VolumeDb == -80);

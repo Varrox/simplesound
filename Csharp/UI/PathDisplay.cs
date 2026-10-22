@@ -9,18 +9,18 @@ public partial class PathDisplay : Control {
     public string path;
 
     public override void _Ready() {
-        delete.Icon = ApplicationManager.theme.GetIcon("x_icon", Constants.THEME_TYPE);
+        delete.Icon = ApplicationManager.GetThemeIcon("x_icon");
 
-        Color pressed_color = ApplicationManager.theme.GetColor("icon_pressed_color", Constants.THEME_TYPE);
+        Color pressed_color = ApplicationManager.GetThemeColor("icon_pressed_color");
 
         delete.AddThemeColorOverride("icon_pressed_color", pressed_color);
         delete.AddThemeColorOverride("icon_hover_pressed_color", pressed_color);
 
-        delete.AddThemeColorOverride("icon_hover_color", ApplicationManager.theme.GetColor("icon_hover_color", Constants.THEME_TYPE));
+        delete.AddThemeColorOverride("icon_hover_color", ApplicationManager.GetThemeColor("icon_hover_color"));
 
         delete.Hide();
 
-        path_type_texture_rect.Texture = ApplicationManager.theme.GetIcon(is_file ? "file_icon" : "folder_icon", Constants.THEME_TYPE);
+        path_type_texture_rect.Texture = ApplicationManager.GetThemeIcon(is_file ? "file_icon" : "folder_icon");
     }
     
     public void SetPath(string _path = null) {

@@ -10,7 +10,7 @@ public partial class FileDropPanel : Panel {
 		GetWindow().FilesDropped += CheckFiles;
 
 		TooltipText = "You can drag & drop files here";
-		AddThemeStyleboxOverride("panel", ApplicationManager.theme.GetStylebox("file_drop_normal_stylebox", Constants.THEME_TYPE));
+		AddThemeStyleboxOverride("panel", ApplicationManager.GetThemeStylebox("file_drop_normal_stylebox"));
 	}
 
 	private bool IsMouseInRect() {

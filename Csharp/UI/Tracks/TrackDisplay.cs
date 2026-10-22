@@ -46,7 +46,7 @@ public partial class TrackDisplay : Button {
 
         ApplicationManager.SetRadioSelected(this, highlighted);
 
-        track_name_label.AddThemeColorOverride("font_color", ApplicationManager.theme.GetColor(highlighted ? "playing_font_color" : "normal_font_color", Constants.THEME_TYPE));
+        track_name_label.AddThemeColorOverride("font_color", ApplicationManager.GetThemeColor(highlighted ? "playing_font_color" : "normal_font_color"));
 
         if (highlighted) Globals.main.OnPlayingChanged += SetPlaying;
 
@@ -56,8 +56,8 @@ public partial class TrackDisplay : Button {
     public void SetPlaying(bool is_playing) {
         sound_visualizer.Visible = highlighted && !IsHovered();
 
-        track_number_label.AddThemeColorOverride("font_color", highlighted || IsHovered() ? Colors.Transparent : ApplicationManager.theme.GetColor("small_font_color", Constants.THEME_TYPE));
-        play_texture_rect.Texture = ApplicationManager.theme.GetIcon(Disabled ? "no_play_icon" : (is_playing ? "pause_icon" : "play_icon"), Constants.THEME_TYPE);
+        track_number_label.AddThemeColorOverride("font_color", highlighted || IsHovered() ? Colors.Transparent : ApplicationManager.GetThemeColor("small_font_color"));
+        play_texture_rect.Texture = ApplicationManager.GetThemeIcon(Disabled ? "no_play_icon" : (is_playing ? "pause_icon" : "play_icon"));
     }
 
     public void OnEnter() {

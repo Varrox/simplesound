@@ -22,7 +22,7 @@ public partial class DownloadPlaylistDisplay : Button {
     }
 
 	public void Init(Playlist playlist, int index) {
-        cover_texture_rect.Texture = Tools.LoadImageFromFile(playlist.cover) ?? ApplicationManager.theme.GetIcon("default_cover_icon", Constants.THEME_TYPE);
+        cover_texture_rect.Texture = Tools.LoadImageFromFile(playlist.cover) ?? ApplicationManager.GetThemeIcon("default_cover_icon");
         playlist_name_label.Text = playlist.name;
 
         string amount = $"{playlist.tracks.Count}{(playlist.tracks.Count != 1 ? " tracks" : " track")}";

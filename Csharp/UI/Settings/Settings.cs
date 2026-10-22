@@ -117,14 +117,14 @@ public partial class Settings : EditorWindow {
 
             // Highlight
 
-            _settings_tabs[tab].button.SelfModulate = ApplicationManager.theme.GetColor("highlight_color", Constants.THEME_TYPE);
-            _settings_tabs[tab].label.AddThemeColorOverride("font_color", ApplicationManager.theme.GetColor("selected_font_color", Constants.THEME_TYPE));
+            _settings_tabs[tab].button.SelfModulate = ApplicationManager.GetThemeColor("highlight_color");
+            _settings_tabs[tab].label.AddThemeColorOverride("font_color", ApplicationManager.GetThemeColor("selected_font_color"));
             _settings_tabs[tab].underline.Visible = true;
 
             for(int i = 0; i < _settings_tabs.Count; i++) {
                 if (i != tab && !_settings_tabs[i].disabled) {
                     _settings_tabs[i].button.SelfModulate = Colors.White;
-                    _settings_tabs[i].label.AddThemeColorOverride("font_color", ApplicationManager.theme.GetColor("unselected_font_color", Constants.THEME_TYPE));
+                    _settings_tabs[i].label.AddThemeColorOverride("font_color", ApplicationManager.GetThemeColor("unselected_font_color"));
                     _settings_tabs[i].underline.Visible = false;
                 }
             }
@@ -148,7 +148,7 @@ public partial class Settings : EditorWindow {
 
     public void AddResetButton(HBoxContainer container, Action reset_value, Action apply_setting) {
         Button button = new Button();
-        button.Icon = ApplicationManager.theme.GetIcon("reload_icon", Constants.THEME_TYPE);
+        button.Icon = ApplicationManager.GetThemeIcon("reload_icon");
         button.ExpandIcon = true;
 
         container.AddChild(button);
@@ -218,11 +218,11 @@ public partial class Settings : EditorWindow {
 
         if (disabled) {
             button.TooltipText = "Disabled";
-            label.AddThemeColorOverride("font_color", ApplicationManager.theme.GetColor("disabled_font_color", Constants.THEME_TYPE));
+            label.AddThemeColorOverride("font_color", ApplicationManager.GetThemeColor("disabled_font_color"));
         }
         else {
             button.TooltipText = tooltip_text;
-            label.AddThemeColorOverride("font_color", ApplicationManager.theme.GetColor("unselected_font_color", Constants.THEME_TYPE));
+            label.AddThemeColorOverride("font_color", ApplicationManager.GetThemeColor("unselected_font_color"));
         }
 
         int tab_index = _settings_tabs.Count;
@@ -405,7 +405,7 @@ public partial class Settings : EditorWindow {
         line_edit.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
 
         Button file_select_button = new Button();
-        file_select_button.Icon = ApplicationManager.theme.GetIcon("folder_icon", Constants.THEME_TYPE);
+        file_select_button.Icon = ApplicationManager.GetThemeIcon("folder_icon");
         file_select_button.ExpandIcon = true;
         file_select_button.TooltipText = "Open file manager to select location.";
         file_select_button.CustomMinimumSize = Vector2.One * 28;

@@ -29,7 +29,7 @@ public partial class ApplicationManager : SceneTree {
 
         Globals.save_data = SaveData.GetSaveData();
 
-        theme = LoadTheme();
+        theme = _LoadTheme();
 
         Root.MinSize = _main_window_minimum_size;
         Root.CloseRequested += QuitProgram;
@@ -121,7 +121,7 @@ public partial class ApplicationManager : SceneTree {
         return false;
     }
 
-    private Theme LoadTheme() {
+    private Theme _LoadTheme() {
         Theme theme_resource = ResourceLoader.Load<Theme>("res://Styling/global_theme.tres");
 
         // Color
@@ -206,22 +206,46 @@ public partial class ApplicationManager : SceneTree {
         theme_resource.SetStylebox("file_drop_normal_stylebox", Constants.THEME_TYPE, GD.Load<StyleBox>("res://Styling/Filedrop/file_drop_normal.tres"));
 
         theme_resource.SetStylebox("context_menu_panel_stylebox", Constants.THEME_TYPE, GD.Load<StyleBox>("res://Styling/context_panel.tres"));
-
+        
         return theme_resource;
     }
 
+    public static Color GetThemeColor(StringName name) {
+        return theme.GetColor(name, Constants.THEME_TYPE);
+    }
+    
+    public static int GetThemeConstant(StringName name) {
+        return theme.GetConstant(name, Constants.THEME_TYPE);
+    }
+
+    public static Font GetThemeFont(StringName name) {
+        return theme.GetFont(name, Constants.THEME_TYPE);
+    }
+
+    public static int GetThemeFontSize(StringName name) {
+        return theme.GetFontSize(name, Constants.THEME_TYPE);
+    }
+
+    public static Texture2D GetThemeIcon(StringName name) {
+        return theme.GetIcon(name, Constants.THEME_TYPE);
+    }
+
+    public static StyleBox GetThemeStylebox(StringName name) {
+        return theme.GetStylebox(name, Constants.THEME_TYPE);
+    }
+
     public static void SetRadioSelected(Control control, bool selected) {
-        control.AddThemeStyleboxOverride("normal", theme.GetStylebox(selected ? "radio_selected_normal_stylebox" : "radio_normal_stylebox", Constants.THEME_TYPE));
-        control.AddThemeStyleboxOverride("hover", theme.GetStylebox(selected ? "radio_selected_hover_stylebox" : "radio_hover_stylebox", Constants.THEME_TYPE));
-        control.AddThemeStyleboxOverride("pressed", theme.GetStylebox(selected ? "radio_selected_pressed_stylebox" : "radio_pressed_stylebox", Constants.THEME_TYPE));
-        control.AddThemeStyleboxOverride("disabled", theme.GetStylebox(selected ? "radio_selected_disabled_stylebox" : "radio_disabled_stylebox", Constants.THEME_TYPE));
+        control.AddThemeStyleboxOverride("normal", GetThemeStylebox(selected ? "radio_selected_normal_stylebox" : "radio_normal_stylebox"));
+        control.AddThemeStyleboxOverride("hover", GetThemeStylebox(selected ? "radio_selected_hover_stylebox" : "radio_hover_stylebox"));
+        control.AddThemeStyleboxOverride("pressed", GetThemeStylebox(selected ? "radio_selected_pressed_stylebox" : "radio_pressed_stylebox"));
+        control.AddThemeStyleboxOverride("disabled", GetThemeStylebox(selected ? "radio_selected_disabled_stylebox" : "radio_disabled_stylebox"));
     }
 
     public static void ApplyPopupMenuStyle(PopupMenu menu)
     {
-        menu.AddThemeStyleboxOverride("panel", theme.GetStylebox("context_menu_panel_stylebox", Constants.THEME_TYPE));
+        menu.AddThemeStyleboxOverride("panel", GetThemeStylebox("context_menu_panel_stylebox"));
         
-        int margin = theme.GetConstant("context_menu_margin_constant", Constants.THEME_TYPE);
+        int margin = GetThemeConstant("context_menu_margin_constant");
 
         menu.AddThemeConstantOverride("v_separation", margin);
         menu.AddThemeConstantOverride("h_separation", margin);

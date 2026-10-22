@@ -24,7 +24,7 @@ public partial class Update : Button {
             return;
         }
 
-        Icon = ApplicationManager.theme.GetIcon("download_icon", Constants.THEME_TYPE);
+        Icon = ApplicationManager.GetThemeIcon("download_icon");
 
         http_client = new HttpRequest();
         AddChild(http_client);

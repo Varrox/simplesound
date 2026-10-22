@@ -32,7 +32,7 @@ public partial class AttributeEditorOpener : EditorWindowOpener {
                 corrupt = Metadata.IsFileCorrupt(Globals.main.track)
             };
 
-            Texture2D default_cover_icon = ApplicationManager.theme.GetIcon("default_cover_icon", Constants.THEME_TYPE);
+            Texture2D default_cover_icon = ApplicationManager.GetThemeIcon("default_cover_icon");
             Globals.main.tracks_visualizer.UpdateTrack(Globals.main.track_index, track_data, Tools.GetMediaCover(Globals.main.track) ?? default_cover_icon);
         }
 

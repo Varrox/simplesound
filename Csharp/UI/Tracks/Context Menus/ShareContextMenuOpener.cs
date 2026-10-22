@@ -8,7 +8,7 @@ public partial class ShareContextMenuOpener : ContextMenuOpener {
 	public override void _Ready() {
 		base._Ready();
 		OnOpen += GetTrackData;
-		OnClose += () => Icon = ApplicationManager.theme.GetIcon("meatballs_icon", Constants.THEME_TYPE);
+		OnClose += () => Icon = ApplicationManager.GetThemeIcon("meatballs_icon");
 
 		share_link.ButtonUp += CopyShareLinkToClipboard;
 		file_browse.ButtonUp += FileBrowseTrack;
@@ -26,6 +26,6 @@ public partial class ShareContextMenuOpener : ContextMenuOpener {
         file = Globals.main.playlists[Globals.main.looked_at_playlist].tracks[TracksContextMenuOpener.selected_track];
 		link = Metadata.GetShareLink(file);
 
-		Icon = ApplicationManager.theme.GetIcon("back_arrow_icon", Constants.THEME_TYPE);;
+		Icon = ApplicationManager.GetThemeIcon("back_arrow_icon");
 	}
 }

@@ -5,7 +5,7 @@ public partial class Refresh : Button {
     [Export] public TextureRect refresh_texture_rect;
 
 	public override void _Ready() {
-        refresh_texture_rect.Texture = ApplicationManager.theme.GetIcon("reload_icon", Constants.THEME_TYPE);
+        refresh_texture_rect.Texture = ApplicationManager.GetThemeIcon("reload_icon");
 
         ButtonUp += _Refresh;
     }
