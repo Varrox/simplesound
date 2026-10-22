@@ -131,8 +131,9 @@ public partial class CarouselScrollContainer : ScrollContainer {
 
     public void Refresh() {
         int first_item = GetFirstVisibleItemIndex();
+        int refresh_items = Mathf.Min(_items.Count, total_items);
 
-        for(int i = 0; i < _items.Count; i++) {
+        for(int i = 0; i < refresh_items; i++) {
             _UpdateItem(first_item + i, _items[i]);
         }
     }
