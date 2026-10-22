@@ -23,7 +23,8 @@ TODO
 - Make all theme dependencies update on command
 - Add theme override class that can serialize and deserialize and change settings
 - Add default themes to settings
-- Add theme editor 
+- Add theme editor
+- Make track tags so they are saved in json by default and updated to json if they are old format.
 
 FINISHED
 
