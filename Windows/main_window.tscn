@@ -45,7 +45,6 @@
 [ext_resource type="Texture2D" uid="uid://csvmj6w2b5le6" path="res://Icons/SVG/loop.svg" id="41_yksdd"]
 [ext_resource type="Texture2D" uid="uid://jqnfgusrehqq" path="res://Icons/SVG/un_muted.svg" id="42_2o8nl"]
 [ext_resource type="Script" uid="uid://c5ep0n80r2l8p" path="res://Csharp/UI/Attribute Editor/AttributeEditorOpener.cs" id="42_3aot7"]
-[ext_resource type="PackedScene" uid="uid://dtfoexo3o7b3p" path="res://Prefabs/Context Menus/playlist_context.tscn" id="44_aaavu"]
 [ext_resource type="PackedScene" uid="uid://dcre7b1cn3b6i" path="res://Prefabs/Context Menus/track_context.tscn" id="45_rjtah"]
 [ext_resource type="Script" uid="uid://ba0kdfmjh8445" path="res://Csharp/Globals.cs" id="46_y0j44"]
 [ext_resource type="PackedScene" uid="uid://cjc5crjo31obe" path="res://Prefabs/path_display.tscn" id="49_mrmdv"]
@@ -945,15 +944,6 @@ text = "Artist"
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="Playlistcontext" parent="Interface" unique_id=957626048 instance=ExtResource("44_aaavu")]
-visible = false
-layout_mode = 1
-anchors_preset = -1
-offset_left = -1006.0
-offset_top = -223.0
-offset_right = -864.0
-offset_bottom = -74.0
-
 [node name="Trackcontext" parent="Interface" unique_id=196847728 instance=ExtResource("45_rjtah")]
 visible = false
 layout_mode = 1
@@ -970,7 +960,7 @@ _discord = NodePath("../Discord")
 _attribute_editor = NodePath("AttributeEditor")
 _download_window = NodePath("DownloadWindow")
 _file_dialog = NodePath("File Dialog")
-_playlist_menu = NodePath("../Interface/Playlistcontext")
+_playlist_menu = NodePath("")
 _track_menu = NodePath("../Interface/Trackcontext")
 _path_display = ExtResource("49_mrmdv")
 _confirmation_window = ExtResource("50_c27js")

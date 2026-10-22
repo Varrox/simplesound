@@ -3,7 +3,7 @@ using Godot;
 public partial class PlaylistDisplay : Button {
     [Export] public TextureRect cover_texture_rect;
     [Export] public Label playlist_name_label, track_count_label;
-    [Export] public ContextMenuOpener more;
+    [Export] public PlaylistsMore more;
 
     int playlist_index;
 
@@ -21,19 +21,16 @@ public partial class PlaylistDisplay : Button {
         playlist_name_label.AddThemeColorOverride("font_color", ApplicationManager.theme.GetColor(highlight ? "playing_font_color" : "normal_font_color", Constants.THEME_TYPE));
     }
 
-    public override void _Input(InputEvent @event) {
+    public override void _GuiInput(InputEvent @event) {
         if (@event is InputEventMouseButton) {
             if ((@event as InputEventMouseButton).ButtonIndex == MouseButton.Right) {
-                if (GetGlobalRect().HasPoint(GetGlobalMousePosition())) {
-                    more.OpenMenu();
-                    more.menu.GlobalPosition = GetGlobalMousePosition();
-                }
+                more.PopupAtMouse();
             }
         }
     }
 
     public void OnExit() {
-        if (!more.menu_open) more.Hide();
+        if (!more.GetPopup().Visible) more.Hide();
     }
 
     public void Set() {

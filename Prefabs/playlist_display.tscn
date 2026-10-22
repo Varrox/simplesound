@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://cksbdmhr2s8yy" path="res://Icons/Default Covers/DefaultCover.png" id="6_dxib1"]
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Styling/Fonts/DefaultFont.tres" id="7_w62j1"]
 [ext_resource type="Texture2D" uid="uid://bkloprdhxat0i" path="res://Icons/SVG/meatballs.svg" id="8_h3l4d"]
-[ext_resource type="Script" uid="uid://dijx812bdmf7t" path="res://Csharp/UI/Playlists/PlaylistsMore.cs" id="9_b8rky"]
+[ext_resource type="Script" uid="uid://dijx812bdmf7t" path="res://Csharp/UI/Context Menus/PlaylistsMore.cs" id="9_b8rky"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0xwl0"]
 
@@ -19,7 +19,6 @@ shader = ExtResource("5_t1j7f")
 
 [node name="Playlist Button" type="Button" unique_id=321300163 node_paths=PackedStringArray("cover_texture_rect", "playlist_name_label", "track_count_label", "more")]
 custom_minimum_size = Vector2(0, 65)
-anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -36,26 +35,37 @@ theme_override_styles/hover = ExtResource("2_imthr")
 theme_override_styles/disabled = ExtResource("2_imthr")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_0xwl0")
 script = ExtResource("3_3gw7l")
-cover_texture_rect = NodePath("PanelContainer/Cover")
-playlist_name_label = NodePath("Name")
-track_count_label = NodePath("Tracks")
-more = NodePath("More")
+cover_texture_rect = NodePath("MarginContainer/HBoxContainer/PanelContainer/Cover")
+playlist_name_label = NodePath("MarginContainer/HBoxContainer/Text/Name")
+track_count_label = NodePath("MarginContainer/HBoxContainer/Text/Tracks")
+more = NodePath("MarginContainer/HBoxContainer/More")
 
-[node name="PanelContainer" type="PanelContainer" parent="." unique_id=590391751]
-clip_children = 1
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1331048777]
 layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 8.0
-offset_top = -24.5
-offset_right = 58.0
-offset_bottom = 25.5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 7
+theme_override_constants/margin_top = 7
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 7
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=802569809]
+layout_mode = 2
+size_flags_horizontal = 17
+size_flags_vertical = 17
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer" unique_id=590391751]
+clip_children = 1
+custom_minimum_size = Vector2(51, 0)
+layout_mode = 2
+size_flags_horizontal = 0
 mouse_filter = 2
 theme_override_styles/panel = ExtResource("4_q088j")
 
-[node name="Cover" type="TextureRect" parent="PanelContainer" unique_id=1835501531]
+[node name="Cover" type="TextureRect" parent="MarginContainer/HBoxContainer/PanelContainer" unique_id=1835501531]
 material = SubResource("ShaderMaterial_ehwnt")
 layout_mode = 2
 mouse_filter = 2
@@ -63,43 +73,39 @@ texture = ExtResource("6_dxib1")
 expand_mode = 4
 stretch_mode = 6
 
-[node name="Name" type="Label" parent="." unique_id=427234953]
-layout_mode = 0
-offset_left = 69.0
-offset_top = 16.0
-offset_right = 255.4
-offset_bottom = 40.0
+[node name="Text" type="MarginContainer" parent="MarginContainer/HBoxContainer" unique_id=563274103]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="Name" type="Label" parent="MarginContainer/HBoxContainer/Text" unique_id=427234953]
+layout_mode = 2
+size_flags_horizontal = 17
+size_flags_vertical = 0
 theme_override_fonts/font = ExtResource("7_w62j1")
 theme_override_font_sizes/font_size = 15
 text = "Name"
+text_overrun_behavior = 5
 
-[node name="Tracks" type="Label" parent="." unique_id=203868085]
-layout_mode = 0
-offset_left = 69.0
-offset_top = 38.0
-offset_right = 196.2
-offset_bottom = 50.8
+[node name="Tracks" type="Label" parent="MarginContainer/HBoxContainer/Text" unique_id=203868085]
+layout_mode = 2
+size_flags_horizontal = 17
+size_flags_vertical = 24
 theme_override_fonts/font = ExtResource("7_w62j1")
 theme_override_font_sizes/font_size = 9
 text = "0 tracks"
 
-[node name="More" type="Button" parent="." unique_id=1646754304]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -49.0
-offset_top = -14.5
-offset_right = -9.0
-offset_bottom = 25.5
-grow_horizontal = 0
-grow_vertical = 2
-scale = Vector2(0.8, 0.8)
+[node name="More" type="MenuButton" parent="MarginContainer/HBoxContainer" unique_id=932108404]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
 theme_override_styles/focus = SubResource("StyleBoxEmpty_2it5a")
 icon = ExtResource("8_h3l4d")
+flat = false
 icon_alignment = 1
+expand_icon = true
 script = ExtResource("9_b8rky")
-teleportMenu = null
-teleportMenuOffset = Vector2(35, 35)

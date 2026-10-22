@@ -26,9 +26,6 @@ public partial class Globals : Node {
     [Export] private FileDialog _file_dialog{set{ file_dialog = value; }get { return file_dialog; }}
     public static FileDialog file_dialog;
 
-    [Export] private ContextMenu _playlist_menu{set{ playlist_menu = value; }get{ return playlist_menu; }}
-    public static ContextMenu playlist_menu;
-
     [Export] private ContextMenu _track_menu{set{ track_menu = value; }get{ return track_menu; }}
     public static ContextMenu track_menu;
 
