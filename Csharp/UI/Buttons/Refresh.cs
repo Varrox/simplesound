@@ -2,15 +2,22 @@ using Godot;
 
 public partial class Refresh : Button {
 	[Export] public AnimationPlayer refesh_texture_animation;
+    [Export] public TextureRect refresh_texture_rect;
+
 	public override void _Ready() {
-        ButtonUp += () => refesh_texture_animation.Play("refresh");
-        ButtonUp += Globals.main.Refresh;
+        refresh_texture_rect.Texture = ApplicationManager.theme.GetIcon("reload_icon", Constants.THEME_TYPE);
+
+        ButtonUp += _Refresh;
     }
 
     public override void _Process(double delta) {
         if (Input.IsActionJustPressed("refresh")) {
-            refesh_texture_animation.Play("refresh");
-            Globals.main.Refresh();
+            _Refresh();
         }
+    }
+
+    private void _Refresh() {
+        refesh_texture_animation.Play("refresh");
+        Globals.main.Refresh();
     }
 }

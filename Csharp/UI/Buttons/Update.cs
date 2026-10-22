@@ -4,7 +4,7 @@ using System.IO;
 
 public partial class Update : Button {
     readonly string download_folder = new FileInfo(OS.GetExecutablePath()).Directory.FullName;
-    readonly string download_file = Path.Combine(new FileInfo(OS.GetExecutablePath()).Directory.FullName, "Download.zip");
+    readonly string download_file = Path.Combine(new FileInfo(OS.GetExecutablePath()).Directory.FullName, "download.zip");
 
 	HttpRequest http_client;
 
@@ -23,6 +23,8 @@ public partial class Update : Button {
             QueueFree();
             return;
         }
+
+        Icon = ApplicationManager.theme.GetIcon("download_icon", Constants.THEME_TYPE);
 
         http_client = new HttpRequest();
         AddChild(http_client);

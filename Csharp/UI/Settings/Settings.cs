@@ -148,7 +148,7 @@ public partial class Settings : EditorWindow {
 
     public void AddResetButton(HBoxContainer container, Action reset_value, Action apply_setting) {
         Button button = new Button();
-        button.Icon = ApplicationManager.theme.GetIcon("refresh_icon", Constants.THEME_TYPE);
+        button.Icon = ApplicationManager.theme.GetIcon("reload_icon", Constants.THEME_TYPE);
         button.ExpandIcon = true;
 
         container.AddChild(button);

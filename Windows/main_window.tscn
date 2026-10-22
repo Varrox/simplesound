@@ -427,7 +427,6 @@ icon = ExtResource("10_gjyis")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("11_2o8nl")
-teleportMenu = null
 teleportMenuOffset = Vector2(0, 32)
 
 [node name="HSeparator" type="HSeparator" parent="Interface/Content/Side Panel/Collapsed/VBoxContainer" unique_id=765403374]
@@ -448,12 +447,10 @@ theme_override_constants/scrollbar_h_separation = 4
 theme_override_styles/focus = SubResource("StyleBoxEmpty_b1qrp")
 horizontal_scroll_mode = 0
 script = ExtResource("15_btqdu")
-item_template = ExtResource("16_ns1th")
-total_items = null
-item_height = null
 cover = NodePath("Container/Top card/Icon/TextureRect")
 playlist_name_label = NodePath("Container/Top card/Playlist name")
 track_count_label = NodePath("Container/Top card/Track count")
+item_template = ExtResource("16_ns1th")
 parent_container = NodePath("Container")
 item_container = NodePath("Container/VBoxContainer")
 
@@ -586,7 +583,7 @@ icon = ExtResource("24_cq8g2")
 expand_icon = true
 script = ExtResource("23_f8opk")
 
-[node name="Refresh" type="Button" parent="Interface/Top Bar/Left" unique_id=953963470 node_paths=PackedStringArray("refesh_texture_animation")]
+[node name="Refresh" type="Button" parent="Interface/Top Bar/Left" unique_id=953963470 node_paths=PackedStringArray("refesh_texture_animation", "refresh_texture_rect")]
 custom_minimum_size = Vector2(28, 0)
 layout_mode = 2
 tooltip_text = "Refreshes all of the music player."
@@ -596,6 +593,7 @@ icon_alignment = 1
 expand_icon = true
 script = ExtResource("29_nr08j")
 refesh_texture_animation = NodePath("AnimationPlayer")
+refresh_texture_rect = NodePath("TextureRect")
 
 [node name="TextureRect" type="TextureRect" parent="Interface/Top Bar/Left/Refresh" unique_id=727025634]
 layout_mode = 1
@@ -954,8 +952,6 @@ offset_bottom = 43.0
 
 [node name="Globals" type="Node" parent="." unique_id=71517921 node_paths=PackedStringArray("_main", "_player", "_discord", "_attribute_editor", "_download_window", "_file_dialog", "_track_menu")]
 script = ExtResource("46_y0j44")
-_path_display = ExtResource("49_mrmdv")
-_confirmation_window = ExtResource("50_c27js")
 _main = NodePath("..")
 _player = NodePath("../Interface")
 _discord = NodePath("../Discord")
@@ -963,6 +959,8 @@ _attribute_editor = NodePath("AttributeEditor")
 _download_window = NodePath("DownloadWindow")
 _file_dialog = NodePath("File Dialog")
 _track_menu = NodePath("../Interface/Trackcontext")
+_path_display = ExtResource("49_mrmdv")
+_confirmation_window = ExtResource("50_c27js")
 
 [node name="File Dialog" type="FileDialog" parent="Globals" unique_id=1989544037]
 title = "Open a File"
