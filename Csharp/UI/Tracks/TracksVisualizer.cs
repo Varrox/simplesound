@@ -28,7 +28,7 @@ public partial class TracksVisualizer : CarouselScrollContainer {
 
     private Texture2D GetCover(in Playlist playlist, in int track) {
         Texture2D default_cover_icon = ApplicationManager.theme.GetIcon("default_cover_icon", Constants.THEME_TYPE);
-        return (playlist.type == Playlist.PlaylistType.Album) ? null : (ConvertToGodot.GetMediaCover(playlist.tracks[track]) ?? default_cover_icon);
+        return (playlist.type == Playlist.PlaylistType.Album) ? null : (Tools.GetMediaCover(playlist.tracks[track]) ?? default_cover_icon);
     }
 
     protected override void _UpdateItem(int item_index, Control item) {

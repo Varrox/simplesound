@@ -36,7 +36,7 @@ public partial class AttributeEditorOpenerGlobal : EditorWindowOpener {
             };
 
             Texture2D default_cover_icon = ApplicationManager.theme.GetIcon("default_cover_icon", Constants.THEME_TYPE);
-            Globals.main.tracks_visualizer.UpdateTrack(TracksContextMenuOpener.selected_track, track_data, ConvertToGodot.GetMediaCover(file) ?? default_cover_icon);
+            Globals.main.tracks_visualizer.UpdateTrack(TracksContextMenuOpener.selected_track, track_data, Tools.GetMediaCover(file) ?? default_cover_icon);
         }
 
         Globals.player.interrupted = false;

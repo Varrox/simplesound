@@ -12,7 +12,7 @@ public class Playlist {
     public string cover {
         set {
             field = value;
-            _cover_texture = ConvertToGodot.LoadImageFromFile(value);
+            _cover_texture = Tools.LoadImageFromFile(value);
         }
         get;
     }
