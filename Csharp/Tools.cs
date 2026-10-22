@@ -60,6 +60,13 @@ public class Tools {
             case "image/svg+xml":
                 error = image.LoadSvgFromBuffer(picture_data);
                 break;
+            case "image/vnd-ms.dds":
+                error = image.LoadDdsFromBuffer(picture_data);
+                break;
+            case "image/x-targa":
+            case "image/x-tga":
+                error = image.LoadTgaFromBuffer(picture_data);
+                break;
         }
 
         return error == Error.Ok ? ImageTexture.CreateFromImage(image) : null;
