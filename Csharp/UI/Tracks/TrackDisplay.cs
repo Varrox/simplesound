@@ -1,15 +1,15 @@
 ﻿using Godot;
 
 public partial class TrackDisplay : Button {
-    [Export] public Label track_number_label, track_name_label, track_artist_label, total_time_label;
+    [Export] public RichTextLabel track_name_label;
+
+    [Export] public Label track_number_label, track_artist_label, total_time_label;
     
     [Export] public TextureRect cover_texture_rect, play_texture_rect;
 
     [Export] public Control spacer, sound_visualizer;
 
     [Export] public TracksContextMenuOpener more;
-
-    [Export] public Panel explicit_lyrics_indicator;
 
     public int track_index, playlist_index;
 
@@ -30,13 +30,11 @@ public partial class TrackDisplay : Button {
         Globals.main.OnLoadTrack -= SetHighlight;
     }
 
-    public override void _Input(InputEvent @event) {
+    public override void _GuiInput(InputEvent @event) {
         if (@event is InputEventMouseButton) {
             if ((@event as InputEventMouseButton).ButtonIndex == MouseButton.Right) {
-                if (GetGlobalRect().HasPoint(GetGlobalMousePosition())) {
-                    more.OpenMenu();
-                    more.menu.GlobalPosition = GetGlobalMousePosition();
-                }
+                more.OpenMenu();
+                more.menu.GlobalPosition = GetGlobalMousePosition();
             }
         }
     }
@@ -87,7 +85,7 @@ public partial class TrackDisplay : Button {
         track_index = track;
         playlist_index = playlist;
 
-        track_name_label.Text = data.title;
+        track_name_label.Text = data.title + (data.explicit_lyrics ? " [img height=1.5em]Icons/SVG/explicit.svg[/img]" : "");
         track_artist_label.Text = data.artist;
         total_time_label.Text = data.time;
 
@@ -97,8 +95,6 @@ public partial class TrackDisplay : Button {
         (cover_texture_rect.GetParent() as Control).Visible = !album;
 
         spacer.Visible = !album;
-
-        explicit_lyrics_indicator.Visible = data.explicit_lyrics;
 
         SetHighlight();
     }
