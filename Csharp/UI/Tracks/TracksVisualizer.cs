@@ -34,12 +34,8 @@ public partial class TracksVisualizer : CarouselScrollContainer {
     protected override void _UpdateItem(int item_index, Control item) {
         Playlist playlist = GetPlaylist();
 
-        TrackData data = GetTrackData(item_index, playlist);
-        (item as TrackDisplay).Init(item_index, _current_playlist, data, playlist.type, GetCover(playlist, item_index));
-    }
 
-    private TrackData GetTrackData(int track, in Playlist playlist) {
-        return new TrackData(playlist.tracks[track]);
+        (item as TrackDisplay).Init(item_index, _current_playlist, new TrackData(playlist.tracks[item_index]), playlist.type, GetCover(playlist, item_index));
     }
 
     private void LoadPlaylist(int playlist_index) {
