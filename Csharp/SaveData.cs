@@ -12,7 +12,6 @@ public class SaveData : ISettings {
 	public List<string> playlists;
 	
 	public ApplicationSettings application_settings;
-	public CloudSettings cloud_settings;
 	public AudioSettings audio_settings;
 	public GraphicSettings graphic_settings;
 
@@ -30,7 +29,6 @@ public class SaveData : ISettings {
     public static readonly string[] PROPERTY_PLAYLISTS = ["playlists"];
 
     public static readonly string[] PROPERTY_APPLICATION_SETTINGS = ["application_settings"];
-    public static readonly string[] PROPERTY_CLOUD_SETTINGS = ["cloud_settings"];
     public static readonly string[] PROPERTY_AUDIO_SETTINGS = ["audio_settings"];
     public static readonly string[] PROPERTY_GRAPHIC_SETTINGS = ["graphic_settings"];
 
@@ -45,14 +43,12 @@ public class SaveData : ISettings {
         shuffled = false;
 
         application_settings = new ApplicationSettings();
-        cloud_settings = new CloudSettings();
         audio_settings = new AudioSettings();
         graphic_settings = new GraphicSettings();
     }
 
     public void ApplySettings() {
         application_settings.ApplySettings();
-        cloud_settings.ApplySettings();
         audio_settings.ApplySettings();
         graphic_settings.ApplySettings();
     }
@@ -85,10 +81,6 @@ public class SaveData : ISettings {
 
         writer.WriteStartObject(PROPERTY_APPLICATION_SETTINGS[0]);
         application_settings.WriteJson(writer);
-        writer.WriteEndObject();
-
-        writer.WriteStartObject(PROPERTY_CLOUD_SETTINGS[0]);
-        cloud_settings.WriteJson(writer);
         writer.WriteEndObject();
 
         writer.WriteStartObject(PROPERTY_AUDIO_SETTINGS[0]);
@@ -150,9 +142,6 @@ public class SaveData : ISettings {
         }
         else if (PROPERTY_APPLICATION_SETTINGS.Contains(property_name)) {
             if (reader.TokenType == JsonTokenType.StartObject) application_settings = JsonHelper.LoadSettingsFromJson<ApplicationSettings>(ref reader);
-        }
-        else if (PROPERTY_CLOUD_SETTINGS.Contains(property_name)) {
-            if (reader.TokenType == JsonTokenType.StartObject) cloud_settings = JsonHelper.LoadSettingsFromJson<CloudSettings>(ref reader);
         }
         else if (PROPERTY_AUDIO_SETTINGS.Contains(property_name)) {
             if (reader.TokenType == JsonTokenType.StartObject) audio_settings = JsonHelper.LoadSettingsFromJson<AudioSettings>(ref reader);

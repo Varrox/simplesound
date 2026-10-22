@@ -36,7 +36,6 @@ public partial class Settings : EditorWindow {
         base._Ready();
 
         AddSettingsTab("Audio", AddAudioSettings, false, "EQ, Reverb, etc.");
-        AddSettingsTab("Cloud", AddCloudSettings, false, "Login, sync settings, etc.");
         AddSettingsTab("Downloader", AddDownloaderSettings, false, "yt-dlp executable, download formats, etc.");
         AddSettingsTab("App data", AddAppDataSettings, true, "");
         AddSettingsTab("Graphics / Display", AddGraphicSettings, false, "VSync, background blur quality, etc.");
@@ -79,10 +78,6 @@ public partial class Settings : EditorWindow {
 
         AddFloatSetting("Wet", Globals.save_data.audio_settings, "wet", 0.0f, 0.0f, 1.0f,
         "The volume ratio of the modified audio. At 0, only the original audio is outputted.");
-    }
-
-    void AddCloudSettings() {
-        AddBoolSetting("Sync Application Settings", Globals.save_data.cloud_settings, "sync_application_settings", true);
     }
 
     void AddDownloaderSettings() {
