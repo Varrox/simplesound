@@ -12,7 +12,7 @@
 [ext_resource type="Shader" uid="uid://cxrpix7bw201g" path="res://Styling/Shaders/anti_aliased.gdshader" id="10_ag77y"]
 [ext_resource type="Texture2D" uid="uid://cksbdmhr2s8yy" path="res://Icons/Default Covers/DefaultCover.png" id="11_g37tx"]
 [ext_resource type="Texture2D" uid="uid://bkloprdhxat0i" path="res://Icons/SVG/meatballs.svg" id="12_dyujo"]
-[ext_resource type="Script" uid="uid://b2jr4ebqqjhu3" path="res://Csharp/UI/Tracks/Context Menus/TracksContextMenuOpener.cs" id="13_eopcg"]
+[ext_resource type="Script" uid="uid://cneudq4ve06wn" path="res://Csharp/UI/Context Menus/TracksMore.cs" id="13_awn7o"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4b8h4"]
 
@@ -188,7 +188,7 @@ text = "0:00"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="More" type="Button" parent="MarginContainer/HBoxContainer/End Details" unique_id=1123040031 node_paths=PackedStringArray("display")]
+[node name="More" type="MenuButton" parent="MarginContainer/HBoxContainer/End Details" unique_id=386917071 node_paths=PackedStringArray("track_display")]
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
 size_flags_horizontal = 8
@@ -196,9 +196,8 @@ size_flags_vertical = 4
 focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_31pnr")
 icon = ExtResource("12_dyujo")
+flat = false
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("13_eopcg")
-display = NodePath("../../../..")
-teleportMenu = null
-teleportMenuOffset = null
+script = ExtResource("13_awn7o")
+track_display = NodePath("../../../..")

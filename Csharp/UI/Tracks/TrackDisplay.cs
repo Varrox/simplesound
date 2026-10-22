@@ -9,7 +9,7 @@ public partial class TrackDisplay : Button {
 
     [Export] public Control spacer, sound_visualizer;
 
-    [Export] public TracksContextMenuOpener more;
+    [Export] public TracksMore more;
 
     public int track_index, playlist_index;
 
@@ -21,7 +21,6 @@ public partial class TrackDisplay : Button {
         MouseExited += OnExit;
 
         more.MouseEntered += OnEnter;
-        more.OnClose += more.Hide;
 
         Globals.main.OnLoadTrack += SetHighlight;
     }
@@ -33,8 +32,7 @@ public partial class TrackDisplay : Button {
     public override void _GuiInput(InputEvent @event) {
         if (@event is InputEventMouseButton) {
             if ((@event as InputEventMouseButton).ButtonIndex == MouseButton.Right) {
-                more.OpenMenu();
-                more.menu.GlobalPosition = GetGlobalMousePosition();
+                more.PopupAtMouse();
             }
         }
     }
@@ -69,7 +67,7 @@ public partial class TrackDisplay : Button {
     }
 
     public void OnExit() {
-        if (!more.menu_open) more.Hide();
+        if (!more.GetPopup().Visible) more.Hide();
 
         SetPlaying(highlighted);
 
