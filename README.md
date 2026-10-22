@@ -7,7 +7,7 @@ a simple music / audio player made in Godot. It takes inspiration from how spoti
 Feel free to report issues and bugs! It would help out a lot.
 
 Goals:
-* Add cloud syncing
+* Add cloud playlist syncing (somehow)
 * Fix up all bugs and random code inconsistencies
 * Implement Searching
 * Add playlist and track re-ordering.

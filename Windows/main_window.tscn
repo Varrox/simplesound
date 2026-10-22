@@ -448,14 +448,14 @@ theme_override_constants/scrollbar_h_separation = 4
 theme_override_styles/focus = SubResource("StyleBoxEmpty_b1qrp")
 horizontal_scroll_mode = 0
 script = ExtResource("15_btqdu")
+item_template = ExtResource("16_ns1th")
+total_items = null
+item_height = null
 cover = NodePath("Container/Top card/Icon/TextureRect")
 playlist_name_label = NodePath("Container/Top card/Playlist name")
 track_count_label = NodePath("Container/Top card/Track count")
-item_template = ExtResource("16_ns1th")
 parent_container = NodePath("Container")
 item_container = NodePath("Container/VBoxContainer")
-total_items = null
-item_height = null
 
 [node name="Container" type="VBoxContainer" parent="Interface/Content/Tracks/Track Display" unique_id=933878103]
 layout_mode = 2
@@ -952,18 +952,17 @@ offset_bottom = 43.0
 
 [node name="Player" type="AudioStreamPlayer" parent="." unique_id=488316782]
 
-[node name="Globals" type="Node" parent="." unique_id=71517921 node_paths=PackedStringArray("_main", "_player", "_discord", "_attribute_editor", "_download_window", "_file_dialog", "_playlist_menu", "_track_menu")]
+[node name="Globals" type="Node" parent="." unique_id=71517921 node_paths=PackedStringArray("_main", "_player", "_discord", "_attribute_editor", "_download_window", "_file_dialog", "_track_menu")]
 script = ExtResource("46_y0j44")
+_path_display = ExtResource("49_mrmdv")
+_confirmation_window = ExtResource("50_c27js")
 _main = NodePath("..")
 _player = NodePath("../Interface")
 _discord = NodePath("../Discord")
 _attribute_editor = NodePath("AttributeEditor")
 _download_window = NodePath("DownloadWindow")
 _file_dialog = NodePath("File Dialog")
-_playlist_menu = NodePath("")
 _track_menu = NodePath("../Interface/Trackcontext")
-_path_display = ExtResource("49_mrmdv")
-_confirmation_window = ExtResource("50_c27js")
 
 [node name="File Dialog" type="FileDialog" parent="Globals" unique_id=1989544037]
 title = "Open a File"

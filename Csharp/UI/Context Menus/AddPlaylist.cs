@@ -113,16 +113,35 @@ public partial class AddPlaylist : ContextMenuButton {
 				return;
 			}
 
-			byte[][] track_data = new byte[playlist.tracks_raw.Count][];
+			// Cover
 
-			for(int i = 0; i < playlist.tracks_raw.Count; i++) {
-				GD.Print(playlist.tracks_raw[i]);
-				if(reader.FileExists(playlist.tracks_raw[i]) && Tools.IsValidAudioFormat(playlist.tracks_raw[i])) {
-					track_data[i] = reader.ReadFile(playlist.tracks_raw[i]);
+			if (playlist.cover != null) {
+				if (reader.FileExists(playlist.cover)) {
+					string cover_save_path = Path.Combine(Constants.USER_PLAYLIST_COVERS, $"{playlist.name}.{playlist.cover.GetExtension()}");
+				
+					File.WriteAllBytes(cover_save_path, reader.ReadFile(playlist.cover));
+					playlist.cover = cover_save_path;
 				}
 			}
 
-			playlist.tracks = SaveSystem.ImportTracksData(playlist.tracks_raw.ToArray(), track_data, playlist.name);
+			// Tracks
+
+			List<string> tracks = new List<string>();
+
+			string playlist_tracks_directory = Path.Combine(Constants.USER_TRACKS, Tools.GetProperFileName(playlist.name));
+
+			for(int i = 0; i < playlist.tracks_raw.Count; i++) {
+				if(reader.FileExists(playlist.tracks_raw[i]) && Tools.IsValidAudioFormat(playlist.tracks_raw[i])) {
+					string destination_path = Path.Combine(playlist_tracks_directory, playlist.tracks_raw[i].GetFile());
+
+					File.WriteAllBytes(destination_path, reader.ReadFile(playlist.tracks_raw[i]));
+					tracks.Add(destination_path);
+				}
+			}
+
+			playlist.tracks = tracks;
+
+			// Save
 
 			Globals.save_data.playlists.Add(playlist.Save());
 			Globals.save_data.Save();

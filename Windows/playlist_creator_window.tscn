@@ -13,7 +13,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r7omr"]
 
-[node name="Window" type="Window" unique_id=874625055 node_paths=PackedStringArray("playlist_name_field", "add_track_button", "track_drop_panel", "track_path_display_container", "add_cover_button", "cover_path_display", "album_field", "artist_field", "cloud_sync_enabled_field", "submit_button", "cancel_button")]
+[node name="Window" type="Window" unique_id=874625055 node_paths=PackedStringArray("playlist_name_field", "add_track_button", "track_drop_panel", "track_path_display_container", "add_cover_button", "cover_path_display", "album_field", "artist_field", "submit_button", "cancel_button")]
 oversampling_override = 1.0
 title = "Create Playlist"
 initial_position = 2
@@ -30,9 +30,6 @@ add_cover_button = NodePath("HBoxContainer2/VBoxContainer2/Cover")
 cover_path_display = NodePath("HBoxContainer2/VBoxContainer2/Selected File")
 album_field = NodePath("HBoxContainer2/VBoxContainer2/Album")
 artist_field = NodePath("HBoxContainer2/VBoxContainer2/Artist")
-background_color_enabled_field = null
-background_color_field = null
-cloud_sync_enabled_field = NodePath("")
 submit_button = NodePath("HBoxContainer/Create")
 cancel_button = NodePath("HBoxContainer/Cancel")
 
