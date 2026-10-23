@@ -46,6 +46,23 @@ public partial class AttributeEditor : EditorWindow {
         Show();
     }
 
+    public void Open(TrackData track_data) {
+        name_field.Text = track_data.title;
+        track_name = track_data.title;
+        artist_field.Text = track_data.artist;
+        artist = track_data.artist;
+        share_link_field.Text = track_data.share_link;
+        share_link = track_data.share_link;
+
+        this.explicit_lyrics_field.ButtonPressed = track_data.explicit_lyrics;
+        this.explicit_lyrics = track_data.explicit_lyrics;
+
+        cover_label.SetPath();
+        cover_path = "";
+
+        Show();
+    }
+
     public void Submit() {
         Hide();
 

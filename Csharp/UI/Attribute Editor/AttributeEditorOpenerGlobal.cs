@@ -25,14 +25,15 @@ public partial class AttributeEditorOpenerGlobal : EditorWindowOpener {
             if (Globals.main.playlist != null)
                 Metadata.SetData(file, editor.name_field.Text, editor.artist_field.Text, editor.cover_path, editor.share_link_field.Text, editor.explicit_lyrics_field.ButtonPressed);
 
-            Globals.player.OnLoadTrack();
+            Globals.player.UpdateDisplayedInfo();
 
             TrackData track_data = new TrackData {
                 title = editor.name_field.Text,
                 artist = editor.artist_field.Text,
-                time = Tools.SecondsToTimestamp(Metadata.GetTotalTime(file)),
+                share_link = editor.share_link_field.Text,
                 explicit_lyrics = editor.explicit_lyrics_field.ButtonPressed,
-                corrupt = Metadata.IsFileCorrupt(file)
+                time = Tools.SecondsToTimestamp(Metadata.GetTotalTime(file)),
+                corrupt = Metadata.IsFileCorrupt(file),
             };
 
             Texture2D default_cover_icon = ApplicationManager.GetThemeIcon("default_cover_icon");

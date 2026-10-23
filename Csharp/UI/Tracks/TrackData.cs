@@ -1,6 +1,8 @@
 public struct TrackData {
     public string title, artist, time;
     public bool explicit_lyrics, corrupt;
+    
+    public string share_link;
 
     public TrackData(string file) {
         title = Tools.GetMediaTitle(file);
@@ -8,5 +10,7 @@ public struct TrackData {
         time = Tools.SecondsToTimestamp(Metadata.GetTotalTime(file));
         explicit_lyrics = Metadata.IsExplicit(file);
         corrupt = Metadata.IsFileCorrupt(file);
+
+        share_link = Metadata.GetShareLink(file);
     }
 }

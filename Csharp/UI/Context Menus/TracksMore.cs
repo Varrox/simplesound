@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using Godot;
 
@@ -13,27 +14,9 @@ public partial class TracksMore : ContextMenuButton {
     public override void _Ready() {
         base._Ready();
 
-        GetPopup().AddItem("Edit metadata", EDIT_METADATA);
-        GetPopup().SetItemDisabled(EDIT_METADATA, true);
+        SetupTrackOptions(GetPopup(), out share_popup_menu);
 
-        GetPopup().AddItem("Remove track from playlist", REMOVE_TRACK);
-        GetPopup().SetItemDisabled(REMOVE_TRACK, true);
-
-        GetPopup().AddItem("Delete track file", DELETE_TRACK);
-        GetPopup().SetItemDisabled(DELETE_TRACK, true);
-
-        share_popup_menu = new ThemePopupMenu();
-
-        GetPopup().AddSubmenuNodeItem("Share", share_popup_menu, SHARE_TRACK);
-        GetPopup().SetItemDisabled(SHARE_TRACK, true);
-
-        // Share Menu
-
-        share_popup_menu.AddIconItem(ApplicationManager.GetThemeIcon("loop_icon"), "Copy share link", COPY_SHARE_LINK);
-        share_popup_menu.SetItemDisabled(COPY_SHARE_LINK, true);
-
-        share_popup_menu.AddIconItem(ApplicationManager.GetThemeIcon("folder_icon"), "Open track in file browser", OPEN_TRACK_IN_FILE_BROWSER);
-        share_popup_menu.SetItemDisabled(OPEN_TRACK_IN_FILE_BROWSER, true);
+        share_popup_menu.IdPressed += _ShareItemPressed;
 
         MouseEntered += Show;
         GetPopup().PopupHide += Hide;
@@ -41,35 +24,63 @@ public partial class TracksMore : ContextMenuButton {
         Hide();
     }
 
+    public static void SetupTrackOptions(PopupMenu popup, out ThemePopupMenu share_popup) {
+        popup.AddItem("Edit metadata", EDIT_METADATA);
+
+        popup.AddItem("Remove track from playlist", REMOVE_TRACK);
+
+        popup.AddItem("Delete track file", DELETE_TRACK);
+
+        // Share Menu
+
+        share_popup = new ThemePopupMenu();
+
+        popup.AddSubmenuNodeItem("Share", share_popup, SHARE_TRACK);
+
+        share_popup.AddIconItem(ApplicationManager.GetThemeIcon("loop_icon"), "Copy share link", COPY_SHARE_LINK);
+
+        share_popup.AddIconItem(ApplicationManager.GetThemeIcon("folder_icon"), "Open track in file browser", OPEN_TRACK_IN_FILE_BROWSER);
+    }
+
     protected override void _ItemPressed(long id) {
         base._ItemPressed(id);
 
-		switch(id) {
+		TrackOptionSelected(id, track_display.playlist_index, track_display.track_index, track_display.track_data);
+    }
+
+    private void _ShareItemPressed(long id) {
+        base._ItemPressed(id);
+
+        ShareItemSelected(id, track_display.playlist_index, track_display.track_index);
+    }
+
+    public static void TrackOptionSelected(long id, int playlist_index, int track_index, TrackData track_data) {
+        switch(id) {
 			case EDIT_METADATA:
+                EditMetadata(playlist_index, track_index, track_data);
 				break;
 			case REMOVE_TRACK:
-                RemoveTrack();
+                RemoveTrack(playlist_index, track_index, track_data.title);
 				break;
 			case DELETE_TRACK:
-                DeleteTrack();
+                DeleteTrack(playlist_index, track_index, track_data.title);
 				break;
 		}
     }
 
-    public void EditMetadata() {
-
-
+    public static void EditMetadata(int playlist_index, int track_index, TrackData track_data) {
         if (!Globals.player.Interrupt()) return;
 
-        string track_file = Globals.main.playlists[track_display.playlist_index].tracks[track_display.track_index];;
-
-        Globals.attribute_editor.Open(Metadata.GetName(track_file), Metadata.GetArtist(track_file), Metadata.GetShareLink(track_file), Metadata.IsExplicit(track_file));
+        Globals.attribute_editor.Open(track_data);
         
         void SubmitMeta() {
             if (Globals.attribute_editor.cancelled) {
                 Globals.player.interrupted = false;
                 Globals.attribute_editor.OnClose -= SubmitMeta;
+                return;
             }
+
+            string track_file = Globals.main.playlists[playlist_index].tracks[track_index];
             
             Metadata.SetData(track_file, 
                 Globals.attribute_editor.name_field.Text, 
@@ -79,19 +90,18 @@ public partial class TracksMore : ContextMenuButton {
                 Globals.attribute_editor.explicit_lyrics_field.ButtonPressed
             );
 
-            Globals.player.OnLoadTrack();
+            Globals.player.UpdateDisplayedInfo();
 
-            TrackData track_data = new TrackData {
+            TrackData new_track_data = new TrackData {
                 title = Globals.attribute_editor.name_field.Text,
                 artist = Globals.attribute_editor.artist_field.Text,
-                time = Tools.SecondsToTimestamp(Metadata.GetTotalTime(track_file)),
                 explicit_lyrics = Globals.attribute_editor.explicit_lyrics_field.ButtonPressed,
-                corrupt = Metadata.IsFileCorrupt(track_file)
+                share_link = Globals.attribute_editor.share_link_field.Text,
+                time = track_data.time,
+                corrupt = Metadata.IsFileCorrupt(track_file), // Recheck just incase
             };
 
-            Texture2D default_cover_icon = ApplicationManager.GetThemeIcon("default_cover_icon");
-            Globals.main.tracks_visualizer.UpdateTrack(track_display.track_index, track_data, Tools.GetMediaCover(track_file) ?? default_cover_icon);
-
+            Globals.main.tracks_visualizer.UpdateTrack(track_index, new_track_data, Tools.GetMediaCover(track_file) ?? ApplicationManager.GetThemeIcon("default_cover_icon"));
             Globals.player.interrupted = false;
             Globals.attribute_editor.OnClose -= SubmitMeta;
         }
@@ -99,17 +109,36 @@ public partial class TracksMore : ContextMenuButton {
         Globals.attribute_editor.OnClose += SubmitMeta;
     }
 
-    public void RemoveTrackFromPlaylist() {
-        Globals.main.playlists[track_display.playlist_index].tracks.RemoveAt(track_display.track_index);
-        Globals.main.playlists[track_display.playlist_index].Save();
+    public static void RemoveTrackFromPlaylist(int playlist_index, int track_index) {
+        Globals.main.playlists[playlist_index].RemoveTrack(track_index);
+        Globals.main.playlists[playlist_index].Save();
+
+        if(Globals.main.playlist_index == playlist_index) {
+            if (Globals.main.track_index > track_index) {
+                Globals.main.track_index--;
+            }
+        }
 
         Globals.main.Refresh();
     }
 
-    public void DeleteTrack() {
+    public static void DeleteTrackFromPlaylist(int playlist_index, int track_index) {
+        Globals.main.playlists[playlist_index].DeleteTrack(track_index);
+        Globals.main.playlists[playlist_index].Save();
+
+        if(Globals.main.playlist_index == playlist_index) {
+            if (Globals.main.track_index > track_index) {
+                Globals.main.track_index--;
+            }
+        }
+
+        Globals.main.Refresh();
+    }
+
+    public static void DeleteTrack(int playlist_index, int track_index, string track_name) {
         ConfirmationWindow confirmation = (ConfirmationWindow)Globals.confirmation_window.Instantiate();
 
-        confirmation.message = $"Do you really want to delete track file '{track_display.track_name_label.GetParsedText()}'?";
+        confirmation.message = $"Do you really want to delete track file '{track_name}'?";
         confirmation.accept_text = "Yes";
         confirmation.decline_text = "No";
         confirmation.cancel_text = "";
@@ -117,29 +146,26 @@ public partial class TracksMore : ContextMenuButton {
         confirmation.front = true;
         confirmation.free_on_close = true;
         
-        GetTree().Root.AddChild(confirmation);
+        ApplicationManager.instance.Root.AddChild(confirmation);
 
         void Confirmed(Confirm confirm) {
             if (confirm == Confirm.Declined) return;
 
-            string track_file = Globals.main.playlists[track_display.playlist_index].tracks[track_display.track_index];
-
-            File.Delete(track_file);
-            RemoveTrackFromPlaylist();
+            DeleteTrackFromPlaylist(playlist_index, track_index);
         }
 
         confirmation.OnClose += Confirmed;
     }
 
-    public void RemoveTrack() {
+    public static void RemoveTrack(int playlist_index, int track_index, string track_name) {
         if(!Globals.save_data.application_settings.remove_track_warning) {
-            RemoveTrackFromPlaylist();
+            RemoveTrackFromPlaylist(playlist_index, track_index);
             return;
         }
 
         ConfirmationWindow confirmation = (ConfirmationWindow)Globals.confirmation_window.Instantiate();
 
-        confirmation.message = $"Do you really want to remove track '{track_display.track_name_label.GetParsedText()}'?\n(This will not delete its file.)";
+        confirmation.message = $"Do you really want to remove track '{track_name}'?\n(This will not delete its file.)";
         confirmation.accept_text = "Yes";
         confirmation.decline_text = "No";
         confirmation.cancel_text = "";
@@ -148,7 +174,7 @@ public partial class TracksMore : ContextMenuButton {
         confirmation.show_ignore = true;
         confirmation.free_on_close = true;
         
-        GetTree().Root.AddChild(confirmation);
+        ApplicationManager.instance.Root.AddChild(confirmation);
 
         void Confirmed(Confirm confirm) {
             if (confirmation.ignored) {
@@ -158,16 +184,14 @@ public partial class TracksMore : ContextMenuButton {
 
             if (confirm == Confirm.Declined) return;
 
-            RemoveTrackFromPlaylist();
+            RemoveTrackFromPlaylist(playlist_index, track_index);
         }
 
         confirmation.OnClose += Confirmed;
     }
 
-    private void _ShareItemPressed(long id) {
-        base._ItemPressed(id);
-
-        string track_file = Globals.main.playlists[track_display.playlist_index].tracks[track_display.track_index];
+    public static void ShareItemSelected(long id, int playlist_index, int track_index) {
+        string track_file = Globals.main.playlists[playlist_index].tracks[track_index];
 
 		switch(id) {
 			case COPY_SHARE_LINK:

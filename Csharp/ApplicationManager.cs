@@ -22,10 +22,10 @@ public partial class ApplicationManager : SceneTree {
 
     public static Theme theme;
 
-    private static ApplicationManager self;
+    public static ApplicationManager instance;
 
     public ApplicationManager() {
-        self = this;
+        instance = this;
 
         Globals.save_data = SaveData.GetSaveData();
 
@@ -69,8 +69,8 @@ public partial class ApplicationManager : SceneTree {
     }
 
     public static void QuitProgram() {
-        Globals.save_data.graphic_settings.main_display_size = self.Root.Size;
-        self.Quit();
+        Globals.save_data.graphic_settings.main_display_size = instance.Root.Size;
+        instance.Quit();
     }
 
     private static void _SetMaxFPS(bool focused) {

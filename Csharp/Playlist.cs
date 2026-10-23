@@ -4,6 +4,7 @@ using System.IO;
 using System;
 using System.Text;
 using Godot;
+using System.Linq;
 
 public class Playlist {
     public string name;
@@ -65,6 +66,57 @@ public class Playlist {
         cover = "";
 
         type = PlaylistType.Default;
+    }
+
+    public int FindRawTrackIndex(int track_index) {
+        string track_path = _tracks[track_index];
+
+        for(int i = 0; i < _tracks_raw.Count; i++) {
+            if(Directory.Exists(_tracks_raw[i]) && track_path.Contains(_tracks_raw[i])) {
+                List<string> directory_tracks = new List<string>();
+                GetTracksFromDirectory(ref directory_tracks, _tracks_raw[i]);
+
+                track_index -= directory_tracks.Count;
+            }
+            else {
+                track_index--;
+            }
+            if (track_index <= 0) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public void RemoveTrack(int track_index) {
+        string track_path = _tracks[track_index];
+        int raw_index = FindRawTrackIndex(track_index);
+
+        if(!Directory.Exists(_tracks_raw[raw_index])) {
+            _tracks_raw.RemoveAt(raw_index);
+        }
+        else {
+            _tracks_raw.Insert(raw_index + 1, $"!{track_path}");
+        }
+
+        _tracks.RemoveAt(track_index);
+    }
+
+    public void DeleteTrack(int track_index) {
+        string track_path = _tracks[track_index];
+
+        if (_tracks_raw.Contains(track_path)) { // If it contains it, remove it.
+            int index = FindRawTrackIndex(track_index);
+
+            if(!Directory.Exists(_tracks_raw[index])) {
+                _tracks_raw.RemoveAt(index);
+            }
+        }
+
+        _tracks.RemoveAt(track_index);
+
+        File.Delete(track_path);
     }
 
     public byte[] CreateJson() {
@@ -190,7 +242,15 @@ public class Playlist {
     }
 
     public static List<string> ProcessTracks(List<string> tracks) {
+        List<string> exclude = new List<string>();
+
         for(int i = tracks.Count - 1; i >= 0; i--) {
+            if(tracks[i].StartsWith("!")) {
+                exclude.Add(tracks[i].Substring(1));
+                tracks.RemoveAt(i);
+                continue;
+            }
+
             if(!Tools.ValidAudioFile(tracks[i]) && !Directory.Exists(tracks[i])) {
                 tracks.RemoveAt(i);
             }
@@ -202,6 +262,10 @@ public class Playlist {
                 GetTracksFromDirectory(ref dir_tracks, dir_path);
                 tracks.InsertRange(i, dir_tracks);
             }
+        }
+
+        for(int i = 0; i < exclude.Count; i++) {
+            tracks.RemoveAll(t => t.Equals(exclude[i]));
         }
         
         return tracks;

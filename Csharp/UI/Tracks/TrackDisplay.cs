@@ -15,6 +15,8 @@ public partial class TrackDisplay : Button {
 
     public bool highlighted;
 
+    public TrackData track_data;
+
     public override void _Ready() {
         ButtonUp += SetTrack;
         MouseEntered += OnEnter;
@@ -76,6 +78,8 @@ public partial class TrackDisplay : Button {
     }
 
     public void Init(in int track, in int playlist, in TrackData data, in Playlist.PlaylistType type, in Texture2D cover) {
+        track_data = data;
+
         Disabled = data.corrupt;
 
         track_number_label.Text = (track + 1).ToString();
@@ -93,6 +97,9 @@ public partial class TrackDisplay : Button {
         (cover_texture_rect.GetParent() as Control).Visible = !album;
 
         spacer.Visible = !album;
+
+        more.GetPopup().SetItemDisabled(TracksMore.EDIT_METADATA, data.corrupt);
+        more.share_popup_menu.SetItemDisabled(TracksMore.COPY_SHARE_LINK, data.corrupt);
 
         SetHighlight();
     }

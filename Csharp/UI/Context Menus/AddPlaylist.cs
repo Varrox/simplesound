@@ -127,12 +127,26 @@ public partial class AddPlaylist : ContextMenuButton {
 			// Tracks
 
 			List<string> tracks = new List<string>();
+			List<string> exclude = new List<string>();
 
 			string playlist_tracks_directory = Path.Combine(Constants.USER_TRACKS, Tools.GetProperFileName(playlist.name));
+
+			for(int i = playlist.tracks_raw.Count - 1; i >= 0; i--) {
+				if(playlist.tracks_raw[i].StartsWith("!")) { // Excludes
+					string track_path = playlist.tracks_raw[i].Substring(1);
+
+					if (reader.FileExists(track_path) && Tools.IsValidAudioFormat(track_path)) {
+						exclude.Add(track_path);
+						playlist.tracks_raw.RemoveAt(i);
+					}
+				}
+			}
 
 			for(int i = 0; i < playlist.tracks_raw.Count; i++) {
 				if(reader.FileExists(playlist.tracks_raw[i]) && Tools.IsValidAudioFormat(playlist.tracks_raw[i])) {
 					string destination_path = Path.Combine(playlist_tracks_directory, playlist.tracks_raw[i].GetFile());
+
+					if (exclude.Contains(destination_path)) continue;
 
 					File.WriteAllBytes(destination_path, reader.ReadFile(playlist.tracks_raw[i]));
 					tracks.Add(destination_path);

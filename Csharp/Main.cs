@@ -19,6 +19,8 @@ public partial class Main : Control {
 
     public int looked_at_playlist;
 
+	private string playing_path;
+
     public Playlist playlist {
 		get {
 			if (playlists == null) return null;
@@ -211,20 +213,37 @@ public partial class Main : Control {
 
 		track_index = Mathf.Wrap(track_index, 0, playlist.tracks.Count);
 
-		if(Metadata.IsFileCorrupt(track)) { // Skip if corrupted
-			MoveTrack(amount);
-			return;
+		int total_skips = 0;
+		while(Metadata.IsFileCorrupt(track)) { // Skip if corrupted
+			track_index = Mathf.Wrap(track_index + 1, 0, playlist.tracks.Count);
+			total_skips++;
+
+			if (total_skips >= playlist.tracks.Count) {
+				return;
+			}
 		}
 
 		PlayTrack(track);
 
 		playing = false;
-		FlipPlayingState();
+		Play();
 	}
 
 	public void SetTrack(int index) {
 		if (!IsTrackAvailable()) return;
-		
+
+		index = Mathf.Clamp(index, 0, playlist.tracks.Count);
+
+		int total_skips = 0;
+		while(Metadata.IsFileCorrupt(playlist.tracks[index])) { // Skip if corrupted
+			index = Mathf.Wrap(index + 1, 0, playlist.tracks.Count);
+			total_skips++;
+
+			if (total_skips >= playlist.tracks.Count) {
+				return;
+			}
+		}
+
 		offset = index;
 		shuffle_index = index;
 		track_index = index;
@@ -232,8 +251,7 @@ public partial class Main : Control {
 		PlayTrack(track);
 
 		playing = false;
-
-		FlipPlayingState();
+		Play();
     }
 
 	public void PlayTrack(string path) {
@@ -243,19 +261,13 @@ public partial class Main : Control {
             if (FileAccess.FileExists(path)) _LoadTrack(path);
             else { // if the file doesn't exist
                 GD.PrintErr($"{path} doesn't exist");
-
-				// TODO : Better missing track management needed.
-
-				if (playlist.tracks[track_index] == path) {
-                    playlist.tracks.RemoveAt(track_index);
-                    playlist.Save();
-					PlayTrack(track);
-                }
             }
         }
 	}
 
 	private void _LoadTrack(in string path) {
+		playing_path = path;
+
 		switch (path.GetExtension()) {
 			case "mp3":
 				audio_player.Stream = AudioStreamMP3.LoadFromFile(path);
@@ -309,13 +321,36 @@ public partial class Main : Control {
     }
 
     public void Refresh() {
+		string current_playlist = playlist_paths[playlist_index];
+		int current_playlist_index = playlist_index;
+
         SaveData save_data = SaveData.GetSaveData();
+
         playlist_paths = save_data.playlists ?? new List<string>();
-        playlists = new List<Playlist>(new Playlist[playlist_paths.Count]);
+		
+        playlists = new List<Playlist>();
 
-        for (int i = 0; i < playlist_paths.Count; i++) playlists[i] = Playlist.LoadFromFile(playlist_paths[i]);
+        for (int i = 0; i < playlist_paths.Count; i++) playlists.Add(Playlist.LoadFromFile(playlist_paths[i]));
 
-        LoadPlaylist(playlist_index);
+		int target_playlist;
+
+		if (!playlist_paths.Contains(current_playlist)) {
+			target_playlist = Mathf.Clamp(current_playlist_index, 0, playlist_paths.Count - 1);
+		}
+		else {
+			target_playlist = playlist_paths.IndexOf(current_playlist);
+		}
+
+        LoadPlaylist(target_playlist);
+
+		if (!playlist.tracks.Contains(playing_path)) {
+
+			PlayTrack(track);
+			Pause();
+		}
+		else {
+			track_index = playlist.tracks.IndexOf(playing_path);
+		}
 
         // Done Loading
 

@@ -27,7 +27,7 @@ public partial class Player : Node {
         next_button.ButtonUp += () => Move(1);
         back_button.ButtonUp += () => Move(-1);
 
-        Globals.main.OnLoadTrack += OnLoadTrack;
+        Globals.main.OnLoadTrack += UpdateDisplayedInfo;
         Globals.main.OnLoadPlaylist += ApplyPlaylistSettings;
 
         progress_slider.DragEnded += SetTime;
@@ -115,7 +115,7 @@ public partial class Player : Node {
         if (!interrupted) Globals.main.MoveTrack(by);
     }
 
-    public void OnLoadTrack() {
+    public void UpdateDisplayedInfo() {
         Texture2D default_cover_icon = ApplicationManager.GetThemeIcon("default_cover_icon");
 
         if (Globals.main.IsTrackAvailable()) {

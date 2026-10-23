@@ -427,6 +427,7 @@ icon = ExtResource("10_gjyis")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("11_2o8nl")
+teleportMenu = null
 teleportMenuOffset = Vector2(0, 32)
 
 [node name="HSeparator" type="HSeparator" parent="Interface/Content/Side Panel/Collapsed/VBoxContainer" unique_id=765403374]
@@ -453,6 +454,8 @@ track_count_label = NodePath("Container/Top card/Track count")
 item_template = ExtResource("16_ns1th")
 parent_container = NodePath("Container")
 item_container = NodePath("Container/VBoxContainer")
+total_items = null
+item_height = null
 
 [node name="Container" type="VBoxContainer" parent="Interface/Content/Tracks/Track Display" unique_id=933878103]
 layout_mode = 2
@@ -583,7 +586,7 @@ icon = ExtResource("24_cq8g2")
 expand_icon = true
 script = ExtResource("23_f8opk")
 
-[node name="Refresh" type="Button" parent="Interface/Top Bar/Left" unique_id=953963470 node_paths=PackedStringArray("refesh_texture_animation", "refresh_texture_rect")]
+[node name="Refresh" type="Button" parent="Interface/Top Bar/Left" unique_id=953963470 node_paths=PackedStringArray("refesh_texture_animation")]
 custom_minimum_size = Vector2(28, 0)
 layout_mode = 2
 tooltip_text = "Refreshes all of the music player."
@@ -593,7 +596,6 @@ icon_alignment = 1
 expand_icon = true
 script = ExtResource("29_nr08j")
 refesh_texture_animation = NodePath("AnimationPlayer")
-refresh_texture_rect = NodePath("TextureRect")
 
 [node name="TextureRect" type="TextureRect" parent="Interface/Top Bar/Left/Refresh" unique_id=727025634]
 layout_mode = 1
