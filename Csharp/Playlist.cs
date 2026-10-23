@@ -251,10 +251,7 @@ public class Playlist {
                 continue;
             }
 
-            if(!Tools.ValidAudioFile(tracks[i]) && !Directory.Exists(tracks[i])) {
-                tracks.RemoveAt(i);
-            }
-            else if (Directory.Exists(tracks[i])) {
+            if (Directory.Exists(tracks[i])) {
                 string dir_path = tracks[i];
                 tracks.RemoveAt(i);
 
@@ -262,12 +259,15 @@ public class Playlist {
                 GetTracksFromDirectory(ref dir_tracks, dir_path);
                 tracks.InsertRange(i, dir_tracks);
             }
+            else if(!Tools.ValidAudioFile(tracks[i])) { // Not an audio file.
+                tracks.RemoveAt(i);
+            }
         }
 
-        for(int i = 0; i < exclude.Count; i++) {
+        for(int i = 0; i < exclude.Count; i++) { // Remove exclusions.
             tracks.RemoveAll(t => t.Equals(exclude[i]));
         }
-        
+
         return tracks;
     }
 }
