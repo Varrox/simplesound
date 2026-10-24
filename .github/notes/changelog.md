@@ -26,7 +26,7 @@
 - Added update / download icon to download menu button
 - Settings menu tabs UI improved (tool tips, selected tab indicator, etc).
 - All icons are now SVGs for better visibility.
-- Improved selected song / playlist button highlight visibility.
+- Improved selected track / playlist button highlight visibility.
 - Playlist scroll positions are saved (only runtime), so no more scrolling back to the position you were at before.
 - Removed separation between tracks (biproduct of instant load time optimization)
 - Proper context menus (now using godot's built in popup menu)

@@ -7,7 +7,7 @@ TODO
 - Optimize blur by not rendering new frames unless window size is changed or track changes.
 - Add CD read support (optional ripping too)
 - Make context menus so they instantiate instead of keep reference & make them children of popup windows.
-- Add song context menu to playing icon / name in bottom left corner
+- Add track context menu to playing icon / name in bottom left corner
 - Add warnings to downloader
 - Standardize all input fields to be like settings
 - Redo playlist creator UI
@@ -50,7 +50,7 @@ FINISHED
 - Add update button.
 - Add share button to tracks (keep youtube link in track metadata).
 - Add shuffle option to save file.
-- Add music video playing.
+- Add video playing.
 - Make top card playbutton functionality.
 - Add playlist creation.
 - Add playlist importing.
@@ -81,5 +81,5 @@ SCRAPPED
 
 ULTIMATE GOAL:
 
-Create a music player like spotify, that allows for advanced track visualizers, shaders, 
+Create a audio player like spotify, that allows for advanced track visualizers, shaders, 
 ui customization, and other features.

@@ -1,6 +1,6 @@
 # simplesound
 
-a simple music / audio player made in Godot. It takes inspiration from how spotify in UI design and UX, and it is all ran with local files.
+a simple audio player made in Godot. It takes inspiration from how spotify in UI design and UX, and it is all ran with local files.
 
 ![Screenshot of simplesound in action](https://raw.githubusercontent.com/Varrox/simplesound/main/.github/screenshot_01.png)
 

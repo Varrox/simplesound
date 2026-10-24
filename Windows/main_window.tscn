@@ -297,7 +297,7 @@ script = ExtResource("23_f8opk")
 [node name="Refresh" type="Button" parent="Interface/Top Bar/MarginContainer/Left" unique_id=953963470 node_paths=PackedStringArray("refesh_texture_animation", "refresh_texture_rect")]
 custom_minimum_size = Vector2(28, 0)
 layout_mode = 2
-tooltip_text = "Refreshes all of the music player."
+tooltip_text = "Refreshes the whole audio player."
 focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_wx3lt")
 icon_alignment = 1
@@ -327,7 +327,7 @@ libraries/ = SubResource("AnimationLibrary_4w656")
 [node name="Downloader" type="Button" parent="Interface/Top Bar/MarginContainer/Left" unique_id=1673368361]
 custom_minimum_size = Vector2(125, 0)
 layout_mode = 2
-tooltip_text = "Menu for downloading music from streaming services."
+tooltip_text = "Menu for downloading tracks from youtube via yt-dlp."
 focus_mode = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_i5cru")
 text = "Downloader"

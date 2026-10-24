@@ -19,9 +19,9 @@ Similar rules can be applied when contributing bug fixes.
 * You cannot add anything that violates a separate platforms policies directly (Note: this means utilizing a public tool like yt-dlp, which violates youtube's policies on its own, separately from us is still fine)
 * No artificial intelligence may be used to write simplesound code. The only lenience allowed is small casual use that isn't visibly AI generated, But if your pull request contains visibly AI generated code, or an AI generated description, it will most likely be turned down. If your pull request contains AI generated code, you must state it in the description.
 * Use the same Godot version as the development branch you are working on. Otherwise you might possibly create unnecassary conflicts and/or build errors.
-* simplesound must be minimally functional without needing an internet connection (able to play music)
+* simplesound must be minimally functional without needing an internet connection (able to play tracks)
 * Do not over complicate the process of using simplesound, its in the name, keep it simple.
-* Along with no AI usage for adding to simplesound source code, no adding in AI features. I do not even know how AI could be even useful in a music player in the first place, or how it could even be implemented in an open source project like simplesound.
+* Along with no AI usage for adding to simplesound source code, no adding in AI features. I do not even know how AI could be even useful in a audio player in the first place, or how it could even be implemented in an open source project like simplesound.
 * The code must not pose a security risk to the user.
 
 > ### Extra

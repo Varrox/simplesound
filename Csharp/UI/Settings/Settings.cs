@@ -57,7 +57,7 @@ public partial class Settings : EditorWindow {
         AddFloatSetting("Hz 10000", Globals.save_data.audio_settings, "hz_10000", 0.0f, -60.0f, 24.0f, "The 10000 Hz band.");
 
         AddHeader("Reverb", """
-        The reverb effect plays the music audio back continuously, decaying over a period of time.
+        The reverb effect plays the track audio back continuously, decaying over a period of time.
         It simulates sounds in different kinds of spaces, ranging from small rooms, to big caverns.
         """);
 
@@ -84,7 +84,7 @@ public partial class Settings : EditorWindow {
         AddFileLocationSetting("yt-dlp Location", Globals.save_data.application_settings, "ytdlp_location", 
         "The file location of an yt-dlp executable.");
         AddEnumSetting("Audio Format", Globals.save_data.application_settings, "download_format", DownloadFormat.MP3, false, 
-        "The audio format that the music downloader will save music as.");
+        "The audio format that the track downloader will save track as.");
     }
 
     void AddAppDataSettings() {
