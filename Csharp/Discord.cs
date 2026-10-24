@@ -44,21 +44,21 @@ public partial class Discord : Node {
     public void FinishUpdateTrack() {
         if (!set_up) return;
 
-        string name = client.CurrentUser.Username;
-
         bool cover = string.IsNullOrEmpty(cover_link) || cover_link.Length > 255;
 
+        TrackData track_data = new TrackData(Globals.main.track);
+
         RichPresence presence = new RichPresence() {
-            Details = Globals.player.track_name_label.Text,
-            State = Globals.player.track_artist_label.Text,
+            Details = track_data.title,
+            State = track_data.artist,
             Assets = new Assets() {
                 LargeImageKey = cover ? GetLogo() : cover_link,
                 SmallImageKey = cover ? "" : GetLogo(),
-                LargeImageText = name == "varrox" ? $"btw I ({client.CurrentUser.DisplayName}) made this software" : "simplesound is an open source music player",
+                LargeImageText = "simplesound is an open source audio player",
                 LargeImageUrl = "https://github.com/Varrox/simplesound"
             },
             Type = ActivityType.Listening,
-            Buttons = new[]{ new DiscordRPC.Button() { Label = "Open track", Url = Globals.main.current_share_link } }
+            Buttons = [ new DiscordRPC.Button() { Label = "Open track", Url = Globals.main.current_share_link } ]
         };
 
         client.SetPresence(presence);
