@@ -1,5 +1,6 @@
 using Godot;
 using System.IO;
+using System.Collections.Generic;
 
 public class Tools {
     /// <summary>
@@ -121,7 +122,7 @@ public record Diff<T> {
         removals = new List<int>();
 
         for(int i = 0; i < list_1.Count; i++) { // Removals
-            if(!list_2.Contains(list_1[i])) diff.removals.Add(i);
+            if(!list_2.Contains(list_1[i])) removals.Add(i);
         }
 
         for(int i = 0; i <= list_2.Count; i++) { // Additions
@@ -132,7 +133,7 @@ public record Diff<T> {
             }
 
             for(int j = i + 1; j <= list_2.Count; j++) {
-                if(!list_1.Contains(list_2[j])) diff.additions.Add(new Diff.DiffAddition(list_1_index, j));
+                if(!list_1.Contains(list_2[j])) additions.Add(new DiffAddition(list_1_index, j));
             }
         }
     }
@@ -145,7 +146,7 @@ public record Diff<T> {
             T addition = _list_2[additions[i].list_2_index];
             for(int j = 0; j < removals.Count; j++) {
                 T removal = _list_1[removals[j]];
-                if (removal == addition) {
+                if (removal.Equals(addition)) {
                     moved.Add(new DiffAddition(removals[i], additions[i].list_2_index));
                     break;
                 }
