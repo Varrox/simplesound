@@ -2,7 +2,7 @@
 
 [ext_resource type="StyleBox" uid="uid://bw4kvok8cf77w" path="res://Styling/Selectables/radio_normal.tres" id="1_idoqo"]
 [ext_resource type="StyleBox" uid="uid://d05hxmlaqj0qh" path="res://Styling/Selectables/radio_hover.tres" id="2_imthr"]
-[ext_resource type="Script" uid="uid://bgp1778sxr2gj" path="res://Csharp/UI/Playlists/PlaylistDisplay.cs" id="3_3gw7l"]
+[ext_resource type="Script" uid="uid://bgp1778sxr2gj" path="res://Csharp/UI/Radios/PlaylistDisplay.cs" id="3_3gw7l"]
 [ext_resource type="StyleBox" uid="uid://bhcyqvvim6l5e" path="res://Styling/Rounded Corners.tres" id="4_q088j"]
 [ext_resource type="Shader" uid="uid://cxrpix7bw201g" path="res://Styling/Shaders/anti_aliased.gdshader" id="5_t1j7f"]
 [ext_resource type="Texture2D" uid="uid://cksbdmhr2s8yy" path="res://Icons/Default Covers/DefaultCover.png" id="6_dxib1"]

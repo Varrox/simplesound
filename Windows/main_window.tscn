@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://cbpkjhjnbrjm6"]
 
 [ext_resource type="Theme" uid="uid://cg2x5h7ufrntn" path="res://Styling/global_theme.tres" id="1_gjyis"]
-[ext_resource type="Script" uid="uid://b81fhtdmrks0a" path="res://Csharp/Main.cs" id="2_kb0xi"]
-[ext_resource type="Script" uid="uid://cvtqwvi0qvcvy" path="res://Csharp/Player.cs" id="3_cq8g2"]
+[ext_resource type="Script" uid="uid://b81fhtdmrks0a" path="res://Csharp/Application/Main.cs" id="2_kb0xi"]
+[ext_resource type="Script" uid="uid://cvtqwvi0qvcvy" path="res://Csharp/Application/Player.cs" id="3_cq8g2"]
 [ext_resource type="Script" uid="uid://dshtlldgdpwlu" path="res://Styling/background_image_transition.gd" id="4_7kpk1"]
 [ext_resource type="Shader" uid="uid://bdi2g0ydm4uf7" path="res://Styling/Shaders/transition.gdshader" id="5_xqlq7"]
 [ext_resource type="Shader" uid="uid://6mp1f8uww708" path="res://Styling/Shaders/blur.gdshader" id="6_r776v"]
@@ -13,18 +13,18 @@
 [ext_resource type="Texture2D" uid="uid://cnygllcx1qoyc" path="res://Icons/SVG/search.svg" id="10_ns1th"]
 [ext_resource type="Script" uid="uid://ddkuen8ursg0q" path="res://Csharp/UI/Context Menus/AddPlaylist.cs" id="11_xrbbi"]
 [ext_resource type="PackedScene" uid="uid://5kfxiu06xug0" path="res://Windows/playlist_creator_window.tscn" id="12_gjyis"]
-[ext_resource type="Script" uid="uid://dcnfao6qa81tk" path="res://Csharp/UI/Playlists/PlaylistsVisualizer.cs" id="12_jnr5d"]
+[ext_resource type="Script" uid="uid://dcnfao6qa81tk" path="res://Csharp/UI/Containers/PlaylistsVisualizer.cs" id="12_jnr5d"]
 [ext_resource type="PackedScene" uid="uid://qe17cpkc3gqr" path="res://Prefabs/playlist_display.tscn" id="13_ns1th"]
-[ext_resource type="Script" uid="uid://bgymt3f23woi7" path="res://Csharp/UI/Tracks/TracksVisualizer.cs" id="15_btqdu"]
+[ext_resource type="Script" uid="uid://bgymt3f23woi7" path="res://Csharp/UI/Containers/TracksVisualizer.cs" id="15_btqdu"]
 [ext_resource type="PackedScene" uid="uid://kjaecy3cmwvl" path="res://Prefabs/track_display.tscn" id="16_ns1th"]
 [ext_resource type="StyleBox" uid="uid://bhcyqvvim6l5e" path="res://Styling/Rounded Corners.tres" id="17_0xq2a"]
 [ext_resource type="Shader" uid="uid://cxrpix7bw201g" path="res://Styling/Shaders/anti_aliased.gdshader" id="18_fmyll"]
-[ext_resource type="Script" uid="uid://qupwebtnhh44" path="res://Csharp/UI/Playlists/PlaylistPlayer.cs" id="20_drm60"]
+[ext_resource type="Script" uid="uid://qupwebtnhh44" path="res://Csharp/UI/Buttons/PlaylistPlayer.cs" id="20_drm60"]
 [ext_resource type="Texture2D" uid="uid://bm7judayjojov" path="res://Icons/SVG/play.svg" id="21_kb0xi"]
 [ext_resource type="Script" uid="uid://ckpanpt3fty8d" path="res://Csharp/UI/Default Node Extentions/ThemeLineEdit.cs" id="21_w782g"]
 [ext_resource type="Script" uid="uid://bag5mx17s8q1c" path="res://Csharp/UI/Buttons/Appdata.cs" id="23_f8opk"]
 [ext_resource type="Texture2D" uid="uid://ynqg27jlotl6" path="res://Icons/SVG/folder.svg" id="24_cq8g2"]
-[ext_resource type="Script" uid="uid://d0tve0wh2kxhq" path="res://Csharp/UI/Downloader/DownloadWindowOpener.cs" id="24_o03o1"]
+[ext_resource type="Script" uid="uid://d0tve0wh2kxhq" path="res://Csharp/UI/Buttons/DownloadWindowOpener.cs" id="24_o03o1"]
 [ext_resource type="PackedScene" uid="uid://da3r1vmve1qwd" path="res://Windows/stream_display_window.tscn" id="26_3edd3"]
 [ext_resource type="Texture2D" uid="uid://cb0yjhel4cdr5" path="res://Icons/SVG/download.svg" id="27_ns1th"]
 [ext_resource type="Script" uid="uid://gwm4ru46vy21" path="res://Csharp/UI/Buttons/Update.cs" id="28_3ax07"]
@@ -32,7 +32,7 @@
 [ext_resource type="Script" uid="uid://cheuagrd5va2f" path="res://Csharp/UI/Buttons/Refresh.cs" id="29_nr08j"]
 [ext_resource type="Script" uid="uid://gln3mhngvyx5" path="res://Csharp/UI/Context Menus/ToolList.cs" id="30_xrbbi"]
 [ext_resource type="Texture2D" uid="uid://dcr4yu0bt8s2o" path="res://Icons/SVG/reload.svg" id="32_7kpk1"]
-[ext_resource type="Script" uid="uid://cm1lylxwcslla" path="res://Csharp/UI/Settings/SettingsOpener.cs" id="32_mmy12"]
+[ext_resource type="Script" uid="uid://cm1lylxwcslla" path="res://Csharp/UI/Buttons/SettingsOpener.cs" id="32_mmy12"]
 [ext_resource type="PackedScene" uid="uid://cn1tw3g51dn0c" path="res://Windows/settings_window.tscn" id="33_25o3l"]
 [ext_resource type="Texture2D" uid="uid://bufeg5uvpnkav" path="res://Icons/SVG/cog.svg" id="33_xqlq7"]
 [ext_resource type="FontFile" uid="uid://ckdni7vy5bpft" path="res://Styling/Fonts/VarelaRound-Regular.ttf" id="34_4jfok"]
@@ -43,16 +43,16 @@
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Styling/Fonts/DefaultFont.tres" id="41_qf528"]
 [ext_resource type="Texture2D" uid="uid://csvmj6w2b5le6" path="res://Icons/SVG/loop.svg" id="41_yksdd"]
 [ext_resource type="Texture2D" uid="uid://jqnfgusrehqq" path="res://Icons/SVG/un_muted.svg" id="42_2o8nl"]
-[ext_resource type="Script" uid="uid://c5ep0n80r2l8p" path="res://Csharp/UI/Attribute Editor/AttributeEditorOpener.cs" id="42_3aot7"]
-[ext_resource type="Script" uid="uid://ba0kdfmjh8445" path="res://Csharp/Globals.cs" id="46_y0j44"]
+[ext_resource type="Script" uid="uid://c5ep0n80r2l8p" path="res://Csharp/UI/Buttons/AttributeEditorOpener.cs" id="42_3aot7"]
+[ext_resource type="Script" uid="uid://ba0kdfmjh8445" path="res://Csharp/Application/Globals.cs" id="46_y0j44"]
 [ext_resource type="PackedScene" uid="uid://cjc5crjo31obe" path="res://Prefabs/path_display.tscn" id="49_mrmdv"]
 [ext_resource type="PackedScene" uid="uid://bw078i5dk5ff4" path="res://Prefabs/confirmation_window.tscn" id="50_c27js"]
 [ext_resource type="PackedScene" uid="uid://dle5y658wmx03" path="res://Windows/attribute_editor_window.tscn" id="52_vsj6c"]
 [ext_resource type="PackedScene" uid="uid://djve16b56k6h0" path="res://Windows/Downloading/download_window.tscn" id="53_7surn"]
 [ext_resource type="Texture2D" uid="uid://bdbco8a0mnjn6" path="res://Icons/Logos/logotrans.png" id="54_lfg21"]
-[ext_resource type="Script" uid="uid://bmgcpmp5cfuwy" path="res://Csharp/Tray.cs" id="55_y62dl"]
+[ext_resource type="Script" uid="uid://bmgcpmp5cfuwy" path="res://Csharp/Application/Tray.cs" id="55_y62dl"]
 [ext_resource type="Script" uid="uid://ca5d2qc1a4t64" path="res://GDScript/gd_script_globals.gd" id="56_08crl"]
-[ext_resource type="Script" uid="uid://dn1xjyy7q4ft5" path="res://Csharp/Discord.cs" id="57_kef43"]
+[ext_resource type="Script" uid="uid://dn1xjyy7q4ft5" path="res://Csharp/Application/Discord.cs" id="57_kef43"]
 [ext_resource type="Script" uid="uid://cqf4nqygajv02" path="res://GDScript/zoomer.gd" id="58_e23wy"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_abqjc"]
@@ -923,9 +923,10 @@ expand_icon = true
 
 [node name="Player" type="AudioStreamPlayer" parent="." unique_id=488316782]
 
-[node name="Globals" type="Node" parent="." unique_id=71517921 node_paths=PackedStringArray("_main", "_discord", "_attribute_editor", "_download_window", "_file_dialog")]
+[node name="Globals" type="Node" parent="." unique_id=71517921 node_paths=PackedStringArray("_main", "_player", "_discord", "_attribute_editor", "_download_window", "_file_dialog")]
 script = ExtResource("46_y0j44")
 _main = NodePath("..")
+_player = NodePath("../Interface")
 _discord = NodePath("../Discord")
 _attribute_editor = NodePath("AttributeEditor")
 _download_window = NodePath("DownloadWindow")

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://5kfxiu06xug0"]
 
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Styling/Fonts/DefaultFont.tres" id="1_8t6yf"]
-[ext_resource type="Script" uid="uid://bhqfe4m1n2gya" path="res://Csharp/UI/Playlist Creator/PlaylistCreator.cs" id="1_b0noq"]
+[ext_resource type="Script" uid="uid://bhqfe4m1n2gya" path="res://Csharp/Windows/PlaylistCreator.cs" id="1_b0noq"]
 [ext_resource type="PackedScene" uid="uid://cjc5crjo31obe" path="res://Prefabs/path_display.tscn" id="3_uox0n"]
 [ext_resource type="Script" uid="uid://ckpanpt3fty8d" path="res://Csharp/UI/Default Node Extentions/ThemeLineEdit.cs" id="4_eb7ps"]
 [ext_resource type="StyleBox" uid="uid://dhhahexcqr5gf" path="res://Styling/Filedrop/file_drop_normal.tres" id="4_pc04o"]

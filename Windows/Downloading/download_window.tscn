@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://djve16b56k6h0"]
 
-[ext_resource type="Script" uid="uid://ddqjqicca0ftd" path="res://Csharp/UI/Downloader/DownloadWindow.cs" id="1_v3qo6"]
+[ext_resource type="Script" uid="uid://ddqjqicca0ftd" path="res://Csharp/Windows/Downloader/DownloadWindow.cs" id="1_v3qo6"]
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Styling/Fonts/DefaultFont.tres" id="2_v3qo6"]
 [ext_resource type="StyleBox" uid="uid://bw4kvok8cf77w" path="res://Styling/Selectables/radio_normal.tres" id="4_ec5im"]
 [ext_resource type="PackedScene" uid="uid://ccu57wwy5vwng" path="res://Windows/Downloading/download_playlist_display.scn" id="4_o2q55"]

@@ -4,7 +4,7 @@
 [ext_resource type="StyleBox" uid="uid://d2rqqjc81a4f0" path="res://Styling/Selectables/radio_pressed.tres" id="2_fm01l"]
 [ext_resource type="StyleBox" uid="uid://d05hxmlaqj0qh" path="res://Styling/Selectables/radio_hover.tres" id="3_jirj6"]
 [ext_resource type="StyleBox" uid="uid://ch62tbkn2uj66" path="res://Styling/Selectables/radio_disabled.tres" id="4_4mu4d"]
-[ext_resource type="Script" uid="uid://b2tb0otyqrctn" path="res://Csharp/UI/Tracks/TrackDisplay.cs" id="5_xv1yq"]
+[ext_resource type="Script" uid="uid://b2tb0otyqrctn" path="res://Csharp/UI/Radios/TrackDisplay.cs" id="5_xv1yq"]
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Styling/Fonts/DefaultFont.tres" id="6_xytfg"]
 [ext_resource type="Texture2D" uid="uid://bm7judayjojov" path="res://Icons/SVG/play.svg" id="7_0nwlm"]
 [ext_resource type="PackedScene" uid="uid://cqa0miuyddnkx" path="res://Prefabs/sound_visualizer.tscn" id="8_uh5h4"]
@@ -23,7 +23,6 @@ shader = ExtResource("10_ag77y")
 
 [node name="Register" type="Button" unique_id=127370609 node_paths=PackedStringArray("track_name_label", "track_number_label", "track_artist_label", "total_time_label", "cover_texture_rect", "play_texture_rect", "spacer", "sound_visualizer", "more")]
 custom_minimum_size = Vector2(0, 60)
-anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
