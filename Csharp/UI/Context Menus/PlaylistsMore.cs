@@ -10,7 +10,7 @@ public partial class PlaylistsMore : ContextMenuButton {
     public override void _Ready() {
         base._Ready();
 
-        GetPopup().AddItem("Edit", EDIT_PLAYLIST);
+        GetPopup().AddIconItem(ApplicationManager.GetThemeIcon("pen_icon"), "Edit", EDIT_PLAYLIST);
         GetPopup().SetItemDisabled(EDIT_PLAYLIST, true);
 
         GetPopup().AddIconItem(ApplicationManager.GetThemeIcon("folder_icon"), "Open playlist in file browser", OPEN_PLAYLIST_IN_FILE_BROWER);

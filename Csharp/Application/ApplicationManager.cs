@@ -178,14 +178,16 @@ public partial class ApplicationManager : SceneTree {
 
         theme_resource.SetIcon("plus_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/plus.svg"));
         theme_resource.SetIcon("minus_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/minus.svg"));
-        
+
         theme_resource.SetIcon("x_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/x.svg"));
 
         theme_resource.SetIcon("download_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/download.svg"));
         theme_resource.SetIcon("upload_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/upload.svg"));
 
         theme_resource.SetIcon("reload_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/reload.svg"));
+
         theme_resource.SetIcon("cog_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/cog.svg"));
+        theme_resource.SetIcon("pen_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/pen.svg"));
 
         theme_resource.SetIcon("folder_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/folder.svg"));
         theme_resource.SetIcon("file_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/file.svg"));
@@ -255,6 +257,6 @@ public partial class ApplicationManager : SceneTree {
         menu.AddThemeConstantOverride("h_separation", margin);
         menu.AddThemeConstantOverride("item_start_padding", margin);
 
-        menu.AddThemeConstantOverride("icon_max_width", 20);
+        menu.AddThemeConstantOverride("icon_max_width", 22);
     }
 }

@@ -47,7 +47,7 @@ public partial class TracksMore : ContextMenuButton {
 
         // Normal Options
 
-        popup.AddItem("Edit metadata", EDIT_METADATA);
+        popup.AddIconItem(ApplicationManager.GetThemeIcon("pen_icon"), "Edit metadata", EDIT_METADATA);
 
         popup.AddSeparator("", SEP_1);
 
@@ -228,7 +228,7 @@ public partial class TracksMore : ContextMenuButton {
 
     public static void AddToPlaylistItemSelected(long id, int playlist_index, int track_index) {
         string track_file = Globals.main.playlists[playlist_index].tracks[track_index];
-        
+
         Globals.main.playlists[(int)id].AddTrack(track_file);
         Globals.main.playlists[(int)id].Save();
 

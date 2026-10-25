@@ -589,6 +589,8 @@ track_count_label = NodePath("Container/Top card/Track count")
 item_template = ExtResource("16_ns1th")
 parent_container = NodePath("Container")
 item_container = NodePath("Container/VBoxContainer")
+total_items = null
+item_height = null
 
 [node name="Container" type="VBoxContainer" parent="Interface/Content/Tracks/Track Display" unique_id=933878103]
 layout_mode = 2
