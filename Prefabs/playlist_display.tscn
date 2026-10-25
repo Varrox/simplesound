@@ -19,6 +19,7 @@ shader = ExtResource("5_t1j7f")
 
 [node name="Playlist Button" type="Button" unique_id=321300163 node_paths=PackedStringArray("cover_texture_rect", "playlist_name_label", "track_count_label", "more")]
 custom_minimum_size = Vector2(0, 65)
+anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -98,7 +99,7 @@ theme_override_fonts/font = ExtResource("7_w62j1")
 theme_override_font_sizes/font_size = 9
 text = "0 tracks"
 
-[node name="More" type="MenuButton" parent="MarginContainer/HBoxContainer" unique_id=932108404]
+[node name="More" type="MenuButton" parent="MarginContainer/HBoxContainer" unique_id=932108404 node_paths=PackedStringArray("playlist_display")]
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
 size_flags_horizontal = 8
@@ -109,3 +110,4 @@ flat = false
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("9_b8rky")
+playlist_display = NodePath("../../..")

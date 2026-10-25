@@ -5,7 +5,7 @@ public partial class PlaylistDisplay : Button {
     [Export] public Label playlist_name_label, track_count_label;
     [Export] public PlaylistsMore more;
 
-    int playlist_index;
+    public int playlist_index;
 
     public override void _Ready() {
         ButtonUp += Set;
