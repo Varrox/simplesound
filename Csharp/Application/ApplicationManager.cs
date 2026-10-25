@@ -177,9 +177,13 @@ public partial class ApplicationManager : SceneTree {
         theme_resource.SetIcon("search_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/search.svg"));
 
         theme_resource.SetIcon("plus_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/plus.svg"));
+        theme_resource.SetIcon("minus_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/minus.svg"));
+        
         theme_resource.SetIcon("x_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/x.svg"));
 
         theme_resource.SetIcon("download_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/download.svg"));
+        theme_resource.SetIcon("upload_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/upload.svg"));
+
         theme_resource.SetIcon("reload_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/reload.svg"));
         theme_resource.SetIcon("cog_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/cog.svg"));
 

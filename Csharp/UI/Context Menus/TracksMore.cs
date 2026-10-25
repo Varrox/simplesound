@@ -5,17 +5,20 @@ using Godot;
 public partial class TracksMore : ContextMenuButton {
     [Export] public TrackDisplay track_display;
 
-    public const int EDIT_METADATA = 0, REMOVE_TRACK = 1, DELETE_TRACK = 2, SHARE_TRACK = 3;
+    public const int SEP_1 = 2, SEP_2 = 5;
+
+    public const int ADD_TO_PLAYLIST = 0, EDIT_METADATA = 1, REMOVE_TRACK = 3, DELETE_TRACK = 4, SHARE_TRACK = 6;
 
     public const int COPY_SHARE_LINK = 0, OPEN_TRACK_IN_FILE_BROWSER = 1;
 
-    public ThemePopupMenu share_popup_menu;
+    public ThemePopupMenu add_to_playlist_popup_menu, share_popup_menu;
 
     public override void _Ready() {
         base._Ready();
 
-        SetupTrackOptions(GetPopup(), out share_popup_menu);
+        SetupTrackOptions(GetPopup(), out add_to_playlist_popup_menu, out share_popup_menu);
 
+        add_to_playlist_popup_menu.IdPressed += _AddToPlaylistItemPressed;
         share_popup_menu.IdPressed += _ShareItemPressed;
 
         MouseEntered += Show;
@@ -24,18 +27,42 @@ public partial class TracksMore : ContextMenuButton {
         Hide();
     }
 
-    public static void SetupTrackOptions(PopupMenu popup, out ThemePopupMenu share_popup) {
+    public static void SetupAddToPlaylistOptions(PopupMenu popup) {
+        popup.Clear();
+
+        for(int i = 0; i < Globals.main.playlists.Count; i++) {
+            popup.AddIconItem(Globals.main.playlists[i].cover_texture ?? ApplicationManager.GetThemeIcon("default_cover_icon"), Globals.main.playlists[i].name);
+        }
+    }
+
+    public static void SetupTrackOptions(PopupMenu popup, out ThemePopupMenu add_to_playlist_popup, out ThemePopupMenu share_popup) {
+        // Add To Playlist
+
+        add_to_playlist_popup = new ThemePopupMenu();
+
+        popup.AddSubmenuNodeItem("Add to playlist", add_to_playlist_popup, ADD_TO_PLAYLIST);
+        popup.SetItemIcon(ADD_TO_PLAYLIST, ApplicationManager.GetThemeIcon("plus_icon"));
+
+        SetupAddToPlaylistOptions(add_to_playlist_popup);
+
+        // Normal Options
+
         popup.AddItem("Edit metadata", EDIT_METADATA);
 
-        popup.AddItem("Remove track from playlist", REMOVE_TRACK);
+        popup.AddSeparator("", SEP_1);
 
-        popup.AddItem("Delete track file", DELETE_TRACK);
+        popup.AddIconItem(ApplicationManager.GetThemeIcon("minus_icon"), "Remove track from playlist", REMOVE_TRACK);
+
+        popup.AddIconItem(ApplicationManager.GetThemeIcon("x_icon"), "Delete track file", DELETE_TRACK);
+
+        popup.AddSeparator("", SEP_2);
 
         // Share Menu
 
         share_popup = new ThemePopupMenu();
 
         popup.AddSubmenuNodeItem("Share", share_popup, SHARE_TRACK);
+        popup.SetItemIcon(SHARE_TRACK, ApplicationManager.GetThemeIcon("upload_icon"));
 
         share_popup.AddIconItem(ApplicationManager.GetThemeIcon("loop_icon"), "Copy share link", COPY_SHARE_LINK);
 
@@ -45,7 +72,13 @@ public partial class TracksMore : ContextMenuButton {
     protected override void _ItemPressed(long id) {
         base._ItemPressed(id);
 
-		TrackOptionSelected(id, track_display.playlist_index, track_display.track_index, track_display.track_data);
+		TrackOptionSelected(id, track_display.playlist_index, track_display.track_index, track_display.track_data, add_to_playlist_popup_menu);
+    }
+
+    private void _AddToPlaylistItemPressed(long id) {
+        base._ItemPressed(id);
+
+        AddToPlaylistItemSelected(id, track_display.playlist_index, track_display.track_index);
     }
 
     private void _ShareItemPressed(long id) {
@@ -54,8 +87,11 @@ public partial class TracksMore : ContextMenuButton {
         ShareItemSelected(id, track_display.playlist_index, track_display.track_index);
     }
 
-    public static void TrackOptionSelected(long id, int playlist_index, int track_index, TrackData track_data) {
+    public static void TrackOptionSelected(long id, int playlist_index, int track_index, TrackData track_data, PopupMenu add_to_playlist_popup) {
         switch(id) {
+            case ADD_TO_PLAYLIST:
+                SetupAddToPlaylistOptions(add_to_playlist_popup);
+                break;
 			case EDIT_METADATA:
                 EditMetadata(playlist_index, track_index, track_data);
 				break;
@@ -188,6 +224,15 @@ public partial class TracksMore : ContextMenuButton {
         }
 
         confirmation.OnClose += Confirmed;
+    }
+
+    public static void AddToPlaylistItemSelected(long id, int playlist_index, int track_index) {
+        string track_file = Globals.main.playlists[playlist_index].tracks[track_index];
+        
+        Globals.main.playlists[(int)id].AddTrack(track_file);
+        Globals.main.playlists[(int)id].Save();
+
+        Globals.main.Refresh();
     }
 
     public static void ShareItemSelected(long id, int playlist_index, int track_index) {

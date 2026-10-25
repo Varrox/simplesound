@@ -16,6 +16,7 @@
 - EQ and Reverb audio settings.
 - System tray item added for simplesound.
 - Copy system info button added to settings menu.
+- You can add individual songs from one playlist to another through context menu
 
 ## UI Improvements
 

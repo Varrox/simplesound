@@ -89,6 +89,21 @@ public class Playlist {
         return -1;
     }
 
+    public void AddTrack(string track_path) {
+        if(!Tools.ValidAudioFile(track_path)) {
+            return;
+        }
+
+        _tracks.Add(track_path);
+
+        if (_tracks_raw.Contains($"!{track_path}")) {
+            _tracks_raw.Add($"+{track_path}"); // Add append
+        }
+        else {
+            _tracks_raw.Add(track_path);
+        }
+    }
+
     public void RemoveTrack(int track_index) {
         string track_path = _tracks[track_index];
         int raw_index = FindRawTrackIndex(track_index);
@@ -243,10 +258,16 @@ public class Playlist {
 
     public static List<string> ProcessTracks(List<string> tracks) {
         List<string> exclude = new List<string>();
+        Dictionary<int, string> insertions = new Dictionary<int, string>();
 
         for(int i = tracks.Count - 1; i >= 0; i--) {
             if(tracks[i].StartsWith("!")) {
                 exclude.Add(tracks[i].Substring(1));
+                tracks.RemoveAt(i);
+                continue;
+            }
+            else if(tracks[i].StartsWith("+")) {
+                insertions.Add(i, tracks[i].Substring(1));
                 tracks.RemoveAt(i);
                 continue;
             }
@@ -266,6 +287,10 @@ public class Playlist {
 
         for(int i = 0; i < exclude.Count; i++) { // Remove exclusions.
             tracks.RemoveAll(t => t.Equals(exclude[i]));
+        }
+
+        foreach(int key in insertions.Keys) {
+            tracks.Insert(key, insertions[key]);
         }
 
         return tracks;
