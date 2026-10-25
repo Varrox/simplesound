@@ -166,10 +166,10 @@ shader = ExtResource("18_fmyll")
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i82gy"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_28euk"]
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 anti_aliasing_size = 1.1
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6iyjs"]
@@ -248,19 +248,19 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 0
 script = ExtResource("3_cq8g2")
-play_button = NodePath("Player/MarginContainer/Controls/HBoxContainer/Play")
-next_button = NodePath("Player/MarginContainer/Controls/HBoxContainer/Next")
-back_button = NodePath("Player/MarginContainer/Controls/HBoxContainer/Back")
-loop_button = NodePath("Player/MarginContainer/Controls/HBoxContainer/Loop")
-shuffle_button = NodePath("Player/MarginContainer/Controls/HBoxContainer/Shuffle")
-progress_slider = NodePath("Player/MarginContainer/Controls/Progress")
-volume_slider = NodePath("Player/MarginContainer/Controls/Volume")
+play_button = NodePath("Player/MarginContainer/Controls/Track/Play")
+next_button = NodePath("Player/MarginContainer/Controls/Track/Next")
+back_button = NodePath("Player/MarginContainer/Controls/Track/Back")
+loop_button = NodePath("Player/MarginContainer/Controls/Track/Loop")
+shuffle_button = NodePath("Player/MarginContainer/Controls/Track/Shuffle")
+progress_slider = NodePath("Player/MarginContainer/Controls/Time/Progress")
+volume_slider = NodePath("Player/MarginContainer/Controls/Volume/Volume")
 mute_button = NodePath("Player/MarginContainer/Controls/Volume/Mute")
-current_time_label = NodePath("Player/MarginContainer/Controls/Progress/Current Time")
-total_time_label = NodePath("Player/MarginContainer/Controls/Progress/Total Time")
-track_name_label = NodePath("Player/MarginContainer/Track Attributes/Name")
-track_artist_label = NodePath("Player/MarginContainer/Track Attributes/Artist")
-track_cover_texture_rect = NodePath("Player/MarginContainer/Track Attributes/PanelContainer/Cover")
+current_time_label = NodePath("Player/MarginContainer/Controls/Time/Current Time")
+total_time_label = NodePath("Player/MarginContainer/Controls/Time/Total Time")
+track_name_label = NodePath("Player/MarginContainer/Track Attributes/VBoxContainer2/VBoxContainer/Name")
+track_artist_label = NodePath("Player/MarginContainer/Track Attributes/VBoxContainer2/VBoxContainer/Artist")
+track_cover_texture_rect = NodePath("Player/MarginContainer/Track Attributes/VBoxContainer2/PanelContainer/Cover")
 background_subviewport = NodePath("../Background/SubViewport")
 
 [node name="Top Bar" type="ColorRect" parent="Interface" unique_id=1268311251]
@@ -589,8 +589,6 @@ track_count_label = NodePath("Container/Top card/Track count")
 item_template = ExtResource("16_ns1th")
 parent_container = NodePath("Container")
 item_container = NodePath("Container/VBoxContainer")
-total_items = null
-item_height = null
 
 [node name="Container" type="VBoxContainer" parent="Interface/Content/Tracks/Track Display" unique_id=933878103]
 layout_mode = 2
@@ -684,35 +682,61 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 15
+theme_override_constants/margin_left = 14
 theme_override_constants/margin_top = 14
-theme_override_constants/margin_right = 15
+theme_override_constants/margin_right = 14
 theme_override_constants/margin_bottom = 14
 
 [node name="Track Attributes" type="Control" parent="Interface/Player/MarginContainer" unique_id=74537140]
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="Interface/Player/MarginContainer/Track Attributes" unique_id=13376162]
+[node name="VBoxContainer2" type="HBoxContainer" parent="Interface/Player/MarginContainer/Track Attributes" unique_id=865290593]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 14
+
+[node name="PanelContainer" type="PanelContainer" parent="Interface/Player/MarginContainer/Track Attributes/VBoxContainer2" unique_id=13376162]
 clip_children = 1
 custom_minimum_size = Vector2(80, 80)
 clip_contents = true
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -40.0
-offset_right = 80.0
-offset_bottom = 40.0
-grow_vertical = 2
+layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_28euk")
 
-[node name="Cover" type="TextureRect" parent="Interface/Player/MarginContainer/Track Attributes/PanelContainer" unique_id=184891046]
+[node name="Cover" type="TextureRect" parent="Interface/Player/MarginContainer/Track Attributes/VBoxContainer2/PanelContainer" unique_id=184891046]
 material = SubResource("ShaderMaterial_6iyjs")
 layout_mode = 2
 texture = ExtResource("7_xvcl6")
 expand_mode = 1
 stretch_mode = 6
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Interface/Player/MarginContainer/Track Attributes/VBoxContainer2" unique_id=1908627255]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_constants/separation = 7
+
+[node name="Name" type="Label" parent="Interface/Player/MarginContainer/Track Attributes/VBoxContainer2/VBoxContainer" unique_id=916219751]
+layout_mode = 2
+size_flags_horizontal = 17
+size_flags_vertical = 0
+text = "Track"
+text_overrun_behavior = 5
+
+[node name="Artist" type="Label" parent="Interface/Player/MarginContainer/Track Attributes/VBoxContainer2/VBoxContainer" unique_id=119670755]
+layout_mode = 2
+size_flags_horizontal = 17
+size_flags_vertical = 10
+theme_override_colors/font_color = Color(0.662452, 0.662452, 0.662452, 1)
+theme_override_font_sizes/font_size = 12
+text = "Artist"
+clip_text = true
+text_overrun_behavior = 5
 
 [node name="Edit Attributes" type="Button" parent="Interface/Player/MarginContainer/Track Attributes" unique_id=2018817777 node_paths=PackedStringArray("window")]
 layout_mode = 1
@@ -729,41 +753,11 @@ flat = true
 script = ExtResource("42_3aot7")
 window = NodePath("../../../../../Globals/AttributeEditor")
 
-[node name="Name" type="Label" parent="Interface/Player/MarginContainer/Track Attributes" unique_id=916219751]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 103.0
-offset_top = -26.5
-offset_right = 338.0
-offset_bottom = 16.5
-grow_vertical = 2
-text = "Track
-"
-text_overrun_behavior = 5
-
-[node name="Artist" type="Label" parent="Interface/Player/MarginContainer/Track Attributes" unique_id=119670755]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 103.0
-offset_top = 10.0
-offset_right = 281.0
-offset_bottom = 30.0
-grow_vertical = 2
-scale = Vector2(0.75, 0.75)
-theme_override_colors/font_color = Color(0.662452, 0.662452, 0.662452, 1)
-text = "Artist"
-clip_text = true
-text_overrun_behavior = 5
-
 [node name="Controls" type="Control" parent="Interface/Player/MarginContainer" unique_id=1065715383]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Interface/Player/MarginContainer/Controls" unique_id=1250907681]
+[node name="Track" type="HBoxContainer" parent="Interface/Player/MarginContainer/Controls" unique_id=1250907681]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -777,7 +771,7 @@ offset_bottom = 14.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Shuffle" type="Button" parent="Interface/Player/MarginContainer/Controls/HBoxContainer" unique_id=872846605]
+[node name="Shuffle" type="Button" parent="Interface/Player/MarginContainer/Controls/Track" unique_id=872846605]
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Toggle track shuffling."
@@ -790,7 +784,7 @@ icon = ExtResource("37_r776v")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Back" type="Button" parent="Interface/Player/MarginContainer/Controls/HBoxContainer" unique_id=202036208]
+[node name="Back" type="Button" parent="Interface/Player/MarginContainer/Controls/Track" unique_id=202036208]
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Previous track."
@@ -803,7 +797,7 @@ icon = ExtResource("38_xvcl6")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Play" type="Button" parent="Interface/Player/MarginContainer/Controls/HBoxContainer" unique_id=1287565051]
+[node name="Play" type="Button" parent="Interface/Player/MarginContainer/Controls/Track" unique_id=1287565051]
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Play / Pause."
@@ -814,7 +808,7 @@ icon = ExtResource("39_j6ftg")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Next" type="Button" parent="Interface/Player/MarginContainer/Controls/HBoxContainer" unique_id=1880351366]
+[node name="Next" type="Button" parent="Interface/Player/MarginContainer/Controls/Track" unique_id=1880351366]
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Next track."
@@ -827,7 +821,7 @@ icon = ExtResource("40_mskga")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Loop" type="Button" parent="Interface/Player/MarginContainer/Controls/HBoxContainer" unique_id=1580156266]
+[node name="Loop" type="Button" parent="Interface/Player/MarginContainer/Controls/Track" unique_id=1580156266]
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Toggle track looping."
@@ -838,88 +832,75 @@ icon = ExtResource("41_yksdd")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Progress" type="HSlider" parent="Interface/Player/MarginContainer/Controls" unique_id=82174511]
+[node name="Volume" type="HBoxContainer" parent="Interface/Player/MarginContainer/Controls" unique_id=158484167]
 layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 311.0
-offset_top = -18.0
-offset_right = -311.0
-offset_bottom = -2.0
-grow_horizontal = 2
-grow_vertical = 0
-focus_mode = 0
-step = 0.01
-
-[node name="Current Time" type="Label" parent="Interface/Player/MarginContainer/Controls/Progress" unique_id=60779300]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = -60.0
-offset_top = -7.0
-offset_right = 10.0
-offset_bottom = 16.0
-grow_vertical = 2
-scale = Vector2(0.75, 0.75)
-theme_override_fonts/font = ExtResource("34_4jfok")
-text = "0:00"
-horizontal_alignment = 2
-
-[node name="Total Time" type="Label" parent="Interface/Player/MarginContainer/Controls/Progress" unique_id=1044105771]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = 10.0
-offset_top = -7.0
-offset_right = 80.0
-offset_bottom = 16.0
-grow_horizontal = 0
-grow_vertical = 2
-scale = Vector2(0.75, 0.75)
-theme_override_fonts/font = ExtResource("34_4jfok")
-text = "0:00"
-
-[node name="Volume" type="HSlider" parent="Interface/Player/MarginContainer/Controls" unique_id=111862397]
-layout_mode = 1
-anchors_preset = -1
+anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -165.0
-offset_top = -18.000366
-offset_right = -40.0
-offset_bottom = -2.0003662
+offset_left = -189.67499
+offset_top = -25.0
+offset_right = -40.000244
+offset_bottom = 5.0
 grow_horizontal = 0
 grow_vertical = 0
-focus_mode = 0
-min_value = -50.0
-max_value = 0.0
-step = 0.01
+theme_override_constants/separation = 0
 
 [node name="Mute" type="Button" parent="Interface/Player/MarginContainer/Controls/Volume" unique_id=2043952974]
 modulate = Color(0.7666196, 0.76661956, 0.76661956, 1)
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = -29.0
-offset_top = -15.999661
-offset_right = 13.666748
-offset_bottom = 24.00034
-grow_vertical = 2
-scale = Vector2(0.75, 0.75)
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 17
 tooltip_text = "Mute audio."
 theme_override_styles/focus = SubResource("StyleBoxEmpty_6x3o4")
 icon = ExtResource("42_2o8nl")
 flat = true
 expand_icon = true
+
+[node name="Volume" type="HSlider" parent="Interface/Player/MarginContainer/Controls/Volume" unique_id=111862397]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 17
+focus_mode = 0
+min_value = -50.0
+max_value = 0.0
+step = 0.01
+
+[node name="Time" type="HBoxContainer" parent="Interface/Player/MarginContainer/Controls" unique_id=783237213]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -290.0
+offset_top = -18.0
+offset_right = 290.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Current Time" type="Label" parent="Interface/Player/MarginContainer/Controls/Time" unique_id=60779300]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("34_4jfok")
+theme_override_font_sizes/font_size = 13
+text = "0:00"
+horizontal_alignment = 2
+
+[node name="Progress" type="HSlider" parent="Interface/Player/MarginContainer/Controls/Time" unique_id=82174511]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+focus_mode = 0
+step = 0.01
+
+[node name="Total Time" type="Label" parent="Interface/Player/MarginContainer/Controls/Time" unique_id=1044105771]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("34_4jfok")
+theme_override_font_sizes/font_size = 13
+text = "0:00"
 
 [node name="Player" type="AudioStreamPlayer" parent="." unique_id=488316782]
 
