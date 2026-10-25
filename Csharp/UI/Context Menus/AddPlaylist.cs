@@ -6,7 +6,9 @@ using Godot;
 public partial class AddPlaylist : ContextMenuButton {
 	[Export] public PackedScene create_new_playlist_template;
 
-	public const int CREATE_NEW_PLAYLIST = 0, IMPORT_PLAYLIST_FILE = 1, IMPORT_PLAYLIST_ZIP = 2;
+	public const int SEP_1 = 2;
+
+	public const int CREATE_NEW_PLAYLIST = 0, IMPORT_PLAYLIST_FILE = 2, IMPORT_PLAYLIST_ZIP = 3;
 
 	public override void _Ready() {
 		base._Ready();
@@ -16,8 +18,15 @@ public partial class AddPlaylist : ContextMenuButton {
 		Texture2D zip_icon = ApplicationManager.GetThemeIcon("zip_icon");
 
 		GetPopup().AddIconItem(plus_icon, "Create new playlist", CREATE_NEW_PLAYLIST);
+		GetPopup().SetItemTooltip(CREATE_NEW_PLAYLIST, "Opens window for creating a new playlist.");
+
+		GetPopup().AddSeparator("", SEP_1);
+
 		GetPopup().AddIconItem(file_icon, "Import playlist file", IMPORT_PLAYLIST_FILE);
+		GetPopup().SetItemTooltip(IMPORT_PLAYLIST_FILE, $"Opens file dialog for selecting a playlist (json) file to add to {ApplicationManager.SOFTWARE_NAME}.");
+
 		GetPopup().AddIconItem(zip_icon, "Import playlist zip file", IMPORT_PLAYLIST_ZIP);
+		GetPopup().SetItemTooltip(IMPORT_PLAYLIST_ZIP, $"Opens file dialog for selecting a playlist ZIP archive (.zip file) to add to {ApplicationManager.SOFTWARE_NAME}.");
 	}
 
     protected override void _ItemPressed(long id) {
