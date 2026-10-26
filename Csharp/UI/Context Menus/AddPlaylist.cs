@@ -140,6 +140,8 @@ public partial class AddPlaylist : ContextMenuButton {
 
 			string playlist_tracks_directory = Path.Combine(Constants.USER_TRACKS, Tools.GetProperFileName(playlist.name));
 
+			Directory.CreateDirectory(playlist_tracks_directory);
+
 			for(int i = playlist.tracks_raw.Count - 1; i >= 0; i--) {
 				if(playlist.tracks_raw[i].StartsWith("!")) { // Excludes
 					string track_path = playlist.tracks_raw[i].Substring(1);

@@ -18,7 +18,9 @@ public partial class TracksMore : ContextMenuButton {
 
         SetupTrackOptions(GetPopup(), out add_to_playlist_popup_menu, out share_popup_menu);
 
+        add_to_playlist_popup_menu.AboutToPopup += () => SetupAddToPlaylistOptions(add_to_playlist_popup_menu);
         add_to_playlist_popup_menu.IdPressed += _AddToPlaylistItemPressed;
+        
         share_popup_menu.IdPressed += _ShareItemPressed;
 
         MouseEntered += Show;
@@ -89,9 +91,6 @@ public partial class TracksMore : ContextMenuButton {
 
     public static void TrackOptionSelected(long id, int playlist_index, int track_index, TrackData track_data, PopupMenu add_to_playlist_popup) {
         switch(id) {
-            case ADD_TO_PLAYLIST:
-                SetupAddToPlaylistOptions(add_to_playlist_popup);
-                break;
 			case EDIT_METADATA:
                 EditMetadata(playlist_index, track_index, track_data);
 				break;
