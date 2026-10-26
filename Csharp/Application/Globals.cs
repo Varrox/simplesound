@@ -9,9 +9,6 @@ public partial class Globals : Node {
 
     [ExportGroup("Packed Scenes")]
 
-    [Export] private PackedScene _path_display{set{ path_display = value; }get{ return path_display; }}
-    public static PackedScene path_display;
-
     [Export] private PackedScene _confirmation_window{set{ confirmation_window = value; }get{ return confirmation_window; }}
     public static PackedScene confirmation_window;
 }

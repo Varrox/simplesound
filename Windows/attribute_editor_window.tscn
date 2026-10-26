@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://eh8a3k652ogt" path="res://Csharp/Windows/AttributeEditor.cs" id="1_cj5je"]
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Styling/Fonts/DefaultFont.tres" id="1_ot5f1"]
-[ext_resource type="PackedScene" uid="uid://cjc5crjo31obe" path="res://Prefabs/path_display.tscn" id="3_6cib4"]
 [ext_resource type="Script" uid="uid://ckpanpt3fty8d" path="res://Csharp/UI/Default Node Extentions/ThemeLineEdit.cs" id="3_j2mdm"]
+[ext_resource type="Script" uid="uid://ddv8hmbckq2e" path="res://Csharp/UI/PathDisplay.cs" id="4_n5hso"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3g08v"]
 
@@ -26,7 +26,7 @@ artist_field = NodePath("VBoxContainer/Artist")
 share_link_field = NodePath("VBoxContainer/Share")
 explicit_lyrics_field = NodePath("VBoxContainer/Explicit Lyrics")
 select_cover_button = NodePath("VBoxContainer/Cover")
-cover_label = NodePath("VBoxContainer/Selected File")
+cover_label = NodePath("VBoxContainer/PathDisplay")
 submit_button = NodePath("VBoxContainer/HBoxContainer/Submit")
 cancel_button = NodePath("VBoxContainer/HBoxContainer/Cancel")
 
@@ -90,8 +90,11 @@ theme_override_fonts/font = ExtResource("1_ot5f1")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_mixmj")
 text = "Select cover image"
 
-[node name="Selected File" parent="VBoxContainer" unique_id=262419127 instance=ExtResource("3_6cib4")]
+[node name="PathDisplay" type="Button" parent="VBoxContainer" unique_id=799703097]
+custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
+script = ExtResource("4_n5hso")
+metadata/_custom_type_script = "uid://ddv8hmbckq2e"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=366126135]
 layout_mode = 2

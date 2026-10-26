@@ -39,7 +39,6 @@ public partial class PlaylistCreator : EditorWindow {
 
 	public void Clear() {
         playlist_name_field.Text = "";
-        cover_path_display.SetPath();
 
         foreach (Node child in track_path_display_container.GetChildren()) {
             child.QueueFree();
@@ -70,7 +69,7 @@ public partial class PlaylistCreator : EditorWindow {
 
 		void SetCover(string path) {
 			cover_path = path;
-			cover_path_display.SetPath(cover_path);
+			cover_path_display.path = cover_path;
 
 			Finish();
 		}
@@ -88,7 +87,7 @@ public partial class PlaylistCreator : EditorWindow {
 	
 	public void ClearCover() {
 		cover_path = "";
-        cover_path_display.SetPath(cover_path);
+        cover_path_display.path = cover_path;
     }
 
 	public void OpenTracks() {
@@ -120,12 +119,12 @@ public partial class PlaylistCreator : EditorWindow {
 		foreach(string path in paths) {
 			if(Tools.ValidAudioFile(path)) {
 				if(!tracks.Contains(path)) {
-					var disp = Globals.path_display.Instantiate() as PathDisplay;
+					PathDisplay disp = new PathDisplay();
 					disp.is_file = true;
 
 					track_path_display_container.AddChild(disp);
 
-					disp.SetPath(path);
+					disp.path = path;
 
 					tracks.Add(path);
 

@@ -45,7 +45,6 @@
 [ext_resource type="Texture2D" uid="uid://jqnfgusrehqq" path="res://Icons/SVG/un_muted.svg" id="42_2o8nl"]
 [ext_resource type="Script" uid="uid://c5ep0n80r2l8p" path="res://Csharp/UI/Buttons/AttributeEditorOpener.cs" id="42_3aot7"]
 [ext_resource type="Script" uid="uid://ba0kdfmjh8445" path="res://Csharp/Application/Globals.cs" id="46_y0j44"]
-[ext_resource type="PackedScene" uid="uid://cjc5crjo31obe" path="res://Prefabs/path_display.tscn" id="49_mrmdv"]
 [ext_resource type="PackedScene" uid="uid://bw078i5dk5ff4" path="res://Prefabs/confirmation_window.tscn" id="50_c27js"]
 [ext_resource type="PackedScene" uid="uid://dle5y658wmx03" path="res://Windows/attribute_editor_window.tscn" id="52_vsj6c"]
 [ext_resource type="PackedScene" uid="uid://djve16b56k6h0" path="res://Windows/Downloading/download_window.tscn" id="53_7surn"]
@@ -567,10 +566,12 @@ theme_override_constants/scrollbar_h_separation = 4
 theme_override_styles/focus = SubResource("StyleBoxEmpty_b1qrp")
 horizontal_scroll_mode = 0
 script = ExtResource("15_btqdu")
+item_template = ExtResource("16_ns1th")
+total_items = null
+item_height = null
 cover = NodePath("Container/Top card/Icon/TextureRect")
 playlist_name_label = NodePath("Container/Top card/Playlist name")
 track_count_label = NodePath("Container/Top card/Track count")
-item_template = ExtResource("16_ns1th")
 parent_container = NodePath("Container")
 item_container = NodePath("Container/VBoxContainer")
 
@@ -883,9 +884,8 @@ text = "0:00"
 
 [node name="Globals" type="Node" parent="." unique_id=71517921 node_paths=PackedStringArray("_attribute_editor")]
 script = ExtResource("46_y0j44")
-_attribute_editor = NodePath("AttributeEditor")
-_path_display = ExtResource("49_mrmdv")
 _confirmation_window = ExtResource("50_c27js")
+_attribute_editor = NodePath("AttributeEditor")
 
 [node name="AttributeEditor" parent="Globals" unique_id=1605960294 instance=ExtResource("52_vsj6c")]
 visible = false

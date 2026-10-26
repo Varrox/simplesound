@@ -40,7 +40,6 @@ public partial class AttributeEditor : EditorWindow {
         this.explicit_lyrics_field.ButtonPressed = explicit_lyrics;
         this.explicit_lyrics = explicit_lyrics;
 
-        cover_label.SetPath();
         cover_path = "";
 
         Show();
@@ -57,7 +56,6 @@ public partial class AttributeEditor : EditorWindow {
         this.explicit_lyrics_field.ButtonPressed = track_data.explicit_lyrics;
         this.explicit_lyrics = track_data.explicit_lyrics;
 
-        cover_label.SetPath();
         cover_path = "";
 
         Show();
@@ -88,7 +86,7 @@ public partial class AttributeEditor : EditorWindow {
 
         void SubmitCover(string path) {
             cover_path = path;
-            cover_label.SetPath(path);
+            cover_label.path = path;
 
             Finish();
         }

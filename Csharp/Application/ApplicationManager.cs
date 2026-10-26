@@ -224,26 +224,32 @@ public partial class ApplicationManager : SceneTree {
     }
 
     public static Color GetThemeColor(StringName name) {
+        if (theme == null) return Colors.White;
         return theme.GetColor(name, Constants.THEME_TYPE);
     }
     
     public static int GetThemeConstant(StringName name) {
+        if (theme == null) return 0;
         return theme.GetConstant(name, Constants.THEME_TYPE);
     }
 
     public static Font GetThemeFont(StringName name) {
+        if (theme == null) return null;
         return theme.GetFont(name, Constants.THEME_TYPE);
     }
 
     public static int GetThemeFontSize(StringName name) {
+        if (theme == null) return 10;
         return theme.GetFontSize(name, Constants.THEME_TYPE);
     }
 
     public static Texture2D GetThemeIcon(StringName name) {
+        if (theme == null) return null;
         return theme.GetIcon(name, Constants.THEME_TYPE);
     }
 
     public static StyleBox GetThemeStylebox(StringName name) {
+        if (theme == null) return null;
         return theme.GetStylebox(name, Constants.THEME_TYPE);
     }
 
