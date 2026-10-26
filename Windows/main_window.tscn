@@ -353,7 +353,7 @@ icon_alignment = 1
 expand_icon = true
 script = ExtResource("28_3ax07")
 
-[node name="List" type="MenuButton" parent="Interface/Top Bar/MarginContainer/HBoxContainer/Right" unique_id=1295130311 node_paths=PackedStringArray("background_texture_rect")]
+[node name="List" type="MenuButton" parent="Interface/Top Bar/MarginContainer/HBoxContainer/Right" unique_id=1295130311 node_paths=PackedStringArray("background_texture_rect", "text_container")]
 custom_minimum_size = Vector2(28, 0)
 layout_mode = 2
 icon = ExtResource("29_2wbij")
@@ -362,6 +362,7 @@ expand_icon = true
 script = ExtResource("30_xrbbi")
 streamer_display_template = ExtResource("26_3edd3")
 background_texture_rect = NodePath("../../../../../../Background/Image")
+text_container = NodePath("../Text")
 
 [node name="Settings" type="Button" parent="Interface/Top Bar/MarginContainer/HBoxContainer/Right" unique_id=501507118 node_paths=PackedStringArray("window")]
 custom_minimum_size = Vector2(28, 0)
@@ -566,14 +567,14 @@ theme_override_constants/scrollbar_h_separation = 4
 theme_override_styles/focus = SubResource("StyleBoxEmpty_b1qrp")
 horizontal_scroll_mode = 0
 script = ExtResource("15_btqdu")
-item_template = ExtResource("16_ns1th")
-total_items = null
-item_height = null
 cover = NodePath("Container/Top card/Icon/TextureRect")
 playlist_name_label = NodePath("Container/Top card/Playlist name")
 track_count_label = NodePath("Container/Top card/Track count")
+item_template = ExtResource("16_ns1th")
 parent_container = NodePath("Container")
 item_container = NodePath("Container/VBoxContainer")
+total_items = null
+item_height = null
 
 [node name="Container" type="VBoxContainer" parent="Interface/Content/Tracks/Track Display" unique_id=933878103]
 layout_mode = 2
@@ -884,8 +885,8 @@ text = "0:00"
 
 [node name="Globals" type="Node" parent="." unique_id=71517921 node_paths=PackedStringArray("_attribute_editor")]
 script = ExtResource("46_y0j44")
-_confirmation_window = ExtResource("50_c27js")
 _attribute_editor = NodePath("AttributeEditor")
+_confirmation_window = ExtResource("50_c27js")
 
 [node name="AttributeEditor" parent="Globals" unique_id=1605960294 instance=ExtResource("52_vsj6c")]
 visible = false

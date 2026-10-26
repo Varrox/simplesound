@@ -17,15 +17,15 @@ public partial class AddPlaylist : ContextMenuButton {
 		Texture2D file_icon = ApplicationManager.GetThemeIcon("file_icon");
 		Texture2D zip_icon = ApplicationManager.GetThemeIcon("zip_icon");
 
-		GetPopup().AddIconItem(plus_icon, "Create new playlist", CREATE_NEW_PLAYLIST);
+		GetPopup().AddIconItem(plus_icon, "Create New Playlist", CREATE_NEW_PLAYLIST);
 		GetPopup().SetItemTooltip(CREATE_NEW_PLAYLIST, "Opens window for creating a new playlist.");
 
 		GetPopup().AddSeparator("", SEP_1);
 
-		GetPopup().AddIconItem(file_icon, "Import playlist file", IMPORT_PLAYLIST_FILE);
+		GetPopup().AddIconItem(file_icon, "Import Playlist File", IMPORT_PLAYLIST_FILE);
 		GetPopup().SetItemTooltip(IMPORT_PLAYLIST_FILE, $"Opens file dialog for selecting a playlist (json) file to add to {ApplicationManager.SOFTWARE_NAME}.");
 
-		GetPopup().AddIconItem(zip_icon, "Import playlist zip file", IMPORT_PLAYLIST_ZIP);
+		GetPopup().AddIconItem(zip_icon, "Import Playlist ZIP File", IMPORT_PLAYLIST_ZIP);
 		GetPopup().SetItemTooltip(IMPORT_PLAYLIST_ZIP, $"Opens file dialog for selecting a playlist ZIP archive (.zip file) to add to {ApplicationManager.SOFTWARE_NAME}.");
 	}
 
@@ -80,7 +80,7 @@ public partial class AddPlaylist : ContextMenuButton {
 				Main.instance.Refresh();
 			}
 			else {
-				OS.Alert("Playlist could not be imported since it is already referenced in playlist library.", "Playlist import failed");
+				OS.Alert("Playlist could not be imported since it is already referenced in playlist library.", "Playlist Import Failed");
 			}
 
 			Finish();
@@ -121,7 +121,7 @@ public partial class AddPlaylist : ContextMenuButton {
 			}
 
 			if (playlist_file == null) {
-				OS.Alert("Zip Archive could not be imported since no playlist .json file could be found in its contents.", "Zip import failed");
+				OS.Alert("ZIP Archive could not be imported since no playlist (.json) file could be found in its contents.", "ZIP import failed");
 				Finish();
 				return;
 			}
@@ -129,7 +129,7 @@ public partial class AddPlaylist : ContextMenuButton {
 			Playlist playlist = Playlist.LoadFromJson(playlist_file);
 
 			if(ApplicationManager.save_data.playlists.Contains(playlist.path)) {
-				OS.Alert("Playlist could not be imported since it is already referenced in playlist library.", "Playlist import failed");
+				OS.Alert("Playlist could not be imported since it is already referenced in playlist library.", "Playlist Import Failed");
 				Finish();
 				return;
 			}

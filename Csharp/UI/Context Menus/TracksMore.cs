@@ -9,7 +9,7 @@ public partial class TracksMore : ContextMenuButton {
 
     public const int ADD_TO_PLAYLIST = 0, EDIT_METADATA = 1, REMOVE_TRACK = 3, DELETE_TRACK = 4, SHARE_TRACK = 6;
 
-    public const int COPY_SHARE_LINK = 0, OPEN_TRACK_IN_FILE_BROWSER = 1;
+    public const int COPY_SHARE_LINK = 0, OPEN_TRACK_IN_FILE_EXPLORER = 1;
 
     public ThemePopupMenu add_to_playlist_popup_menu, share_popup_menu;
 
@@ -42,20 +42,20 @@ public partial class TracksMore : ContextMenuButton {
 
         add_to_playlist_popup = new ThemePopupMenu();
 
-        popup.AddSubmenuNodeItem("Add to playlist", add_to_playlist_popup, ADD_TO_PLAYLIST);
+        popup.AddSubmenuNodeItem("Add to Playlist", add_to_playlist_popup, ADD_TO_PLAYLIST);
         popup.SetItemIcon(ADD_TO_PLAYLIST, ApplicationManager.GetThemeIcon("plus_icon"));
 
         SetupAddToPlaylistOptions(add_to_playlist_popup);
 
         // Normal Options
 
-        popup.AddIconItem(ApplicationManager.GetThemeIcon("pen_icon"), "Edit metadata", EDIT_METADATA);
+        popup.AddIconItem(ApplicationManager.GetThemeIcon("pen_icon"), "Edit Metadata", EDIT_METADATA);
 
         popup.AddSeparator("", SEP_1);
 
-        popup.AddIconItem(ApplicationManager.GetThemeIcon("minus_icon"), "Remove track from playlist", REMOVE_TRACK);
+        popup.AddIconItem(ApplicationManager.GetThemeIcon("minus_icon"), "Remove Track from Playlist", REMOVE_TRACK);
 
-        popup.AddIconItem(ApplicationManager.GetThemeIcon("x_icon"), "Delete track file", DELETE_TRACK);
+        popup.AddIconItem(ApplicationManager.GetThemeIcon("x_icon"), "Delete Track File", DELETE_TRACK);
 
         popup.AddSeparator("", SEP_2);
 
@@ -66,9 +66,9 @@ public partial class TracksMore : ContextMenuButton {
         popup.AddSubmenuNodeItem("Share", share_popup, SHARE_TRACK);
         popup.SetItemIcon(SHARE_TRACK, ApplicationManager.GetThemeIcon("upload_icon"));
 
-        share_popup.AddIconItem(ApplicationManager.GetThemeIcon("loop_icon"), "Copy share link", COPY_SHARE_LINK);
+        share_popup.AddIconItem(ApplicationManager.GetThemeIcon("loop_icon"), "Copy Share Link", COPY_SHARE_LINK);
 
-        share_popup.AddIconItem(ApplicationManager.GetThemeIcon("folder_icon"), "Open track in file browser", OPEN_TRACK_IN_FILE_BROWSER);
+        share_popup.AddIconItem(ApplicationManager.GetThemeIcon("folder_icon"), "Open Track in File Explorer", OPEN_TRACK_IN_FILE_EXPLORER);
     }
 
     protected override void _ItemPressed(long id) {
@@ -240,7 +240,7 @@ public partial class TracksMore : ContextMenuButton {
 			case COPY_SHARE_LINK:
                 DisplayServer.ClipboardSet(Metadata.GetShareLink(track_file));
 				break;
-			case OPEN_TRACK_IN_FILE_BROWSER:
+			case OPEN_TRACK_IN_FILE_EXPLORER:
                 OS.ShellShowInFileManager(track_file);
 				break;
 		}

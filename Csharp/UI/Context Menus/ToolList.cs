@@ -22,6 +22,10 @@ public partial class ToolList : ContextMenuButton {
     public override void _Ready() {
         base._Ready();
 
+        Icon = ApplicationManager.GetThemeIcon("hamburger_icon");
+
+        // Items
+
         GetPopup().AddCheckItem("Streamer Mode", STREAMER_DISPLAY);
 
         GetPopup().AddSeparator("", SEP_1);
@@ -31,14 +35,14 @@ public partial class ToolList : ContextMenuButton {
         GetPopup().AddSubmenuNodeItem("Sleep Timer", _sleep_timer_popup_menu, SLEEP_TIMER);
         GetPopup().SetItemIcon(SLEEP_TIMER, ApplicationManager.GetThemeIcon("time_icon"));
 
-        _sleep_timer_popup_menu.AddItem("5 minutes", SLEEP_5_MINUTES);
-        _sleep_timer_popup_menu.AddItem("10 minutes", SLEEP_10_MINUTES);
-        _sleep_timer_popup_menu.AddItem("15 minutes", SLEEP_15_MINUTES);
-        _sleep_timer_popup_menu.AddItem("20 minutes", SLEEP_20_MINUTES);
-        _sleep_timer_popup_menu.AddItem("30 minutes", SLEEP_30_MINUTES);
-        _sleep_timer_popup_menu.AddItem("45 minutes", SLEEP_45_MINUTES);
-        _sleep_timer_popup_menu.AddItem("1 hour", SLEEP_1_HOUR);
-        _sleep_timer_popup_menu.AddItem("2 hours", SLEEP_2_HOURS);
+        _sleep_timer_popup_menu.AddItem("5 Minutes", SLEEP_5_MINUTES);
+        _sleep_timer_popup_menu.AddItem("10 Minutes", SLEEP_10_MINUTES);
+        _sleep_timer_popup_menu.AddItem("15 Minutes", SLEEP_15_MINUTES);
+        _sleep_timer_popup_menu.AddItem("20 Minutes", SLEEP_20_MINUTES);
+        _sleep_timer_popup_menu.AddItem("30 Minutes", SLEEP_30_MINUTES);
+        _sleep_timer_popup_menu.AddItem("45 Minutes", SLEEP_45_MINUTES);
+        _sleep_timer_popup_menu.AddItem("1 Hour", SLEEP_1_HOUR);
+        _sleep_timer_popup_menu.AddItem("2 Hours", SLEEP_2_HOURS);
 
         _sleep_timer_popup_menu.IdPressed += _SetupSleepTimer;
     }

@@ -6,7 +6,7 @@ public partial class PlaylistsMore : ContextMenuButton {
 
     public const int SEP_1 = 1, SEP_2 = 4, SEP_3 = 7;
 
-    public const int EDIT_PLAYLIST = 0, OPEN_PLAYLIST_IN_FILE_BROWER = 2, OPEN_PLAYLIST_FILE = 3, SAVE_PLAYLIST_AS_ZIP = 5, ADD_TO_OTHER_PLAYLIST = 6, DELETE_PLAYLIST = 8;
+    public const int EDIT_PLAYLIST = 0, OPEN_PLAYLIST_IN_FILE_EXPLORER = 2, OPEN_PLAYLIST_FILE = 3, SAVE_PLAYLIST_AS_ZIP = 5, ADD_TO_OTHER_PLAYLIST = 6, DELETE_PLAYLIST = 8;
 
     public ThemePopupMenu add_to_other_playlist_popup_menu;
 
@@ -22,20 +22,20 @@ public partial class PlaylistsMore : ContextMenuButton {
 
         // Open
 
-        GetPopup().AddIconItem(ApplicationManager.GetThemeIcon("folder_icon"), "Open playlist in file browser", OPEN_PLAYLIST_IN_FILE_BROWER);
+        GetPopup().AddIconItem(ApplicationManager.GetThemeIcon("folder_icon"), "Open Playlist in File Explorer", OPEN_PLAYLIST_IN_FILE_EXPLORER);
 
-        GetPopup().AddIconItem(ApplicationManager.GetThemeIcon("file_icon"), "Open playlist file", OPEN_PLAYLIST_FILE);
+        GetPopup().AddIconItem(ApplicationManager.GetThemeIcon("file_icon"), "Open Playlist File", OPEN_PLAYLIST_FILE);
 
         GetPopup().AddSeparator("", SEP_2);
 
         // Save
 
-        GetPopup().AddIconItem(ApplicationManager.GetThemeIcon("zip_icon"), "Save as ZIP file", SAVE_PLAYLIST_AS_ZIP);
+        GetPopup().AddIconItem(ApplicationManager.GetThemeIcon("zip_icon"), "Save as ZIP File", SAVE_PLAYLIST_AS_ZIP);
         GetPopup().SetItemDisabled(SAVE_PLAYLIST_AS_ZIP, true);
 
         add_to_other_playlist_popup_menu = new ThemePopupMenu();
 
-        GetPopup().AddSubmenuNodeItem("Add to other playlist", add_to_other_playlist_popup_menu, ADD_TO_OTHER_PLAYLIST);
+        GetPopup().AddSubmenuNodeItem("Add to other Playlist", add_to_other_playlist_popup_menu, ADD_TO_OTHER_PLAYLIST);
         GetPopup().SetItemIcon(ADD_TO_OTHER_PLAYLIST, ApplicationManager.GetThemeIcon("plus_icon"));
 
         UpdateAddToOtherPlaylistOptions();
@@ -64,7 +64,7 @@ public partial class PlaylistsMore : ContextMenuButton {
 				break;
 			case DELETE_PLAYLIST:
 				break;
-            case OPEN_PLAYLIST_IN_FILE_BROWER:
+            case OPEN_PLAYLIST_IN_FILE_EXPLORER:
                 OS.ShellShowInFileManager(Main.playlists[playlist_display.playlist_index].path);
 				break;
 			case OPEN_PLAYLIST_FILE:
