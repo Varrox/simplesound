@@ -51,7 +51,6 @@
 [ext_resource type="PackedScene" uid="uid://djve16b56k6h0" path="res://Windows/Downloading/download_window.tscn" id="53_7surn"]
 [ext_resource type="Texture2D" uid="uid://bdbco8a0mnjn6" path="res://Icons/Logos/logotrans.png" id="54_lfg21"]
 [ext_resource type="Script" uid="uid://bmgcpmp5cfuwy" path="res://Csharp/Application/Tray.cs" id="55_y62dl"]
-[ext_resource type="Script" uid="uid://ca5d2qc1a4t64" path="res://GDScript/gd_script_globals.gd" id="56_08crl"]
 [ext_resource type="Script" uid="uid://dn1xjyy7q4ft5" path="res://Csharp/Application/Discord.cs" id="57_kef43"]
 [ext_resource type="Script" uid="uid://cqf4nqygajv02" path="res://GDScript/zoomer.gd" id="58_e23wy"]
 
@@ -900,10 +899,6 @@ tool_list = NodePath("../../Interface/Top Bar/MarginContainer/HBoxContainer/Righ
 
 [node name="PopupMenu" type="PopupMenu" parent="Globals/StatusIndicator" unique_id=251564623]
 prefer_native_menu = true
-
-[node name="GDScript Globals" type="Node" parent="." unique_id=142593709 node_paths=PackedStringArray("_audio_source")]
-script = ExtResource("56_08crl")
-_audio_source = NodePath("../Player")
 
 [node name="Discord" type="Node" parent="." unique_id=46493677]
 script = ExtResource("57_kef43")
