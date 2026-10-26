@@ -220,7 +220,7 @@ public partial class Player : Node {
 
         _SetPlayIcon();
 
-        Globals.discord.UpdateTrack();
+        Discord.UpdateTrack();
     }
 
     public static void SetTime(float value) {

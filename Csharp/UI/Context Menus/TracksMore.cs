@@ -192,7 +192,7 @@ public partial class TracksMore : ContextMenuButton {
     }
 
     public static void RemoveTrack(int playlist_index, int track_index, string track_name) {
-        if(!Globals.save_data.application_settings.remove_track_warning) {
+        if(!ApplicationManager.save_data.application_settings.remove_track_warning) {
             RemoveTrackFromPlaylist(playlist_index, track_index);
             return;
         }
@@ -212,8 +212,8 @@ public partial class TracksMore : ContextMenuButton {
 
         void Confirmed(Confirm confirm) {
             if (confirmation.ignored) {
-                Globals.save_data.application_settings.remove_track_warning = false;
-                Globals.save_data.Save();
+                ApplicationManager.save_data.application_settings.remove_track_warning = false;
+                ApplicationManager.save_data.Save();
             }
 
             if (confirm == Confirm.Declined) return;

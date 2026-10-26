@@ -49,41 +49,41 @@ public partial class Settings : EditorWindow {
         A band is a point in the frequency spectrum, and each band means a division of the spectrum that can be adjusted.
         """);
 
-        AddFloatSetting("Hz 32", Globals.save_data.audio_settings, "hz_32", 0.0f, -60.0f, 24.0f, "The 32 Hz band.");
-        AddFloatSetting("Hz 100", Globals.save_data.audio_settings, "hz_100", 0.0f, -60.0f, 24.0f, "The 100 Hz band.");
-        AddFloatSetting("Hz 320", Globals.save_data.audio_settings, "hz_320", 0.0f, -60.0f, 24.0f, "The 320 Hz band.");
-        AddFloatSetting("Hz 1000", Globals.save_data.audio_settings, "hz_1000", 0.0f, -60.0f, 24.0f, "The 1900 Hz band.");
-        AddFloatSetting("Hz 3200", Globals.save_data.audio_settings, "hz_3200", 0.0f, -60.0f, 24.0f, "The 3200 Hz band.");
-        AddFloatSetting("Hz 10000", Globals.save_data.audio_settings, "hz_10000", 0.0f, -60.0f, 24.0f, "The 10000 Hz band.");
+        AddFloatSetting("Hz 32", ApplicationManager.save_data.audio_settings, "hz_32", 0.0f, -60.0f, 24.0f, "The 32 Hz band.");
+        AddFloatSetting("Hz 100", ApplicationManager.save_data.audio_settings, "hz_100", 0.0f, -60.0f, 24.0f, "The 100 Hz band.");
+        AddFloatSetting("Hz 320", ApplicationManager.save_data.audio_settings, "hz_320", 0.0f, -60.0f, 24.0f, "The 320 Hz band.");
+        AddFloatSetting("Hz 1000", ApplicationManager.save_data.audio_settings, "hz_1000", 0.0f, -60.0f, 24.0f, "The 1900 Hz band.");
+        AddFloatSetting("Hz 3200", ApplicationManager.save_data.audio_settings, "hz_3200", 0.0f, -60.0f, 24.0f, "The 3200 Hz band.");
+        AddFloatSetting("Hz 10000", ApplicationManager.save_data.audio_settings, "hz_10000", 0.0f, -60.0f, 24.0f, "The 10000 Hz band.");
 
         AddHeader("Reverb", """
         The reverb effect plays the track audio back continuously, decaying over a period of time.
         It simulates sounds in different kinds of spaces, ranging from small rooms, to big caverns.
         """);
 
-        AddFloatSetting("Room Size", Globals.save_data.audio_settings, "room_size", 0.0f, 0.0f, 1.0f, 
+        AddFloatSetting("Room Size", ApplicationManager.save_data.audio_settings, "room_size", 0.0f, 0.0f, 1.0f, 
         "Dimensions of simulated room. Bigger means more echoes.");
 
-        AddFloatSetting("Damping", Globals.save_data.audio_settings, "damping", 0.5f, 0.0f, 1.0f, 
+        AddFloatSetting("Damping", ApplicationManager.save_data.audio_settings, "damping", 0.5f, 0.0f, 1.0f, 
         "Defines how reflective the imaginary room's walls are. The more reflective, the more high frequency content the reverb has.");
 
-        AddFloatSetting("Spread", Globals.save_data.audio_settings, "spread", 1.0f, 0.0f, 1.0f,
+        AddFloatSetting("Spread", ApplicationManager.save_data.audio_settings, "spread", 1.0f, 0.0f, 1.0f,
         "Widens or narrows the stereo image of the reverb tail. At 1, it fully widens.");
 
-        AddFloatSetting("High-Pass", Globals.save_data.audio_settings, "high_pass", 0.0f, 0.0f, 1.0f,
+        AddFloatSetting("High-Pass", ApplicationManager.save_data.audio_settings, "high_pass", 0.0f, 0.0f, 1.0f,
         "High-pass filter allows frequencies higher than a certain cutoff threshold and attenuates frequencies lower than the cutoff threshold.");
 
-        AddFloatSetting("Dry", Globals.save_data.audio_settings, "dry", 1.0f, 0.0f, 1.0f, 
+        AddFloatSetting("Dry", ApplicationManager.save_data.audio_settings, "dry", 1.0f, 0.0f, 1.0f, 
         "The volume ratio of the original audio. At 0, only the modified audio is outputted.");
 
-        AddFloatSetting("Wet", Globals.save_data.audio_settings, "wet", 0.0f, 0.0f, 1.0f,
+        AddFloatSetting("Wet", ApplicationManager.save_data.audio_settings, "wet", 0.0f, 0.0f, 1.0f,
         "The volume ratio of the modified audio. At 0, only the original audio is outputted.");
     }
 
     void AddDownloaderSettings() {
-        AddFileLocationSetting("yt-dlp Location", Globals.save_data.application_settings, "ytdlp_location", 
+        AddFileLocationSetting("yt-dlp Location", ApplicationManager.save_data.application_settings, "ytdlp_location", 
         "The file location of an yt-dlp executable.");
-        AddEnumSetting("Audio Format", Globals.save_data.application_settings, "download_format", DownloadFormat.MP3, false, 
+        AddEnumSetting("Audio Format", ApplicationManager.save_data.application_settings, "download_format", DownloadFormat.MP3, false, 
         "The audio format that the track downloader will save track as.");
     }
 
@@ -91,18 +91,18 @@ public partial class Settings : EditorWindow {
     }
 
     void AddGraphicSettings() {
-        AddEnumSetting("Blur Quality", Globals.save_data.graphic_settings, "blur_quality", QualityLevel.MEDIUM, true, 
+        AddEnumSetting("Blur Quality", ApplicationManager.save_data.graphic_settings, "blur_quality", QualityLevel.MEDIUM, true, 
         "The quality of the blur effect on the background (Higher qualities will lower performance).");
 
         AddHeader("Display");
 
-        AddBoolSetting("VSync", Globals.save_data.graphic_settings, "vsync", true, 
+        AddBoolSetting("VSync", ApplicationManager.save_data.graphic_settings, "vsync", true, 
         "VSync changes your top FPS to be the same as your monitor refreshrate (regardless of Max FPS), saving power and CPU / GPU usage.");
 
-        AddIntSetting("Max FPS", Globals.save_data.graphic_settings, "max_fps", 60, 0, 500, 
+        AddIntSetting("Max FPS", ApplicationManager.save_data.graphic_settings, "max_fps", 60, 0, 500, 
         $"The Maximum FPS that {ApplicationManager.SOFTWARE_NAME} can run at.");
 
-        AddBoolSetting("Reduce FPS on lose focus", Globals.save_data.graphic_settings, "reduce_fps_on_lose_focus", true, $"""
+        AddBoolSetting("Reduce FPS on lose focus", ApplicationManager.save_data.graphic_settings, "reduce_fps_on_lose_focus", true, $"""
         An option to reduce FPS to a maximum of {ApplicationManager.reduce_fps_on_lose_focus_fps} when the {ApplicationManager.SOFTWARE_NAME} window(s) is not focused to lower CPU / GPU usage.
         Note: Having this enabled while streamer mode is on isn't suggested as it will lower the FPS of the streamer window too (it affects all windows apart of {ApplicationManager.SOFTWARE_NAME}).
         """);
@@ -526,14 +526,14 @@ public partial class Settings : EditorWindow {
     }
 
     public void SetSetting<T>(ref T obj, Type type, string instance_name, object value) where T : ISettings {
-        if (Globals.save_data == null) return;
+        if (ApplicationManager.save_data == null) return;
 
         FieldInfo field = type.GetField(instance_name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
         
         if (field != null) {
             field.SetValue(obj, Convert.ChangeType(value, field.FieldType));
 
-            Globals.save_data.Save();
+            ApplicationManager.save_data.Save();
         }
         else GD.PrintErr($"Settings Field not found. Unable to set setting \'{instance_name}\'");
     }

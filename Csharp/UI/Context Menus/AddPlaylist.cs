@@ -73,9 +73,9 @@ public partial class AddPlaylist : ContextMenuButton {
 		}
 
 		void AddPlaylistFile(string file) {
-			if(!Globals.save_data.playlists.Contains(file)) {
-				Globals.save_data.playlists.Add(file);
-				Globals.save_data.Save();
+			if(!ApplicationManager.save_data.playlists.Contains(file)) {
+				ApplicationManager.save_data.playlists.Add(file);
+				ApplicationManager.save_data.Save();
 				
 				Main.instance.Refresh();
 			}
@@ -128,7 +128,7 @@ public partial class AddPlaylist : ContextMenuButton {
 
 			Playlist playlist = Playlist.LoadFromJson(playlist_file);
 
-			if(Globals.save_data.playlists.Contains(playlist.path)) {
+			if(ApplicationManager.save_data.playlists.Contains(playlist.path)) {
 				OS.Alert("Playlist could not be imported since it is already referenced in playlist library.", "Playlist import failed");
 				Finish();
 				return;
@@ -180,8 +180,8 @@ public partial class AddPlaylist : ContextMenuButton {
 
 			// Save
 
-			Globals.save_data.playlists.Add(playlist.Save());
-			Globals.save_data.Save();
+			ApplicationManager.save_data.playlists.Add(playlist.Save());
+			ApplicationManager.save_data.Save();
 			
 			Main.instance.Refresh();
 

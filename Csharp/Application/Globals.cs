@@ -2,13 +2,6 @@
 
 [GlobalClass]
 public partial class Globals : Node {
-    public static Globals self;
-
-    [ExportGroup("Nodes")]
-
-    [Export] private Discord _discord{set{ discord = value; }get{ return discord; }}
-    public static Discord discord;
-
     [ExportGroup("Windows")]
 
     [Export] private AttributeEditor _attribute_editor{set{ attribute_editor = value; }get{ return attribute_editor; }}
@@ -24,10 +17,4 @@ public partial class Globals : Node {
 
     [Export] private PackedScene _confirmation_window{set{ confirmation_window = value; }get{ return confirmation_window; }}
     public static PackedScene confirmation_window;
-
-    public static SaveData save_data;
-
-    Globals() {
-        self = this;
-    }
 }

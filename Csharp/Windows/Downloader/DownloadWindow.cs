@@ -71,11 +71,6 @@ public partial class DownloadWindow : EditorWindow {
     }
 
     public void Close() {
-        if(Globals.self == null) {
-            ApplicationManager.QuitProgram();
-            return;
-        }
-
         Hide();
         Clear();
     }
@@ -118,9 +113,6 @@ public partial class DownloadWindow : EditorWindow {
     }
 
     public string[] RunDownloadCommand(string url, string folder) {
-        if(Globals.self == null) // If globals doesn't exist
-            return null;
-        
         var output = new Godot.Collections.Array();
 
         string directory = folder == "" ? Constants.USER_TRACKS : Path.Combine(Constants.USER_TRACKS, folder);
@@ -132,7 +124,7 @@ public partial class DownloadWindow : EditorWindow {
 
         string output_directory = Path.Combine(directory, file);
 
-        string selected_format = Constants.DOWNLOAD_FORMATS[(int)Globals.save_data.application_settings.download_format];
+        string selected_format = Constants.DOWNLOAD_FORMATS[(int)ApplicationManager.save_data.application_settings.download_format];
 
         List<string> arguments = new List<string>(new[]{
             "-x", 
@@ -154,7 +146,7 @@ public partial class DownloadWindow : EditorWindow {
         if(url.Contains("list="))
             arguments.Insert(4,"--yes-playlist");
 
-        int result = OS.Execute(Globals.save_data.application_settings.ytdlp_location, arguments.ToArray(), output, true, false);
+        int result = OS.Execute(ApplicationManager.save_data.application_settings.ytdlp_location, arguments.ToArray(), output, true, false);
 
         List<string> tracks = new List<string>();
 

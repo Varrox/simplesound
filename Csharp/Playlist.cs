@@ -226,9 +226,9 @@ public class Playlist {
     public void DeleteFile() {
         File.Delete(path);
 
-        Globals.save_data.playlists.Remove(path);
+        ApplicationManager.save_data.playlists.Remove(path);
 
-        Globals.save_data.Save();
+        ApplicationManager.save_data.Save();
     }
 
     public static void GetTracksFromDirectory(ref List<string> tracks, string directory) {

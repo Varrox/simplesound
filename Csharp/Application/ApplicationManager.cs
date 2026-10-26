@@ -22,23 +22,25 @@ public partial class ApplicationManager : SceneTree {
 
     public static Theme theme;
 
+    public static SaveData save_data;
+
     public static ApplicationManager instance;
 
     public ApplicationManager() {
         instance = this;
 
-        Globals.save_data = SaveData.GetSaveData();
+        save_data = SaveData.GetSaveData();
 
         theme = _LoadTheme();
 
         Root.MinSize = _main_window_minimum_size;
         Root.CloseRequested += QuitProgram;
 
-        if (Globals.save_data.graphic_settings.main_display_size >= _main_window_minimum_size) { // If the size is not below minimum
-            DisplayServer.WindowSetSize(Globals.save_data.graphic_settings.main_display_size);
+        if (save_data.graphic_settings.main_display_size >= _main_window_minimum_size) { // If the size is not below minimum
+            DisplayServer.WindowSetSize(save_data.graphic_settings.main_display_size);
         }
         else { // Set setting to default size if so, and save.
-            Globals.save_data.graphic_settings.main_display_size = _main_window_default_size;
+            save_data.graphic_settings.main_display_size = _main_window_default_size;
             Save();
         }
 
@@ -60,7 +62,7 @@ public partial class ApplicationManager : SceneTree {
     }
 
     public static void Save() {
-        Globals.save_data.Save();
+        save_data.Save();
     }
 
     public override void _Finalize() {
@@ -69,12 +71,12 @@ public partial class ApplicationManager : SceneTree {
     }
 
     public static void QuitProgram() {
-        Globals.save_data.graphic_settings.main_display_size = instance.Root.Size;
+        save_data.graphic_settings.main_display_size = instance.Root.Size;
         instance.Quit();
     }
 
     private static void _SetMaxFPS(bool focused) {
-        Engine.MaxFps = focused || !Globals.save_data.graphic_settings.reduce_fps_on_lose_focus ? Globals.save_data.graphic_settings.max_fps : reduce_fps_on_lose_focus_fps;
+        Engine.MaxFps = focused || !save_data.graphic_settings.reduce_fps_on_lose_focus ? save_data.graphic_settings.max_fps : reduce_fps_on_lose_focus_fps;
     }
 
     public static void OnTextEditingToggled(bool toggled_on) {

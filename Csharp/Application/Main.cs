@@ -47,17 +47,19 @@ public partial class Main : Control {
 		return null;
 	}
 
-    public override void _Ready() {
-		instance = this;
+    public Main() {
+        instance = this;
+    }
 
+    public override void _Ready() {
 		// Load Save data
 
-		playlist_index = Globals.save_data.playlist_index;
-		track_index = Globals.save_data.track_index;
-		time = Globals.save_data.time;
-		volume = Globals.save_data.volume;
-		shuffled = Globals.save_data.shuffled;
-        looked_at_playlist = Globals.save_data.looked_at_playlist;
+		playlist_index = ApplicationManager.save_data.playlist_index;
+		track_index = ApplicationManager.save_data.track_index;
+		time = ApplicationManager.save_data.time;
+		volume = ApplicationManager.save_data.volume;
+		shuffled = ApplicationManager.save_data.shuffled;
+        looked_at_playlist = ApplicationManager.save_data.looked_at_playlist;
 
 		offset = track_index;
 
@@ -70,10 +72,10 @@ public partial class Main : Control {
 
         // Load playlists
 
-        playlist_paths = Globals.save_data.playlists ?? new List<string>();
+        playlist_paths = ApplicationManager.save_data.playlists ?? new List<string>();
         playlists = new List<Playlist>(new Playlist[playlist_paths.Count]);
 
-        if (Globals.save_data.playlists == null) return;
+        if (ApplicationManager.save_data.playlists == null) return;
 
         for (int i = 0; i < playlist_paths.Count; i++) playlists[i] = Playlist.LoadFromFile(playlist_paths[i]);
 
@@ -300,13 +302,13 @@ public partial class Main : Control {
 	}
 
 	public void SetSaveData() {
-		Globals.save_data.playlist_index = playlist_index;
-		Globals.save_data.track_index = track_index;
-		Globals.save_data.looked_at_playlist = looked_at_playlist;
-		Globals.save_data.time = time;
-		Globals.save_data.volume = audio_player.VolumeDb;
-		Globals.save_data.shuffled = shuffled;
-		Globals.save_data.playlists = playlist_paths;
+		ApplicationManager.save_data.playlist_index = playlist_index;
+		ApplicationManager.save_data.track_index = track_index;
+		ApplicationManager.save_data.looked_at_playlist = looked_at_playlist;
+		ApplicationManager.save_data.time = time;
+		ApplicationManager.save_data.volume = audio_player.VolumeDb;
+		ApplicationManager.save_data.shuffled = shuffled;
+		ApplicationManager.save_data.playlists = playlist_paths;
 	}
 
     public override void _ExitTree() {

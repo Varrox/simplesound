@@ -3,100 +3,70 @@ using DiscordRPC;
 using DiscordRPC.Message;
 
 public partial class Discord : Node {
-    public const string DISCORD_APP_ID = "1313226375007703160";
-    public static DiscordRpcClient client;
-    public static bool set_up;
+    private const string DISCORD_APP_ID = "1313226375007703160";
 
-    public HttpRequest request;
-    private string _link;
+    private static DiscordRpcClient _client;
+    private static bool _set_up;
 
-    public static string cover_link;
+    private static HttpRequest _request;
+    private static string _link, _cover_link;
 
-    private const string LOGO = "logotrans", LOGO_GAY = "logogay", LOGO_CHRIMIS = "logochrimis";
+    private const string LOGO = "logotrans", LOGO_PRIDE_MONTH = "logogay", LOGO_JOLLY = "logochrimis";
 
     public override void _Ready() {
         // Create the client and setup some basic events
-        client = new DiscordRpcClient(DISCORD_APP_ID);
+        _client = new DiscordRpcClient(DISCORD_APP_ID);
 
-        //Connect to the RPC
-        client.Initialize();
+        // Connect to the RPC
+        _client.Initialize();
 
-        client.OnReady += FinishSetUp;
+        _client.OnReady += _FinishSetUp;
 
-        if (request != null) request.CancelRequest();
+        if (_request != null) _request.CancelRequest();
         else {
-            request = new HttpRequest();
-            AddChild(request);
-            request.RequestCompleted += RequestFinished;
+            _request = new HttpRequest();
+            AddChild(_request);
+
+            _request.RequestCompleted += _RequestFinished;
         }
     }
 
-    public void FinishSetUp(object sender, ReadyMessage msg) {
-        set_up = true;
+    private void _FinishSetUp(object sender, ReadyMessage msg) {
+        _set_up = true;
         UpdateTrack();
     }
 
-    public void UpdateTrack() {
-        if (!set_up) return;
-        Check();
-    }
-
-    public void FinishUpdateTrack() {
-        if (!set_up) return;
-
-        bool cover = string.IsNullOrEmpty(cover_link) || cover_link.Length > 255;
-
-        TrackData track_data = new TrackData(Main.GetCurrentTrack());
-
-        RichPresence presence = new RichPresence() {
-            Details = track_data.title,
-            State = track_data.artist,
-            Assets = new Assets() {
-                LargeImageKey = cover ? GetLogo() : cover_link,
-                SmallImageKey = cover ? "" : GetLogo(),
-                LargeImageText = "simplesound is an open source audio player",
-                LargeImageUrl = "https://github.com/Varrox/simplesound"
-            },
-            Type = ActivityType.Listening,
-            Buttons = [ new DiscordRPC.Button() { Label = "Open track", Url = Metadata.GetShareLink(Main.GetCurrentTrack()) } ]
-        };
-
-        client.SetPresence(presence);
-    }
-
-    public string GetLogo() {
-        int month = (int)Time.GetDateDictFromSystem()["month"];
-        if(month == 6) return LOGO_GAY;
-        else if(month == 12) return LOGO_CHRIMIS;
-        else return LOGO;
-    }
-
     public static void ShutDown() { // Cleanup
-        client.Dispose();
+        _client.Dispose();
     }
 
-    public void Check() {
+    public static void UpdateTrack() {
+        if (!_set_up) return;
+        _Check();
+    }
+
+    private static void _Check() {
         string input_link = Metadata.GetShareLink(Main.GetCurrentTrack());
 
         if (string.IsNullOrEmpty(input_link)) {
-            cover_link = "";
-            FinishUpdateTrack();
+            _cover_link = "";
+            _FinishUpdateTrack();
             return;
         }
 
         _link = ParseURL(input_link);
 
         if (_link != input_link) {
-            cover_link = _link;
-            FinishUpdateTrack();
+            _cover_link = _link;
+            _FinishUpdateTrack();
             return;
         }
 
-        request.CallDeferredThreadGroup("cancel_request");
-        request.CallDeferredThreadGroup("request", new Variant[] { _link, new string[] { "Content-Type: application/json" } });
+        _request.CallDeferredThreadGroup("cancel_request");
+        _request.CallDeferredThreadGroup("request", new Variant[] { _link, new string[] { "Content-Type: application/json" } });
     }
 
-    void RequestFinished(long result, long responseCode, string[] headers, byte[] body) {
+    private static void _RequestFinished(long result, long responseCode, string[] headers, byte[] body) {
         if (result != (long)HttpRequest.Result.Success) {
             GD.PushError($"Https request failed. Something went wrong server side: {result}");
             return;
@@ -121,11 +91,42 @@ public partial class Discord : Node {
 
         _link = text;
 
-        cover_link = _link;
-        FinishUpdateTrack();
+        _cover_link = _link;
+        _FinishUpdateTrack();
     }
 
-    string ParseURL(string url) {
+    private static void _FinishUpdateTrack() {
+        if (!_set_up) return;
+
+        bool cover = string.IsNullOrEmpty(_cover_link) || _cover_link.Length > 255;
+
+        TrackData track_data = new TrackData(Main.GetCurrentTrack());
+
+        RichPresence presence = new RichPresence() {
+            Details = track_data.title,
+            State = track_data.artist,
+            Assets = new Assets() {
+                LargeImageKey = cover ? GetLogo() : _cover_link,
+                SmallImageKey = cover ? "" : GetLogo(),
+                LargeImageText = "simplesound is an open source audio player",
+                LargeImageUrl = "https://github.com/Varrox/simplesound"
+            },
+            Type = ActivityType.Listening,
+            Buttons = [ new DiscordRPC.Button() { Label = "Open track", Url = Metadata.GetShareLink(Main.GetCurrentTrack()) } ]
+        };
+
+        _client.SetPresence(presence);
+    }
+
+    public static string GetLogo() {
+        int month = (int)Time.GetDateDictFromSystem()["month"];
+
+        if(month == 6) return LOGO_PRIDE_MONTH;
+        else if(month == 12) return LOGO_JOLLY;
+        else return LOGO;
+    }
+
+    public static string ParseURL(string url) {
         string converted_url = url;
         if (url.Contains("www.youtube") || url.Contains("https://youtu.be/")) {
             converted_url = "https://i.ytimg.com/vi/";
