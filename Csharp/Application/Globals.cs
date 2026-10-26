@@ -23,9 +23,6 @@ public partial class Globals : Node {
     [Export] private DownloadWindow _download_window{set{ download_window = value; }get{ return download_window; }}
     public static DownloadWindow download_window;
 
-    [Export] private FileDialog _file_dialog{set{ file_dialog = value; }get { return file_dialog; }}
-    public static FileDialog file_dialog;
-
     [ExportGroup("Packed Scenes")]
 
     [Export] private PackedScene _path_display{set{ path_display = value; }get{ return path_display; }}
@@ -38,49 +35,5 @@ public partial class Globals : Node {
 
     Globals() {
         self = this;
-    }
-
-    public override void _Ready() {
-        file_dialog.CurrentDir = Constants.USER_DATA;
-    }
-
-    public static void ResetFileDialogParameters() {
-        file_dialog.Filters = null;
-        file_dialog.OkButtonText = "";
-    }
-
-    public static void SetFileDialogTracks() {
-        file_dialog.Filters = new[] { "*.mp3", "*.wav", "*.ogg" };
-        file_dialog.FileMode = FileDialog.FileModeEnum.OpenFiles;
-        file_dialog.OkButtonText = "Import audio files";
-        file_dialog.Title = "Select Audio files";
-    }
-
-    public static void SetFileDialogFile() {
-        file_dialog.Filters = null;
-        file_dialog.FileMode = FileDialog.FileModeEnum.OpenFile;
-        file_dialog.OkButtonText = "Select file";
-        file_dialog.Title = "Select file";
-    }
-
-    public static void SetFileDialogCover() {
-        file_dialog.Filters = new[] { "*.jpeg", "*.jpg", "*.png", "*.webp" };
-        file_dialog.FileMode = FileDialog.FileModeEnum.OpenFile;
-        file_dialog.OkButtonText = "Import Cover";
-        file_dialog.Title = "Select Cover";
-    }
-
-    public static void SetFileDialogPlaylist() {
-        file_dialog.Filters = new[] { "*.json"};
-        file_dialog.FileMode = FileDialog.FileModeEnum.OpenFile;
-        file_dialog.OkButtonText = "Import Playlist";
-        file_dialog.Title = "Select Playlist";
-    }
-    
-    public static void SetFileDialogZIP() {
-        file_dialog.Filters = new[] { "*.zip"};
-        file_dialog.FileMode = FileDialog.FileModeEnum.OpenFile;
-        file_dialog.OkButtonText = "Import Zip Archive";
-        file_dialog.Title = "Select Zip Archive";
     }
 }

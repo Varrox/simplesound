@@ -78,22 +78,31 @@ public partial class AttributeEditor : EditorWindow {
     }
 
     public void Cover() {
-        Globals.file_dialog.Reparent(this);
-        Globals.file_dialog.FileSelected += SubmitCover;
+        ThemeFileDialog file_dialog = new ThemeFileDialog();
+        
+        AddChild(file_dialog);
 
-        Globals.SetFileDialogCover();
-        Globals.file_dialog.Popup();
+        file_dialog.SetCover();
+        file_dialog.Popup();
+        
+
+        void SubmitCover(string path) {
+            cover_path = path;
+            cover_label.SetPath(path);
+
+            Finish();
+        }
+
+        void Finish() {
+            file_dialog.FileSelected -= SubmitCover;
+            file_dialog.Canceled -= Finish;
+
+            file_dialog.QueueFree();
+        }
+
+        file_dialog.FileSelected += SubmitCover;
+        file_dialog.Canceled += Finish;
 
         cover_changed = true;
-    }
-
-    public void SubmitCover(string path) {
-        cover_path = path;
-        cover_label.SetPath(path);
-
-        Globals.file_dialog.Reparent(Globals.self);
-        Globals.file_dialog.FileSelected -= SubmitCover;
-
-        Globals.ResetFileDialogParameters();
     }
 }

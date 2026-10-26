@@ -29,8 +29,8 @@ public partial class AddPlaylist : ContextMenuButton {
 		GetPopup().SetItemTooltip(IMPORT_PLAYLIST_ZIP, $"Opens file dialog for selecting a playlist ZIP archive (.zip file) to add to {ApplicationManager.SOFTWARE_NAME}.");
 	}
 
-    protected override void _ItemPressed(long id) {
-        base._ItemPressed(id);
+	protected override void _ItemPressed(long id) {
+		base._ItemPressed(id);
 
 		switch(id) {
 			case CREATE_NEW_PLAYLIST:
@@ -43,7 +43,7 @@ public partial class AddPlaylist : ContextMenuButton {
 				_ImportPlaylistZIP();
 				break;
 		}
-    }
+	}
 
 	public void _OpenPlaylistCreator() {
 		Globals.main.Pause();
@@ -58,12 +58,18 @@ public partial class AddPlaylist : ContextMenuButton {
 	}
 
 	public void _ImportPlaylistFile() {
-		Globals.SetFileDialogPlaylist();
-        Globals.file_dialog.Popup();
+		ThemeFileDialog file_dialog = new ThemeFileDialog();
+		
+		ApplicationManager.instance.Root.AddChild(file_dialog);
+
+		file_dialog.SetPlaylist();
+		file_dialog.Popup();
 
 		void Finish() {
-			Globals.file_dialog.FileSelected -= AddPlaylistFile;
-			Globals.file_dialog.Canceled -= Finish;
+			file_dialog.FileSelected -= AddPlaylistFile;
+			file_dialog.Canceled -= Finish;
+
+			file_dialog.QueueFree();
 		}
 
 		void AddPlaylistFile(string file) {
@@ -80,17 +86,23 @@ public partial class AddPlaylist : ContextMenuButton {
 			Finish();
 		}
 
-		Globals.file_dialog.FileSelected += AddPlaylistFile;
-        Globals.file_dialog.Canceled += Finish;
+		file_dialog.FileSelected += AddPlaylistFile;
+		file_dialog.Canceled += Finish;
 	}
 
 	public void _ImportPlaylistZIP() {
-		Globals.SetFileDialogZIP();
-        Globals.file_dialog.Popup();
+		ThemeFileDialog file_dialog = new ThemeFileDialog();
+
+		ApplicationManager.instance.Root.AddChild(file_dialog);
+
+		file_dialog.SetZIP();
+		file_dialog.Popup();
 
 		void Finish() {
-			Globals.file_dialog.FileSelected -= AddPlaylistZIP;
-			Globals.file_dialog.Canceled -= Finish;
+			file_dialog.FileSelected -= AddPlaylistZIP;
+			file_dialog.Canceled -= Finish;
+
+			file_dialog.QueueFree();
 		}
 
 		void AddPlaylistZIP(string file) {
@@ -176,7 +188,7 @@ public partial class AddPlaylist : ContextMenuButton {
 			Finish();
 		}
 
-		Globals.file_dialog.FileSelected += AddPlaylistZIP;
-        Globals.file_dialog.Canceled += Finish;
+		file_dialog.FileSelected += AddPlaylistZIP;
+		file_dialog.Canceled += Finish;
 	}
 }

@@ -414,10 +414,29 @@ public partial class Settings : EditorWindow {
         void ResetFileLocation() { line_edit.Text = ""; }
 
         void FileLocation() {
-            Globals.SetFileDialogFile();
-            Globals.file_dialog.Popup();
+            ThemeFileDialog file_dialog = new ThemeFileDialog();
+            
+            AddChild(file_dialog);
 
-            Globals.file_dialog.FileSelected += (string file) => {line_edit.Text = file; ValueChanged(container, file, "", ResetFileLocation, ApplyFileLocation);};
+            file_dialog.SetFile();
+            file_dialog.Popup();
+
+            void SetFile(string file) {
+                line_edit.Text = file;
+                ValueChanged(container, file, "", ResetFileLocation, ApplyFileLocation);
+
+                Finish();
+            }
+
+            void Finish() {
+                file_dialog.FileSelected -= SetFile;
+                file_dialog.Canceled -= Finish;
+                
+                file_dialog.QueueFree();
+            }
+
+            file_dialog.FileSelected += SetFile;
+            file_dialog.Canceled += Finish;
         }
 
         file_select_button.ButtonUp += FileLocation;
@@ -480,13 +499,11 @@ public partial class Settings : EditorWindow {
     }
 
     public void Open() {
-        Globals.file_dialog.Reparent(this);
         Show();
         SelectSettingsTab(0);
     }
 
     public void Close() {
-        Globals.file_dialog.Reparent(Globals.self);
         Hide();
     }
 

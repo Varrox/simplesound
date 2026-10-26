@@ -355,7 +355,7 @@ icon_alignment = 1
 expand_icon = true
 script = ExtResource("28_3ax07")
 
-[node name="List" type="MenuButton" parent="Interface/Top Bar/MarginContainer/HBoxContainer/Right" unique_id=1295130311 node_paths=PackedStringArray("background_texture_rect", "text_container")]
+[node name="List" type="MenuButton" parent="Interface/Top Bar/MarginContainer/HBoxContainer/Right" unique_id=1295130311 node_paths=PackedStringArray("background_texture_rect")]
 custom_minimum_size = Vector2(28, 0)
 layout_mode = 2
 icon = ExtResource("29_2wbij")
@@ -364,7 +364,6 @@ expand_icon = true
 script = ExtResource("30_xrbbi")
 streamer_display_template = ExtResource("26_3edd3")
 background_texture_rect = NodePath("../../../../../../Background/Image")
-text_container = NodePath("../Text")
 
 [node name="Settings" type="Button" parent="Interface/Top Bar/MarginContainer/HBoxContainer/Right" unique_id=501507118 node_paths=PackedStringArray("window")]
 custom_minimum_size = Vector2(28, 0)
@@ -885,24 +884,15 @@ text = "0:00"
 
 [node name="Player" type="AudioStreamPlayer" parent="." unique_id=488316782]
 
-[node name="Globals" type="Node" parent="." unique_id=71517921 node_paths=PackedStringArray("_main", "_player", "_discord", "_attribute_editor", "_download_window", "_file_dialog")]
+[node name="Globals" type="Node" parent="." unique_id=71517921 node_paths=PackedStringArray("_main", "_player", "_discord", "_attribute_editor", "_download_window")]
 script = ExtResource("46_y0j44")
 _main = NodePath("..")
 _player = NodePath("../Interface")
 _discord = NodePath("../Discord")
 _attribute_editor = NodePath("AttributeEditor")
 _download_window = NodePath("DownloadWindow")
-_file_dialog = NodePath("File Dialog")
 _path_display = ExtResource("49_mrmdv")
 _confirmation_window = ExtResource("50_c27js")
-
-[node name="File Dialog" type="FileDialog" parent="Globals" unique_id=1989544037]
-title = "Open a File"
-initial_position = 1
-file_mode = 0
-access = 2
-show_hidden_files = true
-use_native_dialog = true
 
 [node name="AttributeEditor" parent="Globals" unique_id=1605960294 instance=ExtResource("52_vsj6c")]
 visible = false

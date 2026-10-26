@@ -57,23 +57,33 @@ public partial class PlaylistCreator : EditorWindow {
 		if (!cleared)
 			Clear();
 
-        Globals.file_dialog.Reparent(this);
-
         Show();
 	}
 
     public void OpenCover() {
-        Globals.SetFileDialogCover();
-        Globals.file_dialog.Popup();
+		ThemeFileDialog file_dialog = new ThemeFileDialog();
 
-		Globals.file_dialog.FileSelected += SetCover;
-        Globals.file_dialog.Canceled += CancelSetCover;
-    }
+		AddChild(file_dialog);
 
-	public void SetCover(string path) {
-		cover_path = path;
-		cover_path_display.SetPath(cover_path);
-        CancelSetCover();
+		file_dialog.SetCover();
+		file_dialog.Popup();
+
+		void SetCover(string path) {
+			cover_path = path;
+			cover_path_display.SetPath(cover_path);
+
+			Finish();
+		}
+
+		void Finish() {
+            file_dialog.FileSelected -= SetCover;
+			file_dialog.Canceled -= Finish;
+
+			file_dialog.QueueFree();
+        }
+
+		file_dialog.FileSelected += SetCover;
+        file_dialog.Canceled += Finish;
     }
 	
 	public void ClearCover() {
@@ -82,15 +92,29 @@ public partial class PlaylistCreator : EditorWindow {
     }
 
 	public void OpenTracks() {
-		Globals.SetFileDialogTracks();
-		Globals.file_dialog.Popup();
+		ThemeFileDialog file_dialog = new ThemeFileDialog();
 
-        Globals.file_dialog.FilesSelected += FileDialogAddTracks;
-        Globals.file_dialog.Canceled += CancelAddTracks;
+		AddChild(file_dialog);
+
+		file_dialog.SetTracks();
+		file_dialog.Popup();
+
+		void FileDialogAddTracks(string[] paths) {
+			AddTracks(paths);
+
+			Finish();
+		}
+
+		void Finish() {
+            file_dialog.FilesSelected -= FileDialogAddTracks;
+			file_dialog.Canceled -= Finish;
+
+			file_dialog.QueueFree();
+        }
+
+        file_dialog.FilesSelected += FileDialogAddTracks;
+        file_dialog.Canceled += Finish;
     }
-
-	void CancelAddTracks() { Globals.file_dialog.FilesSelected -= FileDialogAddTracks; Globals.file_dialog.Canceled -= CancelAddTracks; }
-    void CancelSetCover() { Globals.file_dialog.FileSelected -= SetCover; Globals.file_dialog.Canceled -= CancelSetCover; }
 
     public void AddTracks(string[] paths) {
 		foreach(string path in paths) {
@@ -117,15 +141,8 @@ public partial class PlaylistCreator : EditorWindow {
 		}
     }
 
-	public void FileDialogAddTracks(string[] paths) {
-		AddTracks(paths);
-		CancelAddTracks();
-	}
-
 	public void Submit() {
 		Hide();
-
-        Globals.file_dialog.Reparent(Globals.self);
 
 		if(!cancelled) {
             string file_name = Tools.GetProperFileName(playlist_name_field.Text);

@@ -57,8 +57,6 @@ public partial class DownloadWindow : EditorWindow {
     }
 
     public void Open() {
-        Globals.file_dialog.Reparent(this);
-
         ApplicationManager.SetRadioSelected(no_playlist, true);
         EmitSignal(SignalName.OnSelectPlaylist, -1);
 
@@ -78,7 +76,6 @@ public partial class DownloadWindow : EditorWindow {
             return;
         }
 
-        Globals.file_dialog.Reparent(Globals.self);
         Hide();
         Clear();
     }
