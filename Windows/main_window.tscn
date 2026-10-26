@@ -318,6 +318,7 @@ text = "Downloader"
 icon = ExtResource("27_ns1th")
 expand_icon = true
 script = ExtResource("24_o03o1")
+download_window_template = ExtResource("53_7surn")
 
 [node name="Right" type="HBoxContainer" parent="Interface/Top Bar/MarginContainer/HBoxContainer" unique_id=1972233890]
 layout_mode = 2
@@ -881,19 +882,13 @@ text = "0:00"
 
 [node name="Player" type="AudioStreamPlayer" parent="." unique_id=488316782]
 
-[node name="Globals" type="Node" parent="." unique_id=71517921 node_paths=PackedStringArray("_main", "_discord", "_attribute_editor", "_download_window")]
+[node name="Globals" type="Node" parent="." unique_id=71517921 node_paths=PackedStringArray("_attribute_editor")]
 script = ExtResource("46_y0j44")
-_main = NodePath("..")
-_discord = NodePath("../Discord")
 _attribute_editor = NodePath("AttributeEditor")
-_download_window = NodePath("DownloadWindow")
 _path_display = ExtResource("49_mrmdv")
 _confirmation_window = ExtResource("50_c27js")
 
 [node name="AttributeEditor" parent="Globals" unique_id=1605960294 instance=ExtResource("52_vsj6c")]
-visible = false
-
-[node name="DownloadWindow" parent="Globals" unique_id=1926010608 instance=ExtResource("53_7surn")]
 visible = false
 
 [node name="StatusIndicator" type="StatusIndicator" parent="Globals" unique_id=1556933644 node_paths=PackedStringArray("tool_list")]

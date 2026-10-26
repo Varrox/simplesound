@@ -64,7 +64,7 @@ public partial class DownloadWindow : EditorWindow {
         {
             DownloadPlaylistDisplay display = playlist_display.Instantiate() as DownloadPlaylistDisplay;
             playlist_container.AddChild(display);
-            display.Init(Main.playlists[i], i);
+            display.Init(this, Main.playlists[i], i);
         }
 
         Show();

@@ -7,9 +7,6 @@ public partial class Globals : Node {
     [Export] private AttributeEditor _attribute_editor{set{ attribute_editor = value; }get{ return attribute_editor; }}
     public static AttributeEditor attribute_editor;
 
-    [Export] private DownloadWindow _download_window{set{ download_window = value; }get{ return download_window; }}
-    public static DownloadWindow download_window;
-
     [ExportGroup("Packed Scenes")]
 
     [Export] private PackedScene _path_display{set{ path_display = value; }get{ return path_display; }}

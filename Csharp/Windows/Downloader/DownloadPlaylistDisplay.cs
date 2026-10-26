@@ -4,24 +4,27 @@ public partial class DownloadPlaylistDisplay : Button {
 	[Export] public TextureRect cover_texture_rect;
     [Export] public Label playlist_name_label, track_count_label;
 
-	int playlist_index;
+    private DownloadWindow _download_window;
+	private int _playlist_index;
 
 	public override void _Ready() {
 		ButtonUp += Set;
 	}
 
 	public void Set() {
-        Globals.download_window.EmitSignal("OnSelectPlaylist", playlist_index);
-        Globals.download_window.selected_playlist = playlist_index;
+        _download_window.EmitSignal("OnSelectPlaylist", _playlist_index);
+        _download_window.selected_playlist = _playlist_index;
 
         ApplicationManager.SetRadioSelected(this, true);
     }
 
 	public void ClearSelected(int index) {
-        if (index != playlist_index) ApplicationManager.SetRadioSelected(this, false);
+        if (index != _playlist_index) ApplicationManager.SetRadioSelected(this, false);
     }
 
-	public void Init(Playlist playlist, int index) {
+	public void Init(DownloadWindow window, Playlist playlist, int index) {
+        _download_window = window;
+        
         cover_texture_rect.Texture = Tools.LoadImageFromFile(playlist.cover) ?? ApplicationManager.GetThemeIcon("default_cover_icon");
         playlist_name_label.Text = playlist.name;
 
@@ -37,10 +40,10 @@ public partial class DownloadPlaylistDisplay : Button {
             track_count_label.Text = $"Album  {Constants.DOT}  {playlist.artist ?? (playlist.tracks.Count.ToString() + (playlist.tracks.Count != 1 ? " tracks" : " track"))}";
         }
 
-        playlist_index = index;
+        _playlist_index = index;
 
         TooltipText = $"{playlist.name} - {amount}";
 
-        Globals.download_window.OnSelectPlaylist += ClearSelected;
+        _download_window.OnSelectPlaylist += ClearSelected;
     }
 }
