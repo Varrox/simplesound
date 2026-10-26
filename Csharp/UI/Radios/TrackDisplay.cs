@@ -50,20 +50,20 @@ public partial class TrackDisplay : Button {
 
         if (highlighted) Globals.main.OnPlayingChanged += SetPlaying;
 
-        SetPlaying(highlighted && Globals.main.playing);
+        SetPlaying();
     }
 
-    public void SetPlaying(bool is_playing) {
+    public void SetPlaying() {
         sound_visualizer.Visible = highlighted && !IsHovered();
 
         track_number_label.AddThemeColorOverride("font_color", highlighted || IsHovered() ? Colors.Transparent : ApplicationManager.GetThemeColor("small_font_color"));
-        play_texture_rect.Texture = ApplicationManager.GetThemeIcon(Disabled ? "no_play_icon" : (is_playing ? "pause_icon" : "play_icon"));
+        play_texture_rect.Texture = ApplicationManager.GetThemeIcon(Disabled ? "no_play_icon" : (Globals.main.playing && highlighted ? "pause_icon" : "play_icon"));
     }
 
     public void OnEnter() {
         more.Show();
 
-        SetPlaying(highlighted);
+        SetPlaying();
 
         play_texture_rect.Show();
     }
@@ -71,7 +71,7 @@ public partial class TrackDisplay : Button {
     public void OnExit() {
         if (!more.GetPopup().Visible) more.Hide();
 
-        SetPlaying(highlighted);
+        SetPlaying();
 
         play_texture_rect.Hide();
         play_texture_rect.Texture = null;

@@ -16,7 +16,7 @@ public partial class PlaylistPlayer : Button {
         }
 	}
 
-	public void UpdateTexture(bool playing) {
-		Icon = ApplicationManager.GetThemeIcon((Globals.main.playlist_index == Globals.main.looked_at_playlist) && playing ? "pause_icon" : "play_icon");
+	public void UpdateTexture() {
+		Icon = ApplicationManager.GetThemeIcon((Globals.main.playlist_index == Globals.main.looked_at_playlist) && Globals.main.playing ? "pause_icon" : "play_icon");
 	}
 }

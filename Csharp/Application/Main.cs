@@ -44,7 +44,7 @@ public partial class Main : Control {
 
 	/// Emitted when played or paused.
 	[Signal]
-    public delegate void OnPlayingChangedEventHandler(bool playing);
+    public delegate void OnPlayingChangedEventHandler();
 
 	public string track {
 		get {
@@ -113,7 +113,7 @@ public partial class Main : Control {
 					video_player.Play();
 					video_player.StreamPosition = time;
 
-					EmitSignal(SignalName.OnPlayingChanged, playing);
+					EmitSignal(SignalName.OnPlayingChanged);
 				}
 			}
 
@@ -161,7 +161,7 @@ public partial class Main : Control {
 		if (video_player.Stream != null) video_player.Stop();
 		audio_player.Stop();
 
-		EmitSignal(SignalName.OnPlayingChanged, playing);
+		EmitSignal(SignalName.OnPlayingChanged);
 	}
 
 	public void Play()
@@ -178,7 +178,7 @@ public partial class Main : Control {
 			video_player.StreamPosition = time;
 		}
 
-		EmitSignal(SignalName.OnPlayingChanged, playing);
+		EmitSignal(SignalName.OnPlayingChanged);
 	}
 
 	public void FlipPlayingState() {

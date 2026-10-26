@@ -40,7 +40,7 @@ public partial class Player : Node {
 
         Globals.main.OnPlayingChanged += _SetPlayIcon;
 
-        _SetPlayIcon(false);
+        _SetPlayIcon();
 
         mute_button.ButtonUp += ToggleMute;
 
@@ -51,8 +51,13 @@ public partial class Player : Node {
         volume_slider.Step = VOLUME_STEP;
 
         volume_slider.DragStarted += Unmute;
+        volume_slider.DragEnded += (bool value_changed) => { _SetMutedVolume(); };
 
         CallDeferred("_SetShuffleIcon");
+    }
+
+    private void _SetMutedVolume() {
+        instance.muted_volume = Mathf.Max(instance.volume_slider.Value, MINIMUM_VOLUME + 1);
     }
 
     private void _SetTime(bool value_changed) {
@@ -88,8 +93,8 @@ public partial class Player : Node {
         mute_button.Icon = ApplicationManager.GetThemeIcon(muted ? "unmute_icon" : "mute_icon");
     }
 
-    private void _SetPlayIcon(bool playing) { 
-        play_button.Icon = ApplicationManager.GetThemeIcon(!playing ? (!Globals.main.IsTrackAvailable() ? "no_play_icon" : "play_icon") : "pause_icon"); 
+    private void _SetPlayIcon() { 
+        play_button.Icon = ApplicationManager.GetThemeIcon(!Globals.main.playing ? (!Globals.main.IsTrackAvailable() ? "no_play_icon" : "play_icon") : "pause_icon"); 
     }
 
     public static void ToggleMute() {
@@ -104,18 +109,8 @@ public partial class Player : Node {
     public static void Mute() {
         muted = true;
 
-        instance.muted_volume = Mathf.Max(instance.volume_slider.Value, MINIMUM_VOLUME);
-
-        if (Globals.main.audio_player.VolumeDb == MUTED_VOLUME + 1) {
-            muted = false;
-
-            instance._SetMuteIcon();
-            instance.volume_slider.Value = instance.muted_volume;
-        }
-        else {
-            Globals.main.audio_player.VolumeDb = MUTED_VOLUME;
-            instance.volume_slider.Value = MINIMUM_VOLUME;
-        }
+        Globals.main.audio_player.VolumeDb = MUTED_VOLUME;
+        instance.volume_slider.Value = MINIMUM_VOLUME;
 
         AudioServer.SetBusMute(0, muted);
 
@@ -125,9 +120,8 @@ public partial class Player : Node {
     public static void Unmute() {
         muted = false;
 
+        Globals.main.audio_player.VolumeDb = (float)instance.muted_volume;
         instance.volume_slider.Value = instance.muted_volume;
-        
-        SetVolume((float)instance.muted_volume);
 
         AudioServer.SetBusMute(0, muted);
 
@@ -141,8 +135,12 @@ public partial class Player : Node {
         else if(muted) {
             Unmute();
         }
+        else {
+            Globals.main.audio_player.VolumeDb = value;
+            instance.volume_slider.Value = value;
 
-        Globals.main.audio_player.VolumeDb = value;
+            instance._SetMutedVolume();
+        }
     }
 
     public static void SetShuffle() {
@@ -206,6 +204,8 @@ public partial class Player : Node {
         total_time_label.Text = Tools.SecondsToTimestamp(track_length);
 
         progress_slider.MaxValue = track_length;
+
+        _SetPlayIcon();
 
         Globals.discord.UpdateTrack();
     }
