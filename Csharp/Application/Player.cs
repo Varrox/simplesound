@@ -14,12 +14,18 @@ public partial class Player : Node {
     [Export] public TextureRect track_cover_texture_rect;
     [Export] public SubViewport background_subviewport;
 
-    bool can_set_time;
+    private bool _setting_time;
 
     public static bool muted;
-    public static double muted_volume;
+    private double muted_volume;
+
+    public static Player instance;
+
+    public const float MINIMUM_VOLUME = -50.0f, MAXIUMUM_VOLUME = 0.0f, MUTED_VOLUME = -80.0f, VOLUME_STEP = 0.01f;
 
     public override void _Ready() {
+        instance = this;
+
         loop_button.ButtonUp += SetLoop;
         shuffle_button.ButtonUp += SetShuffle;
         play_button.ButtonUp += Globals.main.FlipPlayingState;
@@ -28,24 +34,39 @@ public partial class Player : Node {
         back_button.ButtonUp += () => Move(-1);
 
         Globals.main.OnLoadTrack += UpdateDisplayedInfo;
-        Globals.main.OnLoadPlaylist += ApplyPlaylistSettings;
 
-        progress_slider.DragEnded += SetTime;
-        progress_slider.DragStarted += () => can_set_time = true;
+        progress_slider.DragEnded += _SetTime;
+        progress_slider.DragStarted += () => _setting_time = true;
 
-        Globals.main.OnPlayingChanged += SetPlayIcon;
-        play_button.Icon = ApplicationManager.GetThemeIcon("play_icon");
+        Globals.main.OnPlayingChanged += _SetPlayIcon;
 
-        mute_button.ButtonUp += MuteVolume;
-        volume_slider.DragStarted += VolumeUnmute;
+        _SetPlayIcon(false);
 
-        SetMuteTexture();
+        mute_button.ButtonUp += ToggleMute;
 
-        CallDeferred("SetShuffleIndicator");
+        _SetMuteIcon();
+
+        volume_slider.MinValue = MINIMUM_VOLUME;
+        volume_slider.MaxValue = MAXIUMUM_VOLUME;
+        volume_slider.Step = VOLUME_STEP;
+
+        volume_slider.DragStarted += Unmute;
+
+        CallDeferred("_SetShuffleIcon");
     }
 
-    public void SetShuffleIndicator() {
+    private void _SetTime(bool value_changed) {
+        if(value_changed) {
+            float time = (float)progress_slider.Value;
+            SetTime(time);
+        }
+        
+        _setting_time = false;
+    }
+
+    private void _SetShuffleIcon() {
         Color color = Globals.main.shuffled ? ApplicationManager.GetThemeColor("enabled_font_color") : Colors.White;
+
         shuffle_button.AddThemeColorOverride("icon_normal_color", color);
         shuffle_button.AddThemeColorOverride("icon_focus_color", color);
         shuffle_button.AddThemeColorOverride("icon_pressed_color", color);
@@ -53,44 +74,9 @@ public partial class Player : Node {
         shuffle_button.AddThemeColorOverride("icon_hover_pressed_color", color);
     }
 
-    public void SetMuteTexture() => mute_button.Icon = ApplicationManager.GetThemeIcon(muted ? "unmute_icon" : "mute_icon");
-
-    public void MuteVolume() {
-        muted = !muted;
-        SetMuteTexture();
-        if (muted) {
-            muted_volume = Mathf.Max(volume_slider.Value, -49);
-            if (Globals.main.audio_player.VolumeDb == -80f) {
-                muted = false;
-                SetMuteTexture();
-                volume_slider.Value = muted_volume;
-            }
-            else {
-                Globals.main.audio_player.VolumeDb = -80f;
-                volume_slider.Value = -50;
-            }
-        }
-        else volume_slider.Value = muted_volume;
-    }
-
-    public void VolumeUnmute() {
-        muted = false;
-        SetMuteTexture();
-    }
-
-    public void SetShuffle() {
-        Globals.main.shuffled = !Globals.main.shuffled;
-
-        Globals.main.offset = Globals.main.track_index;
-        Globals.main.shuffle_index = Globals.main.track_index;
-
-        SetShuffleIndicator();
-    }
-
-    public void SetLoop() {
-        Globals.main.loop = !Globals.main.loop;
-        
+    private void _SetLoopIcon() {
         Color color = Globals.main.loop ? ApplicationManager.GetThemeColor("enabled_font_color") : Colors.White;
+        
         loop_button.AddThemeColorOverride("icon_normal_color", color);
         loop_button.AddThemeColorOverride("icon_focus_color", color);
         loop_button.AddThemeColorOverride("icon_pressed_color", color);
@@ -98,25 +84,92 @@ public partial class Player : Node {
         loop_button.AddThemeColorOverride("icon_hover_pressed_color", color);
     }
 
-    public void SetPlayIcon(bool playing) { 
-        play_button.Icon = ApplicationManager.GetThemeIcon(!playing || !Globals.main.IsTrackAvailable() ? "play_icon" : "pause_icon"); 
+    private void _SetMuteIcon() { 
+        mute_button.Icon = ApplicationManager.GetThemeIcon(muted ? "unmute_icon" : "mute_icon");
     }
 
-    public void Move(int by) {
+    private void _SetPlayIcon(bool playing) { 
+        play_button.Icon = ApplicationManager.GetThemeIcon(!playing ? (!Globals.main.IsTrackAvailable() ? "no_play_icon" : "play_icon") : "pause_icon"); 
+    }
+
+    public static void ToggleMute() {
+        if (muted) {
+            Unmute();
+        }
+        else {
+            Mute();
+        }
+    }
+
+    public static void Mute() {
+        muted = true;
+
+        instance.muted_volume = Mathf.Max(instance.volume_slider.Value, MINIMUM_VOLUME);
+
+        if (Globals.main.audio_player.VolumeDb == MUTED_VOLUME + 1) {
+            muted = false;
+
+            instance._SetMuteIcon();
+            instance.volume_slider.Value = instance.muted_volume;
+        }
+        else {
+            Globals.main.audio_player.VolumeDb = MUTED_VOLUME;
+            instance.volume_slider.Value = MINIMUM_VOLUME;
+        }
+
+        AudioServer.SetBusMute(0, muted);
+
+        instance._SetMuteIcon();
+    }
+
+    public static void Unmute() {
+        muted = false;
+
+        instance.volume_slider.Value = instance.muted_volume;
+        
+        SetVolume((float)instance.muted_volume);
+
+        AudioServer.SetBusMute(0, muted);
+
+        instance._SetMuteIcon();
+    }
+
+    public static void SetVolume(float value) {
+        if(value <= MINIMUM_VOLUME) {
+            Mute();
+        }
+        else if(muted) {
+            Unmute();
+        }
+
+        Globals.main.audio_player.VolumeDb = value;
+    }
+
+    public static void SetShuffle() {
+        Globals.main.shuffled = !Globals.main.shuffled;
+
+        Globals.main.offset = Globals.main.track_index;
+        Globals.main.shuffle_index = Globals.main.track_index;
+
+        instance._SetShuffleIcon();
+    }
+
+    public static void SetLoop() {
+        Globals.main.loop = !Globals.main.loop;
+        
+        instance._SetLoopIcon();
+    }
+
+    public static void Move(int by) {
         Globals.main.MoveTrack(by);
     }
 
     public void UpdateDisplayedInfo() {
-        Texture2D default_cover_icon = ApplicationManager.GetThemeIcon("default_cover_icon");
+        float track_length;
 
         if (Globals.main.IsTrackAvailable()) {
-            string name = Tools.GetMediaTitle(Globals.main.track);
-            track_name_label.Text = name;
-            track_name_label.TooltipText = name;
-
-            string artist = Metadata.GetArtist(Globals.main.track);
-            track_artist_label.Text = artist;
-            track_artist_label.TooltipText = artist;
+            track_name_label.Text = Tools.GetMediaTitle(Globals.main.track);
+            track_artist_label.Text = Metadata.GetArtist(Globals.main.track);
 
             if (Globals.main.playlist.type == Playlist.PlaylistType.Album) {                
                 track_cover_texture_rect.Texture = Globals.main.playlist.cover_texture;
@@ -125,36 +178,41 @@ public partial class Player : Node {
                 track_cover_texture_rect.Texture = Tools.GetMediaCover(Globals.main.track);
             }
 
-            if (track_cover_texture_rect.Texture == null) {
-                track_cover_texture_rect.Texture = default_cover_icon;
-            }
+            track_length = Metadata.GetTotalTime(Globals.main.track);
 
-            background_subviewport.Set("target_texture", track_cover_texture_rect.Texture);
-
-            total_time_label.Text = Tools.SecondsToTimestamp(Metadata.GetTotalTime(Globals.main.track));
-            progress_slider.MaxValue = Globals.main.audio_player.Stream.GetLength();
             progress_slider.Editable = true;
         }
         else {
             track_name_label.Text = "No track playing";
-            track_name_label.TooltipText = "";
             track_artist_label.Text = "No artist";
-            track_artist_label.TooltipText = "";
 
-            total_time_label.Text = "0:00";
-            progress_slider.MaxValue = 1;
-            progress_slider.Value = 0;
+            track_cover_texture_rect.Texture = null;
+            
+            track_length = 0.0f;
+
+            progress_slider.Value = 0.0f;
             progress_slider.Editable = false;
-
-            track_cover_texture_rect.Texture = default_cover_icon;
-            background_subviewport.Set("target_texture", default_cover_icon);
         }
+
+        track_name_label.TooltipText = track_name_label.Text;
+        track_artist_label.TooltipText = track_artist_label.Text;
+
+        if (track_cover_texture_rect.Texture == null) {
+            track_cover_texture_rect.Texture = ApplicationManager.GetThemeIcon("default_cover_icon");
+        }
+
+        background_subviewport.Set("target_texture", track_cover_texture_rect.Texture);
+
+        total_time_label.Text = Tools.SecondsToTimestamp(track_length);
+
+        progress_slider.MaxValue = track_length;
 
         Globals.discord.UpdateTrack();
     }
 
-    public void SetTime(bool value) {
-        Globals.main.time = (float)progress_slider.Value;
+    public static void SetTime(float value) {
+        Globals.main.time = value;
+
         if (Globals.main.playing) {
             Globals.main.audio_player.Play(Globals.main.time);
 
@@ -162,11 +220,6 @@ public partial class Player : Node {
                 Globals.main.video_player.StreamPosition = Globals.main.time;
             }
         }
-        
-        can_set_time = false;
-    }
-    public void ApplyPlaylistSettings() {
-        if(Globals.main.playlist == null) return;
     }
 
     public override void _Process(double delta) {
@@ -176,20 +229,12 @@ public partial class Player : Node {
             else if (Input.IsActionJustPressed("back")) Globals.main.MoveTrack(-1);
         }
 
-        if (Globals.main.audio_player.Stream != null) current_time_label.Text = Tools.SecondsToTimestamp(Globals.main.time);
+        current_time_label.Text = Tools.SecondsToTimestamp(Globals.main.time);
 
-        if (!can_set_time) {
+        if (!_setting_time) {
             progress_slider.Value = Globals.main.time;
         }
-        else if (!Globals.main.playing) {
-            Globals.main.time = (float)progress_slider.Value;
-        }
-
-        if (!muted) {
-            Globals.main.audio_player.VolumeDb = (float)(volume_slider.Value != -50 ? volume_slider.Value : -80);
-            mute_button.Icon = ApplicationManager.GetThemeIcon(Globals.main.audio_player.VolumeDb == -80 ? "unmute_icon" : "mute_icon");
-        }
-
-        AudioServer.SetBusMute(0, Globals.main.audio_player.VolumeDb == -80);
+        
+        SetVolume((float)(volume_slider.Value != MINIMUM_VOLUME ? volume_slider.Value : MUTED_VOLUME));
     }
 }
