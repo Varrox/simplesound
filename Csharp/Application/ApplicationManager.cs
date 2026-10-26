@@ -146,6 +146,8 @@ public partial class ApplicationManager : SceneTree {
 
         theme_resource.SetConstant("context_menu_margin_constant", Constants.THEME_TYPE, 5);
 
+        theme_resource.SetConstant("context_button_icon_max_width_small_constant", Constants.THEME_TYPE, 20);
+
         // Font
 
         // Font size

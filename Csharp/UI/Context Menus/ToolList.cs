@@ -100,7 +100,7 @@ public partial class ToolList : ContextMenuButton {
         _sleep_timer_button.Flat = false;
 
         _sleep_timer_button.Icon = ApplicationManager.GetThemeIcon("time_icon");
-        _sleep_timer_button.AddThemeConstantOverride("icon_max_width", 20);
+        _sleep_timer_button.AddThemeConstantOverride("icon_max_width", ApplicationManager.GetThemeConstant("context_button_icon_max_width_small_constant"));
 
         _sleep_timer_button.Text = $"Sleep timer: {Tools.SecondsToTimestamp(time_seconds)}";
 
