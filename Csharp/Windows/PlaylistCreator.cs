@@ -147,8 +147,6 @@ public partial class PlaylistCreator : EditorWindow {
             Globals.main.Refresh();
 		}
 
-		Globals.player.interrupted = false;
-
         EmitSignal(SignalName.OnClose);
     }
 	public void Cancel() {

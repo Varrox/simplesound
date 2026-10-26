@@ -46,15 +46,15 @@ public partial class AddPlaylist : ContextMenuButton {
     }
 
 	public void _OpenPlaylistCreator() {
-		if (Globals.player.Interrupt()) {
-			PlaylistCreator playlist_creator = (PlaylistCreator)create_new_playlist_template.Instantiate();
-			playlist_creator.Visible = false;
+		Globals.main.Pause();
+		
+		PlaylistCreator playlist_creator = (PlaylistCreator)create_new_playlist_template.Instantiate();
+		playlist_creator.Visible = false;
 
-			GetTree().Root.AddChild(playlist_creator);
+		GetTree().Root.AddChild(playlist_creator);
 
-			playlist_creator.Open();
-			playlist_creator.OnClose += playlist_creator.QueueFree;
-		}
+		playlist_creator.Open();
+		playlist_creator.OnClose += playlist_creator.QueueFree;
 	}
 
 	public void _ImportPlaylistFile() {

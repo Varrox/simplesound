@@ -104,13 +104,12 @@ public partial class TracksMore : ContextMenuButton {
     }
 
     public static void EditMetadata(int playlist_index, int track_index, TrackData track_data) {
-        if (!Globals.player.Interrupt()) return;
+        Globals.main.Pause();
 
         Globals.attribute_editor.Open(track_data);
         
         void SubmitMeta() {
             if (Globals.attribute_editor.cancelled) {
-                Globals.player.interrupted = false;
                 Globals.attribute_editor.OnClose -= SubmitMeta;
                 return;
             }
@@ -137,7 +136,7 @@ public partial class TracksMore : ContextMenuButton {
             };
 
             Globals.main.tracks_visualizer.UpdateTrack(track_index, new_track_data, Tools.GetMediaCover(track_file) ?? ApplicationManager.GetThemeIcon("default_cover_icon"));
-            Globals.player.interrupted = false;
+            
             Globals.attribute_editor.OnClose -= SubmitMeta;
         }
         

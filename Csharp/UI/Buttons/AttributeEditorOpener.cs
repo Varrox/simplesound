@@ -8,7 +8,7 @@ public partial class AttributeEditorOpener : EditorWindowOpener {
 
     public void EditAttributes() {
         if (Globals.main.track != null) {
-            if (!Globals.player.Interrupt()) return;
+            Globals.main.Pause();
 
             (window as AttributeEditor).Open(Globals.player.track_name_label.Text, Globals.player.track_artist_label.Text, Metadata.GetShareLink(Globals.main.track), Metadata.IsExplicit(Globals.main.track));
             window.OnClose += SubmitMeta;
@@ -36,8 +36,7 @@ public partial class AttributeEditorOpener : EditorWindowOpener {
             Texture2D default_cover_icon = ApplicationManager.GetThemeIcon("default_cover_icon");
             Globals.main.tracks_visualizer.UpdateTrack(Globals.main.track_index, track_data, Tools.GetMediaCover(Globals.main.track) ?? default_cover_icon);
         }
-
-        Globals.player.interrupted = false;
+        
         window.OnClose -= SubmitMeta;
     }
 }

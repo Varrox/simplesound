@@ -16,8 +16,8 @@ public partial class Player : Node {
 
     bool can_set_time;
 
-    public bool interrupted, muted;
-    public double muted_volume;
+    public static bool muted;
+    public static double muted_volume;
 
     public override void _Ready() {
         loop_button.ButtonUp += SetLoop;
@@ -78,15 +78,6 @@ public partial class Player : Node {
         SetMuteTexture();
     }
 
-    public bool Interrupt() {
-        if (interrupted)
-            return false;
-        
-        Globals.main.Pause();
-        interrupted = true;
-        return true;
-    }
-
     public void SetShuffle() {
         Globals.main.shuffled = !Globals.main.shuffled;
 
@@ -112,7 +103,7 @@ public partial class Player : Node {
     }
 
     public void Move(int by) {
-        if (!interrupted) Globals.main.MoveTrack(by);
+        Globals.main.MoveTrack(by);
     }
 
     public void UpdateDisplayedInfo() {

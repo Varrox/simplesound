@@ -6,9 +6,9 @@ public partial class DownloadWindowOpener : EditorWindowOpener {
     }
 
     public void OpenSettings() {
-		if (Globals.player.Interrupt()) {
-			(window as DownloadWindow).Open();
-            ButtonPressed = false;
-		}
+        Globals.main.Pause();
+		
+        (window as DownloadWindow).Open();
+        ButtonPressed = false;
 	}
 }

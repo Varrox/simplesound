@@ -81,7 +81,6 @@ public partial class DownloadWindow : EditorWindow {
         Globals.file_dialog.Reparent(Globals.self);
         Hide();
         Clear();
-        Globals.player.interrupted = false; 
     }
 
     public void Clear() {
