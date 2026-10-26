@@ -7,10 +7,10 @@ public partial class AttributeEditorOpener : EditorWindowOpener {
     }
 
     public void EditAttributes() {
-        if (Globals.main.track != null) {
-            Globals.main.Pause();
+        if (Main.GetCurrentTrack() != null) {
+            Main.instance.Pause();
 
-            (window as AttributeEditor).Open(Globals.player.track_name_label.Text, Globals.player.track_artist_label.Text, Metadata.GetShareLink(Globals.main.track), Metadata.IsExplicit(Globals.main.track));
+            (window as AttributeEditor).Open(Player.instance.track_name_label.Text, Player.instance.track_artist_label.Text, Metadata.GetShareLink(Main.GetCurrentTrack()), Metadata.IsExplicit(Main.GetCurrentTrack()));
             window.OnClose += SubmitMeta;
         }
     }
@@ -19,22 +19,22 @@ public partial class AttributeEditorOpener : EditorWindowOpener {
         AttributeEditor editor = window as AttributeEditor;
 
         if(!editor.cancelled) {
-            if (Globals.main.playlist != null)
-                Metadata.SetData(Globals.main.track, editor.name_field.Text, editor.artist_field.Text, editor.cover_path, editor.share_link_field.Text, editor.explicit_lyrics_field.ButtonPressed);
+            if (Main.GetCurrentPlaylist() != null)
+                Metadata.SetData(Main.GetCurrentTrack(), editor.name_field.Text, editor.artist_field.Text, editor.cover_path, editor.share_link_field.Text, editor.explicit_lyrics_field.ButtonPressed);
 
-            Globals.player.UpdateDisplayedInfo();
+            Player.instance.UpdateDisplayedInfo();
 
             TrackData track_data = new TrackData {
                 title = editor.name_field.Text,
                 artist = editor.artist_field.Text,
                 share_link = editor.share_link_field.Text,
                 explicit_lyrics = editor.explicit_lyrics_field.ButtonPressed,
-                time = Globals.player.total_time_label.Text,
-                corrupt = Metadata.IsFileCorrupt(Globals.main.track),
+                time = Player.instance.total_time_label.Text,
+                corrupt = Metadata.IsFileCorrupt(Main.GetCurrentTrack()),
             };
 
             Texture2D default_cover_icon = ApplicationManager.GetThemeIcon("default_cover_icon");
-            Globals.main.tracks_visualizer.UpdateTrack(Globals.main.track_index, track_data, Tools.GetMediaCover(Globals.main.track) ?? default_cover_icon);
+            Main.instance.tracks_visualizer.UpdateTrack(Main.track_index, track_data, Tools.GetMediaCover(Main.GetCurrentTrack()) ?? default_cover_icon);
         }
         
         window.OnClose -= SubmitMeta;

@@ -141,7 +141,7 @@ public partial class ToolList : ContextMenuButton {
     }
 
     private void _SleepTimerFinished() {
-        Globals.main.Pause();
+        Main.instance.Pause();
         _ClearTimer();
     }
 

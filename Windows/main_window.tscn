@@ -163,7 +163,7 @@ anti_aliasing_size = 1.1
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6iyjs"]
 shader = ExtResource("18_fmyll")
 
-[node name="Main" type="Control" unique_id=14097904 node_paths=PackedStringArray("audio_player", "video_player", "player", "playlist_visualizer", "tracks_visualizer")]
+[node name="Main" type="Control" unique_id=14097904 node_paths=PackedStringArray("audio_player", "video_player", "playlist_visualizer", "tracks_visualizer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -174,7 +174,6 @@ theme = ExtResource("1_gjyis")
 script = ExtResource("2_kb0xi")
 audio_player = NodePath("Player")
 video_player = NodePath("Background/Video")
-player = NodePath("Interface")
 playlist_visualizer = NodePath("Interface/Content/Side Panel/Open/Open/Playlists")
 tracks_visualizer = NodePath("Interface/Content/Tracks/Track Display")
 
@@ -574,8 +573,6 @@ track_count_label = NodePath("Container/Top card/Track count")
 item_template = ExtResource("16_ns1th")
 parent_container = NodePath("Container")
 item_container = NodePath("Container/VBoxContainer")
-total_items = null
-item_height = null
 
 [node name="Container" type="VBoxContainer" parent="Interface/Content/Tracks/Track Display" unique_id=933878103]
 layout_mode = 2
@@ -884,10 +881,9 @@ text = "0:00"
 
 [node name="Player" type="AudioStreamPlayer" parent="." unique_id=488316782]
 
-[node name="Globals" type="Node" parent="." unique_id=71517921 node_paths=PackedStringArray("_main", "_player", "_discord", "_attribute_editor", "_download_window")]
+[node name="Globals" type="Node" parent="." unique_id=71517921 node_paths=PackedStringArray("_main", "_discord", "_attribute_editor", "_download_window")]
 script = ExtResource("46_y0j44")
 _main = NodePath("..")
-_player = NodePath("../Interface")
 _discord = NodePath("../Discord")
 _attribute_editor = NodePath("AttributeEditor")
 _download_window = NodePath("DownloadWindow")
@@ -910,10 +906,9 @@ tool_list = NodePath("../../Interface/Top Bar/MarginContainer/HBoxContainer/Righ
 [node name="PopupMenu" type="PopupMenu" parent="Globals/StatusIndicator" unique_id=251564623]
 prefer_native_menu = true
 
-[node name="GDScript Globals" type="Node" parent="." unique_id=142593709 node_paths=PackedStringArray("_audio_source", "_globals")]
+[node name="GDScript Globals" type="Node" parent="." unique_id=142593709 node_paths=PackedStringArray("_audio_source")]
 script = ExtResource("56_08crl")
 _audio_source = NodePath("../Player")
-_globals = NodePath("../Globals")
 
 [node name="Discord" type="Node" parent="." unique_id=46493677]
 script = ExtResource("57_kef43")

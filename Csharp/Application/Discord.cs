@@ -46,7 +46,7 @@ public partial class Discord : Node {
 
         bool cover = string.IsNullOrEmpty(cover_link) || cover_link.Length > 255;
 
-        TrackData track_data = new TrackData(Globals.main.track);
+        TrackData track_data = new TrackData(Main.GetCurrentTrack());
 
         RichPresence presence = new RichPresence() {
             Details = track_data.title,
@@ -58,7 +58,7 @@ public partial class Discord : Node {
                 LargeImageUrl = "https://github.com/Varrox/simplesound"
             },
             Type = ActivityType.Listening,
-            Buttons = [ new DiscordRPC.Button() { Label = "Open track", Url = Globals.main.current_share_link } ]
+            Buttons = [ new DiscordRPC.Button() { Label = "Open track", Url = Metadata.GetShareLink(Main.GetCurrentTrack()) } ]
         };
 
         client.SetPresence(presence);
@@ -76,7 +76,7 @@ public partial class Discord : Node {
     }
 
     public void Check() {
-        string input_link = Globals.main.current_share_link;
+        string input_link = Metadata.GetShareLink(Main.GetCurrentTrack());
 
         if (string.IsNullOrEmpty(input_link)) {
             cover_link = "";

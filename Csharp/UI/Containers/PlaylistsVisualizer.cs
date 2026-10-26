@@ -11,7 +11,7 @@ public partial class PlaylistsVisualizer : ScrollContainer {
     public delegate void OnSelectPlaylistEventHandler(int playlist_index);
 
     public void LoadAllPlaylistVisuals() { // only done once for init
-        for (int i = 0; i < Globals.main.playlist_paths.Count; i++) LoadPlaylist(i);
+        for (int i = 0; i < Main.playlist_paths.Count; i++) LoadPlaylist(i);
     }
 
     public void LoadPlaylist(int i) {
@@ -19,26 +19,26 @@ public partial class PlaylistsVisualizer : ScrollContainer {
         container.AddChild(playlist_display);
         playlist_displays.Add(playlist_display);
 
-        playlist_display.Init(Globals.main.playlists[i], i);
+        playlist_display.Init(Main.playlists[i], i);
     }
 
     public void UpdatePlaylists() {
         int end = playlist_displays.Count;
 
-        if (playlist_displays.Count < Globals.main.playlists.Count) { // less
-            for(int i = playlist_displays.Count; i < Globals.main.playlists.Count; i++) LoadPlaylist(i);
+        if (playlist_displays.Count < Main.playlists.Count) { // less
+            for(int i = playlist_displays.Count; i < Main.playlists.Count; i++) LoadPlaylist(i);
         }
-        else if (playlist_displays.Count > Globals.main.playlists.Count) { // more
-            for (int i = playlist_displays.Count; i < Globals.main.playlists.Count; i++) { // delete the extra
+        else if (playlist_displays.Count > Main.playlists.Count) { // more
+            for (int i = playlist_displays.Count; i < Main.playlists.Count; i++) { // delete the extra
                 playlist_displays[i].QueueFree();
                 playlist_displays.RemoveAt(i);
             }
 
-            end = Globals.main.playlists.Count;
+            end = Main.playlists.Count;
         }
 
         for(int i = 0; i < end; i++) {
-            playlist_displays[i].Init(Globals.main.playlists[i], i);
+            playlist_displays[i].Init(Main.playlists[i], i);
         }
     }
 }

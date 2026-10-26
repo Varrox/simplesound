@@ -6,12 +6,6 @@ public partial class Globals : Node {
 
     [ExportGroup("Nodes")]
 
-    [Export] private Main _main{set{ main = value; }get{ return main; }}
-    public static Main main;
-
-    [Export] private Player _player{set{ player = value; }get{ return player; }}
-    public static Player player;
-
     [Export] private Discord _discord{set{ discord = value; }get{ return discord; }}
     public static Discord discord;
 

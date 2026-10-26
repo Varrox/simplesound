@@ -65,10 +65,10 @@ public partial class PlaylistsMore : ContextMenuButton {
 			case DELETE_PLAYLIST:
 				break;
             case OPEN_PLAYLIST_IN_FILE_BROWER:
-                OS.ShellShowInFileManager(Globals.main.playlists[playlist_display.playlist_index].path);
+                OS.ShellShowInFileManager(Main.playlists[playlist_display.playlist_index].path);
 				break;
 			case OPEN_PLAYLIST_FILE:
-                OS.ShellOpen(Globals.main.playlists[playlist_display.playlist_index].path);
+                OS.ShellOpen(Main.playlists[playlist_display.playlist_index].path);
 				break;
             case SAVE_PLAYLIST_AS_ZIP:
                 break;
@@ -82,20 +82,20 @@ public partial class PlaylistsMore : ContextMenuButton {
     }
 
     public static void UpdateAddToOtherPlaylistItemSelected(long id, int playlist_index) {
-        for(int i = 0; i < Globals.main.playlists[playlist_index].tracks.Count; i++) {
-            Globals.main.playlists[(int)id].AddTrack(Globals.main.playlists[playlist_index].tracks[i]);
+        for(int i = 0; i < Main.playlists[playlist_index].tracks.Count; i++) {
+            Main.playlists[(int)id].AddTrack(Main.playlists[playlist_index].tracks[i]);
         }
 
-        Globals.main.playlists[(int)id].Save();
+        Main.playlists[(int)id].Save();
 
-        Globals.main.Refresh();
+        Main.instance.Refresh();
     }
 
     private void UpdateAddToOtherPlaylistOptions() {
         add_to_other_playlist_popup_menu.Clear();
 
-        for(int i = 0; i < Globals.main.playlists.Count; i++) {
-            add_to_other_playlist_popup_menu.AddIconItem(Globals.main.playlists[i].cover_texture ?? ApplicationManager.GetThemeIcon("default_cover_icon"), Globals.main.playlists[i].name);
+        for(int i = 0; i < Main.playlists.Count; i++) {
+            add_to_other_playlist_popup_menu.AddIconItem(Main.playlists[i].cover_texture ?? ApplicationManager.GetThemeIcon("default_cover_icon"), Main.playlists[i].name);
         }
     }
 }

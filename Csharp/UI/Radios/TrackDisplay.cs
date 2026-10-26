@@ -24,11 +24,11 @@ public partial class TrackDisplay : Button {
 
         more.MouseEntered += OnEnter;
 
-        Globals.main.OnLoadTrack += SetHighlight;
+        Main.instance.OnLoadTrack += SetHighlight;
     }
 
     public override void _ExitTree() {
-        Globals.main.OnLoadTrack -= SetHighlight;
+        Main.instance.OnLoadTrack -= SetHighlight;
     }
 
     public override void _GuiInput(InputEvent @event) {
@@ -40,15 +40,15 @@ public partial class TrackDisplay : Button {
     }
 
     public void SetHighlight() {
-        Globals.main.OnPlayingChanged -= SetPlaying;
+        Main.instance.OnPlayingChanged -= SetPlaying;
 
-        highlighted = Globals.main.playlist_index == playlist_index && Globals.main.track_index == track_index;
+        highlighted = Main.playlist_index == playlist_index && Main.track_index == track_index;
 
         ApplicationManager.SetRadioSelected(this, highlighted);
 
         track_name_label.AddThemeColorOverride("font_color", ApplicationManager.GetThemeColor(highlighted ? "playing_font_color" : "normal_font_color"));
 
-        if (highlighted) Globals.main.OnPlayingChanged += SetPlaying;
+        if (highlighted) Main.instance.OnPlayingChanged += SetPlaying;
 
         SetPlaying();
     }
@@ -57,7 +57,7 @@ public partial class TrackDisplay : Button {
         sound_visualizer.Visible = highlighted && !IsHovered();
 
         track_number_label.AddThemeColorOverride("font_color", highlighted || IsHovered() ? Colors.Transparent : ApplicationManager.GetThemeColor("small_font_color"));
-        play_texture_rect.Texture = ApplicationManager.GetThemeIcon(Disabled ? "no_play_icon" : (Globals.main.playing && highlighted ? "pause_icon" : "play_icon"));
+        play_texture_rect.Texture = ApplicationManager.GetThemeIcon(Disabled ? "no_play_icon" : (Main.playing && highlighted ? "pause_icon" : "play_icon"));
     }
 
     public void OnEnter() {
@@ -105,8 +105,8 @@ public partial class TrackDisplay : Button {
     }
 
     public void SetTrack() {
-        if (Globals.main.playlist_index != playlist_index) Globals.main.LoadPlaylist(playlist_index);
-        if (!highlighted) Globals.main.SetTrack(track_index);
-        else Globals.main.FlipPlayingState();
+        if (Main.playlist_index != playlist_index) Main.instance.LoadPlaylist(playlist_index);
+        if (!highlighted) Main.instance.SetTrack(track_index);
+        else Main.instance.FlipPlayingState();
     }
 }

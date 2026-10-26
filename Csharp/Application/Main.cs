@@ -5,36 +5,26 @@ using System.Collections.Generic;
 public partial class Main : Control {
 	[Export] public AudioStreamPlayer audio_player;
     [Export] public VideoStreamPlayer video_player;
-	
-    [Export] public Player player;
 
 	[Export] public PlaylistsVisualizer playlist_visualizer;
 	[Export] public TracksVisualizer tracks_visualizer;
 
-	public bool loop, playing, shuffled;
+	public static Main instance;
 
-	public int playlist_index, track_index;
+	public static bool loop, playing, shuffled;
 
-	public string current_track_path, current_share_link;
+	public static int playlist_index, track_index, looked_at_playlist;
 
-    public int looked_at_playlist;
+	public string current_track_path;
 
 	private string playing_path;
 
-    public Playlist playlist {
-		get {
-			if (playlists == null) return null;
-			if (playlists.Count > playlist_index) return playlists[playlist_index];
-			return null;
-		}
-	}
+	public static List<string> playlist_paths;
+    public static List<Playlist> playlists;
 
-	public List<string> playlist_paths;
-    public List<Playlist> playlists;
+    public static float time, volume;
 
-    public float time, volume;
-
-	public int offset, shuffle_index, random_offset;
+	public static int offset, shuffle_index, random_offset;
 
 	[Signal]
     public delegate void OnLoadTrackEventHandler();
@@ -46,14 +36,20 @@ public partial class Main : Control {
 	[Signal]
     public delegate void OnPlayingChangedEventHandler();
 
-	public string track {
-		get {
-			if(IsTrackAvailable()) return playlists[playlist_index].tracks[track_index];
-			else return null;
-        }
+	public static string GetCurrentTrack() {
+		if(IsTrackAvailable()) return playlists[playlist_index].tracks[track_index];
+		else return null;
+	}
+
+	public static Playlist GetCurrentPlaylist() {
+		if (playlists == null) return null;
+		if (playlists.Count > playlist_index) return playlists[playlist_index];
+		return null;
 	}
 
     public override void _Ready() {
+		instance = this;
+
 		// Load Save data
 
 		playlist_index = Globals.save_data.playlist_index;
@@ -70,7 +66,7 @@ public partial class Main : Control {
         // Set Volume
 
         audio_player.VolumeDb = volume;
-        player.volume_slider.Value = volume;
+        Player.instance.volume_slider.Value = volume;
 
         // Load playlists
 
@@ -87,7 +83,7 @@ public partial class Main : Control {
 
         playlist_visualizer.LoadAllPlaylistVisuals();
 
-        if (IsTrackAvailable()) PlayTrack(playlist.tracks[track_index]);
+        if (IsTrackAvailable()) PlayTrack(GetCurrentPlaylist().tracks[track_index]);
         else EmitSignal(SignalName.OnLoadTrack); // Emit anyways just so it can display no tracks
 
 		// Done Loading
@@ -122,9 +118,9 @@ public partial class Main : Control {
 	}
 
 	public void CheckIndex() {
-		if (playlist_paths[playlist_index] != playlist.path) playlist_index = playlist_paths.IndexOf(playlist.path);
+		if (playlist_paths[playlist_index] != GetCurrentPlaylist().path) playlist_index = playlist_paths.IndexOf(GetCurrentPlaylist().path);
 
-		if (track != current_track_path) track_index = playlist.tracks.IndexOf(current_track_path);
+		if (GetCurrentTrack() != current_track_path) track_index = GetCurrentPlaylist().tracks.IndexOf(current_track_path);
 	}
 
 	public void LoadPlaylist(int index) {
@@ -200,7 +196,7 @@ public partial class Main : Control {
 			else {
 				for(int i = 0; i < 6; i++) {
 					GD.Seed((ulong)(offset * 3 + random_offset + i));
-					int random_number = GD.RandRange(0, playlist.tracks.Count);
+					int random_number = GD.RandRange(0, GetCurrentPlaylist().tracks.Count);
 					if (random_number != track_index) {
 						track_index = random_number;
 						offset += i / 3;
@@ -211,19 +207,19 @@ public partial class Main : Control {
 		}
 		else track_index += amount;
 
-		track_index = Mathf.Wrap(track_index, 0, playlist.tracks.Count);
+		track_index = Mathf.Wrap(track_index, 0, GetCurrentPlaylist().tracks.Count);
 
 		int total_skips = 0;
-		while(Metadata.IsFileCorrupt(track)) { // Skip if corrupted
-			track_index = Mathf.Wrap(track_index + 1, 0, playlist.tracks.Count);
+		while(Metadata.IsFileCorrupt(GetCurrentTrack())) { // Skip if corrupted
+			track_index = Mathf.Wrap(track_index + 1, 0, GetCurrentPlaylist().tracks.Count);
 			total_skips++;
 
-			if (total_skips >= playlist.tracks.Count) {
+			if (total_skips >= GetCurrentPlaylist().tracks.Count) {
 				return;
 			}
 		}
 
-		PlayTrack(track);
+		PlayTrack(GetCurrentTrack());
 
 		playing = false;
 		Play();
@@ -232,14 +228,14 @@ public partial class Main : Control {
 	public void SetTrack(int index) {
 		if (!IsTrackAvailable()) return;
 
-		index = Mathf.Clamp(index, 0, playlist.tracks.Count);
+		index = Mathf.Clamp(index, 0, GetCurrentPlaylist().tracks.Count);
 
 		int total_skips = 0;
-		while(Metadata.IsFileCorrupt(playlist.tracks[index])) { // Skip if corrupted
-			index = Mathf.Wrap(index + 1, 0, playlist.tracks.Count);
+		while(Metadata.IsFileCorrupt(GetCurrentPlaylist().tracks[index])) { // Skip if corrupted
+			index = Mathf.Wrap(index + 1, 0, GetCurrentPlaylist().tracks.Count);
 			total_skips++;
 
-			if (total_skips >= playlist.tracks.Count) {
+			if (total_skips >= GetCurrentPlaylist().tracks.Count) {
 				return;
 			}
 		}
@@ -248,7 +244,7 @@ public partial class Main : Control {
 		shuffle_index = index;
 		track_index = index;
 
-		PlayTrack(track);
+		PlayTrack(GetCurrentTrack());
 
 		playing = false;
 		Play();
@@ -291,12 +287,10 @@ public partial class Main : Control {
 			}
 		}
 
-		current_share_link = Metadata.GetShareLink(path);
-
 		EmitSignal(SignalName.OnLoadTrack);
 	}
 
-	public bool IsTrackAvailable() {
+	public static bool IsTrackAvailable() {
 		if (playlists == null) return false;
 		if (playlists.Count <= playlist_index) return false;
 		if (playlists[playlist_index] == null) return false;
@@ -315,8 +309,7 @@ public partial class Main : Control {
 		Globals.save_data.playlists = playlist_paths;
 	}
 
-    public override void _ExitTree()
-    {
+    public override void _ExitTree() {
         SetSaveData();
     }
 
@@ -343,13 +336,13 @@ public partial class Main : Control {
 
         LoadPlaylist(target_playlist);
 
-		if (!playlist.tracks.Contains(playing_path)) {
+		if (!GetCurrentPlaylist().tracks.Contains(playing_path)) {
 
-			PlayTrack(track);
+			PlayTrack(GetCurrentTrack());
 			Pause();
 		}
 		else {
-			track_index = playlist.tracks.IndexOf(playing_path);
+			track_index = GetCurrentPlaylist().tracks.IndexOf(playing_path);
 		}
 
         // Done Loading

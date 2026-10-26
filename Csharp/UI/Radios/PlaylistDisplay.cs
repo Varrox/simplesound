@@ -13,11 +13,11 @@ public partial class PlaylistDisplay : Button {
         MouseEntered += more.Show;
         MouseExited += OnExit;
 
-        Globals.main.OnLoadTrack += SetTextHighlight;
+        Main.instance.OnLoadTrack += SetTextHighlight;
     }
 
     public void SetTextHighlight() {
-        bool highlight = Globals.main.playlist_index == playlist_index;
+        bool highlight = Main.playlist_index == playlist_index;
         playlist_name_label.AddThemeColorOverride("font_color", ApplicationManager.GetThemeColor(highlight ? "playing_font_color" : "normal_font_color"));
     }
 
@@ -34,8 +34,8 @@ public partial class PlaylistDisplay : Button {
     }
 
     public void Set() {
-        Globals.main.playlist_visualizer.EmitSignal("OnSelectPlaylist", playlist_index);
-        Globals.main.looked_at_playlist = playlist_index;
+        Main.instance.playlist_visualizer.EmitSignal("OnSelectPlaylist", playlist_index);
+        Main.looked_at_playlist = playlist_index;
 
         ApplicationManager.SetRadioSelected(this, true);
     }
@@ -66,8 +66,8 @@ public partial class PlaylistDisplay : Button {
 
         TooltipText = $"{playlist.name} - {amount}";
 
-        if (index == Globals.main.looked_at_playlist) Set();
+        if (index == Main.looked_at_playlist) Set();
 
-        Globals.main.playlist_visualizer.OnSelectPlaylist += ClearSelected;
+        Main.instance.playlist_visualizer.OnSelectPlaylist += ClearSelected;
     }
 }

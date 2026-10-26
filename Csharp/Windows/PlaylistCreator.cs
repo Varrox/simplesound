@@ -159,9 +159,9 @@ public partial class PlaylistCreator : EditorWindow {
 
             Clear();
 
-			Globals.main.playlist_paths.Add(playlist.Save());
-			Globals.main.SetSaveData();
-            Globals.main.Refresh();
+			Main.playlist_paths.Add(playlist.Save());
+			Main.instance.SetSaveData();
+            Main.instance.Refresh();
 		}
 
         EmitSignal(SignalName.OnClose);

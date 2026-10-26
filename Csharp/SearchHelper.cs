@@ -14,9 +14,9 @@ struct SearchHelper {
 
         Dictionary<int, PlayIndex> results = new Dictionary<int, PlayIndex>();
 
-        for(int i = 0; i < Globals.main.playlists.Count; i++) {
-            for(int j = 0; j < Globals.main.playlists[i].tracks.Count; j++) {
-                string track = Globals.main.playlists[i].tracks[j];
+        for(int i = 0; i < Main.playlists.Count; i++) {
+            for(int j = 0; j < Main.playlists[i].tracks.Count; j++) {
+                string track = Main.playlists[i].tracks[j];
 
                 FuzzySearchMatch result_name = fuzzy.Search(search_query, Tools.GetMediaTitle(track));
                 FuzzySearchMatch result_artist = fuzzy.Search(search_query, Metadata.GetArtist(track));

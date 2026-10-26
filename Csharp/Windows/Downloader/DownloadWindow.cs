@@ -60,11 +60,11 @@ public partial class DownloadWindow : EditorWindow {
         ApplicationManager.SetRadioSelected(no_playlist, true);
         EmitSignal(SignalName.OnSelectPlaylist, -1);
 
-        for(int i = 0; i < Globals.main.playlists.Count; i++)
+        for(int i = 0; i < Main.playlists.Count; i++)
         {
             DownloadPlaylistDisplay display = playlist_display.Instantiate() as DownloadPlaylistDisplay;
             playlist_container.AddChild(display);
-            display.Init(Globals.main.playlists[i], i);
+            display.Init(Main.playlists[i], i);
         }
 
         Show();
@@ -100,16 +100,16 @@ public partial class DownloadWindow : EditorWindow {
 
     public void Download() {
         foreach(string url in links) {
-            string[] tracks = RunDownloadCommand(url, selected_playlist != -1 ? Globals.main.playlists[selected_playlist].name : "");
+            string[] tracks = RunDownloadCommand(url, selected_playlist != -1 ? Main.playlists[selected_playlist].name : "");
 
             if(tracks == null || tracks.Length == 0)
                 continue;
             
             if(selected_playlist != -1) {
                 GD.Print(tracks);
-                Globals.main.playlists[selected_playlist].tracks.AddRange(tracks);
-                Globals.main.playlists[selected_playlist].Save();
-                Globals.main.Refresh();
+                Main.playlists[selected_playlist].tracks.AddRange(tracks);
+                Main.playlists[selected_playlist].Save();
+                Main.instance.Refresh();
             }
             else { // Open in file explorer
                 OS.ShellShowInFileManager(tracks[0], true);

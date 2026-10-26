@@ -32,8 +32,8 @@ public partial class TracksMore : ContextMenuButton {
     public static void SetupAddToPlaylistOptions(PopupMenu popup) {
         popup.Clear();
 
-        for(int i = 0; i < Globals.main.playlists.Count; i++) {
-            popup.AddIconItem(Globals.main.playlists[i].cover_texture ?? ApplicationManager.GetThemeIcon("default_cover_icon"), Globals.main.playlists[i].name);
+        for(int i = 0; i < Main.playlists.Count; i++) {
+            popup.AddIconItem(Main.playlists[i].cover_texture ?? ApplicationManager.GetThemeIcon("default_cover_icon"), Main.playlists[i].name);
         }
     }
 
@@ -104,7 +104,7 @@ public partial class TracksMore : ContextMenuButton {
     }
 
     public static void EditMetadata(int playlist_index, int track_index, TrackData track_data) {
-        Globals.main.Pause();
+        Main.instance.Pause();
 
         Globals.attribute_editor.Open(track_data);
         
@@ -114,7 +114,7 @@ public partial class TracksMore : ContextMenuButton {
                 return;
             }
 
-            string track_file = Globals.main.playlists[playlist_index].tracks[track_index];
+            string track_file = Main.playlists[playlist_index].tracks[track_index];
             
             Metadata.SetData(track_file, 
                 Globals.attribute_editor.name_field.Text, 
@@ -124,7 +124,7 @@ public partial class TracksMore : ContextMenuButton {
                 Globals.attribute_editor.explicit_lyrics_field.ButtonPressed
             );
 
-            Globals.player.UpdateDisplayedInfo();
+            Player.instance.UpdateDisplayedInfo();
 
             TrackData new_track_data = new TrackData {
                 title = Globals.attribute_editor.name_field.Text,
@@ -135,7 +135,7 @@ public partial class TracksMore : ContextMenuButton {
                 corrupt = Metadata.IsFileCorrupt(track_file), // Recheck just incase
             };
 
-            Globals.main.tracks_visualizer.UpdateTrack(track_index, new_track_data, Tools.GetMediaCover(track_file) ?? ApplicationManager.GetThemeIcon("default_cover_icon"));
+            Main.instance.tracks_visualizer.UpdateTrack(track_index, new_track_data, Tools.GetMediaCover(track_file) ?? ApplicationManager.GetThemeIcon("default_cover_icon"));
             
             Globals.attribute_editor.OnClose -= SubmitMeta;
         }
@@ -144,29 +144,29 @@ public partial class TracksMore : ContextMenuButton {
     }
 
     public static void RemoveTrackFromPlaylist(int playlist_index, int track_index) {
-        Globals.main.playlists[playlist_index].RemoveTrack(track_index);
-        Globals.main.playlists[playlist_index].Save();
+        Main.playlists[playlist_index].RemoveTrack(track_index);
+        Main.playlists[playlist_index].Save();
 
-        if(Globals.main.playlist_index == playlist_index) {
-            if (Globals.main.track_index > track_index) {
-                Globals.main.track_index--;
+        if(Main.playlist_index == playlist_index) {
+            if (Main.track_index > track_index) {
+                Main.track_index--;
             }
         }
 
-        Globals.main.Refresh();
+        Main.instance.Refresh();
     }
 
     public static void DeleteTrackFromPlaylist(int playlist_index, int track_index) {
-        Globals.main.playlists[playlist_index].DeleteTrack(track_index);
-        Globals.main.playlists[playlist_index].Save();
+        Main.playlists[playlist_index].DeleteTrack(track_index);
+        Main.playlists[playlist_index].Save();
 
-        if(Globals.main.playlist_index == playlist_index) {
-            if (Globals.main.track_index > track_index) {
-                Globals.main.track_index--;
+        if(Main.playlist_index == playlist_index) {
+            if (Main.track_index > track_index) {
+                Main.track_index--;
             }
         }
 
-        Globals.main.Refresh();
+        Main.instance.Refresh();
     }
 
     public static void DeleteTrack(int playlist_index, int track_index, string track_name) {
@@ -225,16 +225,16 @@ public partial class TracksMore : ContextMenuButton {
     }
 
     public static void AddToPlaylistItemSelected(long id, int playlist_index, int track_index) {
-        string track_file = Globals.main.playlists[playlist_index].tracks[track_index];
+        string track_file = Main.playlists[playlist_index].tracks[track_index];
 
-        Globals.main.playlists[(int)id].AddTrack(track_file);
-        Globals.main.playlists[(int)id].Save();
+        Main.playlists[(int)id].AddTrack(track_file);
+        Main.playlists[(int)id].Save();
 
-        Globals.main.Refresh();
+        Main.instance.Refresh();
     }
 
     public static void ShareItemSelected(long id, int playlist_index, int track_index) {
-        string track_file = Globals.main.playlists[playlist_index].tracks[track_index];
+        string track_file = Main.playlists[playlist_index].tracks[track_index];
 
 		switch(id) {
 			case COPY_SHARE_LINK:

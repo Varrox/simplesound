@@ -18,6 +18,6 @@ public partial class Refresh : Button {
 
     private void _Refresh() {
         refesh_texture_animation.Play("refresh");
-        Globals.main.Refresh();
+        Main.instance.Refresh();
     }
 }

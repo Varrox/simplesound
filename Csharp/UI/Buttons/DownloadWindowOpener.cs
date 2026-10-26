@@ -6,7 +6,7 @@ public partial class DownloadWindowOpener : EditorWindowOpener {
     }
 
     public void OpenSettings() {
-        Globals.main.Pause();
+        Main.instance.Pause();
 		
         (window as DownloadWindow).Open();
         ButtonPressed = false;

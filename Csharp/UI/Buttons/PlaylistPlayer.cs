@@ -3,20 +3,20 @@ using Godot;
 public partial class PlaylistPlayer : Button {
 	public override void _Ready() {
 		ButtonUp += Play;
-		Globals.main.OnPlayingChanged += UpdateTexture;
+		Main.instance.OnPlayingChanged += UpdateTexture;
 	}
 
 	public void Play() {
-		if(Globals.main.playlist_index == Globals.main.looked_at_playlist) {
-			Globals.main.FlipPlayingState();
+		if(Main.playlist_index == Main.looked_at_playlist) {
+			Main.instance.FlipPlayingState();
 		}
 		else {
-            Globals.main.LoadPlaylist(Globals.main.looked_at_playlist);
-            Globals.main.SetTrack(0);
+            Main.instance.LoadPlaylist(Main.looked_at_playlist);
+            Main.instance.SetTrack(0);
         }
 	}
 
 	public void UpdateTexture() {
-		Icon = ApplicationManager.GetThemeIcon((Globals.main.playlist_index == Globals.main.looked_at_playlist) && Globals.main.playing ? "pause_icon" : "play_icon");
+		Icon = ApplicationManager.GetThemeIcon((Main.playlist_index == Main.looked_at_playlist) && Main.playing ? "pause_icon" : "play_icon");
 	}
 }

@@ -46,7 +46,7 @@ public partial class AddPlaylist : ContextMenuButton {
 	}
 
 	public void _OpenPlaylistCreator() {
-		Globals.main.Pause();
+		Main.instance.Pause();
 		
 		PlaylistCreator playlist_creator = (PlaylistCreator)create_new_playlist_template.Instantiate();
 		playlist_creator.Visible = false;
@@ -77,7 +77,7 @@ public partial class AddPlaylist : ContextMenuButton {
 				Globals.save_data.playlists.Add(file);
 				Globals.save_data.Save();
 				
-				Globals.main.Refresh();
+				Main.instance.Refresh();
 			}
 			else {
 				OS.Alert("Playlist could not be imported since it is already referenced in playlist library.", "Playlist import failed");
@@ -183,7 +183,7 @@ public partial class AddPlaylist : ContextMenuButton {
 			Globals.save_data.playlists.Add(playlist.Save());
 			Globals.save_data.Save();
 			
-			Globals.main.Refresh();
+			Main.instance.Refresh();
 
 			Finish();
 		}

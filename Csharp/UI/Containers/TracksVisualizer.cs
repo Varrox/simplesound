@@ -12,9 +12,9 @@ public partial class TracksVisualizer : CarouselScrollContainer {
     private Dictionary<int, int> _scroll_positions = new Dictionary<int, int>();
 
     private Playlist GetPlaylist() {
-        if (Globals.main.playlists != null)
-            if (_current_playlist < Globals.main.playlists.Count)
-                return Globals.main.playlists[_current_playlist];
+        if (Main.playlists != null)
+            if (_current_playlist < Main.playlists.Count)
+                return Main.playlists[_current_playlist];
         return null;
     }
 
@@ -23,7 +23,7 @@ public partial class TracksVisualizer : CarouselScrollContainer {
 
         item_height = 60;
 
-        Globals.main.playlist_visualizer.OnSelectPlaylist += LoadPlaylist;
+        Main.instance.playlist_visualizer.OnSelectPlaylist += LoadPlaylist;
     }
 
     private Texture2D GetCover(in Playlist playlist, in int track) {
@@ -56,7 +56,7 @@ public partial class TracksVisualizer : CarouselScrollContainer {
     public void UpdateTrack(int index, in TrackData track_data, in Texture2D cover) {
         int first_visible_track = GetFirstVisibleItemIndex();
 
-        if (Globals.main.looked_at_playlist != Globals.main.playlist_index || index < first_visible_track || index >= (items.Count + first_visible_track))
+        if (Main.looked_at_playlist != Main.playlist_index || index < first_visible_track || index >= (items.Count + first_visible_track))
             return;
         
         (items[index - first_visible_track] as TrackDisplay).Init(index, _current_playlist, track_data, GetPlaylist().type, cover);
