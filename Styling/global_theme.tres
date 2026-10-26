@@ -2,6 +2,7 @@
 
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Styling/Fonts/DefaultFont.tres" id="1_787rk"]
 [ext_resource type="StyleBox" uid="uid://bcwdihevqnrfe" path="res://Styling/Color Picker/color_picker_normal.tres" id="1_jybvc"]
+[ext_resource type="StyleBox" uid="uid://bjy0mr2f567qe" path="res://Styling/focus.tres" id="1_k2t6e"]
 [ext_resource type="StyleBox" uid="uid://cxytxx6a7h42y" path="res://Styling/Color Picker/color_picker_disabled.tres" id="1_m7e64"]
 
 [sub_resource type="DPITexture" id="DPITexture_m7e64"]
@@ -55,6 +56,7 @@ corner_detail = 5
 
 [resource]
 default_font = ExtResource("1_787rk")
+Button/styles/focus = ExtResource("1_k2t6e")
 ColorPickerButton/colors/font_color = Color(1, 1, 1, 1)
 ColorPickerButton/colors/font_disabled_color = Color(0.9, 0.9, 0.9, 0.3)
 ColorPickerButton/colors/font_focus_color = Color(1, 1, 1, 1)

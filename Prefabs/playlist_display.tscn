@@ -10,12 +10,8 @@
 [ext_resource type="Texture2D" uid="uid://bkloprdhxat0i" path="res://Icons/SVG/meatballs.svg" id="8_h3l4d"]
 [ext_resource type="Script" uid="uid://dijx812bdmf7t" path="res://Csharp/UI/Context Menus/PlaylistsMore.cs" id="9_b8rky"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0xwl0"]
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ehwnt"]
 shader = ExtResource("5_t1j7f")
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2it5a"]
 
 [node name="Playlist Button" type="Button" unique_id=321300163 node_paths=PackedStringArray("cover_texture_rect", "playlist_name_label", "track_count_label", "more")]
 custom_minimum_size = Vector2(0, 65)
@@ -34,7 +30,6 @@ theme_override_styles/normal = ExtResource("1_idoqo")
 theme_override_styles/pressed = ExtResource("2_imthr")
 theme_override_styles/hover = ExtResource("2_imthr")
 theme_override_styles/disabled = ExtResource("2_imthr")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_0xwl0")
 script = ExtResource("3_3gw7l")
 cover_texture_rect = NodePath("MarginContainer/HBoxContainer/PanelContainer/Cover")
 playlist_name_label = NodePath("MarginContainer/HBoxContainer/Text/Name")
@@ -104,7 +99,6 @@ custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
-theme_override_styles/focus = SubResource("StyleBoxEmpty_2it5a")
 icon = ExtResource("8_h3l4d")
 flat = false
 icon_alignment = 1

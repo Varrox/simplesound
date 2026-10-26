@@ -63,10 +63,6 @@ shader_parameter/t = 0.0
 shader = ExtResource("6_r776v")
 shader_parameter/blur_size = 0.25
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i5cru"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wx3lt"]
-
 [sub_resource type="Animation" id="Animation_6iyjs"]
 length = 0.001
 tracks/0/type = "value"
@@ -126,17 +122,11 @@ func _process(delta: float) -> void:
 		label_settings.font_color = Color.RED
 "
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_come4"]
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4w656"]
 bg_color = Color(0.27752772, 0.27752772, 0.27752772, 0.50980395)
 border_width_right = 2
 border_color = Color(1, 1, 1, 0)
 border_blend = true
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r3k7g"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7vj4a"]
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_blkrb"]
 color = Color(0.4627451, 0.4627451, 0.4627451, 0.6392157)
@@ -163,8 +153,6 @@ corner_radius_bottom_left = 12
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4w656"]
 shader = ExtResource("18_fmyll")
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i82gy"]
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_28euk"]
 corner_radius_top_left = 10
 corner_radius_top_right = 10
@@ -174,12 +162,6 @@ anti_aliasing_size = 1.1
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6iyjs"]
 shader = ExtResource("18_fmyll")
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_68lop"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l3qov"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6x3o4"]
 
 [node name="Main" type="Control" unique_id=14097904 node_paths=PackedStringArray("audio_player", "video_player", "player", "playlist_visualizer", "tracks_visualizer")]
 layout_mode = 3
@@ -266,6 +248,7 @@ background_subviewport = NodePath("../Background/SubViewport")
 [node name="Top Bar" type="ColorRect" parent="Interface" unique_id=1268311251]
 custom_minimum_size = Vector2(0, 52)
 layout_mode = 2
+focus_mode = 1
 color = Color(0.136826, 0.136826, 0.136826, 1)
 
 [node name="MarginContainer" type="MarginContainer" parent="Interface/Top Bar" unique_id=347022056]
@@ -294,7 +277,6 @@ custom_minimum_size = Vector2(27.5, 0)
 layout_mode = 2
 tooltip_text = "App data"
 focus_mode = 0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_i5cru")
 icon = ExtResource("24_cq8g2")
 expand_icon = true
 script = ExtResource("23_f8opk")
@@ -304,7 +286,6 @@ custom_minimum_size = Vector2(28, 0)
 layout_mode = 2
 tooltip_text = "Refreshes the whole audio player."
 focus_mode = 0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_wx3lt")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("29_nr08j")
@@ -334,7 +315,6 @@ custom_minimum_size = Vector2(125, 0)
 layout_mode = 2
 tooltip_text = "Menu for downloading tracks from youtube via yt-dlp."
 focus_mode = 0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_i5cru")
 text = "Downloader"
 icon = ExtResource("27_ns1th")
 expand_icon = true
@@ -370,7 +350,6 @@ visible = false
 custom_minimum_size = Vector2(28, 0)
 layout_mode = 2
 focus_mode = 0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_wx3lt")
 icon = ExtResource("27_ns1th")
 icon_alignment = 1
 expand_icon = true
@@ -392,7 +371,6 @@ custom_minimum_size = Vector2(28, 0)
 layout_mode = 2
 tooltip_text = "Opens settings menu."
 focus_mode = 0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_wx3lt")
 icon = ExtResource("33_xqlq7")
 icon_alignment = 1
 expand_icon = true
@@ -417,7 +395,6 @@ grow_horizontal = 2
 grow_vertical = 2
 tooltip_text = "Type in the name of an artist or track, or playlist"
 focus_mode = 1
-theme_override_styles/focus = SubResource("StyleBoxEmpty_come4")
 placeholder_text = " Search in playlists..."
 editable = false
 right_icon = ExtResource("10_ns1th")
@@ -428,6 +405,7 @@ metadata/_custom_type_script = "uid://ckpanpt3fty8d"
 [node name="Content" type="HSplitContainer" parent="Interface" unique_id=1145519971]
 layout_mode = 2
 size_flags_vertical = 3
+focus_mode = 1
 theme_override_constants/separation = 0
 split_offsets = PackedInt32Array(303)
 split_offset = 303
@@ -435,6 +413,7 @@ split_offset = 303
 [node name="Side Panel" type="Panel" parent="Interface/Content" unique_id=638521110 node_paths=PackedStringArray("split", "open_button", "closed_button", "open_element", "closed_element")]
 custom_minimum_size = Vector2(303, 0)
 layout_mode = 2
+focus_mode = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_4w656")
 script = ExtResource("8_j6ftg")
 closed_min_size = 52
@@ -469,7 +448,6 @@ custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_horizontal = 2
 focus_mode = 0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_r3k7g")
 icon = ExtResource("9_xrbbi")
 expand_icon = true
 
@@ -496,7 +474,6 @@ layout_mode = 2
 size_flags_horizontal = 8
 tooltip_text = "Add a playlist."
 focus_mode = 0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_7vj4a")
 text = "
 "
 icon = ExtResource("10_gjyis")
@@ -566,7 +543,6 @@ size_flags_horizontal = 0
 size_flags_vertical = 0
 tooltip_text = "Add a playlist."
 focus_mode = 0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_7vj4a")
 text = "
 "
 icon = ExtResource("10_gjyis")
@@ -674,7 +650,6 @@ grow_horizontal = 0
 grow_vertical = 2
 tooltip_text = "Play / Pause playlist."
 focus_mode = 0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_i82gy")
 icon = ExtResource("21_kb0xi")
 script = ExtResource("20_drm60")
 
@@ -685,6 +660,7 @@ theme_override_constants/separation = 0
 [node name="Player" type="ColorRect" parent="Interface" unique_id=930252818]
 custom_minimum_size = Vector2(0, 108)
 layout_mode = 2
+focus_mode = 1
 color = Color(0.0509804, 0.0509804, 0.0509804, 1)
 
 [node name="MarginContainer" type="MarginContainer" parent="Interface/Player" unique_id=1785885290]
@@ -759,7 +735,6 @@ grow_vertical = 2
 tooltip_text = "Middle click to edit attributes"
 focus_mode = 0
 theme_override_fonts/font = ExtResource("41_qf528")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_68lop")
 button_mask = 4
 flat = true
 script = ExtResource("42_3aot7")
@@ -789,7 +764,6 @@ size_flags_horizontal = 3
 tooltip_text = "Toggle track shuffling."
 focus_mode = 0
 theme_override_fonts/font = ExtResource("34_4jfok")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_l3qov")
 text = "
 "
 icon = ExtResource("37_r776v")
@@ -802,7 +776,6 @@ size_flags_horizontal = 3
 tooltip_text = "Previous track."
 focus_mode = 0
 theme_override_fonts/font = ExtResource("34_4jfok")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_l3qov")
 text = "
 "
 icon = ExtResource("38_xvcl6")
@@ -815,7 +788,6 @@ size_flags_horizontal = 3
 tooltip_text = "Play / Pause."
 focus_mode = 0
 theme_override_fonts/font = ExtResource("34_4jfok")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_l3qov")
 icon = ExtResource("39_j6ftg")
 icon_alignment = 1
 expand_icon = true
@@ -826,7 +798,6 @@ size_flags_horizontal = 3
 tooltip_text = "Next track."
 focus_mode = 0
 theme_override_fonts/font = ExtResource("34_4jfok")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_l3qov")
 text = "
 "
 icon = ExtResource("40_mskga")
@@ -839,7 +810,6 @@ size_flags_horizontal = 3
 tooltip_text = "Toggle track looping."
 focus_mode = 0
 theme_override_fonts/font = ExtResource("34_4jfok")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_l3qov")
 icon = ExtResource("41_yksdd")
 icon_alignment = 1
 expand_icon = true
@@ -866,7 +836,6 @@ layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 17
 tooltip_text = "Mute audio."
-theme_override_styles/focus = SubResource("StyleBoxEmpty_6x3o4")
 icon = ExtResource("42_2o8nl")
 flat = true
 expand_icon = true
