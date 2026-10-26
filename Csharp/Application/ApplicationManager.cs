@@ -154,6 +154,7 @@ public partial class ApplicationManager : SceneTree {
 
         theme_resource.SetIcon("play_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/play.svg"));
         theme_resource.SetIcon("pause_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/pause.svg"));
+        theme_resource.SetIcon("stop_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/stop.svg"));
 
         theme_resource.SetIcon("no_play_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/no_play.svg"));
 
@@ -188,6 +189,8 @@ public partial class ApplicationManager : SceneTree {
 
         theme_resource.SetIcon("cog_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/cog.svg"));
         theme_resource.SetIcon("pen_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/pen.svg"));
+
+        theme_resource.SetIcon("time_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/time.svg"));
 
         theme_resource.SetIcon("folder_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/folder.svg"));
         theme_resource.SetIcon("file_icon", Constants.THEME_TYPE, GD.Load<DpiTexture>("res://Icons/SVG/file.svg"));

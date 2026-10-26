@@ -280,11 +280,16 @@ theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 12
 
-[node name="Left" type="HBoxContainer" parent="Interface/Top Bar/MarginContainer" unique_id=331342659]
+[node name="HBoxContainer" type="HBoxContainer" parent="Interface/Top Bar/MarginContainer" unique_id=1876386845]
 layout_mode = 2
-size_flags_horizontal = 0
+size_flags_horizontal = 17
+size_flags_vertical = 17
 
-[node name="Folders" type="Button" parent="Interface/Top Bar/MarginContainer/Left" unique_id=519215062]
+[node name="Left" type="HBoxContainer" parent="Interface/Top Bar/MarginContainer/HBoxContainer" unique_id=331342659]
+layout_mode = 2
+size_flags_horizontal = 19
+
+[node name="Folders" type="Button" parent="Interface/Top Bar/MarginContainer/HBoxContainer/Left" unique_id=519215062]
 custom_minimum_size = Vector2(27.5, 0)
 layout_mode = 2
 tooltip_text = "App data"
@@ -294,7 +299,7 @@ icon = ExtResource("24_cq8g2")
 expand_icon = true
 script = ExtResource("23_f8opk")
 
-[node name="Refresh" type="Button" parent="Interface/Top Bar/MarginContainer/Left" unique_id=953963470 node_paths=PackedStringArray("refesh_texture_animation", "refresh_texture_rect")]
+[node name="Refresh" type="Button" parent="Interface/Top Bar/MarginContainer/HBoxContainer/Left" unique_id=953963470 node_paths=PackedStringArray("refesh_texture_animation", "refresh_texture_rect")]
 custom_minimum_size = Vector2(28, 0)
 layout_mode = 2
 tooltip_text = "Refreshes the whole audio player."
@@ -306,7 +311,7 @@ script = ExtResource("29_nr08j")
 refesh_texture_animation = NodePath("AnimationPlayer")
 refresh_texture_rect = NodePath("TextureRect")
 
-[node name="TextureRect" type="TextureRect" parent="Interface/Top Bar/MarginContainer/Left/Refresh" unique_id=727025634]
+[node name="TextureRect" type="TextureRect" parent="Interface/Top Bar/MarginContainer/HBoxContainer/Left/Refresh" unique_id=727025634]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -321,10 +326,10 @@ pivot_offset = Vector2(12.5, 12)
 texture = ExtResource("32_7kpk1")
 expand_mode = 1
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Interface/Top Bar/MarginContainer/Left/Refresh" unique_id=549007236]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Interface/Top Bar/MarginContainer/HBoxContainer/Left/Refresh" unique_id=549007236]
 libraries/ = SubResource("AnimationLibrary_4w656")
 
-[node name="Downloader" type="Button" parent="Interface/Top Bar/MarginContainer/Left" unique_id=1673368361]
+[node name="Downloader" type="Button" parent="Interface/Top Bar/MarginContainer/HBoxContainer/Left" unique_id=1673368361]
 custom_minimum_size = Vector2(125, 0)
 layout_mode = 2
 tooltip_text = "Menu for downloading tracks from youtube via yt-dlp."
@@ -335,28 +340,32 @@ icon = ExtResource("27_ns1th")
 expand_icon = true
 script = ExtResource("24_o03o1")
 
-[node name="Right" type="HBoxContainer" parent="Interface/Top Bar/MarginContainer" unique_id=1972233890]
+[node name="Right" type="HBoxContainer" parent="Interface/Top Bar/MarginContainer/HBoxContainer" unique_id=1972233890]
 layout_mode = 2
-size_flags_horizontal = 8
+size_flags_horizontal = 19
 alignment = 2
 
-[node name="Text" type="HBoxContainer" parent="Interface/Top Bar/MarginContainer/Right" unique_id=1058386449]
+[node name="Text" type="HBoxContainer" parent="Interface/Top Bar/MarginContainer/HBoxContainer/Right" unique_id=1058386449]
 layout_mode = 2
+size_flags_horizontal = 3
 theme_override_constants/separation = 8
+alignment = 2
+reverse_sort = true
 
-[node name="FPS" type="Label" parent="Interface/Top Bar/MarginContainer/Right/Text" unique_id=1348915883]
+[node name="Zoom amount" type="Label" parent="Interface/Top Bar/MarginContainer/HBoxContainer/Right/Text" unique_id=1415807281]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "100%"
+
+[node name="FPS" type="Label" parent="Interface/Top Bar/MarginContainer/HBoxContainer/Right/Text" unique_id=1348915883]
 visible = false
 layout_mode = 2
+size_flags_horizontal = 8
 text = "60 FPS"
 label_settings = SubResource("LabelSettings_e71vb")
 script = SubResource("GDScript_e71vb")
 
-[node name="Zoom amount" type="Label" parent="Interface/Top Bar/MarginContainer/Right/Text" unique_id=1415807281]
-layout_mode = 2
-text = "100%"
-horizontal_alignment = 2
-
-[node name="Update" type="Button" parent="Interface/Top Bar/MarginContainer/Right" unique_id=925467314]
+[node name="Update" type="Button" parent="Interface/Top Bar/MarginContainer/HBoxContainer/Right" unique_id=925467314]
 visible = false
 custom_minimum_size = Vector2(28, 0)
 layout_mode = 2
@@ -367,7 +376,7 @@ icon_alignment = 1
 expand_icon = true
 script = ExtResource("28_3ax07")
 
-[node name="List" type="MenuButton" parent="Interface/Top Bar/MarginContainer/Right" unique_id=1295130311 node_paths=PackedStringArray("background_texture_rect")]
+[node name="List" type="MenuButton" parent="Interface/Top Bar/MarginContainer/HBoxContainer/Right" unique_id=1295130311 node_paths=PackedStringArray("background_texture_rect", "text_container")]
 custom_minimum_size = Vector2(28, 0)
 layout_mode = 2
 icon = ExtResource("29_2wbij")
@@ -375,9 +384,10 @@ flat = false
 expand_icon = true
 script = ExtResource("30_xrbbi")
 streamer_display_template = ExtResource("26_3edd3")
-background_texture_rect = NodePath("../../../../../Background/Image")
+background_texture_rect = NodePath("../../../../../../Background/Image")
+text_container = NodePath("../Text")
 
-[node name="Settings" type="Button" parent="Interface/Top Bar/MarginContainer/Right" unique_id=501507118 node_paths=PackedStringArray("window")]
+[node name="Settings" type="Button" parent="Interface/Top Bar/MarginContainer/HBoxContainer/Right" unique_id=501507118 node_paths=PackedStringArray("window")]
 custom_minimum_size = Vector2(28, 0)
 layout_mode = 2
 tooltip_text = "Opens settings menu."
@@ -389,7 +399,7 @@ expand_icon = true
 script = ExtResource("32_mmy12")
 window = NodePath("Window")
 
-[node name="Window" parent="Interface/Top Bar/MarginContainer/Right/Settings" unique_id=874625055 instance=ExtResource("33_25o3l")]
+[node name="Window" parent="Interface/Top Bar/MarginContainer/HBoxContainer/Right/Settings" unique_id=874625055 instance=ExtResource("33_25o3l")]
 visible = false
 
 [node name="Search" type="LineEdit" parent="Interface/Top Bar" unique_id=125845047]
@@ -936,7 +946,7 @@ tooltip = "simplesound"
 icon = ExtResource("54_lfg21")
 menu = NodePath("PopupMenu")
 script = ExtResource("55_y62dl")
-tool_list = NodePath("../../Interface/Top Bar/MarginContainer/Right/List")
+tool_list = NodePath("../../Interface/Top Bar/MarginContainer/HBoxContainer/Right/List")
 
 [node name="PopupMenu" type="PopupMenu" parent="Globals/StatusIndicator" unique_id=251564623]
 prefer_native_menu = true
@@ -951,4 +961,4 @@ script = ExtResource("57_kef43")
 
 [node name="Zoomer" type="Node" parent="." unique_id=1869739749 node_paths=PackedStringArray("zoom_display")]
 script = ExtResource("58_e23wy")
-zoom_display = NodePath("../Interface/Top Bar/MarginContainer/Right/Text/Zoom amount")
+zoom_display = NodePath("../Interface/Top Bar/MarginContainer/HBoxContainer/Right/Text/Zoom amount")

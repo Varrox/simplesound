@@ -46,3 +46,5 @@ func disable_zoom_display():
 	tween = get_tree().create_tween()
 	tween.finished.connect(func(): zoom_display.hide())
 	tween.tween_property(zoom_display, "self_modulate", Color(1.0, 1.0, 1.0, 0.0), 1.0)
+	tween.tween_callback(func(): zoom_display.custom_minimum_size = zoom_display.size; zoom_display.text = "")
+	tween.tween_property(zoom_display, "custom_minimum_size:x", 0, 0.1)

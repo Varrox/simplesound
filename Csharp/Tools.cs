@@ -9,9 +9,12 @@ public class Tools {
     /// <returns>Timestamp</returns>
     public static string SecondsToTimestamp(float time) {
         int total_seconds = Mathf.RoundToInt(time);
-        int mins = total_seconds / 60;
+        int total_mins = total_seconds / 60;
+        bool hours = total_seconds / 3600 != 0;
+        
+        string mins = (total_mins % 60).ToString(hours ? "D2" : "");
 
-        return (total_seconds / 3600 != 0 ? $"{mins / 60}:" : "") + $"{mins % 60}:{total_seconds % 60:D2}";
+        return (hours ? $"{total_mins / 60}:" : "") + $"{mins}:{total_seconds % 60:D2}";
     }
 
     /// <summary>

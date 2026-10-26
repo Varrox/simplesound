@@ -2,11 +2,9 @@ TODO
 
 - Add sorting.
 - Add track / playlist position rearange.
-- Sleep timer.
 - Add optional compact form track displays without cover.
 - Optimize blur by not rendering new frames unless window size is changed or track changes.
 - Add CD read support (optional ripping too)
-- Make context menus so they instantiate instead of keep reference & make them children of popup windows.
 - Add track context menu to playing icon / name in bottom left corner
 - Add warnings to downloader
 - Standardize all input fields to be like settings
@@ -28,6 +26,8 @@ TODO
 
 FINISHED
 
+- Make context menus so they instantiate instead of keep reference & make them children of popup windows.
+- Sleep timer.
 - Remove ‘Cloud’ options for now as there is no good solution for cloud without requiring the user to set up a server.
 - Fix track display to cut off long titles
 - Rework how importing is done (two types, playlist file being added to list, zip file with playlist file being unzipped into appdata)

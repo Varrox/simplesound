@@ -5,6 +5,8 @@ public partial class ContextMenuButton : MenuButton {
 		ApplicationManager.ApplyPopupMenuStyle(GetPopup());
         GetPopup().HideOnCheckableItemSelection = false;
 
+        ButtonMask = MouseButtonMask.Left | MouseButtonMask.Right;
+
         GetPopup().IdPressed += _ItemPressed;
 	}
 
