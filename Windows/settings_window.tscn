@@ -1,10 +1,8 @@
 [gd_scene format=3 uid="uid://cn1tw3g51dn0c"]
 
 [ext_resource type="Script" uid="uid://lbhqgj6ahfub" path="res://Csharp/Windows/Settings.cs" id="1_c0o00"]
-[ext_resource type="Script" uid="uid://b85d04ls7d2ww" path="res://GDScript/version_display.gd" id="2_c0o00"]
-[ext_resource type="Script" uid="uid://lbv20vk1ksc2" path="res://GDScript/copy_system_info.gd" id="10_3eler"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7l07q"]
+[ext_resource type="Script" uid="uid://0uihglatqjna" path="res://Csharp/UI/Buttons/SourceButton.cs" id="2_y72ja"]
+[ext_resource type="Script" uid="uid://butttpslokrhq" path="res://Csharp/UI/Buttons/CopySystemInfo.cs" id="3_y72ja"]
 
 [node name="Window" type="Window" unique_id=874625055 node_paths=PackedStringArray("settings_container", "tabs_container", "close_menu")]
 oversampling_override = 1.0
@@ -86,16 +84,12 @@ theme_override_constants/separation = 10
 [node name="LinkButton" type="LinkButton" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=69504489]
 layout_mode = 2
 size_flags_vertical = 4
-tooltip_text = "Opens the page to simplesound's source code in browser."
-theme_override_colors/font_color = Color(0.45064825, 0.4506483, 0.45064813, 1)
-theme_override_styles/focus = SubResource("StyleBoxEmpty_7l07q")
-uri = "https://github.com/Varrox/simplesound"
-script = ExtResource("2_c0o00")
+script = ExtResource("2_y72ja")
 
 [node name="Button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=653522616]
 layout_mode = 2
 text = "Copy System Info"
-script = ExtResource("10_3eler")
+script = ExtResource("3_y72ja")
 
 [node name="Close" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1390632733]
 layout_mode = 2

@@ -5,7 +5,9 @@ public struct Constants {
     public static readonly string[] DOWNLOAD_FORMATS = ["mp3", "wav"];
     public static readonly string[] PLAYABLE_FORMATS = ["mp3", "wav", "ogg"];
     
+    public const string SOURCE = "https://github.com/Varrox/simplesound";
     public const string LATEST_RELEASE = "https://api.github.com/repos/Varrox/simplesound/releases/latest";
+    
     public const char DOT = '\u00b7';
 
     public const int SPECTRUM_ANALIZER_IDX = 0;

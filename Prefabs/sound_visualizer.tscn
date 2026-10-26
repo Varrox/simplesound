@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cqa0miuyddnkx"]
 
-[ext_resource type="Script" uid="uid://c5sckwqxlg2v4" path="res://GDScript/sound_visualizer.gd" id="1_66esn"]
+[ext_resource type="Script" uid="uid://dq5cev1gx7701" path="res://Csharp/UI/SoundVisualizer.cs" id="1_81fw2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ibk32"]
 bg_color = Color(1, 1, 1, 1)
@@ -23,7 +23,7 @@ offset_bottom = 3.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-script = ExtResource("1_66esn")
+script = ExtResource("1_81fw2")
 min_height = 3.5
 bars = [NodePath("ColorRect"), NodePath("ColorRect2"), NodePath("ColorRect3"), NodePath("ColorRect4"), NodePath("ColorRect5"), NodePath("ColorRect6")]
 
