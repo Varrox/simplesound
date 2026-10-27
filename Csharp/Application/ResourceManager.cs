@@ -14,6 +14,11 @@ public record ResourceManager {
         return resources[resource_name] as PackedScene;
     }
 
+    public Shader GetShaderResource(StringName resource_name) {
+        if (resources == null || !resources.ContainsKey(resource_name) || resources[resource_name] is not Shader) return null;
+        return resources[resource_name] as Shader;
+    }
+
     public void SetResource(StringName name, Resource resource) {
         resources.Add(name, resource);
     }

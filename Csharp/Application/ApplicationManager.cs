@@ -258,6 +258,11 @@ public partial class ApplicationManager : SceneTree {
         return resource_manager.GetSceneResource(name);
     }
 
+    public static Shader GetShaderResource(StringName name) {
+        if (resource_manager == null) return null;
+        return resource_manager.GetShaderResource(name);
+    }
+
     public static Color GetThemeColor(StringName name) {
         if (theme == null) return Colors.White;
         return theme.GetColor(name, Constants.THEME_TYPE);
