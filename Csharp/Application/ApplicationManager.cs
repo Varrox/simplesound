@@ -228,6 +228,8 @@ public partial class ApplicationManager : SceneTree {
     private ResourceManager _LoadResourceManager() {
         ResourceManager resource_manager = new ResourceManager();
 
+        // Scenes
+
         resource_manager.SetResource("sound_visualizer", GD.Load<PackedScene>("res://Prefabs/sound_visualizer.tscn"));
 
         resource_manager.SetResource("playlist_display", GD.Load<PackedScene>("res://Prefabs/playlist_display.tscn"));
@@ -244,6 +246,11 @@ public partial class ApplicationManager : SceneTree {
         resource_manager.SetResource("download_window", GD.Load<PackedScene>("res://Windows/Downloading/download_window.tscn"));
         
         resource_manager.SetResource("settings_window", GD.Load<PackedScene>("res://Windows/settings_window.tscn"));
+
+        // Shaders
+
+        resource_manager.SetResource("transition_blit", GD.Load<Shader>("res://Styling/Shaders/transition_blit.gdshader"));
+        resource_manager.SetResource("blur_blit", GD.Load<Shader>("res://Styling/Shaders/blur_blit.gdshader"));
 
         return resource_manager;
     }
