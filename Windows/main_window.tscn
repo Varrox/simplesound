@@ -12,9 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://dgqxvsk1bwyga" path="res://Icons/SVG/plus.svg" id="10_gjyis"]
 [ext_resource type="Texture2D" uid="uid://cnygllcx1qoyc" path="res://Icons/SVG/search.svg" id="10_ns1th"]
 [ext_resource type="Script" uid="uid://ddkuen8ursg0q" path="res://Csharp/UI/Context Menus/AddPlaylist.cs" id="11_xrbbi"]
-[ext_resource type="PackedScene" uid="uid://5kfxiu06xug0" path="res://Windows/playlist_creator_window.tscn" id="12_gjyis"]
 [ext_resource type="Script" uid="uid://dcnfao6qa81tk" path="res://Csharp/UI/Containers/PlaylistsVisualizer.cs" id="12_jnr5d"]
-[ext_resource type="PackedScene" uid="uid://qe17cpkc3gqr" path="res://Prefabs/playlist_display.tscn" id="13_ns1th"]
 [ext_resource type="Script" uid="uid://bgymt3f23woi7" path="res://Csharp/UI/Containers/TracksVisualizer.cs" id="15_btqdu"]
 [ext_resource type="PackedScene" uid="uid://kjaecy3cmwvl" path="res://Prefabs/track_display.tscn" id="16_ns1th"]
 [ext_resource type="StyleBox" uid="uid://bhcyqvvim6l5e" path="res://Styling/Rounded Corners.tres" id="17_0xq2a"]
@@ -25,7 +23,6 @@
 [ext_resource type="Script" uid="uid://bag5mx17s8q1c" path="res://Csharp/UI/Buttons/Appdata.cs" id="23_f8opk"]
 [ext_resource type="Texture2D" uid="uid://ynqg27jlotl6" path="res://Icons/SVG/folder.svg" id="24_cq8g2"]
 [ext_resource type="Script" uid="uid://d0tve0wh2kxhq" path="res://Csharp/UI/Buttons/DownloadWindowOpener.cs" id="24_o03o1"]
-[ext_resource type="PackedScene" uid="uid://da3r1vmve1qwd" path="res://Windows/stream_display_window.tscn" id="26_3edd3"]
 [ext_resource type="Texture2D" uid="uid://cb0yjhel4cdr5" path="res://Icons/SVG/download.svg" id="27_ns1th"]
 [ext_resource type="Script" uid="uid://gwm4ru46vy21" path="res://Csharp/UI/Buttons/Update.cs" id="28_3ax07"]
 [ext_resource type="Texture2D" uid="uid://cr6152637qeey" path="res://Icons/SVG/hamburger.svg" id="29_2wbij"]
@@ -45,9 +42,7 @@
 [ext_resource type="Texture2D" uid="uid://jqnfgusrehqq" path="res://Icons/SVG/un_muted.svg" id="42_2o8nl"]
 [ext_resource type="Script" uid="uid://c5ep0n80r2l8p" path="res://Csharp/UI/Buttons/AttributeEditorOpener.cs" id="42_3aot7"]
 [ext_resource type="Script" uid="uid://ba0kdfmjh8445" path="res://Csharp/Application/Globals.cs" id="46_y0j44"]
-[ext_resource type="PackedScene" uid="uid://bw078i5dk5ff4" path="res://Prefabs/confirmation_window.tscn" id="50_c27js"]
 [ext_resource type="PackedScene" uid="uid://dle5y658wmx03" path="res://Windows/attribute_editor_window.tscn" id="52_vsj6c"]
-[ext_resource type="PackedScene" uid="uid://djve16b56k6h0" path="res://Windows/Downloading/download_window.tscn" id="53_7surn"]
 [ext_resource type="Texture2D" uid="uid://bdbco8a0mnjn6" path="res://Icons/Logos/logotrans.png" id="54_lfg21"]
 [ext_resource type="Script" uid="uid://bmgcpmp5cfuwy" path="res://Csharp/Application/Tray.cs" id="55_y62dl"]
 [ext_resource type="Script" uid="uid://dn1xjyy7q4ft5" path="res://Csharp/Application/Discord.cs" id="57_kef43"]
@@ -316,7 +311,6 @@ text = "Downloader"
 icon = ExtResource("27_ns1th")
 expand_icon = true
 script = ExtResource("24_o03o1")
-download_window_template = ExtResource("53_7surn")
 
 [node name="Right" type="HBoxContainer" parent="Interface/Top Bar/MarginContainer/HBoxContainer" unique_id=1972233890]
 layout_mode = 2
@@ -360,7 +354,6 @@ icon = ExtResource("29_2wbij")
 flat = false
 expand_icon = true
 script = ExtResource("30_xrbbi")
-streamer_display_template = ExtResource("26_3edd3")
 background_texture_rect = NodePath("../../../../../../Background/Image")
 text_container = NodePath("../Text")
 
@@ -479,7 +472,6 @@ flat = false
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("11_xrbbi")
-create_new_playlist_template = ExtResource("12_gjyis")
 
 [node name="HSeparator2" type="HSeparator" parent="Interface/Content/Side Panel/Open/Open" unique_id=659545680]
 layout_mode = 2
@@ -513,7 +505,6 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/focus = SubResource("StyleBoxEmpty_facbu")
 script = ExtResource("12_jnr5d")
-template = ExtResource("13_ns1th")
 container = NodePath("VBoxContainer")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Interface/Content/Side Panel/Open/Open/Playlists" unique_id=663656003]
@@ -548,7 +539,6 @@ flat = false
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("11_xrbbi")
-create_new_playlist_template = ExtResource("12_gjyis")
 
 [node name="HSeparator" type="HSeparator" parent="Interface/Content/Side Panel/Open/Collapsed" unique_id=765403374]
 layout_mode = 2
@@ -573,8 +563,6 @@ track_count_label = NodePath("Container/Top card/Track count")
 item_template = ExtResource("16_ns1th")
 parent_container = NodePath("Container")
 item_container = NodePath("Container/VBoxContainer")
-total_items = null
-item_height = null
 
 [node name="Container" type="VBoxContainer" parent="Interface/Content/Tracks/Track Display" unique_id=933878103]
 layout_mode = 2
@@ -886,7 +874,6 @@ text = "0:00"
 [node name="Globals" type="Node" parent="." unique_id=71517921 node_paths=PackedStringArray("_attribute_editor")]
 script = ExtResource("46_y0j44")
 _attribute_editor = NodePath("AttributeEditor")
-_confirmation_window = ExtResource("50_c27js")
 
 [node name="AttributeEditor" parent="Globals" unique_id=1605960294 instance=ExtResource("52_vsj6c")]
 visible = false

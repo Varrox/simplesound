@@ -2,7 +2,6 @@ using Godot;
 using Godot.Collections;
 
 public partial class PlaylistsVisualizer : ScrollContainer {
-	[Export] public PackedScene template;
     [Export] public VBoxContainer container;
 
     public Array<PlaylistDisplay> playlist_displays = new Array<PlaylistDisplay>();
@@ -15,7 +14,7 @@ public partial class PlaylistsVisualizer : ScrollContainer {
     }
 
     public void LoadPlaylist(int i) {
-        PlaylistDisplay playlist_display = template.Instantiate() as PlaylistDisplay;
+        PlaylistDisplay playlist_display = (PlaylistDisplay)ApplicationManager.GetSceneResource("playlist_display").Instantiate();
         container.AddChild(playlist_display);
         playlist_displays.Add(playlist_display);
 

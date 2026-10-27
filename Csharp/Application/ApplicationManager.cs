@@ -240,7 +240,9 @@ public partial class ApplicationManager : SceneTree {
         
         resource_manager.SetResource("stream_display_window", GD.Load<PackedScene>("res://Windows/stream_display_window.tscn"));
         
+        resource_manager.SetResource("download_playlist_display", GD.Load<PackedScene>("res://Windows/Downloading/download_playlist_display.tscn"));
         resource_manager.SetResource("download_window", GD.Load<PackedScene>("res://Windows/Downloading/download_window.tscn"));
+        
         resource_manager.SetResource("settings_window", GD.Load<PackedScene>("res://Windows/settings_window.tscn"));
 
         return resource_manager;

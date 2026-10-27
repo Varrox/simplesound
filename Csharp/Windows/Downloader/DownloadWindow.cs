@@ -5,7 +5,6 @@ using System.IO;
 public partial class DownloadWindow : EditorWindow {
     [Export] public Button no_playlist;
     [Export] public VBoxContainer playlist_container, link_container;
-    [Export] public PackedScene playlist_display;
     [Export] public ThemeLineEdit link;
     [Export] public Button add_link, download, close;
 
@@ -62,7 +61,7 @@ public partial class DownloadWindow : EditorWindow {
 
         for(int i = 0; i < Main.playlists.Count; i++)
         {
-            DownloadPlaylistDisplay display = playlist_display.Instantiate() as DownloadPlaylistDisplay;
+            DownloadPlaylistDisplay display = (DownloadPlaylistDisplay)ApplicationManager.GetSceneResource("download_playlist_display").Instantiate();
             playlist_container.AddChild(display);
             display.Init(this, Main.playlists[i], i);
         }

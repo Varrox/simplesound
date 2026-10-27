@@ -4,8 +4,7 @@ using System.Collections.Generic;
 public partial class TracksVisualizer : CarouselScrollContainer {
     [Export] public TextureRect cover;
     
-    [Export] public Label playlist_name_label;
-    [Export] public Label track_count_label;
+    [Export] public Label playlist_name_label, track_count_label;
 
     private int _current_playlist;
 
@@ -19,6 +18,8 @@ public partial class TracksVisualizer : CarouselScrollContainer {
     }
 
     public override void _Ready() {
+        item_template = ApplicationManager.GetSceneResource("track_display");
+
         base._Ready();
 
         item_height = 60;

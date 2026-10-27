@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://ddqjqicca0ftd" path="res://Csharp/Windows/Downloader/DownloadWindow.cs" id="1_v3qo6"]
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Styling/Fonts/DefaultFont.tres" id="2_v3qo6"]
 [ext_resource type="StyleBox" uid="uid://bw4kvok8cf77w" path="res://Styling/Selectables/radio_normal.tres" id="4_ec5im"]
-[ext_resource type="PackedScene" uid="uid://ccu57wwy5vwng" path="res://Windows/Downloading/download_playlist_display.scn" id="4_o2q55"]
 [ext_resource type="StyleBox" uid="uid://d05hxmlaqj0qh" path="res://Styling/Selectables/radio_hover.tres" id="5_gftam"]
 [ext_resource type="Script" uid="uid://ckpanpt3fty8d" path="res://Csharp/UI/Default Node Extentions/ThemeLineEdit.cs" id="8_1qv4f"]
 
@@ -27,7 +26,6 @@ script = ExtResource("1_v3qo6")
 no_playlist = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer2/ScrollContainer/VBoxContainer/None")
 playlist_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer2/ScrollContainer/VBoxContainer")
 link_container = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/Downloading/Display links/MarginContainer/ScrollContainer/Link Container")
-playlist_display = ExtResource("4_o2q55")
 link = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/Downloading/Add Link/Link")
 add_link = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/Downloading/Add Link/Add")
 download = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/Downloading/Download")
