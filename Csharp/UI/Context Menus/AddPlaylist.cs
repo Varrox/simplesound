@@ -1,11 +1,8 @@
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using Godot;
 
 public partial class AddPlaylist : ContextMenuButton {
-	[Export] public PackedScene create_new_playlist_template;
-
 	public const int SEP_1 = 2;
 
 	public const int CREATE_NEW_PLAYLIST = 0, IMPORT_PLAYLIST_FILE = 2, IMPORT_PLAYLIST_ZIP = 3;
@@ -48,7 +45,7 @@ public partial class AddPlaylist : ContextMenuButton {
 	public void _OpenPlaylistCreator() {
 		Main.instance.Pause();
 		
-		PlaylistCreator playlist_creator = (PlaylistCreator)create_new_playlist_template.Instantiate();
+		PlaylistCreator playlist_creator = (PlaylistCreator)ApplicationManager.GetSceneResource("playlist_creator_window").Instantiate();
 		playlist_creator.Visible = false;
 
 		GetTree().Root.AddChild(playlist_creator);

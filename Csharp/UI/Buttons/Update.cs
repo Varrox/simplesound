@@ -120,7 +120,7 @@ public partial class Update : Button {
 
         // Restart.
 
-        ConfirmationWindow confirmation = (ConfirmationWindow)Globals.confirmation_window.Instantiate();
+        ConfirmationWindow confirmation = (ConfirmationWindow)ApplicationManager.GetSceneResource("confirmation_window").Instantiate();
 
         confirmation.message = $"Restart {ApplicationManager.SOFTWARE_NAME}?";
         confirmation.accept_text = "Yes";

@@ -1,7 +1,6 @@
 using Godot;
 
 public partial class ToolList : ContextMenuButton {
-    [Export] public PackedScene streamer_display_template;
     [Export] public TextureRect background_texture_rect;
     [Export] public HBoxContainer text_container;
 
@@ -151,7 +150,7 @@ public partial class ToolList : ContextMenuButton {
 
     private void _ToggleStreamDisplay() {
 		if (IsStreamDisplayOpen()) { 
-			_streamer_display = streamer_display_template.Instantiate() as StreamDisplay;
+			_streamer_display = (StreamDisplay)ApplicationManager.GetSceneResource("streamer_display_window").Instantiate();
 			GetTree().CurrentScene.AddChild(_streamer_display);
 
             _streamer_display.background_texture_rect.Texture = background_texture_rect.Texture;

@@ -21,6 +21,7 @@ public partial class ApplicationManager : SceneTree {
     private static List<Action> _focus_exited_actions = new List<Action>();
 
     public static Theme theme;
+    public static ResourceManager resource_manager;
 
     public static SaveData save_data;
 
@@ -32,6 +33,7 @@ public partial class ApplicationManager : SceneTree {
         save_data = SaveData.GetSaveData();
 
         theme = _LoadTheme();
+        resource_manager = _LoadResourceManager();
 
         Root.MinSize = _main_window_minimum_size;
         Root.CloseRequested += QuitProgram;
@@ -221,6 +223,37 @@ public partial class ApplicationManager : SceneTree {
         theme_resource.SetStylebox("context_menu_panel_stylebox", Constants.THEME_TYPE, GD.Load<StyleBox>("res://Styling/context_panel.tres"));
         
         return theme_resource;
+    }
+
+    private ResourceManager _LoadResourceManager() {
+        ResourceManager resource_manager = new ResourceManager();
+
+        resource_manager.SetResource("sound_visualizer", GD.Load<PackedScene>("res://Prefabs/sound_visualizer.tscn"));
+
+        resource_manager.SetResource("playlist_display", GD.Load<PackedScene>("res://Prefabs/playlist_display.tscn"));
+        resource_manager.SetResource("track_display", GD.Load<PackedScene>("res://Prefabs/track_display.tscn"));
+
+        resource_manager.SetResource("confirmation_window", GD.Load<PackedScene>("res://Prefabs/confirmation_window.tscn"));
+
+        resource_manager.SetResource("playlist_creator_window", GD.Load<PackedScene>("res://Windows/playlist_creator_window.tscn"));
+        resource_manager.SetResource("metadata_editor_window", GD.Load<PackedScene>("res://attribute_editor_window.tscn"));
+        
+        resource_manager.SetResource("stream_display_window", GD.Load<PackedScene>("res://Windows/stream_display_window.tscn"));
+        
+        resource_manager.SetResource("download_window", GD.Load<PackedScene>("res://Windows/Downloading/download_window.tscn"));
+        resource_manager.SetResource("settings_window", GD.Load<PackedScene>("res://Windows/settings_window.tscn"));
+
+        return resource_manager;
+    }
+
+    public static Resource GetResource(StringName name) {
+        if (resource_manager == null) return null;
+        return resource_manager.GetResource(name);
+    }
+
+    public static PackedScene GetSceneResource(StringName name) {
+        if (resource_manager == null) return null;
+        return resource_manager.GetSceneResource(name);
     }
 
     public static Color GetThemeColor(StringName name) {

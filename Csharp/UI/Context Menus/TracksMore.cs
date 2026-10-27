@@ -170,7 +170,7 @@ public partial class TracksMore : ContextMenuButton {
     }
 
     public static void DeleteTrack(int playlist_index, int track_index, string track_name) {
-        ConfirmationWindow confirmation = (ConfirmationWindow)Globals.confirmation_window.Instantiate();
+        ConfirmationWindow confirmation = (ConfirmationWindow)ApplicationManager.GetSceneResource("confirmation_window").Instantiate();
 
         confirmation.message = $"Do you really want to delete track file '{track_name}'?";
         confirmation.accept_text = "Yes";
@@ -197,7 +197,7 @@ public partial class TracksMore : ContextMenuButton {
             return;
         }
 
-        ConfirmationWindow confirmation = (ConfirmationWindow)Globals.confirmation_window.Instantiate();
+        ConfirmationWindow confirmation = (ConfirmationWindow)ApplicationManager.GetSceneResource("confirmation_window").Instantiate();
 
         confirmation.message = $"Do you really want to remove track '{track_name}'?\n(This will not delete its file.)";
         confirmation.accept_text = "Yes";

@@ -1,10 +1,9 @@
 using Godot;
 
 public partial class DownloadWindowOpener : EditorWindowOpener {
-    [Export] public PackedScene download_window_template;
 
     public override void _Ready() {
-        DownloadWindow download_window = (DownloadWindow)download_window_template.Instantiate();
+        DownloadWindow download_window = (DownloadWindow)ApplicationManager.GetSceneResource("download_window").Instantiate();
         GetTree().Root.CallDeferred("add_child", download_window);
 
         download_window.Hide();
