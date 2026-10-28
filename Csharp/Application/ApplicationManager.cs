@@ -238,11 +238,11 @@ public partial class ApplicationManager : SceneTree {
         resource_manager.SetResource("confirmation_window", GD.Load<PackedScene>("res://Prefabs/confirmation_window.tscn"));
 
         resource_manager.SetResource("playlist_creator_window", GD.Load<PackedScene>("res://Windows/playlist_creator_window.tscn"));
-        resource_manager.SetResource("metadata_editor_window", GD.Load<PackedScene>("res://attribute_editor_window.tscn"));
+        resource_manager.SetResource("metadata_editor_window", GD.Load<PackedScene>("res://Windows/attribute_editor_window.tscn"));
         
         resource_manager.SetResource("stream_display_window", GD.Load<PackedScene>("res://Windows/stream_display_window.tscn"));
         
-        resource_manager.SetResource("download_playlist_display", GD.Load<PackedScene>("res://Windows/Downloading/download_playlist_display.tscn"));
+        resource_manager.SetResource("download_playlist_display", GD.Load<PackedScene>("res://Windows/Downloading/download_playlist_display.scn"));
         resource_manager.SetResource("download_window", GD.Load<PackedScene>("res://Windows/Downloading/download_window.tscn"));
         
         resource_manager.SetResource("settings_window", GD.Load<PackedScene>("res://Windows/settings_window.tscn"));
