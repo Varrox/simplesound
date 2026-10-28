@@ -13,6 +13,7 @@ public partial class Player : Node {
     [Export] public Label current_time_label, total_time_label, track_name_label, track_artist_label;
     [Export] public TextureRect track_cover_texture_rect;
     [Export] public SubViewport background_subviewport;
+    [Export] public BlitEffectRect background;
 
     private bool _setting_time;
 
@@ -212,6 +213,7 @@ public partial class Player : Node {
             track_cover_texture_rect.Texture = ApplicationManager.GetThemeIcon("default_cover_icon");
         }
 
+        
         background_subviewport.Set("target_texture", track_cover_texture_rect.Texture);
 
         total_time_label.Text = Tools.SecondsToTimestamp(track_length);

@@ -1,66 +1,111 @@
-using System.Collections.Generic;
 using Godot;
+using System.Collections.Generic;
+using System.Linq;
 
-public partial class Background : TextureRect {
-    private Dictionary<int, BlitEffect> effects;
-    private DrawableTexture2D drawable_texture;
+[GlobalClass]
+public partial class BlitEffectRect : TextureRect {
+    private Dictionary<int, BlitEffectLayer> _effect_layers;
+    private DrawableTexture2D _drawable_texture;
 
     private bool _queued_for_redraw;
 
     private Vector2 _last_size;
     private bool _last_visible;
 
+    private int[] _sorted_effects;
+
     public const DrawableTexture2D.DrawableFormat FORMAT = DrawableTexture2D.DrawableFormat.Rgbah;
 
+    private record BlitEffectLayer {
+        public int priority;
+        public bool visible;
+        public BlitEffect effect;
+
+        public bool is_shader { get { return effect != null && effect is ShaderBlitEffect; } }
+
+        public void TryRecompile() {
+            if (is_shader) {
+                (effect as ShaderBlitEffect).Recompile();
+            }
+        }
+    }
+
     public override void _Ready() {
-        effects = new Dictionary<int, BlitEffect>();
-        drawable_texture = new DrawableTexture2D();
+        _effect_layers = new Dictionary<int, BlitEffectLayer>();
+        _drawable_texture = new DrawableTexture2D();
 
-        TransitionBlitEffect gup = new TransitionBlitEffect();
-        gup.last_texture = GD.Load<Texture2D>("res://Icons/Default Covers/DefaultCover.png");
-        gup.new_texture = GD.Load<Texture2D>("res://Icons/Logos/logochrimis.png");
+        TransitionBlitEffect gup = new TransitionBlitEffect
+        {
+            last_texture = GD.Load<Texture2D>("res://Icons/Default Covers/DefaultCover.png"),
+            new_texture = GD.Load<Texture2D>("res://Icons/Logos/logochrimis.png"),
+            time = 0.0f
+        };
 
-        gup.time = 0f;
-
-        AppendEffect(gup);
-
-        AppendEffect(new BlurBlitEffect());
+        AppendEffect(gup, 0);
+        AppendEffect(new BlurBlitEffect(), 1);
 
         QueueRedrawBlits();
-        
-        Resized += QueueRedrawBlits;
-        Hidden += QueueRedrawBlits;
 
         _last_size = -Vector2.One;
         _last_visible = false;
     }
 
     public override void _Process(double delta) {
-        bool changed = !_last_visible || Size != _last_size;
+        if((!_last_visible || Size != _last_size) && Visible) {
+            QueueRedrawBlits();
 
-        if ((_queued_for_redraw || changed) && Visible) {
             _last_visible = Visible;
             _last_size = Size;
+        }
 
+        if (_queued_for_redraw) {
             _queued_for_redraw = false;
             RedrawBlits();
         }
     }
 
-    public int AppendEffect(BlitEffect effect) {
-        int idx = effects.Count;
+    public int AppendEffect(BlitEffect effect, int priority = 0, bool visible = true) {
+        int idx = _effect_layers.Count;
 
-        while (effects.ContainsKey(idx)) idx++;
+        while (_effect_layers.ContainsKey(idx)) idx++;
 
-        effects.Add(idx, effect);
+        _effect_layers.Add(idx, new BlitEffectLayer { priority = priority, visible = visible, effect = effect});
+
+        QueuePriorityResort();
         RedrawBlits();
 
         return idx;
     }
 
     public void RemoveEffect(int effect_idx) {
-        effects.Remove(effect_idx);
+        if (!_effect_layers.ContainsKey(effect_idx))
+            return;
+
+        _effect_layers.Remove(effect_idx);
+
+        QueuePriorityResort();
         RedrawBlits();
+    }
+
+    public void ClearEffects() {
+        _effect_layers.Clear();
+        
+        QueuePriorityResort();
+        RedrawBlits();
+    }
+
+    public void SetEffectVisible(int effect_idx, bool is_visible) {
+        if (_effect_layers.ContainsKey(effect_idx))
+            _effect_layers[effect_idx].visible = is_visible;
+    }
+
+    public void SetEffectPriority(int effect_idx, int priority) {
+        if (_effect_layers.ContainsKey(effect_idx))
+            _effect_layers[effect_idx].priority = priority;
+    }
+
+    private void QueuePriorityResort() {
+        _sorted_effects = null;
     }
 
     public void QueueRedrawBlits() {
@@ -70,13 +115,19 @@ public partial class Background : TextureRect {
     public void RedrawBlits() {
         Rect2I full_rect = new Rect2I(0, 0, (Vector2I)Size);
 
-        drawable_texture.Setup(full_rect.Size.X, full_rect.Size.Y, FORMAT);
+        _drawable_texture.Setup(full_rect.Size.X, full_rect.Size.Y, FORMAT);
 
-        foreach(int idx in effects.Keys) {
-            effects[idx].Blit(ref drawable_texture, full_rect);
+        if (_sorted_effects == null) {
+            _sorted_effects = _effect_layers.OrderBy(k => k.Value.priority).Select(v => v.Key).ToArray();
         }
 
-        Texture = drawable_texture;
+        foreach(int idx in _sorted_effects) {
+            if (_effect_layers[idx].visible) {
+                _effect_layers[idx].effect.Blit(ref _drawable_texture, full_rect);
+            }
+        }
+
+        Texture = _drawable_texture;
     }
 }
 
@@ -85,7 +136,7 @@ public interface BlitEffect {
 }
 
 public interface ShaderBlitEffect : BlitEffect {
-    
+    public void Recompile();
 }
 
 public class ImageBlitEffect : BlitEffect {
@@ -110,6 +161,10 @@ public class TransitionBlitEffect : ShaderBlitEffect {
         _blit_transition_material = new ShaderMaterial {
             Shader = _blit_transition_shader
         };
+    }
+
+    public void Recompile() {
+        _blit_transition_shader = GD.Load<Shader>(_blit_transition_shader.ResourcePath);
     }
 
     public void Blit(ref DrawableTexture2D drawable_texture, Rect2I full_rect) {
@@ -141,8 +196,12 @@ public class BlurBlitEffect : ShaderBlitEffect {
         vertical_drawable_texture = new DrawableTexture2D();
     }
 
+    public void Recompile() {
+        _blit_blur_shader = GD.Load<Shader>(_blit_blur_shader.ResourcePath);
+    }
+
     public void Blit(ref DrawableTexture2D drawable_texture, Rect2I full_rect) {
-        vertical_drawable_texture.Setup(full_rect.Size.X, full_rect.Size.Y, Background.FORMAT);
+        vertical_drawable_texture.Setup(full_rect.Size.X, full_rect.Size.Y, BlitEffectRect.FORMAT);
 
         _blit_blur_material.SetShaderParameter("blur_size", blur_size);
         _blit_blur_material.SetShaderParameter("dim", dim);

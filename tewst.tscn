@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ccxk0mku6dchm"]
 
-[ext_resource type="Script" uid="uid://c7o0wxqgwiqm0" path="res://Csharp/UI/Background.cs" id="1_mw7mu"]
+[ext_resource type="Script" uid="uid://cjec8h445h4vn" path="res://Csharp/UI/BlitEffectRect.cs" id="1_mw7mu"]
 
 [node name="Control" type="Control" unique_id=30858111]
 layout_mode = 3
