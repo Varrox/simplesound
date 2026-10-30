@@ -54,8 +54,8 @@ public partial class FloatInputField : InputField {
         base._Ready();
 
         _spin_box = new SpinBox {
-            Value = _value,
             Step = 0.01,
+            Value = _value,
             MinValue = _minimum_value,
             MaxValue = _maximum_value
         };

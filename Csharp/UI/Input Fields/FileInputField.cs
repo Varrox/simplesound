@@ -41,7 +41,7 @@ public partial class FileInputField : InputField {
             Icon = ApplicationManager.GetThemeIcon("folder_icon"),
             ExpandIcon = true,
             TooltipText = "Open file manager to select location.",
-            CustomMinimumSize = Vector2.One * 28
+            CustomMinimumSize = new Vector2(MINIMUM_HEIGHT, MINIMUM_HEIGHT)
         };
 
         AddChild(_file_select_button);

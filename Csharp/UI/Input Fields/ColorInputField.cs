@@ -37,7 +37,7 @@ public partial class ColorInputField : InputField {
 
         _theme_color_picker_button = new ThemeColorPickerButton {
             Color = _value,
-            CustomMinimumSize = new Vector2(84, 28)
+            CustomMinimumSize = new Vector2(MINIMUM_WIDTH * 3, MINIMUM_HEIGHT)
         };
 
         AddChild(_theme_color_picker_button);
