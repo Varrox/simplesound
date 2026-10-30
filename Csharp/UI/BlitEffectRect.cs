@@ -38,7 +38,7 @@ public partial class BlitEffectRect : TextureRect {
         {
             last_texture = GD.Load<Texture2D>("res://Icons/Default Covers/DefaultCover.png"),
             new_texture = GD.Load<Texture2D>("res://Icons/Logos/logochrimis.png"),
-            time = 0.0f
+            t_value = 0.0f
         };
 
         AppendEffect(gup, 0);
@@ -72,7 +72,7 @@ public partial class BlitEffectRect : TextureRect {
         _effect_layers.Add(idx, new BlitEffectLayer { priority = priority, visible = visible, effect = effect});
 
         QueuePriorityResort();
-        RedrawBlits();
+        QueueRedrawBlits();
 
         return idx;
     }
@@ -84,24 +84,36 @@ public partial class BlitEffectRect : TextureRect {
         _effect_layers.Remove(effect_idx);
 
         QueuePriorityResort();
-        RedrawBlits();
+        QueueRedrawBlits();
     }
 
     public void ClearEffects() {
         _effect_layers.Clear();
         
         QueuePriorityResort();
-        RedrawBlits();
+        QueueRedrawBlits();
     }
 
     public void SetEffectVisible(int effect_idx, bool is_visible) {
         if (_effect_layers.ContainsKey(effect_idx))
             _effect_layers[effect_idx].visible = is_visible;
+        
+        QueuePriorityResort();
+        QueueRedrawBlits();
     }
 
     public void SetEffectPriority(int effect_idx, int priority) {
         if (_effect_layers.ContainsKey(effect_idx))
             _effect_layers[effect_idx].priority = priority;
+        
+        QueuePriorityResort();
+        QueueRedrawBlits();
+    }
+
+    public BlitEffect GetEffect(int effect_idx) {
+        if (_effect_layers.ContainsKey(effect_idx))
+            return _effect_layers[effect_idx].effect;
+        return null;
     }
 
     private void QueuePriorityResort() {
@@ -151,7 +163,7 @@ public class TransitionBlitEffect : ShaderBlitEffect {
     private static Shader _blit_transition_shader;
     private static ShaderMaterial _blit_transition_material;
 
-    public float time = 0.0f;
+    public float t_value = 0.0f;
 
     public Texture2D last_texture, new_texture;
 
@@ -171,7 +183,7 @@ public class TransitionBlitEffect : ShaderBlitEffect {
         _blit_transition_material.SetShaderParameter("last_texture", last_texture);
         _blit_transition_material.SetShaderParameter("new_texture", new_texture);
 
-        _blit_transition_material.SetShaderParameter("time", time);
+        _blit_transition_material.SetShaderParameter("time", t_value);
 
         drawable_texture.BlitRectMulti(full_rect, [last_texture, new_texture], [], null, 0, _blit_transition_material);
     }

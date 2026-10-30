@@ -2,6 +2,7 @@
 // I have modified it to be sample count independent, so you can get the same visuals with 16 samples as the original with 30 samples.
 
 shader_type texture_blit;
+render_mode blend_disabled;
 
 uniform sampler2D blur_texture:hint_blit_source0;
 
@@ -16,7 +17,7 @@ const int samples = 5;
 global uniform int blur_quality;
 
 float gaussian(float x, float sigma) {
-	return 1.0 / (2.0 * PI * sigma) * exp(-((pow2(x)) / (2.0 * sigma)));
+	return 1.0 / (TAU * sigma) * exp(-pow2(x) / (2.0 * sigma));
 }
 
 vec3 blur(vec2 screen_uv, sampler2D input_texture, float size) {
@@ -37,5 +38,5 @@ vec3 blur(vec2 screen_uv, sampler2D input_texture, float size) {
 }
 
 void blit() {
-	COLOR0 = vec4(blur(UV, blur_texture, blur_size / 2.0) * dim, 1.);
+	COLOR0 = vec4(blur(UV, blur_texture, blur_size / 2.0) * (horizontal ? dim : 1.0), 1.0);
 }

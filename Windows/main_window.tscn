@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://dshtlldgdpwlu" path="res://Styling/background_image_transition.gd" id="4_7kpk1"]
 [ext_resource type="Shader" uid="uid://bdi2g0ydm4uf7" path="res://Styling/Shaders/transition.gdshader" id="5_xqlq7"]
 [ext_resource type="Shader" uid="uid://6mp1f8uww708" path="res://Styling/Shaders/blur.gdshader" id="6_r776v"]
+[ext_resource type="Script" uid="uid://bmsq8qroocy22" path="res://Csharp/UI/Background.cs" id="7_j1bvx"]
 [ext_resource type="Texture2D" uid="uid://cksbdmhr2s8yy" path="res://Icons/Default Covers/DefaultCover.png" id="7_xvcl6"]
 [ext_resource type="Script" uid="uid://bemg4hrkjfrtx" path="res://GDScript/side_panel.gd" id="8_j6ftg"]
 [ext_resource type="Texture2D" uid="uid://pldqtuicj4ri" path="res://Icons/SVG/playlist.svg" id="9_xrbbi"]
@@ -193,6 +194,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Image" type="TextureRect" parent="Background" unique_id=212901943]
+visible = false
 material = SubResource("ShaderMaterial_n3cvr")
 layout_mode = 1
 anchors_preset = 15
@@ -213,7 +215,18 @@ grow_vertical = 2
 volume_db = -80.0
 expand = true
 
-[node name="Interface" type="VBoxContainer" parent="." unique_id=1529140980 node_paths=PackedStringArray("play_button", "next_button", "back_button", "loop_button", "shuffle_button", "progress_slider", "volume_slider", "mute_button", "current_time_label", "total_time_label", "track_name_label", "track_artist_label", "track_cover_texture_rect", "background_subviewport")]
+[node name="Background" type="TextureRect" parent="Background" unique_id=846968988]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+script = ExtResource("7_j1bvx")
+metadata/_custom_type_script = "uid://bmsq8qroocy22"
+
+[node name="Interface" type="VBoxContainer" parent="." unique_id=1529140980 node_paths=PackedStringArray("play_button", "next_button", "back_button", "loop_button", "shuffle_button", "progress_slider", "volume_slider", "mute_button", "current_time_label", "total_time_label", "track_name_label", "track_artist_label", "track_cover_texture_rect", "background_subviewport", "background")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -236,6 +249,7 @@ track_name_label = NodePath("Player/MarginContainer/Track Attributes/VBoxContain
 track_artist_label = NodePath("Player/MarginContainer/Track Attributes/VBoxContainer2/VBoxContainer/Artist")
 track_cover_texture_rect = NodePath("Player/MarginContainer/Track Attributes/VBoxContainer2/PanelContainer/Cover")
 background_subviewport = NodePath("../Background/SubViewport")
+background = NodePath("../Background/Background")
 
 [node name="Top Bar" type="ColorRect" parent="Interface" unique_id=1268311251]
 custom_minimum_size = Vector2(0, 52)
@@ -563,6 +577,8 @@ track_count_label = NodePath("Container/Top card/Track count")
 item_template = ExtResource("16_ns1th")
 parent_container = NodePath("Container")
 item_container = NodePath("Container/VBoxContainer")
+total_items = null
+item_height = null
 
 [node name="Container" type="VBoxContainer" parent="Interface/Content/Tracks/Track Display" unique_id=933878103]
 layout_mode = 2
