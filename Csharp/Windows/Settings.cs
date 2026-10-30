@@ -117,16 +117,14 @@ public partial class Settings : EditorWindow {
 
             // Highlight
 
-            _settings_tabs[tab].button.SelfModulate = ApplicationManager.GetThemeColor("highlight_color");
-            _settings_tabs[tab].label.AddThemeColorOverride("font_color", ApplicationManager.GetThemeColor("selected_font_color"));
-            _settings_tabs[tab].underline.Visible = true;
-
             for(int i = 0; i < _settings_tabs.Count; i++) {
-                if (i != tab && !_settings_tabs[i].disabled) {
-                    _settings_tabs[i].button.SelfModulate = Colors.White;
-                    _settings_tabs[i].label.AddThemeColorOverride("font_color", ApplicationManager.GetThemeColor("unselected_font_color"));
-                    _settings_tabs[i].underline.Visible = false;
-                }
+                if(_settings_tabs[i].disabled) continue;
+                bool is_tab = i == tab;
+
+                _settings_tabs[i].label.AddThemeColorOverride("font_color", ApplicationManager.GetThemeColor(is_tab ? "selected_font_color" : "unselected_font_color"));
+                _settings_tabs[i].button.SelfModulate = is_tab ? ApplicationManager.GetThemeColor("highlight_color") : Colors.White;
+                _settings_tabs[i].underline.Visible = is_tab;
+
             }
         }
         else GD.PrintErr($"Unable to select settings tab \'{tab}\'");
@@ -138,92 +136,49 @@ public partial class Settings : EditorWindow {
         }
     }
 
-    public void ClearResetButton(HBoxContainer container) { // Delete Reset button(s)
-        foreach (Node node in container.GetChildren()) {
-            if (node is Button && node.HasMeta("reset")) {
-                node.QueueFree();
-            }
-        }
-    }
-
-    public void AddResetButton(HBoxContainer container, Action reset_value, Action apply_setting) {
-        Button button = new Button();
-        button.Icon = ApplicationManager.GetThemeIcon("reload_icon");
-        button.ExpandIcon = true;
-
-        container.AddChild(button);
-        button.SetMeta("reset", true);
-        button.CustomMinimumSize = Vector2.One * 28;
-        button.ButtonUp += () => { reset_value(); button.QueueFree(); apply_setting(); };
-    }
-
-    public HBoxContainer CreateSettingsItem(string full_name, string tooltip_text) {
-        HBoxContainer container = new HBoxContainer();
-        settings_container.AddChild(container);
-
-        container.TooltipText = tooltip_text;
-
-        Label label = new Label();
-        label.Text = full_name + ":";
-        label.MouseFilter = Control.MouseFilterEnum.Ignore;
-
-        container.AddChild(label);
-
-        return container;
-    }
-
     public void AddSettingsTab(string section_name, Action add_settings, bool disabled = false, string tooltip_text = "") {
-        Button button = new Button();
+        Vector2 button_size = new Vector2(SETTINGS_TAB_SIZE_X + LABEL_PADDING, SETTINGS_TAB_SIZE_Y + LABEL_PADDING);
+        
+        Button button = new Button
+        {
+            TooltipText = disabled ? "Disabled" : tooltip_text,
+            Size = button_size,
+            CustomMinimumSize = button_size,
+            Disabled = disabled
+        };
 
         tabs_container.AddChild(button);
 
-        Vector2 button_size = new Vector2(SETTINGS_TAB_SIZE_X + LABEL_PADDING, SETTINGS_TAB_SIZE_Y + LABEL_PADDING);
-        
-        button.CustomMinimumSize = button_size;
-
-        button.Disabled = disabled;
-
-        Label label = new Label();
-        label.Text = section_name;
+        Label label = new Label {
+            Text = section_name,
+            VerticalAlignment = VerticalAlignment.Center,
+            HorizontalAlignment = HorizontalAlignment.Center,
+            Size = button_size,
+            Position = Vector2.Zero,
+            CustomMaximumSize = button_size,
+            MouseFilter = Control.MouseFilterEnum.Ignore,
+        };
 
         button.AddChild(label);
-
-        label.Size = button_size;
-        label.Position = Vector2.Zero;
-        label.CustomMaximumSize = button_size;
+        
         label.SetAnchorsPreset(Control.LayoutPreset.FullRect);
+        label.AddThemeColorOverride("font_color", ApplicationManager.GetThemeColor(disabled ? "disabled_font_color" : "unselected_font_color"));
 
-        label.VerticalAlignment = VerticalAlignment.Center;
-        label.HorizontalAlignment = HorizontalAlignment.Center;
-
-        label.MouseFilter = Control.MouseFilterEnum.Ignore;
-
-        HSeparator underline = new HSeparator();
+        HSeparator underline = new HSeparator {
+            Size = button_size,
+            Position = Vector2.Zero,
+            CustomMaximumSize = button_size,
+            Visible = false,
+            SelfModulate = new Color(1f, 1f, 1f, 0.25f),
+            MouseFilter = Control.MouseFilterEnum.Ignore
+        };
 
         label.AddChild(underline);
 
-        underline.Size = button_size;
-        underline.Position = Vector2.Zero;
-        underline.CustomMaximumSize = button_size;
         underline.SetAnchorsPreset(Control.LayoutPreset.FullRect);
 
         underline.Size = new Vector2(button_size.X * (3.75f/4f), button_size.Y);
         underline.Position = new Vector2(button_size.X * (.25f/8f), button_size.Y * (.675f/2f));
-        
-        underline.SelfModulate = new Color(1f, 1f, 1f, 0.25f);
-
-        underline.Visible = false;
-
-        underline.MouseFilter = Control.MouseFilterEnum.Ignore;
-
-        if (disabled) {
-            button.TooltipText = "Disabled";
-            label.AddThemeColorOverride("font_color", ApplicationManager.GetThemeColor("disabled_font_color"));
-        }
-        else {
-            button.TooltipText = tooltip_text;
-            label.AddThemeColorOverride("font_color", ApplicationManager.GetThemeColor("unselected_font_color"));
-        }
 
         int tab_index = _settings_tabs.Count;
 
@@ -233,269 +188,175 @@ public partial class Settings : EditorWindow {
     }
 
     public void AddHeader(string header_title, string tooltip_text = "") {
-        HBoxContainer container = new HBoxContainer();
+        HBoxContainer container = new HBoxContainer {
+            CustomMinimumSize = Vector2.Down * 25,
+            TooltipText = tooltip_text
+        };
+
         settings_container.AddChild(container);
 
-        container.CustomMinimumSize = Vector2.Down * 25;
-        container.TooltipText = tooltip_text;
-
-        HSeparator l_h_separator = new HSeparator();
-        l_h_separator.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
-        l_h_separator.MouseFilter = Control.MouseFilterEnum.Ignore;
-
-        Label label = new Label();
-        label.Text = header_title;
-
-        HSeparator r_h_separator = new HSeparator();
-        r_h_separator.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
-        r_h_separator.MouseFilter = Control.MouseFilterEnum.Ignore;
+        HSeparator l_h_separator = new HSeparator {
+            SizeFlagsHorizontal = Control.SizeFlags.ExpandFill,
+            MouseFilter = Control.MouseFilterEnum.Ignore
+        };
 
         container.AddChild(l_h_separator);
+
+        Label label = new Label {
+            Text = header_title
+        };
+
         container.AddChild(label);
+
+        HSeparator r_h_separator = new HSeparator() {
+            SizeFlagsHorizontal = Control.SizeFlags.ExpandFill,
+            MouseFilter = Control.MouseFilterEnum.Ignore
+        };
+
         container.AddChild(r_h_separator);
     }
 
     public void AddIntSetting<T>(string full_name, T where, string instance_name, int default_value, int min_value = 0, int max_value = int.MaxValue, string tooltip_text = "") where T : ISettings {
         Type type = typeof(T);
 
-        HBoxContainer container = CreateSettingsItem(full_name, tooltip_text);
+        IntegerInputField input_field = new IntegerInputField {
+            full_name = full_name,
+            TooltipText = tooltip_text,
+            value = GetSetting<int>(where, type, instance_name),
+            default_value = default_value,
+            minimum_value = min_value,
+            maximum_value = max_value
+        };
 
-        SpinBox spin_box = new SpinBox();
-        int value = GetSetting<int>(where, type, instance_name);
-        spin_box.Value = value;
+        settings_container.AddChild(input_field);
 
-        spin_box.MinValue = min_value;
-        spin_box.MaxValue = max_value;
-
-        void ApplyInt() { ApplySetting(spin_box.Value, where, type, instance_name); }
-        void ResetInt() { spin_box.Value = default_value; }
-
-        spin_box.ValueChanged += (double new_value) => ValueChanged(container, new_value, default_value, ResetInt, ApplyInt);
-
-        container.AddChild(spin_box);
-
-        if (value != default_value) 
-            AddResetButton(container, ResetInt, ApplyInt);
+        input_field.ValueChanged += (int new_value) => ApplySetting(new_value, where, type, instance_name);
     }
 
     public void AddFloatSetting<T>(string full_name, T where, string instance_name, float default_value, float min_value = 0.0f, float max_value = float.PositiveInfinity, string tooltip_text = "") where T : ISettings {
         Type type = typeof(T);
 
-        HBoxContainer container = CreateSettingsItem(full_name, $"{tooltip_text} Value can range from {min_value} to {max_value}.");
+        FloatInputField input_field = new FloatInputField {
+            full_name = full_name,
+            TooltipText = $"{tooltip_text} Value can range from {min_value} to {max_value}.",
+            value = GetSetting<float>(where, type, instance_name),
+            default_value = default_value,
+            minimum_value = min_value,
+            maximum_value = max_value
+        };
 
-        SpinBox spin_box = new SpinBox();
-        float value = GetSetting<float>(where, type, instance_name);
-        spin_box.Step = 0.01;
-        spin_box.Value = value;
+        settings_container.AddChild(input_field);
 
-        spin_box.MinValue = min_value;
-        spin_box.MaxValue = max_value;
-
-        void ApplyFloat() { ApplySetting(spin_box.Value, where, type, instance_name); }
-        void ResetFloat() { spin_box.Value = default_value; }
-
-        spin_box.ValueChanged += (double new_value) => ValueChanged(container, new_value, default_value, ResetFloat, ApplyFloat);
-
-        container.AddChild(spin_box);
-
-        if (value != default_value) 
-            AddResetButton(container, ResetFloat, ApplyFloat);
+        input_field.ValueChanged += (float new_value) => ApplySetting(new_value, where, type, instance_name);
     }
 
     public void AddEnumSetting<T>(string full_name, T where, string instance_name, int default_value, string[] enum_values, string tooltip_text = "") where T : ISettings {
         Type type = typeof(T);
-        
-        HBoxContainer container = CreateSettingsItem(full_name, tooltip_text);
 
-        OptionButton option_button = new OptionButton();
+        EnumInputField input_field = new EnumInputField {
+            full_name = full_name,
+            TooltipText = tooltip_text,
+            value = GetSetting<int>(where, type, instance_name),
+            default_value = default_value,
+            options = enum_values
+        };
 
-        for (int i = 0; i < enum_values.Length; i++) {
-            option_button.GetPopup().AddItem(enum_values[i]);
-        }
+        settings_container.AddChild(input_field);
 
-        int value = GetSetting<int>(where, type, instance_name);
-        option_button.Select(value);
-
-        void ApplyEnum() { ApplySetting(option_button.Selected, where, type, instance_name); }
-        void ResetEnum() { option_button.Selected = default_value; }
-
-        option_button.ItemSelected += (long new_value) => ValueChanged(container, (int)new_value, default_value, ResetEnum, ApplyEnum);
-
-        container.AddChild(option_button);
-
-        if (value != default_value) 
-            AddResetButton(container, ResetEnum, ApplyEnum);
+        input_field.ValueChanged += (int new_value) => ApplySetting(new_value, where, type, instance_name);
     }
 
     public void AddEnumSetting<T, E>(string full_name, T where, string instance_name, E default_value, bool capitalize_values = true, string tooltip_text = "") where T : ISettings where E : struct, Enum {
         Type type = typeof(T);
+
+        EnumInputField input_field = EnumInputField.CreateFromEnum(
+            GetSetting<E>(where, type, instance_name), // Value
+            default_value, // Default Value
+            capitalize_values // Capitalize
+        );
         
-        HBoxContainer container = CreateSettingsItem(full_name, tooltip_text);
+        input_field.full_name = full_name;
+        input_field.TooltipText = tooltip_text;
 
-        OptionButton option_button = new OptionButton();
+        settings_container.AddChild(input_field);
 
-        string[] enum_value_names = Enum.GetNames(typeof(E));
-
-        for (int i = 0; i < enum_value_names.Length; i++) {
-            string value_name = enum_value_names[i].ToLower();
-            if (capitalize_values) value_name = value_name.Capitalize();
-            option_button.GetPopup().AddItem(value_name);
-        }
-
-        E value = GetSetting<E>(where, type, instance_name);
-        option_button.Select(Convert.ToInt32(value));
-
-        void ApplyEnum() { ApplySetting((E)Enum.ToObject(typeof(E), option_button.Selected), where, type, instance_name); }
-        void ResetEnum() { option_button.Selected = Convert.ToInt32(default_value); }
-
-        option_button.ItemSelected += (long new_value) => ValueChanged(container, (int)new_value, Convert.ToInt32(default_value), ResetEnum, ApplyEnum);
-
-        container.AddChild(option_button);
-
-        if (!value.Equals(default_value)) 
-            AddResetButton(container, ResetEnum, ApplyEnum);
+        input_field.ValueChanged += (int new_value) => ApplySetting((E)Enum.ToObject(typeof(E), new_value), where, type, instance_name);
     }
 
     public void AddBoolSetting<T>(string full_name, T where, string instance_name, bool default_value, string tooltip_text = "") where T : ISettings {
         Type type = typeof(T);
 
-        HBoxContainer container = CreateSettingsItem(full_name, tooltip_text);
+        BooleanInputField input_field = new BooleanInputField {
+            full_name = full_name,
+            TooltipText = tooltip_text,
+            value = GetSetting<bool>(where, type, instance_name),
+            default_value = default_value
+        };
 
-        CheckButton check_button = new CheckButton();
-        check_button.ButtonPressed = GetSetting<bool>(where, type, instance_name);
+        settings_container.AddChild(input_field);
 
-        void ApplyBool() { ApplySetting(check_button.ButtonPressed, where, type, instance_name); }
-        void ResetBool() { check_button.ButtonPressed = default_value; }
-
-        check_button.Pressed += () => ValueChanged(container, check_button.ButtonPressed, default_value, ResetBool, ApplyBool);
-
-        container.AddChild(check_button);
-
-        if (check_button.ButtonPressed != default_value)
-            AddResetButton(container, ResetBool, ApplyBool);
+        input_field.ValueChanged += (bool new_value) => ApplySetting(new_value, where, type, instance_name);
     }
 
     public void AddStringSetting<T>(string full_name, T where, string instance_name, string default_value, string tooltip_text = "") where T : ISettings {
         Type type = typeof(T);
 
-        HBoxContainer container = CreateSettingsItem(full_name, tooltip_text);
+        StringInputField input_field = new StringInputField {
+            full_name = full_name,
+            TooltipText = tooltip_text,
+            value = GetSetting<string>(where, type, instance_name),
+            default_value = default_value
+        };
 
-        ThemeLineEdit line_edit = new ThemeLineEdit();
-        line_edit.Text = GetSetting<string>(where, type, instance_name);
-        line_edit.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+        settings_container.AddChild(input_field);
 
-        void ApplyString() { ApplySetting(line_edit.Text, where, type, instance_name); }
-        void ResetString() { line_edit.Text = default_value; }
-
-        line_edit.TextChanged += (string new_value) => ValueChanged(container, new_value, default_value, ResetString, ApplyString);
-
-        container.AddChild(line_edit);
-
-        if (line_edit.Text != "") 
-            AddResetButton(container, ResetString, ApplyString);
+        input_field.ValueChanged += (string new_value) => ApplySetting(new_value, where, type, instance_name);
     }
 
     public void AddFileLocationSetting<T>(string full_name, T where, string instance_name, string tooltip_text = "") where T : ISettings {
         Type type = typeof(T);
 
-        HBoxContainer container = CreateSettingsItem(full_name, tooltip_text);
+        FileInputField input_field = new FileInputField {
+            full_name = full_name,
+            TooltipText = tooltip_text,
+            value = GetSetting<string>(where, type, instance_name)
+        };
 
-        ThemeLineEdit line_edit = new ThemeLineEdit();
-        line_edit.Text = GetSetting<string>(where, type, instance_name);
-        line_edit.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+        settings_container.AddChild(input_field);
 
-        Button file_select_button = new Button();
-        file_select_button.Icon = ApplicationManager.GetThemeIcon("folder_icon");
-        file_select_button.ExpandIcon = true;
-        file_select_button.TooltipText = "Open file manager to select location.";
-        file_select_button.CustomMinimumSize = Vector2.One * 28;
-
-        void ApplyFileLocation() { ApplySetting(line_edit.Text, where, type, instance_name); }
-        void ResetFileLocation() { line_edit.Text = ""; }
-
-        void FileLocation() {
-            ThemeFileDialog file_dialog = new ThemeFileDialog();
-            
-            AddChild(file_dialog);
-
-            file_dialog.SetFile();
-            file_dialog.Popup();
-
-            void SetFile(string file) {
-                line_edit.Text = file;
-                ValueChanged(container, file, "", ResetFileLocation, ApplyFileLocation);
-
-                Finish();
-            }
-
-            void Finish() {
-                file_dialog.FileSelected -= SetFile;
-                file_dialog.Canceled -= Finish;
-                
-                file_dialog.QueueFree();
-            }
-
-            file_dialog.FileSelected += SetFile;
-            file_dialog.Canceled += Finish;
-        }
-
-        file_select_button.ButtonUp += FileLocation;
-
-        line_edit.TextChanged += (string new_value) => ValueChanged(container, new_value, "", ResetFileLocation, ApplyFileLocation);
-
-        container.AddChild(line_edit);
-        container.AddChild(file_select_button);
-
-        if (line_edit.Text != "") 
-            AddResetButton(container, ResetFileLocation, ApplyFileLocation);
+        input_field.ValueChanged += (string new_value) => ApplySetting(new_value, where, type, instance_name);
     }
 
-    public void AddVector2Setting<T>(string full_name, T where, string instance_name, Vector2 default_value, string tooltip_text = "") where T : ISettings {
+    public void AddVector2Setting<T>(string full_name, T where, string instance_name, Vector2 default_value, Vector2 min_value, Vector2 max_value, string tooltip_text = "") where T : ISettings {
         Type type = typeof(T);
 
-        HBoxContainer container = CreateSettingsItem(full_name, tooltip_text);
+        Vector2InputField input_field = new Vector2InputField {
+            full_name = full_name,
+            TooltipText = tooltip_text,
+            value = GetSetting<Vector2>(where, type, instance_name),
+            default_value = default_value,
+            minimum_value = min_value,
+            maximum_value = max_value
+        };
 
-        SpinBox spin_box_x = new SpinBox(), spin_box_y = new SpinBox();
-        Vector2 value = GetSetting<Vector2>(where, type, instance_name);
+        settings_container.AddChild(input_field);
 
-        spin_box_x.Step = 0.01;
-        spin_box_x.Value = value.X;
-
-        spin_box_y.Step = 0.01;
-        spin_box_y.Value = value.Y;
-
-        void ApplyVector2() { ApplySetting(new Vector2((float)spin_box_x.Value, (float)spin_box_y.Value), where, type, instance_name); }
-        void ResetVector2() { spin_box_x.Value = default_value.X; spin_box_y.Value = default_value.Y; }
-
-        spin_box_x.ValueChanged += (double new_x_value) => ValueChanged(container, new Vector2((float)new_x_value, (float)spin_box_y.Value), default_value, ResetVector2, ApplyVector2);
-        spin_box_y.ValueChanged += (double new_y_value) => ValueChanged(container, new Vector2((float)spin_box_x.Value, (float)new_y_value), default_value, ResetVector2, ApplyVector2);
-
-        container.AddChild(spin_box_x);
-        container.AddChild(spin_box_y);
-
-        if (value != default_value) 
-            AddResetButton(container, ResetVector2, ApplyVector2);
+        input_field.ValueChanged += (Vector2 new_value) => ApplySetting(new_value, where, type, instance_name);
     }
 
     public void AddColorSetting<T>(string full_name, T where, string instance_name, Color default_value, string tooltip_text = "") where T : ISettings {
         Type type = typeof(T);
 
-        HBoxContainer container = CreateSettingsItem(full_name, tooltip_text);
+        ColorInputField input_field = new ColorInputField {
+            full_name = full_name,
+            TooltipText = tooltip_text,
+            value = Color.FromString(GetSetting<string>(where, type, instance_name) ?? "", default_value),
+            default_value = default_value
+        };
 
-        ThemeColorPickerButton color_picker_button = new ThemeColorPickerButton();
-        color_picker_button.Color = Color.FromString(GetSetting<string>(where, type, instance_name) ?? "", default_value);
+        settings_container.AddChild(input_field);
 
-        color_picker_button.CustomMinimumSize = new Vector2(84, 28);
-
-        void ApplyString() { ApplySetting(color_picker_button.Color.ToString(), where, type, instance_name); }
-        void ResetString() { color_picker_button.Color = default_value; }
-
-        color_picker_button.ColorChanged += (Color new_value) => ValueChanged(container, new_value, default_value, ResetString, ApplyString);
-
-        container.AddChild(color_picker_button);
-
-        if (color_picker_button.Text != "") 
-            AddResetButton(container, ResetString, ApplyString);
+        input_field.ValueChanged += (Color new_value) => ApplySetting(new_value, where, type, instance_name);
     }
 
     public void Open() {
@@ -511,29 +372,16 @@ public partial class Settings : EditorWindow {
         return (T)(type.GetField(name).GetValue(where));
     }
 
-    public void ValueChanged<T>(HBoxContainer container, T new_value, T default_value, Action reset_setting, Action apply_setting) {
-        ClearResetButton(container);
-
-        if(!new_value.Equals(default_value))
-            AddResetButton(container, reset_setting, apply_setting);
-
-        apply_setting();
-    }
-
-    public void ApplySetting(object value, ISettings where, Type type, string instance_name) {
-        SetSetting(ref where, type, instance_name, value);
-        where.ApplySettings();
-    }
-
-    public void SetSetting<T>(ref T obj, Type type, string instance_name, object value) where T : ISettings {
+    public void ApplySetting<T>(T value, ISettings where, Type type, string instance_name) {
         if (ApplicationManager.save_data == null) return;
 
         FieldInfo field = type.GetField(instance_name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
         
         if (field != null) {
-            field.SetValue(obj, Convert.ChangeType(value, field.FieldType));
+            field.SetValue(where, Convert.ChangeType(value, field.FieldType));
 
             ApplicationManager.save_data.Save();
+            where.ApplySettings();
         }
         else GD.PrintErr($"Settings Field not found. Unable to set setting \'{instance_name}\'");
     }

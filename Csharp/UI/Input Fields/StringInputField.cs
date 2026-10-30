@@ -26,7 +26,7 @@ public partial class StringInputField : InputField {
     private string _value, _default_value;
 
     [Signal]
-    public delegate void ValueChangedEventHandler(int new_value);
+    public delegate void ValueChangedEventHandler(string new_value);
 
     private ThemeLineEdit _theme_line_edit;
 

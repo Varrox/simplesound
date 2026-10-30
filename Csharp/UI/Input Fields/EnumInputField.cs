@@ -55,6 +55,8 @@ public partial class EnumInputField : InputField {
             _option_button.GetPopup().AddItem(_options[i]);
         }
 
+        _option_button.Select(value);
+
         AddChild(_option_button);
 
         _option_button.ItemSelected += (long new_value) => _ValueChanged((int)new_value, _default_value);

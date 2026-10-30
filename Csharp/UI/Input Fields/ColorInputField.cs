@@ -26,7 +26,7 @@ public partial class ColorInputField : InputField {
     private Color _value, _default_value;
 
     [Signal]
-    public delegate void ValueChangedEventHandler(int new_value);
+    public delegate void ValueChangedEventHandler(Color new_value);
 
     private ThemeColorPickerButton _theme_color_picker_button;
 

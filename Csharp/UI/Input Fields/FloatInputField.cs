@@ -55,7 +55,7 @@ public partial class FloatInputField : InputField {
 
         _spin_box = new SpinBox {
             Value = _value,
-            Step = 0.01f,
+            Step = 0.01,
             MinValue = _minimum_value,
             MaxValue = _maximum_value
         };
@@ -79,6 +79,6 @@ public partial class FloatInputField : InputField {
     }
 
     protected override bool _IsDefaultValue() {
-        return _value == _default_value;
+        return Mathf.IsEqualApprox(_value, _default_value, 0.005);
     }
 }

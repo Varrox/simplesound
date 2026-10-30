@@ -46,7 +46,7 @@ public partial class Vector2InputField : InputField {
     private Vector2 _value, _default_value, _minimum_value = Vector2.Zero, _maximum_value = new Vector2(float.PositiveInfinity, float.PositiveInfinity);
 
     [Signal]
-    public delegate void ValueChangedEventHandler(int new_value);
+    public delegate void ValueChangedEventHandler(Vector2 new_value);
 
     private SpinBox _spin_box_x, _spin_box_y;
 

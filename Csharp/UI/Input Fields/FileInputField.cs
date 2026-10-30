@@ -16,7 +16,7 @@ public partial class FileInputField : InputField {
     private string _value;
 
     [Signal]
-    public delegate void ValueChangedEventHandler(int new_value);
+    public delegate void ValueChangedEventHandler(string new_value);
 
     private ThemeLineEdit _theme_line_edit;
 
@@ -31,6 +31,7 @@ public partial class FileInputField : InputField {
 
         _theme_line_edit = new ThemeLineEdit {
             Text = _value,
+            PlaceholderText = "...",
             SizeFlagsHorizontal = SizeFlags.ExpandFill
         };
 
@@ -43,6 +44,7 @@ public partial class FileInputField : InputField {
             CustomMinimumSize = Vector2.One * 28
         };
 
+        AddChild(_file_select_button);
         _file_select_button.ButtonUp += OpenFileLocation;
 
         _theme_line_edit.TextChanged += (string new_value) => _ValueChanged(new_value, "");
