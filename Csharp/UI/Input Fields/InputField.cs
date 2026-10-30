@@ -31,6 +31,10 @@ public partial class InputField : HBoxContainer {
         
     }
 
+    protected virtual bool _IsDefaultValue() {
+        return true;
+    }
+
     protected void _AddResetButton() {
         _ClearResetButton();
 
@@ -44,8 +48,9 @@ public partial class InputField : HBoxContainer {
 
         void ResetButtonPressed() {
             _ResetToDefaultValue();
-            _ClearResetButton();
             _ApplyValue();
+            if (_IsDefaultValue())
+                _ClearResetButton();
         }
 
         _reset_button.ButtonUp += ResetButtonPressed;

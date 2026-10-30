@@ -1,7 +1,29 @@
 using Godot;
 
+[GlobalClass]
 public partial class StringInputField : InputField {
-    [Export] public string value, default_value;
+
+    [Export] public string value {
+        set {
+            _value = value;
+            if(!IsInsideTree()) return;
+            _theme_line_edit.Text = _value;
+            EmitSignal(SignalName.ValueChanged, _value);
+        }
+        get { return _value; }
+    }
+
+    [Export] public string default_value {
+        set {
+            _default_value = value;
+            if(!IsInsideTree()) return;
+            if (!_IsDefaultValue()) _AddResetButton();
+            else _ClearResetButton();
+        }
+        get { return _default_value; }
+    }
+
+    private string _value, _default_value;
 
     [Signal]
     public delegate void ValueChangedEventHandler(int new_value);
@@ -14,24 +36,28 @@ public partial class StringInputField : InputField {
         base._Ready();
 
         _theme_line_edit = new ThemeLineEdit {
-            Text = value
+            Text = _value
         };
 
         AddChild(_theme_line_edit);
 
-        _theme_line_edit.TextChanged += (string new_value) => _ValueChanged(new_value, default_value);
+        _theme_line_edit.TextChanged += (string new_value) => _ValueChanged(new_value, _default_value);
 
-        if (value != default_value) 
+        if (!_IsDefaultValue()) 
             _AddResetButton();
     }
 
     protected override void _ApplyValue() {
-        value = _theme_line_edit.Text;
-        EmitSignal(SignalName.ValueChanged, _theme_line_edit.Text);
+        _value = _theme_line_edit.Text;
+        EmitSignal(SignalName.ValueChanged, _value);
     }
 
     protected override void _ResetToDefaultValue() {
-        value = default_value;
-        _theme_line_edit.Text = default_value;
+        _value = _default_value;
+        _theme_line_edit.Text = _default_value;
+    }
+
+    protected override bool _IsDefaultValue() {
+        return _value == _default_value;
     }
 }

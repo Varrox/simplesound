@@ -1,7 +1,19 @@
 using Godot;
 
+[GlobalClass]
 public partial class FileInputField : InputField {
-    [Export] public string value;
+
+    [Export] public string value {
+        set {
+            _value = value;
+            if(!IsInsideTree()) return;
+            _theme_line_edit.Text = _value;
+            EmitSignal(SignalName.ValueChanged, _value);
+        }
+        get { return _value; }
+    }
+
+    private string _value;
 
     [Signal]
     public delegate void ValueChangedEventHandler(int new_value);
@@ -18,7 +30,7 @@ public partial class FileInputField : InputField {
         base._Ready();
 
         _theme_line_edit = new ThemeLineEdit {
-            Text = value,
+            Text = _value,
             SizeFlagsHorizontal = SizeFlags.ExpandFill
         };
 
@@ -35,18 +47,22 @@ public partial class FileInputField : InputField {
 
         _theme_line_edit.TextChanged += (string new_value) => _ValueChanged(new_value, "");
 
-        if (value != "")
+        if (!_IsDefaultValue())
             _AddResetButton();
     }
 
     protected override void _ApplyValue() {
-        value = _theme_line_edit.Text;
-        EmitSignal(SignalName.ValueChanged, _theme_line_edit.Text);
+        _value = _theme_line_edit.Text;
+        EmitSignal(SignalName.ValueChanged, _value);
     }
 
     protected override void _ResetToDefaultValue() {
-        value = "";
+        _value = "";
         _theme_line_edit.Text = "";
+    }
+
+    protected override bool _IsDefaultValue() {
+        return _value == "";
     }
 
     public void OpenFileLocation() {

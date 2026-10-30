@@ -1,10 +1,50 @@
 using Godot;
 
+[GlobalClass]
 public partial class FloatInputField : InputField {
-    [Export] public float value, default_value, minimum_value = 0, maximum_value = float.PositiveInfinity;
+
+    [Export] public float value {
+        set {
+            _value = value;
+            if(!IsInsideTree()) return;
+            _spin_box.Value = _value;
+            EmitSignal(SignalName.ValueChanged, _value);
+        }
+        get { return _value; }
+    }
+
+    [Export] public float default_value {
+        set {
+            _default_value = value;
+            if(!IsInsideTree()) return;
+            if (!_IsDefaultValue()) _AddResetButton();
+            else _ClearResetButton();
+        }
+        get { return _default_value; }
+    }
+
+    [Export] public float minimum_value {
+        set {
+            _minimum_value = value;
+            if(!IsInsideTree()) return;
+            _spin_box.MinValue = _minimum_value;
+        }
+        get { return _minimum_value; }
+    }
+
+    [Export] public float maximum_value {
+        set {
+            _maximum_value = value;
+            if(!IsInsideTree()) return;
+            _spin_box.MaxValue = _maximum_value;
+        }
+        get { return _maximum_value; }
+    }
+
+    private float _value, _default_value, _minimum_value = 0, _maximum_value = float.PositiveInfinity;
 
     [Signal]
-    public delegate void ValueChangedEventHandler(int new_value);
+    public delegate void ValueChangedEventHandler(float new_value);
 
     private SpinBox _spin_box;
 
@@ -14,27 +54,31 @@ public partial class FloatInputField : InputField {
         base._Ready();
 
         _spin_box = new SpinBox {
-            Value = value,
+            Value = _value,
             Step = 0.01f,
-            MinValue = minimum_value,
-            MaxValue = maximum_value
+            MinValue = _minimum_value,
+            MaxValue = _maximum_value
         };
 
         AddChild(_spin_box);
 
-        _spin_box.ValueChanged += (double new_value) => _ValueChanged((float)new_value, default_value);
+        _spin_box.ValueChanged += (double new_value) => _ValueChanged((float)new_value, _default_value);
 
-        if (value != default_value) 
+        if (!_IsDefaultValue()) 
             _AddResetButton();
     }
 
     protected override void _ApplyValue() {
-        value = (float)_spin_box.Value;
-        EmitSignal(SignalName.ValueChanged, _spin_box.Value);
+        _value = (float)_spin_box.Value;
+        EmitSignal(SignalName.ValueChanged, _value);
     }
 
     protected override void _ResetToDefaultValue() {
-        value = default_value;
-        _spin_box.Value = default_value;
+        _value = _default_value;
+        _spin_box.Value = _default_value;
+    }
+
+    protected override bool _IsDefaultValue() {
+        return _value == _default_value;
     }
 }

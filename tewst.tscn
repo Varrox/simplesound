@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://ccxk0mku6dchm"]
 
 [ext_resource type="Script" uid="uid://cjec8h445h4vn" path="res://Csharp/UI/BlitEffectRect.cs" id="1_mw7mu"]
+[ext_resource type="Script" uid="uid://ba45ic1w0e0cu" path="res://Csharp/UI/Input Fields/FloatInputField.cs" id="2_0k4q2"]
+[ext_resource type="Script" uid="uid://cilngnsffjdgs" path="res://Csharp/UI/Input Fields/ColorInputField.cs" id="3_ciouk"]
 
 [node name="Control" type="Control" unique_id=30858111]
 layout_mode = 3
@@ -18,3 +20,24 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_mw7mu")
+
+[node name="FloatInputField" type="HBoxContainer" parent="." unique_id=2131813670]
+layout_mode = 0
+offset_right = 574.0
+offset_bottom = 40.0
+script = ExtResource("2_0k4q2")
+value = 12.325
+full_name = "The Glorp Giggle"
+metadata/_custom_type_script = "uid://ba45ic1w0e0cu"
+
+[node name="ColorInputField" type="HBoxContainer" parent="." unique_id=1474200709]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 95.0
+offset_right = 500.0
+offset_bottom = 135.0
+script = ExtResource("3_ciouk")
+value = Color(0.53104097, 0.6942105, 0.8500645, 1)
+default_value = Color(1, 1, 1, 1)
+full_name = "My sigma color"
+metadata/_custom_type_script = "uid://cilngnsffjdgs"
