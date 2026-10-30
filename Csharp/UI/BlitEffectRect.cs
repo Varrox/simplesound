@@ -184,6 +184,7 @@ public class TransitionBlitEffect : ShaderBlitEffect {
         _blit_transition_material.SetShaderParameter("new_texture", new_texture);
 
         _blit_transition_material.SetShaderParameter("time", t_value);
+        _blit_transition_material.SetShaderParameter("screen_pixel_size", (Vector2)full_rect.Size / full_rect.Size.Y);
 
         drawable_texture.BlitRectMulti(full_rect, [last_texture, new_texture], [], null, 0, _blit_transition_material);
     }
@@ -195,8 +196,8 @@ public class BlurBlitEffect : ShaderBlitEffect {
 
     private static DrawableTexture2D vertical_drawable_texture;
 
-    public float blur_size = 0.25f;
-    public float dim = 0.7f;
+    public float blur_size = 0.22f;
+    public float dim = 0.85f;
 
     public BlurBlitEffect() {
         _blit_blur_shader = ApplicationManager.GetShaderResource("blur_blit");

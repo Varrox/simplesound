@@ -32,8 +32,6 @@ public partial class Background : BlitEffectRect {
     public override void _Process(double delta)
     {
         if (_default_effects_enabled) {
-            CustomMinimumSize = new Vector2(0, Size.X);
-
             if(!Mathf.IsEqualApprox(_transition_value, 1.0f)) {
                 _transition_value = Helper.Smooth(_transition_value, 1.0f, 4.0f);
 

@@ -4,39 +4,39 @@
 shader_type texture_blit;
 render_mode blend_disabled;
 
-uniform sampler2D blur_texture:hint_blit_source0;
+uniform sampler2D blur_texture:hint_blit_source0, filter_linear;
 
-uniform float blur_size = 0.25;
-uniform float dim = 0.7;
+uniform float blur_size = 0.22;
+uniform float dim = 0.85;
 
 uniform bool horizontal = false;
-
-#define pow2(x) (x * x)
 
 const int samples = 5;
 global uniform int blur_quality;
 
-float gaussian(float x, float sigma) {
-	return 1.0 / (TAU * sigma) * exp(-pow2(x) / (2.0 * sigma));
-}
-
-vec3 blur(vec2 screen_uv, sampler2D input_texture, float size) {
-	vec3 result = vec3(1.0);
-	float steps = size / float(samples * blur_quality);
-	float sigma = pow2(float(blur_size) * 0.25);
+void blit() {
+	vec3 result = vec3(0.0);
 	float accum = 0.0;
-	float weight;
-	vec2 direction = horizontal ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
-
+	
+	float size = blur_size / 2.0;
+	float steps = size / float(samples * blur_quality);
+	ivec2 texture_size = textureSize(blur_texture, 0);
+	vec2 direction = horizontal ? vec2(1.0, 0.0) : vec2(0.0, float(texture_size.x) / float(texture_size.y));
+	
+	float sigma = blur_size * blur_size;
+	float two_sigma_squared = 2.0 * sigma * sigma;
+	float gaussian_denominator = sqrt(PI * two_sigma_squared);
+	
 	for(float x = -size; x < size; x += steps) {
-		weight = gaussian(x, sigma);
-		result += texture(input_texture, screen_uv + direction * x * size).rgb * weight;
-		accum += weight;
+		vec2 uv = UV + direction * x * size;
+		if (uv.x >= 0.0 && uv.x <= 1.0) {
+			float weight = exp(-(x * x) / two_sigma_squared) / gaussian_denominator;
+			result += texture(blur_texture, uv).rgb * weight;
+			accum += weight;
+		}
 	}
 	
-	return result / accum;
-}
-
-void blit() {
-	COLOR0 = vec4(blur(UV, blur_texture, blur_size / 2.0) * (horizontal ? dim : 1.0), 1.0);
+	vec3 blur = result / accum;
+	
+	COLOR0 = vec4(blur * (horizontal ? dim : 1.0), 1.0);
 }
