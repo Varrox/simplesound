@@ -36,8 +36,13 @@ public partial class Discord : Node {
         UpdateTrack();
     }
 
-    public static void ShutDown() { // Cleanup
+    public override void _ExitTree() { // Cleanup
         _client.Dispose();
+
+        _request.RequestCompleted -= _RequestFinished;
+
+        _client = null;
+        _request = null;
     }
 
     public static void UpdateTrack() {

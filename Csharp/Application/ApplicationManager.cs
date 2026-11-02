@@ -25,12 +25,16 @@ public partial class ApplicationManager : SceneTree {
 
     public static SaveData save_data;
 
+    public static Discord discord;
+
     public static ApplicationManager instance;
 
     public ApplicationManager() {
         instance = this;
 
         save_data = SaveData.GetSaveData();
+
+        save_data.ApplySettings();
 
         theme = _LoadTheme();
         resource_manager = _LoadResourceManager();
@@ -68,7 +72,6 @@ public partial class ApplicationManager : SceneTree {
     }
 
     public override void _Finalize() {
-        Discord.ShutDown();
         Save();
     }
 

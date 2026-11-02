@@ -36,7 +36,7 @@ public partial class Settings : EditorWindow {
         base._Ready();
 
         AddSettingsTab("Audio", AddAudioSettings, false, "EQ, Reverb, etc.");
-        AddSettingsTab("Downloader", AddDownloaderSettings, false, "yt-dlp executable, download formats, etc.");
+        AddSettingsTab("External", AddExternalSettings, false, "yt-dlp downloader, discord rich presence, etc.");
         AddSettingsTab("App data", AddAppDataSettings, true, "");
         AddSettingsTab("Graphics / Display", AddGraphicSettings, false, "VSync, background blur quality, etc.");
 
@@ -80,11 +80,18 @@ public partial class Settings : EditorWindow {
         "The volume ratio of the modified audio. At 0, only the original audio is outputted.");
     }
 
-    void AddDownloaderSettings() {
+    void AddExternalSettings() {
+        AddHeader("Downloader");
+
         AddFileLocationSetting("yt-dlp Location", ApplicationManager.save_data.application_settings, "ytdlp_location", 
         "The file location of an yt-dlp executable.");
         AddEnumSetting("Audio Format", ApplicationManager.save_data.application_settings, "download_format", DownloadFormat.MP3, false, 
         "The audio format that the track downloader will save track as.");
+
+        AddHeader("Discord Rich Presence");
+
+        AddBoolSetting("Discord Rich Presence Enabled", ApplicationManager.save_data.application_settings, "discord_rich_presence_enabled", true, 
+        "Whether or not discord rich presence is enabled.");
     }
 
     void AddAppDataSettings() {
