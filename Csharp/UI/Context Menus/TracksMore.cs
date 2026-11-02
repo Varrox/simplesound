@@ -106,41 +106,45 @@ public partial class TracksMore : ContextMenuButton {
     public static void EditMetadata(int playlist_index, int track_index, TrackData track_data) {
         Main.instance.Pause();
 
-        Globals.attribute_editor.Open(track_data);
+        AttributeEditor attribute_editor = (AttributeEditor)ApplicationManager.GetSceneResource("metadata_editor_window").Instantiate();
+        ApplicationManager.instance.Root.AddChild(attribute_editor);
+
+        attribute_editor.Open(track_data);
         
         void SubmitMeta() {
-            if (Globals.attribute_editor.cancelled) {
-                Globals.attribute_editor.OnClose -= SubmitMeta;
+            if (attribute_editor.cancelled) {
+                attribute_editor.OnClose -= SubmitMeta;
                 return;
             }
 
             string track_file = Main.playlists[playlist_index].tracks[track_index];
             
             Metadata.SetData(track_file, 
-                Globals.attribute_editor.name_field.Text, 
-                Globals.attribute_editor.artist_field.Text, 
-                Globals.attribute_editor.cover_path, 
-                Globals.attribute_editor.share_link_field.Text, 
-                Globals.attribute_editor.explicit_lyrics_field.ButtonPressed
+                attribute_editor.name_field.Text, 
+                attribute_editor.artist_field.Text, 
+                attribute_editor.cover_path, 
+                attribute_editor.share_link_field.Text, 
+                attribute_editor.explicit_lyrics_field.ButtonPressed
             );
 
             Player.instance.UpdateDisplayedInfo();
 
             TrackData new_track_data = new TrackData {
-                title = Globals.attribute_editor.name_field.Text,
-                artist = Globals.attribute_editor.artist_field.Text,
-                explicit_lyrics = Globals.attribute_editor.explicit_lyrics_field.ButtonPressed,
-                share_link = Globals.attribute_editor.share_link_field.Text,
+                title = attribute_editor.name_field.Text,
+                artist = attribute_editor.artist_field.Text,
+                explicit_lyrics = attribute_editor.explicit_lyrics_field.ButtonPressed,
+                share_link = attribute_editor.share_link_field.Text,
                 time = track_data.time,
                 corrupt = Metadata.IsFileCorrupt(track_file), // Recheck just incase
             };
 
             Main.instance.tracks_visualizer.UpdateTrack(track_index, new_track_data, Tools.GetMediaCover(track_file) ?? ApplicationManager.GetThemeIcon("default_cover_icon"));
             
-            Globals.attribute_editor.OnClose -= SubmitMeta;
+            attribute_editor.OnClose -= SubmitMeta;
+            attribute_editor.QueueFree();
         }
         
-        Globals.attribute_editor.OnClose += SubmitMeta;
+        attribute_editor.OnClose += SubmitMeta;
     }
 
     public static void RemoveTrackFromPlaylist(int playlist_index, int track_index) {

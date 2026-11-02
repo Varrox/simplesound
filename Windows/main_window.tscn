@@ -42,8 +42,6 @@
 [ext_resource type="Texture2D" uid="uid://csvmj6w2b5le6" path="res://Icons/SVG/loop.svg" id="41_yksdd"]
 [ext_resource type="Texture2D" uid="uid://jqnfgusrehqq" path="res://Icons/SVG/un_muted.svg" id="42_2o8nl"]
 [ext_resource type="Script" uid="uid://c5ep0n80r2l8p" path="res://Csharp/UI/Buttons/AttributeEditorOpener.cs" id="42_3aot7"]
-[ext_resource type="Script" uid="uid://ba0kdfmjh8445" path="res://Csharp/Application/Globals.cs" id="46_y0j44"]
-[ext_resource type="PackedScene" uid="uid://dle5y658wmx03" path="res://Windows/attribute_editor_window.tscn" id="52_vsj6c"]
 [ext_resource type="Texture2D" uid="uid://bdbco8a0mnjn6" path="res://Icons/Logos/logotrans.png" id="54_lfg21"]
 [ext_resource type="Script" uid="uid://bmgcpmp5cfuwy" path="res://Csharp/Application/Tray.cs" id="55_y62dl"]
 [ext_resource type="Script" uid="uid://cqf4nqygajv02" path="res://GDScript/zoomer.gd" id="58_e23wy"]
@@ -569,14 +567,14 @@ theme_override_constants/scrollbar_h_separation = 4
 theme_override_styles/focus = SubResource("StyleBoxEmpty_b1qrp")
 horizontal_scroll_mode = 0
 script = ExtResource("15_btqdu")
+item_template = ExtResource("16_ns1th")
+total_items = null
+item_height = null
 cover = NodePath("Container/Top card/Icon/TextureRect")
 playlist_name_label = NodePath("Container/Top card/Playlist name")
 track_count_label = NodePath("Container/Top card/Track count")
-item_template = ExtResource("16_ns1th")
 parent_container = NodePath("Container")
 item_container = NodePath("Container/VBoxContainer")
-total_items = null
-item_height = null
 
 [node name="Container" type="VBoxContainer" parent="Interface/Content/Tracks/Track Display" unique_id=933878103]
 layout_mode = 2
@@ -738,7 +736,7 @@ theme_override_fonts/font = ExtResource("41_qf528")
 button_mask = 4
 flat = true
 script = ExtResource("42_3aot7")
-window = NodePath("../../../../../Globals/AttributeEditor")
+window = NodePath("")
 
 [node name="Controls" type="Control" parent="Interface/Player/MarginContainer" unique_id=1065715383]
 layout_mode = 2
@@ -885,21 +883,14 @@ text = "0:00"
 
 [node name="Player" type="AudioStreamPlayer" parent="." unique_id=488316782]
 
-[node name="Globals" type="Node" parent="." unique_id=71517921 node_paths=PackedStringArray("_attribute_editor")]
-script = ExtResource("46_y0j44")
-_attribute_editor = NodePath("AttributeEditor")
-
-[node name="AttributeEditor" parent="Globals" unique_id=1605960294 instance=ExtResource("52_vsj6c")]
-visible = false
-
-[node name="StatusIndicator" type="StatusIndicator" parent="Globals" unique_id=1556933644 node_paths=PackedStringArray("tool_list")]
+[node name="StatusIndicator" type="StatusIndicator" parent="." unique_id=1556933644 node_paths=PackedStringArray("tool_list")]
 tooltip = "simplesound"
 icon = ExtResource("54_lfg21")
 menu = NodePath("PopupMenu")
 script = ExtResource("55_y62dl")
-tool_list = NodePath("../../Interface/Top Bar/MarginContainer/HBoxContainer/Right/List")
+tool_list = NodePath("../Interface/Top Bar/MarginContainer/HBoxContainer/Right/List")
 
-[node name="PopupMenu" type="PopupMenu" parent="Globals/StatusIndicator" unique_id=251564623]
+[node name="PopupMenu" type="PopupMenu" parent="StatusIndicator" unique_id=251564623]
 prefer_native_menu = true
 
 [node name="Zoomer" type="Node" parent="." unique_id=1869739749 node_paths=PackedStringArray("zoom_display")]
