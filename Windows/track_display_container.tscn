@@ -1,0 +1,120 @@
+[gd_scene format=3 uid="uid://baioljfdlawl7"]
+
+[ext_resource type="Script" uid="uid://bgymt3f23woi7" path="res://Csharp/UI/Containers/TracksVisualizer.cs" id="1_7jv3s"]
+[ext_resource type="PackedScene" uid="uid://kjaecy3cmwvl" path="res://Prefabs/track_display.tscn" id="2_xpsan"]
+[ext_resource type="StyleBox" uid="uid://bhcyqvvim6l5e" path="res://Styling/Rounded Corners.tres" id="3_i1dkv"]
+[ext_resource type="Shader" uid="uid://cxrpix7bw201g" path="res://Styling/Shaders/anti_aliased.gdshader" id="4_dl5r7"]
+[ext_resource type="Texture2D" uid="uid://cksbdmhr2s8yy" path="res://Icons/Default Covers/DefaultCover.png" id="5_jax4n"]
+[ext_resource type="Texture2D" uid="uid://bm7judayjojov" path="res://Icons/SVG/play.svg" id="6_pmeki"]
+[ext_resource type="Script" uid="uid://qupwebtnhh44" path="res://Csharp/UI/Buttons/PlaylistPlayer.cs" id="7_4qdqd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_b1qrp"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4b8h4"]
+bg_color = Color(0.27752772, 0.27752772, 0.27752772, 0.50980395)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 0)
+border_blend = true
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4w656"]
+shader = ExtResource("4_dl5r7")
+
+[node name="Track Display" type="ScrollContainer" unique_id=72923922 node_paths=PackedStringArray("cover", "playlist_name_label", "track_count_label", "parent_container", "item_container")]
+theme_override_constants/scrollbar_h_separation = 4
+theme_override_styles/focus = SubResource("StyleBoxEmpty_b1qrp")
+horizontal_scroll_mode = 0
+script = ExtResource("1_7jv3s")
+cover = NodePath("Container/Top card/Icon/TextureRect")
+playlist_name_label = NodePath("Container/Top card/Playlist name")
+track_count_label = NodePath("Container/Top card/Track count")
+item_template = ExtResource("2_xpsan")
+parent_container = NodePath("Container")
+item_container = NodePath("Container/VBoxContainer")
+total_items = null
+item_height = null
+
+[node name="Container" type="VBoxContainer" parent="." unique_id=1418004031]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="Top card" type="Panel" parent="Container" unique_id=1408023889]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4b8h4")
+
+[node name="Icon" type="PanelContainer" parent="Container/Top card" unique_id=1350299798]
+clip_children = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 25.0
+offset_top = -50.0
+offset_right = 125.0
+offset_bottom = 50.0
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("3_i1dkv")
+
+[node name="TextureRect" type="TextureRect" parent="Container/Top card/Icon" unique_id=1373844630]
+material = SubResource("ShaderMaterial_4w656")
+layout_mode = 2
+texture = ExtResource("5_jax4n")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Playlist name" type="Label" parent="Container/Top card" unique_id=2080560304]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 150.0
+offset_top = -39.0
+offset_right = 233.0
+offset_bottom = -3.0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 29
+text = "Name"
+
+[node name="Track count" type="Label" parent="Container/Top card" unique_id=662347574]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 150.0
+offset_top = 8.0
+offset_right = 233.0
+offset_bottom = 44.0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 16
+text = "0 tracks"
+
+[node name="Play" type="Button" parent="Container/Top card" unique_id=1323028640]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -89.0
+offset_top = -20.0
+offset_right = -49.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+tooltip_text = "Play / Pause playlist."
+focus_mode = 0
+icon = ExtResource("6_pmeki")
+script = ExtResource("7_4qdqd")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Container" unique_id=1539367216]
+layout_mode = 2
+theme_override_constants/separation = 0

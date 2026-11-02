@@ -14,18 +14,14 @@
 [ext_resource type="Texture2D" uid="uid://cnygllcx1qoyc" path="res://Icons/SVG/search.svg" id="10_ns1th"]
 [ext_resource type="Script" uid="uid://ddkuen8ursg0q" path="res://Csharp/UI/Context Menus/AddPlaylist.cs" id="11_xrbbi"]
 [ext_resource type="Script" uid="uid://dcnfao6qa81tk" path="res://Csharp/UI/Containers/PlaylistsVisualizer.cs" id="12_jnr5d"]
-[ext_resource type="Script" uid="uid://bgymt3f23woi7" path="res://Csharp/UI/Containers/TracksVisualizer.cs" id="15_btqdu"]
-[ext_resource type="PackedScene" uid="uid://kjaecy3cmwvl" path="res://Prefabs/track_display.tscn" id="16_ns1th"]
-[ext_resource type="StyleBox" uid="uid://bhcyqvvim6l5e" path="res://Styling/Rounded Corners.tres" id="17_0xq2a"]
 [ext_resource type="Shader" uid="uid://cxrpix7bw201g" path="res://Styling/Shaders/anti_aliased.gdshader" id="18_fmyll"]
-[ext_resource type="Script" uid="uid://qupwebtnhh44" path="res://Csharp/UI/Buttons/PlaylistPlayer.cs" id="20_drm60"]
-[ext_resource type="Texture2D" uid="uid://bm7judayjojov" path="res://Icons/SVG/play.svg" id="21_kb0xi"]
 [ext_resource type="Script" uid="uid://ckpanpt3fty8d" path="res://Csharp/UI/Default Node Extentions/ThemeLineEdit.cs" id="21_w782g"]
 [ext_resource type="Script" uid="uid://bag5mx17s8q1c" path="res://Csharp/UI/Buttons/Appdata.cs" id="23_f8opk"]
 [ext_resource type="Texture2D" uid="uid://ynqg27jlotl6" path="res://Icons/SVG/folder.svg" id="24_cq8g2"]
 [ext_resource type="Script" uid="uid://d0tve0wh2kxhq" path="res://Csharp/UI/Buttons/DownloadWindowOpener.cs" id="24_o03o1"]
 [ext_resource type="Texture2D" uid="uid://cb0yjhel4cdr5" path="res://Icons/SVG/download.svg" id="27_ns1th"]
 [ext_resource type="Script" uid="uid://gwm4ru46vy21" path="res://Csharp/UI/Buttons/Update.cs" id="28_3ax07"]
+[ext_resource type="PackedScene" uid="uid://baioljfdlawl7" path="res://Windows/track_display_container.tscn" id="28_pojro"]
 [ext_resource type="Texture2D" uid="uid://cr6152637qeey" path="res://Icons/SVG/hamburger.svg" id="29_2wbij"]
 [ext_resource type="Script" uid="uid://cheuagrd5va2f" path="res://Csharp/UI/Buttons/Refresh.cs" id="29_nr08j"]
 [ext_resource type="Script" uid="uid://gln3mhngvyx5" path="res://Csharp/UI/Context Menus/ToolList.cs" id="30_xrbbi"]
@@ -126,24 +122,6 @@ grow_end = 0.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_facbu"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_b1qrp"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4b8h4"]
-bg_color = Color(0.27752772, 0.27752772, 0.27752772, 0.50980395)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(1, 1, 1, 0)
-border_blend = true
-corner_radius_top_left = 12
-corner_radius_top_right = 12
-corner_radius_bottom_right = 12
-corner_radius_bottom_left = 12
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_4w656"]
-shader = ExtResource("18_fmyll")
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_28euk"]
 corner_radius_top_left = 10
 corner_radius_top_right = 10
@@ -166,7 +144,7 @@ script = ExtResource("2_kb0xi")
 audio_player = NodePath("Player")
 video_player = NodePath("Background/Video")
 playlist_visualizer = NodePath("Interface/Content/Side Panel/Open/Open/Playlists")
-tracks_visualizer = NodePath("Interface/Content/Tracks/Track Display")
+tracks_visualizer = NodePath("Interface/Content/Main Content/Track Display")
 
 [node name="Background" type="Control" parent="." unique_id=291196361]
 layout_mode = 1
@@ -553,7 +531,7 @@ script = ExtResource("11_xrbbi")
 [node name="HSeparator" type="HSeparator" parent="Interface/Content/Side Panel/Open/Collapsed" unique_id=765403374]
 layout_mode = 2
 
-[node name="Tracks" type="MarginContainer" parent="Interface/Content" unique_id=594462082]
+[node name="Main Content" type="MarginContainer" parent="Interface/Content" unique_id=594462082]
 custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -561,99 +539,8 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="Track Display" type="ScrollContainer" parent="Interface/Content/Tracks" unique_id=1804847451 node_paths=PackedStringArray("cover", "playlist_name_label", "track_count_label", "parent_container", "item_container")]
+[node name="Track Display" parent="Interface/Content/Main Content" unique_id=72923922 instance=ExtResource("28_pojro")]
 layout_mode = 2
-theme_override_constants/scrollbar_h_separation = 4
-theme_override_styles/focus = SubResource("StyleBoxEmpty_b1qrp")
-horizontal_scroll_mode = 0
-script = ExtResource("15_btqdu")
-cover = NodePath("Container/Top card/Icon/TextureRect")
-playlist_name_label = NodePath("Container/Top card/Playlist name")
-track_count_label = NodePath("Container/Top card/Track count")
-item_template = ExtResource("16_ns1th")
-parent_container = NodePath("Container")
-item_container = NodePath("Container/VBoxContainer")
-total_items = null
-item_height = null
-
-[node name="Container" type="VBoxContainer" parent="Interface/Content/Tracks/Track Display" unique_id=933878103]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_constants/separation = 0
-
-[node name="Top card" type="Panel" parent="Interface/Content/Tracks/Track Display/Container" unique_id=1802359906]
-custom_minimum_size = Vector2(0, 150)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_4b8h4")
-
-[node name="Icon" type="PanelContainer" parent="Interface/Content/Tracks/Track Display/Container/Top card" unique_id=1147541334]
-clip_children = 1
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 25.0
-offset_top = -50.0
-offset_right = 125.0
-offset_bottom = 50.0
-grow_vertical = 2
-theme_override_styles/panel = ExtResource("17_0xq2a")
-
-[node name="TextureRect" type="TextureRect" parent="Interface/Content/Tracks/Track Display/Container/Top card/Icon" unique_id=803486648]
-material = SubResource("ShaderMaterial_4w656")
-layout_mode = 2
-texture = ExtResource("7_xvcl6")
-expand_mode = 1
-stretch_mode = 6
-
-[node name="Playlist name" type="Label" parent="Interface/Content/Tracks/Track Display/Container/Top card" unique_id=1152091530]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 150.0
-offset_top = -39.0
-offset_right = 233.0
-offset_bottom = -3.0
-grow_vertical = 2
-theme_override_font_sizes/font_size = 29
-text = "Name"
-
-[node name="Track count" type="Label" parent="Interface/Content/Tracks/Track Display/Container/Top card" unique_id=684426772]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 150.0
-offset_top = 8.0
-offset_right = 233.0
-offset_bottom = 44.0
-grow_vertical = 2
-theme_override_font_sizes/font_size = 16
-text = "0 tracks"
-
-[node name="Play" type="Button" parent="Interface/Content/Tracks/Track Display/Container/Top card" unique_id=1739860587]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -89.0
-offset_top = -20.0
-offset_right = -49.0
-offset_bottom = 20.0
-grow_horizontal = 0
-grow_vertical = 2
-tooltip_text = "Play / Pause playlist."
-focus_mode = 0
-icon = ExtResource("21_kb0xi")
-script = ExtResource("20_drm60")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Interface/Content/Tracks/Track Display/Container" unique_id=366499595]
-layout_mode = 2
-theme_override_constants/separation = 0
 
 [node name="Player" type="ColorRect" parent="Interface" unique_id=930252818]
 custom_minimum_size = Vector2(0, 108)
