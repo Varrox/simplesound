@@ -67,12 +67,12 @@ public partial class InputField : HBoxContainer {
         }
     }
 
-    protected void _ValueChanged<T>(T new_value, T default_value) {
+    protected void _ValueChanged() {
+        _ApplyValue();
+
         _ClearResetButton();
 
-        if(!new_value.Equals(default_value))
+        if(!_IsDefaultValue())
             _AddResetButton();
-
-        _ApplyValue();
     }
 }

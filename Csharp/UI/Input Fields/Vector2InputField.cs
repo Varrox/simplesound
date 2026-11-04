@@ -73,8 +73,8 @@ public partial class Vector2InputField : InputField {
         AddChild(_spin_box_x);
         AddChild(_spin_box_y);
 
-        _spin_box_x.ValueChanged += (double new_value) => _ValueChanged(new Vector2((float)new_value, _value.Y), _default_value);
-        _spin_box_y.ValueChanged += (double new_value) => _ValueChanged(new Vector2(_value.X, (float)new_value), _default_value);
+        _spin_box_x.ValueChanged += (double new_value) => _ValueChanged();
+        _spin_box_y.ValueChanged += (double new_value) => _ValueChanged();
 
         if (!_IsDefaultValue()) 
             _AddResetButton();

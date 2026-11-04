@@ -47,7 +47,7 @@ public partial class FileInputField : InputField {
         AddChild(_file_select_button);
         _file_select_button.ButtonUp += OpenFileLocation;
 
-        _theme_line_edit.TextChanged += (string new_value) => _ValueChanged(new_value, "");
+        _theme_line_edit.TextChanged += (string new_value) => _ValueChanged();
 
         if (!_IsDefaultValue())
             _AddResetButton();
@@ -64,7 +64,7 @@ public partial class FileInputField : InputField {
     }
 
     protected override bool _IsDefaultValue() {
-        return _value == "";
+        return (_value ?? "").Equals("");
     }
 
     public void OpenFileLocation() {
@@ -77,7 +77,7 @@ public partial class FileInputField : InputField {
 
         void SetFile(string file) {
             _theme_line_edit.Text = file;
-            _ValueChanged(file, "");
+            _ValueChanged();
 
             Finish();
         }

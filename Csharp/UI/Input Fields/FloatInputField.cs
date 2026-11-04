@@ -62,7 +62,7 @@ public partial class FloatInputField : InputField {
 
         AddChild(_spin_box);
 
-        _spin_box.ValueChanged += (double new_value) => _ValueChanged((float)new_value, _default_value);
+        _spin_box.ValueChanged += (double new_value) => _ValueChanged();
 
         if (!_IsDefaultValue()) 
             _AddResetButton();

@@ -61,7 +61,7 @@ public partial class IntegerInputField : InputField {
 
         AddChild(_spin_box);
 
-        _spin_box.ValueChanged += (double new_value) => _ValueChanged((int)new_value, _default_value);
+        _spin_box.ValueChanged += (double new_value) => _ValueChanged();
 
         if (!_IsDefaultValue()) 
             _AddResetButton();

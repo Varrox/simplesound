@@ -59,7 +59,7 @@ public partial class EnumInputField : InputField {
 
         AddChild(_option_button);
 
-        _option_button.ItemSelected += (long new_value) => _ValueChanged((int)new_value, _default_value);
+        _option_button.ItemSelected += (long new_value) => _ValueChanged();
 
         if (!_IsDefaultValue()) 
             _AddResetButton();

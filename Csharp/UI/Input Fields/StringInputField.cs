@@ -36,12 +36,13 @@ public partial class StringInputField : InputField {
         base._Ready();
 
         _theme_line_edit = new ThemeLineEdit {
-            Text = _value
+            Text = _value,
+            SizeFlagsHorizontal = SizeFlags.ExpandFill
         };
 
         AddChild(_theme_line_edit);
 
-        _theme_line_edit.TextChanged += (string new_value) => _ValueChanged(new_value, _default_value);
+        _theme_line_edit.TextChanged += (string new_value) => _ValueChanged();
 
         if (!_IsDefaultValue()) 
             _AddResetButton();
@@ -58,6 +59,6 @@ public partial class StringInputField : InputField {
     }
 
     protected override bool _IsDefaultValue() {
-        return _value == _default_value;
+        return (_value ?? "").Equals(_default_value ?? "");
     }
 }

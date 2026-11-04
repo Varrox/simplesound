@@ -42,7 +42,7 @@ public partial class ColorInputField : InputField {
 
         AddChild(_theme_color_picker_button);
 
-        _theme_color_picker_button.ColorChanged += (Color new_value) => _ValueChanged(new_value, _default_value);
+        _theme_color_picker_button.ColorChanged += (Color new_value) => _ValueChanged();
 
         if (!_IsDefaultValue()) 
             _AddResetButton();

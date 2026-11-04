@@ -41,7 +41,7 @@ public partial class BooleanInputField : InputField {
 
         AddChild(_check_box);
 
-        _check_box.Pressed += () => _ValueChanged(_check_box.ButtonPressed, _default_value);
+        _check_box.Pressed += () => _ValueChanged();
 
         if (!_IsDefaultValue()) 
             _AddResetButton();
