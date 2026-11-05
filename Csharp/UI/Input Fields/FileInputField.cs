@@ -7,7 +7,7 @@ public partial class FileInputField : InputField {
 
     [Export] public string value {
         set {
-            _value = value;
+            _value = value ?? "";
             if(!IsInsideTree()) return;
             _theme_line_edit.Text = _value;
             EmitSignal(SignalName.ValueChanged, _value);
@@ -17,7 +17,7 @@ public partial class FileInputField : InputField {
 
     [Export] public Array<string> filters;
 
-    private string _value;
+    private string _value = "";
 
     [Signal]
     public delegate void ValueChangedEventHandler(string new_value);

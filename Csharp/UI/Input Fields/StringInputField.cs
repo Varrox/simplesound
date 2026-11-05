@@ -5,7 +5,7 @@ public partial class StringInputField : InputField {
 
     [Export] public string value {
         set {
-            _value = value;
+            _value = value ?? "";
             if(!IsInsideTree()) return;
             _theme_line_edit.Text = _value;
             EmitSignal(SignalName.ValueChanged, _value);
@@ -15,7 +15,7 @@ public partial class StringInputField : InputField {
 
     [Export] public string default_value {
         set {
-            _default_value = value;
+            _default_value = value ?? "";
             if(!IsInsideTree()) return;
             if (!_IsDefaultValue()) _AddResetButton();
             else _ClearResetButton();
@@ -23,7 +23,7 @@ public partial class StringInputField : InputField {
         get { return _default_value; }
     }
 
-    private string _value, _default_value;
+    private string _value = "", _default_value = "";
 
     [Signal]
     public delegate void ValueChangedEventHandler(string new_value);

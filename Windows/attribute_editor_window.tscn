@@ -2,16 +2,13 @@
 
 [ext_resource type="Script" uid="uid://eh8a3k652ogt" path="res://Csharp/Windows/AttributeEditor.cs" id="1_cj5je"]
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Styling/Fonts/DefaultFont.tres" id="1_ot5f1"]
-[ext_resource type="Script" uid="uid://ckpanpt3fty8d" path="res://Csharp/UI/Default Node Extentions/ThemeLineEdit.cs" id="3_j2mdm"]
-[ext_resource type="Script" uid="uid://ddv8hmbckq2e" path="res://Csharp/UI/PathDisplay.cs" id="4_n5hso"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3g08v"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mixmj"]
+[ext_resource type="Script" uid="uid://d31syayqhiohg" path="res://Csharp/UI/Input Fields/StringInputField.cs" id="2_ya0cy"]
+[ext_resource type="Script" uid="uid://cmts1ynynqmtp" path="res://Csharp/UI/Input Fields/BooleanInputField.cs" id="3_xjb1e"]
+[ext_resource type="Script" uid="uid://gen4blolgiqy" path="res://Csharp/UI/Input Fields/FileInputField.cs" id="4_iqhlo"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iyibu"]
 
-[node name="Attribute editor" type="Window" unique_id=397200673 node_paths=PackedStringArray("name_field", "artist_field", "share_link_field", "explicit_lyrics_field", "select_cover_button", "cover_label", "submit_button", "cancel_button")]
+[node name="Attribute editor" type="Window" unique_id=397200673 node_paths=PackedStringArray("name_field", "artist_field", "share_link_field", "explicit_lyrics_field", "cover_input_field", "submit_button", "cancel_button")]
 auto_translate_mode = 1
 oversampling_override = 1.0
 title = "Edit track attributes"
@@ -21,94 +18,94 @@ transient = true
 exclusive = true
 min_size = Vector2i(250, 250)
 script = ExtResource("1_cj5je")
-name_field = NodePath("VBoxContainer/Name")
-artist_field = NodePath("VBoxContainer/Artist")
-share_link_field = NodePath("VBoxContainer/Share")
-explicit_lyrics_field = NodePath("VBoxContainer/Explicit Lyrics")
-select_cover_button = NodePath("VBoxContainer/Cover")
-cover_label = NodePath("VBoxContainer/PathDisplay")
-submit_button = NodePath("VBoxContainer/HBoxContainer/Submit")
-cancel_button = NodePath("VBoxContainer/HBoxContainer/Cancel")
+name_field = NodePath("MarginContainer/VBoxContainer/StringInputField")
+artist_field = NodePath("MarginContainer/VBoxContainer/StringInputField2")
+share_link_field = NodePath("MarginContainer/VBoxContainer/StringInputField3")
+explicit_lyrics_field = NodePath("MarginContainer/VBoxContainer/BooleanInputField")
+cover_input_field = NodePath("MarginContainer/VBoxContainer/FileInputField")
+submit_button = NodePath("MarginContainer/VBoxContainer/HBoxContainer/Submit")
+cancel_button = NodePath("MarginContainer/VBoxContainer/HBoxContainer/Cancel")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=598437280]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=472020695]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = 10.0
-offset_right = -10.0
-offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 
-[node name="Name" type="LineEdit" parent="VBoxContainer" unique_id=1616236964]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=598437280]
+layout_mode = 2
+
+[node name="StringInputField" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1755806766]
+custom_minimum_size = Vector2(28, 28)
 layout_mode = 2
 tooltip_text = "Name of the track."
-theme_override_fonts/font = ExtResource("1_ot5f1")
-placeholder_text = "Name"
-caret_blink = true
-script = ExtResource("3_j2mdm")
-metadata/_custom_type_script = "uid://ckpanpt3fty8d"
+script = ExtResource("2_ya0cy")
+value = null
+default_value = null
+full_name = "Name"
+metadata/_custom_type_script = "uid://d31syayqhiohg"
 
-[node name="Artist" type="LineEdit" parent="VBoxContainer" unique_id=39460]
+[node name="StringInputField2" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=225613138]
+custom_minimum_size = Vector2(28, 28)
 layout_mode = 2
 tooltip_text = "The artist(s) who made the track."
-theme_override_fonts/font = ExtResource("1_ot5f1")
-placeholder_text = "Artist
-"
-caret_blink = true
-script = ExtResource("3_j2mdm")
-metadata/_custom_type_script = "uid://ckpanpt3fty8d"
+script = ExtResource("2_ya0cy")
+value = null
+default_value = null
+full_name = "Artist"
+metadata/_custom_type_script = "uid://d31syayqhiohg"
 
-[node name="Share" type="LineEdit" parent="VBoxContainer" unique_id=941129891]
+[node name="StringInputField3" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=548350443]
+custom_minimum_size = Vector2(28, 28)
 layout_mode = 2
 tooltip_text = "The link (URL) to share this track via external platforms (link is also used to extract cover art for discord rich presence)."
-theme_override_fonts/font = ExtResource("1_ot5f1")
-placeholder_text = "Share Link
-"
-caret_blink = true
-script = ExtResource("3_j2mdm")
-metadata/_custom_type_script = "uid://ckpanpt3fty8d"
+script = ExtResource("2_ya0cy")
+value = null
+default_value = null
+full_name = "Share Link"
+metadata/_custom_type_script = "uid://d31syayqhiohg"
 
-[node name="Explicit Lyrics" type="CheckBox" parent="VBoxContainer" unique_id=2003182571]
+[node name="BooleanInputField" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1019273907]
+custom_minimum_size = Vector2(28, 28)
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 8
 tooltip_text = "Toggles whether or not this track has explicit lyrics."
-theme_override_fonts/font = ExtResource("1_ot5f1")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_3g08v")
-text = "Explicit Lyrics"
+script = ExtResource("3_xjb1e")
+value = null
+default_value = null
+full_name = "Explicit Lyrics"
+metadata/_custom_type_script = "uid://cmts1ynynqmtp"
 
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer" unique_id=1874090028]
+[node name="FileInputField" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1916652478]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+tooltip_text = "A file path for the image used as the cover in the playlist."
+script = ExtResource("4_iqhlo")
+value = null
+full_name = "Cover Image"
+metadata/_custom_type_script = "uid://gen4blolgiqy"
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer" unique_id=1874090028]
 custom_minimum_size = Vector2(0, 5.06)
 layout_mode = 2
 
-[node name="Cover" type="Button" parent="VBoxContainer" unique_id=1017338183]
-layout_mode = 2
-tooltip_text = "Opens a file dialog to select an image as the cover art for this track."
-theme_override_fonts/font = ExtResource("1_ot5f1")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_mixmj")
-text = "Select cover image"
-
-[node name="PathDisplay" type="Button" parent="VBoxContainer" unique_id=799703097]
-custom_minimum_size = Vector2(0, 25)
-layout_mode = 2
-script = ExtResource("4_n5hso")
-metadata/_custom_type_script = "uid://ddv8hmbckq2e"
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=366126135]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=366126135]
 layout_mode = 2
 size_flags_vertical = 10
 alignment = 1
 
-[node name="Submit" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=1208880014]
+[node name="Submit" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1208880014]
 layout_mode = 2
 tooltip_text = "Applies all changes done to the metadata of this track."
 theme_override_fonts/font = ExtResource("1_ot5f1")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_iyibu")
 text = "Apply Changes"
 
-[node name="Cancel" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=1813568189]
+[node name="Cancel" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1813568189]
 layout_mode = 2
 tooltip_text = "Cancels all changes done to the metadata of this track."
 theme_override_fonts/font = ExtResource("1_ot5f1")

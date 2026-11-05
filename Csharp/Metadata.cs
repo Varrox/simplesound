@@ -100,15 +100,17 @@ public class Metadata {
 
         if (artist != null) file_list[path].Artist = artist;
 
-        string file_type = ImageMimeConvert(cover_path);
+        if(!string.IsNullOrEmpty(cover_path)) {
+            string file_type = ImageMimeConvert(cover_path);
 
-        if(file_type != null) {
-            byte[] data = File.ReadAllBytes(cover_path);
+            if(file_type != null) {
+                byte[] data = File.ReadAllBytes(cover_path);
 
-            PictureInfo picture = PictureInfo.fromBinaryData(data, PictureInfo.PIC_TYPE.Front);
+                PictureInfo picture = PictureInfo.fromBinaryData(data, PictureInfo.PIC_TYPE.Front);
 
-            file_list[path].EmbeddedPictures.Clear();
-            file_list[path].EmbeddedPictures.Add(picture);
+                file_list[path].EmbeddedPictures.Clear();
+                file_list[path].EmbeddedPictures.Add(picture);
+            }
         }
 
         List<string> tags = new List<string>();

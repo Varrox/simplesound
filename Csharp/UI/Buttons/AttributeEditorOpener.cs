@@ -22,15 +22,15 @@ public partial class AttributeEditorOpener : Button {
     public void SubmitMeta() {
         if(!attribute_editor.cancelled) {
             if (Main.GetCurrentPlaylist() != null)
-                Metadata.SetData(Main.GetCurrentTrack(), attribute_editor.name_field.Text, attribute_editor.artist_field.Text, attribute_editor.cover_path, attribute_editor.share_link_field.Text, attribute_editor.explicit_lyrics_field.ButtonPressed);
+                Metadata.SetData(Main.GetCurrentTrack(), attribute_editor.name_field.value, attribute_editor.artist_field.value, attribute_editor.cover_input_field.value, attribute_editor.share_link_field.value, attribute_editor.explicit_lyrics_field.value);
 
             Player.instance.UpdateDisplayedInfo();
 
             TrackData track_data = new TrackData {
-                title = attribute_editor.name_field.Text,
-                artist = attribute_editor.artist_field.Text,
-                share_link = attribute_editor.share_link_field.Text,
-                explicit_lyrics = attribute_editor.explicit_lyrics_field.ButtonPressed,
+                title = attribute_editor.name_field.value,
+                artist = attribute_editor.artist_field.value,
+                share_link = attribute_editor.share_link_field.value,
+                explicit_lyrics = attribute_editor.explicit_lyrics_field.value,
                 time = Player.instance.total_time_label.Text,
                 corrupt = Metadata.IsFileCorrupt(Main.GetCurrentTrack()),
             };

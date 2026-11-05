@@ -120,20 +120,20 @@ public partial class TracksMore : ContextMenuButton {
             string track_file = Main.playlists[playlist_index].tracks[track_index];
             
             Metadata.SetData(track_file, 
-                attribute_editor.name_field.Text, 
-                attribute_editor.artist_field.Text, 
-                attribute_editor.cover_path, 
-                attribute_editor.share_link_field.Text, 
-                attribute_editor.explicit_lyrics_field.ButtonPressed
+                attribute_editor.name_field.value, 
+                attribute_editor.artist_field.value, 
+                attribute_editor.cover_input_field.value, 
+                attribute_editor.share_link_field.value, 
+                attribute_editor.explicit_lyrics_field.value
             );
 
             Player.instance.UpdateDisplayedInfo();
 
             TrackData new_track_data = new TrackData {
-                title = attribute_editor.name_field.Text,
-                artist = attribute_editor.artist_field.Text,
-                explicit_lyrics = attribute_editor.explicit_lyrics_field.ButtonPressed,
-                share_link = attribute_editor.share_link_field.Text,
+                title = attribute_editor.name_field.value,
+                artist = attribute_editor.artist_field.value,
+                explicit_lyrics = attribute_editor.explicit_lyrics_field.value,
+                share_link = attribute_editor.share_link_field.value,
                 time = track_data.time,
                 corrupt = Metadata.IsFileCorrupt(track_file), // Recheck just incase
             };
