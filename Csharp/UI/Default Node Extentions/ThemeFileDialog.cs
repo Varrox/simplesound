@@ -10,21 +10,14 @@ public partial class ThemeFileDialog : FileDialog {
 	}
 
 	public void SetTracks() {
-		Filters = new[] { "*.mp3", "*.wav", "*.ogg" };
+		Filters = Tools.GetFilters(Constants.PLAYABLE_FORMATS);
 		FileMode = FileModeEnum.OpenFiles;
 		OkButtonText = "Import audio files";
 		Title = "Select Audio files";
 	}
 
-	public void SetFile() {
-		Filters = null;
-		FileMode = FileModeEnum.OpenFile;
-		OkButtonText = "Select file";
-		Title = "Select file";
-	}
-
 	public void SetCover() {
-		Filters = new[] { "*.jpeg", "*.jpg", "*.png", "*.webp" };
+		Filters = Tools.GetFilters(Constants.IMAGE_FORMATS);
 		FileMode = FileModeEnum.OpenFile;
 		OkButtonText = "Import Cover";
 		Title = "Select Cover";

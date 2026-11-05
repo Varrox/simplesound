@@ -4,6 +4,8 @@ using System;
 public struct Constants {
     public static readonly string[] DOWNLOAD_FORMATS = ["mp3", "wav"];
     public static readonly string[] PLAYABLE_FORMATS = ["mp3", "wav", "ogg"];
+    public static readonly string[] IMAGE_FORMATS = ["png", "jpg", "jpeg", "bmp", "dds", "svg", "tga", "webp"];
+    public static readonly string[] EXECUTABLE_FORMATS = System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows) ? ["exe"] : [];
     
     public const string SOURCE = "https://github.com/Varrox/simplesound";
     public const string LATEST_RELEASE = "https://api.github.com/repos/Varrox/simplesound/releases/latest";

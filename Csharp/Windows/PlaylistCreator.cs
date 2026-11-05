@@ -2,30 +2,27 @@ using Godot;
 using System.Collections.Generic;
 
 public partial class PlaylistCreator : EditorWindow {
-	[Export] public ThemeLineEdit playlist_name_field;
+	[Export] public StringInputField playlist_name_field;
 
 	[Export] public Button add_track_button;
 	[Export] public FileDropPanel track_drop_panel;
 	[Export] public Control track_path_display_container;
 
-	[Export] public Button add_cover_button;
-	[Export] public PathDisplay cover_path_display;
+	[Export] public FileInputField cover_input_field;
 
-	[Export] public CheckBox album_field;
-	[Export] public ThemeLineEdit artist_field;
+	[Export] public BooleanInputField album_field;
+	[Export] public StringInputField artist_field;
 
 	[Export] public Button submit_button, cancel_button;
 
 	public List<string> tracks = new List<string>();
-	public string cover_path;
 
 	bool cleared = false;
 
 	public override void _Ready() {
 		base._Ready();
 
-		add_cover_button.ButtonUp += OpenCover;
-		cover_path_display.delete.ButtonUp += ClearCover;
+		cover_input_field.filters = new (Tools.GetFilters(Constants.IMAGE_FORMATS));
 
 		add_track_button.ButtonUp += OpenTracks;
 
@@ -38,7 +35,7 @@ public partial class PlaylistCreator : EditorWindow {
 	}
 
 	public void Clear() {
-        playlist_name_field.Text = "";
+        playlist_name_field.value = "";
 
         foreach (Node child in track_path_display_container.GetChildren()) {
             child.QueueFree();
@@ -46,8 +43,8 @@ public partial class PlaylistCreator : EditorWindow {
 
         tracks.Clear();
 
-        album_field.ButtonPressed = false;
-        artist_field.Text = "";
+        album_field.value = false;
+        artist_field.value = "";
 
 		cleared = true;
     }
@@ -58,37 +55,6 @@ public partial class PlaylistCreator : EditorWindow {
 
         Show();
 	}
-
-    public void OpenCover() {
-		ThemeFileDialog file_dialog = new ThemeFileDialog();
-
-		AddChild(file_dialog);
-
-		file_dialog.SetCover();
-		file_dialog.Popup();
-
-		void SetCover(string path) {
-			cover_path = path;
-			cover_path_display.path = cover_path;
-
-			Finish();
-		}
-
-		void Finish() {
-            file_dialog.FileSelected -= SetCover;
-			file_dialog.Canceled -= Finish;
-
-			file_dialog.QueueFree();
-        }
-
-		file_dialog.FileSelected += SetCover;
-        file_dialog.Canceled += Finish;
-    }
-	
-	public void ClearCover() {
-		cover_path = "";
-        cover_path_display.path = cover_path;
-    }
 
 	public void OpenTracks() {
 		ThemeFileDialog file_dialog = new ThemeFileDialog();
@@ -144,17 +110,17 @@ public partial class PlaylistCreator : EditorWindow {
 		Hide();
 
 		if(!cancelled) {
-            string file_name = Tools.GetProperFileName(playlist_name_field.Text);
+            string file_name = Tools.GetProperFileName(playlist_name_field.value);
 
 			Playlist playlist = new Playlist();
 
-            playlist.name = playlist_name_field.Text;
-            playlist.cover = cover_path;
+            playlist.name = playlist_name_field.value;
+            playlist.cover = cover_input_field.value;
             playlist.tracks = tracks;
 
-			if (album_field.ButtonPressed) playlist.type = Playlist.PlaylistType.Album;
+			if (album_field.value) playlist.type = Playlist.PlaylistType.Album;
 
-			if (artist_field.Text.Trim() != "") playlist.artist = artist_field.Text;
+			if (artist_field.value.Trim() != "") playlist.artist = artist_field.value;
 
             Clear();
 

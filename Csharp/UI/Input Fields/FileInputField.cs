@@ -1,4 +1,6 @@
+using System.Linq;
 using Godot;
+using Godot.Collections;
 
 [GlobalClass]
 public partial class FileInputField : InputField {
@@ -12,6 +14,8 @@ public partial class FileInputField : InputField {
         }
         get { return _value; }
     }
+
+    [Export] public Array<string> filters;
 
     private string _value;
 
@@ -68,11 +72,14 @@ public partial class FileInputField : InputField {
     }
 
     public void OpenFileLocation() {
-        ThemeFileDialog file_dialog = new ThemeFileDialog();
+        ThemeFileDialog file_dialog = new ThemeFileDialog {
+            Filters = filters == null ? null : filters.ToArray(),
+            Title = $"Select {full_name} file",
+            OkButtonText = $"Select {full_name}",
+        };
         
         AddChild(file_dialog);
-
-        file_dialog.SetFile();
+        
         file_dialog.Popup();
 
         void SetFile(string file) {

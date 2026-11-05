@@ -83,7 +83,7 @@ public partial class Settings : EditorWindow {
     void AddExternalSettings() {
         AddHeader("Downloader");
 
-        AddFileLocationSetting("yt-dlp Location", ApplicationManager.save_data.application_settings, "ytdlp_location", 
+        AddFileLocationSetting("yt-dlp Location", Tools.GetFilters(Constants.EXECUTABLE_FORMATS), ApplicationManager.save_data.application_settings, "ytdlp_location", 
         "The file location of an yt-dlp executable.");
         AddEnumSetting("Audio Format", ApplicationManager.save_data.application_settings, "download_format", DownloadFormat.MP3, false, 
         "The audio format that the track downloader will save track as.");
@@ -320,11 +320,12 @@ public partial class Settings : EditorWindow {
         input_field.ValueChanged += (string new_value) => ApplySetting(new_value, where, type, instance_name);
     }
 
-    public void AddFileLocationSetting<T>(string full_name, T where, string instance_name, string tooltip_text = "") where T : ISettings {
+    public void AddFileLocationSetting<T>(string full_name, string[] filters, T where, string instance_name, string tooltip_text = "") where T : ISettings {
         Type type = typeof(T);
 
         FileInputField input_field = new FileInputField {
             full_name = full_name,
+            filters = new (filters),
             TooltipText = tooltip_text,
             value = GetSetting<string>(where, type, instance_name)
         };

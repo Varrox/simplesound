@@ -99,4 +99,12 @@ public class Tools {
     public static string GetProperFileName(string text) {
         return text.Replace('\\', '-').Replace('/', '-').Replace(':', '-');
     }
+
+    public static string[] GetFilters(string[] file_extentions) {
+        for(int i = 0; i < file_extentions.Length; i++) {
+            file_extentions[i] = $"*.{file_extentions[i]}";
+        }
+
+        return file_extentions;
+    }
 }

@@ -2,67 +2,99 @@
 
 [ext_resource type="FontVariation" uid="uid://c51c0k1xp8ef5" path="res://Styling/Fonts/DefaultFont.tres" id="1_8t6yf"]
 [ext_resource type="Script" uid="uid://bhqfe4m1n2gya" path="res://Csharp/Windows/PlaylistCreator.cs" id="1_b0noq"]
-[ext_resource type="Script" uid="uid://ckpanpt3fty8d" path="res://Csharp/UI/Default Node Extentions/ThemeLineEdit.cs" id="4_eb7ps"]
+[ext_resource type="Script" uid="uid://d31syayqhiohg" path="res://Csharp/UI/Input Fields/StringInputField.cs" id="2_etdoe"]
 [ext_resource type="StyleBox" uid="uid://dhhahexcqr5gf" path="res://Styling/Filedrop/file_drop_normal.tres" id="4_pc04o"]
 [ext_resource type="Script" uid="uid://bf0uwbvnc27wl" path="res://Csharp/UI/FileDropPanel.cs" id="5_etdoe"]
-[ext_resource type="Script" uid="uid://ddv8hmbckq2e" path="res://Csharp/UI/PathDisplay.cs" id="6_pc04o"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_acdqb"]
+[ext_resource type="Script" uid="uid://gen4blolgiqy" path="res://Csharp/UI/Input Fields/FileInputField.cs" id="6_m7hbu"]
+[ext_resource type="Script" uid="uid://cmts1ynynqmtp" path="res://Csharp/UI/Input Fields/BooleanInputField.cs" id="7_m7hbu"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yiuwm"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r7omr"]
 
-[node name="Window" type="Window" unique_id=874625055 node_paths=PackedStringArray("playlist_name_field", "add_track_button", "track_drop_panel", "track_path_display_container", "add_cover_button", "cover_path_display", "album_field", "artist_field", "submit_button", "cancel_button")]
+[node name="Window" type="Window" unique_id=874625055 node_paths=PackedStringArray("playlist_name_field", "add_track_button", "track_drop_panel", "track_path_display_container", "cover_input_field", "album_field", "artist_field", "submit_button", "cancel_button")]
 oversampling_override = 1.0
 title = "Create Playlist"
 initial_position = 2
-size = Vector2i(600, 350)
+size = Vector2i(600, 400)
 transient = true
 exclusive = true
 min_size = Vector2i(450, 300)
 script = ExtResource("1_b0noq")
-playlist_name_field = NodePath("HBoxContainer2/VBoxContainer/Name")
-add_track_button = NodePath("HBoxContainer2/VBoxContainer/AddTrack")
-track_drop_panel = NodePath("HBoxContainer2/VBoxContainer/Panel")
-track_path_display_container = NodePath("HBoxContainer2/VBoxContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer")
-add_cover_button = NodePath("HBoxContainer2/VBoxContainer2/Cover")
-cover_path_display = NodePath("HBoxContainer2/VBoxContainer2/PathDisplay")
-album_field = NodePath("HBoxContainer2/VBoxContainer2/Album")
-artist_field = NodePath("HBoxContainer2/VBoxContainer2/Artist")
-submit_button = NodePath("HBoxContainer/Create")
-cancel_button = NodePath("HBoxContainer/Cancel")
+playlist_name_field = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/Name")
+add_track_button = NodePath("MarginContainer/VBoxContainer/AddTrack")
+track_drop_panel = NodePath("MarginContainer/VBoxContainer/Panel")
+track_path_display_container = NodePath("MarginContainer/VBoxContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer")
+cover_input_field = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer2/FileInputField")
+album_field = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/Album")
+artist_field = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/Artist")
+submit_button = NodePath("MarginContainer/VBoxContainer/HBoxContainer/Create")
+cancel_button = NodePath("MarginContainer/VBoxContainer/HBoxContainer/Cancel")
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="." unique_id=1414908470]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=484719441]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = 10.0
-offset_right = -10.0
-offset_bottom = -55.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer2" unique_id=878386457]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1701904165]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1414908470]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2" unique_id=878386457]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Name" type="LineEdit" parent="HBoxContainer2/VBoxContainer" unique_id=416225668]
+[node name="Name" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer" unique_id=826947875]
+custom_minimum_size = Vector2(28, 28)
 layout_mode = 2
 size_flags_vertical = 4
 tooltip_text = "The name of the playlist."
-theme_override_fonts/font = ExtResource("1_8t6yf")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_acdqb")
-placeholder_text = "Name"
-script = ExtResource("4_eb7ps")
-metadata/_custom_type_script = "uid://ckpanpt3fty8d"
+script = ExtResource("2_etdoe")
+full_name = "Name"
+metadata/_custom_type_script = "uid://d31syayqhiohg"
 
-[node name="HSeparator" type="HSeparator" parent="HBoxContainer2/VBoxContainer" unique_id=261354492]
+[node name="Artist" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer" unique_id=1883170301]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+size_flags_vertical = 4
+tooltip_text = "The artist of this playlist / album."
+script = ExtResource("2_etdoe")
+full_name = "Artist"
+metadata/_custom_type_script = "uid://d31syayqhiohg"
+
+[node name="Album" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer" unique_id=1105242706]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+tooltip_text = "Toggles whether or not this playlist is considered an album."
+script = ExtResource("7_m7hbu")
+full_name = "Album"
+metadata/_custom_type_script = "uid://cmts1ynynqmtp"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1572833832]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="FileInputField" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer2" unique_id=1062248738]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+script = ExtResource("6_m7hbu")
+full_name = "Cover"
+metadata/_custom_type_script = "uid://gen4blolgiqy"
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer" unique_id=261354492]
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
-[node name="AddTrack" type="Button" parent="HBoxContainer2/VBoxContainer" unique_id=1543300614]
+[node name="AddTrack" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1543300614]
 layout_mode = 2
 size_flags_vertical = 4
 tooltip_text = "Opens a dialog to select audio files."
@@ -70,14 +102,14 @@ theme_override_fonts/font = ExtResource("1_8t6yf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_yiuwm")
 text = "Add Track(s)"
 
-[node name="Panel" type="Panel" parent="HBoxContainer2/VBoxContainer" unique_id=1120451052]
+[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer" unique_id=1120451052]
 custom_minimum_size = Vector2(0, 79.7)
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = ExtResource("4_pc04o")
 script = ExtResource("5_etdoe")
 
-[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer2/VBoxContainer/Panel" unique_id=808288629]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/Panel" unique_id=808288629]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -89,77 +121,24 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer2/VBoxContainer/Panel/MarginContainer" unique_id=531190408]
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/Panel/MarginContainer" unique_id=531190408]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer2/VBoxContainer/Panel/MarginContainer/ScrollContainer" unique_id=1925917653]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="VSeparator" type="VSeparator" parent="HBoxContainer2" unique_id=1218646127]
-custom_minimum_size = Vector2(7.06, 0)
-layout_mode = 2
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer2" unique_id=1572833832]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Panel/MarginContainer/ScrollContainer" unique_id=1925917653]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Cover" type="Button" parent="HBoxContainer2/VBoxContainer2" unique_id=623857352]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=463861364]
 layout_mode = 2
-size_flags_vertical = 4
-tooltip_text = "Opens a file dialog to select an image."
-theme_override_fonts/font = ExtResource("1_8t6yf")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_yiuwm")
-text = "Select cover"
-
-[node name="PathDisplay" type="Button" parent="HBoxContainer2/VBoxContainer2" unique_id=887099655]
-custom_minimum_size = Vector2(0, 25)
-layout_mode = 2
-script = ExtResource("6_pc04o")
-metadata/_custom_type_script = "uid://ddv8hmbckq2e"
-
-[node name="HSeparator2" type="HSeparator" parent="HBoxContainer2/VBoxContainer2" unique_id=284551003]
-custom_minimum_size = Vector2(0, 10)
-layout_mode = 2
-
-[node name="Album" type="CheckBox" parent="HBoxContainer2/VBoxContainer2" unique_id=1588255886]
-layout_mode = 2
-tooltip_text = "Toggles whether or not this playlist is considered an album."
-theme_override_fonts/font = ExtResource("1_8t6yf")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_r7omr")
-text = "Album"
-
-[node name="Artist" type="LineEdit" parent="HBoxContainer2/VBoxContainer2" unique_id=873509322]
-layout_mode = 2
-size_flags_vertical = 4
-tooltip_text = "The artist of this playlist / album."
-theme_override_fonts/font = ExtResource("1_8t6yf")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_acdqb")
-placeholder_text = "Artist"
-script = ExtResource("4_eb7ps")
-metadata/_custom_type_script = "uid://ckpanpt3fty8d"
-
-[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=463861364]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -61.0
-offset_top = -39.045
-offset_right = 61.0
-offset_bottom = -11.045
-grow_horizontal = 2
-grow_vertical = 0
 alignment = 1
 
-[node name="Create" type="Button" parent="HBoxContainer" unique_id=2060439743]
+[node name="Create" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=2060439743]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_8t6yf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_r7omr")
 text = "Create"
 
-[node name="Cancel" type="Button" parent="HBoxContainer" unique_id=1208944921]
+[node name="Cancel" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1208944921]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_8t6yf")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_r7omr")
