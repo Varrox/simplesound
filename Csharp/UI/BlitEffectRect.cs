@@ -14,7 +14,7 @@ public partial class BlitEffectRect : TextureRect {
 
     private int[] _sorted_effects;
 
-    public const DrawableTexture2D.DrawableFormat FORMAT = DrawableTexture2D.DrawableFormat.Rgbah;
+    public const DrawableTexture2D.DrawableFormat FORMAT = DrawableTexture2D.DrawableFormat.Rgbaf;
 
     private record BlitEffectLayer {
         public int priority;
@@ -33,16 +33,6 @@ public partial class BlitEffectRect : TextureRect {
     public override void _Ready() {
         _effect_layers = new Dictionary<int, BlitEffectLayer>();
         _drawable_texture = new DrawableTexture2D();
-
-        TransitionBlitEffect gup = new TransitionBlitEffect
-        {
-            last_texture = GD.Load<Texture2D>("res://Icons/Default Covers/DefaultCover.png"),
-            new_texture = GD.Load<Texture2D>("res://Icons/Logos/logochrimis.png"),
-            t_value = 0.0f
-        };
-
-        AppendEffect(gup, 0);
-        AppendEffect(new BlurBlitEffect(), 1);
 
         QueueRedrawBlits();
 
@@ -196,8 +186,8 @@ public class BlurBlitEffect : ShaderBlitEffect {
 
     private static DrawableTexture2D vertical_drawable_texture;
 
-    public float blur_size = 0.22f;
-    public float dim = 0.85f;
+    public float blur_size = 0.25f;
+    public float dim = 0.7f;
 
     public BlurBlitEffect() {
         _blit_blur_shader = ApplicationManager.GetShaderResource("blur_blit");

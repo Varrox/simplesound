@@ -1,4 +1,5 @@
 shader_type texture_blit;
+render_mode blend_disabled;
 
 uniform sampler2D last_texture:hint_blit_source0;
 uniform sampler2D new_texture:hint_blit_source1;

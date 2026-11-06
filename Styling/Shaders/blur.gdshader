@@ -8,37 +8,30 @@ uniform float blur_size:hint_range(0.001, 1, 0.001) = 0.25;
 
 #define pow2(x) (x * x)
 
-varying float sigma;
-
 const int samples = 5;
 global uniform int blur_quality;
 
-float gaussian(vec2 i) {
-	return 1.0 / (2.0 * PI * sigma) * exp(-((pow2(i.x) + pow2(i.y)) / (2.0 * sigma)));
-}
-
-vec3 blur(vec2 screen_uv, sampler2D input_texture, float size) {
-	vec3 result = vec3(1.);
-	float steps = size / float(samples * blur_quality);
+void fragment() {
+	vec3 result = vec3(1.0);
 	float accum = 0.0;
-	float weight;
-	vec2 offset;
-
-	for(float x = -size; x < size; x += steps)
-	{
-		for(float y = -size; y < size; y += steps)
-		{
-			offset = vec2(x, y);
-			weight = gaussian(offset);
-			result += texture(input_texture, screen_uv + offset * size).rgb * weight;
-			accum += weight;
+	
+	float size = blur_size * 0.5;
+	float steps = size / float(samples * blur_quality);
+	
+	float sigma = pow2(float(blur_size) * 0.25);
+	
+	for(float x = -size; x < size; x += steps) {
+		for(float y = -size; y < size; y += steps) {
+			vec2 uv = UV + vec2(x, y) * size;
+			if ((uv.x >= 0.0 && uv.x <= 1.0) && (uv.y >= 0.0 && uv.y <= 1.0)) {
+				float weight = exp(-((pow2(x) + pow2(y)) / (2.0 * sigma))) / (2.0 * PI * sigma);
+				result += texture(TEXTURE, uv).rgb * weight;
+				accum += weight;
+			}
 		}
 	}
 	
-	return result / accum;
-}
-
-void fragment() {
-	sigma = pow2(float(blur_size) * 0.25);
-	COLOR = vec4(blur(UV, TEXTURE, blur_size / 2.0) * 0.7, 1.);
+	result /= accum;
+	
+	COLOR = vec4(result * 0.7, 1.0);
 }

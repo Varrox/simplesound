@@ -169,7 +169,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Image" type="TextureRect" parent="Background" unique_id=212901943]
-visible = false
 material = SubResource("ShaderMaterial_n3cvr")
 layout_mode = 1
 anchors_preset = 15
@@ -318,7 +317,6 @@ size_flags_horizontal = 8
 text = "100%"
 
 [node name="FPS" type="Label" parent="Interface/Top Bar/MarginContainer/HBoxContainer/Right/Text" unique_id=1348915883]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 8
 text = "60 FPS"
