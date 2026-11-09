@@ -34,6 +34,7 @@
 
 ## Optimizations
 
+- Background now uses 2 pass blur and only rerenders when it needs to.
 - Using ATL now over Taglib for faster metadata loading performance.
 - Instant playlist loading.
 - Exports from now on will be using a custom export template of godot that strips away all unnecessary parts of the engine like 3D, 2D, and physics. This decreases the size of simplesound by 15mb - 25mb.
