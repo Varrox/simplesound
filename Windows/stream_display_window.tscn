@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://bso3qe68ptmm4" path="res://Csharp/Windows/StreamDisplay.cs" id="1_gaihk"]
 [ext_resource type="Texture2D" uid="uid://cksbdmhr2s8yy" path="res://Icons/Default Covers/DefaultCover.png" id="1_lpmxw"]
-[ext_resource type="Shader" uid="uid://6mp1f8uww708" path="res://Styling/Shaders/blur.gdshader" id="2_lpmxw"]
 [ext_resource type="PackedScene" uid="uid://cqa0miuyddnkx" path="res://Prefabs/sound_visualizer.tscn" id="5_mdwd8"]
 [ext_resource type="FontFile" uid="uid://ckdni7vy5bpft" path="res://Styling/Fonts/VarelaRound-Regular.ttf" id="5_tsl3i"]
 
@@ -15,10 +14,6 @@ corner_radius_bottom_left = 20
 shadow_color = Color(0, 0, 0, 0.5254902)
 shadow_size = 5
 shadow_offset = Vector2(5, 5)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_bmsx4"]
-shader = ExtResource("2_lpmxw")
-shader_parameter/blur_size = 0.32400001539
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1qe5s"]
 corner_radius_top_left = 8
@@ -58,7 +53,6 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_gaihk")
 
 [node name="ColorRect" type="TextureRect" parent="Panel" unique_id=1599798773]
-material = SubResource("ShaderMaterial_bmsx4")
 layout_mode = 2
 expand_mode = 2
 stretch_mode = 6

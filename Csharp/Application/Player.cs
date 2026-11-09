@@ -12,7 +12,6 @@ public partial class Player : Node {
     [ExportGroup("Visuals")]
     [Export] public Label current_time_label, total_time_label, track_name_label, track_artist_label;
     [Export] public TextureRect track_cover_texture_rect;
-    [Export] public SubViewport background_subviewport;
     [Export] public Background background;
 
     private bool _setting_time;
@@ -216,8 +215,6 @@ public partial class Player : Node {
         if (background != null && background.GetDefaultEffectsVisible()) {
             background.SetDefaultBackgroundTexture(track_cover_texture_rect.Texture);
         }
-        
-        background_subviewport.Set("target_texture", track_cover_texture_rect.Texture);
 
         total_time_label.Text = Tools.SecondsToTimestamp(track_length);
 

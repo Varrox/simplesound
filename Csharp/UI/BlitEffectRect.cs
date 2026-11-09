@@ -7,7 +7,7 @@ public partial class BlitEffectRect : TextureRect {
     private Dictionary<int, BlitEffectLayer> _effect_layers;
     private DrawableTexture2D _drawable_texture;
 
-    private bool _queued_for_redraw;
+    private bool _queued_for_redraw, _queued_for_setup;
 
     private Vector2 _last_size;
     private bool _last_visible;
@@ -15,6 +15,10 @@ public partial class BlitEffectRect : TextureRect {
     private int[] _sorted_effects;
 
     public const DrawableTexture2D.DrawableFormat FORMAT = DrawableTexture2D.DrawableFormat.Rgbaf;
+
+    private Rect2I GetFullRect() {
+        return new Rect2I(0, 0, (Vector2I)Size);
+    }
 
     private record BlitEffectLayer {
         public int priority;
@@ -35,6 +39,7 @@ public partial class BlitEffectRect : TextureRect {
         _drawable_texture = new DrawableTexture2D();
 
         QueueRedrawBlits();
+        QueueSetup();
 
         _last_size = -Vector2.One;
         _last_visible = false;
@@ -43,6 +48,7 @@ public partial class BlitEffectRect : TextureRect {
     public override void _Process(double delta) {
         if((!_last_visible || Size != _last_size) && Visible) {
             QueueRedrawBlits();
+            QueueSetup();
 
             _last_visible = Visible;
             _last_size = Size;
@@ -114,10 +120,21 @@ public partial class BlitEffectRect : TextureRect {
         _queued_for_redraw = true;
     }
 
+    public void QueueSetup() {
+        _queued_for_setup = true;
+    }
+
+    public void Setup(Rect2I full_rect) {
+        _drawable_texture.Setup(full_rect.Size.X, full_rect.Size.Y, FORMAT);
+    }
+
     public void RedrawBlits() {
         Rect2I full_rect = new Rect2I(0, 0, (Vector2I)Size);
 
-        _drawable_texture.Setup(full_rect.Size.X, full_rect.Size.Y, FORMAT);
+        if (_queued_for_setup) {
+            Setup(full_rect);
+            _queued_for_setup = false;
+        }
 
         if (_sorted_effects == null) {
             _sorted_effects = _effect_layers.OrderBy(k => k.Value.priority).Select(v => v.Key).ToArray();

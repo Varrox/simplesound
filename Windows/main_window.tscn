@@ -3,9 +3,6 @@
 [ext_resource type="Theme" uid="uid://cg2x5h7ufrntn" path="res://Styling/global_theme.tres" id="1_gjyis"]
 [ext_resource type="Script" uid="uid://b81fhtdmrks0a" path="res://Csharp/Application/Main.cs" id="2_kb0xi"]
 [ext_resource type="Script" uid="uid://cvtqwvi0qvcvy" path="res://Csharp/Application/Player.cs" id="3_cq8g2"]
-[ext_resource type="Script" uid="uid://dshtlldgdpwlu" path="res://Styling/background_image_transition.gd" id="4_7kpk1"]
-[ext_resource type="Shader" uid="uid://bdi2g0ydm4uf7" path="res://Styling/Shaders/transition.gdshader" id="5_xqlq7"]
-[ext_resource type="Shader" uid="uid://6mp1f8uww708" path="res://Styling/Shaders/blur.gdshader" id="6_r776v"]
 [ext_resource type="Script" uid="uid://bmsq8qroocy22" path="res://Csharp/UI/Background.cs" id="7_j1bvx"]
 [ext_resource type="Texture2D" uid="uid://cksbdmhr2s8yy" path="res://Icons/Default Covers/DefaultCover.png" id="7_xvcl6"]
 [ext_resource type="Script" uid="uid://bemg4hrkjfrtx" path="res://GDScript/side_panel.gd" id="8_j6ftg"]
@@ -41,14 +38,6 @@
 [ext_resource type="Script" uid="uid://5e0topb6784o" path="res://Csharp/UI/Zoomer.cs" id="45_0rtar"]
 [ext_resource type="Texture2D" uid="uid://bdbco8a0mnjn6" path="res://Icons/Logos/logotrans.png" id="54_lfg21"]
 [ext_resource type="Script" uid="uid://bmgcpmp5cfuwy" path="res://Csharp/Application/Tray.cs" id="55_y62dl"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_abqjc"]
-shader = ExtResource("5_xqlq7")
-shader_parameter/t = 0.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_n3cvr"]
-shader = ExtResource("6_r776v")
-shader_parameter/blur_size = 0.25
 
 [sub_resource type="Animation" id="Animation_6iyjs"]
 length = 0.001
@@ -154,31 +143,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="SubViewport" type="SubViewport" parent="Background" unique_id=748581528 node_paths=PackedStringArray("transitioner", "target_texture_rect")]
-size = Vector2i(256, 256)
-script = ExtResource("4_7kpk1")
-transitioner = NodePath("Transitioner")
-target_texture_rect = NodePath("../Image")
-
-[node name="Transitioner" type="ColorRect" parent="Background/SubViewport" unique_id=839690620]
-material = SubResource("ShaderMaterial_abqjc")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Image" type="TextureRect" parent="Background" unique_id=212901943]
-material = SubResource("ShaderMaterial_n3cvr")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("7_xvcl6")
-stretch_mode = 6
-
 [node name="Video" type="VideoStreamPlayer" parent="Background" unique_id=797067042]
 layout_mode = 1
 anchors_preset = 15
@@ -200,7 +164,7 @@ expand_mode = 1
 script = ExtResource("7_j1bvx")
 metadata/_custom_type_script = "uid://bmsq8qroocy22"
 
-[node name="Interface" type="VBoxContainer" parent="." unique_id=1529140980 node_paths=PackedStringArray("play_button", "next_button", "back_button", "loop_button", "shuffle_button", "progress_slider", "volume_slider", "mute_button", "current_time_label", "total_time_label", "track_name_label", "track_artist_label", "track_cover_texture_rect", "background_subviewport")]
+[node name="Interface" type="VBoxContainer" parent="." unique_id=1529140980 node_paths=PackedStringArray("play_button", "next_button", "back_button", "loop_button", "shuffle_button", "progress_slider", "volume_slider", "mute_button", "current_time_label", "total_time_label", "track_name_label", "track_artist_label", "track_cover_texture_rect", "background")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -222,7 +186,7 @@ total_time_label = NodePath("Player/MarginContainer/Controls/Time/Total Time")
 track_name_label = NodePath("Player/MarginContainer/Track Attributes/VBoxContainer2/VBoxContainer/Name")
 track_artist_label = NodePath("Player/MarginContainer/Track Attributes/VBoxContainer2/VBoxContainer/Artist")
 track_cover_texture_rect = NodePath("Player/MarginContainer/Track Attributes/VBoxContainer2/PanelContainer/Cover")
-background_subviewport = NodePath("../Background/SubViewport")
+background = NodePath("../Background/Background")
 
 [node name="Top Bar" type="ColorRect" parent="Interface" unique_id=1268311251]
 custom_minimum_size = Vector2(0, 52)
@@ -340,7 +304,7 @@ icon = ExtResource("29_2wbij")
 flat = false
 expand_icon = true
 script = ExtResource("30_xrbbi")
-background_texture_rect = NodePath("../../../../../../Background/Image")
+background_texture_rect = NodePath("../../../../../../Background/Background")
 text_container = NodePath("../Text")
 
 [node name="Settings" type="Button" parent="Interface/Top Bar/MarginContainer/HBoxContainer/Right" unique_id=501507118 node_paths=PackedStringArray("window")]
