@@ -5,13 +5,13 @@
 [ext_resource type="Script" uid="uid://cvtqwvi0qvcvy" path="res://Csharp/Application/Player.cs" id="3_cq8g2"]
 [ext_resource type="Script" uid="uid://bmsq8qroocy22" path="res://Csharp/UI/Background.cs" id="7_j1bvx"]
 [ext_resource type="Texture2D" uid="uid://cksbdmhr2s8yy" path="res://Icons/Default Covers/DefaultCover.png" id="7_xvcl6"]
-[ext_resource type="Script" uid="uid://bemg4hrkjfrtx" path="res://GDScript/side_panel.gd" id="8_j6ftg"]
 [ext_resource type="Texture2D" uid="uid://pldqtuicj4ri" path="res://Icons/SVG/playlist.svg" id="9_xrbbi"]
 [ext_resource type="Texture2D" uid="uid://dgqxvsk1bwyga" path="res://Icons/SVG/plus.svg" id="10_gjyis"]
 [ext_resource type="Texture2D" uid="uid://cnygllcx1qoyc" path="res://Icons/SVG/search.svg" id="10_ns1th"]
 [ext_resource type="Script" uid="uid://ddkuen8ursg0q" path="res://Csharp/UI/Context Menus/AddPlaylist.cs" id="11_xrbbi"]
 [ext_resource type="Script" uid="uid://dcnfao6qa81tk" path="res://Csharp/UI/Containers/PlaylistsVisualizer.cs" id="12_jnr5d"]
 [ext_resource type="Shader" uid="uid://cxrpix7bw201g" path="res://Styling/Shaders/anti_aliased.gdshader" id="18_fmyll"]
+[ext_resource type="Script" uid="uid://dk38vgmpdyowf" path="res://Csharp/UI/SidePanel.cs" id="19_8ildk"]
 [ext_resource type="Script" uid="uid://ckpanpt3fty8d" path="res://Csharp/UI/Default Node Extentions/ThemeLineEdit.cs" id="21_w782g"]
 [ext_resource type="Script" uid="uid://bag5mx17s8q1c" path="res://Csharp/UI/Buttons/Appdata.cs" id="23_f8opk"]
 [ext_resource type="Texture2D" uid="uid://ynqg27jlotl6" path="res://Icons/SVG/folder.svg" id="24_cq8g2"]
@@ -351,16 +351,17 @@ theme_override_constants/separation = 0
 split_offsets = PackedInt32Array(303)
 split_offset = 303
 
-[node name="Side Panel" type="Panel" parent="Interface/Content" unique_id=638521110 node_paths=PackedStringArray("split", "open_button", "closed_button", "open_element", "closed_element")]
+[node name="Side Panel" type="Panel" parent="Interface/Content" unique_id=638521110 node_paths=PackedStringArray("split_container", "open_button", "close_button", "open_element", "closed_element")]
 custom_minimum_size = Vector2(303, 0)
 layout_mode = 2
 focus_mode = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_4w656")
-script = ExtResource("8_j6ftg")
-closed_min_size = 52
-split = NodePath("..")
+script = ExtResource("19_8ildk")
+open_minimum_size = 303
+closed_minimum_size = 52
+split_container = NodePath("..")
 open_button = NodePath("Open/Open/HBoxContainer/Playlist")
-closed_button = NodePath("Open/Collapsed/Button")
+close_button = NodePath("Open/Collapsed/Button")
 open_element = NodePath("Open/Open")
 closed_element = NodePath("Open/Collapsed")
 
@@ -503,6 +504,8 @@ theme_override_constants/margin_bottom = 5
 
 [node name="Track Display" parent="Interface/Content/Main Content" unique_id=72923922 instance=ExtResource("28_pojro")]
 layout_mode = 2
+total_items = 0
+item_height = 60
 
 [node name="Player" type="ColorRect" parent="Interface" unique_id=930252818]
 custom_minimum_size = Vector2(0, 108)
