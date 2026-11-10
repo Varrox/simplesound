@@ -37,10 +37,13 @@ public partial class ColorInputField : InputField {
 
         _theme_color_picker_button = new ThemeColorPickerButton {
             Color = _value,
-            CustomMinimumSize = new Vector2(MINIMUM_WIDTH * 3, MINIMUM_HEIGHT)
+            CustomMinimumSize = new Vector2(MINIMUM_WIDTH * 3, MINIMUM_HEIGHT),
+            SizeFlagsHorizontal = SizeFlags.ExpandFill
         };
 
-        AddChild(_theme_color_picker_button);
+        _panel.AddChild(_theme_color_picker_button);
+
+        _theme_color_picker_button.SetAnchorsPreset(LayoutPreset.FullRect);
 
         _theme_color_picker_button.ColorChanged += (Color new_value) => _ValueChanged();
 

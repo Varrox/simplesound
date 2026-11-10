@@ -7,24 +7,50 @@ public partial class InputField : HBoxContainer {
     {
         set {
             field = value;
-            if (_full_name_label != null) _full_name_label.Text = value + ":";
+            if (_full_name_label != null) _full_name_label.Text = $"{value}:";
         }
         get;
     }
+
+    private HBoxContainer _field_name_container;
     private Label _full_name_label;
+    protected Panel _panel;
+
     private Button _reset_button;
 
     public const int MINIMUM_WIDTH = 28, MINIMUM_HEIGHT = 29;
 
     public override void _Ready() {
-        _full_name_label = new Label {
-            MouseFilter = MouseFilterEnum.Ignore,
-            Text = full_name + ":"
+        AddThemeConstantOverride("separation", 5);
+
+        _field_name_container = new HBoxContainer {
+            SizeFlagsHorizontal = SizeFlags.ExpandFill,
+            SizeFlagsVertical = SizeFlags.ExpandFill
         };
 
-        CustomMinimumSize = new Vector2(MINIMUM_WIDTH, MINIMUM_HEIGHT);
+        _field_name_container.AddThemeConstantOverride("separation", 5);
 
-        AddChild(_full_name_label);
+        AddChild(_field_name_container);
+
+        _full_name_label = new Label {
+            MouseFilter = MouseFilterEnum.Ignore,
+            Text = $"{full_name}:",
+            VerticalAlignment = VerticalAlignment.Center,
+            SizeFlagsHorizontal = SizeFlags.ExpandFill,
+            SizeFlagsVertical = SizeFlags.ExpandFill,
+            TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis
+        };
+
+        _field_name_container.AddChild(_full_name_label);
+
+        _panel = new Panel {
+            SizeFlagsHorizontal = SizeFlags.ExpandFill,
+            SizeFlagsVertical = SizeFlags.ExpandFill
+        };
+
+        AddChild(_panel);
+
+        CustomMinimumSize = new Vector2(MINIMUM_WIDTH, MINIMUM_HEIGHT);
     }
 
     protected virtual void _ResetToDefaultValue() {
@@ -48,7 +74,9 @@ public partial class InputField : HBoxContainer {
             CustomMinimumSize = Vector2.One * 28
         };
 
-        AddChild(_reset_button);
+        _field_name_container.AddChild(_reset_button);
+
+        _reset_button.SizeFlagsHorizontal = SizeFlags.ShrinkEnd;
 
         void ResetButtonPressed() {
             _ResetToDefaultValue();

@@ -16,18 +16,18 @@
 oversampling_override = 1.0
 title = "Create Playlist"
 initial_position = 2
-size = Vector2i(600, 400)
+size = Vector2i(450, 400)
 transient = true
 exclusive = true
 min_size = Vector2i(450, 300)
 script = ExtResource("1_b0noq")
-playlist_name_field = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/Name")
+playlist_name_field = NodePath("MarginContainer/VBoxContainer/VBoxContainer/Name")
 add_track_button = NodePath("MarginContainer/VBoxContainer/AddTrack")
 track_drop_panel = NodePath("MarginContainer/VBoxContainer/Panel")
 track_path_display_container = NodePath("MarginContainer/VBoxContainer/Panel/MarginContainer/ScrollContainer/VBoxContainer")
-cover_input_field = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer2/FileInputField")
-album_field = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/Album")
-artist_field = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/Artist")
+cover_input_field = NodePath("MarginContainer/VBoxContainer/VBoxContainer2/FileInputField")
+album_field = NodePath("MarginContainer/VBoxContainer/VBoxContainer/Album")
+artist_field = NodePath("MarginContainer/VBoxContainer/VBoxContainer/Artist")
 submit_button = NodePath("MarginContainer/VBoxContainer/HBoxContainer/Create")
 cancel_button = NodePath("MarginContainer/VBoxContainer/HBoxContainer/Cancel")
 
@@ -46,49 +46,57 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 theme_override_constants/separation = 5
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1414908470]
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2" unique_id=878386457]
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1572833832]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Name" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer" unique_id=826947875]
+[node name="FileInputField" type="HBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer2" unique_id=1062248738]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+script = ExtResource("6_m7hbu")
+value = null
+full_name = "Cover"
+metadata/_custom_type_script = "uid://gen4blolgiqy"
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer" unique_id=2124824861]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=878386457]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Name" type="HBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer" unique_id=826947875]
 custom_minimum_size = Vector2(28, 28)
 layout_mode = 2
 size_flags_vertical = 4
 tooltip_text = "The name of the playlist."
 script = ExtResource("2_etdoe")
+value = null
+default_value = null
 full_name = "Name"
 metadata/_custom_type_script = "uid://d31syayqhiohg"
 
-[node name="Artist" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer" unique_id=1883170301]
+[node name="Artist" type="HBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer" unique_id=1883170301]
 custom_minimum_size = Vector2(28, 28)
 layout_mode = 2
 size_flags_vertical = 4
 tooltip_text = "The artist of this playlist / album."
 script = ExtResource("2_etdoe")
+value = null
+default_value = null
 full_name = "Artist"
 metadata/_custom_type_script = "uid://d31syayqhiohg"
 
-[node name="Album" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer" unique_id=1105242706]
+[node name="Album" type="HBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer" unique_id=1105242706]
 custom_minimum_size = Vector2(28, 28)
 layout_mode = 2
 tooltip_text = "Toggles whether or not this playlist is considered an album."
 script = ExtResource("7_m7hbu")
+value = null
+default_value = null
 full_name = "Album"
 metadata/_custom_type_script = "uid://cmts1ynynqmtp"
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2" unique_id=1572833832]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="FileInputField" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer2" unique_id=1062248738]
-custom_minimum_size = Vector2(28, 28)
-layout_mode = 2
-script = ExtResource("6_m7hbu")
-full_name = "Cover"
-metadata/_custom_type_script = "uid://gen4blolgiqy"
 
 [node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer" unique_id=261354492]
 custom_minimum_size = Vector2(0, 10)
@@ -108,6 +116,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = ExtResource("4_pc04o")
 script = ExtResource("5_etdoe")
+file_filter = null
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/Panel" unique_id=808288629]
 layout_mode = 1

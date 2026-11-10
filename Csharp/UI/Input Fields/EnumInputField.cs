@@ -49,7 +49,9 @@ public partial class EnumInputField : InputField {
     public override void _Ready() {
         base._Ready();
 
-        _option_button = new OptionButton();
+        _option_button = new OptionButton {
+            SizeFlagsHorizontal = SizeFlags.ExpandFill
+        };
 
         for (int i = 0; i < _options.Length; i++) {
             _option_button.GetPopup().AddItem(_options[i]);
@@ -57,7 +59,9 @@ public partial class EnumInputField : InputField {
 
         _option_button.Select(value);
 
-        AddChild(_option_button);
+        _panel.AddChild(_option_button);
+
+        _option_button.SetAnchorsPreset(LayoutPreset.FullRect);
 
         _option_button.ItemSelected += (long new_value) => _ValueChanged();
 

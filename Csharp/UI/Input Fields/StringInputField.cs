@@ -40,7 +40,9 @@ public partial class StringInputField : InputField {
             SizeFlagsHorizontal = SizeFlags.ExpandFill
         };
 
-        AddChild(_theme_line_edit);
+        _panel.AddChild(_theme_line_edit);
+
+        _theme_line_edit.SetAnchorsPreset(LayoutPreset.FullRect);
 
         _theme_line_edit.TextChanged += (string new_value) => _ValueChanged();
 

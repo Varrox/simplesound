@@ -33,13 +33,21 @@ public partial class FileInputField : InputField {
     public override void _Ready() {
         base._Ready();
 
+        HBoxContainer container = new HBoxContainer {};
+
+        _panel.AddChild(container);
+
+        container.SetAnchorsPreset(LayoutPreset.FullRect);
+
         _theme_line_edit = new ThemeLineEdit {
             Text = _value,
             PlaceholderText = "...",
             SizeFlagsHorizontal = SizeFlags.ExpandFill
         };
 
-        AddChild(_theme_line_edit);
+        container.AddChild(_theme_line_edit);
+
+        _theme_line_edit.SetAnchorsPreset(LayoutPreset.FullRect);
 
         _file_select_button = new Button {
             Icon = ApplicationManager.GetThemeIcon("folder_icon"),
@@ -48,7 +56,8 @@ public partial class FileInputField : InputField {
             CustomMinimumSize = new Vector2(MINIMUM_HEIGHT, MINIMUM_HEIGHT)
         };
 
-        AddChild(_file_select_button);
+        container.AddChild(_file_select_button);
+        
         _file_select_button.ButtonUp += OpenFileLocation;
 
         _theme_line_edit.TextChanged += (string new_value) => _ValueChanged();

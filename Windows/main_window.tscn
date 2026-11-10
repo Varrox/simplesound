@@ -504,8 +504,6 @@ theme_override_constants/margin_bottom = 5
 
 [node name="Track Display" parent="Interface/Content/Main Content" unique_id=72923922 instance=ExtResource("28_pojro")]
 layout_mode = 2
-total_items = 0
-item_height = 60
 
 [node name="Player" type="ColorRect" parent="Interface" unique_id=930252818]
 custom_minimum_size = Vector2(0, 108)

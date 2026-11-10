@@ -56,22 +56,30 @@ public partial class Vector2InputField : InputField {
     public override void _Ready() {
         base._Ready();
 
+        HBoxContainer container = new HBoxContainer {};
+
+        _panel.AddChild(container);
+
+        container.SetAnchorsPreset(LayoutPreset.FullRect);
+
         _spin_box_x = new SpinBox {
             Value = _value.X,
             Step = 0.01f,
             MinValue = _minimum_value.X,
-            MaxValue = _maximum_value.X
+            MaxValue = _maximum_value.X,
+            SizeFlagsHorizontal = SizeFlags.ExpandFill
         };
 
         _spin_box_y = new SpinBox {
             Value = _value.Y,
             Step = 0.01f,
             MinValue = _minimum_value.Y,
-            MaxValue = _maximum_value.Y
+            MaxValue = _maximum_value.Y,
+            SizeFlagsHorizontal = SizeFlags.ExpandFill
         };
 
-        AddChild(_spin_box_x);
-        AddChild(_spin_box_y);
+        container.AddChild(_spin_box_x);
+        container.AddChild(_spin_box_y);
 
         _spin_box_x.ValueChanged += (double new_value) => _ValueChanged();
         _spin_box_y.ValueChanged += (double new_value) => _ValueChanged();

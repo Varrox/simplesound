@@ -56,10 +56,13 @@ public partial class IntegerInputField : InputField {
         _spin_box = new SpinBox {
             Value = _value,
             MinValue = _minimum_value,
-            MaxValue = _maximum_value
+            MaxValue = _maximum_value,
+            SizeFlagsHorizontal = SizeFlags.ExpandFill
         };
 
-        AddChild(_spin_box);
+        _panel.AddChild(_spin_box);
+
+        _spin_box.SetAnchorsPreset(LayoutPreset.FullRect);
 
         _spin_box.ValueChanged += (double new_value) => _ValueChanged();
 
