@@ -11,7 +11,7 @@ uniform float dim = 0.85;
 
 uniform bool horizontal = false;
 
-const int samples = 16;
+const int samples = 8;
 global uniform int blur_quality;
 
 #define pow2(x) (x * x)
