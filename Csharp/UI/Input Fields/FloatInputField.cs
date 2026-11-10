@@ -17,7 +17,7 @@ public partial class FloatInputField : InputField {
         set {
             _default_value = value;
             if(!IsInsideTree()) return;
-            if (!_IsDefaultValue()) _AddResetButton();
+            if (!IsDefaultValue()) _AddResetButton();
             else _ClearResetButton();
         }
         get { return _default_value; }
@@ -67,7 +67,7 @@ public partial class FloatInputField : InputField {
 
         _spin_box.ValueChanged += (double new_value) => _ValueChanged();
 
-        if (!_IsDefaultValue()) 
+        if (!IsDefaultValue()) 
             _AddResetButton();
     }
 
@@ -81,7 +81,7 @@ public partial class FloatInputField : InputField {
         _spin_box.Value = _default_value;
     }
 
-    protected override bool _IsDefaultValue() {
+    public override bool IsDefaultValue() {
         return Mathf.IsEqualApprox(_value, _default_value, 0.005);
     }
 }

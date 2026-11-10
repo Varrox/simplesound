@@ -17,7 +17,7 @@ public partial class StringInputField : InputField {
         set {
             _default_value = value ?? "";
             if(!IsInsideTree()) return;
-            if (!_IsDefaultValue()) _AddResetButton();
+            if (!IsDefaultValue()) _AddResetButton();
             else _ClearResetButton();
         }
         get { return _default_value; }
@@ -46,7 +46,7 @@ public partial class StringInputField : InputField {
 
         _theme_line_edit.TextChanged += (string new_value) => _ValueChanged();
 
-        if (!_IsDefaultValue()) 
+        if (!IsDefaultValue()) 
             _AddResetButton();
     }
 
@@ -60,7 +60,7 @@ public partial class StringInputField : InputField {
         _theme_line_edit.Text = _default_value;
     }
 
-    protected override bool _IsDefaultValue() {
+    public override bool IsDefaultValue() {
         return (_value ?? "").Equals(_default_value ?? "");
     }
 }

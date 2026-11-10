@@ -61,7 +61,7 @@ public partial class InputField : HBoxContainer {
         
     }
 
-    protected virtual bool _IsDefaultValue() {
+    public virtual bool IsDefaultValue() {
         return true;
     }
 
@@ -81,7 +81,7 @@ public partial class InputField : HBoxContainer {
         void ResetButtonPressed() {
             _ResetToDefaultValue();
             _ApplyValue();
-            if (_IsDefaultValue())
+            if (IsDefaultValue())
                 _ClearResetButton();
         }
 
@@ -100,7 +100,7 @@ public partial class InputField : HBoxContainer {
 
         _ClearResetButton();
 
-        if(!_IsDefaultValue())
+        if(!IsDefaultValue())
             _AddResetButton();
     }
 }

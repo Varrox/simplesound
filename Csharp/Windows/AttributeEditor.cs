@@ -19,32 +19,30 @@ public partial class AttributeEditor : EditorWindow {
     }
 
     public override void _Process(double delta) {
-        if (Visible) { 
-            bool changed =  (name_field.value != track_name) || 
-                            (artist_field.value != artist) || 
-                            (share_link != share_link_field.value) ||
-                            (explicit_lyrics != explicit_lyrics_field.value) || 
-                            cover_input_field.value != "";
-            
-            submit_button.Visible = changed;
-        }
+        bool changed =  !name_field.IsDefaultValue() || 
+                        !artist_field.IsDefaultValue() || 
+                        !share_link_field.IsDefaultValue() ||
+                        !explicit_lyrics_field.IsDefaultValue() || 
+                        !cover_input_field.IsDefaultValue();
+        
+        submit_button.Disabled = !changed;
     }
 
     public void Open(string current_track_name, string current_artist, string current_share_link, bool explicit_lyrics) {
         name_field.value = current_track_name;
-        name_field.default_value = "";
+        name_field.default_value = current_track_name;
         track_name = current_track_name;
 
         artist_field.value = current_artist;
-        artist_field.default_value = "";
+        artist_field.default_value = current_artist;
         artist = current_artist;
 
         share_link_field.value = current_share_link;
-        share_link_field.default_value = "";
+        share_link_field.default_value = current_share_link;
         share_link = current_share_link;
 
         explicit_lyrics_field.value = explicit_lyrics;
-        explicit_lyrics_field.default_value = false;
+        explicit_lyrics_field.default_value = explicit_lyrics;
         this.explicit_lyrics = explicit_lyrics;
 
         Show();
@@ -52,19 +50,19 @@ public partial class AttributeEditor : EditorWindow {
 
     public void Open(TrackData track_data) {
         name_field.value = track_data.title;
-        name_field.default_value = "";
+        name_field.default_value = track_data.title;
         track_name = track_data.title;
 
         artist_field.value = track_data.artist;
-        artist_field.default_value = "";
+        artist_field.default_value = track_data.artist;
         artist = track_data.artist;
 
         share_link_field.value = track_data.share_link;
-        share_link_field.default_value = "";
+        share_link_field.default_value = track_data.share_link;
         share_link = track_data.share_link;
 
         explicit_lyrics_field.value = track_data.explicit_lyrics;
-        explicit_lyrics_field.default_value = false;
+        explicit_lyrics_field.default_value = track_data.explicit_lyrics;
         explicit_lyrics = track_data.explicit_lyrics;
 
         Show();

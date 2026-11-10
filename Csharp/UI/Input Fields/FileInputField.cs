@@ -57,12 +57,12 @@ public partial class FileInputField : InputField {
         };
 
         container.AddChild(_file_select_button);
-        
+
         _file_select_button.ButtonUp += OpenFileLocation;
 
         _theme_line_edit.TextChanged += (string new_value) => _ValueChanged();
 
-        if (!_IsDefaultValue())
+        if (!IsDefaultValue())
             _AddResetButton();
     }
 
@@ -76,7 +76,7 @@ public partial class FileInputField : InputField {
         _theme_line_edit.Text = "";
     }
 
-    protected override bool _IsDefaultValue() {
+    public override bool IsDefaultValue() {
         return (_value ?? "").Equals("");
     }
 
