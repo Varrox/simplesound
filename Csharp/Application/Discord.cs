@@ -1,6 +1,7 @@
 using Godot;
 using DiscordRPC;
 using DiscordRPC.Message;
+using System;
 
 public partial class Discord : Node {
     private const string DISCORD_APP_ID = "1313226375007703160";
@@ -101,11 +102,14 @@ public partial class Discord : Node {
     }
 
     private static void _FinishUpdateTrack() {
-        if (!_set_up) return;
+        if (!_set_up || _client == null) return;
 
         bool cover = string.IsNullOrEmpty(_cover_link) || _cover_link.Length > 255;
 
         TrackData track_data = new TrackData(Main.GetCurrentTrack());
+
+        long start_time = DateTime.UtcNow.Ticks - (10000000L * (int)(Main.time + 0.5f));
+        long track_total_time = 10000000L * (int)(Metadata.GetTotalTime(Main.GetCurrentTrack()) + 0.5f);
 
         RichPresence presence = new RichPresence() {
             Details = track_data.title,
@@ -115,6 +119,10 @@ public partial class Discord : Node {
                 SmallImageKey = cover ? "" : GetLogo(),
                 LargeImageText = "simplesound is an open source audio player",
                 LargeImageUrl = "https://github.com/Varrox/simplesound"
+            },
+            Timestamps = new Timestamps() {
+                Start = new DateTime(start_time),
+                End = new DateTime(start_time + track_total_time)
             },
             Type = ActivityType.Listening,
             Buttons = [ new DiscordRPC.Button() { Label = "Open track", Url = Metadata.GetShareLink(Main.GetCurrentTrack()) } ]
