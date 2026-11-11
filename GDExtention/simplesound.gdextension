@@ -1,0 +1,9 @@
+[configuration]
+
+entry_symbol = "simplesound_init"
+compatibility_minimum = "4.8"
+reloadable = true
+
+[libraries]
+
+windows.debug.x86_64 = "bin/simplesound.windows.template_debug.x86_64.dll"

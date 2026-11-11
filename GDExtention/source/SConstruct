@@ -8,7 +8,7 @@ import sys
 # This lets SCons know that we're using godot-cpp, from the godot-cpp folder.
 env = SConscript("godot-cpp/SConstruct", {"api_version": 4.8})
 
-env["build_profile"] = "../../simplesound.gdbuild"
+#env["build_profile"] = "../../simplesound.gdbuild"
 
 # Configures the 'src' directory as a source for header files.
 env.Append(CPPPATH=["src/"])
@@ -22,11 +22,11 @@ sources = Glob("src/*.cpp")
 # env["suffix"] includes the build's feature tags (e.g. '.windows.template_debug.x86_64')
 # (see https://docs.godotengine.org/en/stable/tutorials/export/feature_tags.html).
 # The final path should match a path in the '.gdextension' file.
-lib_filename = "{}gdexample{}{}".format(env.subst('$SHLIBPREFIX'), env["suffix"], env.subst('$SHLIBSUFFIX'))
+lib_filename = "{}simplesound{}{}".format(env.subst('$SHLIBPREFIX'), env["suffix"], env.subst('$SHLIBSUFFIX'))
 
 # Creates a SCons target for the path with our sources.
 library = env.SharedLibrary(
-    "../bin{}".format(lib_filename),
+    "../bin/{}".format(lib_filename),
     source=sources,
 )
 
