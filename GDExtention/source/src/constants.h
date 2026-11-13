@@ -2,18 +2,17 @@
 
 #include <godot_cpp/variant/string.hpp>
 #include <godot_cpp/variant/packed_string_array.hpp>
-#include <godot_cpp/templates/vector.hpp>
 
 using namespace godot;
 
-const Vector<String> EXECUTABLE_FORMATS {
+const PackedStringArray EXECUTABLE_FORMATS {
 #ifdef _WIN32 || _WIN64
     "exe"
 #else
 #endif
 };
 
-const Vector<String> DOWNLOAD_FORMATS {
+const PackedStringArray DOWNLOAD_FORMATS {
     "mp3",
     "wav"
 };
@@ -23,13 +22,13 @@ enum DownloadFormat : uint32_t {
     WAV = 1
 };
 
-const Vector<String> PLAYABLE_FORMATS {
+const PackedStringArray PLAYABLE_FORMATS {
     "mp3",
     "wav",
     "ogg"
 };
 
-const Vector<String> IMAGE_FORMATS {
+const PackedStringArray IMAGE_FORMATS {
     "png", 
     "jpg", 
     "jpeg", 
@@ -40,7 +39,7 @@ const Vector<String> IMAGE_FORMATS {
     "webp"
 };
 
-const Vector<String> QUALITY_LEVELS {
+const PackedStringArray QUALITY_LEVELS {
     "Low",
     "Medium",
     "High"

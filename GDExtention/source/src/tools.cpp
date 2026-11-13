@@ -82,7 +82,7 @@ String get_proper_file_name(const String& p_text) {
     return p_text.replace_char('\\', '-').replace_char('/', '-').replace_char(':', '-');
 }
 
-Vector<String> get_filters(Vector<String> p_file_extentions) {
+PackedStringArray get_filters(PackedStringArray p_file_extentions) {
     for(String& extention : p_file_extentions) {
         extention.insert(0, String("*."));
     }
