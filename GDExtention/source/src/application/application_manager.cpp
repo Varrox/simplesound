@@ -144,8 +144,8 @@ void ApplicationManager::save() {
 }
 
 void ApplicationManager::quit_program() {
-    if (!instance.is_null()) {
-        instance->quit();
+    if (singleton != nullptr) {
+        singleton->quit();
     }
 }
 

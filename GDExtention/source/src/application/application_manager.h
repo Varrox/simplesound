@@ -16,7 +16,7 @@ private:
 
     Ref<Theme> _load_theme();
 
-    const StringName _THEME_TYPE = StringName("");
+    const StringName _THEME_TYPE = StringName("GUI");
 
 protected:
 	static void _bind_methods();
