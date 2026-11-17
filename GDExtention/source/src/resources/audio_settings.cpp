@@ -24,6 +24,8 @@ AudioSettings::AudioSettings() {
     hz_10000 = 0.0f;
 }
 
+AudioSettings::~AudioSettings() {}
+
 void AudioSettings::apply_settings() {
     Ref<AudioEffectReverb> reverb = AudioServer::get_singleton()->get_bus_effect(0, AudioEffects::REVERB);
 

@@ -4,6 +4,20 @@
 
 namespace godot {
     class AudioSettings : public Settings {
+    private:
+    	const PackedStringArray PROPERTY_ROOM_SIZE = {"room_size"};
+    	const PackedStringArray PROPERTY_DAMPING = {"damping"};
+    	const PackedStringArray PROPERTY_SPREAD = {"spread"};
+    	const PackedStringArray PROPERTY_HIGH_PASS = {"high_pass"};
+    	const PackedStringArray PROPERTY_DRY = {"dry"};
+    	const PackedStringArray PROPERTY_WET = {"wet"};
+
+    	const PackedStringArray PROPERTY_HZ_32 = {"hz_32"};
+    	const PackedStringArray PROPERTY_HZ_100 = {"hz_100"};
+    	const PackedStringArray PROPERTY_HZ_320 = {"hz_320"};
+    	const PackedStringArray PROPERTY_HZ_1000 = {"hz_1000"};
+    	const PackedStringArray PROPERTY_HZ_3200 = {"hz_3200"};
+    	const PackedStringArray PROPERTY_HZ_10000 = {"hz_10000"};
     public:
         AudioSettings();
         ~AudioSettings();

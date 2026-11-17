@@ -40,11 +40,8 @@ namespace godot {
 
         const PackedStringArray PROPERTY_NAME = {"name"};
         const PackedStringArray PROPERTY_ARTIST = {"artist"};
-
         const PackedStringArray PROPERTY_COVER_ART = {"cover_art", "cover"};
-
         const PackedStringArray PROPERTY_PLAYLIST_TYPE = {"playlist_type", "type"};
-
         const PackedStringArray PROPERTY_TRACKS = {"tracks", "songs"};
     };
 };

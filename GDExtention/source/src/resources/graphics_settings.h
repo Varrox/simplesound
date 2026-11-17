@@ -7,6 +7,12 @@
 
 namespace godot {
     class GraphicsSettings : public Settings {
+    private:
+        const PackedStringArray PROPERTY_BLUR_QUALITY = {"blur_quality"};
+	    const PackedStringArray PROPERTY_VSYNC = {"vsync"};
+        const PackedStringArray PROPERTY_MAX_FPS = {"max_fps"};
+        const PackedStringArray PROPERTY_REDUCE_FPS_ON_LOSE_FOCUS = {"reduce_fps_on_lose_focus"};
+        const PackedStringArray PROPERTY_MAIN_DISPLAY_SIZE = {"main_display_size"};
     public:
         GraphicsSettings();
         ~GraphicsSettings();
@@ -23,5 +29,6 @@ namespace godot {
         int max_fps;
 
         Vector2i main_display_size;
+    
     };
 };
