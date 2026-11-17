@@ -4,7 +4,7 @@
 
 #include "constants.h"
 
-using namespace godot;
+using namespace godot::Tools;
 
 String seconds_to_timestamp(float p_time) {
     int total_seconds = (int)(p_time + 0.5f);
@@ -75,7 +75,7 @@ bool is_valid_audio_format(const String& p_file_path) {
 bool is_valid_audio_file(const String& p_file_path) {
     if(!FileAccess::file_exists(p_file_path)) return false;
 
-    return is_valid_audio_format(p_file_path);
+    return godot::Tools::is_valid_audio_format(p_file_path);
 }
 
 String get_proper_file_name(const String& p_text) {
