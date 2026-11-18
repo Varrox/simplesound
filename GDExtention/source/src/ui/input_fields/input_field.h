@@ -37,9 +37,9 @@ namespace godot {
         InputField();
         ~InputField();
 
-        String get_full_name();
+        String get_full_name() const;
         void set_full_name(const String& p_full_name);
 
-        virtual bool is_default_value();
+        virtual bool is_default_value() const;
     };
 };

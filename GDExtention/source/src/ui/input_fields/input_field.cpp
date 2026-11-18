@@ -5,6 +5,11 @@
 using namespace godot;
 
 void InputField::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("set_full_name", "p_full_name"), &InputField::set_full_name);
+    ClassDB::bind_method(D_METHOD("get_full_name"), &InputField::get_full_name);
+    
+    ADD_PROPERTY(PropertyInfo(Variant::STRING, "full_name"), "set_full_name", "get_full_name");
+    
     ClassDB::bind_method(D_METHOD("is_default_value"), &InputField::is_default_value);
 }
 
@@ -23,7 +28,7 @@ InputField::InputField() {
     _full_name_label = memnew(Label);
 
     _full_name_label->set_mouse_filter(MouseFilter::MOUSE_FILTER_IGNORE);
-    _full_name_label->set_text(_full_name + ":");
+    _full_name_label->set_text(_full_name + ':');
     _full_name_label->set_vertical_alignment(VerticalAlignment::VERTICAL_ALIGNMENT_CENTER);
     _full_name_label->set_h_size_flags(SIZE_EXPAND_FILL);
     _full_name_label->set_v_size_flags(SIZE_EXPAND_FILL);
@@ -42,6 +47,18 @@ InputField::InputField() {
 }
 
 InputField::~InputField() {}
+
+String InputField::get_full_name() const{
+    return _full_name;
+}
+
+void InputField::set_full_name(const String& p_full_name) {
+    _full_name = p_full_name;
+
+    if (_full_name_label != nullptr) {
+        _full_name_label->set_text(_full_name + ':');
+    }
+}
 
 void InputField::_reset_button_pressed() {
     _reset_to_default_value();
@@ -85,4 +102,4 @@ void InputField::_reset_to_default_value() {}
 
 void InputField::_apply_value() {}
 
-bool InputField::is_default_value() { return true; }
+bool InputField::is_default_value() const{ return true; }
