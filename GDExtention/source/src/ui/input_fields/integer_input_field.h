@@ -15,6 +15,10 @@ namespace godot {
         int _maximum_value;
 
         SpinBox* _spin_box;
+
+        inline void _on_value_changed(int p_new_value) {
+            _value_changed();
+        }
     protected:
         static void _bind_methods();
 

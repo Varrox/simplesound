@@ -40,7 +40,7 @@ IntegerInputField::IntegerInputField() {
 
     _spin_box->set_anchors_preset(PRESET_FULL_RECT);
 
-    _spin_box->connect("value_changed", callable_mp(this, &IntegerInputField::_value_changed));
+    _spin_box->connect("value_changed", callable_mp(this, &IntegerInputField::_on_value_changed));
 
     if (!is_default_value()) _add_reset_button();
 }
