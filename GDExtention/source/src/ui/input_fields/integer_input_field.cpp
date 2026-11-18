@@ -26,6 +26,8 @@ void IntegerInputField::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::INT, "minimum_value"), "set_minimum_value", "get_minimum_value");
 
     ClassDB::bind_method(D_METHOD("get_spin_box"), &IntegerInputField::get_spin_box);
+
+    ADD_SIGNAL(MethodInfo("value_changed", PropertyInfo(Variant::INT, "new_value")));
 }
 
 IntegerInputField::IntegerInputField() {

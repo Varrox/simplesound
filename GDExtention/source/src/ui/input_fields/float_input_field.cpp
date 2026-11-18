@@ -27,6 +27,8 @@ void FloatInputField::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "minimum_value"), "set_minimum_value", "get_minimum_value");
 
     ClassDB::bind_method(D_METHOD("get_spin_box"), &FloatInputField::get_spin_box);
+
+    ADD_SIGNAL(MethodInfo("value_changed", PropertyInfo(Variant::FLOAT, "new_value")));
 }
 
 FloatInputField::FloatInputField() {
