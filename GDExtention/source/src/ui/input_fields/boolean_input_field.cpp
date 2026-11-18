@@ -17,7 +17,7 @@ void BooleanInputField::_bind_methods() {
 
     ClassDB::bind_method(D_METHOD("get_check_box"), &BooleanInputField::get_check_box);
 
-    ADD_SIGNAL(MethodInfo("value_changed", PropertyInfo(Variant::BOOL, "new_value")));
+    ADD_SIGNAL(MethodInfo("pressed", PropertyInfo(Variant::BOOL, "new_value")));
 }
 
 BooleanInputField::BooleanInputField() {
@@ -30,7 +30,7 @@ BooleanInputField::BooleanInputField() {
 
     _check_box->set_anchors_preset(PRESET_FULL_RECT);
 
-    _check_box->connect("value_changed", callable_mp(this, &BooleanInputField::_on_value_changed));
+    _check_box->connect("pressed", callable_mp(this, &BooleanInputField::_on_value_changed));
 
     if (!is_default_value()) _add_reset_button();
 }
@@ -48,7 +48,7 @@ void BooleanInputField::_reset_to_default_value() {
 void BooleanInputField::_apply_value() {
     if(_check_box) {
         _value = _check_box->is_pressed();
-        emit_signal("value_changed", this, _value);
+        emit_signal("pressed", this, _value);
     }
 }
 
@@ -62,7 +62,7 @@ bool BooleanInputField::get_value() const{
 
 void BooleanInputField::set_value(bool p_value) {
     _value = p_value;
-    emit_signal("value_changed", this, _value);
+    emit_signal("pressed", this, _value);
 
     if(_check_box) _check_box->set_pressed(_value);
 }

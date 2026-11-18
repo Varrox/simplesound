@@ -17,7 +17,7 @@ void StringInputField::_bind_methods() {
 
     ClassDB::bind_method(D_METHOD("get_line_edit"), &StringInputField::get_line_edit);
 
-    ADD_SIGNAL(MethodInfo("value_changed", PropertyInfo(Variant::BOOL, "new_value")));
+    ADD_SIGNAL(MethodInfo("text_changed", PropertyInfo(Variant::BOOL, "new_value")));
 }
 
 StringInputField::StringInputField() {
@@ -30,7 +30,7 @@ StringInputField::StringInputField() {
 
     _line_edit->set_anchors_preset(PRESET_FULL_RECT);
 
-    _line_edit->connect("value_changed", callable_mp(this, &StringInputField::_on_value_changed));
+    _line_edit->connect("text_changed", callable_mp(this, &StringInputField::_on_value_changed));
 
     if (!is_default_value()) _add_reset_button();
 }
@@ -48,7 +48,7 @@ void StringInputField::_reset_to_default_value() {
 void StringInputField::_apply_value() {
     if(_line_edit) {
         _value = _line_edit->get_text();
-        emit_signal("value_changed", this, _value);
+        emit_signal("text_changed", this, _value);
     }
 }
 
@@ -62,7 +62,7 @@ String StringInputField::get_value() const{
 
 void StringInputField::set_value(const String& p_value) {
     _value = p_value;
-    emit_signal("value_changed", this, _value);
+    emit_signal("text_changed", this, _value);
 
     if(_line_edit) _line_edit->set_text(_value);
 }
