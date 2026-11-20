@@ -19,7 +19,7 @@ void FileInputField::_bind_methods() {
 
     ClassDB::bind_method(D_METHOD("open_file_dialog"), &FileInputField::open_file_dialog);
 
-    ADD_SIGNAL(MethodInfo("text_changed", PropertyInfo(Variant::BOOL, "new_value")));
+    ADD_SIGNAL(MethodInfo("value_changed", PropertyInfo(Variant::BOOL, "new_value")));
 }
 
 FileInputField::FileInputField() {
@@ -67,7 +67,7 @@ void FileInputField::_reset_to_default_value() {
 void FileInputField::_apply_value() {
     if(_line_edit) {
         _value = _line_edit->get_text();
-        emit_signal("text_changed", this, _value);
+        emit_signal("value_changed", this, _value);
     }
 }
 
@@ -81,7 +81,7 @@ String FileInputField::get_value() const{
 
 void FileInputField::set_value(const String& p_value) {
     _value = p_value;
-    emit_signal("text_changed", this, _value);
+    emit_signal("value_changed", this, _value);
 
     if(_line_edit) _line_edit->set_text(_value);
 }

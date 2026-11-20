@@ -14,7 +14,6 @@ namespace godot {
 
     private:
         String _value;
-        String _default_value;
         PackedStringArray _filters;
 
         LineEdit* _line_edit;
