@@ -1,10 +1,19 @@
-public partial class SettingsOpener : EditorWindowOpener {
+using Godot;
+
+public partial class SettingsOpener : Button {
+
     public override void _Ready() {
-        base._Ready();
-        ButtonUp += OpenSettings;
+        ButtonUp += OpenSettingsWindow;
     }
 
-    public void OpenSettings() {
-		(window as Settings).Open();
+    public void OpenSettingsWindow() {
+        Main.instance.Pause();
+
+        DownloadWindow settings_window = (DownloadWindow)ApplicationManager.GetSceneResource("settings_window").Instantiate();
+        GetTree().Root.AddChid(settings_window);
+
+        settings_window.Open();
+		
+        ButtonPressed = false;
 	}
 }

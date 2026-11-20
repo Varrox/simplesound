@@ -1,23 +1,19 @@
 using Godot;
 
-public partial class DownloadWindowOpener : EditorWindowOpener {
+public partial class DownloadWindowOpener : Button {
 
     public override void _Ready() {
-        DownloadWindow download_window = (DownloadWindow)ApplicationManager.GetSceneResource("download_window").Instantiate();
-        GetTree().Root.CallDeferred("add_child", download_window);
-
-        download_window.Hide();
-
-        window = download_window;
-        
-        base._Ready();
-        ButtonUp += OpenSettings;
+        ButtonUp += OpenDownloadWindow;
     }
 
-    public void OpenSettings() {
+    public void OpenDownloadWindow() {
         Main.instance.Pause();
+
+        DownloadWindow download_window = (DownloadWindow)ApplicationManager.GetSceneResource("download_window").Instantiate();
+        GetTree().Root.AddChid(download_window);
+
+        download_window.Open();
 		
-        (window as DownloadWindow).Open();
         ButtonPressed = false;
 	}
 }
