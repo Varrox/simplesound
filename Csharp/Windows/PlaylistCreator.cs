@@ -1,7 +1,7 @@
 using Godot;
 using System.Collections.Generic;
 
-public partial class PlaylistCreator : EditorWindow {
+public partial class PlaylistCreator : ThemeWindow {
 	[Export] public StringInputField playlist_name_field;
 
 	[Export] public Button add_track_button;

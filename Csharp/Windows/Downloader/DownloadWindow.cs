@@ -2,7 +2,7 @@ using Godot;
 using System.Collections.Generic;
 using System.IO;
 
-public partial class DownloadWindow : EditorWindow {
+public partial class DownloadWindow : ThemeWindow {
     [Export] public Button no_playlist;
     [Export] public VBoxContainer playlist_container, link_container;
     [Export] public ThemeLineEdit link;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using Godot;
 
-public partial class Settings : EditorWindow {
+public partial class Settings : ThemeWindow {
     [Export] public VBoxContainer settings_container;
     [Export] public VBoxContainer tabs_container;
 

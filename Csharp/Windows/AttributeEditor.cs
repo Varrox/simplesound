@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class AttributeEditor : EditorWindow {
+public partial class AttributeEditor : ThemeWindow {
     [Export] public StringInputField name_field, artist_field, share_link_field;
     [Export] public BooleanInputField explicit_lyrics_field;
     [Export] public FileInputField cover_input_field;

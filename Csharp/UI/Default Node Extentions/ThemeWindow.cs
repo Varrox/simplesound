@@ -1,6 +1,6 @@
 ﻿using Godot;
 
-public partial class EditorWindow : Window {
+public partial class ThemeWindow : Window {
     [Signal]
     public delegate void OnCloseEventHandler();
     public bool cancelled;
