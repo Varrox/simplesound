@@ -2,6 +2,8 @@
 
 #include <godot_cpp/core/memory.hpp>
 
+#include "application/application_manager.h"
+
 using namespace godot;
 
 void FileInputField::_bind_methods() {
@@ -42,7 +44,7 @@ FileInputField::FileInputField() {
 
     _file_select_button = memnew(Button);
 
-    //_file_select_button->set_button_icon(ApplicationManager::get_singleton()->get_theme_icon("folder_icon"));
+    _file_select_button->set_button_icon(ApplicationManager::get_singleton()->get_theme_icon("folder_icon"));
     _file_select_button->set_expand_icon(true);
     _file_select_button->set_tooltip_text("Open file manager to select location.");
     _file_select_button->set_custom_minimum_size(Vector2(_MINIMUM_HEIGHT, _MINIMUM_HEIGHT));

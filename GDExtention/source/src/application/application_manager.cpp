@@ -191,6 +191,48 @@ bool ApplicationManager::is_any_window_focused() {
     return false;
 }
 
+/*Resource ApplicationManager::get_resource(const StringName& p_name) {
+
+}
+
+PackedScene ApplicationManager::get_scene_resource(const StringName& p_name) {
+
+}
+
+Shader ApplicationManager::get_shader_resource(const StringName& p_name) {
+
+}*/
+
+Color ApplicationManager::get_theme_color(const StringName& p_name) {
+    if(_theme.is_null()) return Color(1, 1, 1);
+    return _theme->get_color(p_name, _THEME_TYPE);
+}
+
+int ApplicationManager::get_theme_constant(const StringName& p_name) {
+    if(_theme.is_null()) return 0;
+    return _theme->get_constant(p_name, _THEME_TYPE);
+}
+
+Ref<Font> ApplicationManager::get_theme_font(const StringName& p_name) {
+    if(_theme.is_null()) return nullptr;
+    return _theme->get_font(p_name, _THEME_TYPE);
+}
+
+int ApplicationManager::get_theme_font_size(const StringName& p_name) {
+    if(_theme.is_null()) return 10;
+    return _theme->get_font_size(p_name, _THEME_TYPE);
+}
+
+Ref<Texture2D> ApplicationManager::get_theme_icon(const StringName& p_name) {
+    if(_theme.is_null()) return nullptr;
+    return _theme->get_icon(p_name, _THEME_TYPE);
+}
+
+Ref<StyleBox> ApplicationManager::get_theme_stylebox(const StringName& p_name) {
+    if(_theme.is_null()) return nullptr;
+    return _theme->get_stylebox(p_name, _THEME_TYPE);
+}
+
 ApplicationManager* ApplicationManager::get_singleton() {
     return _singleton;
 }

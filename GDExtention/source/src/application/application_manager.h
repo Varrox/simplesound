@@ -45,6 +45,17 @@ public:
     void remove_window(const int32_t p_window);
     bool is_any_window_focused();
 
+    //Ref<Resource> get_resource(const StringName& p_name);
+    //Ref<PackedScene> get_scene_resource(const StringName& p_name);
+    //Ref<Shader> get_shader_resource(const StringName& p_name);
+
+    Color get_theme_color(const StringName& p_name);
+    int get_theme_constant(const StringName& p_name);
+    Ref<Font> get_theme_font(const StringName& p_name);
+    int get_theme_font_size(const StringName& p_name);
+    Ref<Texture2D> get_theme_icon(const StringName& p_name);
+    Ref<StyleBox> get_theme_stylebox(const StringName& p_name);
+
     static ApplicationManager* get_singleton();
 };
 };

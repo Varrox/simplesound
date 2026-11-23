@@ -2,6 +2,8 @@
 
 #include <godot_cpp/core/memory.hpp>
 
+#include "application/application_manager.h"
+
 using namespace godot;
 
 void InputField::_bind_methods() {
@@ -71,7 +73,7 @@ void InputField::_add_reset_button() {
     _clear_reset_button();
 
     _reset_button = memnew(Button);
-    //_reset_button->set_button_icon(ApplicationManager::get_singleton()->get_theme_icon("reload_icon"));
+    _reset_button->set_button_icon(ApplicationManager::get_singleton()->get_theme_icon("reload_icon"));
     _reset_button->set_expand_icon(true);
     _reset_button->set_custom_minimum_size(Vector2(_MINIMUM_HEIGHT, _MINIMUM_HEIGHT));
 

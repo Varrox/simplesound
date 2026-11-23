@@ -6,6 +6,8 @@
 #include <godot_cpp/classes/popup_panel.hpp>
 #include <godot_cpp/classes/panel.hpp>
 
+#include "application/application_manager.h"
+
 using namespace godot;
 
 void ThemeColorPickerButton::_bind_methods() {}
@@ -32,6 +34,6 @@ void ThemeColorPickerButton::_apply_customization() {
 	if (!popup_panel.is_null()) {
 		Ref<Panel> panel = dynamic_cast<Panel *>(popup_panel->get_child(0, true));
         
-		//panel->add_theme_stylebox_override("panel", ApplicationManager->get_singleton()->get_theme_stylebox("color_picker_panel_stylebox"));
+		panel->add_theme_stylebox_override("panel", ApplicationManager::get_singleton()->get_theme_stylebox("color_picker_panel_stylebox"));
 	}
 }
