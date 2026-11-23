@@ -9,11 +9,11 @@ void ThemeWindow::_bind_methods() {
 }
 
 ThemeWindow::ThemeWindow() {
-    //ApplicationManager::get_singleton()->add_window(get_window_id());
-
-    //set_theme(ApplicationManager::get_singleton()->get_theme());
+    ApplicationManager::get_singleton()->add_window(get_window_id());
+    
+    set_theme(ApplicationManager::get_singleton()->get_theme());
 }
 
 ThemeWindow::~ThemeWindow() {
-    // ApplicationManager::get_singleton()->remove_window(get_window_id());
+    ApplicationManager::get_singleton()->remove_window(get_window_id());
 }

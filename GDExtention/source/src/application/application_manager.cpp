@@ -15,11 +15,10 @@ ApplicationManager::ApplicationManager() {
     _last_windows_focused = 0;
     _windows_focused = 0;
 
-    singleton = this;
-    
+    _singleton = this;
 
-    currently_focused_window = Ref(get_root());
-    add_window(currently_focused_window);
+    _currently_focused_window = get_root()->get_window_id();
+    add_window(_currently_focused_window);
 }
 
 ApplicationManager::~ApplicationManager() {
@@ -29,7 +28,7 @@ void ApplicationManager::_initialize() {
     Node *current_scene_node = get_current_scene();
     
     if(current_scene_node) {
-        static_cast<Control *>(current_scene_node)->set_theme(theme);
+        static_cast<Control *>(current_scene_node)->set_theme(_theme);
     }
 }
 
@@ -139,17 +138,25 @@ Ref<Theme> ApplicationManager::_load_theme() {
     return theme_resource;
 }
 
+Ref<Theme> ApplicationManager::get_theme() {
+    return _theme;
+}
+
+int32_t ApplicationManager::get_currently_focused_window() {
+    return _currently_focused_window;
+}
+
 void ApplicationManager::save() {
 
 }
 
 void ApplicationManager::quit_program() {
-    if (singleton != nullptr) {
-        singleton->quit();
+    if (_singleton != nullptr) {
+        _singleton->quit();
     }
 }
 
-void ApplicationManager::add_window(const Ref<Window>& p_window) {
+void ApplicationManager::add_window(const int32_t p_window) {
     if (_windows.has(p_window)) {
         return;
     }
@@ -159,12 +166,12 @@ void ApplicationManager::add_window(const Ref<Window>& p_window) {
     
 }
 
-void ApplicationManager::remove_window(const Ref<Window>& p_window) {
+void ApplicationManager::remove_window(const int32_t p_window) {
     if (!_windows.has(p_window)) {
         return;
     }
 
-    for(const Ref<Window>& window : _windows){
+    for(const int32_t window : _windows){
         if (window == p_window) {
             int idx = _windows.find(window);
             _windows.remove_at(idx);
@@ -174,12 +181,16 @@ void ApplicationManager::remove_window(const Ref<Window>& p_window) {
 }
 
 bool ApplicationManager::is_any_window_focused() {
-    for(const Ref<Window>& window : _windows){
-        if (window == nullptr) continue;;
-        if(window->has_focus()) {
+    for(const int32_t window : _windows){
+        if (!DisplayServer::get_singleton()->get_window_list().has(window)) continue;
+        if(DisplayServer::get_singleton()->window_is_focused(window)) {
             return true;
         }
     }
 
     return false;
+}
+
+ApplicationManager* ApplicationManager::get_singleton() {
+    return _singleton;
 }
