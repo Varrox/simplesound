@@ -138,8 +138,42 @@ Ref<Theme> ApplicationManager::_load_theme() {
     return theme_resource;
 }
 
+Ref<ResourceManager> ApplicationManager::_load_resource_manager() {
+    Ref<ResourceManager> resource_manager = memnew(ResourceManager);
+
+    // Scenes
+
+    resource_manager->set_scene("sound_visualizer", static_cast<Ref<PackedScene>>(ResourceLoader::get_singleton()->load("res://Prefabs/sound_visualizer.tscn", "PackedScene")));
+
+    resource_manager->set_scene("playlist_display", static_cast<Ref<PackedScene>>(ResourceLoader::get_singleton()->load("res://Prefabs/playlist_display.tscn", "PackedScene")));
+    resource_manager->set_scene("track_display", static_cast<Ref<PackedScene>>(ResourceLoader::get_singleton()->load("res://Prefabs/track_display.tscn", "PackedScene")));
+
+    resource_manager->set_scene("confirmation_window", static_cast<Ref<PackedScene>>(ResourceLoader::get_singleton()->load("res://Prefabs/confirmation_window.tscn", "PackedScene")));
+
+    resource_manager->set_scene("playlist_creator_window", static_cast<Ref<PackedScene>>(ResourceLoader::get_singleton()->load("res://Windows/playlist_creator_window.tscn", "PackedScene")));
+    resource_manager->set_scene("metadata_editor_window", static_cast<Ref<PackedScene>>(ResourceLoader::get_singleton()->load("res://Windows/attribute_editor_window.tscn", "PackedScene")));
+    
+    resource_manager->set_scene("stream_display_window", static_cast<Ref<PackedScene>>(ResourceLoader::get_singleton()->load("res://Windows/stream_display_window.tscn", "PackedScene")));
+    
+    resource_manager->set_scene("download_playlist_display", static_cast<Ref<PackedScene>>(ResourceLoader::get_singleton()->load("res://Windows/Downloading/download_playlist_display.scn", "PackedScene")));
+    resource_manager->set_scene("download_window", static_cast<Ref<PackedScene>>(ResourceLoader::get_singleton()->load("res://Windows/Downloading/download_window.tscn", "PackedScene")));
+    
+    resource_manager->set_scene("settings_window", static_cast<Ref<PackedScene>>(ResourceLoader::get_singleton()->load("res://Windows/settings_window.tscn", "PackedScene")));
+
+    // Shaders
+
+    resource_manager->set_shader("transition_blit", static_cast<Ref<Shader>>(ResourceLoader::get_singleton()->load("res://Styling/Shaders/transition_blit.gdshader", "Shader")));
+    resource_manager->set_shader("blur_blit", static_cast<Ref<Shader>>(ResourceLoader::get_singleton()->load("res://Styling/Shaders/blur_blit.gdshader", "Shader")));
+
+    return resource_manager;
+}
+
 Ref<Theme> ApplicationManager::get_theme() {
     return _theme;
+}
+
+Ref<ResourceManager> ApplicationManager::get_resource_manager() {
+    return _resource-manager;
 }
 
 int32_t ApplicationManager::get_currently_focused_window() {
@@ -191,17 +225,15 @@ bool ApplicationManager::is_any_window_focused() {
     return false;
 }
 
-/*Resource ApplicationManager::get_resource(const StringName& p_name) {
-
+Ref<PackedScene> ApplicationManager::get_scene_resource(const StringName& p_name) {
+    if(_resource_manager.is_null()) return nullptr;
+    return _resource_manager->get_scene(p_name);
 }
 
-PackedScene ApplicationManager::get_scene_resource(const StringName& p_name) {
-
+Ref<Shader> ApplicationManager::get_shader_resource(const StringName& p_name) {
+    if(_resource_manager.is_null()) return nullptr;
+    return _resource_manager->get_shader(p_name);
 }
-
-Shader ApplicationManager::get_shader_resource(const StringName& p_name) {
-
-}*/
 
 Color ApplicationManager::get_theme_color(const StringName& p_name) {
     if(_theme.is_null()) return Color(1, 1, 1);

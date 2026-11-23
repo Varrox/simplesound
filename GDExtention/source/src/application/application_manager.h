@@ -3,6 +3,8 @@
 #include <godot_cpp/classes/scene_tree.hpp>
 #include <godot_cpp/classes/theme.hpp>
 
+#include "resources/resource_manager.h"
+
 namespace godot {
 
 class ApplicationManager : public SceneTree {
@@ -16,8 +18,10 @@ private:
     int32_t _currently_focused_window;
 
     Ref<Theme> _theme;
+    Ref<ResourceManager> _resource_manager;
     
     Ref<Theme> _load_theme();
+    Ref<ResourceManager> _load_resource_manager();
     
     static ApplicationManager* _singleton;
     
@@ -36,6 +40,8 @@ public:
     bool _process(double delta) override;
     
     Ref<Theme> get_theme();
+    Ref<ResourceManager> get_resource_manager();
+
     int32_t get_currently_focused_window();
     
     void save();
@@ -45,9 +51,8 @@ public:
     void remove_window(const int32_t p_window);
     bool is_any_window_focused();
 
-    //Ref<Resource> get_resource(const StringName& p_name);
-    //Ref<PackedScene> get_scene_resource(const StringName& p_name);
-    //Ref<Shader> get_shader_resource(const StringName& p_name);
+    Ref<PackedScene> get_scene_resource(const StringName& p_name);
+    Ref<Shader> get_shader_resource(const StringName& p_name);
 
     Color get_theme_color(const StringName& p_name);
     int get_theme_constant(const StringName& p_name);
