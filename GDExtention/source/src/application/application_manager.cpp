@@ -173,7 +173,7 @@ Ref<Theme> ApplicationManager::get_theme() {
 }
 
 Ref<ResourceManager> ApplicationManager::get_resource_manager() {
-    return _resource-manager;
+    return _resource_manager;
 }
 
 int32_t ApplicationManager::get_currently_focused_window() {
