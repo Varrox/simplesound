@@ -106,7 +106,7 @@ public partial class PlaylistCreator : ThemeWindow {
 		}
     }
 
-	public void Submit() {
+	public void Submit(bool cancelled = false) {
 		Hide();
 
 		if(!cancelled) {
@@ -132,7 +132,6 @@ public partial class PlaylistCreator : ThemeWindow {
         EmitSignal(SignalName.OnClose);
     }
 	public void Cancel() {
-		cancelled = true;
-		Submit();
+		Submit(true);
 	}
 }

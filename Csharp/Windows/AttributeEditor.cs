@@ -10,6 +10,8 @@ public partial class AttributeEditor : ThemeWindow {
     public string track_path, track_name, artist, share_link;
     public bool explicit_lyrics;
 
+    public bool cancelled;
+
     public override void _Ready()
     {
         base._Ready();
