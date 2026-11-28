@@ -5,6 +5,8 @@
 #include <godot_cpp/classes/dpi_texture.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
 #include <godot_cpp/classes/window.hpp>
+#include <godot_cpp/classes/font.hpp>
+#include <godot_cpp/classes/style_box.hpp>
 
 using namespace godot;
 
