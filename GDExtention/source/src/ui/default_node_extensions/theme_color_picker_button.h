@@ -4,6 +4,8 @@
 
 namespace godot {
     class ThemeColorPickerButton : public ColorPickerButton {
+        GDCLASS(ThemeColorPickerButton, ColorPickerButton);
+
     private:
         void _apply_customization();
     protected:

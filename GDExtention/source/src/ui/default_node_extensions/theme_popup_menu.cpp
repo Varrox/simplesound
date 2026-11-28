@@ -2,6 +2,8 @@
 
 using namespace godot;
 
+ThemePopupMenu::_bind_methods() {}
+
 ThemePopupMenu::ThemePopupMenu() {}
 
 ThemePopupMenu::~ThemePopupMenu() {}

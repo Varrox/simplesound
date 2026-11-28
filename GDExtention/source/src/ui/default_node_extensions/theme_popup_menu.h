@@ -4,6 +4,10 @@
 
 namespace godot {
     class ThemePopupMenu : public PopupMenu {
+        GDCLASS(ThemePopupMenu, PopupMenu);
+        
+    protected:
+        static void _bind_methods();
     public:
         ThemePopupMenu();
         ~ThemePopupMenu();

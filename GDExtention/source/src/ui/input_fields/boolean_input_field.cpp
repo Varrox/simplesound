@@ -1,5 +1,6 @@
 #include "boolean_input_field.h"
 
+#include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/core/memory.hpp>
 
 using namespace godot;

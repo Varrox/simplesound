@@ -30,7 +30,7 @@ void ApplicationManager::_initialize() {
     Node *current_scene_node = get_current_scene();
     
     if(current_scene_node) {
-        static_cast<Control *>(current_scene_node)->set_theme(_theme);
+        Object::cast_to<Control>(current_scene_node)->set_theme(_theme);
     }
 }
 

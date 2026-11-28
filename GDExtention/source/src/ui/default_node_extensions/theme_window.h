@@ -4,8 +4,8 @@
 
 namespace godot {
     class ThemeWindow : public Window {
-    private:
         GDCLASS(ThemeWindow, Window);
+        
     protected:
         static void _bind_methods();
     public:

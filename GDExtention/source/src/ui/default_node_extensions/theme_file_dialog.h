@@ -4,6 +4,8 @@
 
 namespace godot {
     class ThemeFileDialog : public FileDialog {
+        GDCLASS(ThemeFileDialog, FileDialog);
+        
     protected:
         static void _bind_methods();
     public:
